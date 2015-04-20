@@ -8,4 +8,8 @@ class UserLoginForm extends FormValidator {
 		'username'	=>	'required',
 		'password'	=>	'required|min:6'
 		);
+	protected $messages = array(
+		 'required' => ':attribute không được để trống thím ơi.',
+		 'min'		=>	':attribute tối thiểu là :min ký tự cơ mà',
+		);
 }
