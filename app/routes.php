@@ -15,10 +15,9 @@ Route::get('/', function()
 {
 	return View::make('hello');
 });
-<<<<<<< HEAD
+
+Route::get('admin/dashboard','AdminController@index');
 
 Route::get('admin/login', 'AuthController@login' );
 Route::post('admin/login', 'AuthController@doLogin' );
-=======
-Route::get('admin/dashboard','AdminController@index');
->>>>>>> cc50c047d6c6228f8742d3f68f27d798f0b9da94
+
