@@ -4,7 +4,11 @@
 	"keywords": ["framework", "laravel"],
 	"license": "MIT",
 	"require": {
-		"laravel/framework": "4.2.*"
+		"laravel/framework": "4.2.*",
+		"cartalyst/sentry": "2.1.*",
+		"way/generators": "~2.6",
+		"barryvdh/laravel-debugbar": "~1.8",
+		"bllim/datatables": "1.4.4"
 	},
 	"autoload": {
 		"classmap": [
@@ -14,7 +18,10 @@
 			"app/database/migrations",
 			"app/database/seeds",
 			"app/tests/TestCase.php"
-		]
+		],
+		"psr-4": {
+			"App\\DTT\\": "app/DTT"
+		}
 	},
 	"scripts": {
 		"post-install-cmd": [

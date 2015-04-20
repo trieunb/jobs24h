@@ -13,7 +13,7 @@ return array(
 	|
 	*/
 
-	'debug' => false,
+	'debug' => true,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -121,7 +121,10 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
-
+		'Cartalyst\Sentry\SentryServiceProvider',
+		'Bllim\Datatables\DatatablesServiceProvider',
+		'Way\Generators\GeneratorsServiceProvider',
+		'Barryvdh\Debugbar\ServiceProvider',
 	),
 
 	/*
@@ -188,7 +191,10 @@ return array(
 		'URL'             => 'Illuminate\Support\Facades\URL',
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
-
+		'Sentry' 		=> 'Cartalyst\Sentry\Facades\Laravel\Sentry',
+		'Datatables'    => 'Bllim\Datatables\Facade\Datatables',
+		'Debugbar' => 'Barryvdh\Debugbar\Facade',
+		
 	),
 
 );

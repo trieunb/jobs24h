@@ -15,3 +15,6 @@ Route::get('/', function()
 {
 	return View::make('hello');
 });
+
+Route::get('admin/login', 'AuthController@login' );
+Route::post('admin/login', 'AuthController@doLogin' );
