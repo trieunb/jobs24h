@@ -15,13 +15,10 @@ class UserController extends \BaseController {
 
 	public function datatables()
 	{
-		$users = User::select('username', 'first_name', 'email', 'ngaysinh', 'diachi', 'id');
+		$users = User::select('id', 'username', 'first_name', 'email', 'ngaysinh', 'diachi', 'id as ids');
 		$stt = 1;
 		return Datatables::of($users)
-		->add_column('edit', function($stt) {
-			return $stt++;
-		})
-		->edit_column('id', '
+		->edit_column('ids', '
 			{{ Form::open(array("method"=>"delete", "route"=>array("admin.users.destroy", $id) )) }}
 			<a class="btn btn-sm btn-info" href="{{URL::route("admin.users.edit", array($id) )}}" title="Edit"><i class="glyphicon glyphicon-edit"></i></a> 
 			<button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you want delete ?\');" type="submit" title="Delete"><i class="glyphicon glyphicon-remove"></i></button>

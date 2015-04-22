@@ -30,24 +30,27 @@
 	{{ HTML::script('assets/js/jquery.dataTables.min.js') }}
 	{{ HTML::script('assets/js/dataTables.bootstrap.js') }}
 	<script type="text/javascript">
-		var t = $('#jobseekers').dataTable( {
+		$('#jobseekers').dataTable( {
 				"bProcessing": true,
 				"bServerSide": true,
 				"sAjaxSource": "{{ URL::route('users.datatables') }}",
+				"aoColumnDefs": [
+		        	{ 'bSortable': false, 'aTargets': [ 0 ] }
+		        ],
 				"aaSorting": [[ 0, "desc" ]],
 				
 				"fnDrawCallback": function (oSettings) {
-					if(oSettings.bSorted || oSettings.bFiltered) {
+					//if(oSettings.bSorted || oSettings.bFiltered) {
+						var current = $('ul.pagination li.active a').text();
+						var crshow = $('#jobseekers_length select option:selected').val();
+						//alert(crshow);
 						for (var i = 0, iLen = oSettings.aiDisplay.length; i < iLen; i++) {
-							
+							$('td:eq(0)', oSettings.aoData[ oSettings.aiDisplay[i]].nTr).html(i+1+(crshow*current-crshow));	
+
 						}
-					}
+					//}
 				}
 			});
-		t.on('order.dt search.dt', function() {
-			t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function(ceil, i) {
-				ceil.innerHTML = i+1;
-			});
-		}).draw();
+		
 	</script>
 @stop

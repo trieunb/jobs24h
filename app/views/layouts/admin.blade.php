@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@yield('title', isset($title) ?: 'Dashboard') - Admin VnJobs</title>
     <!-- BOOTSTRAP STYLES-->
-    <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" />
     <!-- FONTAWESOME ICONS STYLES-->
     <link href="{{ asset('assets/css/font-awesome.css') }}" rel="stylesheet" />
     <!--CUSTOM STYLES-->
