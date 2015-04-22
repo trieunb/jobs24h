@@ -33,4 +33,3 @@ Route::group(array('prefix'=>'admin'), function() {
 		Route::post('login', 'AuthController@doLogin');
 	});
 });
-
