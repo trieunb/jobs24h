@@ -46,7 +46,7 @@ return array(
 	|
 	*/
 
-	'hasher' => 'sha256',
+	'hasher' => 'native',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -133,7 +133,7 @@ return array(
 		|
 		*/
 
-		'login_attribute' => 'username',
+		'login_attribute' => 'email',
 
 	),
 
@@ -174,7 +174,7 @@ return array(
 		|
 		*/
 
-		'enabled' => false,
+		'enabled' => true,
 
 		/*
 		|--------------------------------------------------------------------------
