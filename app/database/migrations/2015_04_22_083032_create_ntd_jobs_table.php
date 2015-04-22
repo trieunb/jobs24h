@@ -19,7 +19,7 @@ class CreateNtdJobsTable extends Migration {
 			$table->longText('ntd_motacongviec');
 			$table->longText('ntd_yeucaucongviec');
 			$table->string('ntd_nganhnghe');
-			$table->string('ntd_loaicongviec');
+			$table->string('ntd_lhcongviec');
 			$table->timestamps();
 		});
 	}
