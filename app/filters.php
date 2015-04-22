@@ -33,6 +33,94 @@ App::after(function($request, $response)
 |
 */
 
+/**
+ * Filter authentication
+ */
+Route::filter('sentry.logged', function() {
+	if(Sentry::check())
+	{
+		return Redirect::to('/');
+	} 
+});
+Route::filter('sentry.admin', function() {
+	if( ! Sentry::check())
+	{
+		return Redirect::to('/admin/login');
+	} else {
+		$user = Sentry::getUser();
+		if( ! $user->hasAccess('admin'))
+		{
+			return Redirect::to('/admin/login');
+		}
+	}
+});
+Route::filter('sentry.ntd', function() {
+	if( ! Sentry::check())
+	{
+		return Redirect::to('/employer/login');
+	} else {
+		$user = Sentry::getUser();
+		if( ! $user->hasAccess('ntd'))
+		{
+			return Redirect::to('/employer/login');
+		}
+	}
+});
+Route::filter('sentry.ntv', function() {
+	if( ! Sentry::check())
+	{
+		return Redirect::to('/login');
+	} else {
+		$user = Sentry::getUser();
+		if( ! $user->hasAccess('ntv'))
+		{
+			return Redirect::to('/login');
+		}
+	}
+});
+Route::filter('sentry.logged.admin', function() {
+	if( Sentry::check())
+	{
+		$user = Sentry::getUser();
+		if($user->hasAccess('admin'))
+		{
+			return Redirect::to('/admin/');
+		}
+	}
+});
+Route::filter('sentry.logged.ntd', function() {
+	if( Sentry::check())
+	{
+		$user = Sentry::getUser();
+		if($user->hasAccess('ntd'))
+		{
+			return Redirect::to('/employer/');
+		}
+	}
+});
+Route::filter('sentry.logged.ntv', function() {
+	if( Sentry::check())
+	{
+		return Redirect::to('/profile');
+	}
+});
+
+/**
+ * Filter languages
+ */
+Route::filter('detectLang', function($lang = "vi")
+{echo 'aaaaaa';
+    if($lang != "vi" && in_array($lang , Config::get('app.available_language')))
+    {
+        Config::set('app.locale', $lang);
+    }else{
+        $browser_lang = !empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? strtok(strip_tags($_SERVER['HTTP_ACCEPT_LANGUAGE']), ',') : '';
+        $browser_lang = substr($browser_lang, 0,2);
+        $userLang = (in_array($browser_lang, Config::get('app.available_language'))) ? $browser_lang : Config::get('app.locale');
+        Config::set('app.locale', $userLang);
+    }
+});
+
 Route::filter('auth', function()
 {
 	if (Auth::guest())

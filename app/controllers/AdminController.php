@@ -56,6 +56,8 @@ class AdminController extends \BaseController {
 	public function edit($id)
 	{
 		//
+		echo "edit";
+		return "edit";
 	}
 
 
@@ -68,6 +70,7 @@ class AdminController extends \BaseController {
 	public function update($id)
 	{
 		//
+		return "saved";
 	}
 
 
@@ -80,6 +83,7 @@ class AdminController extends \BaseController {
 	public function destroy($id)
 	{
 		//
+		return "Delete";
 	}
 
 

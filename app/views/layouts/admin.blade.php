@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Free Bootstrap Admin Template</title>
+    <title>@yield('title', isset($title) ?: 'Dashboard') - Admin VnJobs</title>
     <!-- BOOTSTRAP STYLES-->
     <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" />
     <!-- FONTAWESOME ICONS STYLES-->
@@ -16,6 +16,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    @yield('style')
 </head>
 <body>
     <div id="wrapper">
@@ -27,9 +28,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a  class="navbar-brand" href="/">Dashboard
-
-                </a>
+                {{ HTML::link(URL::route('admin.dashboard'), 'Dashboard', array('class'=>'navbar-brand')) }}
             </div>
             <div class="notifications-wrapper">
                 <ul class="nav">
@@ -38,10 +37,10 @@
                             <i class="fa fa-user-plus"></i>  <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#"><i class="fa fa-user-plus"></i> My Profile</a>
+                            <li><a href="{{ URL::route('admin.profile') }}"><i class="fa fa-user-plus"></i> My Profile</a>
                             </li>
                             <li class="divider"></li>
-                            <li><a href="#"><i class="fa fa-sign-out"></i> Logout</a>
+                            <li><a href="{{ URL::route('admin.logout') }}"><i class="fa fa-sign-out"></i> Logout</a>
                             </li>
                         </ul>
                     </li>
@@ -61,25 +60,25 @@
 
                     </li>
                      <li>
-                        <a  href="#"> <strong> Romelia Alexendra </strong></a>
+                     <?php $user = Sentry::getUser() ?>
+                        <a  href="#"> <strong> {{ $user->first_name . $user->last_name }} </strong></a>
                     </li>
 
                     <li>
-                        <a class="active-menu"  href="/"><i class="fa fa-dashboard "></i>Dashboard</a>
+                        <a class="{{ Request::is('admin')?'active-menu':'' }}"  href="{{ URL::to('/admin') }}"><i class="fa fa-dashboard "></i>Dashboard</a>
                     </li>
                     <li>
-                        <a href=""><i class="fa fa-venus "></i>UI Elements </a>
-                        
+                        <a href="{{ URL::to('/admin/general') }}" class="{{ Request::is('general')?'active-menu':'' }}"><i class="fa fa-venus "></i>Quản lý chung </a>
                     </li>
                     
                     <li>
-                        <a href=""><i class="fa fa-bolt "></i>Data Tables </a>
+                        <a href="{{ URL::to('/admin/users') }}" class="{{ Request::is('admin/users')?'active-menu':'' }}"><i class="fa fa-venus "></i>Người tìm việc </a>
                         
                     </li>
                    
                      
                      <li>
-                        <a href=""><i class="fa fa-code "></i>Forms</a>
+                        <a href="{{ URL::to('/admin/employers') }}" class="{{ Request::is('employers')?'active-menu':'' }}"><i class="fa fa-venus "></i>Nhà tuyển dụng </a>
                     </li>
                    
                     <li>
@@ -137,7 +136,7 @@
     <script src="{{ asset('assets/js/jquery.metisMenu.js') }}"></script>
     <!-- CUSTOM SCRIPTS -->
     <script src="{{ asset('assets/js/custom.js') }}"></script>
-
+    @yield('script')
 
 </body>
 </html>

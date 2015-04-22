@@ -11,13 +11,26 @@
 |
 */
 
+App::setLocale(Session::get('language', 'vi'));	
+
 Route::get('/', function()
 {
 	return View::make('hello');
 });
 
-Route::get('admin/dashboard','AdminController@index');
+Route::group(array('prefix'=>'admin'), function() {
 
-Route::get('admin/login', 'AuthController@login' );
-Route::post('admin/login', 'AuthController@doLogin' );
+	Route::group(array('before'=>'sentry.admin'), function() {
+		Route::get('/', array('as'=>'admin.dashboard', 'uses'=>'AdminController@index'));
+		Route::get('profile', array('as'=>'admin.profile', 'uses'=>'AdminController@profile'));
+		Route::get('users/datatables', array('as'=>'users.datatables', 'uses'=>'UserController@datatables'));
+		Route::resource('users', 'UserController');
+		Route::get('logout', array('as'=>'admin.logout', 'uses'=>'AuthController@logout'));
+	});
+
+	Route::group(array('before'=>'sentry.logged.admin'), function() {
+		Route::get('login', 'AuthController@login');
+		Route::post('login', 'AuthController@doLogin');
+	});
+});
 

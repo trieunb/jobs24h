@@ -4,10 +4,12 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Admin Login</title>
+		<title>Admin Login - VNJobs</title>
 
 		<!-- Bootstrap CSS -->
-		<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+		
+		{{ HTML::style('assets/css/bootstrap.css') }}
+		{{ HTML::style('assets/css/admin-login.css') }}
 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -17,38 +19,31 @@
 		<![endif]-->
 	</head>
 	<body>
-		<h1 class="text-center">Vnjobs Login</h1>
 		<div class="container">
-			<div class="row">
-				<div class="col-xs-12">
-					
-					{{ Form::open(array('class'	=> 'form-horizontal')) }}
-						@include('includes.notifications')
-						<div class="form-group">
-							<label for="inputUsername" class="col-sm-2 control-label">Username:</label>
-							<div class="col-sm-10">
-								{{ Form::input('text', 'username', null, array('class'=>'form-control') ) }}
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="input" class="col-sm-2 control-label">Password:</label>
-							<div class="col-sm-10">
-								{{ Form::input('password', 'password', null, array('class'=>'form-control') ) }}
-							</div>
-						</div>
-							<div class="form-group">
-								<div class="col-sm-10 col-sm-offset-2">
-									{{ Form::button('Login', array('class'=>'btn btn-primary', 'type'=>'submit') ) }}
-								</div>
-							</div>
-					{{ Form::close() }}
-				</div>
-			</div>
-		</div>
+			<div class="card card-container">
+				{{ HTML::image('assets/img/avatar_2x.png', '', array('id'=>'profile-img', 'class'=>'profile-img-card')) }}
+				@include('includes.notifications')
+				<p id="profile-name" class="profile-name-card"></p>
+				{{ Form::open(array('class'	=> 'form-horizontal form-signin')) }}
+					<span id="reauth-email" class="reauth-email"></span>
+					{{ Form::input('text', 'username', null, array('class'=>'form-control', 'id'=>'inputEmail', 'required', 'autofocus', 'placeholder'=>'Username') ) }}
+					{{ Form::input('password', 'password', null, array('class'=>'form-control', 'id'=>'inputPassword', 'required', 'placeholder'=>'Password') ) }}
+					<div id="remember" class="checkbox">
+						<label>
+							{{ Form::checkbox('remember', 1, true) }} Remember me
+							
+						</label>
+					</div>
+					{{ Form::button('Sign In', array('class'=>'btn btn-lg btn-primary btn-block btn-signin', 'type'=>'submit')) }}
+
+				{{ Form::close() }}<!-- /form -->
+				
+			</div><!-- /card-container -->
+		</div><!-- /container -->
 
 		<!-- jQuery -->
-		<script src="//code.jquery.com/jquery.js"></script>
+		{{ HTML::script('assets/js/jquery-1.11.1.js') }}
 		<!-- Bootstrap JavaScript -->
-		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+		{{ HTML::script('assets/js/bootstrap.js') }}
 	</body>
 </html>

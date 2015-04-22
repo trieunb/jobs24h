@@ -197,4 +197,9 @@ return array(
 		
 	),
 
+	/**
+	 * Custom configuration
+	 */
+	'available_language' => array('en', 'vi'),
+
 );
