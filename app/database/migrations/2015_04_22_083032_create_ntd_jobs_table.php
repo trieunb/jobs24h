@@ -15,10 +15,11 @@ class CreateNtdJobsTable extends Migration {
 		Schema::create('ntd_jobs',function(Blueprint $table){
 			$table->increments('id');
 			$table->integer('info_id');
-			$table->string('ntd_vitrituyendung',100);
+			$table->string('ntd_vitrituyendung');
 			$table->longText('ntd_motacongviec');
 			$table->longText('ntd_yeucaucongviec');
-			$table->string('ntd_nganhnghe',50);
+			$table->string('ntd_nganhnghe');
+			$table->string('ntd_loaicongviec');
 			$table->timestamps();
 		});
 	}
