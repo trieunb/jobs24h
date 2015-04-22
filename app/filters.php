@@ -42,16 +42,10 @@ Route::filter('sentry.logged', function() {
 		return Redirect::to('/');
 	} 
 });
-Route::filter('sentry.admin', function() {
-	if( ! Sentry::check())
+Route::filter('sentry.admin', function() { //chan chua dang nhap
+	if( ! AdminAuth::check())
 	{
 		return Redirect::to('/admin/login');
-	} else {
-		$user = Sentry::getUser();
-		if( ! $user->hasAccess('admin'))
-		{
-			return Redirect::to('/admin/login');
-		}
 	}
 });
 Route::filter('sentry.ntd', function() {
@@ -79,13 +73,9 @@ Route::filter('sentry.ntv', function() {
 	}
 });
 Route::filter('sentry.logged.admin', function() {
-	if( Sentry::check())
+	if( AdminAuth::check())
 	{
-		$user = Sentry::getUser();
-		if($user->hasAccess('admin'))
-		{
-			return Redirect::to('/admin/');
-		}
+		return Redirect::to('/admin/');
 	}
 });
 Route::filter('sentry.logged.ntd', function() {

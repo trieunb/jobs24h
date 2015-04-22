@@ -194,6 +194,7 @@ return array(
 		'Sentry' 		=> 'Cartalyst\Sentry\Facades\Laravel\Sentry',
 		'Datatables'    => 'Bllim\Datatables\Facade\Datatables',
 		'Debugbar' => 'Barryvdh\Debugbar\Facade',
+		'AdminAuth'	=>	'DTT\Sentry\AdminAuth',
 		
 	),
 

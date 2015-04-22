@@ -13,50 +13,20 @@ class AuthController extends Controller {
 		{
 			return Redirect::back()->withErrors($validator)->withInput();
 		} else {
-			try {
-				$remember = Input::get('remember', false);
-				$credentials = Input::only('username', 'password');
-				$user = DTT\Sentry\AdminSentry::authenticate($credentials, $remember);
-				if($user->hasAccess('admin')) return Redirect::to('/admin/');
-				else $error = Lang::get('validation.login_permission');
-			}
-			catch (Cartalyst\Sentry\Users\LoginRequiredException $e)
+			$remember = Input::get('remember', false);
+			$credentials = Input::only('username', 'password');
+			$user = AdminAuth::authenticate($credentials, $remember);
+			if($user)
 			{
-			    $error = Lang::get('validation.required');
+				return Redirect::to('/admin/');
 			}
-			catch (Cartalyst\Sentry\Users\PasswordRequiredException $e)
-			{
-			    $error = Lang::get('validation.required');
-			}
-			catch (Cartalyst\Sentry\Users\WrongPasswordException $e)
-			{
-			    $error = Lang::get('validation.login_failed');
-			}
-			catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
-			{
-			    $error = Lang::get('validation.login_failed');
-			}
-			catch (Cartalyst\Sentry\Users\UserNotActivatedException $e)
-			{
-			    $error = Lang::get('validation.login_notactive');
-			}
-
-			// The following is only required if the throttling is enabled
-			catch (Cartalyst\Sentry\Throttling\UserSuspendedException $e)
-			{
-			    $error = Lang::get('validation.login_suspend');
-			}
-			catch (Cartalyst\Sentry\Throttling\UserBannedException $e)
-			{
-			    $error = Lang::get('validation.login_suspend');
-			}
-			return Redirect::back()->withInput()->withErrors($error);
+			return Redirect::back()->withInput()->withErrors('Tên đăng nhập hoặc mật khẩu không đúng !');
 			
 		}
 	}
 	public function logout()
 	{
-		DTT\Sentry\AdminSentry::logout();
+		AdminAuth::logout();
 		return Redirect::to('/');
 	}
 }
