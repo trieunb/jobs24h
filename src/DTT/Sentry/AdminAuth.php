@@ -74,5 +74,18 @@ class AdminAuth {
 		}
 		return $user;
 	}
+	public static function findUserById($id = false)
+	{
+		if($id)
+		{
+			$user = AdminUser::find($id);
+			if(count($user))
+			{
+				return $user;
+			} 
+			return false;
+		}
+		return false;
+	}
 
 }

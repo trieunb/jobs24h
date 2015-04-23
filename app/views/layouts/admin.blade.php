@@ -60,8 +60,8 @@
 
                     </li>
                      <li>
-                     <?php $user = Sentry::getUser() ?>
-                        <a  href="#"> <strong> {{ $user->first_name . $user->last_name }} </strong></a>
+                     <?php $user = AdminAuth::getUser() ?>
+                        <a  href="#"> <strong> {{ $user->username }} </strong></a>
                     </li>
 
                     <li>
@@ -72,12 +72,14 @@
                     </li>
                     
                     <li>
-                        <a href="{{ URL::to('/admin/users') }}" class="{{ Request::is('admin/users')?'active-menu':'' }}"><i class="fa fa-venus "></i>Người tìm việc </a>
+                        <a href="{{ URL::to('/admin/users') }}" class="{{ Request::is('admin/users')?'active-menu':'' }}"><i class="fa fa-venus "></i>Quản trị viên </a>
                         
                     </li>
-                   
-                     
-                     <li>
+                    <li>
+                        <a href="{{ URL::to('/admin/jobseekers') }}" class="{{ Request::is('admin/jobseekers')?'active-menu':'' }}"><i class="fa fa-venus "></i>Người tìm việc </a>
+                        
+                    </li>
+                    <li>
                         <a href="{{ URL::to('/admin/employers') }}" class="{{ Request::is('employers')?'active-menu':'' }}"><i class="fa fa-venus "></i>Nhà tuyển dụng </a>
                     </li>
                    

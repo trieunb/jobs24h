@@ -25,6 +25,8 @@ Route::group(array('prefix'=>'admin'), function() {
 		Route::get('profile', array('as'=>'admin.profile', 'uses'=>'AdminController@profile'));
 		Route::get('users/datatables', array('as'=>'users.datatables', 'uses'=>'UserController@datatables'));
 		Route::resource('users', 'UserController');
+		Route::get('jobseekers/datatables', array('as'=>'jobseekers.datatables', 'uses'=>'JobSeekerController@datatables'));
+		Route::resource('jobseekers', 'JobSeekerController');
 		Route::get('logout', array('as'=>'admin.logout', 'uses'=>'AuthController@logout'));
 	});
 

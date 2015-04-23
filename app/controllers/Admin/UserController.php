@@ -15,7 +15,7 @@ class UserController extends \BaseController {
 
 	public function datatables()
 	{
-		$users = User::select('id', 'username', 'first_name', 'email', 'ngaysinh', 'diachi', 'id as ids');
+		$users = AdminUser::orderBy('id', 'desc')->select('id', 'username', 'email', 'created_at', 'id as ids');
 		$stt = 1;
 		return Datatables::of($users)
 		->edit_column('ids', '
@@ -36,6 +36,7 @@ class UserController extends \BaseController {
 	public function create()
 	{
 		//
+		return View::make('admin.users.create');
 	}
 
 	/**
@@ -47,6 +48,21 @@ class UserController extends \BaseController {
 	public function store()
 	{
 		//
+		$params = Input::only('username', 'email', 'password');
+		$validator = new App\DTT\Forms\AdminUserCreate;
+		if($validator->fails())
+		{
+			return Redirect::back()->withInput()->withErrors($validator);
+		} else {
+			$params['password'] = DTT\Sentry\Hashing\Sha256Hasher::hash($params['password']);
+			$user = AdminUser::create($params);
+			if($user)
+			{
+				return Redirect::route('admin.users.index')->with('success', 'Tạo mới quản trị thành công.');
+			} else {
+				return Redirect::back()->withInput()->withErrors('Có lỗi khi thêm mới quản trị viên.');
+			}
+		}
 	}
 
 	/**
@@ -72,15 +88,12 @@ class UserController extends \BaseController {
 	public function edit($id)
 	{
 		//
-		try
-		{
-		    $user = Sentry::findUserById($id);
-		    return View::make('admin.users.edit', compact('user'));
-		}
-		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
-		{
-		    return Response::make('User was not found !', 404);
-		}
+	    $user = AdminAuth::findUserById($id);
+	    if($user === false) {
+	    	return Response::make('User was not found !', 404);
+	    } else {
+	    	return View::make('admin.users.edit', compact('user'));
+	    }
 	}
 
 	/**
@@ -93,6 +106,31 @@ class UserController extends \BaseController {
 	public function update($id)
 	{
 		//
+		$req = Input::only('username', 'email', 'password');
+		$user = AdminAuth::findUserById($id);
+		if( ! $user)
+		{
+			return Redirect::back()->withErrors('User không tìm thấy !');
+		}
+		$validator = new App\DTT\Forms\AdminUserSave;
+		if($validator->fails())
+		{
+			return Redirect::back()->withInput()->withErrors($validator);
+		} else {
+			$check = AdminUser::where('username', '=', $req['username'])->where('id', '<>', $id)->first();
+			if(count($check) != 0)
+			{
+				return Redirect::back()->withInput()->withErrors('Username đã tồn tại');
+			}
+			$user->username = $req['username'];
+			$user->email = $req['email'];
+			if($req['password'] != NULL) $user->password = DTT\Sentry\Hashing\Sha256Hasher::hash($req['password']);
+			if($user->save())
+			{
+				return Redirect::route('admin.users.index')->with('success', 'Lưu thông tin thành công !');
+			}
+			return Redirect::back()->withInput()->withErrors('Lỗi khi cập nhật');
+		}
 	}
 
 	/**
@@ -105,7 +143,7 @@ class UserController extends \BaseController {
 	public function destroy($id)
 	{
 		//
-		$user = Sentry::findUserById($id);
+		$user = AdminAuth::findUserById($id);
 		$user->delete();
 		return Redirect::route('admin.users.index')->with('success', 'Xóa người dùng thành công !');
 	}

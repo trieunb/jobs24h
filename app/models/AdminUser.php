@@ -1,6 +1,6 @@
 <?php
 
 class AdminUser extends \Eloquent {
-	protected $fillable = [];
+	protected $fillable = ['username', 'email', 'password'];
 	protected $table = 'admin_info';
 }
