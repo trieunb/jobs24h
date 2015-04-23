@@ -195,6 +195,8 @@ return array(
 		'Datatables'    => 'Bllim\Datatables\Facade\Datatables',
 		'Debugbar' => 'Barryvdh\Debugbar\Facade',
 		'AdminAuth'	=>	'DTT\Sentry\AdminAuth',
+		'Cookies'	=>	'DTT\Sentry\Cookies\NativeCookie',
+		'Hasher'	=>	'DTT\Sentry\Hashing\Sha256Hasher',
 		
 	),
 

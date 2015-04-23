@@ -8,18 +8,33 @@ class NTVTableSeeder extends Seeder {
 	public function run()
 	{
 		$faker = Faker::create();
-
-		foreach(range(1, 10) as $index)
+		foreach(range(1, 21) as $index)
 		{
-			NTV::create([
-				'ntv_username'	=>	$faker->username,
-				'ntv_password'	=>	'123456',
+			$user = Sentry::createUser(array(
+				'username'	=>	$faker->username,
+				'password'	=>	'123456',
 				'ntv_email'	=>	$faker->email,
 				'ntv_hoten'	=>	$faker->firstName . " " . $faker->lastName,
 				'ntv_ngaysinh'	=>	$faker->date(),
 				'ntv_gioitinh'	=>	rand(1, 3),
 				'ntv_tinhtranghonnhan'	=>	rand(0, 1),
-			]);
+				'ntv_diachi'	=>	$faker->address,
+				'ntv_tinhthanh'	=>	Province::orderBy(DB::raw('RAND()'))->first()->tinhID,
+				'ntv_quocgia'	=>	1,
+				'activated'		=>	true,
+				));
+			/*NTV::create([
+				'ntv_username'	=>	$faker->username,
+				'ntv_password'	=>	Hasher::hash('123456'),
+				'ntv_email'	=>	$faker->email,
+				'ntv_hoten'	=>	$faker->firstName . " " . $faker->lastName,
+				'ntv_ngaysinh'	=>	$faker->date(),
+				'ntv_gioitinh'	=>	rand(1, 3),
+				'ntv_tinhtranghonnhan'	=>	rand(0, 1),
+				'ntv_diachi'	=>	$faker->address,
+				'ntv_tinhthanh'	=>	Province::orderBy(DB::raw('RAND()'))->first()->tinhID,
+				'ntv_quocgia'	=>	1
+			]);*/
 		}
 	}
 

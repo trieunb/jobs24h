@@ -46,7 +46,7 @@ return array(
 	|
 	*/
 
-	'hasher' => 'native',
+	'hasher' => 'sha256',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -120,7 +120,8 @@ return array(
 		|
 		*/
 
-		'model' => 'Cartalyst\Sentry\Users\Eloquent\User',
+		//'model' => 'Cartalyst\Sentry\Users\Eloquent\User',
+		'model' => 'NTV',
 
 		/*
 		|--------------------------------------------------------------------------
@@ -133,7 +134,7 @@ return array(
 		|
 		*/
 
-		'login_attribute' => 'email',
+		'login_attribute' => 'username',
 
 	),
 

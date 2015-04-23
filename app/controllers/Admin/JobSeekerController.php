@@ -11,6 +11,9 @@ class JobSeekerController extends \BaseController {
 	public function index()
 	{
 		//
+		
+		$jobseekers = Sentry::findAllUsers();
+		return View::make('admin.jobseekers.index', compact('jobseekers'));
 	}
 
 	/**
@@ -21,8 +24,7 @@ class JobSeekerController extends \BaseController {
 	 */
 	public function datatables()
 	{
-		$users = User::orderBy('id', 'desc')->select('id', 'username', 'email', 'created_at', 'id as ids');
-		$stt = 1;
+		$users = NTV::orderBy('id', 'desc')->select('id', 'username', 'ntv_email', 'ntv_hoten', 'ntv_ngaysinh', 'activated', 'id as ids');
 		return Datatables::of($users)
 		->edit_column('ids', '
 			{{ Form::open(array("method"=>"delete", "route"=>array("admin.users.destroy", $id) )) }}

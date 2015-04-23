@@ -9,7 +9,6 @@ class AdminController extends \BaseController {
 	 */
 	public function index()
 	{
-		//var_dump(Cookie::get('vnjobs_admin'));
 		return View::make('admin.dashboard');
 	}
 

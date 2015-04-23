@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class AddNtvInfoTable extends Migration {
+class CreateCountriesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,9 +12,12 @@ class AddNtvInfoTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('ntv_info', function(Blueprint $table)
+		Schema::create('countries', function(Blueprint $table)
 		{
-			$table->integer('ntv_tinhthanh')->after('ntv_diachi');
+			$table->increments('quocgiaID');
+			$table->string('tenquocgia');
+			$table->integer('sapxep')->default(0);
+			$table->timestamps();
 		});
 	}
 
@@ -26,10 +29,7 @@ class AddNtvInfoTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('ntv_info', function(Blueprint $table)
-		{
-			
-		});
+		Schema::drop('countries');
 	}
 
 }

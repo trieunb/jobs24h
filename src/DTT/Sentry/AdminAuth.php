@@ -1,6 +1,6 @@
 <?php 
 namespace DTT\Sentry;
-use AdminUser, Session, Cookie;
+use AdminUser, Session, Cookies;
 use DTT\Sentry\Hashing\Sha256Hasher as Hasher;
 class AdminAuth {
 	protected static $hasher = 'sha256';
@@ -16,7 +16,8 @@ class AdminAuth {
 				$session_value = array($user->id, $user->persist_code);
 				if($remember) 
 				{
-					Cookie::forever(self::$cookie_name, $session_value);
+					$cookie = new Cookies();
+					$cookie->forever($session_value);
 				}
 				Session::put(self::$cookie_name, $session_value);
 				$user->persist_code = md5(time());
@@ -31,18 +32,21 @@ class AdminAuth {
 
 	public static function logout()
 	{
-		Cookie::forget(self::$cookie_name);
+		$cookie = new Cookies();
+		$cookie->forget(self::$cookie_name);
 		Session::forget(self::$cookie_name);
 	}
 	public static function check()
 	{
-		if( ! Cookie::has(self::$cookie_name) && ! Session::get(self::$cookie_name))
+
+		$cookie = new Cookies;
+		if( ! $cookie->get(self::$cookie_name) && ! Session::get(self::$cookie_name))
 		{
 			return false;
 		}
 		if( ! Session::get(self::$cookie_name))
 		{
-			Session::put(self::$cookie_name, Cookie::get(self::$cookie_name));
+			Session::put(self::$cookie_name, $cookie->get(self::$cookie_name));
 		}
 		$userArray = Session::get(self::$cookie_name);
 		if( ! is_array($userArray))
