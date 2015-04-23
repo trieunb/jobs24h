@@ -14,7 +14,8 @@ class CreateNtdHanhdongTable extends Migration {
 	{
 		Schema::create('ntd_hanhdong',function(Blueprint $table){
 			$table->increments('id');
-			$table->integer('info_id');
+			$table->integer('ntd_info_id');
+			$table->string('tenhanhdong');
 			$table->timestamps();
 		});
 	}

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNtdPackagesTable extends Migration {
+class CreateNtdHosoungvienTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,13 +12,12 @@ class CreateNtdPackagesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('ntd_packages',function(Blueprint $table){
+		Schema::create('ntd_hosoungvien',function(Blueprint $table){
 			$table->increments('id');
-			$table->integer('ntd_info_id');
-			$table->string('name_package');
-			$table->integer('price');
-			$table->tinyInteger('active');
-			$table->string('payment');
+			$table->integer('ntv_info_id');
+			$table->string('tenungvien');
+			$table->string('vitriungtuyen');
+			$table->string('diadiem');
 			$table->timestamps();
 		});
 	}
@@ -30,7 +29,7 @@ class CreateNtdPackagesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('ntd_packages');
+		Schema::drop('ntd_hosoungvien');
 	}
 
 }
