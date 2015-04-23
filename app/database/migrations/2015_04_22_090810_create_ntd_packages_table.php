@@ -15,8 +15,7 @@ class CreateNtdPackagesTable extends Migration {
 		Schema::create('ntd_packages',function(Blueprint $table){
 			$table->increments('id');
 			$table->integer('ntd_info_id');
-			$table->string('name_package');
-			$table->integer('price');
+			$table->string('package_id');
 			$table->tinyInteger('active');
 			$table->string('payment');
 			$table->timestamps();

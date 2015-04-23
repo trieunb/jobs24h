@@ -14,12 +14,18 @@ class CreateNtdJobsTable extends Migration {
 	{
 		Schema::create('ntd_jobs',function(Blueprint $table){
 			$table->increments('id');
-			$table->integer('info_id');
+			$table->integer('ntd_info_id');
 			$table->string('ntd_vitrituyendung');
 			$table->longText('ntd_motacongviec');
 			$table->longText('ntd_yeucaucongviec');
-			$table->string('ntd_nganhnghe');
+			$table->string('cat_id');
 			$table->string('ntd_lhcongviec');
+			$table->string('soluong');
+			$table->string('kinhnghiem');
+			$table->string('mucluong');
+			$table->text('yeucauhoso');
+			$table->string('hancuoinophs');
+			$table->tinyInteger('jobs_active');
 			$table->timestamps();
 		});
 	}

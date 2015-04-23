@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNtdHanhdongTable extends Migration {
+class CreatePackagesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,10 +12,11 @@ class CreateNtdHanhdongTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('ntd_hanhdong',function(Blueprint $table){
+		Schema::create('packages',function(Blueprint $table){
 			$table->increments('id');
-			$table->integer('ntd_info_id');
-			$table->integer('ntv_info_id');
+			$table->string('name_packages');
+			$table->text('info_packages');
+			$table->string('price');
 			$table->timestamps();
 		});
 	}
@@ -27,8 +28,7 @@ class CreateNtdHanhdongTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('ntd_hanhdong');
-
+		Schema::drop('packages');
 	}
 
 }
