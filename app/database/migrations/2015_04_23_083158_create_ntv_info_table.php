@@ -37,7 +37,7 @@ class CreateNtvInfoTable extends Migration {
 			$table->string('ntv_photo');
 			$table->string('ntv_fbID');
 			$table->string('ntv_googleID');
-			$table->string('ntv_linkdleID');
+			$table->string('ntv_linkedinID');
 			$table->timestamps();
 		});
 	}

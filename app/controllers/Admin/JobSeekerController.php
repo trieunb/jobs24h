@@ -30,7 +30,7 @@ class JobSeekerController extends \BaseController {
 		->edit_column('ids', '
 			{{ Form::open(array("method"=>"delete", "route"=>array("admin.jobseekers.destroy", $id) )) }}
 			<a class="btn btn-sm btn-info" href="{{URL::route("admin.jobseekers.edit", array($id) )}}" title="Edit"><i class="glyphicon glyphicon-edit"></i></a> 
-			<button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you want delete ?\');" type="submit" title="Delete"><i class="glyphicon glyphicon-remove"></i></button>
+			<button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure you want to delete ?\');" type="submit" title="Delete"><i class="glyphicon glyphicon-remove"></i></button>
 			{{ Form::close() }}
 			')
 		->make();
@@ -38,6 +38,8 @@ class JobSeekerController extends \BaseController {
 	public function create()
 	{
 		//
+		$provinces = Province::lists('tentinh', 'tinhID');
+		return View::make('admin.jobseekers.create')->with('provinces', $provinces);
 	}
 
 	/**
