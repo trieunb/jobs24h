@@ -24,11 +24,12 @@ class JobSeekerController extends \BaseController {
 	 */
 	public function datatables()
 	{
-		$users = NTV::orderBy('id', 'desc')->select('id', 'username', 'ntv_email', 'ntv_hoten', 'ntv_ngaysinh', 'activated', 'id as ids');
-		return Datatables::of($users)
+		$jobseekers = NTV::select('id', 'username', 'ntv_email', 'ntv_hoten', 'created_at', 'activated', 'id as ids');
+		return Datatables::of($jobseekers)
+		->edit_column('activated', '@if($activated==true)<span class="label label-success">Kích hoạt</span>@else <span class="label label-info">Không kích hoạt</span>@endif')
 		->edit_column('ids', '
-			{{ Form::open(array("method"=>"delete", "route"=>array("admin.users.destroy", $id) )) }}
-			<a class="btn btn-sm btn-info" href="{{URL::route("admin.users.edit", array($id) )}}" title="Edit"><i class="glyphicon glyphicon-edit"></i></a> 
+			{{ Form::open(array("method"=>"delete", "route"=>array("admin.jobseekers.destroy", $id) )) }}
+			<a class="btn btn-sm btn-info" href="{{URL::route("admin.jobseekers.edit", array($id) )}}" title="Edit"><i class="glyphicon glyphicon-edit"></i></a> 
 			<button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you want delete ?\');" type="submit" title="Delete"><i class="glyphicon glyphicon-remove"></i></button>
 			{{ Form::close() }}
 			')

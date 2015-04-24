@@ -15,7 +15,7 @@ class UserController extends \BaseController {
 
 	public function datatables()
 	{
-		$users = AdminUser::orderBy('id', 'desc')->select('id', 'username', 'email', 'created_at', 'id as ids');
+		$users = AdminUser::select('id', 'username', 'email', 'created_at', 'id as ids');
 		$stt = 1;
 		return Datatables::of($users)
 		->edit_column('ids', '

@@ -13,7 +13,7 @@
 				<th>Username</th>
 				<th>Email</th>
 				<th>Họ tên</th>
-				<th>Ngày sinh</th>
+				<th>Ngày đăng ký</th>
 				<th>Trạng thái</th>
 				<th>#</th>
 			</tr>
@@ -39,7 +39,7 @@
 				"aoColumnDefs": [
 		        	{ 'bSortable': false, 'aTargets': [ 0 ] }
 		        ],
-				"aaSorting": [[ 0, "desc" ]],
+				"aaSorting": [[ 4, "desc" ]],
 				
 				"fnDrawCallback": function (oSettings) {
 					//if(oSettings.bSorted || oSettings.bFiltered) {
