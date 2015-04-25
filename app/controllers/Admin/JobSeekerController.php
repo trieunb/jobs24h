@@ -51,6 +51,18 @@ class JobSeekerController extends \BaseController {
 	public function store()
 	{
 		//
+		$inputs = Input::all();
+		$validator = new App\DTT\Forms\AdminNTVCreate;
+		if($validator->fails())
+		{
+			return Redirect::back()->withInput()->withErrors($validator);
+		} else {
+			unset($inputs['_token']);
+			$inputs['ntv_quocgia'] = 1;
+			$user = Sentry::createUser($inputs);
+			if($user) return Redirect::route('admin.jobseekers.index')->with('success', 'Thêm Người tìm việc thành công !');
+			return Redirect::back()->withInput()->withError('error', 'Lỗi khi thêm mới người dùng');
+		}
 	}
 
 	/**
@@ -75,6 +87,14 @@ class JobSeekerController extends \BaseController {
 	public function edit($id)
 	{
 		//
+		try {
+			$provinces = Province::lists('tentinh', 'tinhID');
+			$js = Sentry::findUserById($id);
+			return View::make('admin.jobseekers.edit')->with('provinces', $provinces)->with('js', $js);
+		} catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+			return Response::make('User was not found !', 404);
+		}
+		
 	}
 
 	/**
@@ -87,6 +107,20 @@ class JobSeekerController extends \BaseController {
 	public function update($id)
 	{
 		//
+		$inputs = Input::all();
+		$validator = new App\DTT\Forms\AdminNTVSave;
+		$other = array(
+			'ntv_email'=>'required|email|unique:ntv_info,ntv_email,' . $id,
+			'username'=>'required|min:4|max:32|unique:ntv_info,username,' . $id
+		);
+		$validator->init($other);
+		var_dump($validator->getRules()); die();
+		if($validator->fails())
+		{
+			return Redirect::back()->withInput()->withErrors($validator);
+		} else {
+			var_dump($inputs);
+		}
 	}
 
 	/**
