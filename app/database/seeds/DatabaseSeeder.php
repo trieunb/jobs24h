@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder {
 		Eloquent::unguard();
 
 		//$this->call('GroupTableSeeder');
-		//$this->call('UserTableSeeder');
+		$this->call('UserTableSeeder');
 		//$this->call('CategoryTableSeeder');
 		//$this->call('ProvinceTableSeeder');
 		//$this->call('CountryTableSeeder');

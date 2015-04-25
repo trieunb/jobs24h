@@ -25,7 +25,7 @@ class CreateNtdInfoTable extends Migration {
 			$table->string('ntd_nguoilienlac',50);
 			$table->string('ntd_dienthoai',50);
 			$table->string('ntd_website');
-			$table->tinyIngeger('ntd_active');
+			$table->tinyInteger('ntd_active');
 			$table->timestamps();
 		});
 	}
