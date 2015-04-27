@@ -15,17 +15,25 @@ class CreateNtdJobsTable extends Migration {
 		Schema::create('ntd_jobs',function(Blueprint $table){
 			$table->increments('id');
 			$table->integer('ntd_info_id');
+			$table->integer('ntd_capbac_id');
+			$table->integer('ntd_nganhnghe_id');
 			$table->string('ntd_vitrituyendung');
 			$table->longText('ntd_motacongviec');
 			$table->longText('ntd_yeucaucongviec');
-			$table->string('cat_id');
+			$table->text('ntd_yeucauhoso');
+			$table->string('ntd_chucdanh');
+			$table->string('ntd_phucloi');
 			$table->string('ntd_lhcongviec');
-			$table->string('soluong');
-			$table->string('kinhnghiem');
-			$table->string('mucluong');
-			$table->text('yeucauhoso');
-			$table->string('hancuoinophs');
-			$table->tinyInteger('jobs_active');
+			$table->string('ntd_soluong');
+			$table->string('ntd_kinhnghiem');
+			$table->string('ntd_mucluong');
+			$table->string('ntd_hancuoinophs');
+			$table->string('ntd_tennguoilienhe');
+			$table->string('ntd_emailnhanhoso');
+			$table->string('ntd_ngonngutrinhbay');
+			$table->string('ntd_jobs_image');
+			$table->string('ntd_jobs_video');
+			$table->tinyInteger('ntd_jobs_active');
 			$table->timestamps();
 		});
 	}
