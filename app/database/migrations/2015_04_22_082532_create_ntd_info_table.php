@@ -24,6 +24,8 @@ class CreateNtdInfoTable extends Migration {
 			$table->text('ntd_soluocvecty',5000);
 			$table->string('ntd_nguoilienlac',50);
 			$table->string('ntd_dienthoai',50);
+			$table->string('ntd_website');
+			$table->tinyInteger('ntd_active');
 			$table->timestamps();
 		});
 	}
