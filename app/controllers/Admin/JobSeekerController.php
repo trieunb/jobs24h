@@ -108,18 +108,44 @@ class JobSeekerController extends \BaseController {
 	{
 		//
 		$inputs = Input::all();
-		$validator = new App\DTT\Forms\AdminNTVSave;
-		$other = array(
-			'ntv_email'=>'required|email|unique:ntv_info,ntv_email,' . $id,
-			'username'=>'required|min:4|max:32|unique:ntv_info,username,' . $id
+		$rules = array(
+			'username'				=>	'required|min:4|max:32|unique:ntv_info,username,'.$id,
+			'ntv_email'				=>	'required|email|unique:ntv_info,ntv_email,'.$id,
+			'password'				=>	'min:3',
+			'ntv_ngaysinh'			=>	'date_format:Y-m-d',
+			'ntv_gioitinh'			=>	'in:1,2,3',
+			'ntv_tinhtranghonnhan'	=>	'in:1,2',
+			'activated'				=>	'in:0,1',
 		);
-		$validator->init($other);
-		var_dump($validator->getRules()); die();
+		 $messages = array(
+			'username.required'	=>	'Username không được để trống.',
+			'ntv_email.required'	=>	'Email không được để trống.',
+			'password.required'	=>	'Mật khẩu không được để trống.',
+			'email'		=>	'Email không đúng định dạng.',
+			'unique'	=>	':attribute đã tồn tại, vui lòng chọn tên khác',
+			'min'		=>	':attribute tối thiểu là :min kí tự.',
+			'date_format'=> 'Ngày sinh không đúng định dạng'
+		);
+		$validator = Validator::make($inputs, $rules, $messages);
 		if($validator->fails())
 		{
 			return Redirect::back()->withInput()->withErrors($validator);
 		} else {
-			var_dump($inputs);
+			unset($inputs['_method']);
+			unset($inputs['_token']);
+			if($inputs['password'] == '') unset($inputs['password']);
+			$user = NTVSentry::find($id);
+			
+			if($user)
+			{
+				foreach ($inputs as $key => $value) {
+					$user->$key = $value;
+				}
+				$user->save();
+				return Redirect::route('admin.jobseekers.index')->with('success', 'Lưu thông tin thành công !');
+			} else {
+				return Response::make('User was not found !', 404);
+			}
 		}
 	}
 
@@ -133,6 +159,9 @@ class JobSeekerController extends \BaseController {
 	public function destroy($id)
 	{
 		//
+		$user = NTV::find($id);
+		$user->delete();
+		return Redirect::back()->with('success', 'Xóa thành công !');
 	}
 
 }

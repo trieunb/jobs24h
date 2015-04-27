@@ -22,6 +22,7 @@ class AdminNTVSave extends FormValidator {
 		'min'		=>	':attribute tối thiểu là :min kí tự.',
 		'date_format'=> 'Ngày sinh không đúng định dạng'
 		);
+
 	public function init($other = array())
 	{
 		foreach ($other as $key => $value) {
