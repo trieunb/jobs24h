@@ -25,6 +25,8 @@ class CreateNtdInfoTable extends Migration {
 			$table->string('ntd_nguoilienlac',50);
 			$table->string('ntd_dienthoai',50);
 			$table->string('ntd_website');
+			$table->string('ntd_postcode');
+			$table->string('ntd_logo');
 			$table->string('ntd_info_image');
 			$table->tinyInteger('ntd_active');
 			$table->timestamps();
