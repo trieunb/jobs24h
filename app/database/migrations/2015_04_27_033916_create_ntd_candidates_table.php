@@ -28,7 +28,7 @@ class CreateNtdCandidatesTable extends Migration {
 	 */
 	public function down()
 	{
-		//
+		Schema::drop('ntd_candidats');
 	}
 
 }
