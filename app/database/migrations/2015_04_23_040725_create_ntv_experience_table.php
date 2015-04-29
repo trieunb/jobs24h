@@ -14,7 +14,7 @@ class CreateNtvExperienceTable extends Migration {
 	{
 		Schema::create('ntv_experience', function(Blueprint $table)
 		{
-			$table->increments('ntv_exID');
+			$table->increments('id');
 			$table->integer('ntv_ntvID');
 			$table->string('ntv_tenCty', 50);
 			$table->string('ntv_chucdanh', 50);

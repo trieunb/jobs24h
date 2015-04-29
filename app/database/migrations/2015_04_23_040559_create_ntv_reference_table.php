@@ -14,7 +14,7 @@ class CreateNtvReferenceTable extends Migration {
 	{
 		Schema::create('ntv_reference', function(Blueprint $table)
 		{
-			$table->increments('ntv_ref');
+			$table->increments('id');
 			$table->integer('ntv_ntvID');
 			$table->string('ntv_tennguoithamkhao', 50);
 			$table->string('ntv_chucdanh', 50);

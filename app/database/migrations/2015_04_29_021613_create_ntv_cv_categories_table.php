@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateCategoriesTable extends Migration {
+class CreateNtvCvCategoriesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,12 @@ class CreateCategoriesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('categories', function(Blueprint $table)
+		Schema::create('ntv_cv_categories', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('tennganh');
-			$table->integer('sapxep')->default(0);
+			$table->integer('ntvcv_id');
+			$table->integer('category_id');
+
 			$table->timestamps();
 		});
 	}
@@ -29,7 +30,7 @@ class CreateCategoriesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('categories');
+		Schema::drop('ntv_cv_categories');
 	}
 
 }

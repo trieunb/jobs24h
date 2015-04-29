@@ -38,7 +38,7 @@ class JobSeekerController extends \BaseController {
 	public function create()
 	{
 		//
-		$provinces = Province::lists('tentinh', 'tinhID');
+		$provinces = Province::lists('tentinh', 'id');
 		return View::make('admin.jobseekers.create')->with('provinces', $provinces);
 	}
 
@@ -88,7 +88,7 @@ class JobSeekerController extends \BaseController {
 	{
 		//
 		try {
-			$provinces = Province::lists('tentinh', 'tinhID');
+			$provinces = Province::lists('tentinh', 'id');
 			$js = Sentry::findUserById($id);
 			return View::make('admin.jobseekers.edit')->with('provinces', $provinces)->with('js', $js);
 		} catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
@@ -111,6 +111,7 @@ class JobSeekerController extends \BaseController {
 		$rules = array(
 			'username'				=>	'required|min:4|max:32|unique:ntv_info,username,'.$id,
 			'ntv_email'				=>	'required|email|unique:ntv_info,ntv_email,'.$id,
+			'ntv_hoten'				=>	'required|min:3',
 			'password'				=>	'min:3',
 			'ntv_ngaysinh'			=>	'date_format:Y-m-d',
 			'ntv_gioitinh'			=>	'in:1,2,3',
@@ -121,9 +122,12 @@ class JobSeekerController extends \BaseController {
 			'username.required'	=>	'Username không được để trống.',
 			'ntv_email.required'	=>	'Email không được để trống.',
 			'password.required'	=>	'Mật khẩu không được để trống.',
+			'ntv_hoten.required'	=>	'Họ tên không được để trống.',
 			'email'		=>	'Email không đúng định dạng.',
 			'unique'	=>	':attribute đã tồn tại, vui lòng chọn tên khác',
-			'min'		=>	':attribute tối thiểu là :min kí tự.',
+			'username.min'		=>	'Username tối thiểu là :min kí tự.',
+			'ntv_hoten.min'		=>	'Họ tên tối thiểu là :min kí tự.',
+			'password.min'		=>	'Mật khẩu tối thiểu là :min kí tự.',
 			'date_format'=> 'Ngày sinh không đúng định dạng'
 		);
 		$validator = Validator::make($inputs, $rules, $messages);
@@ -134,7 +138,7 @@ class JobSeekerController extends \BaseController {
 			unset($inputs['_method']);
 			unset($inputs['_token']);
 			if($inputs['password'] == '') unset($inputs['password']);
-			$user = NTVSentry::find($id);
+			$user = NTV::find($id);
 			
 			if($user)
 			{

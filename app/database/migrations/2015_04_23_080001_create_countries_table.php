@@ -14,7 +14,7 @@ class CreateCountriesTable extends Migration {
 	{
 		Schema::create('countries', function(Blueprint $table)
 		{
-			$table->increments('quocgiaID');
+			$table->increments('id');
 			$table->string('tenquocgia');
 			$table->integer('sapxep')->default(0);
 			$table->timestamps();

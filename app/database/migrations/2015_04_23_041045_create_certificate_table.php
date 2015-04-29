@@ -14,7 +14,7 @@ class CreateCertificateTable extends Migration {
 	{
 		Schema::create('certificate', function(Blueprint $table)
 		{
-			$table->increments('ntv_ref');
+			$table->increments('id');
 			$table->integer('ntv_ntvID');
 			$table->string('ntv_chuyennganh');
 			$table->string('ntv_truong', 255);

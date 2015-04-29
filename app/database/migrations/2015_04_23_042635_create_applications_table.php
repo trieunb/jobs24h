@@ -14,7 +14,7 @@ class CreateApplicationsTable extends Migration {
 	{
 		Schema::create('applications', function(Blueprint $table)
 		{
-			$table->increments('apply_id');
+			$table->increments('id');
 			$table->integer('ntv_id');
 			$table->integer('jobs_id');
 			$table->integer('ntd_id');

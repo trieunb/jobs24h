@@ -29,6 +29,8 @@ Route::group(array('prefix'=>'admin'), function() {
 		Route::resource('jobseekers', 'JobSeekerController');
 		Route::get('employers/datatables', array('as'=>'employers.datatables', 'uses'=>'EmployerController@datatables'));
 		Route::resource('employers', 'EmployerController');
+		Route::get('resumes/datatables', array('as'=>'resumes.datatables', 'uses'=>'ResumeController@datatables'));
+		Route::resource('resumes', 'ResumeController');
 		Route::get('logout', array('as'=>'admin.logout', 'uses'=>'AuthController@logout'));
 	});
 
@@ -37,3 +39,6 @@ Route::group(array('prefix'=>'admin'), function() {
 		Route::post('login', 'AuthController@doLogin');
 	});
 });
+
+
+

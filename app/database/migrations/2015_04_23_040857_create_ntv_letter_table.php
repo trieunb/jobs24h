@@ -14,7 +14,7 @@ class CreateNtvLetterTable extends Migration {
 	{
 		Schema::create('ntv_letter', function(Blueprint $table)
 		{
-			$table->increments('ntv_letterID');
+			$table->increments('id');
 			$table->integer('ntv_ntvID');
 			$table->string('ntv_tieudethu', 128);
 			$table->text('ntv_noidungthu');

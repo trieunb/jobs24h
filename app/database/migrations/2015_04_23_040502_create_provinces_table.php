@@ -14,7 +14,7 @@ class CreateProvincesTable extends Migration {
 	{
 		Schema::create('provinces', function(Blueprint $table)
 		{
-			$table->increments('tinhID');
+			$table->increments('id');
 			$table->string('tentinh');
 			$table->integer('sapxep')->default(0);
 			$table->timestamps();

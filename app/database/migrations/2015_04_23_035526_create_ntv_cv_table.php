@@ -14,7 +14,7 @@ class CreateNtvCvTable extends Migration {
 	{
 		Schema::create('ntv_cv', function(Blueprint $table)
 		{
-			$table->increments('ntv_cvid');
+			$table->increments('id');
 			$table->integer('ntv_id');
 			$table->string('ntv_tieudeCV');
 			$table->text('ntv_muctieunghenghiep');
