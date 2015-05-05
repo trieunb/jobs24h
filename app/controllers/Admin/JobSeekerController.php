@@ -90,7 +90,8 @@ class JobSeekerController extends \BaseController {
 		try {
 			$provinces = Province::lists('tentinh', 'id');
 			$js = Sentry::findUserById($id);
-			return View::make('admin.jobseekers.edit')->with('provinces', $provinces)->with('js', $js);
+			$cvlist = Resume::where('ntv_id', '=', $js->id)->get();
+			return View::make('admin.jobseekers.edit', compact('cvlist'))->with('provinces', $provinces)->with('js', $js);
 		} catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
 			return Response::make('User was not found !', 404);
 		}

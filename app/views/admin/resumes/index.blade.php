@@ -4,7 +4,7 @@
 	<h2>Danh sách hồ sơ</h2>
 	<hr>
 	@include('includes.notifications')
-	<a href="{{ URL::route('admin.resumes.create') }}" class="btn btn-success pull-right">Thêm mới</a>
+	<!--<a href="{{ URL::route('admin.resumes.create') }}" class="btn btn-success pull-right">Thêm mới</a>-->
 	<div class="clearfix"></div>
 	<table class="table table-hover table-bordered table-striped" id="resumes">
 		<thead>

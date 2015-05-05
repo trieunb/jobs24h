@@ -6,23 +6,103 @@
 	{{ Form::open(array('method'=>'POST', 'action'=> array('admin.resumes.store'), 'class'=>'form form-horizontal' ) ) }}
 		@include('includes.notifications')
 		<div class="form-group">
-			<label for="inputUsername" class="col-sm-2 control-label">Username:</label>
-			<div class="col-sm-6">
-				{{ Form::input('text', 'username', null, array('class'=>'form-control') ) }}
+			<label for="inputUsername" class="col-sm-2 control-label">User:</label>
+			<div class="col-sm-8">
+				{{ Form::input('text', 'username', null, array('class'=>'form-control', 'required') ) }}
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="inputEmail" class="col-sm-2 control-label">Tiêu đề CV:</label>
-			<div class="col-sm-6">
-				{{ Form::input('email', 'email', null, array('class'=>'form-control') ) }}
+			<label for="input" class="col-sm-2 control-label">Tiêu đề CV:</label>
+			<div class="col-sm-8">
+				{{ Form::input('text', 'ntv_tieudeCV', null, array('class'=>'form-control') ) }}
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="inputFullname" class="col-sm-2 control-label">Mật khẩu:</label>
-			<div class="col-sm-6">
-				{{ Form::input('password', 'password', null, array('class'=>'form-control') ) }}
+			<label for="input" class="col-sm-2 control-label">Mục tiêu NN:</label>
+			<div class="col-sm-8">
+				{{ Form::textarea('ntv_muctieunghenghiep', null, array('class'=>'form-control', 'rows'=>'5') ) }}
 			</div>
-			
+		</div>
+		
+		<div class="form-group">
+			<label for="input" class="col-sm-2 control-label">Công ty gần đây:</label>
+			<div class="col-sm-8">
+				{{ Form::input('text', 'ntv_ctyganday', null, array('class'=>'form-control') ) }}
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="input" class="col-sm-2 control-label">Công việc gần đây:</label>
+			<div class="col-sm-8">
+				{{ Form::input('text', 'ntv_cvganday', null, array('class'=>'form-control') ) }}
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="input" class="col-sm-2 control-label">Cấp bậc hiện tại:</label>
+			<div class="col-sm-8">
+				{{ Form::input('text', 'ntv_capbachientai', null, array('class'=>'form-control') ) }}
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="input" class="col-sm-2 control-label">Vị trí mong muốn:</label>
+			<div class="col-sm-8">
+				{{ Form::input('text', 'ntv_vitrimongmuon', null, array('class'=>'form-control') ) }}
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="input" class="col-sm-2 control-label">Cấp bậc mong muốn:</label>
+			<div class="col-sm-8">
+				{{ Form::input('text', 'ntv_cbmongmuon', null, array('class'=>'form-control') ) }}
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="input" class="col-sm-2 control-label">Nơi làm việc:</label>
+			<div class="col-sm-8">
+				{{ Form::select('ntv_noilamviec', Province::lists('tentinh', 'id'), null, array('multiple'=>'multiple', 'class'=>'form-control') ) }}
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="input" class="col-sm-2 control-label">Nơi làm việc:</label>
+			<div class="col-sm-8">
+				{{ Form::select('ntv_nganhnghe', Category::lists('tennganh', 'id'), null, array('multiple'=>'multiple', 'class'=>'form-control') ) }}
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="input" class="col-sm-2 control-label">Mức lương mong muốn:</label>
+			<div class="col-sm-2">
+				{{ Form::input('number', 'ntv_mucluongmongmuon', '0', array('class'=>'form-control', 'min'=>0, 'max'=>10000, 'step'=>50) ) }}
+			</div>
+			<div class="col-xs-3">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" value="1">
+						Thương lượng
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="input" class="col-sm-2 control-label">Thành tích:</label>
+			<div class="col-sm-8">
+				{{ Form::textarea('ntv_thanhtich', null, array('class'=>'form-control', 'rows'=>'5') ) }}
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="input" class="col-sm-2 control-label">Cho phép tìm kiếm:</label>
+			<div class="col-sm-8">
+				{{ Form::checkbox('ntv_chopheptimkiem', 1, 1) }}
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="input" class="col-sm-2 control-label">Hồ sơ mặc định:</label>
+			<div class="col-sm-6">
+				{{ Form::checkbox('ntv_hosomacdinh', 1, 1) }}
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="input" class="col-sm-2 control-label">Trạng thái:</label>
+			<div class="col-sm-2">
+				{{ Form::select('status', array(0=>'Đang chờ duyệt', 1=>'Đã duyệt'), 1, array('class'=>'form-control') ) }}
+			</div>
 		</div>
 		<div class="form-group">
 			<div class="col-sm-10 col-sm-offset-2">

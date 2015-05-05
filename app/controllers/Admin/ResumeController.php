@@ -45,12 +45,29 @@ class ResumeController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function create()
+	public function create($userId = false)
 	{
 		//
+	}
+
+	public function creates($userId = false)
+	{
+		//
+		if( ! is_numeric($userId)) {
+			return Redirect::route('admin.jobseekers.index')->withErrors('Bạn chưa chọn User cần thêm CV');
+		}
+		if( ! User::find($userId))
+		{
+			return Redirect::route('admin.jobseekers.index')->withErrors('User không tìm thấy.');	
+		}
+		Session::set('cv_userid', $userId);
 		$certificate = Config::get('custom_bangcap.bang_cap', 1);
-		//return $certificate[rand(1, count($certificate)-1)];
-		return View::make('admin.resumes.create');
+		return View::make('admin.resumes.create', compact('userId'));
+	}
+
+	public function download($id)
+	{
+		return $id;
 	}
 
 	/**
@@ -74,6 +91,10 @@ class ResumeController extends \BaseController {
 	public function show($id)
 	{
 		//
+		$resume = Resume::find($id);
+		$bang_cap = Config::get('custom_bangcap.bang_cap');
+		if( ! $resume) return Redirect::route('admin.jobseekers.index')->withErrors('Không tìm thấy CV cần in !');
+		return View::make('admin.resumes.print', compact('resume', 'bang_cap'));
 	}
 
 	/**

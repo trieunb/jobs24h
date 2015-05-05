@@ -12,5 +12,13 @@ class Resume extends \Eloquent {
 	{
 		return $this->hasMany('WorkLocation', 'ntvcv_id');
 	}
+	public function certificate()
+	{
+		return $this->hasMany('Certificate', 'ntvcv_id');
+	}
+	public function experience()
+	{
+		return $this->hasMany('Experience', 'ntvcv_id');
+	}
 
 }

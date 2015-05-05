@@ -83,7 +83,18 @@
 				{{ Form::select('activated', array(1=>'Kích hoạt', 0=>'Không kích hoạt'), (($js->activated==true)?1:0), array('class'=>'form-control') ) }}
 			</div>
 		</div>
-		
+		<div class="form-group">
+			<label for="input" class="col-sm-2 control-label">Danh sách hồ sơ:</label>
+			<div class="col-sm-10">
+				@foreach($cvlist as $cv)
+					<i class="glyphicon glyphicon-hand-right"></i> {{ $cv->ntv_tieudeCV }} 
+					(<a href="{{ URL::route('admin.resumes.edit', $cv->id) }}">Sửa</a> | 
+					<a href="{{ URL::route('admin.resumes.show', $cv->id) }}" target="_blank">In</a>)
+					<br>
+				@endforeach
+			</div>
+		</div>
+
 		<div class="form-group">
 			<div class="col-sm-10 col-sm-offset-2">
 				{{ Form::button('Lưu thay đổi', array('type'=>'submit', 'class'=>'btn btn-primary')) }}
