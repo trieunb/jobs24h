@@ -2,23 +2,23 @@
 
 class Resume extends \Eloquent {
 	protected $fillable = [];
-	protected $table = 'ntv_cv';
+	protected $table = 'resumes';
 
 	public function ntv()
 	{
-		return $this->beLongsTo('NTV', 'ntv_id');
+		return $this->beLongsTo('NTV', 'rs_id');
 	}
 	public function location()
 	{
-		return $this->hasMany('WorkLocation', 'ntvcv_id');
+		return $this->hasMany('WorkLocation', 'rs_id');
 	}
 	public function certificate()
 	{
-		return $this->hasMany('Certificate', 'ntvcv_id');
+		return $this->hasMany('Certificate', 'rs_id');
 	}
 	public function experience()
 	{
-		return $this->hasMany('Experience', 'ntvcv_id');
+		return $this->hasMany('Experience', 'rs_id');
 	}
 
 }

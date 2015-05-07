@@ -24,7 +24,7 @@ class JobSeekerController extends \BaseController {
 	 */
 	public function datatables()
 	{
-		$jobseekers = NTV::select('id', 'username', 'ntv_email', 'ntv_hoten', 'created_at', 'activated', 'id as ids');
+		$jobseekers = NTV::select('id', 'email', 'full_name', 'created_at', 'activated', 'id as ids');
 		return Datatables::of($jobseekers)
 		->edit_column('activated', '@if($activated==true)<span class="label label-success">Kích hoạt</span>@else <span class="label label-info">Không kích hoạt</span>@endif')
 		->edit_column('ids', '
@@ -38,7 +38,7 @@ class JobSeekerController extends \BaseController {
 	public function create()
 	{
 		//
-		$provinces = Province::lists('tentinh', 'id');
+		$provinces = Province::lists('province_name', 'id');
 		return View::make('admin.jobseekers.create')->with('provinces', $provinces);
 	}
 
@@ -58,7 +58,7 @@ class JobSeekerController extends \BaseController {
 			return Redirect::back()->withInput()->withErrors($validator);
 		} else {
 			unset($inputs['_token']);
-			$inputs['ntv_quocgia'] = 1;
+			$inputs['country_id'] = 1;
 			$user = Sentry::createUser($inputs);
 			if($user) return Redirect::route('admin.jobseekers.index')->with('success', 'Thêm Người tìm việc thành công !');
 			return Redirect::back()->withInput()->withError('error', 'Lỗi khi thêm mới người dùng');
@@ -88,7 +88,7 @@ class JobSeekerController extends \BaseController {
 	{
 		//
 		try {
-			$provinces = Province::lists('tentinh', 'id');
+			$provinces = Province::lists('province_name', 'id');
 			$js = Sentry::findUserById($id);
 			$cvlist = Resume::where('ntv_id', '=', $js->id)->get();
 			return View::make('admin.jobseekers.edit', compact('cvlist'))->with('provinces', $provinces)->with('js', $js);
@@ -111,23 +111,23 @@ class JobSeekerController extends \BaseController {
 		$inputs = Input::all();
 		$rules = array(
 			'username'				=>	'required|min:4|max:32|unique:ntv_info,username,'.$id,
-			'ntv_email'				=>	'required|email|unique:ntv_info,ntv_email,'.$id,
-			'ntv_hoten'				=>	'required|min:3',
+			'email'				=>	'required|email|unique:ntv_info,email,'.$id,
+			'full_name'				=>	'required|min:3',
 			'password'				=>	'min:3',
-			'ntv_ngaysinh'			=>	'date_format:Y-m-d',
-			'ntv_gioitinh'			=>	'in:1,2,3',
-			'ntv_tinhtranghonnhan'	=>	'in:1,2',
+			'date_of_birth'			=>	'date_format:Y-m-d',
+			'gender'			=>	'in:1,2,3',
+			'marital_status'	=>	'in:1,2',
 			'activated'				=>	'in:0,1',
 		);
 		 $messages = array(
 			'username.required'	=>	'Username không được để trống.',
-			'ntv_email.required'	=>	'Email không được để trống.',
+			'email.required'	=>	'Email không được để trống.',
 			'password.required'	=>	'Mật khẩu không được để trống.',
-			'ntv_hoten.required'	=>	'Họ tên không được để trống.',
+			'full_name.required'	=>	'Họ tên không được để trống.',
 			'email'		=>	'Email không đúng định dạng.',
 			'unique'	=>	':attribute đã tồn tại, vui lòng chọn tên khác',
 			'username.min'		=>	'Username tối thiểu là :min kí tự.',
-			'ntv_hoten.min'		=>	'Họ tên tối thiểu là :min kí tự.',
+			'full_name.min'		=>	'Họ tên tối thiểu là :min kí tự.',
 			'password.min'		=>	'Mật khẩu tối thiểu là :min kí tự.',
 			'date_format'=> 'Ngày sinh không đúng định dạng'
 		);

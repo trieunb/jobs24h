@@ -10,7 +10,7 @@ class CountryTableSeeder extends Seeder {
 		$faker = Faker::create();
 
 		Country::create(array(
-			'country_name'	=>	'Việt Nam'
+			'tenquocgia'	=>	'Việt Nam'
 			));
 	}
 

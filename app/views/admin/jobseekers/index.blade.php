@@ -10,7 +10,6 @@
 		<thead>
 			<tr>
 				<th>STT</th>
-				<th>Username</th>
 				<th>Email</th>
 				<th>Họ tên</th>
 				<th>Ngày đăng ký</th>

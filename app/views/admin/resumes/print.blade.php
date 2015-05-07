@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>{{ $resume->ntv->ntv_hoten . " - " . $resume->ntv_tieudeCV }}</title>
+	<title>{{ $resume->ntv->full_name . " - " . $resume->ntv_tieudeCV }}</title>
 	{{ HTML::style('assets/css/print-cv.css') }}
 </head>
 <body>  
@@ -14,36 +14,36 @@
 						<tbody>
 							<tr>
 								<td>
-									<span id="fullname">{{ $resume->ntv->ntv_hoten }}</span>
+									<span id="fullname">{{ $resume->ntv->full_name }}</span>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span id="title">{{ $resume->ntv_cvganday }}</span>
+									<span id="title">{{ $resume->cvganday }}</span>
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<span class="profile-label">Ngày sinh: </span>
-									<span class="profile-field" id="dateofbirth">{{ $resume->ntv->ntv_ngaysinh }}</span>
+									<span class="profile-field" id="dateofbirth">{{ $resume->ntv->date_of_birth }}</span>
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<span class="profile-label">Email: </span>
-									<span class="profile-field" id="email">{{ $resume->ntv->ntv_email }}</span>
+									<span class="profile-field" id="email">{{ $resume->ntv->email }}</span>
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<span class="profile-label">Điện thoại: </span>
-									<span class="profile-field" id="phone">{{ $resume->ntv->ntv_sodienthoai }}</span>
+									<span class="profile-field" id="phone">{{ $resume->ntv->phone_number }}</span>
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<span class="profile-label">Địa chỉ: </span>
-									<span class="profile-field" id="address">{{ $resume->ntv->ntv_diachi }}</span>
+									<span class="profile-field" id="address">{{ $resume->ntv->address }}</span>
 								</td>
 							</tr>
 						</tbody>
@@ -52,7 +52,7 @@
 				<div class="block objective">
 					<h3 class="block-title">Mục tiêu nghề nghiệp</h3>
 					<div class="block-body">
-						<span id="objective"><p>{{ $resume->ntv_muctieunghenghiep }}</p></span>
+						<span id="objective"><p>{{ $resume->dinhhuongnn }}</p></span>
 					</div>
 				</div>
 				<div class="block education">
@@ -61,12 +61,12 @@
 						@foreach ($resume->certificate as $cert)
 						<div class="row">
 							<div class="time">
-								<span class="start">{{ $cert->ntv_thoigianbatdau }}</span> -
-								<span class="end">{{ $cert->ntv_thoigianketthuc }}</span>
+								<span class="start">{{ $cert->study_from }}</span> -
+								<span class="end">{{ $cert->study_to }}</span>
 							</div>
 							<div class="school">
-								<span class="school-name">{{ $cert->ntv_truong }}</span>
-								<span class="school-major">{{ $bang_cap[$cert->ntv_bangcap] }} in {{ $cert->ntv_chuyennganh }}</span>
+								<span class="school-name">{{ $cert->school }}</span>
+								<span class="school-major">{{ $bang_cap[$cert->level] }} in {{ $cert->subject }}</span>
 							</div>
 							<div style="clear: both"></div>
 						</div>
@@ -79,12 +79,13 @@
 						@foreach ($resume->experience as $exp)
 						<div class="row">
 							<div class="time">
-								<span class="start">{{ $exp->ntv_thoigianlamviec }}</span>
+								<span class="start">{{ $exp->from_date }}</span> - 
+								<span class="end">{{ $exp->to_date }}</span>
 							</div>
 							<div class="company">
-								<span class="company-name">{{ $exp->ntv_tenCty }}</span>
-								<span class="position">{{ $exp->ntv_chucdanh }}</span>
-								<span class="exp">{{ nl2br($exp->ntv_noidungconviec) }}</span>
+								<span class="company-name">{{ $exp->company_name }}</span>
+								<span class="position">{{ $exp->position }}</span>
+								<span class="exp">{{ nl2br($exp->job_detail) }}</span>
 							</div>
 							<div style="clear: both"></div>
 						</div>

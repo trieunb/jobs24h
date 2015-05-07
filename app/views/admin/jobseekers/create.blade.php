@@ -5,12 +5,7 @@
 	<hr>
 	{{ Form::open(array('method'=>'POST', 'action'=> array('admin.jobseekers.store'), 'class'=>'form form-horizontal' ) ) }}
 		@include('includes.notifications')
-		<div class="form-group">
-			<label for="inputUsername" class="col-sm-2 control-label">Username:</label>
-			<div class="col-sm-6">
-				{{ Form::input('text', 'username', null, array('class'=>'form-control', 'required') ) }}
-			</div>
-		</div>
+		
 		<div class="form-group">
 			<label for="inputEmail" class="col-sm-2 control-label">Email:</label>
 			<div class="col-sm-6">

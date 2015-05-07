@@ -20,7 +20,7 @@
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Mục tiêu NN:</label>
 			<div class="col-sm-8">
-				{{ Form::textarea('ntv_muctieunghenghiep', null, array('class'=>'form-control', 'rows'=>'5') ) }}
+				{{ Form::textarea('dinhhuongnn', null, array('class'=>'form-control', 'rows'=>'5') ) }}
 			</div>
 		</div>
 		<div class="form-group">
@@ -40,19 +40,19 @@
 					<div class="form-group">
 						<label for="input" class="col-sm-2 control-label">Chuyên ngành:</label>
 						<div class="col-sm-10">
-							{{ Form::input('text', 'ntv_chuyennganh', null, array('class'=>'form-control') ) }}
+							{{ Form::input('text', 'subject', null, array('class'=>'form-control') ) }}
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="input" class="col-sm-2 control-label">Trường:</label>
 						<div class="col-sm-10">
-							{{ Form::input('text', 'ntv_truong', null, array('class'=>'form-control') ) }}
+							{{ Form::input('text', 'school', null, array('class'=>'form-control') ) }}
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="input" class="col-sm-2 control-label">Bằng cấp:</label>
 						<div class="col-sm-4">
-							{{ Form::select('ntv_bangcap', Config::get('custom_bangcap.bang_cap'), null, array('class'=>'form-control') ) }}
+							{{ Form::select('level', $certificates, null, array('class'=>'form-control') ) }}
 						</div>
 					</div>
 
@@ -68,31 +68,31 @@
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Công ty gần đây:</label>
 			<div class="col-sm-8">
-				{{ Form::input('text', 'ntv_ctyganday', null, array('class'=>'form-control') ) }}
+				{{ Form::input('text', 'ctyganday', null, array('class'=>'form-control') ) }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Công việc gần đây:</label>
 			<div class="col-sm-8">
-				{{ Form::input('text', 'ntv_cvganday', null, array('class'=>'form-control') ) }}
+				{{ Form::input('text', 'cvganday', null, array('class'=>'form-control') ) }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Cấp bậc hiện tại:</label>
 			<div class="col-sm-8">
-				{{ Form::input('text', 'ntv_capbachientai', null, array('class'=>'form-control') ) }}
+				{{ Form::input('text', 'capbachientai', null, array('class'=>'form-control') ) }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Vị trí mong muốn:</label>
 			<div class="col-sm-8">
-				{{ Form::input('text', 'ntv_vitrimongmuon', null, array('class'=>'form-control') ) }}
+				{{ Form::input('text', 'vitrimongmuon', null, array('class'=>'form-control') ) }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Cấp bậc mong muốn:</label>
 			<div class="col-sm-8">
-				{{ Form::input('text', 'ntv_cbmongmuon', null, array('class'=>'form-control') ) }}
+				{{ Form::input('text', 'capbacmongmuon', null, array('class'=>'form-control') ) }}
 			</div>
 		</div>
 		<div class="form-group">

@@ -11,16 +11,15 @@ class DatabaseSeeder extends Seeder {
 	{
 		Eloquent::unguard();
 
-		//$this->call('GroupTableSeeder');
-		//$this->call('UserTableSeeder');
-		//$this->call('CategoryTableSeeder');
-		//$this->call('ProvinceTableSeeder');
-		//$this->call('CountryTableSeeder');
-		//$this->call('NTVTableSeeder');
-		//$this->call('CertificateTableSeeder');
-		//$this->call('CVTableSeeder');
-		//$this->call('WorkLocationTableSeeder');
-		//$this->call('CVCategoryTableSeeder');
+		$this->call('AdminUserTableSeeder');
+		$this->call('CategoryTableSeeder');
+		$this->call('CountryTableSeeder');
+		$this->call('EducationTableSeeder');
+		$this->call('LanguageTableSeeder');
+		$this->call('LevelTableSeeder');
+		$this->call('ProvinceTableSeeder');
+		$this->call('WorkTypeTableSeeder');
+		$this->call('JobseekerTableSeeder');
 	}
 
 }

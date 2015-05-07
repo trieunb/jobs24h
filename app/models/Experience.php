@@ -2,6 +2,6 @@
 
 class Experience extends \Eloquent {
 	protected $fillable = [];
-	protected $table = 'ntv_experience';
+	protected $table = 'mt_work_exps';
 	
 }

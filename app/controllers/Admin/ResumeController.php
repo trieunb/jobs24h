@@ -18,13 +18,13 @@ class ResumeController extends \BaseController {
 	public function datatables()
 	{
 
-		$resumes = Resume::select('ntv_cv.id', 'ntv_hosomacdinh', 'ntv_cv.created_at', 'ntv_cv.updated_at', 'ntv_hoten', 'ntv_email', 'provinces.tentinh', 'ntv_id')
-		->leftJoin('ntv_info', 'ntv_info.id', '=', 'ntv_id')
-		->leftJoin('ntv_work_locations', 'ntv_work_locations.ntvcv_id', '=', 'ntv_cv.id')
-		->leftJoin('provinces', 'provinces.id', '=', 'ntv_work_locations.province_id')
+		$resumes = Resume::select('resumes.id', 'is_default', 'resumes.created_at', 'resumes.updated_at', 'full_name', 'email', 'provinces.province_name', 'ntv_id')
+		->leftJoin('jobseekers', 'jobseekers.id', '=', 'ntv_id')
+		->leftJoin('mt_work_locations', 'mt_work_locations.rs_id', '=', 'resumes.id')
+		->leftJoin('provinces', 'provinces.id', '=', 'mt_work_locations.province_id')
 		->with('location');
 		return Datatables::of($resumes)
-		->edit_column('ntv_hosomacdinh', '@if($ntv_hosomacdinh==1)
+		->edit_column('is_default', '@if($is_default==1)
 			<span class="label label-success">HS Chính</span>
 			@else 
 			<span class="label label-info">HS Phụ</span>
@@ -61,7 +61,7 @@ class ResumeController extends \BaseController {
 			return Redirect::route('admin.jobseekers.index')->withErrors('User không tìm thấy.');	
 		}
 		Session::set('cv_userid', $userId);
-		$certificate = Config::get('custom_bangcap.bang_cap', 1);
+		$certificate = Education::all();
 		return View::make('admin.resumes.create', compact('userId'));
 	}
 
@@ -92,7 +92,7 @@ class ResumeController extends \BaseController {
 	{
 		//
 		$resume = Resume::find($id);
-		$bang_cap = Config::get('custom_bangcap.bang_cap');
+		$bang_cap = Education::all();
 		if( ! $resume) return Redirect::route('admin.jobseekers.index')->withErrors('Không tìm thấy CV cần in !');
 		return View::make('admin.resumes.print', compact('resume', 'bang_cap'));
 	}

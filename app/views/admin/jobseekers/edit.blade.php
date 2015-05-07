@@ -5,12 +5,7 @@
 	<hr>
 	{{ Form::open( array('route'=>array('admin.jobseekers.update', $js->id), 'class'=>'form-horizontal', 'method'=>'PUT') ) }}
 		@include('includes.notifications')
-		<div class="form-group">
-			<label for="inputUsername" class="col-sm-2 control-label">Username:</label>
-			<div class="col-sm-6">
-				{{ Form::input('text', 'username', $js->username, array('class'=>'form-control', 'required') ) }}
-			</div>
-		</div>
+		
 		<div class="form-group">
 			<label for="inputEmail" class="col-sm-2 control-label">Email:</label>
 			<div class="col-sm-6">

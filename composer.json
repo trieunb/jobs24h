@@ -9,7 +9,7 @@
 		"way/generators": "~2.6",
 		"barryvdh/laravel-debugbar": "~1.8",
 		"bllim/datatables": "1.4.4",
-		"fzaninotto/faker": "v1.3.0"
+		"fzaninotto/faker": "1.5.*@dev"
 	},
 	"autoload": {
 		"classmap": [

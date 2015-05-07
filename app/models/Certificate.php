@@ -2,5 +2,5 @@
 
 class Certificate extends \Eloquent {
 	protected $fillable = [];
-	protected $table = 'certificate';
+	protected $table = 'mt_certificates';
 }

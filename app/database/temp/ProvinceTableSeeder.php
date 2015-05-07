@@ -73,13 +73,15 @@ class ProvinceTableSeeder extends Seeder {
 			'Vĩnh Phúc',
 			'Yên Bái',
 			'Khác'
-		);
-		foreach ($provinces as $index) {
-			Province::create([
-				'province_name'	=>	$index,
-				'country_id'	=>	1,
-				'sort_order'	=>	1
-			]);
+			);
+			foreach ($provinces as $index) {
+				Province::create([
+					'province_name'	=>	$index,
+					'country_id'	=>	1,
+					'sort_order'	=>	1
+				]);
+			}
+			
 		}
 	}
 

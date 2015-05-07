@@ -2,7 +2,7 @@
 
 class NTV extends \Eloquent {
 	protected $fillable = [];
-	protected $table = 'ntv_info';
+	protected $table = 'jobseekers';
 
 	public function resume()
 	{
