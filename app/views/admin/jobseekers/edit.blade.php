@@ -9,7 +9,7 @@
 		<div class="form-group">
 			<label for="inputEmail" class="col-sm-2 control-label">Email:</label>
 			<div class="col-sm-6">
-				{{ Form::input('email', 'ntv_email', $js->ntv_email, array('class'=>'form-control', 'required') ) }}
+				{{ Form::input('email', 'email', $js->email, array('class'=>'form-control', 'required') ) }}
 			</div>
 		</div>
 		<div class="form-group">
@@ -21,55 +21,55 @@
 		<div class="form-group">
 			<label for="inputFullname" class="col-sm-2 control-label">Họ tên:</label>
 			<div class="col-sm-6">
-				{{ Form::input('text', 'ntv_hoten', $js->ntv_hoten, array('class'=>'form-control') ) }}
+				{{ Form::input('text', 'full_name', $js->full_name, array('class'=>'form-control') ) }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Ngày sinh:</label>
 			<div class="col-sm-2">
-				{{ Form::input('text', 'ntv_ngaysinh', $js->ntv_ngaysinh, array('class'=>'form-control datepicker') ) }}
+				{{ Form::input('text', 'date_of_birth', $js->date_of_birth, array('class'=>'form-control datepicker') ) }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Giới tính:</label>
 			<div class="col-sm-2">
-				{{ Form::select('ntv_gioitinh', array(1=>'Nam', 2=>'Nữ', 3=>'Không tiết lộ'), $js->ntv_gioitinh, array('class'=>'form-control') ) }}
+				{{ Form::select('gender', array(1=>'Nam', 2=>'Nữ', 3=>'Không tiết lộ'), $js->gender, array('class'=>'form-control') ) }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Tình trạng hôn nhân:</label>
 			<div class="col-sm-2">
-				{{ Form::select('ntv_tinhtranghonnhan', array(1=>'Độc thân', 2=>'Đã lập gia đình'), $js->ntv_tinhtranghonnhan, array('class'=>'form-control') ) }}
+				{{ Form::select('marital_status', array(1=>'Độc thân', 2=>'Đã lập gia đình'), $js->marital_status, array('class'=>'form-control') ) }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Địa chỉ:</label>
 			<div class="col-sm-6">
-				{{ Form::input('text', 'ntv_diachi', $js->ntv_diachi, array('class'=>'form-control') ) }}
+				{{ Form::input('text', 'address', $js->address, array('class'=>'form-control') ) }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Tỉnh/Thành phố:</label>
 			<div class="col-sm-2">
-				{{ Form::select('ntv_tinhthanh', $provinces, $js->ntv_tinhthanh, array('class'=>'form-control')) }}
+				{{ Form::select('province_id', $provinces, $js->province_id, array('class'=>'form-control')) }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Facebook ID:</label>
 			<div class="col-sm-6">
-				{{ Form::input('text', 'ntv_fbID', $js->ntv_fbID, array('class'=>'form-control') ) }}
+				{{ Form::input('text', 'facebook_ID', $js->facebook_ID, array('class'=>'form-control') ) }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Google Plus ID:</label>
 			<div class="col-sm-6">
-				{{ Form::input('text', 'ntv_googleID', $js->ntv_googleID, array('class'=>'form-control') ) }}
+				{{ Form::input('text', 'gplus_ID', $js->gplus_ID, array('class'=>'form-control') ) }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Linked ID:</label>
 			<div class="col-sm-6">
-				{{ Form::input('text', 'ntv_linkedinID', $js->ntv_linkedinID, array('class'=>'form-control') ) }}
+				{{ Form::input('text', 'linkedin_ID', $js->linkedin_ID, array('class'=>'form-control') ) }}
 			</div>
 		</div>
 		<div class="form-group">

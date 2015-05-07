@@ -110,8 +110,7 @@ class JobSeekerController extends \BaseController {
 		//
 		$inputs = Input::all();
 		$rules = array(
-			'username'				=>	'required|min:4|max:32|unique:ntv_info,username,'.$id,
-			'email'				=>	'required|email|unique:ntv_info,email,'.$id,
+			'email'				=>	'required|email|unique:jobseekers,email,'.$id,
 			'full_name'				=>	'required|min:3',
 			'password'				=>	'min:3',
 			'date_of_birth'			=>	'date_format:Y-m-d',
@@ -120,7 +119,6 @@ class JobSeekerController extends \BaseController {
 			'activated'				=>	'in:0,1',
 		);
 		 $messages = array(
-			'username.required'	=>	'Username không được để trống.',
 			'email.required'	=>	'Email không được để trống.',
 			'password.required'	=>	'Mật khẩu không được để trống.',
 			'full_name.required'	=>	'Họ tên không được để trống.',
