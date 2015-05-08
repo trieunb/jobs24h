@@ -8,7 +8,8 @@
 			                </div>
 			                <div class="col-sm-4">
 			                	<label class="hidden-xs text-white">Địa điểm</label>
-			                	<select class="multiple-choices-cities form-control" multiple="multiple">
+			                	<select data-placeholder="Tất cả địa điểm" multiple class="form-control chosen-select" id="locationMainSearch" multiple="true">
+
 			                		<option value="df">Tất cả địa điểm</option>
 							  		<option value="hcm">Hồ Chí Minh</option>
 							  		<option value="dng">Đà Nẵng</option>
@@ -16,7 +17,7 @@
 		                    </div>
 		                    <div class="clearfix"></div>
 		                    <div class="col-sm-4">
-			                	<select class="multiple-choices-categories form-control" multiple="multiple">
+			                	<select data-placeholder="Tất cả ngành nghề" multiple class="form-control chosen-select form-control" id="categoryMainSearch" multiple="true">
 			                		<option value="df">Tất cả ngành nghề</option>
 							  		<option value="it01">IT-Phàn mềm</option>
 							  		<option value="it02">IT-Phần cứng/Mạng</option>
@@ -26,21 +27,29 @@
 		                    	<input class="form-control" type="number" step="50" placeholder="Mức lương tối thiểu hàng tháng (USD)" >
 		                    </div>
 		                    <div class="col-sm-4">
-			                	<select class="selectpicker form-control">
-								    <option>Tất cả cấp bậc</option>
-								    <option>Giám đốc</option>
-								    <option>Nhân viên</option>
+			                	<select class="job-level" data-placeholder="Tất cả cấp bậc" id="jobLevelMainSearch">
+                                        <option value="-1">Tất cả cấp bậc</option>
+                                        <option value='1'>New Grad/Entry Level/Internship</option>
+										<option value='5'>Experienced (Non-Manager)</option>
+										<option value='6'>Team Leader/Supervisor</option>
+										<option value='7'>Manager</option>
+										<option value='10'>Vice Director</option>
+										<option value='3'>Director</option>
+										<option value='4'>CEO</option>
+										<option value='8'>Vice President</option>
+										<option value='9'>President</option>
 								</select>
 		                    </div>
 		                    <div class="col-sm-6">
-		                    	<select class="selectpicker form-control">
-								    <option>Đối tượng</option>
+		                   		<select class="form-control" data-placeholder="Đối tượng" id="jobObjMainSearch">
+                                    <option>Đối tượng</option>
 								    <option>Thực tập sinh</option>
 								    <option>Mới tốt nghiệp</option>
 								</select>
+
 		                    </div>
 		                    <div class="col-sm-6">
-		                    	<select class="selectpicker form-control">
+		                    	<select class="form-control" data-placeholder="Kinh nghiệm" id="jobExpMainSearch">
 								    <option>Kinh nghiệm</option>
 								    <option>01 năm</option>
 								    <option>02 năm</option>

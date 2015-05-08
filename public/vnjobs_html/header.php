@@ -10,7 +10,6 @@
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 		<link href="assets/css/font-awesome.min.css" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="assets/css/style.css">
-		<link href="assets/plugins/select/css/select2.min.css" type="text/css" rel="stylesheet" />
 		<link href="assets/plugins/jcarousel/css/jcarousel.responsive.css" rel="stylesheet" type="text/css">
 		<link href='http://fonts.googleapis.com/css?family=Calligraffitti' rel='stylesheet' type='text/css'>
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

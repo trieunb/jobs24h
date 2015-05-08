@@ -66,7 +66,7 @@
 		<script src="//code.jquery.com/jquery.js"></script>
 		<!-- Bootstrap JavaScript -->
 		<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="assets/plugins/select/js/select2.full.js"></script>
+		<script type="text/javascript" src="assets/plugins/select/js/select2.full.min.js"></script>
 		<script type="text/javascript" src="assets/plugins/jcarousel/js/jquery.jcarousel.min.js"></script>
 		<script type="text/javascript" src="assets/js/main.js"></script>
 	</body>

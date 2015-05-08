@@ -24,8 +24,27 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
 });
 
 (function($) {
-    $(function() {
-        $('.jcarousel').jcarousel();
+     $(function() {
+        var jcarousel = $('.jcarousel');
+
+        jcarousel
+            .on('jcarousel:reload jcarousel:create', function () {
+                var carousel = $(this),
+                    width = carousel.innerWidth();
+
+                if (width >= 600) {
+                    width = width / 5;
+                } else if (width >= 350) {
+                    width = width / 3;
+                }
+
+                carousel.jcarousel('items').css('width', Math.ceil(width) + 'px');
+            })
+            .jcarousel({
+                wrap: 'circular'
+            });
+
+       
 
         $('.jcarousel-control-prev')
             .on('jcarouselcontrol:active', function() {
@@ -128,27 +147,12 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
         
     });
 
-	// FIXED NAVIGATION IF SCROLL
-	$(window).bind('scroll', function() {
-		if ($(window).scrollTop() > 140) {
-			$('#header').addClass('fixed');
-		}else {
-			$('#header').removeClass('fixed');
-		}
-	});
-
-
 
 	// PLUGIN SELECT 2
-    $(".multiple-choices-cities").select2({
+    $("#locationMainSearch, #categoryMainSearch").select2({
 		maximumSelectionLength: 3,
-		placeholder: "Tất cả địa điểm"
 	});
-	$(".multiple-choices-categories").select2({
-		maximumSelectionLength: 3,
-		placeholder: "Tất cả ngành nghề"
-	});
-
+    $("#jobLevelMainSearch, #jobObjMainSearch,#jobExpMainSearch").select2();
 
 
     // COUNTDOWN TEXTEREA
@@ -179,7 +183,6 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
     document.getElementById("uploadBtn").onchange = function () {
         document.getElementById("uploadFile").value = this.value;
     };
-
 })(jQuery);
 
 

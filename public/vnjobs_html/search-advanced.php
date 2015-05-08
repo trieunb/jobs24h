@@ -441,7 +441,7 @@
 			</div>
 		</section>
 		<aside id="sidebar" class="col-sm-3 pull-right">
-			<div class="widget">
+			<div class="widget row">
 				<h3>Ngành nghề hấp dẫn</h3>
 				<ul class="arrow-plus">
 					<li><a href="#">Biên/Phiên dịch</a></li>
