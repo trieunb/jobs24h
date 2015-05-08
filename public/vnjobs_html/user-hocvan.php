@@ -6,18 +6,7 @@
 		<div class="boxed">
 			<nav class="ntv-menu">
 				<?php include('menu_ntv.php'); ?>
-				<ul class="pull-right relative">
-						<li><a href="#">Mục tiêu</a></li>
-						<li><a href="#">Kinh nghiệm</a></li>
-						<li><a href="#">Kỹ Năng</a></li>
-						<li><a href="#">Học vấn</a></li>
-						<li><a href="#">Ngoại ngữ</a></li>
-						<li><a href="#">Chứng chỉ</a></li>
-						<li><a href="#">Liên hệ</a></li>
-						<li><a href="#">Hình ảnh</a></li>
-						<li><a href="#">Học vấn</a></li>
-						<li><a href="#">Đánh giá bản thân</a></li>
-					</ul>
+				<?php include('menu_right.php'); ?>
 			</nav>
 				<div class="rows">
 					<div class="title-page">
