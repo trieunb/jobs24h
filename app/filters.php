@@ -36,6 +36,7 @@ App::after(function($request, $response)
 /**
  * Filter authentication
  */
+
 Route::filter('sentry.logged', function() {
 	if(Sentry::check())
 	{
@@ -47,6 +48,7 @@ Route::filter('sentry.admin', function() { //chan chua dang nhap
 	{
 		return Redirect::to('/admin/login');
 	}
+	View::share('user', AdminAuth::getUser() );
 });
 Route::filter('sentry.ntd', function() {
 	if( ! Sentry::check())
@@ -77,6 +79,7 @@ Route::filter('sentry.logged.admin', function() {
 	{
 		return Redirect::to('/admin/');
 	}
+	
 });
 Route::filter('sentry.logged.ntd', function() {
 	if( Sentry::check())

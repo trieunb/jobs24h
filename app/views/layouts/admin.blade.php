@@ -60,7 +60,6 @@
 
 					</li>
 					 <li>
-					 <?php $user = AdminAuth::getUser() ?>
 						<a  href="#"> <strong> {{ $user->username }} </strong></a>
 					</li>
 					
