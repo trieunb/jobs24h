@@ -131,6 +131,7 @@ We produce technologically advanced products that often make the difference betw
 				</div>
 			</div>
 			<div class="boxed related-jobs">
+				<div class="rows">
 				<div class="title-page">
 					<h2>Việc làm từ công ty khác</h2>
 				</div>
@@ -142,6 +143,7 @@ We produce technologically advanced products that often make the difference betw
 						<li><a href="#">IOS Developer Đà Nẵng</a></li>
 						<li><a href="#">IOS Developer Đà Nẵng</a></li>
 					</ul>
+				</div>
 			</div>
 			<div class="social pull-right">
 							<span>Chia sẻ: </span>

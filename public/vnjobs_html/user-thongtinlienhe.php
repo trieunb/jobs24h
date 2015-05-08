@@ -54,7 +54,7 @@
 							</div>
 							<div class="form-group">
 							    <div class="col-sm-offset-2 col-sm-10">
-								    <button type="submit" class="btn btn-warning">Lưu</button>
+								    <button type="submit" class="btn btn-lg bg-orange">Lưu</button>
 								    <a href="#" class="text-blue">Hủy bỏ và quay trở lại trang trước</a>
 							    </div>
 							</div>
