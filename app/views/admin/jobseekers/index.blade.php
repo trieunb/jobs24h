@@ -23,13 +23,10 @@
 	</table>
 @stop
 
-@section('style')
-	{{ HTML::style('assets/css/dataTables.bootstrap.css') }}
-@stop
 
 @section('script')
 	{{ HTML::script('assets/js/jquery.dataTables.min.js') }}
-	{{ HTML::script('assets/js/dataTables.bootstrap.js') }}
+	{{ HTML::script('assets/js/jquery.dataTables.bootstrap.min.js') }}
 	<script type="text/javascript">
 		$('#jobseekers').dataTable( {
 				"bProcessing": true,

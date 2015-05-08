@@ -1,5 +1,5 @@
 <?php 
-HTML::macro('active', function($patterns, $class = 'active-menu')
+HTML::macro('active', function($patterns, $class = 'active')
 {
 	if (call_user_func_array(array('Route', 'is'), (array) $patterns))
 	{

@@ -22,9 +22,6 @@
 	</table>
 @stop
 
-@section('style')
-	{{ HTML::style('assets/css/dataTables.bootstrap.css') }}
-@stop
 
 @section('script')
 	{{ HTML::script('assets/js/jquery.dataTables.min.js') }}

@@ -1,147 +1,114 @@
-<!DOCTYPE html>
+<?php $ver = '1.0' ?><!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
 	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 	<title>@yield('title', isset($title) ?: 'Dashboard') - Admin VnJobs</title>
 	<!-- BOOTSTRAP STYLES-->
-	<link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" />
+	{{ HTML::style('assets/css/bootstrap.min.css?v='.$ver) }}
 	<!-- FONTAWESOME ICONS STYLES-->
-	<link href="{{ asset('assets/css/font-awesome.css') }}" rel="stylesheet" />
+	{{ HTML::style('assets/font-awesome/4.2.0/css/font-awesome.min.css?v='.$ver) }}
 	<!--CUSTOM STYLES-->
-	<link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" />
-	  <!-- HTML5 Shiv and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	<!--[if lt IE 9]>
-		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
+	{{ HTML::style('//fonts.googleapis.com/css?family=Open+Sans:400,300?v='.$ver) }}
+	{{ HTML::style('assets/css/ace.min.css?v='.$ver) }}
+	{{ HTML::script('assets/js/ace-extra.min.js?v='.$ver) }}
+	<!--[if lte IE 9]>
+		{{ HTML::style('assets/css/ace-part2.min.css') }}
+		<![endif]-->
+
+		<!--[if lte IE 9]>
+		{{ HTML::style('assets/css/ace-ie.min.css') }}
+		<![endif]-->
+
+
 	@yield('style')
 </head>
-<body>
-	<div id="wrapper">
-		<nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				{{ HTML::link(URL::route('admin.dashboard'), 'Dashboard', array('class'=>'navbar-brand')) }}
-			</div>
-			<div class="notifications-wrapper">
-				<ul class="nav">
-					<li class="dropdown">
-						<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-							<i class="fa fa-user-plus"></i>  <i class="fa fa-caret-down"></i>
-						</a>
-						<ul class="dropdown-menu dropdown-user">
-							<li><a href="{{ URL::route('admin.profile') }}"><i class="fa fa-user-plus"></i> My Profile</a>
-							</li>
-							<li class="divider"></li>
-							<li><a href="{{ URL::route('admin.logout') }}"><i class="fa fa-sign-out"></i> Logout</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-		</nav>
-		<!-- /. NAV TOP  -->
-		<nav  class="navbar-default navbar-side" role="navigation">
-			<div class="sidebar-collapse">
-				<ul class="nav" id="main-menu">
-					<li>
-						<div class="user-img-div">
-							<img src="{{ asset('assets/img/user.jpg') }}" class="img-circle" />
+<body class="no-skin">
+	@include('includes.admin.navbar')
+		<div class="main-container" id="main-container">
+			
+			@include('includes.admin.sidebar')
 
-						   
-						</div>
-
-					</li>
-					 <li>
-						<a  href="#"> <strong> {{ $user->username }} </strong></a>
-					</li>
-					
-					<li>
-						<a class="{{ HTML::active(['admin', 'active']) }}"  href="{{ URL::to('/admin') }}"><i class="fa fa-dashboard "></i>Dashboard</a>
-					</li>
-					<li>
-						<a href="{{ URL::to('/admin/general') }}" class="{{ HTML::active(['admin.general.*', 'active-menu']) }}"><i class="fa fa-venus "></i>Quản lý chung </a>
-					</li>
-					
-					<li>
-						<a href="{{ URL::to('/admin/users') }}" class="{{ HTML::active(['admin.users*', 'active-menu']) }}"><i class="fa fa-venus "></i>Quản trị viên </a>
+			<div class="main-content">
+				<div class="main-content-inner">
+					<div class="breadcrumbs" id="breadcrumbs">
 						
-					</li>
-					<li>
-						<a href="{{ URL::to('/admin/jobseekers') }}" class="{{ HTML::active(['admin.jobseekers.*', 'active-menu']) }}"><i class="fa fa-venus "></i>Người tìm việc </a>
-						
-					</li>
-
-					<li>
-						<a href="{{ URL::to('/admin/resumes') }}" class="{{ HTML::active(['admin.resumes.*', 'active-menu']) }}"><i class="fa fa-cogs "></i>Hồ sơ CV</a>
-					</li>
-
-					<li>
-						<a href="{{ URL::to('/admin/employers') }}" class="{{ HTML::active(['admin.employeers.*', 'active-menu']) }}"><i class="fa fa-venus "></i>Nhà tuyển dụng </a>
-					</li>
-
-
-				   
-					<!--<li>
-						<a href="#"><i class="fa fa-sitemap "></i>Multilevel Link <span class="fa arrow"></span></a>
-						 <ul class="nav nav-second-level">
+						<ul class="breadcrumb">
 							<li>
-								<a href="#"><i class="fa fa-cogs "></i>Second  Link</a>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="#">Home</a>
 							</li>
-							 <li>
-								<a href="#"><i class="fa fa-bullhorn "></i>Second Link</a>
-							</li>
-							<li>
-								<a href="#">Second Level<span class="fa arrow"></span></a>
-								<ul class="nav nav-third-level">
-									<li>
-										<a href="#">Third  Link</a>
-									</li>
-									<li>
-										<a href="#">Third Link</a>
-									</li>
+							<li class="active">Dashboard</li>
+						</ul><!-- /.breadcrumb -->
+					</div>
 
-								</ul>
+					<div class="page-content">
 
-							</li>
-						</ul>
-					</li>-->
-				   
-				</ul>
+						<div class="page-header">
+							<h1>
+								Dashboard
+								<small>
+									<i class="ace-icon fa fa-angle-double-right"></i>
+									overview &amp; stats
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								@yield('content')
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+
+			<div class="footer">
+				<div class="footer-inner">
+					<div class="footer-content">
+						<span class="bigger-120">
+							<span class="blue bolder">Vnjobs</span>
+							MinhPhuc Co.,Ltd &copy; 2015
+						</span>
+
+						<!-- <span class="action-buttons">
+							<a href="#">
+								<i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
+							</a>
+
+							<a href="#">
+								<i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i>
+							</a>
+
+							<a href="#">
+								<i class="ace-icon fa fa-rss-square orange bigger-150"></i>
+							</a>
+						</span> -->
+					</div>
+				</div>
 			</div>
+		</div><!-- /.main-container -->
 
-		</nav>
-		<!-- /. SIDEBAR MENU (navbar-side) -->
-		<div id="page-wrapper" class="page-wrapper-cls">
-			<div id="page-inner">
-				
-			@yield('content')
-
-			</div><!-- /. PAGE WRAPPER  -->
-		</div><!-- /. PAGE WRAPPER  -->
-		</div><!-- /. WRAPPER  -->
-	
-	<footer >
-	   
-	</footer>
-	<!-- /. FOOTER  -->
-	<!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
 	<!-- JQUERY SCRIPTS -->
-	<script src="{{ asset('assets/js/jquery-1.11.1.js') }}"></script>
-	<!-- BOOTSTRAP SCRIPTS -->
-	<script src="{{ asset('assets/js/bootstrap.js') }}"></script>
-	<!-- METISMENU SCRIPTS -->
-	<script src="{{ asset('assets/js/jquery.metisMenu.js') }}"></script>
-	<!-- CUSTOM SCRIPTS -->
-	<script src="{{ asset('assets/js/custom.js') }}"></script>
-	@yield('script')
+	{{ HTML::script('assets/js/jquery-1.11.1.js?v='.$ver) }}
+	{{ HTML::script('assets/js/bootstrap.js?v='.$ver) }}
 
+	{{ HTML::script('assets/js/jquery-ui.custom.min.js?v='.$ver) }}
+	{{ HTML::script('assets/js/jquery.ui.touch-punch.min.js?v='.$ver) }}
+	{{ HTML::script('assets/js/jquery.easypiechart.min.js?v='.$ver) }}
+	{{ HTML::script('assets/js/jquery.sparkline.min.js?v='.$ver) }}
+	{{ HTML::script('assets/js/jquery.flot.min.js?v='.$ver) }}
+	{{ HTML::script('assets/js/jquery.flot.pie.min.js?v='.$ver) }}
+	{{ HTML::script('assets/js/jquery.flot.resize.min.js?v='.$ver) }}
+
+	<!-- ace scripts -->
+	{{ HTML::script('assets/js/ace-elements.min.js?v='.$ver) }}
+	{{ HTML::script('assets/js/ace.min.js?v='.$ver) }}
+	@yield('script')
+	
 </body>
 </html>
