@@ -24,13 +24,20 @@ class JobSeekerController extends \BaseController {
 	 */
 	public function datatables()
 	{
-		$jobseekers = NTV::select('id', 'email', 'full_name', 'created_at', 'activated', 'id as ids');
+		$jobseekers = NTV::select('id as ckid', 'id', 'email', 'full_name', 'created_at', 'activated', 'id as ids');
 		return Datatables::of($jobseekers)
+		->edit_column('ckid', '<th class="center">
+															<label class="pos-rel">
+																<input type="checkbox" class="ace" />
+																<span class="lbl"></span>
+															</label>
+														</th>
+')
 		->edit_column('activated', '@if($activated==true)<span class="label label-success">Kích hoạt</span>@else <span class="label label-info">Không kích hoạt</span>@endif')
 		->edit_column('ids', '
 			{{ Form::open(array("method"=>"delete", "route"=>array("admin.jobseekers.destroy", $id) )) }}
-			<a class="btn btn-sm btn-info" href="{{URL::route("admin.jobseekers.edit", array($id) )}}" title="Edit"><i class="glyphicon glyphicon-edit"></i></a> 
-			<button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure you want to delete ?\');" type="submit" title="Delete"><i class="glyphicon glyphicon-remove"></i></button>
+			<a class="btn btn-xs btn-info" href="{{URL::route("admin.jobseekers.edit", array($id) )}}" title="Edit"><i class="ace-icon fa fa-pencil bigger-120"></i></a> 
+			<button class="btn btn-xs btn-danger" onclick="return confirm(\'Are you sure you want to delete ?\');" type="submit" title="Delete"><i class="ace-icon fa fa-trash-o bigger-120"></i></button>
 			{{ Form::close() }}
 			')
 		->make();

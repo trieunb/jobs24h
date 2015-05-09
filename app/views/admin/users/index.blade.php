@@ -9,7 +9,7 @@
 	<table class="table table-hover table-bordered table-striped" id="administrator">
 		<thead>
 			<tr>
-				<th>STT</th>
+				<th>ID</th>
 				<th>Username</th>
 				<th>Email</th>
 				<th>Ngày tạo</th>

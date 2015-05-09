@@ -11,11 +11,9 @@
 |
 */
 
-App::setLocale(Session::get('language', 'vi'));	
-
-Route::get('/', function()
+Route::get('/', function() use($locale)
 {
-	return View::make('hello');
+	return Redirect::to('/'.$locale.'/jobseekers');
 });
 
 Route::group(array('prefix'=>'admin'), function() {
@@ -42,5 +40,14 @@ Route::group(array('prefix'=>'admin'), function() {
 	});
 });
 
+Route::group(array('prefix'=>$locale), function() {
+	Route::group(array('prefix'=>'jobseekers'), function() {
+		Route::get('/', array('as'=>'jobseekers.home', 'uses'=>'JobSeeker@home'));
+		Route::get('/login', array('as'=>'jobseekers.login', 'uses'=>'JobSeekerAuth@login') );
+		Route::post('/login', 'JobSeekerAuth@doLogin' );
+		Route::get('/register', array('as'=>'jobseekers.register', 'uses'=>'JobSeekerAuth@register') );
+		Route::post('/register', 'JobSeekerAuth@doRegister' );
+	});
+});
 
 

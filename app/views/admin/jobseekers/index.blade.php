@@ -1,15 +1,18 @@
 @extends('layouts.admin')
 @section('title')Jobseeker Manager @stop
 @section('content')
-	<h2>Danh sách người tìm việc</h2>
-	<hr>
 	@include('includes.notifications')
-	<a href="{{ URL::route('admin.jobseekers.create') }}" class="btn btn-success pull-right">Thêm mới</a>
 	<div class="clearfix"></div>
 	<table class="table table-hover table-bordered table-striped" id="jobseekers">
 		<thead>
 			<tr>
-				<th>STT</th>
+				<th class="center">
+					<label class="pos-rel">
+						<input type="checkbox" class="ace" />
+						<span class="lbl"></span>
+					</label>
+				</th>
+				<th>ID</th>
 				<th>Email</th>
 				<th>Họ tên</th>
 				<th>Ngày đăng ký</th>
@@ -23,6 +26,9 @@
 	</table>
 @stop
 
+@section('style')
+	{{ HTML::style('assets/css/dataTables.bootstrap.css') }}
+@stop
 
 @section('script')
 	{{ HTML::script('assets/js/jquery.dataTables.min.js') }}
@@ -32,10 +38,15 @@
 				"bProcessing": true,
 				"bServerSide": true,
 				"sAjaxSource": "{{ URL::route('jobseekers.datatables') }}",
-				"aoColumnDefs": [
-		        	{ 'bSortable': false, 'aTargets': [ 0 ] }
-		        ],
-				"aaSorting": [[ 4, "desc" ]],
+				bAutoWidth: false,
+					"aoColumns": [
+					  { "bSortable": false, "sClass": "center" },
+					  null, null,null, null, null,
+					  { "bSortable": false }
+					],
+					"aaSorting": [],
+
+				/*
 				
 				"fnDrawCallback": function (oSettings) {
 					//if(oSettings.bSorted || oSettings.bFiltered) {
@@ -48,8 +59,27 @@
 						}
 
 					//}
-				}
+				}*/
 			});
+
+		var active_class = 'success';
+		$('#jobseekers > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
+					var th_checked = this.checked;//checkbox inside "TH" table header
+					
+					$(this).closest('table').find('tbody > tr').each(function(){
+						var row = this;
+						if(th_checked) $(row).addClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', true);
+						else $(row).removeClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', false);
+					});
+				});
+
+		$('#jobseekers').on('click', 'td input[type=checkbox]' , function(){
+			alert('a');
+					var $row = $(this).closest('tr');
+					if(this.checked) $row.addClass(active_class);
+					else $row.removeClass(active_class);
+				});
+
 		
 	</script>
 	<script type="text/javascript">
@@ -74,7 +104,7 @@
 				}
 			});
 		$('input[type="search"]').on( 'keyup', function () {
-			$(this).val(locdau($(this).val()));
+			//$(this).val(locdau($(this).val()));
 		} );
 
 		function locdau(str){

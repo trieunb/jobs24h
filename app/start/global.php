@@ -80,3 +80,13 @@ App::down(function()
 
 require app_path().'/filters.php';
 require app_path().'/macros.php';
+
+$languages = Config::get('app.available_language', ['vi', 'en'] );
+$locale = Request::segment(1);
+if (in_array($locale, $languages)) {
+    \App::setLocale($locale);
+} else {
+	\App::setLocale(Config::get('app.default_language', 'vi'));
+    $locale = 'vi';
+}
+View::share('locale', $locale);
