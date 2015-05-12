@@ -15,6 +15,18 @@ Route::get('/', function() use($locale)
 {
 	return Redirect::to('/'.$locale.'/jobseekers');
 });
+Route::get('/' .$locale, function() use($locale)
+{
+	if(Request::header('referer'))
+	{
+		$refererUrl = Request::header('referer');
+		$refererUrl = preg_replace("/\/(en|vi)\//", "/$locale/", $refererUrl);
+		return Redirect::to($refererUrl);
+	} else {
+		return Redirect::to('/'.$locale.'/jobseekers');
+	}
+	die();
+});
 
 Route::group(array('prefix'=>'admin'), function() {
 

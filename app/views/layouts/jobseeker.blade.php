@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>@yield('title', isset($title) ?: 'Trang chủ VnJobs') - Việc làm không giới hạn</title>
+		<title>@yield('title', isset($title) ?: Lang::get('jobseekers.home.title') ) - {{ Lang::get('jobseekers.home.slogan') }}</title>
 
 		<!-- Bootstrap CSS -->
 		{{ HTML::style('assets/css/bootstrap.min.css') }}
@@ -23,7 +23,11 @@
 				</div>
 				<div class="header-right pull-right">
 					<div class="list-link">
-						<span class="language"><a href="#" class="text-blue">English</a></span>
+						@if($locale == 'vi')
+							<span class="language"><a href="{{ URL::to('/en') }}" class="text-blue">English</a></span>
+						@else
+							<span class="language"><a href="{{ URL::to('/vi') }}" class="text-blue">Tiếng Việt</a></span>
+						@endif
 						<span class="local"><a href="#" class="text-blue">Join VnJobs Network</a></span>
 						<span class="envelope"><a href="#" class="text-blue"><i class="fa fa-envelope"></i> Nhận việc làm mới</a></span>
 						<span class="employer-site"><a href="#"><i class="fa fa-caret-right"></i> Nhà tuyển dụng</a></span>
