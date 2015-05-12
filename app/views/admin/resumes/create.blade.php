@@ -6,15 +6,15 @@
 	{{ Form::open(array('method'=>'POST', 'action'=> array('admin.resumes.store'), 'class'=>'form form-horizontal' ) ) }}
 		@include('includes.notifications')
 		<div class="form-group">
-			<label for="inputUsername" class="col-sm-2 control-label">User:</label>
+			<label for="inputEmail" class="col-sm-2 control-label">Email:</label>
 			<div class="col-sm-8">
-				{{ Form::input('text', 'username', null, array('class'=>'form-control', 'required') ) }}
+				{{ Form::email('email', null, array('class'=>'form-control', 'required') ) }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Tiêu đề CV:</label>
 			<div class="col-sm-8">
-				{{ Form::input('text', 'tieude_cv', null, array('class'=>'form-control') ) }}
+				{{ Form::text('tieude_cv', null, array('class'=>'form-control') ) }}
 			</div>
 		</div>
 		<div class="form-group">
@@ -57,19 +57,22 @@
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Nơi làm việc:</label>
 			<div class="col-sm-8">
-				{{ Form::select('ntv_noilamviec', Province::lists('tentinh', 'id'), null, array('multiple'=>'multiple', 'class'=>'form-control') ) }}
+				{{ Form::select('ntv_noilamviec', Province::lists('province_name', 'id'), null, array('multiple'=>'multiple', 'class'=>'form-control') ) }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Nơi làm việc:</label>
 			<div class="col-sm-8">
-				{{ Form::select('ntv_nganhnghe', Category::lists('tennganh', 'id'), null, array('multiple'=>'multiple', 'class'=>'form-control') ) }}
+				{{ Form::select('ntv_nganhnghe', Category::lists('cat_name', 'id'), null, array('multiple'=>'multiple', 'class'=>'form-control') ) }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Mức lương mong muốn:</label>
 			<div class="col-sm-2">
 				{{ Form::input('number', 'ntv_mucluongmongmuon', '0', array('class'=>'form-control', 'min'=>0, 'max'=>10000, 'step'=>50) ) }}
+			</div>
+			<div class="col-xs-1">
+				{{ Form::select('loaitien', array(1=>'USD', 2=>'VND'), 1, array('class'=>'form-control') ) }}
 			</div>
 			<div class="col-xs-3">
 				<div class="checkbox">
@@ -81,9 +84,15 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="input" class="col-sm-2 control-label">Thành tích:</label>
+			<label for="input" class="col-sm-2 control-label">Kỹ năng:</label>
 			<div class="col-sm-8">
-				{{ Form::textarea('ntv_thanhtich', null, array('class'=>'form-control', 'rows'=>'5') ) }}
+				{{ Form::textarea('kynang', null, array('class'=>'form-control', 'rows'=>'5') ) }}
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="input" class="col-sm-2 control-label">Đánh giá bản thân:</label>
+			<div class="col-sm-8">
+				{{ Form::textarea('danhgiabanthan', null, array('class'=>'form-control', 'rows'=>'5') ) }}
 			</div>
 		</div>
 		<div class="form-group">

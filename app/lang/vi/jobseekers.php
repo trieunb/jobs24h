@@ -1,7 +1,7 @@
 <?php 
 return array(
 	'home.title'	=>	'Trang Chủ',
-	'home.slogan'	=>	'Unlimited employment',
+	'home.slogan'	=>	'Việc làm không giới hạn',
 
 
 	);

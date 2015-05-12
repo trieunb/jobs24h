@@ -199,7 +199,7 @@
 								<b class="arrow"></b>
 							</li>
 
-							<li class="">
+							<li class="{{ HTML::active(['admin.resumes.*']) }}">
 								<a href="#" class="dropdown-toggle">
 									<i class="menu-icon fa fa-pencil orange"></i>
 										Hồ sơ
@@ -219,7 +219,7 @@
 									</li>
 
 									<li class="">
-										<a href="#">
+										<a href="{{ URL::route('admin.resumes.create') }}">
 											<i class="menu-icon fa fa-eye pink"></i>
 											Thêm hồ sơ
 										</a>

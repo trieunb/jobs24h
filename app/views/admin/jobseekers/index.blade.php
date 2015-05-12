@@ -44,22 +44,7 @@
 					  null, null,null, null, null,
 					  { "bSortable": false }
 					],
-					"aaSorting": [],
-
-				/*
-				
-				"fnDrawCallback": function (oSettings) {
-					//if(oSettings.bSorted || oSettings.bFiltered) {
-						var current = $('ul.pagination li.active a').text();
-						var crshow = $('#jobseekers_length select option:selected').val();
-						//alert(crshow);
-						for (var i = 0, iLen = oSettings.aiDisplay.length; i < iLen; i++) {
-							$('td:eq(0)', oSettings.aoData[ oSettings.aiDisplay[i]].nTr).html(i+1+(crshow*current-crshow));	
-							
-						}
-
-					//}
-				}*/
+					"aaSorting": [[ 1, "desc" ]],
 			});
 
 		var active_class = 'success';
@@ -74,7 +59,6 @@
 				});
 
 		$('#jobseekers').on('click', 'td input[type=checkbox]' , function(){
-			alert('a');
 					var $row = $(this).closest('tr');
 					if(this.checked) $row.addClass(active_class);
 					else $row.removeClass(active_class);

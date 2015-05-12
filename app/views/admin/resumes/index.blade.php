@@ -6,16 +6,124 @@
 	@include('includes.notifications')
 	<!--<a href="{{ URL::route('admin.resumes.create') }}" class="btn btn-success pull-right">Thêm mới</a>-->
 	<div class="clearfix"></div>
+	<form action="" method="POST" class="form-horizontal" role="form">
+		<div class="col-xs-4">
+			<div class="form-group">
+				<label for="input" class="col-sm-3 control-label">Email:</label>
+				<div class="col-sm-9">
+					{{ Form::email('email', null, array('class'=>'form-control', 'placeholder'=>'Nhập Email', 'id'=>'email') ) }}
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input" class="col-sm-3 control-label">HọTên:</label>
+				<div class="col-sm-9">
+					{{ Form::text('full_name', null, array('class'=>'form-control', 'placeholder'=>'Nhập Họ tên', 'id'=>'full_name') ) }}
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input" class="col-sm-3 control-label">SốĐT:</label>
+				<div class="col-sm-9">
+					{{ Form::text('phone_number', null, array('class'=>'form-control', 'placeholder'=>'Nhập Số điện thoại', 'id'=>'phone_number') ) }}
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input" class="col-sm-3 control-label">Bậc lương:</label>
+				<div class="col-sm-9">
+					{{ Form::select('salary', array('all'=>'Tất cả', 0=>'Thỏa thuận', 1=>'Mức cụ thể'), 'all', array('class'=>'form-control', 'id'=>'salary') ) }}
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input" class="col-sm-3 control-label">Trạng thái:</label>
+				<div class="col-sm-9">
+					{{ Form::select('status', array('all'=>'Tất cả', 1=>'Hồ sơ chính', 0=>'Hồ sơ phụ'), 'all', array('class'=>'form-control', 'id'=>'status') ) }}
+				</div>
+			</div>
+			
+		</div>
+		<div class="col-xs-4">
+			<div class="form-group">
+				<label for="input" class="col-sm-3 control-label">Giới tính:</label>
+				<div class="col-sm-9">
+					{{ Form::select('gender', array('all'=>'Tất cả', 1=>'Nam', 2=>'Nữ', 3=>'Không tiết lộ'), 'all', array('class'=>'form-control', 'id'=>'gender') ) }}
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input" class="col-sm-3 control-label">Ngày sinh:</label>
+				<div class="col-sm-9">
+					{{ Form::text('date_of_birth', null, array('class'=>'form-control', 'placeholder'=>'Nhập ngày sinh', 'id'=>'date_of_birth') ) }}
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input" class="col-sm-3 control-label">Năm KN:</label>
+				<div class="col-sm-9">
+					{{ Form::text('namkinhnghiem', null, array('class'=>'form-control', 'placeholder'=>'Nhập năm kinh nghiệm', 'id'=>'namkinhnghiem') ) }}
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input" class="col-sm-3 control-label">Nơi LV:</label>
+				<div class="col-sm-9">
+					{{ Form::select('work_location', array('all'=>'Tất cả')+Province::lists('province_name', 'id'), null, array('class'=>'form-control', 'id'=>'work_location') ) }}
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input" class="col-sm-3 control-label">Hôn Nhân:</label>
+				<div class="col-sm-9">
+					{{ Form::select('marital_status', array('all'=>'Tất cả', 1=>'Đã lập gia đình', 2=>'Độc thân'), 'all', array('class'=>'form-control', 'id'=>'marital_status') ) }}
+				</div>
+			</div>
+			
+		</div>
+		<div class="col-xs-4">
+			<div class="form-group">
+				<label for="input" class="col-sm-3 control-label">BằngCấp:</label>
+				<div class="col-sm-9">
+					{{ Form::select('education', array('all'=>'Tất cả')+Education::lists('name', 'id'), null, array('class'=>'form-control', 'id'=>'education') ) }}
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input" class="col-sm-3 control-label">Cấp bậc:</label>
+				<div class="col-sm-9">
+					{{ Form::select('level', array('all'=>'Tất cả')+Level::lists('name', 'id'), null, array('class'=>'form-control', 'id'=>'level') ) }}
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input" class="col-sm-3 control-label">Ngành:</label>
+				<div class="col-sm-9">
+					{{ Form::select('category', array('all'=>'Tất cả')+Category::where('parent_id','>',0)->lists('cat_name', 'id'), null, array('class'=>'form-control', 'id'=>'category') ) }}
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="input" class="col-sm-3 control-label">NgoạiNgữ:</label>
+				<div class="col-sm-9">
+					{{ Form::select('language', array('all'=>'Tất cả')+Language::lists('lang_name', 'id'), null, array('class'=>'form-control', 'id'=>'language') ) }}
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-9 col-sm-offset-3">
+					<button type="submit" class="btn btn-xs btn-warning"><i class="fa fa-search"></i> Tìm</button>
+					<button type="button" class="btn btn-xs btn-danger"><i class="fa fa-close"></i> Reset</button>
+				</div>
+			</div>
+		</div>
+			
+	</form>
 	<table class="table table-hover table-bordered table-striped" id="resumes">
 		<thead>
 			<tr>
-				<th>STT</th>
-				<th>Trạng thái</th>
-				<th>Ngày tạo</th>
-				<th>Ngày cập nhật</th>
-				<th>Họ tên</th>
+				<th class="center">
+					<label class="pos-rel">
+						<input type="checkbox" class="ace" />
+						<span class="lbl"></span>
+					</label>
+				</th>
+				<th>ID</th>
 				<th>Email</th>
-				<th>Địa điểm</th>
+				<th>Họ tên</th>
+				<th>Số ĐT</th>
+				<th>Trạng thái</th>
+				<th>Giới tính</th>
+				<th>Ngày sinh</th>
 				<th>#</th>
 			</tr>
 		</thead>
@@ -25,53 +133,8 @@
 	</table>
 @stop
 
-@section('style')
-	{{ HTML::style('assets/css/dataTables.bootstrap.css') }}
-@stop
 
 @section('script')
-	{{ HTML::script('assets/js/jquery.dataTables.min.js') }}
-	{{ HTML::script('assets/js/dataTables.bootstrap.js') }}
-	<script type="text/javascript">
-		$('#resumes').dataTable( {
-				"bProcessing": true,
-				"bServerSide": true,
-				"sAjaxSource": "{{ URL::route('resumes.datatables') }}",
-				"aoColumnDefs": [
-					{ 'bSortable': false, 'aTargets': [ 0 ] }
-				],
-				"fnDrawCallback": function (oSettings) {
-					//if(oSettings.bSorted || oSettings.bFiltered) {
-						var current = $('ul.pagination li.active a').text();
-						var crshow = $('#resumes_length select option:selected').val();
-						//alert(crshow);
-						for (var i = 0, iLen = oSettings.aiDisplay.length; i < iLen; i++) {
-							$('td:eq(0)', oSettings.aoData[ oSettings.aiDisplay[i]].nTr).html(i+1+(crshow*current-crshow));	
-							
-						}
-
-					//}
-				}
-			});
-		$('input[type="search"]').on( 'keyup', function () {
-			$(this).val(locdau($(this).val()));
-		} );
-
-		function locdau(str){
-			str= str.toLowerCase();
-			str= str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a");
-			str= str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e");
-			str= str.replace(/ì|í|ị|ỉ|ĩ/g,"i");
-			str= str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o");
-			str= str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u");
-			str= str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y");
-			str= str.replace(/đ/g,"d");
-			str= str.replace(/!|@|\$|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\'|\"|\&|\#|\[|\]|~/g,"-");
-			str= str.replace(/-+-/g,"-");
-			str= str.replace(/^\-+|\-+$/g,"");
-			return str;
-		}
-
-	</script>
+	
 
 @stop

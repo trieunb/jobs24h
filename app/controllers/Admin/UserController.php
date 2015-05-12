@@ -15,9 +15,16 @@ class UserController extends \BaseController {
 
 	public function datatables()
 	{
-		$users = AdminUser::select('id', 'username', 'email', 'created_at', 'id as ids');
+		$users = AdminUser::select('id as ckid', 'id', 'username', 'email', 'created_at', 'id as ids');
 		$stt = 1;
 		return Datatables::of($users)
+		->edit_column('ckid', '<th class="center">
+															<label class="pos-rel">
+																<input type="checkbox" class="ace" />
+																<span class="lbl"></span>
+															</label>
+														</th>
+')
 		->edit_column('ids', '
 			{{ Form::open(array("method"=>"delete", "route"=>array("admin.users.destroy", $id) )) }}
 			<a class="btn btn-sm btn-info" href="{{URL::route("admin.users.edit", array($id) )}}" title="Edit"><i class="glyphicon glyphicon-edit"></i></a> 

@@ -11,32 +11,15 @@ class ResumeController extends \BaseController {
 	public function index()
 	{
 		//
-		
 		return View::make('admin.resumes.index');
 	}
 
 	public function datatables()
 	{
 
-		$resumes = Resume::select('resumes.id', 'is_default', 'resumes.created_at', 'resumes.updated_at', 'full_name', 'email', 'provinces.province_name', 'ntv_id')
-		->leftJoin('jobseekers', 'jobseekers.id', '=', 'ntv_id')
-		->leftJoin('mt_work_locations', 'mt_work_locations.rs_id', '=', 'resumes.id')
-		->leftJoin('provinces', 'provinces.id', '=', 'mt_work_locations.province_id')
-		->with('location');
-		return Datatables::of($resumes)
-		->edit_column('is_default', '@if($is_default==1)
-			<span class="label label-success">HS Chính</span>
-			@else 
-			<span class="label label-info">HS Phụ</span>
-			@endif')
-		->remove_column('ntv', 'ntv_id', 'location')
-		->add_column('action', '
-			{{ Form::open(array("method"=>"delete", "route"=>array("admin.resumes.destroy", $id) )) }}
-			<a class="btn btn-sm btn-info" href="{{URL::route("admin.resumes.edit", array($id) )}}" title="Edit"><i class="glyphicon glyphicon-edit"></i></a> 
-			<button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure you want to delete ?\');" type="submit" title="Delete"><i class="glyphicon glyphicon-remove"></i></button>
-			{{ Form::close() }}
-			')
-		->make();
+		$resumes = Resume::orderBy('id', 'desc');
+		
+		return $resumes;
 	}
 
 	/**
@@ -45,9 +28,10 @@ class ResumeController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function create($userId = false)
+	public function create()
 	{
 		//
+		return View::make('admin.resumes.create');
 	}
 
 	public function creates($userId = false)
