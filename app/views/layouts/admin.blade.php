@@ -97,18 +97,11 @@
 	{{ HTML::script('assets/js/jquery-1.11.1.js?v='.$ver) }}
 	{{ HTML::script('assets/js/bootstrap.js?v='.$ver) }}
 
-	{{ HTML::script('assets/js/jquery-ui.custom.min.js?v='.$ver) }}
-	{{ HTML::script('assets/js/jquery.ui.touch-punch.min.js?v='.$ver) }}
-	{{ HTML::script('assets/js/jquery.easypiechart.min.js?v='.$ver) }}
-	{{ HTML::script('assets/js/jquery.sparkline.min.js?v='.$ver) }}
-	{{ HTML::script('assets/js/jquery.flot.min.js?v='.$ver) }}
-	{{ HTML::script('assets/js/jquery.flot.pie.min.js?v='.$ver) }}
-	{{ HTML::script('assets/js/jquery.flot.resize.min.js?v='.$ver) }}
-
+	@yield('script')
 	<!-- ace scripts -->
 	{{ HTML::script('assets/js/ace-elements.min.js?v='.$ver) }}
 	{{ HTML::script('assets/js/ace.min.js?v='.$ver) }}
-	@yield('script')
+	@yield('custom-script')
 	
 </body>
 </html>
