@@ -74,33 +74,34 @@
 			</div>
 			<div class="col-sm-6 pull-right">
 				<h2 class="text-orange">Đăng Ký Thành Viên</h2>
+				@include('includes.notifications')
 				<form action="" method="POST" role="form">
 					<div class="form-group row">
 						<div class="col-sm-6">
 							<label for="">Họ-Tên lót<abbr>(*)</abbr></label>
-							<input type="text" class="form-control" id="" required="required">
+							<input type="text" class="form-control" id="first_name" name="first_name" required="required">
 						</div>
 						<div class="col-sm-6 ">
 							<label for="">Tên<abbr>(*)</abbr></label>
-							<input type="text" class="form-control" id="" required="required">
+							<input type="text" class="form-control" id="last_name" name="last_name" required="required">
 						</div>
 					</div>
 					<div class="form-group">
 							<label for="">Email<abbr>(*)</abbr></label>
-							<input type="email" class="form-control" id="" required="required">
+							<input type="email" class="form-control" id="email" name="email" required="required">
 					</div>
 					<div class="form-group">
 							<label for="">Mật khẩu<abbr>(*)</abbr></label>
-							<input type="password" class="form-control" id="" required="required">
+							<input type="password" class="form-control" id="password" name="password" required="required">
 					</div>
 					<div class="form-group">
 							<label for="">Nhập lại mật khẩu<abbr>(*)</abbr></label>
-							<input type="password" class="form-control" id="" required="required">
+							<input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required="required">
 					</div>
 					<div class="form-group">
 						<div class="checkbox">
 							<label>
-								<input type="checkbox" value="">
+								<input type="checkbox" value="1" id="subscribe" name="subscribe">
 								Nhận email bản tin <a href="#" class="text-blue">vnjobs.vn</a>
 							</label>
 						</div>

@@ -47,7 +47,10 @@ Route::group(array('prefix'=>$locale), function() {
 		Route::post('/login', 'JobSeekerAuth@doLogin' );
 		Route::get('/register', array('as'=>'jobseekers.register', 'uses'=>'JobSeekerAuth@register') );
 		Route::post('/register', 'JobSeekerAuth@doRegister' );
+		Route::get('/account-active',array('as'=>'account-active', function() {
+			return View::make('jobseekers.account-active');
+		}));
+		Route::get('/account-active/{email}/{code}',array('as'=>'jobseekers.account-active', 'uses'=>'JobSeekerAuth@checkActive'));
 	});
 });
-
 

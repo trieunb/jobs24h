@@ -8,4 +8,5 @@ class NTV extends \Eloquent {
 	{
 		return $this->hasMany('Resume');
 	}
+	
 }

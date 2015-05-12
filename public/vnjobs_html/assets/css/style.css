@@ -26,7 +26,7 @@ time, mark, audio, video {
 body {
      font-family:"Arial",Helvetica,sans-serif; font-size: 12px;  line-height: 1.42857143;  
      color: #555555; 
-     background: #EFEFEF;
+     background: #fff;
 }
 article,aside,details,figcaption,figure,
 footer,header,hgroup,menu,nav,section { 
@@ -156,6 +156,7 @@ table .glyphicon {margin: 0 7px;}
 .padding.bg-silver-dark,.padding.bg-silver-light{padding: 30px;}
 .bg-silver-light {background: #f5f4f4;}
 
+footer {margin-top:30px;}
 footer.bg-dark:hover {background: #494949;}
 .bg-dark:hover {background:#282b2d; color: #fff;}
 .text-red {color: #FF0000;}
@@ -185,6 +186,7 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
 .form-control {border-color: #dddddd !important;color: #999; font-size: 12px; padding: 6px 5px;}
 .push-top-md, .push-top {margin-top: 20px;}
 .push-bottom-md, .push-bottom {margin-bottom: 30px;}
+.push-bottom-30 {margin-bottom: -30px;}
 .form-horizontal .form-group {margin-right: 0;}
 .progress {height: 10px; border: 1px solid #D7D7D7; margin-bottom: 10px;padding: 2px;}
 .jcarousel-control-prev, .jcarousel-control-next {color: #c7c7c7 !important;}

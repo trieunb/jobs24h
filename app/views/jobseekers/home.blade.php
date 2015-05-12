@@ -402,7 +402,7 @@
 	                	<a href="#" class="jcarousel-control-next">&rsaquo;</a>
 						</div>
 				</section>
-				<div class="padding bg-silver-dark">
+				<div class="padding bg-silver-dark push-bottom-30">
 				<section class="bottom container">
 					<div class="col-sm-4">
 						<h2 class="text-orange">Cẩm nang Người tìm việc</h2>

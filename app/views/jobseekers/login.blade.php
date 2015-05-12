@@ -19,14 +19,15 @@
 	        <i class="fa fa-circle fa-stack-2x text-blue"></i>
 	        <i class="fa fa-user fa-stack-1x text-white"></i>
 	    </span>Người tìm việc</p>
+	    @include('includes.notifications')
 	    <form action="" method="POST" role="form">
 	    	<div class="form-group">
 	    		<label for="">Email<abbr>(*)</abbr></label>
-	    		<input type="email" class="form-control" id="" required="required">
+	    		<input type="email" class="form-control" name="email" id="email" required="required">
 	    	</div>
 	    	<div class="form-group">
 	    		<label for="">Mật khẩu<abbr>(*)</abbr></label>
-	    		<input type="password" class="form-control" id="" required="required">
+	    		<input type="password" class="form-control" id="password" name="password" required="required">
 	    	</div>
 	    	<div class="form-group push-bottom">
 		   	<button type="submit" class="btn btn-lg bg-orange">Đăng nhập</button>
