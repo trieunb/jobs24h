@@ -1,12 +1,15 @@
 <?php
 
 class Resume extends \Eloquent {
-	protected $fillable = [];
+	protected $fillable = ['ntv_id', 'tieude_cv', 'bangcapcaonhat', 'namkinhnghiem','bangcapcaonhat','ctyganday',
+	'cvganday','capbachientai','vitrimongmuon','capbacmongmuon','mucluong','loaitien',
+	'dinhhuongnn','kynang','danhgiabanthan','sothich','hinhthuclamviec','loaihs','trangthai',
+	'is_public','is_visible','is_default'];
 	protected $table = 'resumes';
 
 	public function ntv()
 	{
-		return $this->beLongsTo('NTV', 'rs_id');
+		return $this->beLongsTo('NTV', 'ntv_id');
 	}
 	public function location()
 	{
