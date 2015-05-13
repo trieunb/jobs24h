@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateCertificatesTable extends Migration {
+class CreateMtCertificatesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,7 +12,7 @@ class CreateCertificatesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('certificates', function(Blueprint $table)
+		Schema::create('mt_certificates', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->integer('rs_id');
@@ -32,7 +32,7 @@ class CreateCertificatesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('certificates');
+		Schema::drop('mt_certificates');
 	}
 
 }
