@@ -90,3 +90,4 @@ if (in_array($locale, $languages)) {
     $locale = 'vi';
 }
 View::share('locale', $locale);
+$GLOBALS['user'] = Sentry::getUser();
