@@ -6,7 +6,7 @@
 		<div class="user-menu col-sm-4 pull-right">
 			<a href="#" class="text-blue">
 				<img src="assets/images/ruibu.jpg" class="avatar">
-				<strong><em>Hi, Anh Điệp</em></strong>
+				<strong><em>Hi, David</em></strong>
 			</a>
 			<nav class="ntv-menu navbar-right">
 				<?php include('menu_ntv.php'); ?>
@@ -17,58 +17,88 @@
 		<div class="boxed">
 			<div class="rows">
 				<div class="title-page">
-					<h2>Hồ Sơ Của Tôi</h2>
+					<h2>Việc làm đã nộp</h2>
 				</div>
-				<p>Bạn đã có <strong class="text-orange"><span id="number_of_resumes">3</span> trong số 4</strong> hồ sơ. Hãy chọn một hồ sơ được "<strong>cho phép tìm kiếm</strong>" để nhà tuyển dụng có thể tìm thấy bạn.</p>
-				<p><a href="user-thongtincoban.php" class="btn bg-orange btn-lg">Tạo Hồ Sơ</a></p>
-						<form action="" method="POST" role="form" class="form-horizontal">
-							<table class="table table-striped table-hover table-bordered">
+					<p><strong>Lưu ý</strong>: Bạn không xem được việc làm đã hết thời hạn đăng tuyển hoặc tạm ngưng nhận hồ sơ.
+            		</p>
+					<p>
+						<a href="#" class="text-blue decoration">Chọn tất cả</a> | 
+						<a href="#" class="text-orange decoration">Bỏ chọn tất cả</a>
+					</p>
+					<p><strong>Với phản hồi được chọn:</strong></p>
+					<p class="clearfix">
+						<button type="button" class="btn bg-orange btn-lg">Xóa</button>
+					</p>
+					<table class="table table-striped table-hover table-bordered">
 								<thead>
 									<tr>
-										<th>Tiêu đề</th>
-										<th>Cho phép tìm kiếm</th>
-										<th>Ngày cập nhật</th>
-										<th>Số lần xem</th>
-										<th>Thao tác</th>
+										<th><input type="checkbox" value=""></th>
+										<th>Chức danh</th>
+										<th>Công ty</th>
+										<th>Ngày nộp</th>
+										<th>Nhà tuyển dụng phản hồi</th>
+										<th>Tình trạng</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
+										<td><input type="checkbox" value=""></td>
 										<td>
-											<strong><em class="text-blue">2015/03/19 10:55:17</em> Anh Điệp Trần</strong><br>
-											<small class="legend text-orange">Chưa hoàn thiện</small>
+											<strong class="text-blue"><em>Tuyển lập trình PHP, Front-end</em></strong>
+											<small><div class="legend text-orange">Hết hạn</div></small>
+											<button type="button" class="btn btn-default btn-sm">Thêm ghi chú</button>
 										</td>
+										<td>Minh Phúc Telecom</td>
+										<td>20-05-2015</td>
+										<td></td>
 										<td>
-											<input type="checkbox" value="" name="resume" id="is_resume">
-										</td>
-										<td>17-04-2015</td>
-										<td>0</td>
-										<td>
-											<a href=""><i class="glyphicon glyphicon-eye-open"></i> Xem</a> 
-											<a href=""><i class="glyphicon glyphicon-refresh"></i> Cập nhật</a> 
-											<a href=""><i class="glyphicon glyphicon-trash"></i> Xóa</a>
+											Đã ứng tuyển<br>(06-04-2015)
 										</td>
 									</tr>
 									<tr>
+										<td><input type="checkbox" value=""></td>
 										<td>
-											<strong><em class="text-blue">2015/03/19 10:55:17</em> Anh Điệp Trần</strong><br>
-											<small class="legend text-green">Đã duyệt <i class="fa fa-check-square-o"></i></small>
+											<strong class="text-blue"><em>Tuyển lập trình PHP, Front-end</em></strong>
+											<small><div class="legend text-orange">Hết hạn</div></small>
+											<button type="button" class="btn btn-default btn-sm">Thêm ghi chú</button>
 										</td>
+										<td>Minh Phúc Telecom</td>
+										<td>20-05-2015</td>
+										<td></td>
 										<td>
-											<input type="checkbox" value="" name="resume" id="is_resume">
+											Đã ứng tuyển<br>(06-04-2015)
 										</td>
-										<td>17-04-2015</td>
-										<td>0</td>
+									</tr>
+									<tr>
+										<td><input type="checkbox" value=""></td>
 										<td>
-											<a href=""><i class="glyphicon glyphicon-eye-open"></i> Xem</a> 
-											<a href=""><i class="glyphicon glyphicon-refresh"></i> Cập nhật</a> 
-											<a href=""><i class="glyphicon glyphicon-trash"></i> Xóa</a>
+											<strong class="text-blue"><em>Tuyển lập trình PHP, Front-end</em></strong>
+											<small><div class="legend text-orange">Hết hạn</div></small>
+											<button type="button" class="btn btn-default btn-sm">Thêm ghi chú</button>
+										</td>
+										<td>Minh Phúc Telecom</td>
+										<td>20-05-2015</td>
+										<td></td>
+										<td>
+											Đã ứng tuyển<br>(06-04-2015)
 										</td>
 									</tr>
 								</tbody>
-							</table>		
-						</form>
-				</div>
+							</table>
+							<nav class="navbar-right"><ul class="pagination pagination-sm">
+						<li><a href="#">1</a></li>
+						<li><a href="#">2</a></li>
+						<li><a href="#">&raquo;</a></li>
+					</ul></nav>
+					<p>
+						<a href="#" class="text-blue decoration">Chọn tất cả</a> | 
+						<a href="#" class="text-orange decoration">Bỏ chọn tất cả</a>
+					</p>
+					<p><strong>Với phản hồi được chọn:</strong></p>
+					<p class="clearfix">
+						<button type="button" class="btn bg-orange btn-lg">Xóa</button>
+					</p>
+					
 			</div>
 		</div>
 		<div class="boxed">

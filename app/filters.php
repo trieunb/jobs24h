@@ -65,14 +65,8 @@ Route::filter('sentry.ntd', function() {
 Route::filter('sentry.ntv', function() {
 	if( ! Sentry::check())
 	{
-		return Redirect::to('/login');
-	} else {
-		$user = Sentry::getUser();
-		if( ! $user->hasAccess('ntv'))
-		{
-			return Redirect::to('/login');
-		}
-	}
+		return Redirect::route('jobseekers.login');
+	} 
 });
 Route::filter('sentry.logged.admin', function() {
 	if( AdminAuth::check())
@@ -94,7 +88,7 @@ Route::filter('sentry.logged.ntd', function() {
 Route::filter('sentry.logged.ntv', function() {
 	if( Sentry::check())
 	{
-		return Redirect::to('/profile');
+		return Redirect::route('jobseekers.edit-basic-info');
 	}
 });
 

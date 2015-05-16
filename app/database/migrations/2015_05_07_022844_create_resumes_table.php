@@ -23,6 +23,7 @@ class CreateResumesTable extends Migration {
 			$table->integer('capbachientai');
 			$table->string('vitrimongmuon');
 			$table->integer('capbacmongmuon');
+			$table->integer('noilamviecmongmuon');
 			$table->integer('mucluong');
 			$table->integer('loaitien');
 			$table->text('dinhhuongnn');

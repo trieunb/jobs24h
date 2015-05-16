@@ -25,7 +25,7 @@
 						<a href="#" class="text-blue decoration">Chọn tất cả</a> | 
 						<a href="#" class="text-orange decoration">Bỏ chọn tất cả</a>
 					</p>
-					<p><strong>Với phản hồi được chọn:</strong></p>
+					<p><strong>Với việc làm đã chọn:</strong></p>
 					<p class="clearfix">
 						<button type="button" class="btn bg-orange btn-lg">Xóa</button>
 					</p>
@@ -46,7 +46,7 @@
 										<td>
 											<strong class="text-blue"><em>Tuyển lập trình PHP, Front-end</em></strong>
 											<small><div class="legend text-orange">Hết hạn</div></small>
-											<button type="button" class="btn btn-default btn-sm">Thêm ghi chú</button>
+											<button type="button" class="btn bg-gray-light btn-sm">Thêm ghi chú</button>
 										</td>
 										<td>Minh Phúc Telecom</td>
 										<td>20-05-2015</td>
@@ -60,7 +60,7 @@
 										<td>
 											<strong class="text-blue"><em>Tuyển lập trình PHP, Front-end</em></strong>
 											<small><div class="legend text-orange">Hết hạn</div></small>
-											<button type="button" class="btn btn-default btn-sm">Thêm ghi chú</button>
+											<button type="button" class="btn bg-gray-light btn-sm">Thêm ghi chú</button>
 										</td>
 										<td>Minh Phúc Telecom</td>
 										<td>20-05-2015</td>
@@ -74,7 +74,7 @@
 										<td>
 											<strong class="text-blue"><em>Tuyển lập trình PHP, Front-end</em></strong>
 											<small><div class="legend text-orange">Hết hạn</div></small>
-											<button type="button" class="btn btn-default btn-sm">Thêm ghi chú</button>
+											<button type="button" class="btn bg-gray-light btn-sm">Thêm ghi chú</button>
 										</td>
 										<td>Minh Phúc Telecom</td>
 										<td>20-05-2015</td>
@@ -94,7 +94,7 @@
 						<a href="#" class="text-blue decoration">Chọn tất cả</a> | 
 						<a href="#" class="text-orange decoration">Bỏ chọn tất cả</a>
 					</p>
-					<p><strong>Với phản hồi được chọn:</strong></p>
+					<p><strong>Với việc làm đã chọn:</strong></p>
 					<p class="clearfix">
 						<button type="button" class="btn bg-orange btn-lg">Xóa</button>
 					</p>
@@ -132,12 +132,12 @@
 							</div>
 							<div class="col-sm-3 pull-right">
 								<div class="salary text-orange">
-									<strong>3000$</strong>
+									<strong>$3000</strong>
 								</div>
 								<div class="share">
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-floppy-save"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-search"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-envelope"></i></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/floppy-copy.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/search-job.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/email-job.png"></a>
 								</div>
 								<a href="#" class="share-with-friend" title="Lưu việc làm này"><i class="glyphicon glyphicon-share-alt"></i> Giới thiệu bạn bè</a>
 							</div>
@@ -166,19 +166,19 @@
 							</div>
 							<div class="col-sm-3 pull-right">
 								<div class="salary text-orange">
-									<strong>3000$</strong>
+									<strong>$3000</strong>
 								</div>
 								<div class="share">
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-floppy-save"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-search"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-envelope"></i></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/floppy-copy.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/search-job.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/email-job.png"></a>
 								</div>
 								<a href="#" class="share-with-friend" title="Lưu việc làm này"><i class="glyphicon glyphicon-share-alt"></i> Giới thiệu bạn bè</a>
 							</div>
 						</li>
 					</ul>
 				</div>
-				<a href="#" class="pull-right"><strong>Xem tất cả việc làm tương tự</strong></a>
+				<a href="#" class="pull-right push-top"><strong>Xem tất cả việc làm tương tự</strong></a>
 			</div>
 		</div>
 	</section>

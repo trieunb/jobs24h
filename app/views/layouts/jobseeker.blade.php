@@ -11,6 +11,7 @@
 		{{ HTML::style('assets/font-awesome/4.2.0/css/font-awesome.min.css') }}
 		{{ HTML::style('assets/css/jobseeker-style.css') }}
 		{{ HTML::style('assets/plugins/jcarousel/css/jcarousel.responsive.css') }}
+		{{ HTML::style('assets/css/bootstrap-datetimepicker.min.css') }}
 		{{ HTML::style('//fonts.googleapis.com/css?family=Calligraffitti') }}
 	</head>
 	<body>
@@ -33,7 +34,7 @@
 						<span class="employer-site"><a href="#"><i class="fa fa-caret-right"></i> Nhà tuyển dụng</a></span>
 					</div>
 					<ul class="menu pull-right">
-						<li><a href="{{ URL::route('jobseekers.login') }}">Đăng nhập <i class="fa fa-chevron-down"></i></a></li>
+						<li><a href="{{ URL::route('jobseekers.login') }}">Đăng nhập</a></li>
 						<li><a href="{{ URL::route('jobseekers.register') }}">Đăng ký</a></li>
 					</ul>
 				</div>
@@ -130,6 +131,8 @@
 		{{ HTML::script('assets/js/bootstrap.min.js') }}
 		{{ HTML::script('assets/plugins/select/js/select2.full.min.js') }}
 		{{ HTML::script('assets/plugins/jcarousel/js/jquery.jcarousel.min.js') }}
+		{{ HTML::script('assets/js/moment.js') }}
+		{{ HTML::script('assets/js/bootstrap-datetimepicker.min.js') }}
 		{{ HTML::script('assets/js/main.js') }}
 		
 	</body>

@@ -13,6 +13,7 @@ class JobSeekerAuth extends Controller
 	}
 	public function doLogin()
 	{
+		
 		$params = Input::only('email', 'password');
 		$validator = new App\DTT\Forms\JobSeekersLogin;
 		if($validator->fails())
@@ -21,18 +22,44 @@ class JobSeekerAuth extends Controller
 		} else {
 			try
 			{
-			    // Login credentials
+			     // Login credentials
 			    $credentials = array(
 			        'email'    => $params['email'],
-			        'password' => $params['password'],
+			        'password' => $params['password']
 			    );
-			    //var_dump($credentials);
+
 			    // Authenticate the user
-			    $user = Sentry::authenticate($credentials, false);
+			    $user = Sentry::authenticate($credentials, true);	  	
+			    return Redirect::route('jobseekers.home')->with('user', $user);
 			}
 			catch (Cartalyst\Sentry\Users\LoginRequiredException $e)
 			{
-			   return Redirect::back()->withInput()->withErrors('Email hoặc mật khẩu không đúng, vui lòng thử lại !');
+			    return Redirect::back()->withErrors('Login field is required.');
+			}
+			catch (Cartalyst\Sentry\Users\PasswordRequiredException $e)
+			{
+			    return Redirect::back()->withErrors('Password field is required.');
+			}
+			catch (Cartalyst\Sentry\Users\WrongPasswordException $e)
+			{
+			    return Redirect::back()->withErrors('Wrong password, try again.');
+			}
+			catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+			{
+			    return Redirect::back()->withErrors( 'User was not found.');
+			}
+			catch (Cartalyst\Sentry\Users\UserNotActivatedException $e)
+			{
+			    return Redirect::back()->withErrors( 'User is not activated.');
+			}
+			// The following is only required if the throttling is enabled
+			catch (Cartalyst\Sentry\Throttling\UserSuspendedException $e)
+			{
+			    return Redirect::back()->withErrors( 'User is suspended.');
+			}
+			catch (Cartalyst\Sentry\Throttling\UserBannedException $e)
+			{
+			    return Redirect::back()->withErrors( 'User is banned.');
 			}
 		}
 	}

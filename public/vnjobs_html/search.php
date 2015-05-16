@@ -8,7 +8,7 @@
 			                    <input class="form-control search-all" type="text" name="keyword" value="" placeholder="Nhập Chức Danh, Vị Trí Công Việc, Kỹ Năng Liên Quan...">
 			                </div>
 			                <div class="col-sm-4">
-			                	<label class="hidden-xs text-white">Địa điểm</label>
+			                	<label class="hidden-xs text-white">Tại Việt Nam</label>
 			                	<select data-placeholder="Tất cả địa điểm" multiple class="form-control chosen-select" id="locationMainSearch" multiple="true">
 
 			                		<option value="df">Tất cả địa điểm</option>

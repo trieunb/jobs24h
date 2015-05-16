@@ -47,9 +47,9 @@
 									<strong>$3000</strong>
 								</div>
 								<div class="share">
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-floppy-save"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-search"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-envelope"></i></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/floppy-copy.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/search-job.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/email-job.png"></a>
 								</div>
 								<a href="#" class="share-with-friend" title="Lưu việc làm này"><i class="glyphicon glyphicon-share-alt"></i> Giới thiệu bạn bè</a>
 							</div>
@@ -81,9 +81,9 @@
 									<strong>$3000</strong>
 								</div>
 								<div class="share">
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-floppy-save"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-search"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-envelope"></i></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/floppy-copy.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/search-job.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/email-job.png"></a>
 								</div>
 								<a href="#" class="share-with-friend" title="Lưu việc làm này"><i class="glyphicon glyphicon-share-alt"></i> Giới thiệu bạn bè</a>
 							</div>
@@ -115,9 +115,9 @@
 									<strong>$3000</strong>
 								</div>
 								<div class="share">
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-floppy-save"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-search"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-envelope"></i></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/floppy-copy.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/search-job.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/email-job.png"></a>
 								</div>
 								<a href="#" class="share-with-friend" title="Lưu việc làm này"><i class="glyphicon glyphicon-share-alt"></i> Giới thiệu bạn bè</a>
 							</div>
@@ -149,9 +149,9 @@
 									<strong>$3000</strong>
 								</div>
 								<div class="share">
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-floppy-save"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-search"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-envelope"></i></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/floppy-copy.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/search-job.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/email-job.png"></a>
 								</div>
 								<a href="#" class="share-with-friend" title="Lưu việc làm này"><i class="glyphicon glyphicon-share-alt"></i> Giới thiệu bạn bè</a>
 							</div>
@@ -183,9 +183,9 @@
 									<strong>$3000</strong>
 								</div>
 								<div class="share">
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-floppy-save"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-search"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-envelope"></i></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/floppy-copy.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/search-job.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/email-job.png"></a>
 								</div>
 								<a href="#" class="share-with-friend" title="Lưu việc làm này"><i class="glyphicon glyphicon-share-alt"></i> Giới thiệu bạn bè</a>
 							</div>
@@ -217,9 +217,9 @@
 									<strong>$3000</strong>
 								</div>
 								<div class="share">
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-floppy-save"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-search"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-envelope"></i></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/floppy-copy.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/search-job.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/email-job.png"></a>
 								</div>
 								<a href="#" class="share-with-friend" title="Lưu việc làm này"><i class="glyphicon glyphicon-share-alt"></i> Giới thiệu bạn bè</a>
 							</div>
@@ -251,9 +251,9 @@
 									<strong>$3000</strong>
 								</div>
 								<div class="share">
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-floppy-save"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-search"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-envelope"></i></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/floppy-copy.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/search-job.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/email-job.png"></a>
 								</div>
 								<a href="#" class="share-with-friend" title="Lưu việc làm này"><i class="glyphicon glyphicon-share-alt"></i> Giới thiệu bạn bè</a>
 							</div>
@@ -285,9 +285,9 @@
 									<strong>$3000</strong>
 								</div>
 								<div class="share">
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-floppy-save"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-search"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-envelope"></i></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/floppy-copy.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/search-job.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/email-job.png"></a>
 								</div>
 								<a href="#" class="share-with-friend" title="Lưu việc làm này"><i class="glyphicon glyphicon-share-alt"></i> Giới thiệu bạn bè</a>
 							</div>
@@ -319,9 +319,9 @@
 									<strong>$3000</strong>
 								</div>
 								<div class="share">
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-floppy-save"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-search"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-envelope"></i></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/floppy-copy.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/search-job.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/email-job.png"></a>
 								</div>
 								<a href="#" class="share-with-friend" title="Lưu việc làm này"><i class="glyphicon glyphicon-share-alt"></i> Giới thiệu bạn bè</a>
 							</div>
@@ -353,9 +353,9 @@
 									<strong>$3000</strong>
 								</div>
 								<div class="share">
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-floppy-save"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-search"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-envelope"></i></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/floppy-copy.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/search-job.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/email-job.png"></a>
 								</div>
 								<a href="#" class="share-with-friend" title="Lưu việc làm này"><i class="glyphicon glyphicon-share-alt"></i> Giới thiệu bạn bè</a>
 							</div>
@@ -387,9 +387,9 @@
 									<strong>$3000</strong>
 								</div>
 								<div class="share">
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-floppy-save"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-search"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-envelope"></i></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/floppy-copy.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/search-job.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/email-job.png"></a>
 								</div>
 								<a href="#" class="share-with-friend" title="Lưu việc làm này"><i class="glyphicon glyphicon-share-alt"></i> Giới thiệu bạn bè</a>
 							</div>
@@ -421,9 +421,9 @@
 									<strong>$3000</strong>
 								</div>
 								<div class="share">
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-floppy-save"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-search"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-envelope"></i></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/floppy-copy.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/search-job.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/email-job.png"></a>
 								</div>
 								<a href="#" class="share-with-friend" title="Lưu việc làm này"><i class="glyphicon glyphicon-share-alt"></i> Giới thiệu bạn bè</a>
 							</div>

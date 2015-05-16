@@ -1,79 +1,4 @@
-<?php include('header.php'); ?>
-	<div class="container">
-		<div class="col-sm-8">
-			<?php include('breadcrumb.php'); ?>	
-		</div>
-		<div class="user-menu col-sm-4 pull-right">
-			<a href="#" class="text-blue">
-				<img src="assets/images/ruibu.jpg" class="avatar">
-				<strong><em>Hi, Anh Điệp</em></strong>
-			</a>
-			<nav class="ntv-menu navbar-right">
-				<?php include('menu_ntv.php'); ?>
-			</nav>
-		</div>
-	</div>
-	<section class="main-content container single-post">
-		<div class="boxed">
-			<div class="rows">
-				<div class="title-page">
-					<h2>Hồ Sơ Của Tôi</h2>
-				</div>
-				<p>Bạn đã có <strong class="text-orange"><span id="number_of_resumes">3</span> trong số 4</strong> hồ sơ. Hãy chọn một hồ sơ được "<strong>cho phép tìm kiếm</strong>" để nhà tuyển dụng có thể tìm thấy bạn.</p>
-				<p><a href="user-thongtincoban.php" class="btn bg-orange btn-lg">Tạo Hồ Sơ</a></p>
-						<form action="" method="POST" role="form" class="form-horizontal">
-							<table class="table table-striped table-hover table-bordered">
-								<thead>
-									<tr>
-										<th>Tiêu đề</th>
-										<th>Cho phép tìm kiếm</th>
-										<th>Ngày cập nhật</th>
-										<th>Số lần xem</th>
-										<th>Thao tác</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>
-											<strong><em class="text-blue">2015/03/19 10:55:17</em> Anh Điệp Trần</strong><br>
-											<small class="legend text-orange">Chưa hoàn thiện</small>
-										</td>
-										<td>
-											<input type="checkbox" value="" name="resume" id="is_resume">
-										</td>
-										<td>17-04-2015</td>
-										<td>0</td>
-										<td>
-											<a href=""><i class="glyphicon glyphicon-eye-open"></i> Xem</a> 
-											<a href=""><i class="glyphicon glyphicon-refresh"></i> Cập nhật</a> 
-											<a href=""><i class="glyphicon glyphicon-trash"></i> Xóa</a>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<strong><em class="text-blue">2015/03/19 10:55:17</em> Anh Điệp Trần</strong><br>
-											<small class="legend text-green">Đã duyệt <i class="fa fa-check-square-o"></i></small>
-										</td>
-										<td>
-											<input type="checkbox" value="" name="resume" id="is_resume">
-										</td>
-										<td>17-04-2015</td>
-										<td>0</td>
-										<td>
-											<a href=""><i class="glyphicon glyphicon-eye-open"></i> Xem</a> 
-											<a href=""><i class="glyphicon glyphicon-refresh"></i> Cập nhật</a> 
-											<a href=""><i class="glyphicon glyphicon-trash"></i> Xóa</a>
-										</td>
-									</tr>
-								</tbody>
-							</table>		
-						</form>
-				</div>
-			</div>
-		</div>
-		<div class="boxed">
-			<div class="rows">
-				<div class="title-page">
+<div class="title-page">
 					<h2>Việc Làm Gợi Ý</h2>
 				</div>
 				<div id="searchresult">
@@ -149,8 +74,3 @@
 					</ul>
 				</div>
 				<a href="#" class="pull-right push-top"><strong>Xem tất cả việc làm tương tự</strong></a>
-			</div>
-		</div>
-	</section>
-<?php include('footer.php'); ?>
-

@@ -148,11 +148,13 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
     });
 
 
-	// PLUGIN SELECT 2
+    // PLUGIN SELECT 2
     $("#locationMainSearch, #categoryMainSearch").select2({
-		maximumSelectionLength: 3,
-	});
-    $("#jobLevelMainSearch, #jobObjMainSearch,#jobExpMainSearch").select2();
+        maximumSelectionLength: 3,
+    });
+    $("#ForeignLanguages,#CurrentLevel,#WishLevel,#FieldOfStudy,#WishPlaceWork,#Scope,#Specialized,#LatestLevel,#Diploma,#HighestDegree,#District,#Cities,#Nationality,#jobLevelMainSearch, #jobObjMainSearch,#jobExpMainSearch,#DateOfBirth,#MonthOfBirth,#YearOfBirth,#Gender,#Country,#MaritalStatus,#Category,#Province,#Level").select2({
+        minimumResultsForSearch: Infinity
+    });
 
 
     // COUNTDOWN TEXTEREA
@@ -187,6 +189,111 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
         };
     }
     
+    $('.top-companies li').click(function(){
+        $('.top-companies li').removeClass('active');
+        $(this).addClass('active');
+    });
+
+   
+    $('#specific-salary-0').change(function(){
+        $('#specific-salary-input').attr('disabled', true);
+    });
+     $('#specific-salary').change(function(){
+        $('#specific-salary-input').removeAttr('disabled');
+    });
+
+
+    // HIGHLIGHT MENU RIGHT
+    $('.ntv-menu .menu-right a').each(function(index) {
+        if(this.href.trim() == window.location)
+            $(this).addClass("text-orange");
+    });
+
+
+    $('#DOB').datetimepicker({
+        pickTime: false
+    });
+
+    $(document).on('change','#is_publish',function(){
+        var data = $(this).val();
+        $('#popup_is_publish').modal('show');
+        $('.is_publish').click(function(e){
+            e.preventDefault();
+            $.ajax({
+                type: "GET",
+                url: "my-resume", //Relative or absolute path to response.php file
+                data: {is_publish: data },
+                success : function(data){
+                    $('#popup_is_publish').modal('hide');
+                }
+            });    
+        });
+    });
+
+    $(document).on('click','#del_resume',function(){
+        var data = $(this).attr('data-rs');
+        $('#delete_modal').modal('show');
+        $('.del-modal').click(function(e){
+            e.preventDefault();
+            $.ajax({
+                type: "GET",
+                url: "my-resume", //Relative or absolute path to response.php file
+                data: {is_delete: data },
+                success : function(data){
+                   location.reload();
+                    $('#delete_modal').modal('hide');
+                }
+            });    
+        });
+    });
+
+
+
+    // Toggle language button functions
+    function toggleLanguageButton() {
+        var number_of_visible_language_boxes = $('.fr-lang.block').length;
+        // Toggle the "remove language box buttons"
+        if (number_of_visible_language_boxes > 1) {
+            $('.remove-fr-lang').fadeIn().promise().done(function () {
+                $(this).addClass('block');
+            });
+        } else {
+            $('.remove-fr-lang').fadeOut().promise().done(function () {
+                $(this).removeClass('block');
+            });
+        }
+
+        // Toggle the "add language buttons"
+        if (number_of_visible_language_boxes == 3) {
+            $('.add-language-button-wrapper').slideUp();
+        } else {
+            $('.add-language-button-wrapper').slideDown();
+        }
+    }
+        // Add 1 more language box
+        $('.add-new-fr-lang').click(function () {
+            $('.fr-lang').each(function () {
+                if (!$(this).hasClass('block')) {
+                    $(this).slideDown('fast').promise().done(function () {
+                        $(this).removeClass('hidden-xs');
+                        $(this).addClass('block');
+                        toggleLanguageButton();
+                    });
+                    return false;
+                }
+            });
+        });
+
+    // Remove language box
+    $('.remove-fr-lang').click(function (e) {
+            if ($(':animated').length == 0) {
+                $(this).parents('.fr-lang').slideUp('fast').promise().done(function () {
+                    $(this).removeClass('block');
+                    $(this).addClass('hidden-xs');
+                    toggleLanguageButton();
+                });
+            }
+        });
 })(jQuery);
 
 

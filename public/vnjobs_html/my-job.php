@@ -111,7 +111,7 @@
 				</div><!-- rows -->
 				<div class="rows">
 					<div class="title-page">
-						<h2>Kỹ năng</h2> 
+						<h2>Giáo dục</h2> 
 						<a href="#" class="pull-right italic"><i class="fa fa-plus-circle"></i>Thêm Trường học</a>
 					</div>
 					<div class="box">

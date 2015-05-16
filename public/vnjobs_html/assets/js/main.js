@@ -148,11 +148,13 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
     });
 
 
-	// PLUGIN SELECT 2
+    // PLUGIN SELECT 2
     $("#locationMainSearch, #categoryMainSearch").select2({
-		maximumSelectionLength: 3,
-	});
-    $("#jobLevelMainSearch, #jobObjMainSearch,#jobExpMainSearch").select2();
+        maximumSelectionLength: 3,
+    });
+    $("#jobLevelMainSearch, #jobObjMainSearch,#jobExpMainSearch,#DateOfBirth,#MonthOfBirth,#YearOfBirth,#Gender,#Country,#MaritalStatus,#Category,#Province,#Level").select2({
+        minimumResultsForSearch: Infinity
+    });
 
 
     // COUNTDOWN TEXTEREA
@@ -180,9 +182,32 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
 
 
     // UPLOAD INPUT
-    document.getElementById("uploadBtn").onchange = function () {
-        document.getElementById("uploadFile").value = this.value;
-    };
+    var uploadID = $('#uploadBtn').val();
+    if(typeof uploadID != 'undefined') {
+        document.getElementById("uploadBtn").onchange = function () {
+            document.getElementById("uploadFile").value = this.value;
+        };
+    }
+    
+    $('.top-companies li').click(function(){
+        $('.top-companies li').removeClass('active');
+        $(this).addClass('active');
+    });
+
+   
+    $('#specific-salary-0').change(function(){
+        $('#specific-salary-input').attr('disabled', true);
+    });
+     $('#specific-salary').change(function(){
+        $('#specific-salary-input').removeAttr('disabled');
+    });
+
+
+    // HIGHLIGHT MENU RIGHT
+    $('.ntv-menu .menu-right a').each(function(index) {
+        if(this.href.trim() == window.location)
+            $(this).addClass("text-orange");
+    });
 })(jQuery);
 
 

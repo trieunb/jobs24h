@@ -3,7 +3,7 @@
 	<div class="container">
 		@include('includes.jobseekers.breadcrumb')
 	</div>
-	<section class="main-content container">
+	<section class="main-content container login-form">
 	<div class="col-sm-5">
 		<h2 class="push-bottom">Đăng nhập để xem chi tiết...</h2>
 		<p><strong><i class="fa fa-home"></i> Truy cập hàng ngàn công việc</strong></p>
@@ -15,26 +15,26 @@
 	</div>
 	<div class="col-sm-6 pull-right">
 		<h2 class="text-orange">Đăng Nhập</h2>
-		<p><span class="fa-stack fa-lg">
+		<p><span class="fa-stack fa-sm">
 	        <i class="fa fa-circle fa-stack-2x text-blue"></i>
 	        <i class="fa fa-user fa-stack-1x text-white"></i>
-	    </span>Người tìm việc</p>
+	    </span><strong class="h2">Người tìm việc</strong></p>
 	    @include('includes.notifications')
-	    <form action="" method="POST" role="form">
+	    {{ Form::open( array('route'=>array('jobseekers.login'), 'class'=>'form', 'method'=>'POST') ) }}
 	    	<div class="form-group">
 	    		<label for="">Email<abbr>(*)</abbr></label>
-	    		<input type="email" class="form-control" name="email" id="email" required="required">
+	    		{{Form::input('email','email',null, array('class'=>'form-control', 'id'=>'email', 'required'))}}
 	    	</div>
 	    	<div class="form-group">
 	    		<label for="">Mật khẩu<abbr>(*)</abbr></label>
-	    		<input type="password" class="form-control" id="password" name="password" required="required">
+	    		{{Form::input('password','password',null, array('class'=>'form-control', 'id'=>'password', 'required'))}}
 	    	</div>
 	    	<div class="form-group push-bottom">
-		   	<button type="submit" class="btn btn-lg bg-orange">Đăng nhập</button>
-		   	<i class="fa fa-arrow-circle-o-right fa-1x"></i> <a href="#" class="text-blue italic">Quên mật khẩu</a>
+		   	{{Form::submit('Đăng nhập', array('class'=>'btn btn-lg bg-orange'))}}
+		   	<i class="fa fa-arrow-circle-o-right fa-1x"></i> <a href="{{URL::route('jobseekers.register')}}" class="text-blue italic">Quên mật khẩu</a>
 		   	</div>
-	    </form>
-	    <p  class="push-top">Chưa có tài khoản ? <a href="#" class="btn btn-lg bg-gray-light">Đăng ký ngay</a></p>
+	    {{ Form::close() }}
+	    <p  class="push-top"> <a href="{{URL::route('jobseekers.register')}}" class="btn btn-lg bg-gray-light">Đăng ký ngay</a></p>
 	</div>
 </section>
 

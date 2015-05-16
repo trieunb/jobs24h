@@ -32,7 +32,7 @@
 							<div class="form-group">
 								<label for="" class="col-sm-2 control-label">Nghề nghiệp</label>
 								<div class="col-sm-6">
-									<input type="text" class="form-control" id="" placeholder="">
+									<input type="text" class="form-control" id="" placeholder="Digital Marketing Manager at Minh Phuc (MP Telecom)">
 								</div>
 							</div>
 							<div class="form-group">

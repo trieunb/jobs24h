@@ -63,6 +63,23 @@ Route::group(array('prefix'=>$locale), function() {
 			return View::make('jobseekers.account-active');
 		}));
 		Route::get('/account-active/{email}/{code}',array('as'=>'jobseekers.account-active', 'uses'=>'JobSeekerAuth@checkActive'));
+		Route::group(array('before'=>'sentry.ntv'), function() {
+			Route::get('/edit-cv', array('as'=>'jobseekers.edit-cv', 'uses'=>'JobSeeker@editCvHome') );
+			Route::post('/edit-cv', array('as'=>'jobsserkers.edit-basic', 'uses'=>'JobSeeker@editBasicInfo'));
+			Route::get('/edit-cv/{id_cv}', array('as'=>'jobseekers.edit-cv', 'uses'=>'JobSeeker@editCvHome'));
+			Route::post('/edit-cv/{id_cv}', array('as'=>'jobseekers.edit-general-info', 'uses'=>'JobSeeker@editGeneralInfo'));
+			Route::get('/my-resume', array('as'=>'jobseekers.my-resume', 'uses'=>'JobSeeker@myResume'));
+			Route::post('/my-resume', array('as'=>'jobseekers.my-resume', 'uses'=>'JobSeeker@createResume'));
+
+
+
+			Route::get('/edit-career-objectives', 'JobSeeker@returnLogin');
+			Route::get('/edit-basic-info', array('as'=>'jobseekers.edit-basic-info', 'uses'=>'JobSeeker@editBasicHome') );
+			Route::post('/edit-basic-info', array('as'=>'edit-basic-info', 'uses'=>'JobSeeker@editBasic'));
+			Route::get('/edit-career-objectives/{id}', array('as'=>'jobseekers.edit-career-objectives', 'uses'=>'JobSeeker@editCareerObjectivesHome') );
+			Route::post('/edit-career-objectives/{id}', array('as'=>'edit-career-objectives', 'uses'=>'JobSeeker@editCareerObjectives'));
+		});
 	});
 });
 
+ 

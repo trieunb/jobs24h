@@ -24,7 +24,7 @@
 							<h2>Trần Anh Điệp</h2>
 							<p>Digital Marketing Manager tại Minh Phúc (MP Telecom)</p>
 							<p>Hồ Chí Minh - Việt Nam</p>
-							<p>Điện thoại: 091323333</p>
+							<p>Điện thoại: <span class="text-blue">091323333</span></p>
 						</div>
 						</div>
 					</div>
@@ -65,6 +65,7 @@
 					<div class="col-sm-offset-3 col-sm-8">
 						<button type="submit" class="btn btn-lg bg-dark">Hủy bỏ</button>
 						<button type="submit" class="btn btn-lg bg-dark">Nộp đơn</button>
+						<p><h3><abbr>*</abbr> Required field</h3></p>
 					</div>
 				</form>
 			</div>

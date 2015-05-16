@@ -6,27 +6,27 @@
 				<div class="jcarousel-wrapper">
                 	<div class="jcarousel">
 						<ul>
-							<li><a href="#"><img src="assets/images/brand04.png"><span>Delighting You Always</span></a></li>
-							<li><a href="#"><img src="assets/images/brand04.png"><span>Delighting You Always</span></a></li>
-							<li class="active"><a href="#"><img src="assets/images/brand04.png"><span>Delighting You Always</span></a></li>
-							<li><a href="#"><img src="assets/images/brand04.png"><span>Delighting You Always</span></a></li>
-							<li><a href="#"><img src="assets/images/brand04.png"><span>Delighting You Always</span></a></li>
-							<li><a href="#"><img src="assets/images/brand04.png"><span>Delighting You Always</span></a></li>
-							<li><a href="#"><img src="assets/images/brand04.png"><span>Delighting You Always</span></a></li>
-							<li><a href="#"><img src="assets/images/brand04.png"><span>Delighting You Always</span></a></li>
+							<li><div class="company"><img src="assets/images/brand04.png"><span>Delighting You Always</span></div></li>
+							<li><div class="company"><img src="assets/images/brand04.png"><span>Delighting You Always</span></div></li>
+							<li><div class="company"><img src="assets/images/brand04.png"><span>Delighting You Always</span></div></li>
+							<li><div class="company"><img src="assets/images/brand04.png"><span>Delighting You Always</span></div></li>
+							<li><div class="company"><img src="assets/images/brand04.png"><span>Delighting You Always</span></div></li>
+							<li><div class="company"><img src="assets/images/brand04.png"><span>Delighting You Always</span></div></li>
+							<li><div class="company"><img src="assets/images/brand04.png"><span>Delighting You Always</span></div></li>
+							<li><div class="company"><img src="assets/images/brand04.png"><span>Delighting You Always</span></div></li>
 						</ul>
 					</div>
-					<a href="#" class="jcarousel-control-prev">&lsaquo;</a>
-                	<a href="#" class="jcarousel-control-next">&rsaquo;</a>
+					<span class="ctr left"><a href="#" class="jcarousel-control-prev">&lsaquo;</a></span>
+                	<span class="ctr right"><a href="#" class="jcarousel-control-next">&rsaquo;</a></span>
 				</div>
 			</section>
 			</div>
 				<section class="featured-items">
 					<div class="padding bg-silver-dark">
 					<div class="header-page">
-						<a href="#" class="active">Việc làm nổi bật</a>
+						<a href="#" class="text-blue active">Việc làm nổi bật</a>
 						<span>|</span>
-						<a href="#">Việc làm mới nhất</a>
+						<a href="#" class="text-blue">Việc làm mới nhất</a>
 					</div>
 					</div>
 					<div class="clearfix"></div>
@@ -35,109 +35,205 @@
 							<div class="col-sm-4">
 								<ul>
 								<li>
-									<div class="desc-job"><strong><a href="#">Corporate Communications Manager</a></strong>
-									<span>City International Hospital (CIH)</span></div>
+									<div class="desc-job">
+									<a href="#">
+										<strong>Corporate Communications Manager</strong>
+										<span>City International Hospital (CIH)</span>
+									</a>
+									</div>
+								</li>
+								<li>
+									<div class="desc-job">
+									<a href="#">
+										<strong>Corporate Communications Manager</strong>
+										<span>City International Hospital (CIH)</span>
+									</a>
+									</div>
 								</li>
 								<li class="hot-job">
-									<div class="desc-job"><strong><a href="#">Corporate Communications Manager</a></strong>
-									<span>City International Hospital (CIH)</span></div>
+									<div class="desc-job">
+									<a href="#">
+										<strong>Corporate Communications Manager</strong>
+										<span>City International Hospital (CIH)</span>
+									</a>
+									</div>
 								</li>
 								<li>
-									<div class="desc-job"><strong><a href="#">Corporate Communications Manager</a></strong>
-									<span>City International Hospital (CIH)</span></div>
+									<div class="desc-job">
+									<a href="#">
+										<strong>Corporate Communications Manager</strong>
+										<span>City International Hospital (CIH)</span>
+									</a>
+									</div>
 								</li>
 								<li>
-									<div class="desc-job"><strong><a href="#">Corporate Communications Manager</a></strong>
-									<span>City International Hospital (CIH)</span></div>
+									<div class="desc-job">
+									<a href="#">
+										<strong>Corporate Communications Manager</strong>
+										<span>City International Hospital (CIH)</span>
+									</a>
+									</div>
 								</li>
 								<li>
-									<div class="desc-job"><strong><a href="#">Corporate Communications Manager</a></strong>
-									<span>City International Hospital (CIH)</span></div>
+									<div class="desc-job">
+									<a href="#">
+										<strong>Corporate Communications Manager</strong>
+										<span>City International Hospital (CIH)</span>
+									</a>
+									</div>
 								</li>
 								<li>
-									<div class="desc-job"><strong><a href="#">Corporate Communications Manager</a></strong>
-									<span>City International Hospital (CIH)</span></div>
+									<div class="desc-job">
+									<a href="#">
+										<strong>Corporate Communications Manager</strong>
+										<span>City International Hospital (CIH)</span>
+									</a>
+									</div>
 								</li>
 								<li>
-									<div class="desc-job"><strong><a href="#">Corporate Communications Manager</a></strong>
-									<span>City International Hospital (CIH)</span></div>
-								</li>
-								<li>
-									<div class="desc-job"><strong><a href="#">Corporate Communications Manager</a></strong>
-									<span>City International Hospital (CIH)</span></div>
+									<div class="desc-job">
+									<a href="#">
+										<strong>Corporate Communications Manager</strong>
+										<span>City International Hospital (CIH)</span>
+									</a>
+									</div>
 								</li>
 								</ul>
 							</div>
 							<div class="col-sm-4 bg-silver-light">
 								<ul>
 								<li>
-									<div class="desc-job"><strong><a href="#">Corporate Communications Manager</a></strong>
-									<span>City International Hospital (CIH)</span></div>
-								</li>
-								<li class="hot-job">
-									<div class="desc-job"><strong><a href="#">Corporate Communications Manager</a></strong>
-									<span>City International Hospital (CIH)</span></div>
-								</li>
-								<li>
-									<div class="desc-job"><strong><a href="#">Corporate Communications Manager</a></strong>
-									<span>City International Hospital (CIH)</span></div>
+									<div class="desc-job">
+									<a href="#">
+										<strong>Corporate Communications Manager</strong>
+										<span>City International Hospital (CIH)</span>
+									</a>
+									</div>
 								</li>
 								<li>
-									<div class="desc-job"><strong><a href="#">Corporate Communications Manager</a></strong>
-									<span>City International Hospital (CIH)</span></div>
+									<div class="desc-job">
+									<a href="#">
+										<strong>Corporate Communications Manager</strong>
+										<span>City International Hospital (CIH)</span>
+									</a>
+									</div>
 								</li>
 								<li>
-									<div class="desc-job"><strong><a href="#">Corporate Communications Manager</a></strong>
-									<span>City International Hospital (CIH)</span></div>
+									<div class="desc-job">
+									<a href="#">
+										<strong>Corporate Communications Manager</strong>
+										<span>City International Hospital (CIH)</span>
+									</a>
+									</div>
 								</li>
 								<li>
-									<div class="desc-job"><strong><a href="#">Corporate Communications Manager</a></strong>
-									<span>City International Hospital (CIH)</span></div>
+									<div class="desc-job">
+									<a href="#">
+										<strong>Corporate Communications Manager</strong>
+										<span>City International Hospital (CIH)</span>
+									</a>
+									</div>
 								</li>
 								<li>
-									<div class="desc-job"><strong><a href="#">Corporate Communications Manager</a></strong>
-									<span>City International Hospital (CIH)</span></div>
+									<div class="desc-job">
+									<a href="#">
+										<strong>Corporate Communications Manager</strong>
+										<span>City International Hospital (CIH)</span>
+									</a>
+									</div>
 								</li>
 								<li>
-									<div class="desc-job"><strong><a href="#">Corporate Communications Manager</a></strong>
-									<span>City International Hospital (CIH)</span></div>
+									<div class="desc-job">
+									<a href="#">
+										<strong>Corporate Communications Manager</strong>
+										<span>City International Hospital (CIH)</span>
+									</a>
+									</div>
+								</li>
+								<li>
+									<div class="desc-job">
+									<a href="#">
+										<strong>Corporate Communications Manager</strong>
+										<span>City International Hospital (CIH)</span>
+									</a>
+									</div>
+								</li>
+								<li>
+									<div class="desc-job">
+									<a href="#">
+										<strong>Corporate Communications Manager</strong>
+										<span>City International Hospital (CIH)</span>
+									</a>
+									</div>
 								</li>
 								</ul>
 							</div>
 							<div class="col-sm-4">
 								<ul>
 								<li>
-									<div class="desc-job"><strong><a href="#">Corporate Communications Manager</a></strong>
-									<span>City International Hospital (CIH)</span></div>
+									<div class="desc-job">
+									<a href="#">
+										<strong>Corporate Communications Manager</strong>
+										<span>City International Hospital (CIH)</span>
+									</a>
+									</div>
+								</li>
+								<li>
+									<div class="desc-job">
+									<a href="#">
+										<strong>Corporate Communications Manager</strong>
+										<span>City International Hospital (CIH)</span>
+									</a>
+									</div>
 								</li>
 								<li class="hot-job">
-									<div class="desc-job"><strong><a href="#">Corporate Communications Manager</a></strong>
-									<span>City International Hospital (CIH)</span></div>
+									<div class="desc-job">
+									<a href="#">
+										<strong>Corporate Communications Manager</strong>
+										<span>City International Hospital (CIH)</span>
+									</a>
+									</div>
 								</li>
 								<li>
-									<div class="desc-job"><strong><a href="#">Corporate Communications Manager</a></strong>
-									<span>City International Hospital (CIH)</span></div>
+									<div class="desc-job">
+									<a href="#">
+										<strong>Corporate Communications Manager</strong>
+										<span>City International Hospital (CIH)</span>
+									</a>
+									</div>
 								</li>
 								<li>
-									<div class="desc-job"><strong><a href="#">Corporate Communications Manager</a></strong>
-									<span>City International Hospital (CIH)</span></div>
+									<div class="desc-job">
+									<a href="#">
+										<strong>Corporate Communications Manager</strong>
+										<span>City International Hospital (CIH)</span>
+									</a>
+									</div>
 								</li>
 								<li>
-									<div class="desc-job"><strong><a href="#">Corporate Communications Manager</a></strong>
-									<span>City International Hospital (CIH)</span></div>
+									<div class="desc-job">
+									<a href="#">
+										<strong>Corporate Communications Manager</strong>
+										<span>City International Hospital (CIH)</span>
+									</a>
+									</div>
 								</li>
 								<li>
-									<div class="desc-job"><strong><a href="#">Corporate Communications Manager</a></strong>
-									<span>City International Hospital (CIH)</span></div>
+									<div class="desc-job">
+									<a href="#">
+										<strong>Corporate Communications Manager</strong>
+										<span>City International Hospital (CIH)</span>
+									</a>
+									</div>
 								</li>
 								<li>
-									<div class="desc-job"><strong><a href="#">Corporate Communications Manager</a></strong>
-									<span>City International Hospital (CIH)</span></div>
-								</li>
-								<li>
-									<div class="desc-job"><strong><a href="#">Corporate Communications Manager</a></strong>
-									<span>City International Hospital (CIH)</span></div>
-								</li>
+									<div class="desc-job">
+									<a href="#">
+										<strong>Corporate Communications Manager</strong>
+										<span>City International Hospital (CIH)</span>
+									</a>
+									</div>
+								</li>	
 								</ul>
 							</div>
 						</ul>
@@ -148,7 +244,9 @@
 				<div class="padding bg-silver-dark">
 				<section class="search-by-categories container clearfix">
 					<div class="header-page">
-						<h2>Tìm việc làm theo Ngành Nghề</h2>
+						<h2>Tìm việc làm theo Ngành Nghề
+						<span class="separator"></span>
+						</h2>
 					</div>
 					<div class="panel">
 						<div class="col-sm-7 panel-left">
@@ -317,7 +415,9 @@
 				</section>
 				<section class="top-employer clearfix padding bg-silver-dark">
 					<div class="header-page">
-						<h2>Nhà tuyển dụng hàng đầu</h2>
+						<h2>Nhà tuyển dụng hàng đầu
+							<span class="separator"></span>
+						</h2>
 					</div>
 					<ul>
 						<li class="col-sm-2"><img src="assets/images/brand01.png"></li>
@@ -342,7 +442,9 @@
 				</section>
 				<section class="news clearfix">
 					<div class="header-page">
-						<h2>Tin tức mới nhất</h2>
+						<h2>Tin tức mới nhất
+							<span class="separator"></span>
+						</h2>
 					</div>
 					<div class="jcarousel-wrapper" id="news">
 	                	<div class="jcarousel">
@@ -419,7 +521,7 @@
 	                	<a href="#" class="jcarousel-control-next">&rsaquo;</a>
 						</div>
 				</section>
-				<div class="padding bg-silver-dark">
+				<div class="padding bg-silver-dark push-bottom-30">
 				<section class="bottom container">
 					<div class="col-sm-4">
 						<h2 class="text-orange">Cẩm nang Người tìm việc</h2>

@@ -1,15 +1,16 @@
-<?php include('header.php'); ?>
+@extends('layouts.jobseeker')
+@section('content')
 	<div class="container">
 		<div class="col-sm-8">
-			<?php include('breadcrumb.php'); ?>	
+			@include('includes.jobseekers.breadcrumb')
 		</div>
 		<div class="user-menu col-sm-4 pull-right">
 			<a href="#" class="text-blue">
-				<img src="assets/images/ruibu.jpg" class="avatar">
+				{{HTML::image('assets/images/ruibu.jpg', null, array('class'=>'avatar'))}}
 				<strong><em>Hi, Anh Điệp</em></strong>
 			</a>
 			<nav class="ntv-menu navbar-right">
-				<?php include('menu_ntv.php'); ?>
+				@include('includes.jobseekers.menu-ntv')
 			</nav>
 		</div>
 	</div>
@@ -18,14 +19,14 @@
 				<div class="box">
 					<div class="col-sm-3">
 						<div class="avatar">
-							<img src="assets/images/ruibu.jpg">
+							{{ HTML::image('assets/images/ruibu.jpg') }}
 						</div>
 					</div>
 					<div class="col-sm-9">
 						<div class="profile">
-							<h2>Trần Anh Điệp</h2>
-							<p>Điện thoại: <span class="text-blue">0913658679</span></p>
-							<p>Email: <span class="text-blue">dieptrananh@gmail.com</span></p>
+							<h2>{{$user->first_name}} {{$user->last_name}}</h2>
+							<p>Điện thoại: <span class="text-blue">{{$user->phone_number}}</span></p>
+							<p>Email: <span class="text-blue">{{$user->email}}</span></p>
 							<p>Hồ Sơ: <a href="#" class="text-blue" target="_blank">http://www.vnjobs.com/myjobs/tran.diep.4</a></p>
 						</div>
 					</div>
@@ -44,7 +45,7 @@
 						<div class="print-trash col-sm-4">
 							<a href="#"><i class="glyphicon glyphicon-print"></i></a>	
 							<a href="#"><i class="glyphicon glyphicon-trash"></i></a>	
-							<button class="btn btn-lg bg-orange">Đăng Hồ Sơ</button>
+							{{Form::button('Đăng Hồ Sơ', array('class'=>'btn btn-lg bg-orange'))}}
 						</div>
 				</div><!-- Box -->
 				<div class="boxed">
@@ -53,21 +54,22 @@
 						<h2>Thông tin cá nhân</h2> 
 						<a href="#" class=" pull-right"><i class="fa fa-edit"></i> Chỉnh sửa</a>
 					</div>
+						{{Form::open(array('route'=>'jobsserkers.edit-basic', 'class'=>'form-horizontal', 'method'=>'POST'))}}
 						<form action="" method="POST" role="form" class="form-horizontal">
 							<div class="form-group">
 								<label for="" class="col-sm-3 control-label">Ngày sinh<abbr>*</abbr></label>
 								<div class="col-sm-3">
-									<input type="text" class="form-control" id="" placeholder="DD/MM/YYYY">
+									{{Form::input('text','date_of_birth', $user->date_of_birth, array('class'=>'form-control', 'placeholder'=>'DD/MM/YYYY'))}}
 								</div>
 								<label for="" class="col-sm-3 control-label">Giới tính<abbr>*</abbr></label>
 								<div class="col-sm-3">
 									<div class="radio">
 										<label>
-											<input type="radio" name="sex" id="input" value="" checked="checked">
+											{{Form::radio('gender',0, $user->gender)}}
 											Nam
 										</label>
 										<label>
-											<input type="radio" name="sex" id="input" value="" >
+											{{Form::radio('gender',1, $user->gender)}}
 											Nữ
 										</label>
 									</div>
@@ -78,89 +80,63 @@
 								<div class="col-sm-3">
 									<div class="radio">
 										<label>
-											<input type="radio" name="maried-status" id="input" value="" checked="checked">
+											{{Form::radio('marital_status',0, $user->marital_status)}}
 											Độc thân
 										</label>
 										<label>
-											<input type="radio" name="maried-status" id="input" value="" >
+											{{Form::radio('marital_status',1, $user->marital_status)}}
 											Đã kết hôn
 										</label>
 									</div>
 								</div>
 								<label for="" class="col-sm-3 control-label">Quốc tịch<abbr>*</abbr></label>
 								<div class="col-sm-3">
-									<div class="radio">
-										<select class="selectpicker form-control">
-											<option>- Vui lòng chọn -</option>
-									    	<option>Việt Nam</option>
-									    	<option>Irac</option>
-									    	<option>Iran</option>
-										</select>
-									</div>
+									{{ Form::select('nationality_id', Country::lists('country_name', 'id'),$user->nationality_id, array('class'=>'form-control', 'id' => 'Nationality') ) }}
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="" class="col-sm-3 control-label">Địa chỉ</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" id="" placeholder="">
+									{{Form::input('text', 'address', $user->address, array('class'=>'form-control'))}}
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="" class="col-sm-3 control-label">Quốc gia</label>
 								<div class="col-sm-3">
-									<select class="selectpicker form-control">
-										<option>Việt Nam</option>
-									    <option>Việt Nam</option>
-									</select>
+									{{ Form::select('country_id', Country::lists('country_name', 'id'),$user->country_id, array('class'=>'form-control', 'id' => 'Country') ) }}
 								</div>
 								<label for="" class="col-sm-3 control-label">Tỉnh/Thành phố<abbr>*</abbr></label>
 								<div class="col-sm-3">
-									<div class="radio">
-										<select class="selectpicker form-control">
-											<option>- Vui lòng chọn -</option>
-									    	<option>Đà Nẵng</option>
-									    	<option>Đà Nẵng</option>
-									    	<option>Đà Nẵng</option>
-									    	<option>Đà Nẵng</option>
-										</select>
-									</div>
+										{{ Form::select('province_id', Province::lists('province_name', 'id'),$user->province_id, array('class'=>'form-control', 'id' => 'Cities') ) }}
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="" class="col-sm-3 control-label">Quận huyện</label>
 								<div class="col-sm-3">
-									<div class="radio">
-										<select class="selectpicker form-control">
-											<option>- Vui lòng chọn -</option>
-									    	<option>Đà Nẵng</option>
-									    	<option>Đà Nẵng</option>
-									    	<option>Đà Nẵng</option>
-									    	<option>Đà Nẵng</option>
-										</select>
-									</div>
+									{{ Form::select('district_id', Country::lists('country_name', 'id'),$user->district_id, array('class'=>'form-control', 'id' => 'District') ) }}
 								</div>
 								<label for="" class="col-sm-3 control-label">Điện thoại
 								<abbr>*</abbr></label>
 								<div class="col-sm-3">
-									<input type="text" name="" id="input" class="form-control" value="" placeholder="Ví dụ: 0905 123 456">
+									{{Form::input('number', 'phone_number', $user->phone_number, array('class'=>'form-control'))}}
 								</div>
 							</div>
 							<div class="form-group">
 									<div class="checkbox col-sm-offset-2 col-sm-10">
 										<label>
-											<input type="checkbox" value="">
+											{{Form::checkbox('hide_info_with_ntd', null)}}
 											Ẩn thông tin này với nhà tuyển dụng
 										</label>
 									</div>
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-3 col-sm-7">
-										<button type="submit" class="btn btn-lg bg-gray-light">Hủy</button>
-										<button type="submit" class="btn btn-lg bg-orange">Lưu</button>
+									{{Form::submit('Hủy', array('class'=>'btn btn-lg bg-gray-light'))}}
+									{{Form::submit('Lưu', array('class'=>'btn btn-lg bg-orange'))}}
 									<span>(<span class="text-red">*</span>) Thông tin bắt buộc</span>
 								</div>
 							</div>
-						</form>
+						{{Form::close()}}
 				</div><!-- rows -->
 				</div><!-- boxed -->
 				<div class="boxed">
@@ -169,16 +145,16 @@
 						<h2>Thông tin chung</h2> 
 						<a href="#" class=" pull-right"><i class="fa fa-edit"></i> Chỉnh sửa</a>
 					</div>
-					<form action="" method="POST" role="form" class="form-horizontal">
+					{{Form::open(array('route'=> array('jobseekers.edit-general-info', $id_cv), 'class'=>'form-horizontal', 'method'=>'POST'))}}
 						<div class="form-group">
 			                <label class="col-sm-3 control-label">Số năm kinh nghiệm<abbr>*</abbr></label>
 			                <div class="col-sm-3">
-			                    <input type="text" class="form-control" maxlength="2" placeholder="Ví dụ: 7" value="" autofocus="" required="required">
+			                	{{Form::input('text', 'years-of-experience', null, array('class'=>'form-control', 'maxlength'=>'2', 'placeholder'=>'Ví dụ 2'))}}
 			                </div>
 			                <div class="col-sm-6">
 			                    <div class="checkbox">
 			                    	<label>
-			                    		<input type="checkbox" value="">
+			                    		{{Form::checkbox('years-of-experience', 0)}}
 			                    		  Tôi mới tốt nghiệp/chưa có kinh nghiệm làm việc
 			                    	</label>
 			                    </div>
@@ -187,100 +163,95 @@
 			            <div class="form-group">
 			            	<label class="col-sm-3 control-label">Bằng cấp cao nhất<abbr>*</abbr></label>
 			            	<div class="col-sm-3">
-			            		<select name="" id="input" class="form-control">
-			            			<option>-- Vui lòng chọn --</option>
-			            		</select>
+			            		{{ Form::select('highest-degree', Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'HighestDegree') ) }}
 			            	</div>
 			            </div>
 			            <div class="form-group">
-			            	<label class="col-sm-3 control-label">Ngoại ngữ<abbr>*</abbr></label>
-			            	<div class="col-sm-3">
-			            		<select name="" id="input" class="form-control">
-			            			<option value="">-- Vui lòng chọn --</option>
-			            		</select>
-			            		<a href="#" class="text-blue"><i class="fa fa-plus-circle"></i> Thêm mới</a>
+			            	<?php $i = 1?>
+			            	@foreach($mt_lang as $mtl)
+			            	<div class="row fr-lang lang{{$i}} block">
+				            	<label class="col-sm-3 control-label">Ngoại ngữ<abbr>*</abbr></label>
+				            	<div class="col-sm-3 ">
+				            		{{ Form::select('foreign-languages-$id', array(""=>"- Vui lòng chọn -")+Language::lists('lang_name', 'id'),$mtl->lang_id, array('class'=>'form-control', 'id' => 'ForeignLanguages') ) }}
+				            	</div>
+				            	<label class="col-sm-3 control-label">Trình độ</label>
+				            	<div class="col-sm-3 row">
+				            		{{ Form::select('level-languages-$id', array(""=>"- Vui lòng chọn -")+LevelLang::lists('name', 'id'),$mtl->level, array('class'=>'form-control', 'id' => 'Level') ) }}
+				            	</div>
 			            	</div>
-			            	<label class="col-sm-3 control-label">Chứng chỉ liên quan<abbr>*</abbr></label>
+			            	{{$i+=1}}
+			            	@endforeach
+			            	<!--<label class="col-sm-3 control-label">Chứng chỉ liên quan<abbr>*</abbr></label>
 			            	<div class="col-sm-3">
-			            		<select name="" id="input" class="form-control">
-			            			<option value="">-- Vui lòng chọn --</option>
-			            		</select>
+			            		{{ Form::select('certificate', Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'Certificate') ) }}
+			            	</div>-->
+			            	
+			            	<div class="col-sm-offset-3 col-sm-7 add-language-button-wrapper">
+			            		<a class="text-blue add-new-fr-lang"><i class="fa fa-plus-circle"></i> Thêm mới</a>
 			            	</div>
 			            </div>
 			            <div class="form-group">
 			            	<label class="col-sm-3 control-label">Công ty gần đây nhất</label>
-			            	<div class="col-sm-3">
-			            		<input type="text" name="" id="input" class="form-control" value="" required="required" pattern="" title="">
-			            	</div>
-			            	<label class="col-sm-3 control-label">Trình độ</label>
-			            	<div class="col-sm-3">
-			            		<select name="" id="input" class="form-control">
-			            			<option value="">-- Vui lòng chọn --</option>
-			            		</select>
+			            	<div class="col-sm-9">
+			            		{{Form::input('text', 'latest-company', null, array('class'=>'form-control'))}}
 			            	</div>
 			            </div>
 			            <div class="form-group">
 			            	<label class="col-sm-3 control-label">Công việc gần đây nhất</label>
 			            	<div class="col-sm-3">
-			            		<input type="text" name="" id="input" class="form-control" value="" required="required" pattern="" title="">
+			            		{{Form::input('text', 'latest-job', null, array('class'=>'form-control'))}}
 			            	</div>
 			            	<label class="col-sm-3 control-label">Cấp bậc hiện tại<abbr>*</abbr></label>
 			            	<div class="col-sm-3">
-			            		<select name="" id="input" class="form-control">
-			            			<option value="">-- Vui lòng chọn --</option>
-			            		</select>
+			            		{{ Form::select('current-level', Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'CurrentLevel') ) }}
 			            	</div>
 			            </div>
 			            <div class="form-group">
 			            	<label class="col-sm-3 control-label">Vị trí mong muốn<abbr>*</abbr></label>
 			            	<div class="col-sm-3">
-			            		<input type="text" name="" id="input" class="form-control" value="" required="required" pattern="" title="">
+			            		{{Form::input('text', 'wish-position', null, array('class'=>'form-control'))}}
 			            	</div>
 			            	<label class="col-sm-3 control-label">Cấp bậc mong muốn<abbr>*</abbr></label>
 			            	<div class="col-sm-3">
-			            		<select name="" id="input" class="form-control">
-			            			<option value="">-- Vui lòng chọn --</option>
-			            		</select>
+			            		{{ Form::select('wish-level', Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'WishLevel') ) }}
 			            	</div>
 			            </div>
 			            <div class="form-group">
 				            <label class="col-sm-3 control-label">Nơi làm việc<abbr>*</abbr></label>
 				            	<div class="col-sm-3">
-				            		<select name="" id="input" class="form-control">
-				            			<option>-- Vui lòng chọn --</option>
-				            		</select>
+				            		{{ Form::select('wish-place-work', Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'WishPlaceWork') ) }}
 				            		<small class="legend">(Tối đa 3 địa điểm mong muốn)</small>
 			            		</div>
 			            	<label class="col-sm-3 control-label">Ngành nghề<abbr>*</abbr></label>
 			            	<div class="col-sm-3">
-			            		<input type="text" name="" id="input" class="form-control" value="" required="required" pattern="" title="">
+			            		{{Form::input('text', 'category', null, array('class'=>'form-control'))}}
 			            	</div>
 			            </div>
 			            <div class="form-group">
 			                <label class="col-sm-3 control-label">Mức lương mong muốn<abbr>*</abbr></label>
 							<div class="radio col-sm-4">
-			                	<div for="specific-salary">
-			                    	<input type="radio" value="1" id="specific-salary" name="specific-salary">
-			                        <input type="text" class="form-control edit-control text-blue" placeholder="Ví dụ: 8.000.000" value="" id="specific-salary-input" disabled="">
-			                    	<span>VND / tháng</span>
-			                    </div>
-							</div>
-			                <div class="radio col-sm-4">
-			                    <input type="radio" checked="checked" value="2" name="specific-salary">
-			                        <span>Thương lượng </span>
-			                </div>
+				                	<div for="specific-salary">
+				                    	{{Form::radio('specific-salary', 1, null, array('id'=>'specific-salary'))}}
+				                        {{Form::input('number','salary', null, array('class'=>'form-control edit-control text-blue','id'=>'specific-salary-input', 'placeholder'=>'Ví dụ: 8.000.000', 'disabled'))}}
+				                    	<span>VND / tháng</span>
+				                    </div>
+								</div>
+				                <div class="radio col-sm-4">
+				                    {{Form::radio('specific-salary', 0, null, array('id'=>'specific-salary-0', 'checked'=>'checked'))}}
+				                    <span>Thương lượng </span>
+				                </div>
 						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-3 col-sm-7">
-								<button type="submit" class="btn btn-lg bg-gray-light">Hủy</button>
-								<button type="submit" class="btn btn-lg bg-orange">Lưu</button>
+								{{Form::submit('Hủy', array('class'=>'btn btn-lg bg-gray-light'))}}
+									{{Form::submit('Lưu', array('class'=>'btn btn-lg bg-orange'))}}
 								<span>(<span class="text-red">*</span>) Thông tin bắt buộc</span>
 							</div>
 						</div>	
-					</form>
+					{{Form::close()}}
 				</div><!-- rows -->
 				</div><!-- boxed -->
-				<div class="boxed">
+								<div class="boxed">
 				<div class="rows">
 					<div class="title-page">
 						<h2>Hồ sơ / Mục tiêu nghề nghiệp</h2>
@@ -288,13 +259,13 @@
 					<label><abbr>*</abbr> Giới Thiệu Bản Thân Và Miêu Tả Mục Tiêu Nghề Nghiệp Của Bạn</label>
 					<form action="" method="POST" role="form">
 						<div class="form-group">
-							<textarea class="form-control" id="myTextarea" rows="5"></textarea>
+							{{Form::textarea( 'introduct-yourself', null, array('class'=>'form-control', 'rows'=>'5'))}}
 							<em class="text-gray-light"><span class="countdown">5000</span> ký tự có thể nhập thêm</em>
 						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-3 col-sm-7">
-								<button type="submit" class="btn btn-lg bg-gray-light">Hủy</button>
-								<button type="submit" class="btn btn-lg bg-orange">Lưu</button>
+								{{Form::submit('Hủy', array('class'=>'btn btn-lg bg-gray-light'))}}
+								{{Form::submit('Lưu', array('class'=>'btn btn-lg bg-orange'))}}
 								<span>(<span class="text-red">*</span>) Thông tin bắt buộc</span>
 							</div>
 						</div>
@@ -311,28 +282,28 @@
 							<div class="form-group">
 								<label for="" class="col-sm-3 control-label">Chức danh<abbr>*</abbr></label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" id="" >
+									{{Form::input('text','title-for-position', null, array('class'=>'form-control'))}}
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="" class="col-sm-3 control-label">Công ty<abbr>*</abbr></label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" id="" >
+									{{Form::input('text', 'your-company', null, array('class'=>'form-control'))}}
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="" class="col-sm-3 control-label">Từ tháng<abbr>*</abbr></label>
 								<div class="col-sm-2">
-									<input type="text" class="form-control" id="" placeholder="VD: 09/2009">
+									{{Form::input('text', 'job-from', null, array('class'=>'form-control', 'placeholder'=>'VD: 09/2009'))}}
 								</div>
 								<label for="" class="col-sm-2 control-label">Đến tháng<abbr>*</abbr></label>
 								<div class="col-sm-2">
-									<input type="text" class="form-control" id="" placeholder="VD: 12/2014">
+									{{Form::input('text', 'job-to', null, array('class'=>'form-control', 'placeholder'=>'VD: 04/2013'))}}
 								</div>
 								<div class="col-sm-3">
 									<div class="checkbox">
 										<label>
-											<input type="checkbox" value="">
+											{{Form::checkbox('is-current-job', null)}}
 											Công việc hiện tại
 										</label>
 									</div>
@@ -341,42 +312,34 @@
 							<div class="form-group">
 				            	<label class="col-sm-3 control-label">Lĩnh vực<abbr>*</abbr></label>
 				            	<div class="col-sm-3">
-				            		<select name="" id="input" class="form-control">
-				            			<option value="">-- Vui lòng chọn --</option>
-				            		</select>
+				            		{{ Form::select('scope', Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'Scope') ) }}
 				            	</div>
 				            	<label class="col-sm-3 control-label">Chuyên ngành<abbr>*</abbr></label>
 				            	<div class="col-sm-3">
-				            		<select name="" id="input" class="form-control">
-				            			<option value="">-- Vui lòng chọn --</option>
-				            		</select>
+				            		{{ Form::select('specialized', Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'Specialized') ) }}
 				            	</div>
 				            </div>
 				            <div class="form-group">
 				            	<label class="col-sm-3 control-label">Cấp bậc<abbr>*</abbr></label>
 				            	<div class="col-sm-3">
-				            		<select name="" id="input" class="form-control">
-				            			<option value="">-- Vui lòng chọn --</option>
-				            		</select>
+				            		{{ Form::select('latest-level', Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'LatestLevel') ) }}
 				            	</div>
 				            	<label class="col-sm-3 control-label">Mức lương</label>
 				            	<div class="col-sm-3">
-				            		<select name="" id="input" class="form-control">
-				            			<option value="">-- Vui lòng chọn --</option>
-				            		</select>
+				            		{{Form::input('text', 'latest-salary', null, array('class'=>'form-control'))}}
 				            	</div>
 				            </div>
 				            <div class="form-group">
 				            	<label class="col-sm-3 control-label">Mô tả</label>
 				            	<div class="col-sm-9">
-									<textarea class="form-control" id="myTextarea" rows="5" ></textarea>
+									{{Form::textarea( 'summary', null, array('class'=>'form-control', 'rows'=>'5'))}}
 									<em class="text-gray-light"><span class="countdown">5000</span> ký tự có thể nhập thêm</em>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-3 col-sm-7">
-									<button type="submit" class="btn btn-lg bg-gray-light">Hủy</button>
-								<button type="submit" class="btn btn-lg bg-orange">Lưu</button>
+									{{Form::submit('Hủy', array('class'=>'btn btn-lg bg-gray-light'))}}
+									{{Form::submit('Lưu', array('class'=>'btn btn-lg bg-orange'))}}
 									<span>(<span class="text-red">*</span>) Thông tin bắt buộc</span>
 								</div>
 							</div>
@@ -392,55 +355,46 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Chuyên ngành<abbr>*</abbr></label>
 				            	<div class="col-sm-9">
-				            		<input type="text" name="" id="input" class="form-control" value="" required="required" placeholder="Ví dụ: Kinh doanh quốc tế">
+				            		{{Form::input('text', 'majors', null, array('class'=>'form-control', 'placeholder'=>'Ví dụ: Kinh doanh quốc tế'))}}
 				            	</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Trường<abbr>*</abbr></label>
 				            	<div class="col-sm-3">
-				            		<input type="text" name="" id="input" class="form-control" value="" required="required" placeholder="Ví dụ: Đại học Kinh Tế Tp.Hồ Chí Minh">
+				            		{{Form::input('text', 'school', null, array('class'=>'form-control', 'placeholder'=>'Ví dụ: Đại học Kinh Tế Tp.Hồ Chí Minh'))}}
 				            	</div>
 				            	<label class="col-sm-3 control-label">Bằng cấp<abbr>*</abbr></label>
 				            	<div class="col-sm-3">
-				            		<select name="" id="input" class="form-control" required="required">
-				            			<option value="">- Vui lòng chọn -</option>
-				            			<option value="">Tiểu học/THCS</option>
-				            			<option value="">Tiểu học/THCS</option>
-				            			<option value="">Tiểu học/THCS</option>
-				            			<option value="">Tiểu học/THCS</option>
-				            			<option value="">Tiểu học/THCS</option>
-				            		</select>
+				            		{{ Form::select('diploma', Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'Diploma') ) }}
 				            	</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Từ tháng</label>
 				            	<div class="col-sm-3">
-				            		<input type="text" name="" id="input" class="form-control" value="" required="required" placeholder="Ví dụ: 09/2008">
+				            		{{Form::input('text', 'study-from', null, array('class'=>'form-control', 'placeholder'=>'VD: 09/2009'))}}
 				            	</div>
 				            	<label class="col-sm-3 control-label">Đến tháng</label>
 				            	<div class="col-sm-3">
-				            		<input type="text" name="" id="input" class="form-control" value="" required="required" placeholder="Ví dụ: 04/2012">
+				            		{{Form::input('text', 'study-from', null, array('class'=>'form-control', 'placeholder'=>'VD: 04/2013'))}}
 				            	</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Lĩnh vực nghiên cứu<abbr>*</abbr></label>
 				            	<div class="col-sm-3">
-				            		<select name="" id="input" class="form-control" required="required">
-				            			<option value="">- Vui lòng chọn -</option>
-				            		</select>
+				            		{{ Form::select('field-of-study', Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'FieldOfStudy') ) }}
 				            	</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Thành tựu</label>
 								<div class="col-sm-9">
-									<textarea class="form-control" id="myTextarea" rows="5"></textarea>
+									{{Form::textarea( 'achievement', null, array('class'=>'form-control', 'rows'=>'5'))}}
 									<em class="text-gray-light"><span class="countdown">5000</span> ký tự có thể nhập thêm</em>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-3 col-sm-7">
-									<button type="submit" class="btn btn-lg bg-gray-light">Hủy</button>
-									<button type="submit" class="btn btn-lg bg-orange">Lưu</button>
+									{{Form::submit('Hủy', array('class'=>'btn btn-lg bg-gray-light'))}}
+									{{Form::submit('Lưu', array('class'=>'btn btn-lg bg-orange'))}}
 									<span>(<span class="text-red">*</span>) Thông tin bắt buộc</span>
 								</div>
 							</div>
@@ -485,9 +439,9 @@
 						<div class="add-new-tag">
 							<div class="row">
 								<div class="col-sm-10">
-									<input type="text" name="" id="key-skills" class="form-control input-sm" value="" placeholder="Hãy điền thông tin về lĩnh vực chuyên môn của bạn">
+									{{Form::input('text', 'study-from', null, array('class'=>'form-control input-sm', 'id'=>'key-skills', 'placeholder'=>'Hãy điền thông tin về lĩnh vực chuyên môn của bạn'))}}
 								</div>
-								<button type="button" class="btn btn-default col-sm-2 btn-sm" id="btn-add-tag">Thêm</button>
+									{{Form::submit('Thêm', array('class'=>'btn btn-default col-sm-2 btn-sm'))}}
 							</div>
 							<div class="clearfix push-top-sm">
 								<a class="text-blue pull-left what-is-this-skill-section clickable" data-toggle="popover"  data-content="<p>Ngay bây giờ bạn có thể làm giàu hồ sơ của mình bằng cách <strong>thêm các kỹ năng nghề nghiệp</strong>.</p> Kỹ năng sẽ giúp chúng tôi rất nhiều trong việc <strong>đề xuất việc làm phù hợp nhất với bạn</strong> (dựa vào giải thuật về <strong>Điểm số phù hợp</strong> sẽ được cập nhật trong thời gian tới).">Thêm kỹ năng là gì?</a>
@@ -496,8 +450,8 @@
 						<div class="clearfix"></div>
 						<div class="form-group">
 							<div class="col-sm-offset-3 col-sm-7">
-								<button type="submit" class="btn btn-lg bg-gray-light">Hủy</button>
-								<button type="submit" class="btn btn-lg bg-orange">Lưu</button>
+								{{Form::submit('Hủy', array('class'=>'btn btn-lg bg-gray-light'))}}
+									{{Form::submit('Lưu', array('class'=>'btn btn-lg bg-orange'))}}
 								<span>(<span class="text-red">*</span>) Thông tin bắt buộc</span>
 							</div>
 						</div>
@@ -577,63 +531,63 @@
 					<h3>Cẩm nang nghề nghiệp</h3>
 					<ul>
 						<li>
-							<div class="col-sm-3"><img src="assets/images/example.png"></div>
+							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
 							<div class="col-sm-9">
 								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
 								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
 							</div>
 						</li>
 						<li>
-							<div class="col-sm-3"><img src="assets/images/example.png"></div>
+							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
 							<div class="col-sm-9">
 								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
 								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
 							</div>
 						</li>
 						<li>
-							<div class="col-sm-3"><img src="assets/images/example.png"></div>
+							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
 							<div class="col-sm-9">
 								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
 								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
 							</div>
 						</li>
 						<li>
-							<div class="col-sm-3"><img src="assets/images/example.png"></div>
+							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
 							<div class="col-sm-9">
 								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
 								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
 							</div>
 						</li>
 						<li>
-							<div class="col-sm-3"><img src="assets/images/example.png"></div>
+							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
 							<div class="col-sm-9">
 								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
 								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
 							</div>
 						</li>
 						<li>
-							<div class="col-sm-3"><img src="assets/images/example.png"></div>
+							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
 							<div class="col-sm-9">
 								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
 								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
 							</div>
 						</li>
 						<li>
-							<div class="col-sm-3"><img src="assets/images/example.png"></div>
+							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
 							<div class="col-sm-9">
 								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
 								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
 							</div>
 						</li>
 						<li>
-							<div class="col-sm-3"><img src="assets/images/example.png"></div>
+							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
 							<div class="col-sm-9">
 								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
 								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
 							</div>
 						</li>
 						<li>
-							<div class="col-sm-3"><img src="assets/images/example.png"></div>
+							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
 							<div class="col-sm-9">
 								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
 								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
@@ -643,5 +597,4 @@
 				</div>
 		</aside>
 	</section>
-
-<?php include('footer.php'); ?>
+@stop

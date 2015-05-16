@@ -2,7 +2,7 @@
 <div class="container">
 	<?php include('breadcrumb.php'); ?>
 </div>
-<section class="main-content container">
+<section class="main-content container login-form">
 	<div class="col-sm-5">
 		<h2 class="push-bottom">Đăng nhập để xem chi tiết...</h2>
 		<p><strong><i class="fa fa-home"></i> Truy cập hàng ngàn công việc</strong></p>
@@ -14,10 +14,10 @@
 	</div>
 	<div class="col-sm-6 pull-right">
 		<h2 class="text-orange">Đăng Nhập</h2>
-		<p><span class="fa-stack fa-lg">
+		<p><span class="fa-stack fa-sm">
 	        <i class="fa fa-circle fa-stack-2x text-blue"></i>
 	        <i class="fa fa-user fa-stack-1x text-white"></i>
-	    </span>Người tìm việc</p>
+	    </span><strong class="h2">Người tìm việc</strong></p>
 	    <form action="" method="POST" role="form">
 	    	<div class="form-group">
 	    		<label for="">Email<abbr>(*)</abbr></label>

@@ -104,8 +104,8 @@
 							</label>
 						</div>
 					</div>
-					<p><i class="fa fa-arrow-circle-o-right fa-1x"></i> Click Đăng ký, bạn đã đồng ý với <span class="text-red">Quy định bảo mật</span> và <span class="text-red">Thỏa thuận sử dụng</span> của <span class="text-blue">Vnjobs.vn</span></p>
-					<button type="submit" class="btn btn-primary">Submit</button>
+					<p><i class="fa fa-arrow-circle-o-right fa-1x"></i> Click Đăng ký, bạn đã đồng ý với <span class="text-orange">Quy định bảo mật</span> và <span class="text-orange">Thỏa thuận sử dụng</span> của <span class="text-blue">Vnjobs.vn</span></p>
+					<button type="submit" class="btn btn-lg bg-orange">Đăng ký</button>
 				</form>
 			</div>
 	</section>

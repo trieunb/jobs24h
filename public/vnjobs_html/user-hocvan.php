@@ -10,7 +10,7 @@
 			</nav>
 				<div class="rows">
 					<div class="title-page">
-						<h2>Chứng chỉ</h2> 
+						<h2>Học vấn</h2> 
 						<a href="#" class=" pull-right"><i class="glyphicon glyphicon-edit"></i> Chỉnh sửa</a>
 					</div>
 

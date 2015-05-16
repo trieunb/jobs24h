@@ -23,8 +23,8 @@
 					<div class="bg-blue row">
 					<span class="col-sm-1"><img src="assets/images/alert.png"></span>
 					<div class="col-sm-11">
-						Hồ sơ tải lên từ máy tính của bạn chưa được cập nhật trong tháng 4.
-						<br>Vui lòng tải lại hồ sơ đã được cập nhật bằng cách chọn <button type="button" class="btn btn-info btn-lg">THAY THẾ</button>
+						<h1>Hồ sơ tải lên từ máy tính của bạn chưa được cập nhật trong tháng 4.</h1>
+						Vui lòng tải lại hồ sơ đã được cập nhật bằng cách chọn <button type="button" class="btn btn-info btn-lg">THAY THẾ</button>
 					</div>
 				</div>
 					<label class="col-sm-2 control-label">Tên tập tin</label>
@@ -33,7 +33,7 @@
 					<label class="col-sm-2 control-label">Đã tải</label>
 					<div class="col-sm-10">02-05-2015</div>
 					<div class="clearfix"></div>
-					<p>Lưu ý: Với các công việc bạn đã ứng tuyển, nhà tuyển dụng có thể xem được phiên bản hồ sơ đã tải mới nhất của bạn <a href="#">Tìm hiểu thêm</a></p>
+					<p>Lưu ý: Với các công việc bạn đã ứng tuyển, nhà tuyển dụng có thể xem được phiên bản hồ sơ đã tải mới nhất của bạn <a href="#" class="decoration text-blue">Tìm hiểu thêm</a></p>
 				</div>
 			</div>
 		</div>
@@ -68,12 +68,12 @@
 							</div>
 							<div class="col-sm-3 pull-right">
 								<div class="salary text-orange">
-									<strong>3000$</strong>
+									<strong>$3000</strong>
 								</div>
 								<div class="share">
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-floppy-save"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-search"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-envelope"></i></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/floppy-copy.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/search-job.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/email-job.png"></a>
 								</div>
 								<a href="#" class="share-with-friend" title="Lưu việc làm này"><i class="glyphicon glyphicon-share-alt"></i> Giới thiệu bạn bè</a>
 							</div>
@@ -102,19 +102,19 @@
 							</div>
 							<div class="col-sm-3 pull-right">
 								<div class="salary text-orange">
-									<strong>3000$</strong>
+									<strong>$3000</strong>
 								</div>
 								<div class="share">
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-floppy-save"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-search"></i></a>
-									<a href="#" title="Lưu việc làm này"><i class="glyphicon glyphicon-envelope"></i></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/floppy-copy.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/search-job.png"></a>
+									<a href="#" title="Lưu việc làm này"><img src="assets/images/icons/email-job.png"></a>
 								</div>
 								<a href="#" class="share-with-friend" title="Lưu việc làm này"><i class="glyphicon glyphicon-share-alt"></i> Giới thiệu bạn bè</a>
 							</div>
 						</li>
 					</ul>
 				</div>
-				<a href="#" class="pull-right"><strong>Xem tất cả việc làm tương tự</strong></a>
+				<a href="#" class="pull-right push-top"><strong>Xem tất cả việc làm tương tự</strong></a>
 			</div>
 		</div>
 	</section>

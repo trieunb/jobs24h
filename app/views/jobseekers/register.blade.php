@@ -75,40 +75,40 @@
 			<div class="col-sm-6 pull-right">
 				<h2 class="text-orange">Đăng Ký Thành Viên</h2>
 				@include('includes.notifications')
-				<form action="" method="POST" role="form">
+				{{ Form::open( array('route'=>array('jobseekers.register'), 'class'=>'form', 'method'=>'POST') ) }}
 					<div class="form-group row">
 						<div class="col-sm-6">
 							<label for="">Họ-Tên lót<abbr>(*)</abbr></label>
-							<input type="text" class="form-control" id="first_name" name="first_name" required="required">
+							{{ Form::input('text', 'first_name',null, array('class'=>'form-control', 'id'=>'first_name', 'required') ) }}
 						</div>
 						<div class="col-sm-6 ">
 							<label for="">Tên<abbr>(*)</abbr></label>
-							<input type="text" class="form-control" id="last_name" name="last_name" required="required">
+							{{ Form::input('text', 'last_name',null, array('class'=>'form-control', 'id'=>'last_name', 'required') ) }}
 						</div>
 					</div>
 					<div class="form-group">
 							<label for="">Email<abbr>(*)</abbr></label>
-							<input type="email" class="form-control" id="email" name="email" required="required">
+							{{ Form::input('email', 'email',null, array('class'=>'form-control', 'id'=>'email', 'required') ) }}
 					</div>
 					<div class="form-group">
 							<label for="">Mật khẩu<abbr>(*)</abbr></label>
-							<input type="password" class="form-control" id="password" name="password" required="required">
+							{{ Form::input('password', 'password',null, array('class'=>'form-control', 'id'=>'password', 'required') ) }}	
 					</div>
 					<div class="form-group">
 							<label for="">Nhập lại mật khẩu<abbr>(*)</abbr></label>
-							<input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required="required">
+							{{ Form::input('password', 'password_confirmation',null, array('class'=>'form-control', 'id'=>'password_confirmation', 'required') ) }}	
 					</div>
 					<div class="form-group">
 						<div class="checkbox">
 							<label>
-								<input type="checkbox" value="1" id="subscribe" name="subscribe">
+								{{ Form::checkbox('subscribe', '1', null, array('id'=>'subscribe', 'class'=>'subscribe'))}}
 								Nhận email bản tin <a href="#" class="text-blue">vnjobs.vn</a>
 							</label>
 						</div>
 					</div>
-					<p><i class="fa fa-arrow-circle-o-right fa-1x"></i> Click Đăng ký, bạn đã đồng ý với <span class="text-red">Quy định bảo mật</span> và <span class="text-red">Thỏa thuận sử dụng</span> của <span class="text-blue">Vnjobs.vn</span></p>
-					<button type="submit" class="btn btn-lg bg-orange">Đăng ký</button>
-				</form>
+					<p><i class="fa fa-arrow-circle-o-right fa-1x"></i> Click Đăng ký, bạn đã đồng ý với <span class="text-orange">Quy định bảo mật</span> và <span class="text-orange">Thỏa thuận sử dụng</span> của <span class="text-blue">Vnjobs.vn</span></p>
+					{{Form::submit('Đăng ký', array('class' =>'btn btn-lg bg-orange'))}}
+				{{ Form::close() }}
 			</div>
 	</section>
 

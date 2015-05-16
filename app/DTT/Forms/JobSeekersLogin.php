@@ -8,7 +8,7 @@ class JobseekersLogin extends FormValidator {
 		);
 	protected $messages = array(
 		'required'	=>	':attribute không được để trống.',
-		'password.min'		=>	'Password tối thiểu :min kí tự.',
+		'password.min'	=>	'Password tối thiểu :min kí tự.',
 		'email'		=>	'Email không đúng định dạng.',
 		);
 }
