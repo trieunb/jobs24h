@@ -16,7 +16,7 @@ class AddJobseekers1Table extends Migration {
 		{
 			DB::statement('ALTER TABLE jobseekers MODIFY COLUMN password VARCHAR(255)');
 		});
-	}
+	} 
 
 
 	/**
