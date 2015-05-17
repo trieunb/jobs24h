@@ -1,5 +1,6 @@
 @extends('layouts.jobseeker')
 @section('content')
+
 	<div class="container">
 		<div class="col-sm-8">
 			@include('includes.jobseekers.breadcrumb')
@@ -54,22 +55,26 @@
 						<h2>Thông tin cá nhân</h2> 
 						<a href="#" class=" pull-right"><i class="fa fa-edit"></i> Chỉnh sửa</a>
 					</div>
-						{{Form::open(array('route'=>'jobsserkers.edit-basic', 'class'=>'form-horizontal', 'method'=>'POST'))}}
-						<form action="" method="POST" role="form" class="form-horizontal">
+						{{Form::open(array('route'=> array('jobseekers.edit-basic'),'class'=>'form-horizontal', 'id'=>'saveBasicInfo'))}}
 							<div class="form-group">
 								<label for="" class="col-sm-3 control-label">Ngày sinh<abbr>*</abbr></label>
 								<div class="col-sm-3">
-									{{Form::input('text','date_of_birth', $user->date_of_birth, array('class'=>'form-control', 'placeholder'=>'DD/MM/YYYY'))}}
+									<div class="input-group date" id="DOB">
+					                    {{Form::input('text','date_of_birth', $user->date_of_birth, array('class'=>'date_of_birth form-control', 'placeholder'=>'YYYY-MM-DD','data-date-format'=>'YYYY-MM-DD'))}}
+					                    <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
+					                    </span>
+					                </div>
+					                <span class="error-message">{{$errors->first('date_of_birth')}}</span>
 								</div>
 								<label for="" class="col-sm-3 control-label">Giới tính<abbr>*</abbr></label>
 								<div class="col-sm-3">
 									<div class="radio">
 										<label>
-											{{Form::radio('gender',0, $user->gender)}}
+											{{Form::radio('gender',0, $user->gender, array('checked'=>'checked', 'class'=>'gender'))}}
 											Nam
 										</label>
 										<label>
-											{{Form::radio('gender',1, $user->gender)}}
+											{{Form::radio('gender',1, $user->gender, array('class'=>'gender'))}}
 											Nữ
 										</label>
 									</div>
@@ -80,58 +85,61 @@
 								<div class="col-sm-3">
 									<div class="radio">
 										<label>
-											{{Form::radio('marital_status',0, $user->marital_status)}}
+											{{Form::radio('marital_status',0, $user->marital_status,array('checked'=>'checked', 'class'=>'marital_status'))}}
 											Độc thân
 										</label>
 										<label>
-											{{Form::radio('marital_status',1, $user->marital_status)}}
+											{{Form::radio('marital_status',1, $user->marital_status, array('class'=>'marital_status'))}}
 											Đã kết hôn
 										</label>
 									</div>
 								</div>
 								<label for="" class="col-sm-3 control-label">Quốc tịch<abbr>*</abbr></label>
 								<div class="col-sm-3">
-									{{ Form::select('nationality_id', Country::lists('country_name', 'id'),$user->nationality_id, array('class'=>'form-control', 'id' => 'Nationality') ) }}
+									{{ Form::select('nationality_id', Country::lists('country_name', 'id'),$user->nationality_id, array('class'=>'nationality_id form-control', 'id' => 'Nationality') ) }}
+									<span class="error-message">{{$errors->first('nationality_id')}}</span>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="" class="col-sm-3 control-label">Địa chỉ</label>
 								<div class="col-sm-9">
-									{{Form::input('text', 'address', $user->address, array('class'=>'form-control'))}}
+									{{Form::input('text', 'address', $user->address, array('class'=>'address form-control'))}}
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="" class="col-sm-3 control-label">Quốc gia</label>
 								<div class="col-sm-3">
-									{{ Form::select('country_id', Country::lists('country_name', 'id'),$user->country_id, array('class'=>'form-control', 'id' => 'Country') ) }}
+									{{ Form::select('country_id', Country::lists('country_name', 'id'),$user->country_id, array('class'=>'country_id form-control', 'id' => 'Country') ) }}
 								</div>
 								<label for="" class="col-sm-3 control-label">Tỉnh/Thành phố<abbr>*</abbr></label>
 								<div class="col-sm-3">
-										{{ Form::select('province_id', Province::lists('province_name', 'id'),$user->province_id, array('class'=>'form-control', 'id' => 'Cities') ) }}
+										{{ Form::select('province_id', Province::lists('province_name', 'id'),$user->province_id, array('class'=>'province_id form-control', 'id' => 'Cities') ) }}
+										<span class="error-message">{{$errors->first('province_id')}}</span>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="" class="col-sm-3 control-label">Quận huyện</label>
 								<div class="col-sm-3">
-									{{ Form::select('district_id', Country::lists('country_name', 'id'),$user->district_id, array('class'=>'form-control', 'id' => 'District') ) }}
+									{{ Form::select('district_id', Country::lists('country_name', 'id'),$user->district_id, array('class'=>'district_id form-control', 'id' => 'District') ) }}
 								</div>
 								<label for="" class="col-sm-3 control-label">Điện thoại
 								<abbr>*</abbr></label>
 								<div class="col-sm-3">
-									{{Form::input('number', 'phone_number', $user->phone_number, array('class'=>'form-control'))}}
+									{{Form::input('text', 'phone_number', $user->phone_number, array('class'=>'phone_number form-control'))}}
+									<span class="error-message">{{$errors->first('phone_number')}}</span>
 								</div>
 							</div>
 							<div class="form-group">
 									<div class="checkbox col-sm-offset-2 col-sm-10">
 										<label>
-											{{Form::checkbox('hide_info_with_ntd', null)}}
+											{{Form::checkbox('hide_info_with_ntd', 1, $user->is_publish, array('class'=>'hide_info_with_ntd'))}}
 											Ẩn thông tin này với nhà tuyển dụng
 										</label>
 									</div>
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-3 col-sm-7">
-									{{Form::submit('Hủy', array('class'=>'btn btn-lg bg-gray-light'))}}
+									{{Form::button('Hủy', array('class'=>'btn btn-lg bg-gray-light'))}}
 									{{Form::submit('Lưu', array('class'=>'btn btn-lg bg-orange'))}}
 									<span>(<span class="text-red">*</span>) Thông tin bắt buộc</span>
 								</div>
@@ -158,29 +166,29 @@
 			                    		  Tôi mới tốt nghiệp/chưa có kinh nghiệm làm việc
 			                    	</label>
 			                    </div>
+			                    <span class="error-message">{{$errors->first('years-of-experience')}}</span>
 			                </div>
 			            </div>
 			            <div class="form-group">
 			            	<label class="col-sm-3 control-label">Bằng cấp cao nhất<abbr>*</abbr></label>
 			            	<div class="col-sm-3">
 			            		{{ Form::select('highest-degree', Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'HighestDegree') ) }}
+			            		 <span class="error-message">{{$errors->first('highest-degree')}}</span>
 			            	</div>
 			            </div>
 			            <div class="form-group">
-			            	<?php $i = 1?>
-			            	@foreach($mt_lang as $mtl)
+			            	@for($i=0; $i < count($mt_lang); $i++)
 			            	<div class="row fr-lang lang{{$i}} block">
 				            	<label class="col-sm-3 control-label">Ngoại ngữ<abbr>*</abbr></label>
 				            	<div class="col-sm-3 ">
-				            		{{ Form::select('foreign-languages-$id', array(""=>"- Vui lòng chọn -")+Language::lists('lang_name', 'id'),$mtl->lang_id, array('class'=>'form-control', 'id' => 'ForeignLanguages') ) }}
+				            		{{ Form::select('foreign-languages-'.$i.'', array(""=>"- Vui lòng chọn -")+Language::lists('lang_name', 'id'),$mt_lang[$i]->lang_id, array('class'=>'form-control', 'id' => 'ForeignLanguages') ) }}
 				            	</div>
 				            	<label class="col-sm-3 control-label">Trình độ</label>
 				            	<div class="col-sm-3 row">
-				            		{{ Form::select('level-languages-$id', array(""=>"- Vui lòng chọn -")+LevelLang::lists('name', 'id'),$mtl->level, array('class'=>'form-control', 'id' => 'Level') ) }}
+				            		{{ Form::select('level-languages-'.$i.'', array(""=>"- Vui lòng chọn -")+LevelLang::lists('name', 'id'),$mt_lang[$i]->level, array('class'=>'form-control', 'id' => 'Level') ) }}
 				            	</div>
 			            	</div>
-			            	{{$i+=1}}
-			            	@endforeach
+			            	@endfor
 			            	<!--<label class="col-sm-3 control-label">Chứng chỉ liên quan<abbr>*</abbr></label>
 			            	<div class="col-sm-3">
 			            		{{ Form::select('certificate', Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'Certificate') ) }}
@@ -203,28 +211,35 @@
 			            	</div>
 			            	<label class="col-sm-3 control-label">Cấp bậc hiện tại<abbr>*</abbr></label>
 			            	<div class="col-sm-3">
-			            		{{ Form::select('current-level', Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'CurrentLevel') ) }}
+			            		{{ Form::select('current-level', array(""=>"- Vui lòng chọn -")+Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'CurrentLevel') ) }}
+			            		 <span class="error-message">{{$errors->first('current-level')}}</span>
 			            	</div>
 			            </div>
 			            <div class="form-group">
 			            	<label class="col-sm-3 control-label">Vị trí mong muốn<abbr>*</abbr></label>
 			            	<div class="col-sm-3">
 			            		{{Form::input('text', 'wish-position', null, array('class'=>'form-control'))}}
+			            		<span class="error-message">{{$errors->first('wish-position')}}</span>
 			            	</div>
 			            	<label class="col-sm-3 control-label">Cấp bậc mong muốn<abbr>*</abbr></label>
 			            	<div class="col-sm-3">
-			            		{{ Form::select('wish-level', Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'WishLevel') ) }}
+			            		{{ Form::select('wish-level', array(""=>"- Vui lòng chọn -")+Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'WishLevel') ) }}
+			            		<span class="error-message">{{$errors->first('wish-level')}}</span>
 			            	</div>
 			            </div>
 			            <div class="form-group">
 				            <label class="col-sm-3 control-label">Nơi làm việc<abbr>*</abbr></label>
 				            	<div class="col-sm-3">
-				            		{{ Form::select('wish-place-work', Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'WishPlaceWork') ) }}
+				 
+			            		{{Form::select('wish-place-work', Province::lists('province_name', 'id'), null, array('class'=>'form-control chosen-select', 'id' => 'WishPlaceWork', 'multiple'=>'true','data-placeholder'=>'VD: Hồ Chí Minh') )}}
 				            		<small class="legend">(Tối đa 3 địa điểm mong muốn)</small>
+				            		<span class="error-message">{{$errors->first('wish-place-work')}}</span>
 			            		</div>
 			            	<label class="col-sm-3 control-label">Ngành nghề<abbr>*</abbr></label>
 			            	<div class="col-sm-3">
-			            		{{Form::input('text', 'category', null, array('class'=>'form-control'))}}
+			            		{{Form::select('category', Category::lists('cat_name', 'id'), null, array('class'=>'form-control chosen-select', 'id' => 'categoryMainSearch', 'multiple'=>'true','data-placeholder'=>'VD: Kế toán') )}}
+			            		
+			            		<span class="error-message">{{$errors->first('category')}}</span>
 			            	</div>
 			            </div>
 			            <div class="form-group">

@@ -79,24 +79,24 @@
 					<div class="form-group row">
 						<div class="col-sm-6">
 							<label for="">Họ-Tên lót<abbr>(*)</abbr></label>
-							{{ Form::input('text', 'first_name',null, array('class'=>'form-control', 'id'=>'first_name', 'required') ) }}
+							{{ Form::input('text', 'first_name',null, array('class'=>'form-control', 'id'=>'first_name') ) }}
 						</div>
 						<div class="col-sm-6 ">
 							<label for="">Tên<abbr>(*)</abbr></label>
-							{{ Form::input('text', 'last_name',null, array('class'=>'form-control', 'id'=>'last_name', 'required') ) }}
+							{{ Form::input('text', 'last_name',null, array('class'=>'form-control', 'id'=>'last_name') ) }}
 						</div>
 					</div>
 					<div class="form-group">
 							<label for="">Email<abbr>(*)</abbr></label>
-							{{ Form::input('email', 'email',null, array('class'=>'form-control', 'id'=>'email', 'required') ) }}
+							{{ Form::input('email', 'email',null, array('class'=>'form-control', 'id'=>'email') ) }}
 					</div>
 					<div class="form-group">
 							<label for="">Mật khẩu<abbr>(*)</abbr></label>
-							{{ Form::input('password', 'password',null, array('class'=>'form-control', 'id'=>'password', 'required') ) }}	
+							{{ Form::input('password', 'password',null, array('class'=>'form-control', 'id'=>'password') ) }}	
 					</div>
 					<div class="form-group">
 							<label for="">Nhập lại mật khẩu<abbr>(*)</abbr></label>
-							{{ Form::input('password', 'password_confirmation',null, array('class'=>'form-control', 'id'=>'password_confirmation', 'required') ) }}	
+							{{ Form::input('password', 'password_confirmation',null, array('class'=>'form-control', 'id'=>'password_confirmation') ) }}	
 					</div>
 					<div class="form-group">
 						<div class="checkbox">

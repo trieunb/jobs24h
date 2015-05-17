@@ -165,7 +165,7 @@ body.modal-open {padding: 0 !important; overflow: visible !important;}
 footer {margin-top:30px;}
 footer.bg-dark,footer.bg-dark:hover {background: #494949;}
 .bg-dark:hover {background:#282b2d; color: #fff;}
-.text-red {color: #FF0000;}
+.text-red {color: #ff5051;}
 .text-blue {color: #00b9f2;}
 .text-white {color: #ffffff;}
 .text-orange {color: #f7941d;}
@@ -625,3 +625,5 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
 .fr-lang {margin-bottom: 5px;}
 .fr-lang .select2-container {width: 100% !important;}
 .fr-lang .col-sm-1 {width: 10px;}
+.has-error .form-group, .has-error input.form-control {border-color: #ff5051 !important;}
+.error-message {color: #ff5051; display: block; margin-top: 2px;}

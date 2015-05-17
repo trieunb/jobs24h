@@ -51,26 +51,7 @@ class JobSeeker extends Controller
 	// Mục tiêu nghề nghiệp
 	public function editCareerObjectivesHome($id){
 		return View::make('jobseekers.edit-career-objectives');
-	}
-	public function editCareerObjectives($id){ 
-		$params = Input::only('position','level','province', 'category','salary', 'dhnn');
-		if($params['salary']== null) $params['salary'] = 0;
-		$add = Resume::create( array(
-			'ntv_id' => $id,
-			'vitrimongmuon' => ''.$params['position'].'',
-			'capbacmongmuon' => $params['level'],
-			'noilamviecmongmuon' => $params['province'],
-			'nganhnghe' => $params['category'],
-			'mucluong' => $params['salary'],
-			'dinhhuongnn' => ''.$params['dhnn'].'',
-		));
-		if($add){
-			echo "OK";
-		}else{
-			echo "Loi";
-		}
-
-	}
+	}	
 
 
 
@@ -82,31 +63,42 @@ class JobSeeker extends Controller
 		return View::make('jobseekers.edit-cv')->with('user', $GLOBALS['user'])->with('id_cv', $id_cv)->with('mt_lang',$mt_lang);
 	}
 	public function editBasicInfo(){
-		$params = Input::only('date_of_birth','gender','marital_status', 'nationality_id','address', 'country_id', 'province_id', 'district_id', 'phone_number');
-		try
+		$params = Input::all();
+		if(Request::ajax()){
+			Log::info($params);
+		$validator = new App\DTT\Forms\FormValidatorResume;
+		if($validator->fails())
 		{
-			$user = $GLOBALS['user'];
-			$user->date_of_birth = $params['date_of_birth'];
-			$user->gender 		= $params['gender'];
-			$user->marital_status = $params['marital_status'];
-			$user->nationality_id = $params['nationality_id'];
-			$user->address 		= $params['address'];
-			$user->country_id 	= $params['country_id'];
-			$user->province_id 	= $params['province_id'];
-			$user->district_id 	= $params['district_id'];
-			$user->phone_number = $params['phone_number'];
-			if ($user->save())
-		    {
-		        return Redirect::back()->with('success', 'Lưu thành công!');
-		    }
-		    else
-		    {
-		       return Redirect::back()->withInput->withErrors('Hiện giờ bạn không thể chỉnh sửa mục này');
-		    }
+			return Redirect::back()->withInput()->withErrors($validator);
+		} else {
+			try
+			{	
+				if($params['date_of_birth']=='') $params['date_of_birth'] = null;
+				$user = $GLOBALS['user'];
+				$user->date_of_birth 	= $params['date_of_birth'];
+				$user->gender 			= $params['gender'];
+				$user->marital_status 	= $params['marital_status'];
+				$user->nationality_id 	= $params['nationality_id'];
+				$user->address 			= $params['address'];
+				$user->country_id 		= $params['country_id'];
+				$user->province_id 		= $params['province_id'];
+				$user->district_id 		= $params['district_id'];
+				$user->phone_number 	= $params['phone_number'];
+				$user->is_publish 		= $params['hide_info_with_ntd'];
+				if ($user->save())
+			    {
+			        return Redirect::back();
+			    }
+			    else
+			    {
+			       return Redirect::back()->withInput->withErrors('Hiện giờ bạn không thể chỉnh sửa mục này');
+			    }
+			}
+			catch (Cartalyst\Sentry\Users\UserExistsException $e)
+			{
+			    return Redirect::back()->withInput->withErrors($e);
+			}
 		}
-		catch (Cartalyst\Sentry\Users\UserExistsException $e)
-		{
-		    return Redirect::back()->withInput->withErrors($e);
 		}
 	}
 	public function editGeneralInfo($id_cv) {
@@ -114,14 +106,13 @@ class JobSeeker extends Controller
 		
 		$params = Input::only('years-of-experience','highest-degree','foreign-languages', 'certificate','latest-company', 'level', 'latest-job', 'current-level', 'wish-position','wish-level', 'wish-place-work', 'category','salary','foreign-languages-1', 'level-languages-1', 'foreign-languages-2', 'level-languages-2','foreign-languages-3', 'level-languages-3');
 		if($params['salary']== null) $params['salary'] = 0;
-
+/*	
 		$mt_lang = MTLanguage::where('rs_id','=',$id_cv)->count();
 		if($mt_lang>0){
 			$update_lang = MTLanguage::where('rs_id','=',$id_cv)->update(array(
 				'lang_id'=>$params['foreign-languages-1'], 'level' => $params['level-languages-1'] 
 			));
 		}else{
-			$lang->save();
 			$lang = array(
 			    new MTLanguage(array('rs_id' => $id_cv, 'lang_id' => $params['foreign-languages-1'], 'level' => $params['level-languages-1'])),
 			    new MTLanguage(array('rs_id' => $id_cv, 'lang_id' => $params['foreign-languages-2'], 'level' => $params['level-languages-2'])),
@@ -133,25 +124,31 @@ class JobSeeker extends Controller
 			$create_lang->lang()->saveMany($lang);
 		}
 
-
-		$rs = Resume::where('id',$id_cv)->where('ntv_id',$GLOBALS['user']->id)->update(array(
-			'namkinhnghiem' 		=> ''.$params['years-of-experience'].'',
-			'bangcapcaonhat' 		=> ''.$params['highest-degree'].'',
-			'ctyganday' 			=> ''.$params['latest-company'].'',
-			'cvganday'		 		=> ''.$params['latest-job'].'',
-			'capbachientai'			=> ''.$params['current-level'].'',
-			'vitrimongmuon' 		=> ''.$params['wish-position'].'',
-			'capbacmongmuon' 		=> ''.$params['wish-level'].'',
-			'noilamviecmongmuon' 	=> ''.$params['wish-place-work'].'',
-			'mucluong' 				=> ''.$params['salary'].'',
-		));
-		if ($rs)
+*/
+		$validator = new App\DTT\Forms\FormValidatorGeneralInfo;
+		if($validator->fails())
 		{
-		    return Redirect::back()->with('success', 'Lưu thành công!');
-		}
-		else
-		{
-			return Redirect::back()->withInput->withErrors('Hiện giờ bạn không thể chỉnh sửa mục này');
+			return Redirect::back()->withInput()->withErrors($validator);
+		} else {
+			$rs = Resume::where('id',$id_cv)->where('ntv_id',$GLOBALS['user']->id)->update(array(
+				'namkinhnghiem' 		=> ''.$params['years-of-experience'].'',
+				'bangcapcaonhat' 		=> ''.$params['highest-degree'].'',
+				'ctyganday' 			=> ''.$params['latest-company'].'',
+				'cvganday'		 		=> ''.$params['latest-job'].'',
+				'capbachientai'			=> ''.$params['current-level'].'',
+				'vitrimongmuon' 		=> ''.$params['wish-position'].'',
+				'capbacmongmuon' 		=> ''.$params['wish-level'].'',
+				'noilamviecmongmuon' 	=> ''.$params['wish-place-work'].'',
+				'mucluong' 				=> ''.$params['salary'].'',
+			));
+			if ($rs)
+			{
+			    return Redirect::back()->with('success', 'Lưu thành công!');
+			}
+			else
+			{
+				return Redirect::back()->withInput->withErrors('Hiện giờ bạn không thể chỉnh sửa mục này');
+			}
 		}
 	}
 
@@ -159,7 +156,7 @@ class JobSeeker extends Controller
 	public function myResume(){
 		$data = Input::all();
 		if(Request::ajax())
-	    {
+	    {	
 	    	if(isset($data['is_publish'])){
 		    	$un_set_publish = Resume::where('ntv_id',$GLOBALS['user']->id)->update(array('is_public'=>0));
 		    	if($un_set_publish){

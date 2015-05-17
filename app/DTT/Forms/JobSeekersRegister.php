@@ -10,7 +10,7 @@ class JobSeekersRegister extends FormValidator {
 		"password_confirmation"=>"required|min:3"
 		);
 	protected $messages = array(
-		'required'	=>	':attribute không được để trống.',
+		'required'	=>	'(*) Thông tin bắt buộc.',
 		'min'		=>	':attribute tối thiểu :min kí tự.',
 		'email'		=>	'Email không đúng định dạng.',
 		'unique'	=>	':attribute đã tồn tại.',
