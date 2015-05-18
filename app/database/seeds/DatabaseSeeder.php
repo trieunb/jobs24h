@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder {
 		$this->call('WorkTypeTableSeeder');
 		$this->call('JobseekerTableSeeder');
 		$this->call('LevelLangTableSeeder');
+		$this->call('FieldsInWorkExpTableSeeder');
+		$this->call('SpecializedTableSeeder');
 	}
 
 }

@@ -149,12 +149,19 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
 
 
     // PLUGIN SELECT 2
-    $("#locationMainSearch, #categoryMainSearch, #WishPlaceWork").select2({
+    $("#locationMainSearch, #categoryMainSearch, #WishPlaceWork, #Fields,#Specialized").select2({
         maximumSelectionLength: 3,
     });
-    $("#ForeignLanguages,#CurrentLevel,#WishLevel,#FieldOfStudy,#Scope,#Specialized,#LatestLevel,#Diploma,#HighestDegree,#District,#Cities,#Nationality,#jobLevelMainSearch, #jobObjMainSearch,#jobExpMainSearch,#DateOfBirth,#MonthOfBirth,#YearOfBirth,#Gender,#Country,#MaritalStatus,#Category,#Province,#Level").select2({
+    $("#ForeignLanguages,#CurrentLevel,#WishLevel,#FieldOfStudy,#Scope,#LatestLevel,#Diploma,#HighestDegree,#District,#Cities,#Nationality,#jobLevelMainSearch, #jobObjMainSearch,#jobExpMainSearch,#DateOfBirth,#MonthOfBirth,#YearOfBirth,#Gender,#Country,#MaritalStatus,#Category,#Province,#Level").select2({
         minimumResultsForSearch: Infinity
     });
+    $('#DOB').datetimepicker({
+        pickTime: false,
+    });
+    $('#From_date').datetimepicker({
+        pickTime: false,
+    });
+
 
 
     // COUNTDOWN TEXTEREA
@@ -210,10 +217,7 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
     });
 
 
-    $('#DOB').datetimepicker({
-        pickTime: false,
-    });
-
+    
     $(document).on('change','#is_publish',function(){
         var data = $(this).val();
         $('#popup_is_publish').modal('show');
@@ -302,32 +306,6 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
         }else{
             $(this).parent().addClass('has-error');
         }
-    });
-
-    // Save CV 
-    $('#saveBasicInfo').submit(function(e){
-        e.preventDefault();
-        var url= "{{URL::route('jobsserkers.edit-basic')}}";
-        var date_of_birth = $('.date_of_birth').val();
-        var gender = $('.gender').val();
-        var marital_status = $('.marital_status').val();
-        var nationality_id = $('.nationality_id').val();
-        var address = $('.address').val();
-        var country_id = $('.country_id').val();
-        var province_id = $('.province_id').val();
-        var district_id = $('.district_id').val();
-        var phone_number = $('.phone_number').val();
-        var hide_info_with_ntd = $('.hide_info_with_ntd').val();
-        var dataString = 'date_of_birth='+date_of_birth+'&gender='+gender;
-        $.ajax({
-            type: "GET",
-            url: url,//Relative or absolute path to response.php file
-            data: dataString,
-            cache: false,
-            success : function(data){
-                console.log(date_of_birth);
-                }
-            });    
     });
 
 })(jQuery);

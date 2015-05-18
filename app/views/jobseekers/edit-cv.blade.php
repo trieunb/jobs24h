@@ -55,7 +55,7 @@
 						<h2>Thông tin cá nhân</h2> 
 						<a href="#" class=" pull-right"><i class="fa fa-edit"></i> Chỉnh sửa</a>
 					</div>
-						{{Form::open(array('route'=> array('jobseekers.edit-basic'),'class'=>'form-horizontal', 'id'=>'saveBasicInfo'))}}
+						{{Form::open(array('class'=>'form-horizontal', 'id'=>'saveBasicInfo'))}}
 							<div class="form-group">
 								<label for="" class="col-sm-3 control-label">Ngày sinh<abbr>*</abbr></label>
 								<div class="col-sm-3">
@@ -64,7 +64,7 @@
 					                    <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
 					                    </span>
 					                </div>
-					                <span class="error-message">{{$errors->first('date_of_birth')}}</span>
+					                
 								</div>
 								<label for="" class="col-sm-3 control-label">Giới tính<abbr>*</abbr></label>
 								<div class="col-sm-3">
@@ -97,7 +97,6 @@
 								<label for="" class="col-sm-3 control-label">Quốc tịch<abbr>*</abbr></label>
 								<div class="col-sm-3">
 									{{ Form::select('nationality_id', Country::lists('country_name', 'id'),$user->nationality_id, array('class'=>'nationality_id form-control', 'id' => 'Nationality') ) }}
-									<span class="error-message">{{$errors->first('nationality_id')}}</span>
 								</div>
 							</div>
 							<div class="form-group">
@@ -114,7 +113,6 @@
 								<label for="" class="col-sm-3 control-label">Tỉnh/Thành phố<abbr>*</abbr></label>
 								<div class="col-sm-3">
 										{{ Form::select('province_id', Province::lists('province_name', 'id'),$user->province_id, array('class'=>'province_id form-control', 'id' => 'Cities') ) }}
-										<span class="error-message">{{$errors->first('province_id')}}</span>
 								</div>
 							</div>
 							<div class="form-group">
@@ -126,7 +124,6 @@
 								<abbr>*</abbr></label>
 								<div class="col-sm-3">
 									{{Form::input('text', 'phone_number', $user->phone_number, array('class'=>'phone_number form-control'))}}
-									<span class="error-message">{{$errors->first('phone_number')}}</span>
 								</div>
 							</div>
 							<div class="form-group">
@@ -153,7 +150,7 @@
 						<h2>Thông tin chung</h2> 
 						<a href="#" class=" pull-right"><i class="fa fa-edit"></i> Chỉnh sửa</a>
 					</div>
-					{{Form::open(array('route'=> array('jobseekers.edit-general-info', $id_cv), 'class'=>'form-horizontal', 'method'=>'POST'))}}
+					{{Form::open(array('route'=> array('jobsserkers.save-cv', $id_cv), 'class'=>'form-horizontal', 'method'=>'POST'))}}
 						<div class="form-group">
 			                <label class="col-sm-3 control-label">Số năm kinh nghiệm<abbr>*</abbr></label>
 			                <div class="col-sm-3">
@@ -272,19 +269,19 @@
 						<h2>Hồ sơ / Mục tiêu nghề nghiệp</h2>
 					</div>
 					<label><abbr>*</abbr> Giới Thiệu Bản Thân Và Miêu Tả Mục Tiêu Nghề Nghiệp Của Bạn</label>
-					<form action="" method="POST" role="form">
+					{{Form::open(array('id'=>'saveCareerGoal'))}}
 						<div class="form-group">
-							{{Form::textarea( 'introduct-yourself', null, array('class'=>'form-control', 'rows'=>'5'))}}
+							{{Form::textarea( 'introduct_yourself', $my_resume->dinhhuongnn, array('class'=>'form-control introduct_yourself', 'rows'=>'5'))}}
 							<em class="text-gray-light"><span class="countdown">5000</span> ký tự có thể nhập thêm</em>
 						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-3 col-sm-7">
-								{{Form::submit('Hủy', array('class'=>'btn btn-lg bg-gray-light'))}}
+								{{Form::button('Hủy', array('class'=>'btn btn-lg bg-gray-light'))}}
 								{{Form::submit('Lưu', array('class'=>'btn btn-lg bg-orange'))}}
 								<span>(<span class="text-red">*</span>) Thông tin bắt buộc</span>
 							</div>
 						</div>
-					</form>
+					{{Form::close()}}
 				</div><!-- rows -->
 				</div><!-- boxed -->
 				<div class="boxed">
@@ -293,29 +290,33 @@
 							<h2>Kinh nghiệm làm việc</h2>
 							<a href="#" class=" pull-right"><i class="fa fa-edit"></i> Chỉnh sửa</a>
 						</div>
-						<form action="" method="POST" role="form" class="form-horizontal">
+							{{Form::open(array('class'=>'form-horizontal', 'id'=>'saveWorkExp'))}}
 							<div class="form-group">
-								<label for="" class="col-sm-3 control-label">Chức danh<abbr>*</abbr></label>
-								<div class="col-sm-9">
-									{{Form::input('text','title-for-position', null, array('class'=>'form-control'))}}
+								<label for="" class="col-sm-2 control-label">Chức danh<abbr>*</abbr></label>
+								<div class="col-sm-10">
+									{{Form::input('text','position', null, array('class'=>'position form-control'))}}
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="" class="col-sm-3 control-label">Công ty<abbr>*</abbr></label>
-								<div class="col-sm-9">
-									{{Form::input('text', 'your-company', null, array('class'=>'form-control'))}}
+								<label for="" class="col-sm-2 control-label">Công ty<abbr>*</abbr></label>
+								<div class="col-sm-10">
+									{{Form::input('text', 'company_name', null, array('class'=>'company_name form-control'))}}
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="" class="col-sm-3 control-label">Từ tháng<abbr>*</abbr></label>
-								<div class="col-sm-2">
-									{{Form::input('text', 'job-from', null, array('class'=>'form-control', 'placeholder'=>'VD: 09/2009'))}}
+								<label for="" class="col-sm-2 control-label">Từ tháng<abbr>*</abbr></label>
+								<div class="col-sm-3">
+									<div class="input-group date" id="From_date">
+					                    {{Form::input('text','from_date', null, array('class'=>'from_date form-control', 'placeholder'=>'Ví dụ: 09/2008','data-date-format'=>'MM-YYYY'))}}
+					                    <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
+					                    </span>
+					                </div>
 								</div>
 								<label for="" class="col-sm-2 control-label">Đến tháng<abbr>*</abbr></label>
-								<div class="col-sm-2">
-									{{Form::input('text', 'job-to', null, array('class'=>'form-control', 'placeholder'=>'VD: 04/2013'))}}
-								</div>
 								<div class="col-sm-3">
+									{{Form::input('text', 'to_date', null, array('class'=>'to_date form-control', 'placeholder'=>'VD: 04/2013'))}}
+								</div>
+								<div class="col-sm-2">
 									<div class="checkbox">
 										<label>
 											{{Form::checkbox('is-current-job', null)}}
@@ -325,28 +326,28 @@
 								</div>
 							</div>
 							<div class="form-group">
-				            	<label class="col-sm-3 control-label">Lĩnh vực<abbr>*</abbr></label>
-				            	<div class="col-sm-3">
-				            		{{ Form::select('scope', Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'Scope') ) }}
+				            	<label class="col-sm-2 control-label">Lĩnh vực<abbr>*</abbr></label>
+				            	<div class="col-sm-4">
+				            		{{ Form::select('field',array(''=>'- Vui lòng chọn -')+FieldsInWorkExp::lists('name', 'id'),null, array('class'=>'field form-control', 'id' => 'Fields') ) }}
 				            	</div>
-				            	<label class="col-sm-3 control-label">Chuyên ngành<abbr>*</abbr></label>
-				            	<div class="col-sm-3">
-				            		{{ Form::select('specialized', Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'Specialized') ) }}
-				            	</div>
-				            </div>
-				            <div class="form-group">
-				            	<label class="col-sm-3 control-label">Cấp bậc<abbr>*</abbr></label>
-				            	<div class="col-sm-3">
-				            		{{ Form::select('latest-level', Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'LatestLevel') ) }}
-				            	</div>
-				            	<label class="col-sm-3 control-label">Mức lương</label>
-				            	<div class="col-sm-3">
-				            		{{Form::input('text', 'latest-salary', null, array('class'=>'form-control'))}}
+				            	<label class="col-sm-2 control-label">Chuyên ngành<abbr>*</abbr></label>
+				            	<div class="col-sm-4">
+				            		{{ Form::select('specialized', array(''=>'- Vui lòng chọn -')+Specialized::lists('name', 'id'),null, array('class'=>'specialized form-control', 'id' => 'Specialized') ) }}
 				            	</div>
 				            </div>
 				            <div class="form-group">
-				            	<label class="col-sm-3 control-label">Mô tả</label>
-				            	<div class="col-sm-9">
+				            	<label class="col-sm-2 control-label">Cấp bậc<abbr>*</abbr></label>
+				            	<div class="col-sm-4">
+				            		{{ Form::select('level', array(''=>'- Vui lòng chọn -')+Level::lists('name', 'id'),null, array('class'=>'level form-control', 'id' => 'LatestLevel') ) }}
+				            	</div>
+				            	<label class="col-sm-2 control-label">Mức lương</label>
+				            	<div class="col-sm-4">
+				            		{{Form::input('text', 'salary', null, array('class'=>'salary form-control'))}}
+				            	</div>
+				            </div>
+				            <div class="form-group">
+				            	<label class="col-sm-2 control-label">Mô tả</label>
+				            	<div class="col-sm-10">
 									{{Form::textarea( 'summary', null, array('class'=>'form-control', 'rows'=>'5'))}}
 									<em class="text-gray-light"><span class="countdown">5000</span> ký tự có thể nhập thêm</em>
 								</div>
@@ -612,4 +613,115 @@
 				</div>
 		</aside>
 	</section>
+
+@stop
+
+@section('scripts')
+	
+	<script type="text/javascript">
+	$('#saveBasicInfo').submit(function(e){
+        e.preventDefault();
+        $('.loading-icon').show();
+        url = '{{ URL::route("jobsserkers.save-cv", array("basic", $id_cv )) }}';
+        $.ajax({
+            type: "POST",
+            url: url,//Relative or absolute path to response.php file
+          	dataType: 'json',
+            data: {
+            	date_of_birth: $('.date_of_birth').val(),
+		        gender:$('.gender').val(),
+		        marital_status: $('.marital_status').val(),
+		        nationality_id: $('.nationality_id').val(),
+		        address: $('.address').val(),
+		        country_id: $('.country_id').val(),
+		        province_id: $('.province_id').val(),
+		        district_id: $('.district_id').val(),
+		        phone_number: $('.phone_number').val(),
+		        hide_info_with_ntd: $('.hide_info_with_ntd').val()
+            },
+            success : function(json){
+            	if(! json.has)
+            	{	$('#saveBasicInfo').find(".has-error").removeClass('has-error');
+	            	$('#saveBasicInfo').find(".error-message").remove();
+            		var j = $.parseJSON(json.message);
+            		$.each(j, function(index, val) {
+            			
+	            			$('.'+index).parent().addClass('has-error');
+	            			if($('.'+index).parents('.col-sm-3').find(".error-message").length < 1){
+	            				$('.'+index).parents('.col-sm-3').append('<span class="error-message">'+val+'</span>')
+	            			}
+	            			$('.loading-icon').hide();      		
+            		});
+            	}else{
+            		$('#saveBasicInfo').find(".has-error").removeClass('has-error');
+            		$('#saveBasicInfo').find(".error-message").remove();
+            	}
+            	$('.loading-icon').hide();
+            }
+        });    
+    });
+
+	$('#saveCareerGoal').submit(function(e){
+        e.preventDefault();
+        $('.loading-icon').show();
+        url = '{{ URL::route("jobsserkers.save-cv", array("career-goal", $id_cv )) }}';
+        $.ajax({
+            type: "POST",
+            url: url,//Relative or absolute path to response.php file
+          	dataType: 'json',
+            data: { introduct_yourself: $('.introduct_yourself').val()},
+            success : function(json){
+            	if(! json.has)
+            	{	$('#saveCareerGoal').find(".has-error").removeClass('has-error');
+	            	$('#saveCareerGoal').find(".error-message").remove();
+            		var j = $.parseJSON(json.message);
+            		$.each(j, function(index, val) {
+	            			$('.'+index).parent().addClass('has-error');
+	            			if($('.'+index).parent().find(".error-message").length < 1){
+	            				$('.'+index).parent().append('<span class="error-message">'+val+'</span>')
+	            			}
+	            			$('.loading-icon').hide();           		
+            		});
+            	}else{
+            		$('#saveCareerGoal').find(".has-error").removeClass('has-error');
+            		$('#saveCareerGoal').find(".error-message").remove();
+					$('.loading-icon').hide();
+            	}
+            	$('.loading-icon').hide();
+            }
+        });    
+    });
+	$('#saveWorkExp').submit(function(e) {
+		e.preventDefault();
+		var url = "{{URL::route('jobseekers.save-cv', array('work-exp', $id_cv))}}"
+		$.ajax({
+			url: url,
+			type: 'POST',
+			dataType: 'jsson',
+			data: {
+				position: $('.position').val();
+				company_name: $('.position').val();
+				from_date: $('.from_date').val();
+				to_date: $('.to_date').val();
+				position: $('.position').val();
+				position: $('.position').val();
+				position: $('.position').val();
+				position: $('.position').val();
+				position: $('.position').val();
+				position: $('.position').val();
+			    		'company_name' => ''.$params['company_name'].'', 
+			    		'from_date'=> ''.$params['from_date'].'',
+			    		'to_date'=> ''.$params['to_date'].'',
+			    		'job_detail'=> ''.$params['job_detail'].'',
+			    		'field'=> ''.$params['field'].'', 
+			    		'specialized'=> ''.$params['specialized'].'',
+			    		'level'=> ''.$params['level'].'',
+						'salary'=> ''.$params['salary'].'',))
+			},
+		})
+		.done(function() {
+			console.log("success");
+		})
+	});
+    </script>
 @stop
