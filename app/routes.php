@@ -65,9 +65,8 @@ Route::group(array('prefix'=>$locale), function() {
 		Route::get('/account-active/{email}/{code}',array('as'=>'jobseekers.account-active', 'uses'=>'JobSeekerAuth@checkActive'));
 		Route::group(array('before'=>'sentry.ntv'), function() {
 			Route::get('/edit-cv', array('as'=>'jobseekers.edit-cv', 'uses'=>'JobSeeker@editCvHome') );
-			Route::post('/edit-cv/{id_cv}', array('as'=>'jobsserkers.edit-basic', 'uses'=>'JobSeeker@editBasicInfo'));
+			Route::post('/edit-cv/{action}/{id_cv}', array('as'=>'jobsserkers.save-cv', 'uses'=>'JobSeeker@saveInfo'));
 			Route::get('/edit-cv/{id_cv}', array('as'=>'jobseekers.edit-cv', 'uses'=>'JobSeeker@editCvHome'));
-			Route::post('/edit-cv/{id_cv}', array('as'=>'jobseekers.edit-general-info', 'uses'=>'JobSeeker@editGeneralInfo'));
 			Route::get('/my-resume', array('as'=>'jobseekers.my-resume', 'uses'=>'JobSeeker@myResume'));
 			Route::post('/my-resume', array('as'=>'jobseekers.my-resume', 'uses'=>'JobSeeker@createResume'));
 
