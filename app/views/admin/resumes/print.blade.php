@@ -1,10 +1,10 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>{{ $resume->ntv->full_name . " - " . $resume->ntv_tieudeCV }}</title>
+	<title>{{ $resume->ntv->full_name() . " - " . $resume->tieude_cv }}</title>
 	{{ HTML::style('assets/css/print-cv.css') }}
 </head>
-<body>  
+<body><!-- onload="window.print()">  -->
 <div style="position: relative">
 	<div id="cvo-document" class="cvo-document">
 		<div class="cvo-page" id="cvo-page-1">
@@ -14,7 +14,7 @@
 						<tbody>
 							<tr>
 								<td>
-									<span id="fullname">{{ $resume->ntv->full_name }}</span>
+									<span id="fullname">{{ $resume->ntv->full_name() }}</span>
 								</td>
 							</tr>
 							<tr>
@@ -97,36 +97,9 @@
 					<h3 class="block-title">Skills</h3>
 					<div class="skill-table">
 						<div class="row">
-							<div>
-								<span class="area">Creative thinkings</span>
-							</div>
-							<div>
-								<span class="skill">
-								<p>- Be able to give unique &amp; reliable ideas for Campaigns, contribute to success of these campaign.</p>						</span>
-							</div>
-							<div style="clear: both"></div>
+							{{ nl2br($resume->kynang) }}
 						</div>
-						<div class="row">
-							<div>
-								<span class="area">Computer</span>
-							</div>
-							<div>
-								<span class="skill">
-								<p>- Competent with most Microsoft Office programmes such as Microsoft Word, Excel, PowerPoint, Outlook.</p><div>- Experience with Online Marketing tools such as: Facebook Ads, Google Adword and SEO&nbsp;</div>						</span>
-							</div>
-							<div style="clear: both"></div>
-						</div>
-						<div class="row">
-							<div>
-								<span class="area">LINGUISTICS &nbsp;</span>
-							</div>
-							<div>
-								<span class="skill">
-									<p>Good at English</p>						
-								</span>
-							</div>
-							<div style="clear: both"></div>
-						</div>
+						
 					</div>
 				</div>
 

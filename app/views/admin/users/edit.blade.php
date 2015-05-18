@@ -1,8 +1,7 @@
 @extends('layouts.admin')
 @section('title')Edit User {{ $user->username }} @stop
+@section('page-header')Chỉnh sửa quản trị @stop
 @section('content')
-	<h3>Chỉnh sửa quản trị: </h3>
-	<hr>
 	{{ Form::open(array('method'=>'PUT', 'action'=> array('admin.users.update', $user->id), 'class'=>'form form-horizontal' ) ) }}
 		@include('includes.notifications')
 		<div class="form-group">

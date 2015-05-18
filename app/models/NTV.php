@@ -8,5 +8,9 @@ class NTV extends \Eloquent {
 	{
 		return $this->hasMany('Resume');
 	}
+	public function full_name()
+	{
+		return $this->first_name . " " . $this->last_name;
+	}
 	
 }

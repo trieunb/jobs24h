@@ -91,3 +91,6 @@ if (in_array($locale, $languages)) {
 }
 View::share('locale', $locale);
 $GLOBALS['user'] = Sentry::getUser();
+
+require app_path().'/routes/admin.php';
+require app_path().'/routes/jobseeker.php';

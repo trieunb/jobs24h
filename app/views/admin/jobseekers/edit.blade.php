@@ -1,8 +1,7 @@
 @extends('layouts.admin')
 @section('title')Edit Jobseeker: {{ $js->username }} @stop
+@section('page-header')Chỉnh sửa người tìm việc @stop
 @section('content')
-	<h3>Chỉnh sửa Người tìm việc: </h3>
-	<hr>
 	{{ Form::open( array('route'=>array('admin.jobseekers.update', $js->id), 'class'=>'form-horizontal', 'method'=>'PUT') ) }}
 		@include('includes.notifications')
 		
@@ -19,9 +18,15 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="inputFullname" class="col-sm-2 control-label">Họ tên:</label>
-			<div class="col-sm-6">
-				{{ Form::input('text', 'full_name', $js->full_name, array('class'=>'form-control') ) }}
+			<label for="inputFullname" class="col-sm-2 control-label">Họ:</label>
+			<div class="col-sm-2">
+				{{ Form::input('text', 'first_name', $js->first_name, array('class'=>'form-control') ) }}
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="inputFullname" class="col-sm-2 control-label">Tên:</label>
+			<div class="col-sm-2">
+				{{ Form::input('text', 'last_name', $js->last_name, array('class'=>'form-control') ) }}
 			</div>
 		</div>
 		<div class="form-group">

@@ -1,0 +1,627 @@
+@font-face {
+  font-family: 'Grunge';
+  font-style: normal;
+  font-weight: 300;
+  src: url(../fonts/grunge_serifia_font.ttf);
+}
+
+* {
+    margin: 0; padding: 0;
+    box-sizing:border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+body {
+    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 300;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: #34495E;
+	font-weight: 300;
+}
+
+a {
+    color: #16a085;
+    text-decoration: none;
+    transition: all 0.25s ease 0s;
+}
+
+ul li {
+    list-style: none;
+}
+
+.standalone {
+    display: none;
+    transform: scale(0.8);
+}
+.popup_visible .standalone {
+  transform: scale(1);
+}
+
+.navbar-default {
+    background-color: #ecf0f1;
+}
+.navbar {
+    border: medium none;
+    border-radius: 6px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    min-height: 53px;
+}
+
+.nav-brand {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.042;
+    padding-left: 21px;
+    padding-top: 14px;
+}
+
+.navbar-default a {
+    color: #34495e;
+    float: left;
+}
+
+.clear {
+	clear: both;
+}
+
+.grid-1000, .grid-1200 {
+    margin: 0 auto;
+    padding: 0 0 0 1%;
+}
+
+.grid-1200 {
+    max-width: 1220px;
+}
+
+.grid-1000 {
+    max-width: 1020px;
+}
+
+.onerow {
+    clear: both;
+    padding: 0 10px;
+}
+
+/* *********************************************************************************************************************
+ * Common columns definitions
+ */
+.col1, .col2, .col3, .col4, .col5, .col6, .col7, .col8, .col9, .col10, .col11, .col12 {
+    float: left;
+    margin: 0 3% 0 0;
+}
+
+.col1.last, .col2.last, .col3.last, .col4.last, .col5.last, .col6.last, .col7.last, .col8.last, .col9.last, .col10.last, .col11.last, .col12 {
+    margin: 0;
+}
+
+.col1 { width: 5.5%; }
+.col2 { width: 14%; }
+.col3 { width: 22.5%; }
+.col4 { width: 31%; }
+.col5 { width: 39.5%; }
+.col6 { width: 48%; }
+.col7 { width: 56.5%; }
+.col8 { width: 65%; }
+.col9 { width: 73.5%; }
+.col10 { width: 82%; }
+.col11 { width: 90.5%; }
+.col12 { width: 99%; margin: 0; }
+
+.col1 img, .col2 img, .col3 img, .col4 img, .col5 img, .col6 img, .col7 img, .col8 img, .col9 img, .col10 img, .col11 img, .col12 img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* *********************************************************************************************************************
+ * Disable padding left/right 10px if I'm 1024 or gibber - correct percentage math
+ */
+@media all and (min-width: 1024px) {
+    .onepcssgrid-1000 {
+        max-width: 1000px;
+    }
+
+    .onepcssgrid-1000 .onerow {
+        padding: 0;
+    }
+}
+
+/* *********************************************************************************************************************
+ * Small devices
+ */
+@media all and (max-width: 768px) {
+    .onerow {
+    }
+
+    .col1, .col2, .col3, .col4, .col5, .col6, .col7, .col8, .col9, .col10, .col11 {
+        float: none;
+        width: 99%;
+    }
+}
+
+
+/* Popup download CV */
+#exportMask {
+    position: fixed;
+    display: none;
+    z-index:20071992;
+    top: 0;
+    left:0;
+    background-color:rgba(255, 255, 255, 0.8);
+    width: 100%;
+    height: 100%;
+    color: black;
+    text-align: center;
+}
+#exportMask .export-loading {
+    font-size: 40px;
+    padding-top: 100px;
+    /*display: none;*/
+}
+#exportMask .export-done {
+    color: green;
+    font-size: 40px;
+    padding-top: 100px;
+    display: none;
+}
+#exportMask .export-done a {
+    color:blue;
+}
+
+#exportMask .export-done button {
+    cursor: pointer;
+    font-size: 20px;
+    padding: 7px 15px;
+    border: 0;
+    background-color: #2E4052;
+    color: white;
+    border-radius: 3px;
+}
+
+#exportMask .export-done button:hover {
+    background-color: #111;
+}
+@page {
+    size: A4;
+    margin: 0cm;
+    padding: 0cm;
+}
+
+body {
+}
+
+#cvo-document-root {
+    margin: 0px auto;
+    padding: 0;
+    font-size: 12pt;
+}
+
+.cvo-form {
+    display: none;
+}
+
+.cvo-document {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.cvo-document .cvo-page {
+    width: 210mm;
+    min-height: 290mm;
+    padding: 20mm;
+    margin: 0mm auto;
+    box-shadow: 0 0 2px rgba(0,0,0,0.4);
+    background-color: white;
+    overflow: hidden;
+}
+
+.cvo-document .cvo-subpage {
+    padding: 5mm;
+    min-height: 200mm;
+}
+
+.saveBtns {
+    text-align: center;
+}
+
+.tmpAbsoluteHidden {
+    position: absolute;
+    top: -10000cm;
+}
+
+[cvo-form-field] {
+    cursor: text;
+}
+[cvo-form-field][type=rate] {
+    cursor: pointer;
+}
+[cvo-form-field]:hover,
+[cvo-form-field]:focus
+{
+    /*outline: 1pt dashed green;*/
+}
+
+[cvo-form-field].disabled {
+    outline: none;
+    cursor: default;
+    background-color: #eee;
+}
+[cvo-form-fieldgroup].disabled {
+    background-color: #eee;
+}
+[cvo-form-fieldgroup].disabled,
+[cvo-form-field].disabled {
+    color: transparent;
+    text-shadow: 0 0 3px rgba(0,0,0,0.6);
+}
+[cvo-form-fieldgroup].disabled::after {
+    content: "Má»¥c nĂ y Ä‘ang áº©n vĂ  sáº½ khĂ´ng hiá»ƒn thá»‹ trong CV cá»§a báº¡n. Báº¥m ThĂªm má»¥c Ä‘á»ƒ hiá»ƒn thá»‹.";
+    background-color: rgb(26, 188, 156);
+    text-shadow: none;
+    color: white;
+    display: block;
+    padding: 3px;
+}
+[cvo-form-field][type=text]:focus {
+    cursor: text;
+}
+[cvo-form-field][type=image]:hover::after {
+    background-color: rgba(0,0,0,0.6);
+    content: 'xx';
+}
+
+[type=fieldgroup]:hover {
+    position: relative;
+    box-shadow: 1px 1px 3px #CCC;
+}
+#fieldgroup_controls {
+    display: none;
+}
+.fieldgroup_controls {
+    text-align: right;
+    position: absolute;
+    display: block;
+    width: 135px;
+    top: -32px;
+    right: 0px;
+    text-shadow: none;
+}
+.fieldgroup_controls * {
+    text-shadow: none;
+}
+.fieldgroup_controls .clone, .remove {
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    /*font-size: 10pt;*/
+    margin: 0 auto;
+    line-height: 14px;
+    font-size: 12px;
+    width: 50px;
+    color: white;
+    border-radius: 5px;
+    padding: 4px;
+    margin-top: 10px;
+}
+.fieldgroup_controls .clone {
+    font-size: 12px;
+    background-color: #3CB371;
+    width: 80px;
+}
+.fieldgroup_controls .clone:hover {
+    background-color: green;
+}
+.fieldgroup_controls .remove {
+    background-color: #F15C4C;
+}
+.fieldgroup_controls .remove:hover {
+    background-color: red;
+}
+img[cvo-form-field][type=image] {
+    cursor: pointer;
+}
+.default_min_width {
+    min-width: 30pt;
+}
+
+[contentEditable=true] {
+    min-height: 1em;
+    display: inline-block;
+}
+[contenteditable=true]:empty:before {
+    content:attr(cvo-placeholder);
+    color: #9197a3;
+    font-weight: 100;
+    padding: 3px;
+}
+.cvoInvalidate {
+    outline: 1px dashed rgb(252, 75, 8);
+    color: red;
+}
+#cv-title {
+    display: block;
+}
+#cv-title[contenteditable] {
+    outline: 1px dashed #ccc;
+}
+.cvo-document {
+    font-family: arial, sans-serif, tahoma;
+    font-size: 10pt;
+}
+.cvo-document div.block {
+    margin-bottom: 1cm;
+}
+.cvo-document .block-title {
+    color: #000000;
+    font-size: 12pt;
+    line-height: 18pt;
+    margin-bottom: 5pt;
+    border-bottom: 1pt solid #333;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.cvo-document .block-body {
+    padding-top: 0.5cm;
+}
+
+/* Profile */
+.cvo-document .profile {
+}
+.cvo-document .profile table {
+    margin: 0;
+    border-collapse: collapse;
+    width: 100%;
+}
+.cvo-document .profile th,
+.cvo-document .profile td {
+    padding: 0.1cm;
+    line-height: 15pt;
+    vertical-align: middle;
+}
+.cvo-document .profile td.avatar {
+    width: 4.2cm;
+    min-height: 4.2cm;
+    vertical-align: top;
+}
+.cvo-document .profile td.avatar img {
+    border: 0;
+    width: 3.5cm;
+    height: 4cm;
+    margin: 0 auto;
+}
+.cvo-document .profile #fullname {
+    display: block;
+    font-size: 24pt;
+    line-height: 24pt;
+    font-weight: bold;
+    color: #0E2452;
+    text-transform: capitalize;
+}
+.cvo-document .profile #title {
+    display: block;
+    font-size: 11pt;
+    line-height: 12pt;
+    color: #000050;
+    vertical-align: top;
+}
+.cvo-document .profile span.profile-field
+{
+    display: inline-block;
+    min-width: 3cm;
+    max-width: 10.9cm;
+    font-style: italic;
+}
+
+.cvo-document .profile span.profile-label
+{
+    display: inline-block;
+    width: 2.8cm;
+    font-weight: bold;
+    font-style: normal;
+}
+
+/* Objective */
+.cvo-document span#objective {
+    display: block;
+    line-height: 15pt;
+    min-width: 12cm;
+    font-style: italic;
+    text-align: justify;
+}
+
+/* EDUCATION BLOCK */
+.cvo-document .education-table {
+    width: 100%;
+    margin: 0.2cm auto;
+}
+.cvo-document .education-table {
+
+}
+.cvo-document .education-table .row{
+    display: block;
+    vertical-align: top;
+    border-bottom: 1px solid #eee;
+}
+.cvo-document .education-table .time {
+    padding: 1mm;
+    width: 5cm;
+    float: left;
+}
+.cvo-document .education-table .school {
+    width: 11cm;
+    float: left;
+}
+.cvo-document .education-table .school-name{
+    font-weight: bold;
+    padding: 1mm;
+    min-width: 5cm;
+    display: block;
+}
+.cvo-document .education-table .school-major{
+    padding: 1mm;
+    min-width: 5cm;
+    display: block;
+    font-style: italic;
+}
+
+/* EXP BLOCK */
+.cvo-document .experience-table .row{
+    vertical-align: top;
+}
+.cvo-document .experience-table {
+    width: 100%;
+    margin: 0.2cm auto;
+}
+.cvo-document .experience-table .row {
+    border-bottom: 0.05cm solid #eee;
+    line-height: 15pt;
+    padding: 0.15cm;
+}
+.cvo-document .experience-table .time {
+    padding: 2mm;
+    width: 5cm;
+    float: left;
+}
+
+.cvo-document .experience-table .company{
+    width: 10cm;
+    float: left;
+    overflow: hidden;
+}
+
+.cvo-document .experience-table .company-name{
+    font-weight: bold;
+    min-width: 5cm;
+    display: block;
+}
+.cvo-document .experience-table .position{
+    min-width: 5cm;
+    font-style: italic;
+    display: block;
+}
+
+/* ACTIVITY BLOCK */
+.cvo-document .activity-table .row{
+    vertical-align: top;
+}
+.cvo-document .activity-table {
+    width: 100%;
+    margin: 0.2cm auto;
+}
+.cvo-document .activity-table .row {
+    border-bottom: 0.05cm solid #eee;
+    line-height: 15pt;
+    padding: 0.15cm;
+}
+.cvo-document .activity-table .time {
+    padding: 2mm;
+    width: 5cm;
+    float: left;
+}
+
+.cvo-document .activity-table .organization{
+    width: 10cm;
+    float: left;
+    overflow: hidden;
+}
+
+.cvo-document .activity-table .organization-name{
+    font-weight: bold;
+    min-width: 5cm;
+    display: block;
+}
+.cvo-document .activity-table .position{
+    min-width: 5cm;
+    font-style: italic;
+    display: block;
+}
+
+/* SKILL BLOCK */
+.cvo-document .skill-table .row{
+    vertical-align: top;
+}
+.cvo-document .skill-table {
+    width: 100%;
+    margin: 0.2cm auto;
+}
+.cvo-document .skill-table .row {
+    border-bottom: 0.05cm solid #eee;
+    line-height: 15pt;
+    padding: 0.15cm;
+}
+.cvo-document .skill-table .area {
+    width: 5cm;
+    color: #000000;
+    text-transform: uppercase;
+    font-weight: bold;
+    float: left;
+}
+.cvo-document .skill-table .skill{
+    float: left;
+    width: 10cm;
+}
+
+/* AWARDS BLOCK */
+.cvo-document .awards-table {
+    width: 100%;
+    margin: 0.2cm auto;
+}
+.cvo-document .awards-table {
+
+}
+.cvo-document .awards-table .row{
+    display: block;
+    vertical-align: top;
+    border-bottom: 1px solid #eee;
+}
+.cvo-document .awards-table .time {
+    padding: 1mm;
+    width: 5cm;
+    float: left;
+}
+.cvo-document .awards-table .details {
+    width: 11cm;
+    float: left;
+}
+.cvo-document .awards-table .title{
+    padding: 1mm;
+    font-size: 10pt;
+    min-width: 5cm;
+    display: block;
+    font-style: italic;
+}
+/* ----------- */
+
+/* Reference BLOCK */
+.cvo-document .reference-table .row{
+    vertical-align: top;
+}
+.cvo-document .reference-table {
+    width: 100%;
+    margin: 0.2cm auto;
+}
+.cvo-document .reference-table .row {
+    border-bottom: 0.05cm solid #eee;
+    line-height: 15pt;
+    padding: 0.15cm;
+}
+.cvo-document .reference-table .title {
+    width: 5cm;
+    font-weight: bold;
+    float: left;
+}
+.cvo-document .reference-table .content{
+    float: left;
+    width: 10cm;
+}
+/* ----------- */
+
+.start, .end {
+    min-width: 30px;
+    display: inline-block;
+}

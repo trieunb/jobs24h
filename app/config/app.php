@@ -125,6 +125,8 @@ return array(
 		'Bllim\Datatables\DatatablesServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
 		'Barryvdh\Debugbar\ServiceProvider',
+		'DaveJamesMiller\Breadcrumbs\ServiceProvider',
+
 	),
 
 	/*
@@ -197,6 +199,7 @@ return array(
 		'AdminAuth'	=>	'DTT\Sentry\AdminAuth',
 		'Cookies'	=>	'DTT\Sentry\Cookies\NativeCookie',
 		'Hasher'	=>	'DTT\Sentry\Hashing\Sha256Hasher',
+		'Breadcrumbs' => 'DaveJamesMiller\Breadcrumbs\Facade',
 		
 	),
 

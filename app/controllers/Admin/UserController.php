@@ -27,8 +27,8 @@ class UserController extends \BaseController {
 ')
 		->edit_column('ids', '
 			{{ Form::open(array("method"=>"delete", "route"=>array("admin.users.destroy", $id) )) }}
-			<a class="btn btn-sm btn-info" href="{{URL::route("admin.users.edit", array($id) )}}" title="Edit"><i class="glyphicon glyphicon-edit"></i></a> 
-			<button class="btn btn-sm btn-danger" onclick="return confirm(\'Are you want delete ?\');" type="submit" title="Delete"><i class="glyphicon glyphicon-remove"></i></button>
+			<a class="btn btn-xs btn-info" href="{{URL::route("admin.users.edit", array($id) )}}" title="Edit"><i class="glyphicon glyphicon-edit"></i></a> 
+			<button class="btn btn-xs btn-danger" onclick="return confirm(\'Are you want delete ?\');" type="submit" title="Delete"><i class="glyphicon glyphicon-remove"></i></button>
 			{{ Form::close() }}
 			')
 		->make();

@@ -9,6 +9,6 @@ class WorkLocation extends \Eloquent {
 	}
 	public function resume()
 	{
-		return $this->belongsTo('WorkLocation', 'rs_id');
+		return $this->belongsTo('Resume', 'rs_id');
 	}
 }

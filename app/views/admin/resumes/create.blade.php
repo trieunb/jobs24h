@@ -1,14 +1,38 @@
 @extends('layouts.admin')
 @section('title')Add new Resume @stop
+@section('page-header')Thêm mới Hồ Sơ @stop
 @section('content')
-	<h3>Thêm mới Hồ Sơ: </h3>
-	<hr>
 	{{ Form::open(array('method'=>'POST', 'action'=> array('admin.resumes.store'), 'class'=>'form form-horizontal' ) ) }}
 		@include('includes.notifications')
 		<div class="form-group">
 			<label for="inputEmail" class="col-sm-2 control-label">Email:</label>
 			<div class="col-sm-8">
-				{{ Form::email('email', null, array('required', 'class'=>'form-control', 'required', 'placeholder'=>'Nhập email người tìm việc') ) }}
+				{{ Form::email('email', null, array('autocomplete'=>'off', 'id'=>'email', 'required', 'class'=>'form-control', 'required', 'placeholder'=>'Nhập email người tìm việc') ) }}
+				<div class="col-xs-6">
+					<ul class="dropdown-menu email-result">
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="input" class="col-sm-2 control-label">Số năm kinh nghiệm:</label>
+			<div class="col-sm-1">
+				{{ Form::text('namkinhnghiem', 1, array('required', 'class'=>'form-control', 'placeholder'=>'Ví dụ: 1', 'id'=>'namkinhnghiem') ) }}
+			</div>
+			<div class="col-xs-3">
+				<div class="checkbox">
+					<label>
+						{{ Form::checkbox('is_namkn', 1, 0, array('class'=>'ace', 'id'=>'is_namkn') ) }}
+						<span class="lbl"> Chưa có kinh nghiệm</span>
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="input" class="col-sm-2 control-label">Bằng cấp cao nhất:</label>
+			<div class="col-sm-8">
+				{{ Form::select('bangcapcaonhat', Education::lists('name', 'id'), 1, array('class'=>'form-control') ) }}
 			</div>
 		</div>
 		<div class="form-group">
@@ -45,43 +69,42 @@
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Vị trí mong muốn:</label>
 			<div class="col-sm-8">
-				{{ Form::input('text', 'capbacmongmuon', null, array('required', 'class'=>'form-control', 'placeholder'=>'Ví dụ: Giám đốc') ) }}
+				{{ Form::input('text', 'vitrimongmuon', null, array('required', 'class'=>'form-control', 'placeholder'=>'Ví dụ: Giám đốc') ) }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Cấp bậc mong muốn:</label>
 			<div class="col-sm-8">
-				{{ Form::select('capbachientai', Level::lists('name', 'id'), null, array('class'=>'form-control') ) }}
+				{{ Form::select('capbacmongmuon', Level::lists('name', 'id'), null, array('class'=>'form-control') ) }}
 				
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Nơi làm việc:</label>
 			<div class="col-sm-8">
-				{{ Form::select('ntv_noilamviec', Province::lists('province_name', 'id'), null, array('multiple'=>'multiple', 'class'=>'chosen-select form-control tag-input-style', 'data-placeholder'=>'Chọn nơi làm việc, tối đa 3 địa điểm') ) }}
+				{{ Form::select('ntv_noilamviec[]', Province::lists('province_name', 'id'), null, array('multiple'=>'multiple', 'class'=>'chosen-select form-control tag-input-style', 'data-placeholder'=>'Chọn nơi làm việc, tối đa 3 địa điểm') ) }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Ngành nghề:</label>
 			<div class="col-sm-8">
-				
-				{{ Form::select('nganhnghe', Category::lists('cat_name', 'id'), null, array('multiple'=>'multiple', 'class'=>'chosen-select form-control tag-input-style', 'data-placeholder'=>'Chọn ngành nghề, tối đa 3 ngành') ) }}
+				{{ Form::select('ntv_nganhnghe[]', Category::getList(), null, array('multiple'=>'multiple', 'class'=>'chosen-select form-control tag-input-style', 'data-placeholder'=>'Chọn ngành nghề, tối đa 3 ngành') ) }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Mức lương mong muốn:</label>
 			<div class="col-sm-2">
-				{{ Form::text('mucluongmongmuon', 500, array('id'=>'spinner1') ) }}
+				{{ Form::text('mucluong', 500, array('id'=>'spinner1') ) }}
 			</div>
 			<div class="col-xs-1">
 				<label>
-				{{ Form::select('loaitien', array(1=>'USD', 2=>'VND'), 1, array('class'=>'form-control') ) }}
+				{{ Form::select('loaitien', array(1=>'USD', 2=>'VND'), 1, array('class'=>'form-control','id'=>'loaitien' ) ) }}
 			</div>
 			<div class="col-xs-3">
 				<div class="checkbox">
 					<label>
-						<input type="checkbox" value="1">
-						Thương lượng
+						{{ Form::checkbox('is_mucluong', 1, 0, array('class'=>'ace', 'id'=>'is_mucluong') ) }}
+						<span class="lbl"> Thương lượng</span>
 					</label>
 				</div>
 			</div>
@@ -175,11 +198,11 @@
 		width: 100%;
 	}
 	</style>
+
 @stop
 
 @section('script')
 	{{ HTML::script('assets/js/bootstrap-tag.min.js') }}
-
 	{{ HTML::script('assets/js/jquery.ui.touch-punch.min.js') }}
 	{{ HTML::script('assets/js/chosen.jquery.min.js') }}
 	{{ HTML::script('assets/js/fuelux.spinner.min.js') }}
@@ -195,6 +218,8 @@
 	{{ HTML::script('assets/js/jquery.maskedinput.min.js') }}
 	{{ HTML::script('assets/js/bootstrap-tag.min.js') }}
 	{{ HTML::script('assets/js/bootstrap-switch.min.js') }}
+	{{ HTML::script('assets/js/typeahead.jquery.min.js') }}
+	{{ HTML::script('assets/js/jquery.cookie.js') }}
 
 @stop
 
@@ -240,7 +265,96 @@
 					offText: 'Unactivated',
 					offColor: 'danger'
 				});
+				
+				$('#email').keyup(function() {
+					var query = $('#email').val();
+					if(query != '')
+					{
+						$('#email').trigger('focus');
+						$.ajax({
+							url: '{{ URL::route('resumes.search') }}',
+							data: {query: query},
+							type: 'POST',
+							dataType: 'json',
+							success:function(json)
+							{
+								$('.email-result').html('');
+								if(json.length > 0) {
+									$.each(json, function(index, val) {
+										newVal = val.replace(query, '<b>'+query+'</b>');
+										$('.email-result').append('<li><a href="#" class="set_email" onclick="return false;">'+newVal+'</a></li>');
+									});
+								} else {
+									$('.email-result').append('<li><a href="#" class="">Không có kết quả !</a></li>');
+								}
+								
+								
+							}
+						});
+					}
+					
+				});
+				$(document).on('click', 'a.set_email', function(event) {
+					var email = $(this).text();
+					$('#email').val(email);
+					
+						$('#email').trigger('blur');
+					
+				});
+				function setEmail(email)
+				{
+					alert('a');
+					$('#email').val(email);
+					
+				}
+				$('#email').blur(function() {
+					setTimeout(function function_name (argument) {
+						$('.email-result').css({'display': 'none'});
+					}, 200);
+				});
+				
+				$('#email').focus(function() {
+					if($('#email').val() == '') return;
+					$('.email-result').css({'display': 'block'});
+				});
+				
+				var is_mucluong = {{ (Input::old('is_mucluong'))?1:0 }};
+				if(is_mucluong)
+				{
+					$('#spinner1').prop({disabled: 'disabled'});
+					$('#loaitien').prop({disabled: 'disabled'});
+					$('.spinbox-up').addClass('disabled');
+					$('.spinbox-down').addClass('disabled');
+				}
 
+				$('#is_mucluong').click(function(event) {
+					if($(this).is(':checked'))
+					{
+						$('#spinner1').prop({disabled: 'disabled'});
+						$('#loaitien').prop({disabled: 'disabled'});
+						$('.spinbox-up').addClass('disabled');
+						$('.spinbox-down').addClass('disabled');
+					} else {
+						$('#spinner1').prop({disabled: ''});
+						$('#loaitien').prop({disabled: ''});
+						$('.spinbox-up').removeClass('disabled');
+						$('.spinbox-down').removeClass('disabled');
+					}
+				});
+
+				var is_namkn = {{ (Input::old('is_namkn'))?1:0 }};
+				if(is_namkn)
+				{
+					$('#namkinhnghiem').prop({disabled: 'disabled'});
+				}
+				$('#is_namkn').click(function(event) {
+					if($(this).is(':checked'))
+					{
+						$('#namkinhnghiem').prop({disabled: 'disabled'});
+					} else {
+						$('#namkinhnghiem').prop({disabled: ''});
+					}
+				});
 			});
 		</script>
 

@@ -24,7 +24,7 @@ class JobSeekerController extends \BaseController {
 	 */
 	public function datatables()
 	{
-		$jobseekers = NTV::select('id as ckid', 'id', 'email', 'full_name', 'created_at', 'activated', 'id as ids');
+		$jobseekers = NTV::select('id as ckid', 'id', 'email', 'first_name', 'last_name', 'created_at', 'activated', 'id as ids');
 		return Datatables::of($jobseekers)
 		->edit_column('ckid', '<th class="center">
 															<label class="pos-rel">
@@ -33,6 +33,8 @@ class JobSeekerController extends \BaseController {
 															</label>
 														</th>
 ')
+		->edit_column('first_name', '{{ $first_name }} {{ $last_name }} ')
+		->remove_column('last_name')
 		->edit_column('activated', '@if($activated==true)<span class="label label-success">Kích hoạt</span>@else <span class="label label-info">Không kích hoạt</span>@endif')
 		->edit_column('ids', '
 			{{ Form::open(array("method"=>"delete", "route"=>array("admin.jobseekers.destroy", $id) )) }}
@@ -118,7 +120,8 @@ class JobSeekerController extends \BaseController {
 		$inputs = Input::all();
 		$rules = array(
 			'email'				=>	'required|email|unique:jobseekers,email,'.$id,
-			'full_name'				=>	'required|min:3',
+			'first_name'				=>	'required|min:3',
+			'last_name'				=>	'required|min:3',
 			'password'				=>	'min:3',
 			'date_of_birth'			=>	'date_format:Y-m-d',
 			'gender'			=>	'in:1,2,3',
@@ -128,11 +131,13 @@ class JobSeekerController extends \BaseController {
 		 $messages = array(
 			'email.required'	=>	'Email không được để trống.',
 			'password.required'	=>	'Mật khẩu không được để trống.',
-			'full_name.required'	=>	'Họ tên không được để trống.',
+			'first_name.required'	=>	'Họ không được để trống.',
+			'last_name.required'	=>	'Tên không được để trống.',
 			'email'		=>	'Email không đúng định dạng.',
 			'unique'	=>	':attribute đã tồn tại, vui lòng chọn tên khác',
 			'username.min'		=>	'Username tối thiểu là :min kí tự.',
-			'full_name.min'		=>	'Họ tên tối thiểu là :min kí tự.',
+			'first_name.min'		=>	'Họ tối thiểu là :min kí tự.',
+			'last_name.min'		=>	'Tên tối thiểu là :min kí tự.',
 			'password.min'		=>	'Mật khẩu tối thiểu là :min kí tự.',
 			'date_format'=> 'Ngày sinh không đúng định dạng'
 		);

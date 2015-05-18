@@ -1,8 +1,7 @@
 @extends('layouts.admin')
 @section('title')Add new Administrator @stop
+@section('page-header')Thêm mới quản trị viên @stop
 @section('content')
-	<h3>Thêm mới quản trị viên: </h3>
-	<hr>
 	{{ Form::open(array('method'=>'POST', 'action'=> array('admin.users.store'), 'class'=>'form form-horizontal' ) ) }}
 		@include('includes.notifications')
 		<div class="form-group">

@@ -1,8 +1,7 @@
 @extends('layouts.admin')
 @section('title')Add new Jobseeker @stop
+@section('page-header')Thêm mới người tìm việc @stop
 @section('content')
-	<h3>Thêm mới người tìm việc: </h3>
-	<hr>
 	{{ Form::open(array('method'=>'POST', 'action'=> array('admin.jobseekers.store'), 'class'=>'form form-horizontal' ) ) }}
 		@include('includes.notifications')
 		
@@ -45,7 +44,7 @@
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Địa chỉ:</label>
 			<div class="col-sm-6">
-				{{ Form::input('text', 'address', null, array('class'=>'form-control') ) }}
+				{{ Form::text('address', null, array('class'=>'form-control') ) }}
 			</div>
 		</div>
 		<div class="form-group">

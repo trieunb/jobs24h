@@ -1,8 +1,7 @@
 @extends('layouts.admin')
 @section('title')Users Manager @stop
+@section('page-header')Danh sách quản trị viên @stop
 @section('content')
-	<h2>Danh sách Quản trị viên</h2>
-	<hr>
 	@include('includes.notifications')
 	<a href="{{ URL::route('admin.users.create') }}" class="btn btn-success pull-right">Thêm mới</a>
 	<div class="clearfix"></div>
@@ -28,10 +27,13 @@
 	</table>
 @stop
 
+@section('style')
+	{{ HTML::style('assets/css/dataTables.bootstrap.css') }}
+@stop
 
 @section('script')
 	{{ HTML::script('assets/js/jquery.dataTables.min.js') }}
-	{{ HTML::script('assets/js/dataTables.bootstrap.js') }}
+	{{ HTML::script('assets/js/jquery.dataTables.bootstrap.min.js') }}
 	<script type="text/javascript">
 		$('#administrator').dataTable( {
 				"bProcessing": true,
@@ -40,7 +42,7 @@
 				bAutoWidth: false,
 					"aoColumns": [
 					  { "bSortable": false, "sClass": "center" },
-					  null, null, null,
+					  null, null, null, null,
 					  { "bSortable": false }
 					],
 
