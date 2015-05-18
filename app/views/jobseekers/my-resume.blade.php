@@ -54,7 +54,7 @@
 										<td>0</td>
 										<td>
 											<a href=""><i class="glyphicon glyphicon-eye-open"></i> Xem</a> 
-											<a href="{{URL::route('jobseekers.edit-cv', array($mr->id))}}"><i class="glyphicon glyphicon-refresh"></i> Cập nhật</a> 
+											<a href="{{URL::route('jobseekers.save-cv', array($mr->id))}}"><i class="glyphicon glyphicon-refresh"></i> Cập nhật</a> 
 											<a id="del_resume" data-rs="{{$mr->id}}"><i class="glyphicon glyphicon-trash"></i> Xóa</a>
 										</td>
 									</tr>

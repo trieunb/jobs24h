@@ -11,7 +11,8 @@
 		"bllim/datatables": "1.4.4",
 		"fzaninotto/faker": "1.5.*@dev",
 		"swiftmailer/swiftmailer": "~5.4",
-		"davejamesmiller/laravel-breadcrumbs": "~2.2"
+		"davejamesmiller/laravel-breadcrumbs": "~2.2",
+		"doctrine/dbal": "2.4.*"
 	},
 	"autoload": {
 		"classmap": [

@@ -60,7 +60,7 @@ class JobSeeker extends Controller
 	public function editCvHome($id_cv){
 		$mt_lang = MTLanguage::where('rs_id', $id_cv)->get();
 		$my_resume = Resume::where('id', $id_cv)->first();
-		$mt_work_exp = MTWorkExp::where('rs_id', $id_cv)->get()->first();
+		$mt_work_exp = MTWorkExp::where('rs_id', $id_cv)->get();
 		if(count($mt_lang) == 0) $mt_lang = null;
 		if(count($my_resume) == 0) $my_resume = null;
 		if(count($mt_work_exp) == 0) $mt_work_exp = null;
@@ -73,6 +73,8 @@ class JobSeeker extends Controller
 			return $this->editCareerGoal($id_cv);
 		}if($action == 'work-exp') {
 			return $this->editWorkExperience($id_cv);
+		}if($action == 'education-history') {
+			return $this->editEducationHistory($id_cv);
 		}
 	}
 
@@ -215,8 +217,7 @@ class JobSeeker extends Controller
 			} else {
 				$sl = MTWorkExp::where('rs_id', $id_cv)->get();
 				if(count($sl) == 0){
-					$works = array(
-			    	new MTWorkExp(array(
+					$create = MTWorkExp::insert(array(
 			    		'rs_id' => $id_cv, 
 			    		'position' => ''.$params['position'].'', 
 			    		'company_name' => ''.$params['company_name'].'', 
@@ -227,11 +228,13 @@ class JobSeeker extends Controller
 			    		'specialized'=> ''.$params['specialized'].'',
 			    		'level'=> ''.$params['level'].'',
 						'salary'=> ''.$params['salary'].'',
-					)));
-					$create = MTLanguage::where('rs_id', $id_cv);
-					$create->lang()->saveMany($works);
-					$respond['has'] = true;
-					return Response::json($respond);
+					));
+					if($create){
+						$respond['has'] = true;
+						return Response::json($respond);	
+					}else{
+						$respond['message']='Hiện tại bạn không thể chỉnh sửa mục này';
+					}
 				}else{
 					$update = MTWorkExp::where('rs_id', $id_cv)->update(array(
 						'position' => ''.$params['position'].'', 
@@ -254,6 +257,60 @@ class JobSeeker extends Controller
 			}
 		}
 	}
+
+	// Edit & save education history
+	public function editEducationHistory($id_cv){
+		$params = Input::all();
+		$respond['has'] = false;
+		if(Request::ajax()){
+			Log::info($params);
+			$validator = new App\DTT\Forms\JobSeekersEducation;
+			if($validator->fails())
+			{
+				$respond['message'] = $validator->getMessageBag()->toJson();
+				return Response::json($respond);
+			} else {
+				$mte = MTEducation::where('rs_id', $id_cv)->get();
+				if(count($mte) == 0){
+					$create_mte = MTEducation::insert(array(
+			    		'rs_id' => $id_cv, 
+			    		'school' => ''.$params['school'].'', 
+			    		'field_of_study' => $params['field_of_study'], 
+			    		'level'=> $params['level'],
+			    		'study_from'=> ''.$params['study_from'].'',
+			    		'study_to'=> ''.$params['study_to'].'',
+			    		'achievement'=> ''.$params['achievement'].'', 
+			    		'specialized'=> ''.$params['specialized'].'',
+			    		'average_grade_id'=> $params['average_grade_id'],
+					));
+					if($create_mte){
+						$respond['has'] = true;
+						return Response::json($respond);	
+					}else{
+						$respond['message']='Hiện tại bạn không thể chỉnh sửa mục này';
+					}
+				}else{
+					$update_mte = MTEducation::where('rs_id', $id_cv)->update(array(
+			    		'school' => ''.$params['school'].'', 
+			    		'field_of_study' => $params['field_of_study'], 
+			    		'level'=> $params['level'],
+			    		'study_from'=> ''.$params['study_from'].'',
+			    		'study_to'=> ''.$params['study_to'].'',
+			    		'achievement'=> ''.$params['achievement'].'', 
+			    		'specialized'=> ''.$params['specialized'].'',
+			    		'average_grade_id'=> $params['average_grade_id'],
+					));
+					if($update_mte){
+						$respond['has'] = true;
+						return Response::json($respond);
+					}else{
+						$respond['message']='Hiện tại bạn không thể chỉnh sửa mục này';
+					}
+				}
+			}
+		}
+	}
+
 
 	// Hồ Sơ của tôi
 	public function myResume(){

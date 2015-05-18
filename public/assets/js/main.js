@@ -152,13 +152,13 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
     $("#locationMainSearch, #categoryMainSearch, #WishPlaceWork, #Fields,#Specialized").select2({
         maximumSelectionLength: 3,
     });
-    $("#ForeignLanguages,#CurrentLevel,#WishLevel,#FieldOfStudy,#Scope,#LatestLevel,#Diploma,#HighestDegree,#District,#Cities,#Nationality,#jobLevelMainSearch, #jobObjMainSearch,#jobExpMainSearch,#DateOfBirth,#MonthOfBirth,#YearOfBirth,#Gender,#Country,#MaritalStatus,#Category,#Province,#Level").select2({
+    $("#ForeignLanguages,#CurrentLevel,#WishLevel,#FieldOfStudy,#Scope,#LatestLevel,#Diploma,#HighestDegree,#District,#Cities,#Nationality,#jobLevelMainSearch, #jobObjMainSearch,#jobExpMainSearch,#DateOfBirth,#MonthOfBirth,#YearOfBirth,#Gender,#Country,#MaritalStatus,#Category,#Province,#Level,#AverageGrade").select2({
         minimumResultsForSearch: Infinity
     });
     $('#DOB').datetimepicker({
         pickTime: false,
     });
-    $('#From_date').datetimepicker({
+    $('#From_date,#Study_to').datetimepicker({
         pickTime: false,
     });
 

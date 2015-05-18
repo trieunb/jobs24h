@@ -294,7 +294,7 @@
 							<div class="form-group">
 								<label for="" class="col-sm-2 control-label">Chức danh<abbr>*</abbr></label>
 								<div class="col-sm-10">
-									{{Form::input('text','position', $mt_work_exp->position, array('class'=>'position form-control'))}}
+									{{Form::input('text','position', null, array('class'=>'position form-control'))}}
 								</div>
 							</div>
 							<div class="form-group">
@@ -314,7 +314,11 @@
 								</div>
 								<label for="" class="col-sm-2 control-label">Đến tháng<abbr>*</abbr></label>
 								<div class="col-sm-3">
-									{{Form::input('text', 'to_date', null, array('class'=>'to_date form-control', 'placeholder'=>'VD: 04/2013'))}}
+									<div class="input-group date" id="To_date">
+					                    {{Form::input('text','to_date', null, array('class'=>'to_date form-control', 'placeholder'=>'Ví dụ: 04/2012','data-date-format'=>'MM-YYYY'))}}
+					                    <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
+					                    </span>
+					                </div>
 								</div>
 								<div class="col-sm-2">
 									<div class="checkbox">
@@ -367,54 +371,66 @@
 						<div class="title-page">
 							<h2>Học vấn và Bằng Cấp</h2>
 						</div>
-						<form action="" method="POST" role="form" class="form-horizontal">
+						{{Form::open(array('class'=>'form-horizontal','id'=>'saveEducation'))}}
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Chuyên ngành<abbr>*</abbr></label>
 				            	<div class="col-sm-9">
-				            		{{Form::input('text', 'majors', null, array('class'=>'form-control', 'placeholder'=>'Ví dụ: Kinh doanh quốc tế'))}}
+				            		{{Form::input('text', 'specialized', null, array('class'=>'specialized form-control', 'placeholder'=>'Ví dụ: Kinh doanh quốc tế'))}}
 				            	</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Trường<abbr>*</abbr></label>
-				            	<div class="col-sm-3">
-				            		{{Form::input('text', 'school', null, array('class'=>'form-control', 'placeholder'=>'Ví dụ: Đại học Kinh Tế Tp.Hồ Chí Minh'))}}
+				            	<div class="col-sm-4">
+				            		{{Form::input('text', 'school', null, array('class'=>'school form-control', 'placeholder'=>'Ví dụ: Đại học Kinh Tế Tp.Hồ Chí Minh'))}}
 				            	</div>
-				            	<label class="col-sm-3 control-label">Bằng cấp<abbr>*</abbr></label>
+				            	<label class="col-sm-2 control-label">Bằng cấp<abbr>*</abbr></label>
 				            	<div class="col-sm-3">
-				            		{{ Form::select('diploma', Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'Diploma') ) }}
+				            		{{ Form::select('level', Country::lists('country_name', 'id'),null, array('class'=>'level form-control', 'id' => 'Diploma') ) }}
 				            	</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Từ tháng</label>
-				            	<div class="col-sm-3">
-				            		{{Form::input('text', 'study-from', null, array('class'=>'form-control', 'placeholder'=>'VD: 09/2009'))}}
+				            	<div class="col-sm-4">
+				            		<div class="input-group date" id="Study_from">
+					                    {{Form::input('text','study_from', null, array('class'=>'study_from form-control', 'placeholder'=>'Ví dụ: 09/2008','data-date-format'=>'MM-YYYY'))}}
+					                    <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
+					                    </span>
+					                </div>
 				            	</div>
-				            	<label class="col-sm-3 control-label">Đến tháng</label>
+				            	<label class="col-sm-2 control-label">Đến tháng</label>
 				            	<div class="col-sm-3">
-				            		{{Form::input('text', 'study-from', null, array('class'=>'form-control', 'placeholder'=>'VD: 04/2013'))}}
+				            		<div class="input-group date" id="Study_to">
+					                    {{Form::input('text','study_to', null, array('class'=>'study_to form-control', 'placeholder'=>'Ví dụ: 04/2012','data-date-format'=>'MM-YYYY'))}}
+					                    <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
+					                    </span>
+					                </div>
 				            	</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Lĩnh vực nghiên cứu<abbr>*</abbr></label>
+				            	<div class="col-sm-4">
+				            		{{ Form::select('field_of_study', array(''=>'- Vui lòng chọn -')+FieldsInWorkExp::lists('name', 'id'),null, array('class'=>'field_of_study form-control', 'id' => 'FieldOfStudy') ) }}
+				            	</div>
+				            	<label class="col-sm-2 control-label">Điểm<abbr>*</abbr></label>
 				            	<div class="col-sm-3">
-				            		{{ Form::select('field-of-study', Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'FieldOfStudy') ) }}
+				            		{{ Form::select('average_grade_id', array(''=>'- Vui lòng chọn -')+AverageGrade::lists('name', 'id'),null, array('class'=>'average_grade_id form-control', 'id' => 'AverageGrade') ) }}
 				            	</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Thành tựu</label>
 								<div class="col-sm-9">
-									{{Form::textarea( 'achievement', null, array('class'=>'form-control', 'rows'=>'5'))}}
+									{{Form::textarea( 'achievement', null, array('class'=>'achievement form-control', 'rows'=>'5'))}}
 									<em class="text-gray-light"><span class="countdown">5000</span> ký tự có thể nhập thêm</em>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-3 col-sm-7">
-									{{Form::submit('Hủy', array('class'=>'btn btn-lg bg-gray-light'))}}
+									{{Form::button('Hủy', array('class'=>'btn btn-lg bg-gray-light'))}}
 									{{Form::submit('Lưu', array('class'=>'btn btn-lg bg-orange'))}}
 									<span>(<span class="text-red">*</span>) Thông tin bắt buộc</span>
 								</div>
 							</div>
-						</form>
+						{{Form::close()}}
 					</div><!-- rows -->
 				</div><!-- boxed -->
 				<div class="boxed">
@@ -726,6 +742,47 @@
 	            }else{
 	           		$('#saveWorkExp').find(".has-error").removeClass('has-error');
 	           		$('#saveWorkExp').find(".error-message").remove();
+					$('.loading-icon').hide();
+	           	}
+	           	$('.loading-icon').hide();
+	        }
+		});		
+	});
+
+	$('#saveEducation').submit(function(e) {
+		e.preventDefault();
+		$('.loading-icon').show();
+        url = '{{ URL::route("jobseekers.save-cv", array("education-history", $id_cv )) }}';
+		$.ajax({
+			url: url,
+			type: 'POST',
+			dataType: 'json',
+			data: {
+				school: $('#saveEducation .school').val(),
+				field_of_study: $('#saveEducation .field_of_study').val(),
+				level: $('#saveEducation .level').val(),
+				study_from: $('#saveEducation .study_from').val(),
+				study_to: $('#saveEducation .study_to').val(),
+				achievement: $('#saveEducation .achievement').val(),
+				specialized: $('#saveEducation .specialized').val(),
+				average_grade_id: $('#saveEducation .average_grade_id').val()
+			},
+			success : function(json) {
+				if(! json.has)
+	            {	
+	            	$('#saveEducation').find(".has-error").removeClass('has-error');
+		            $('#saveEducation').find(".error-message").remove();
+	            	var j = $.parseJSON(json.message);
+	            	$.each(j, function(index, val) {
+		            	$('.'+index).parent().closest('div[class^="col-sm"]').addClass('has-error');
+		            	if($('.'+index).parent().closest('div[class^="col-sm"]').find(".error-message").length < 1){
+		           			$('.'+index).parent().closest('div[class^="col-sm"]').append('<span class="error-message">'+val+'</span>')
+		            	}
+		           		$('.loading-icon').hide();           		
+	           		});
+	            }else{
+	           		$('#saveEducation').find(".has-error").removeClass('has-error');
+	           		$('#saveEducation').find(".error-message").remove();
 					$('.loading-icon').hide();
 	           	}
 	           	$('.loading-icon').hide();

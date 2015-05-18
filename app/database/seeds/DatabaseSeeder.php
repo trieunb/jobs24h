@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder {
 		$this->call('LevelLangTableSeeder');
 		$this->call('FieldsInWorkExpTableSeeder');
 		$this->call('SpecializedTableSeeder');
+		$this->call('AverageGradeTableSeeder');
 	}
 
 }
