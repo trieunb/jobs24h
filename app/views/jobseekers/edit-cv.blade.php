@@ -150,7 +150,7 @@
 						<h2>Thông tin chung</h2> 
 						<a href="#" class=" pull-right"><i class="fa fa-edit"></i> Chỉnh sửa</a>
 					</div>
-					{{Form::open(array('route'=> array('jobsserkers.save-cv', $id_cv), 'class'=>'form-horizontal', 'method'=>'POST'))}}
+					{{Form::open(array('route'=> array('jobseekers.save-cv', $id_cv), 'class'=>'form-horizontal', 'method'=>'POST'))}}
 						<div class="form-group">
 			                <label class="col-sm-3 control-label">Số năm kinh nghiệm<abbr>*</abbr></label>
 			                <div class="col-sm-3">
@@ -294,7 +294,7 @@
 							<div class="form-group">
 								<label for="" class="col-sm-2 control-label">Chức danh<abbr>*</abbr></label>
 								<div class="col-sm-10">
-									{{Form::input('text','position', null, array('class'=>'position form-control'))}}
+									{{Form::input('text','position', $mt_work_exp->position, array('class'=>'position form-control'))}}
 								</div>
 							</div>
 							<div class="form-group">
@@ -348,18 +348,18 @@
 				            <div class="form-group">
 				            	<label class="col-sm-2 control-label">Mô tả</label>
 				            	<div class="col-sm-10">
-									{{Form::textarea( 'summary', null, array('class'=>'form-control', 'rows'=>'5'))}}
+									{{Form::textarea( 'job_detail', null, array('class'=>'job_detail form-control', 'rows'=>'5'))}}
 									<em class="text-gray-light"><span class="countdown">5000</span> ký tự có thể nhập thêm</em>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-3 col-sm-7">
-									{{Form::submit('Hủy', array('class'=>'btn btn-lg bg-gray-light'))}}
+									{{Form::button('Hủy', array('class'=>'btn btn-lg bg-gray-light'))}}
 									{{Form::submit('Lưu', array('class'=>'btn btn-lg bg-orange'))}}
 									<span>(<span class="text-red">*</span>) Thông tin bắt buộc</span>
 								</div>
 							</div>
-						</form>
+						{{Form::close()}}
 					</div><!-- rows -->
 				</div><!-- boxed -->
 				<div class="boxed">
@@ -622,7 +622,7 @@
 	$('#saveBasicInfo').submit(function(e){
         e.preventDefault();
         $('.loading-icon').show();
-        url = '{{ URL::route("jobsserkers.save-cv", array("basic", $id_cv )) }}';
+        url = '{{ URL::route("jobseekers.save-cv", array("basic", $id_cv )) }}';
         $.ajax({
             type: "POST",
             url: url,//Relative or absolute path to response.php file
@@ -646,9 +646,9 @@
             		var j = $.parseJSON(json.message);
             		$.each(j, function(index, val) {
             			
-	            			$('.'+index).parent().addClass('has-error');
-	            			if($('.'+index).parents('.col-sm-3').find(".error-message").length < 1){
-	            				$('.'+index).parents('.col-sm-3').append('<span class="error-message">'+val+'</span>')
+	            			$('.'+index).parent().closest('div[class^="col-sm"]').addClass('has-error');
+	            			if($('.'+index).parent().closest('div[class^="col-sm"]').find(".error-message").length < 1){
+	            				$('.'+index).parent().closest('div[class^="col-sm"]').append('<span class="error-message">'+val+'</span>')
 	            			}
 	            			$('.loading-icon').hide();      		
             		});
@@ -664,7 +664,7 @@
 	$('#saveCareerGoal').submit(function(e){
         e.preventDefault();
         $('.loading-icon').show();
-        url = '{{ URL::route("jobsserkers.save-cv", array("career-goal", $id_cv )) }}';
+        url = '{{ URL::route("jobseekers.save-cv", array("career-goal", $id_cv )) }}';
         $.ajax({
             type: "POST",
             url: url,//Relative or absolute path to response.php file
@@ -676,9 +676,9 @@
 	            	$('#saveCareerGoal').find(".error-message").remove();
             		var j = $.parseJSON(json.message);
             		$.each(j, function(index, val) {
-	            			$('.'+index).parent().addClass('has-error');
-	            			if($('.'+index).parent().find(".error-message").length < 1){
-	            				$('.'+index).parent().append('<span class="error-message">'+val+'</span>')
+	            			$('.'+index).parent().closest('div').addClass('has-error');
+	            			if($('.'+index).parent().closest('div').find(".error-message").length < 1){
+	            				$('.'+index).parent().closest('div').append('<span class="error-message">'+val+'</span>')
 	            			}
 	            			$('.loading-icon').hide();           		
             		});
@@ -693,35 +693,44 @@
     });
 	$('#saveWorkExp').submit(function(e) {
 		e.preventDefault();
-		var url = "{{URL::route('jobseekers.save-cv', array('work-exp', $id_cv))}}"
+		$('.loading-icon').show();
+        url = '{{ URL::route("jobseekers.save-cv", array("work-exp", $id_cv )) }}';
 		$.ajax({
 			url: url,
 			type: 'POST',
-			dataType: 'jsson',
+			dataType: 'json',
 			data: {
-				position: $('.position').val();
-				company_name: $('.position').val();
-				from_date: $('.from_date').val();
-				to_date: $('.to_date').val();
-				position: $('.position').val();
-				position: $('.position').val();
-				position: $('.position').val();
-				position: $('.position').val();
-				position: $('.position').val();
-				position: $('.position').val();
-			    		'company_name' => ''.$params['company_name'].'', 
-			    		'from_date'=> ''.$params['from_date'].'',
-			    		'to_date'=> ''.$params['to_date'].'',
-			    		'job_detail'=> ''.$params['job_detail'].'',
-			    		'field'=> ''.$params['field'].'', 
-			    		'specialized'=> ''.$params['specialized'].'',
-			    		'level'=> ''.$params['level'].'',
-						'salary'=> ''.$params['salary'].'',))
+				position: $('.position').val(),
+				company_name: $('.company_name').val(),
+				from_date: $('.from_date').val(),
+				to_date: $('.to_date').val(),
+				job_detail: $('.job_detail').val(),
+				field: $('.field').val(),
+				specialized: $('.specialized').val(),
+				level: $('.level').val(),
+				salary: $('.salary').val()
 			},
-		})
-		.done(function() {
-			console.log("success");
-		})
+			success : function(json) {
+				if(! json.has)
+	            {	
+	            	$('#saveWorkExp').find(".has-error").removeClass('has-error');
+		            $('#saveWorkExp').find(".error-message").remove();
+	            	var j = $.parseJSON(json.message);
+	            	$.each(j, function(index, val) {
+		            	$('.'+index).parent().closest('div[class^="col-sm"]').addClass('has-error');
+		            	if($('.'+index).parent().closest('div[class^="col-sm"]').find(".error-message").length < 1){
+		           			$('.'+index).parent().closest('div[class^="col-sm"]').append('<span class="error-message">'+val+'</span>')
+		            	}
+		           		$('.loading-icon').hide();           		
+	           		});
+	            }else{
+	           		$('#saveWorkExp').find(".has-error").removeClass('has-error');
+	           		$('#saveWorkExp').find(".error-message").remove();
+					$('.loading-icon').hide();
+	           	}
+	           	$('.loading-icon').hide();
+	        }
+		});		
 	});
-    </script>
+	</script>
 @stop

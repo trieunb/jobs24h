@@ -60,15 +60,19 @@ class JobSeeker extends Controller
 	public function editCvHome($id_cv){
 		$mt_lang = MTLanguage::where('rs_id', $id_cv)->get();
 		$my_resume = Resume::where('id', $id_cv)->first();
+		$mt_work_exp = MTWorkExp::where('rs_id', $id_cv)->get()->first();
 		if(count($mt_lang) == 0) $mt_lang = null;
 		if(count($my_resume) == 0) $my_resume = null;
-		return View::make('jobseekers.edit-cv')->with('user', $GLOBALS['user'])->with('id_cv', $id_cv)->with('mt_lang',$mt_lang)->with('my_resume', $my_resume);
+		if(count($mt_work_exp) == 0) $mt_work_exp = null;
+		return View::make('jobseekers.edit-cv')->with('user', $GLOBALS['user'])->with('id_cv', $id_cv)->with('mt_lang',$mt_lang)->with('my_resume', $my_resume)->with('mt_work_exp',$mt_work_exp);
 	}
 	public function saveInfo($action = false, $id_cv){
 		if($action == 'basic'){
 			return $this->editBasicInfo();
-		}elseif($action == 'career-goal'){
+		}if($action == 'career-goal'){
 			return $this->editCareerGoal($id_cv);
+		}if($action == 'work-exp') {
+			return $this->editWorkExperience($id_cv);
 		}
 	}
 
@@ -199,19 +203,18 @@ class JobSeeker extends Controller
 	}
 
 	// Edit & save work experience
-	public function workExperience($id_cv){
+	public function editWorkExperience($id_cv){
 		$params = Input::all();
+		$respond['has'] = false;
 		if(Request::ajax()){
-			$validator = new App\DTT\Forms\FormValidatorGeneralInfo;
-			$respond['has'] = false;
+			$validator = new App\DTT\Forms\JobSeekersWorkExp;
 			if($validator->fails())
 			{
-				$respond['message'] = $validator->getMessageBag->toJson();
+				$respond['message'] = $validator->getMessageBag()->toJson();
 				return Response::json($respond);
 			} else {
 				$sl = MTWorkExp::where('rs_id', $id_cv)->get();
-				var_dump($sl); die();
-				if($sl = 0){
+				if(count($sl) == 0){
 					$works = array(
 			    	new MTWorkExp(array(
 			    		'rs_id' => $id_cv, 
@@ -223,12 +226,31 @@ class JobSeeker extends Controller
 			    		'field'=> ''.$params['field'].'', 
 			    		'specialized'=> ''.$params['specialized'].'',
 			    		'level'=> ''.$params['level'].'',
-						'salary'=> ''.$params['salary'].'',))
-					);
+						'salary'=> ''.$params['salary'].'',
+					)));
 					$create = MTLanguage::where('rs_id', $id_cv);
 					$create->lang()->saveMany($works);
+					$respond['has'] = true;
+					return Response::json($respond);
+				}else{
+					$update = MTWorkExp::where('rs_id', $id_cv)->update(array(
+						'position' => ''.$params['position'].'', 
+			    		'company_name' => ''.$params['company_name'].'', 
+			    		'from_date'=> ''.$params['from_date'].'',
+			    		'to_date'=> ''.$params['to_date'].'',
+			    		'job_detail'=> ''.$params['job_detail'].'',
+			    		'field'=> ''.$params['field'].'', 
+			    		'specialized'=> ''.$params['specialized'].'',
+			    		'level'=> ''.$params['level'].'',
+						'salary'=> ''.$params['salary'].'',
+					));
+					if($update){
+						$respond['has'] = true;
+						return Response::json($respond);
+					}else{
+						$respond['message']='Hiện tại bạn không thể chỉnh sửa mục này';
+					}
 				}
-				
 			}
 		}
 	}

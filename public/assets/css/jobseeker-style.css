@@ -100,8 +100,9 @@ hr {
     padding:0;
 }
 
-input, select, button, textarea,.pagination-lg>li:first-child>a, .pagination-lg>li:first-child>span,.pagination-lg>li:last-child>a, .pagination-lg>li:last-child>span {
+input, select, button, textarea,.input-group-addon,.pagination-lg>li:first-child>a, .pagination-lg>li:first-child>span,.pagination-lg>li:last-child>a, .pagination-lg>li:last-child>span {
     vertical-align:middle;
+    border-radius: 0 !important;
 }
 
 h1,h2,h3,h4,h5,h6 {margin-bottom: 15px; font-weight: 600; margin-top: 0; }
@@ -625,6 +626,6 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
 .fr-lang {margin-bottom: 5px;}
 .fr-lang .select2-container {width: 100% !important;}
 .fr-lang .col-sm-1 {width: 10px;}
-.has-error .form-group, .has-error .form-control {border-color: #ff5051 !important;}
+.has-error .form-group, .has-error .form-control, .has-error .select2-container {border-color: #ff5051 !important;}
 .error-message {color: #ff5051; display: block; margin-top: 2px;}
 .loading-icon {display: none; position: fixed; top: 45%; left: 37%;}
