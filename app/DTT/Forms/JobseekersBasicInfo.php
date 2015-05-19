@@ -1,6 +1,6 @@
 <?php 
 namespace App\DTT\Forms;
-class FormValidatorResume extends FormValidator {
+class JobseekersBasicInfo extends FormValidator {
 	protected $rules = array(
 		"date_of_birth"=>"required",
 		"nationality_id"=>"required",

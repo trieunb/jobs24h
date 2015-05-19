@@ -1,15 +1,16 @@
 <?php 
 namespace App\DTT\Forms;
-class FormValidatorGeneralInfo extends FormValidator {
+class JobseekersGeneralInfo extends FormValidator {
 	protected $rules = array(
-		"years-of-experience"=>"required|numeric|max:2",
-		"highest-degree"=>"required",
-		"current-level"=>"required",
-		"wish-position"=>"required",
-		"wish-level"=>"required",
-		"wish-place-work"=>"required",
-		"category" =>"required",
-		"salary"=>"required",
+		"info_highest_degree"=>"required",
+		"info_current_level"=>"required",
+		"info_wish_position"=>"required",
+		"info_wish_level"=>"required",
+		"info_wish_place_work"=>"required",
+		"info_category" =>"required",
+		"specific_salary"=>"required|numeric",
+		"foreign_languages_1"=>"required",
+		"level_languages_1" =>"required",
 		);
 	protected $messages = array(
 		'required'	=>	'Thông tin này bắt buộc',

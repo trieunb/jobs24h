@@ -75,6 +75,10 @@ class JobSeeker extends Controller
 			return $this->editWorkExperience($id_cv);
 		}if($action == 'education-history') {
 			return $this->editEducationHistory($id_cv);
+		}if($action == 'skills') {
+			return $this->editSkills($id_cv);
+		}if($action == 'general'){
+			return $this->editGeneralInfo($id_cv);
 		}
 	}
 
@@ -84,7 +88,7 @@ class JobSeeker extends Controller
 		$params = Input::all();
 		$respond['has'] = false;
 		if(Request::ajax()){
-			$validator = new App\DTT\Forms\FormValidatorResume;
+			$validator = new App\DTT\Forms\JobSeekersBasicInfo;
 			if($validator->fails())
 			{
 				$respond['message'] = $validator->getMessageBag()->toJson();
@@ -125,52 +129,63 @@ class JobSeeker extends Controller
 
 	// Edit & save genneral information
 	public function editGeneralInfo($id_cv) {
-
-		
-		$params = Input::only('years-of-experience','highest-degree','foreign-languages', 'certificate','latest-company', 'level', 'latest-job', 'current-level', 'wish-position','wish-level', 'wish-place-work', 'category','salary','foreign-languages-1', 'level-languages-1', 'foreign-languages-2', 'level-languages-2','foreign-languages-3', 'level-languages-3');
-		if($params['salary']== null) $params['salary'] = 0;
-/*	
-		$mt_lang = MTLanguage::where('rs_id','=',$id_cv)->count();
-		if($mt_lang>0){
-			$update_lang = MTLanguage::where('rs_id','=',$id_cv)->update(array(
-				'lang_id'=>$params['foreign-languages-1'], 'level' => $params['level-languages-1'] 
-			));
-		}else{
-			$lang = array(
-			    new MTLanguage(array('rs_id' => $id_cv, 'lang_id' => $params['foreign-languages-1'], 'level' => $params['level-languages-1'])),
-			    new MTLanguage(array('rs_id' => $id_cv, 'lang_id' => $params['foreign-languages-2'], 'level' => $params['level-languages-2'])),
-			    new MTLanguage(array('rs_id' => $id_cv, 'lang_id' => $params['foreign-languages-3'], 'level' => $params['level-languages-3'])),
-			);
-
-			$create_lang = MTLanguage::where('rs_id', $id_cv);
-
-			$create_lang->lang()->saveMany($lang);
-		}
-
-*/
-		$validator = new App\DTT\Forms\FormValidatorGeneralInfo;
-		if($validator->fails())
-		{
-			return Redirect::back()->withInput()->withErrors($validator);
-		} else {
-			$rs = Resume::where('id',$id_cv)->where('ntv_id',$GLOBALS['user']->id)->update(array(
-				'namkinhnghiem' 		=> ''.$params['years-of-experience'].'',
-				'bangcapcaonhat' 		=> ''.$params['highest-degree'].'',
-				'ctyganday' 			=> ''.$params['latest-company'].'',
-				'cvganday'		 		=> ''.$params['latest-job'].'',
-				'capbachientai'			=> ''.$params['current-level'].'',
-				'vitrimongmuon' 		=> ''.$params['wish-position'].'',
-				'capbacmongmuon' 		=> ''.$params['wish-level'].'',
-				'noilamviecmongmuon' 	=> ''.$params['wish-place-work'].'',
-				'mucluong' 				=> ''.$params['salary'].'',
-			));
-			if ($rs)
+		$params = Input::all();
+		if(Request::ajax()){
+			$respond['has'] = false;
+			$validator = new App\DTT\Forms\JobseekersGeneralInfo;
+			if($validator->fails())
 			{
-			    return Redirect::back()->with('success', 'Lưu thành công!');
-			}
-			else
-			{
-				return Redirect::back()->withInput->withErrors('Hiện giờ bạn không thể chỉnh sửa mục này');
+				$respond['message'] = $validator->getMessageBag()->toJson();
+				return Response::json($respond);
+			} else {
+				$chk = MTLanguage::where('rs_id',$id_cv)->get();
+				if(count($chk) == 0){
+					$lt = MTLanguage::where('rs_id',$id_cv)->insert(array(
+						array('rs_id' => $id_cv,'lang_id' => $params['foreign_languages_1'],'level' => $params['level_languages_1']),
+						array('rs_id' => $id_cv,'lang_id' => $params['foreign_languages_2'],'level' => $params['level_languages_2']),
+						array('rs_id' => $id_cv,'lang_id' => $params['foreign_languages_3'],'level' => $params['level_languages_3']),
+					));
+					if($lt){
+						$respond['has'] = true;
+						return Response::json($respond);	
+					}else{
+						$respond['message']='Hiện tại bạn không thể chỉnh sửa mục này';
+					}
+				}else{
+					$lt = MTLanguage::where('rs_id',$id_cv)->update(array(
+						array('lang_id' => $params['foreign_languages_1'],'level' => $params['level_languages_1']),
+						array('lang_id' => $params['foreign_languages_2'],'level' => $params['level_languages_2']),
+						array('lang_id' => $params['foreign_languages_3'],'level' => $params['level_languages_3']),
+					));
+					if($lt){
+						$respond['has'] = true;
+						return Response::json($respond);	
+					}else{
+						$respond['message']='Hiện tại bạn không thể chỉnh sửa mục này';
+					}
+				}
+
+				$rs = Resume::where('id',$id_cv)->where('ntv_id',$GLOBALS['user']->id)->update(array(
+					'namkinhnghiem' 		=> ''.$params['info_years_of_exp'].'',
+					'bangcapcaonhat' 		=> ''.$params['info_highest_degree'].'',
+					'capbachientai' 		=> ''.$params['info_current_level'].'',
+					'vitrimongmuon' 		=> ''.$params['info_wish_position'].'',
+					'capbacmongmuon' 		=> ''.$params['info_wish_level'].'',
+					'noilamviecmongmuon' 	=> ''.$params['info_wish_place'].'',
+					'nganhnghe' 			=> ''.$params['info_category'].'',
+					'mucluong' 				=> ''.$params['specific_salary'].'',
+					'ctyganday' 			=> ''.$params['info_latest_company'].'',
+					'cvganday' 				=> ''.$params['info_latest_job'].''
+				));
+				if ($rs)
+				{
+				    $respond['has'] = true;
+				    return Response::json($respond);
+				}
+				else
+				{
+				    $respond['message']='Hiện tại bạn không thể chỉnh sửa mục này';
+				}
 			}
 		}
 	}
@@ -308,6 +323,24 @@ class JobSeeker extends Controller
 					}
 				}
 			}
+		}
+	}
+
+	//edit & save Skills
+	public function editSkills($id_cv){
+		$params = Input::all();
+		if(Request::ajax()){
+			$arr = array();
+			$new_arr= array();
+			foreach($params['skills'] as $value)
+			{
+				if(count($value) == 2){
+					if($value[0] != '' && $value[1] != ''){
+						$arr[] = $value;
+					}
+				}  
+			}
+			$up_skills = Resume::where('id',$id_cv)->where('ntv_id', $GLOBALS['user']->id)->update(array('kynang'=>''.json_encode($arr).''));
 		}
 	}
 

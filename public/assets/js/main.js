@@ -155,10 +155,7 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
     $("#ForeignLanguages,#CurrentLevel,#WishLevel,#FieldOfStudy,#Scope,#LatestLevel,#Diploma,#HighestDegree,#District,#Cities,#Nationality,#jobLevelMainSearch, #jobObjMainSearch,#jobExpMainSearch,#DateOfBirth,#MonthOfBirth,#YearOfBirth,#Gender,#Country,#MaritalStatus,#Category,#Province,#Level,#AverageGrade").select2({
         minimumResultsForSearch: Infinity
     });
-    $('#DOB').datetimepicker({
-        pickTime: false,
-    });
-    $('#From_date,#Study_to').datetimepicker({
+    $("#From_date,#To_date,#DOB,#Study_to,#Study_from").datetimepicker({
         pickTime: false,
     });
 
@@ -299,14 +296,24 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
             }
     });
 
-    // Remove has error
-    $('.error-message').each(function(index ){
-        if($(this).html() == ''){
-            $(this).parent().removeClass('has-error');
-        }else{
-            $(this).parent().addClass('has-error');
-        }
+    $('.add-new-skill').click(function(){
+        var skill = $('#saveSkills .form-group').last().find('.skill').attr('name');
+        var i = skill.split('skill-').pop();
+        i++;
+            $("<div class='form-group'><div class='col-sm-8'><input class='skill form-control' name='skill-"+i+"' type='text'></div><div class='col-sm-4'><select class='level_skill form-control' name='level_skill"+i+"'><option value='' selected='selected'>- Vui lòng chọn -</option><option value='0'>Sơ cấp</option><option value='1'>Trung cấp</option><option value='2'>Cao cấp</option></select></div></div>").insertBefore('#saveSkills .form-submit');
     });
+
+    $('.default_years_of_exp').change(function(event) {
+        event.preventDefault();
+        if (this.checked) {
+            $('.info_years_of_exp').attr('disabled', 'disabled');
+            $('.info_years_of_exp').val('');
+        }else{
+            $('.info_years_of_exp').removeAttr('disabled');
+        }
+
+    });
+    
 
 })(jQuery);
 

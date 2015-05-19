@@ -61,7 +61,8 @@
 								<div class="col-sm-3">
 									<div class="input-group date" id="DOB">
 					                    {{Form::input('text','date_of_birth', $user->date_of_birth, array('class'=>'date_of_birth form-control', 'placeholder'=>'YYYY-MM-DD','data-date-format'=>'YYYY-MM-DD'))}}
-					                    <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
+					                    <span class="input-group-addon have-img">
+					                    	{{HTML::image('assets/images/calendar.png')}}
 					                    </span>
 					                </div>
 					                
@@ -150,42 +151,66 @@
 						<h2>Thông tin chung</h2> 
 						<a href="#" class=" pull-right"><i class="fa fa-edit"></i> Chỉnh sửa</a>
 					</div>
-					{{Form::open(array('route'=> array('jobseekers.save-cv', $id_cv), 'class'=>'form-horizontal', 'method'=>'POST'))}}
+					{{Form::open(array('class'=>'form-horizontal','id'=>'saveGeneralInfo'))}}
 						<div class="form-group">
 			                <label class="col-sm-3 control-label">Số năm kinh nghiệm<abbr>*</abbr></label>
 			                <div class="col-sm-3">
-			                	{{Form::input('text', 'years-of-experience', null, array('class'=>'form-control', 'maxlength'=>'2', 'placeholder'=>'Ví dụ 2'))}}
+			                	{{Form::input('text', 'info_years_of_exp', null, array('class'=>'info_years_of_exp form-control', 'maxlength'=>'2', 'placeholder'=>'Ví dụ 2', 'disabled' =>'disabled'))}} 
 			                </div>
 			                <div class="col-sm-6">
 			                    <div class="checkbox">
 			                    	<label>
-			                    		{{Form::checkbox('years-of-experience', 0)}}
+			                    		{{Form::checkbox('info_years_of_exp', 0, null, array('class'=>'default_years_of_exp','checked'=>'checked'))}}
 			                    		  Tôi mới tốt nghiệp/chưa có kinh nghiệm làm việc
 			                    	</label>
 			                    </div>
-			                    <span class="error-message">{{$errors->first('years-of-experience')}}</span>
 			                </div>
 			            </div>
 			            <div class="form-group">
 			            	<label class="col-sm-3 control-label">Bằng cấp cao nhất<abbr>*</abbr></label>
 			            	<div class="col-sm-3">
-			            		{{ Form::select('highest-degree', Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'HighestDegree') ) }}
-			            		 <span class="error-message">{{$errors->first('highest-degree')}}</span>
+			            		{{ Form::select('info_highest_degree', Country::lists('country_name', 'id'),null, array('class'=>'info_highest_degree form-control', 'id' => 'HighestDegree') ) }}
 			            	</div>
 			            </div>
 			            <div class="form-group">
-			            	@for($i=0; $i < count($mt_lang); $i++)
-			            	<div class="row fr-lang lang{{$i}} block">
+			            	
+			            	<div class="row fr-lang lang block">
 				            	<label class="col-sm-3 control-label">Ngoại ngữ<abbr>*</abbr></label>
 				            	<div class="col-sm-3 ">
-				            		{{ Form::select('foreign-languages-'.$i.'', array(""=>"- Vui lòng chọn -")+Language::lists('lang_name', 'id'),$mt_lang[$i]->lang_id, array('class'=>'form-control', 'id' => 'ForeignLanguages') ) }}
+				            		{{ Form::select('foreign_languages_1', array(""=>"- Vui lòng chọn -")+Language::lists('lang_name', 'id'),null, array('class'=>'foreign_languages_1 form-control', 'id' => 'ForeignLanguages') ) }}
 				            	</div>
 				            	<label class="col-sm-3 control-label">Trình độ</label>
 				            	<div class="col-sm-3 row">
-				            		{{ Form::select('level-languages-'.$i.'', array(""=>"- Vui lòng chọn -")+LevelLang::lists('name', 'id'),$mt_lang[$i]->level, array('class'=>'form-control', 'id' => 'Level') ) }}
+				            		{{ Form::select('level_languages_1', array(""=>"- Vui lòng chọn -")+LevelLang::lists('name', 'id'),null, array('class'=>'level_languages_1 form-control', 'id' => 'Level') ) }}
 				            	</div>
 			            	</div>
-			            	@endfor
+			            	<div class="row fr-lang lang hidden-xs">
+				            	<label class="col-sm-3 control-label"></label>
+				            	<div class="col-sm-3 ">
+				            		{{ Form::select('foreign_languages_2', array(""=>"- Vui lòng chọn -")+Language::lists('lang_name', 'id'),null, array('class'=>'foreign_languages_2 form-control', 'id' => 'ForeignLanguages') ) }}
+				            	</div>
+				            	<label class="col-sm-3 control-label">Trình độ</label>
+				            	<div class="col-sm-3 row">
+				            		{{ Form::select('level_languages_2', array(""=>"- Vui lòng chọn -")+LevelLang::lists('name', 'id'),null, array('class'=>'level_languages_2 form-control', 'id' => 'Level') ) }}
+				            	</div>
+				            	<div class="col-sm-1">
+		                            <div class="fa fa-remove text-red remove-fr-lang"></div>
+		                        </div>
+			            	</div>
+			            	<div class="row fr-lang lang hidden-xs">
+				            	<label class="col-sm-3 control-label"></label>
+				            	<div class="col-sm-3 ">
+				            		{{ Form::select('foreign_languages_3', array(""=>"- Vui lòng chọn -")+Language::lists('lang_name', 'id'),null, array('class'=>'foreign_languages_3 form-control', 'id' => 'ForeignLanguages') ) }}
+				            	</div>
+				            	<label class="col-sm-3 control-label">Trình độ</label>
+				            	<div class="col-sm-3 row">
+				            		{{ Form::select('level_languages_3', array(""=>"- Vui lòng chọn -")+LevelLang::lists('name', 'id'),null, array('class'=>'level_languages_3 form-control', 'id' => 'Level') ) }}
+				            	</div>
+				            	<div class="col-sm-1">
+		                            <div class="fa fa-remove text-red remove-fr-lang"></div>
+		                        </div>
+			            	</div>
+
 			            	<!--<label class="col-sm-3 control-label">Chứng chỉ liên quan<abbr>*</abbr></label>
 			            	<div class="col-sm-3">
 			            		{{ Form::select('certificate', Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'Certificate') ) }}
@@ -198,65 +223,59 @@
 			            <div class="form-group">
 			            	<label class="col-sm-3 control-label">Công ty gần đây nhất</label>
 			            	<div class="col-sm-9">
-			            		{{Form::input('text', 'latest-company', null, array('class'=>'form-control'))}}
+			            		{{Form::input('text', 'info_latest_company', null, array('class'=>'info_latest_company form-control'))}}
 			            	</div>
 			            </div>
 			            <div class="form-group">
 			            	<label class="col-sm-3 control-label">Công việc gần đây nhất</label>
 			            	<div class="col-sm-3">
-			            		{{Form::input('text', 'latest-job', null, array('class'=>'form-control'))}}
+			            		{{Form::input('text', 'info_latest_job', null, array('class'=>'info_latest_job form-control'))}}
 			            	</div>
 			            	<label class="col-sm-3 control-label">Cấp bậc hiện tại<abbr>*</abbr></label>
 			            	<div class="col-sm-3">
-			            		{{ Form::select('current-level', array(""=>"- Vui lòng chọn -")+Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'CurrentLevel') ) }}
-			            		 <span class="error-message">{{$errors->first('current-level')}}</span>
+			            		{{ Form::select('info_current_level', array(""=>"- Vui lòng chọn -")+Level::lists('name', 'id'),null, array('class'=>'info_current_level form-control', 'id' => 'CurrentLevel') ) }}
 			            	</div>
 			            </div>
 			            <div class="form-group">
 			            	<label class="col-sm-3 control-label">Vị trí mong muốn<abbr>*</abbr></label>
 			            	<div class="col-sm-3">
-			            		{{Form::input('text', 'wish-position', null, array('class'=>'form-control'))}}
-			            		<span class="error-message">{{$errors->first('wish-position')}}</span>
+			            		{{Form::input('text', 'info_wish_position', null, array('class'=>'info_wish_position form-control'))}}
 			            	</div>
 			            	<label class="col-sm-3 control-label">Cấp bậc mong muốn<abbr>*</abbr></label>
 			            	<div class="col-sm-3">
-			            		{{ Form::select('wish-level', array(""=>"- Vui lòng chọn -")+Country::lists('country_name', 'id'),null, array('class'=>'form-control', 'id' => 'WishLevel') ) }}
-			            		<span class="error-message">{{$errors->first('wish-level')}}</span>
+			            		{{ Form::select('info_wish_level', array(""=>"- Vui lòng chọn -")+Level::lists('name', 'id'),null, array('class'=>'info_wish_level form-control', 'id' => 'WishLevel') ) }}
 			            	</div>
 			            </div>
 			            <div class="form-group">
 				            <label class="col-sm-3 control-label">Nơi làm việc<abbr>*</abbr></label>
 				            	<div class="col-sm-3">
 				 
-			            		{{Form::select('wish-place-work', Province::lists('province_name', 'id'), null, array('class'=>'form-control chosen-select', 'id' => 'WishPlaceWork', 'multiple'=>'true','data-placeholder'=>'VD: Hồ Chí Minh') )}}
+			            		{{Form::select('info_wish_place_work', Province::lists('province_name', 'id'), null, array('class'=>'info_wish_place_work form-control chosen-select', 'id' => 'WishPlaceWork', 'multiple'=>'true','data-placeholder'=>'VD: Hồ Chí Minh') )}}
 				            		<small class="legend">(Tối đa 3 địa điểm mong muốn)</small>
-				            		<span class="error-message">{{$errors->first('wish-place-work')}}</span>
 			            		</div>
 			            	<label class="col-sm-3 control-label">Ngành nghề<abbr>*</abbr></label>
 			            	<div class="col-sm-3">
-			            		{{Form::select('category', Category::lists('cat_name', 'id'), null, array('class'=>'form-control chosen-select', 'id' => 'categoryMainSearch', 'multiple'=>'true','data-placeholder'=>'VD: Kế toán') )}}
-			            		
-			            		<span class="error-message">{{$errors->first('category')}}</span>
+			            		{{Form::select('info_category', Category::lists('cat_name', 'id'), null, array('class'=>'info_category form-control chosen-select', 'id' => 'categoryMainSearch', 'multiple'=>'true','data-placeholder'=>'VD: Kế toán') )}}
 			            	</div>
 			            </div>
 			            <div class="form-group">
 			                <label class="col-sm-3 control-label">Mức lương mong muốn<abbr>*</abbr></label>
 							<div class="radio col-sm-4">
 				                	<div for="specific-salary">
-				                    	{{Form::radio('specific-salary', 1, null, array('id'=>'specific-salary'))}}
-				                        {{Form::input('number','salary', null, array('class'=>'form-control edit-control text-blue','id'=>'specific-salary-input', 'placeholder'=>'Ví dụ: 8.000.000', 'disabled'))}}
+				                    	{{Form::radio('specific_salary', 1, null, array('id'=>'specific-salary'))}}
+				                        {{Form::input('number','salary', null, array('class'=>'specific form-control edit-control text-blue','id'=>'specific-salary-input', 'placeholder'=>'Ví dụ: 8.000.000', 'disabled'))}}
 				                    	<span>VND / tháng</span>
 				                    </div>
 								</div>
 				                <div class="radio col-sm-4">
-				                    {{Form::radio('specific-salary', 0, null, array('id'=>'specific-salary-0', 'checked'=>'checked'))}}
+				                    {{Form::radio('specific_salary', 0, null, array('id'=>'specific-salary-0', 'checked'=>'checked'))}}
 				                    <span>Thương lượng </span>
 				                </div>
 						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-3 col-sm-7">
-								{{Form::submit('Hủy', array('class'=>'btn btn-lg bg-gray-light'))}}
-									{{Form::submit('Lưu', array('class'=>'btn btn-lg bg-orange'))}}
+								{{Form::button('Hủy', array('class'=>'btn btn-lg bg-gray-light'))}}
+								{{Form::submit('Lưu', array('class'=>'btn btn-lg bg-orange'))}}
 								<span>(<span class="text-red">*</span>) Thông tin bắt buộc</span>
 							</div>
 						</div>	
@@ -266,7 +285,7 @@
 								<div class="boxed">
 				<div class="rows">
 					<div class="title-page">
-						<h2>Hồ sơ / Mục tiêu nghề nghiệp</h2>
+						<h2>Định hướng nghề nghiệp</h2>
 					</div>
 					<label><abbr>*</abbr> Giới Thiệu Bản Thân Và Miêu Tả Mục Tiêu Nghề Nghiệp Của Bạn</label>
 					{{Form::open(array('id'=>'saveCareerGoal'))}}
@@ -308,7 +327,8 @@
 								<div class="col-sm-3">
 									<div class="input-group date" id="From_date">
 					                    {{Form::input('text','from_date', null, array('class'=>'from_date form-control', 'placeholder'=>'Ví dụ: 09/2008','data-date-format'=>'MM-YYYY'))}}
-					                    <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
+					                    <span class="input-group-addon have-img">
+					                    	{{HTML::image('assets/images/calendar.png')}}
 					                    </span>
 					                </div>
 								</div>
@@ -316,7 +336,8 @@
 								<div class="col-sm-3">
 									<div class="input-group date" id="To_date">
 					                    {{Form::input('text','to_date', null, array('class'=>'to_date form-control', 'placeholder'=>'Ví dụ: 04/2012','data-date-format'=>'MM-YYYY'))}}
-					                    <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
+					                    <span class="input-group-addon have-img">
+					                    	{{HTML::image('assets/images/calendar.png')}}
 					                    </span>
 					                </div>
 								</div>
@@ -385,7 +406,7 @@
 				            	</div>
 				            	<label class="col-sm-2 control-label">Bằng cấp<abbr>*</abbr></label>
 				            	<div class="col-sm-3">
-				            		{{ Form::select('level', Country::lists('country_name', 'id'),null, array('class'=>'level form-control', 'id' => 'Diploma') ) }}
+				            		{{ Form::select('level', Education::lists('name', 'id'),null, array('class'=>'level form-control', 'id' => 'Diploma') ) }}
 				            	</div>
 							</div>
 							<div class="form-group">
@@ -393,7 +414,8 @@
 				            	<div class="col-sm-4">
 				            		<div class="input-group date" id="Study_from">
 					                    {{Form::input('text','study_from', null, array('class'=>'study_from form-control', 'placeholder'=>'Ví dụ: 09/2008','data-date-format'=>'MM-YYYY'))}}
-					                    <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
+					                    <span class="input-group-addon have-img">
+					                    	{{HTML::image('assets/images/calendar.png')}}
 					                    </span>
 					                </div>
 				            	</div>
@@ -401,7 +423,8 @@
 				            	<div class="col-sm-3">
 				            		<div class="input-group date" id="Study_to">
 					                    {{Form::input('text','study_to', null, array('class'=>'study_to form-control', 'placeholder'=>'Ví dụ: 04/2012','data-date-format'=>'MM-YYYY'))}}
-					                    <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
+					                    <span class="input-group-addon have-img">
+					                    	{{HTML::image('assets/images/calendar.png')}}
 					                    </span>
 					                </div>
 				            	</div>
@@ -437,8 +460,11 @@
 					<div class="rows">
 						<div class="title-page">
 							<h2>Kỹ năng</h2>
+							<a class="pull-right text-blue add-new-skill"><i class="fa fa-plus-circle"></i> Thêm mới</a>
 						</div>
+						<!-- Thêm kỹ năng cũ
 						<label>Thêm kỹ năng nghề nghiệp đề nhận được những đề nghị công việc phù hợp hơn</label>
+						
 						<div class="box">
 							<div id="tags-edit">
 								<span class="tag-xs" title="Developer">
@@ -467,6 +493,7 @@
 	                                <input class="input-tag-name" type="hidden" name="" data-tag-name="Developer">
                                 </span>
 							</div>
+
 						</div>
 						<div class="add-new-tag">
 							<div class="row">
@@ -486,6 +513,40 @@
 									{{Form::submit('Lưu', array('class'=>'btn btn-lg bg-orange'))}}
 								<span>(<span class="text-red">*</span>) Thông tin bắt buộc</span>
 							</div>
+						</div>-->
+						<div class="col-sm-8"><h3 class="text-gray-light">Kỹ năng</h3></div>
+						<div class="col-sm-4"><h3 class="text-gray-light">Mức độ thành thạo</h3></div>
+						<div class="box">
+							{{Form::open(array('class'=>'form-horizontal','id'=>'saveSkills'))}}
+								<?php $skills = json_decode($my_resume->kynang);?>
+								@if(count($skills) > 0)
+									@for ($i=0; $i < count($skills) ; $i++)
+										<div class='form-group'>
+										<div class='col-sm-8'>
+											{{Form::input('text', 'skill-'.$i.'', $skills[$i][0], array('class'=>'skill form-control'))}}
+										</div>
+										<div class='col-sm-4'>
+											{{Form::select('level_skill-'.$i.'', array(''=>'- Vui lòng chọn -','0'=>'Sơ cấp','1'=>'Trung cấp','2'=>'Cao cấp'), $skills[$i][1], array('class'=>'level_skill form-control', 'id'=>'LevelSkill'))}}
+										</div>
+										</div>
+									@endfor
+								@else
+								<div class="form-group">
+									<div class="col-sm-8">
+										{{Form::input('text', 'skill-1', null, array('class'=>'skill form-control'))}}
+									</div>
+									<div class="col-sm-4">
+										{{Form::select('level_skill-1', array(''=>'- Vui lòng chọn -','0'=>'Sơ cấp','1'=>'Trung cấp','2'=>'Cao cấp'),null, array('class'=>'level_skill form-control', 'id'=>'LevelSkill'))}}
+									</div>
+								</div>
+								@endif
+								<div class="form-submit">
+									<div class="col-sm-offset-3 col-sm-7">
+										{{Form::button('Hủy', array('class'=>'btn btn-lg bg-gray-light'))}}
+										{{Form::submit('Lưu', array('class'=>'btn btn-lg bg-orange'))}}
+									</div>
+								</div>
+							{{Form::close()}}
 						</div>
 					</div><!-- rows -->
 				</div><!-- boxed -->
@@ -789,5 +850,80 @@
 	        }
 		});		
 	});
+	
+	$('#saveSkills').submit(function(e) {
+		e.preventDefault();
+		$('.loading-icon').show();
+        url = '{{ URL::route("jobseekers.save-cv", array("skills", $id_cv )) }}';
+      	var arr = [];
+        $('#saveSkills .form-group').each(function() {
+        	var skill =  $(this).find('.skill').val();
+        	var level_skill =  $(this).find('.level_skill').val();
+        		var row = [];
+	        	row.push(skill);
+			    row.push(level_skill);
+			    arr.push(row);
+        });
+
+ 		$.ajax({
+ 			url: url,
+ 			type: 'POST',
+ 			data: {skills: arr},
+ 			success : function(data){
+ 				$('.loading-icon').hide();
+ 			}
+ 		})
+	});
+	
+	$('#saveGeneralInfo').submit(function(e) {
+		e.preventDefault();
+		$('.loading-icon').show();
+        url = '{{ URL::route("jobseekers.save-cv", array("general", $id_cv )) }}';
+		$.ajax({
+			url: url,
+			type: 'POST',
+			dataType: 'json',
+			data: {
+				info_years_of_exp: $('#saveGeneralInfo .info_years_of_exp').val(),
+				info_highest_degree: $('#saveGeneralInfo .info_highest_degree').val(),
+				info_current_level: $('#saveGeneralInfo .info_current_level').val(),
+				info_wish_position: $('#saveGeneralInfo .info_wish_position').val(),
+				info_wish_level: $('#saveGeneralInfo .info_wish_level').val(),
+				info_wish_place: $('#saveGeneralInfo .info_wish_place').val(),
+				info_category: $('#saveGeneralInfo .info_category').val(),
+				specific_salary: $('#saveGeneralInfo .specific_salary').val(),
+				info_latest_company: $('#saveGeneralInfo .info_latest_company').val(),
+				info_latest_job: $('#saveGeneralInfo .info_latest_job').val(),
+				foreign_languages_1: $('#saveGeneralInfo .foreign_languages_1').val(),
+				foreign_languages_2: $('#saveGeneralInfo .foreign_languages_2').val(),
+				foreign_languages_3: $('#saveGeneralInfo .foreign_languages_3').val(),
+				level_languages_1: $('#saveGeneralInfo .level_languages_1').val(),
+				level_languages_2: $('#saveGeneralInfo .level_languages_2').val(),
+				level_languages_3: $('#saveGeneralInfo .level_languages_3').val(),
+
+			},
+			success : function(json) {
+				if(! json.has)
+	            {	
+	            	$('#saveGeneralInfo').find(".has-error").removeClass('has-error');
+		            $('#saveGeneralInfo').find(".error-message").remove();
+	            	var j = $.parseJSON(json.message);
+	            	$.each(j, function(index, val) {
+		            	$('.'+index).parent().closest('div[class^="col-sm"]').addClass('has-error');
+		            	if($('.'+index).parent().closest('div[class^="col-sm"]').find(".error-message").length < 1){
+		           			$('.'+index).parent().closest('div[class^="col-sm"]').append('<span class="error-message">'+val+'</span>')
+		            	}
+		           		$('.loading-icon').hide();           		
+	           		});
+	            }else{
+	           		$('#saveGeneralInfo').find(".has-error").removeClass('has-error');
+	           		$('#saveGeneralInfo').find(".error-message").remove();
+					$('.loading-icon').hide();
+	           	}
+	           	$('.loading-icon').hide();
+	        }
+		});		
+	});
+
 	</script>
 @stop
