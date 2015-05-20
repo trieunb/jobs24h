@@ -9,7 +9,13 @@ Route::group(array('prefix'=>$locale), function() {
 		Route::get('/account-active',array('as'=>'account-active', function() {
 			return View::make('jobseekers.account-active');
 		}));
+		Route::get('/forgot-password',array('as'=>'forgot-password', function() {
+			return View::make('jobseekers.forgot-password');
+		}));
 		Route::get('/account-active/{email}/{code}',array('as'=>'jobseekers.account-active', 'uses'=>'JobSeekerAuth@checkActive'));
+		Route::post('/forgot-password','JobSeekerAuth@doResetPass');
+		Route::get('/forgot-password/reset-password/{email}/{code}',array('as'=>'jobseekers.reset-password', 'uses'=>'JobSeekerAuth@ChangePass'));
+		Route::post('/forgot-password/reset-password/{email}/{code}',array('as'=>'jobseekers.reset-password', 'uses'=>'JobSeekerAuth@doChangePass'));
 		Route::group(array('before'=>'sentry.ntv'), function() {
 			Route::get('/edit-cv', array('as'=>'jobseekers.edit-cv', 'uses'=>'JobSeeker@editCvHome') );
 			Route::post('/edit-cv/{action}/{id_cv}', array('as'=>'jobseekers.save-cv', 'uses'=>'JobSeeker@saveInfo'));

@@ -12,7 +12,8 @@
 	      	<li><a href="#">{{ HTML::image('assets/images/icons/save.png') }} Việc làm đã lưu<span class="badge">2</span></a></li>
 	      	<li><a href="ntv-vieclamcuatoi.php">{{ HTML::image('assets/images/icons/job_submitted.png') }} Việc làm đã nộp<span class="badge">2</span></a></li>
 	      	<li><a href="ntv-xemhoso.php">{{ HTML::image('assets/images/icons/view_profile.png') }} Nhà tuyển dụng xem hồ sơ<span class="badge">2</span></a></li>
-	      	<li><a href="ntv-hanchecty.php">{{ HTML::image('assets/images/icons/limit.png') }} Hạn chê công ty xem hồ sơ<span class="badge">2</span></a></li>
+	      	<li><a href="ntv-xemhoso.php">{{ HTML::image('assets/images/icons/repond.png') }} Phản hồi của nhà tuyển dụng<span class="badge">2</span></a></li>
+	      	<!--<li><a href="ntv-hanchecty.php">{{ HTML::image('assets/images/icons/limit.png') }} Hạn chê công ty xem hồ sơ<span class="badge">2</span></a></li>-->
 	      	<li><a href="ntv-thumoipv.php">{{ HTML::image('assets/images/icons/interview_letter.png') }} Thư mời phỏng vấn</a></li>
 	      	<li><a href="ntv-thongbaovieclam.php">{{ HTML::image('assets/images/icons/notify.png') }} Thông báo việc làm</a></li>
 	      	<li><a href="#">{{ HTML::image('assets/images/icons/log_out.png') }} Thoát</a></li>

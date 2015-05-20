@@ -51,7 +51,7 @@
 				  </a>
 				</div>	
 				<div class="faq clearfix">
-				<p>{{ HTML::image('assets/images/faq.png') }} Bạn đã có tài khoản? <a href="" class="text-blue decoration">Đăng nhập tại đây</a></p>
+				<p>{{ HTML::image('assets/images/faq.png') }} Bạn đã có tài khoản? <a href="{{URL::route('jobseekers.login')}}" class="text-blue decoration">Đăng nhập tại đây</a></p>
 				<span>Hoặc đăng nhập bằng: 
 						<a href="#"><span class="fa-stack fa-lg">
 	                		<i class="fa fa-circle fa-stack-2x text-face"></i>

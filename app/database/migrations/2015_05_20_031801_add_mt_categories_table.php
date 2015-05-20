@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class AddResumesTable extends Migration {
+class AddMtCategoriesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,9 +12,9 @@ class AddResumesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('resumes', function(Blueprint $table)
+		Schema::table('mt_categories', function(Blueprint $table)
 		{
-			$table->integer('nganhnghe');
+			$table->integer('count_cate');
 		});
 	}
 
@@ -26,9 +26,9 @@ class AddResumesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('resumes', function(Blueprint $table)
+		Schema::table('mt_categories', function(Blueprint $table)
 		{
-			$table->dropColumn('nganhnghe');
+			$table->dropColumn('count_cate');
 		});
 	}
 

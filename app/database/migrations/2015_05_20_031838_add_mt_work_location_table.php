@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class AddResumesTable extends Migration {
+class AddMtWorkLocationTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,10 +12,9 @@ class AddResumesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('resumes', function(Blueprint $table)
+		Schema::table('mt_work_locations', function(Blueprint $table)
 		{
-			$table->string('tieude_cv')->after('ntv_id');
-			$table->tinyInteger('is_default')->after('is_visible');
+			$table->integer('count_work_location');
 		});
 	}
 
@@ -27,9 +26,9 @@ class AddResumesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('resumes', function(Blueprint $table)
+		Schema::table('mt_work_location', function(Blueprint $table)
 		{
-			
+			$table->dropColumn('count_work_localtion');
 		});
 	}
 

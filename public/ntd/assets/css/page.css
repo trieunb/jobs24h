@@ -2,7 +2,7 @@
 @import url('color.css');
 a:hover, button:hover {transition: 0.3s;}
 body {
-	background: url(../images/background.png) no-repeat;
+	background: url(../images/background.jpg) repeat;
 	background-size: 100%;
 }
 .head-main {

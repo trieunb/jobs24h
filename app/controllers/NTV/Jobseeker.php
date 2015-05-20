@@ -8,7 +8,7 @@ class JobSeeker extends Controller
 	
 	public function home()
 	{
-		return View::make('jobseekers.home');
+		return View::make('jobseekers.home')->with('user', $GLOBALS['user']);
 	}
 	public function editBasicHome(){
 		$js = Sentry::getUser();
@@ -130,50 +130,84 @@ class JobSeeker extends Controller
 	// Edit & save genneral information
 	public function editGeneralInfo($id_cv) {
 		$params = Input::all();
+		$respond['has'] = false;
 		if(Request::ajax()){
-			$respond['has'] = false;
+		
 			$validator = new App\DTT\Forms\JobseekersGeneralInfo;
 			if($validator->fails())
 			{
 				$respond['message'] = $validator->getMessageBag()->toJson();
 				return Response::json($respond);
 			} else {
+				// Languages
 				$chk = MTLanguage::where('rs_id',$id_cv)->get();
 				if(count($chk) == 0){
-					$lt = MTLanguage::where('rs_id',$id_cv)->insert(array(
-						array('rs_id' => $id_cv,'lang_id' => $params['foreign_languages_1'],'level' => $params['level_languages_1']),
-						array('rs_id' => $id_cv,'lang_id' => $params['foreign_languages_2'],'level' => $params['level_languages_2']),
-						array('rs_id' => $id_cv,'lang_id' => $params['foreign_languages_3'],'level' => $params['level_languages_3']),
+					$lt = MTLanguage::insert(array(
+						array('rs_id' => $id_cv,'lang_id' => $params['foreign_languages_1'],'level' => $params['level_languages_1'],'count_lang' => 1),
+						array('rs_id' => $id_cv,'lang_id' => $params['foreign_languages_2'],'level' => $params['level_languages_2'],'count_lang' => 2),
+						array('rs_id' => $id_cv,'lang_id' => $params['foreign_languages_3'],'level' => $params['level_languages_3'],'count_lang' => 3),
 					));
-					if($lt){
-						$respond['has'] = true;
-						return Response::json($respond);	
-					}else{
-						$respond['message']='Hiện tại bạn không thể chỉnh sửa mục này';
-					}
 				}else{
-					$lt = MTLanguage::where('rs_id',$id_cv)->update(array(
-						array('lang_id' => $params['foreign_languages_1'],'level' => $params['level_languages_1']),
-						array('lang_id' => $params['foreign_languages_2'],'level' => $params['level_languages_2']),
-						array('lang_id' => $params['foreign_languages_3'],'level' => $params['level_languages_3']),
-					));
-					if($lt){
-						$respond['has'] = true;
-						return Response::json($respond);	
-					}else{
-						$respond['message']='Hiện tại bạn không thể chỉnh sửa mục này';
+					for ($i=1; $i <= count($chk) ; $i++) { 
+						$lt = MTLanguage::where('rs_id',$id_cv)->where('count_lang', $i)->update(array(
+							'lang_id' => $params['foreign_languages_'.$i.''],'level' => $params['level_languages_'.$i.'']
+						));
 					}
 				}
 
+				// Categories
+				$chk_cat = MTCategory::where('rs_id',$id_cv)->get();
+				if(count($params['info_category']) < 2){
+					$params['info_category'][1] = 0;	
+				}
+				if(count($params['info_category']) < 3){
+					$params['info_category'][2] = 0;
+				}
+				if(count($chk_cat) == 0){
+					$ct = MTCategory::insert(array(
+						array('rs_id' => $id_cv,'cat_id' => $params['info_category'][0], 'count_cate' => 1),
+						array('rs_id' => $id_cv,'cat_id' => $params['info_category'][1], 'count_cate' => 2),
+						array('rs_id' => $id_cv,'cat_id' => $params['info_category'][2], 'count_cate' => 3),
+					));
+				}else{
+					for ($i=0; $i < count($chk_cat) ; $i++) { 
+						$update_ct = MTCategory::where('rs_id',$id_cv)->where('count_cate', $i+1)->update(array(
+							'cat_id' => $params['info_category'][$i]
+						));
+					}
+				}
+
+
+				// Work Locations
+				$chk_wl = MTWorkLocation::where('rs_id',$id_cv)->get();
+				if(count($params['info_wish_place_work']) < 2){
+					$params['info_wish_place_work'][1] = 0;	
+				}
+				if(count($params['info_wish_place_work']) < 3){
+					$params['info_wish_place_work'][2] = 0;
+				}
+				if(count($chk_wl) == 0){
+					$wl = MTWorkLocation::insert(array(
+						array('rs_id' => $id_cv,'province_id' => $params['info_wish_place_work'][0], 'count_work_location' => 1),
+						array('rs_id' => $id_cv,'province_id' => $params['info_wish_place_work'][1], 'count_work_location' => 2),
+						array('rs_id' => $id_cv,'province_id' => $params['info_wish_place_work'][2], 'count_work_location' => 3),
+					));
+				}else{
+					for ($j=0; $j < count($chk_wl) ; $j++) { 
+						$update_wl = MTWorkLocation::where('rs_id',$id_cv)->where('count_work_location', $j+1)->update(array(
+							'province_id' => $params['info_wish_place_work'][$j]
+						));
+					}
+				}
+				Log::info($params['specific_salary']);
+				if($params['specific_salary'] == '') $params['specific_salary'] = 0;
 				$rs = Resume::where('id',$id_cv)->where('ntv_id',$GLOBALS['user']->id)->update(array(
-					'namkinhnghiem' 		=> ''.$params['info_years_of_exp'].'',
-					'bangcapcaonhat' 		=> ''.$params['info_highest_degree'].'',
-					'capbachientai' 		=> ''.$params['info_current_level'].'',
+					'namkinhnghiem' 		=> $params['info_years_of_exp'],
+					'bangcapcaonhat' 		=> $params['info_highest_degree'],
+					'capbachientai' 		=> $params['info_current_level'],
 					'vitrimongmuon' 		=> ''.$params['info_wish_position'].'',
-					'capbacmongmuon' 		=> ''.$params['info_wish_level'].'',
-					'noilamviecmongmuon' 	=> ''.$params['info_wish_place'].'',
-					'nganhnghe' 			=> ''.$params['info_category'].'',
-					'mucluong' 				=> ''.$params['specific_salary'].'',
+					'capbacmongmuon' 		=> $params['info_wish_level'],
+					'mucluong' 				=> $params['specific_salary'],
 					'ctyganday' 			=> ''.$params['info_latest_company'].'',
 					'cvganday' 				=> ''.$params['info_latest_job'].''
 				));
