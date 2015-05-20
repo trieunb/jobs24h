@@ -1,0 +1,210 @@
+@import url('fonts.css');
+@import url('color.css');
+a:hover, button:hover {transition: 0.3s;}
+body {
+	background: url(../images/background.png) no-repeat;
+	background-size: 100%;
+}
+.head-main {
+	background: none;
+	max-width: 1024px;
+	margin: 0 auto;
+}
+.page {
+	max-width: 935px;
+	margin: 0 auto;
+}
+.full-page {
+	max-width: 1140px;
+	margin: 0 auto;
+}
+.header {
+	height: 150px;
+}
+header {
+	padding-top: 40px;
+}
+ul.nav-menu {
+	padding-top: 10px;
+	padding-bottom: 20px;
+}
+ul.nav-menu li {
+	display: inline;
+}
+
+ul.nav-menu li:last-child a {
+	padding-right: 0;
+}
+ul.nav-menu li a {
+	color: #FFF;
+	font-weight: bold;
+	padding-right: 30px;
+}
+ul.nav-menu li.active a {
+	color: #1ac6ff;
+	padding-left: 10px;
+	background: url('../images/li-active.png') no-repeat center left;
+}
+ul.language {
+	padding-bottom: 10px;
+}
+ul.language li a {
+	color: #FFF;
+}
+ul.language li {
+	display: inline;
+	
+}
+ul.language li a {
+	padding-left: 5px;
+	padding-right: 7px;
+	border-right: 1px solid #FFF;
+}
+ul.language li:last-child a {
+	padding-right: 30px;
+	border-right: none;
+}
+footer {
+	bottom: 0;
+}
+footer .footer-page {
+	max-width: 1025px;
+	margin: 0 auto;
+}
+footer #above {
+	padding: 20px 0 10px;
+	background: #282b2d;
+}
+footer #above ul.bottom-navigation li, footer #above ul li {
+	display: inline;
+}
+footer #above ul.bottom-navigation {
+	padding: 20px 0;
+}
+footer #above ul.bottom-navigation li a {
+	color: #FFF;
+	font-weight: bold;
+	font-size: 14px;
+	padding-left: 20px;
+	padding-right: 20px;
+	border-right: 1px solid #FFF;
+}
+.text-center {
+	text-align: center;
+}
+.main-content {
+	margin-bottom: 37px;
+}
+.main-content .panel .panel-heading {
+	background: #FFF;
+	min-height: 52px;
+	padding-top: 0;
+	padding-left: 30px;
+	padding-bottom: 0;
+	background: url('../images/login-heading-bg.jpg') repeat-x center bottom;
+}
+.main-content .panel .panel-heading .heading-title {
+	padding-left: 40px;
+	height: 50px;
+	margin: 10px 0 0 0;
+	width: 100%;
+	font-size: 23px;
+	text-transform: uppercase;
+	font-family: "Gotham-Medium";
+	color: #494949;
+}
+.main-content .panel .panel-body {
+	background: #eff3f6;
+}
+.main-content .panel {
+	border-radius: 3px 3px 0 0;
+}
+.form-control {
+	border-radius: 0;
+	border-left: 3px solid #1ac6ff;
+}
+.form-group label {
+	color: #4c4c4c;
+	font-family: "Arial",Helvetica,sans-serif;
+	font-size: 13px;
+}
+.text-required {
+	color: #FF0000;
+}
+span.nomal-text {
+	font-weight: normal;
+	font-size: 12px;
+}
+label.control-label {
+	text-align: left !important;
+}
+.form-group span.pull-right {
+	font-size: 11px;
+	font-family: arial;
+	font-style: italic;
+	padding-top: 5px;
+}
+/*
+.panel .panel-body button {
+	background: #1ac6ff;
+	border: none;
+	border-radius: 0;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 18px;
+	border-radius: 3px;
+}
+.panel .panel-body button:hover {
+	background: #5AADC8;
+}
+*/
+input[class="vnjob-checkbox"] {
+    display:none;
+}
+input[class="vnjob-checkbox"] + label span {
+    display:inline-block;
+    width:17px;
+    height:17px;
+    margin:-1px 4px 0 0;
+    vertical-align:middle;
+    background:url(../images/checkbox-icon.png) left top no-repeat;
+    cursor:pointer;
+}
+input[class="vnjob-checkbox"]:checked + label span {
+    background:url(../images/checkbox-icon.png) -19px top no-repeat;
+}
+.center {
+	text-align: center;
+}
+.btn-transparent {
+	background: none;
+	border: 1px solid #FFF;
+}
+.btn-transparent:hover {
+	background: #1ac6ff;
+	border: 1px solid #1ac6ff;
+}
+footer #above ul.bottom-navigation li:last-child a {
+	border: none;
+	padding-right: 0;
+}
+footer #above ul.socials  {
+	text-align: center;
+	padding: 10px 0 0;
+}
+footer #above .text-center span {
+	color: #FFF;
+}
+ul.socials li a img:hover {
+	outline: 1px solid #FFF;
+}
+footer #below {
+	background: #444444;
+}
+footer #below .center {
+	padding: 16px 0;
+	text-align: center;
+	font-family: "caviar";
+	color: #cccccc;
+	font-size: 14px;
+}

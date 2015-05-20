@@ -1,0 +1,38 @@
+@import url('page.css');
+
+.register-form {
+	max-width: 570px;
+	margin: 0 auto;
+	float: none;
+	padding: 0;
+}
+.register-form .panel .panel-heading .heading-title {
+	background: url('../images/add_user.png') no-repeat;
+}
+.register-form .content-required {
+	font-size: 12px;
+	font-weight: normal;
+	text-transform: none;
+	font-family: arial;
+	padding-top: 8px;
+}
+.register-form h3.form-legend {
+	font-family: "Gotham-Thin";
+	font-size: 24px;
+	font-weight: 400;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.register-form .form-horizontal .form-group a {
+	color: #8f8f8f;
+	text-decoration: underline;
+}
+.register-form .form-horizontal .form-group a:hover {
+	text-decoration: none;
+}
+.register-form button.btn-register {
+	background: #1ac6ff;
+	border: none;
+	height: 70px;
+	font-weight: bold;
+}
