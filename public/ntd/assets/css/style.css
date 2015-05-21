@@ -122,7 +122,8 @@ h6,
 .h6{font-size:10px;}
 section {margin-bottom: 50px;}
 p{margin-bottom: 0;}
-.table>thead>tr>th {background: #1ac6ff;  border-bottom: 1px solid #FFF !important;color: #fff; text-transform: uppercase; font-size: 11px;}
+.table-blue, .table-blue-bordered >thead>tr>th {background: #1ac6ff;  border-bottom: 1px solid #FFF !important;color: #fff; text-transform: uppercase; font-size: 11px; vertical-align: middle;}
+.table-little-blue>thead>tr>th {background: #e4f5ff;  border-bottom: 1px solid #ddd !important;color: #555; text-transform: uppercase; font-size: 11px; vertical-align: top;}
 .table-blue>thead>tr>th, .table-blue>tbody>tr>th, .table-blue>tfoot>tr>th, .table-blue>thead>tr>td, .table-blue>tbody>tr>td, .table-blue>tfoot>tr>td{border: 1px solid #1ac6ff;}
 .table-blue>thead>tr>th {color: #fff;}
 .table-blue tbody {background: #fff;}
@@ -207,10 +208,12 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
 /* OVERWIRTE BOOTSTRAP AND PLUGINS */
 .form-control {border-color: #dddddd ;color: #555; font-size: 12px; padding: 6px 5px; box-shadow: none !important;}
 .btn {font-size: 12px; padding: 6px 20px;}
-.push-top-md, .push-top {margin-top: 20px;}
-.push-bottom-md, .push-bottom {margin-bottom: 20px;}
+.push-top {margin-top: 20px;}
+.push-bottom {margin-bottom: 20px;}
 .push-bottom-30 {margin-bottom: -30px;}
+.push-top-30 {margin-top: -30px;}
 .push-padding-10 {padding: 10px;}
+.push-padding-10-lr {padding: 0 10px;}
 .push-padding-20 {padding: 10px 20px;}
 .form-horizontal .form-group {margin-right: 0; margin-left: 0;}
 .decoration {text-decoration: underline;}
@@ -222,9 +225,11 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
 abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display: inline-block;background: #fff;border-radius: 3px;margin-top: 8px;}
 .heading-form {padding: 10px 0 20px; margin: 0 0 0 -15px;}
 .heading-form h2{ font-family:"Gotham-Thin"; text-transform:  uppercase; font-size: 24px; color: #999; margin: 0; display: inline-block;}
-.heading-image {  margin: -20px -20px 30px; padding: 15px 20px 20px; text-align: center;background:#fff url(../images/super-divider2.png) bottom center no-repeat}
+.heading-image {  margin: -20px -20px 15px; padding: 15px 20px 20px; text-align: center;background:#fff url(../images/super-divider2.png) bottom center no-repeat}
 .heading-image h2 {  vertical-align: bottom;font-size: 26px;font-weight: 200;text-transform: uppercase; font-family: "Gotham-Thin";}
 .heading-image h2 img {vertical-align: top; margin-right: 10px}
+.heading-border-blue {padding: 10px 20px; border-left: 5px solid #1ac6ff; margin-bottom: 20px;}
+.heading-border-blue h3 {margin: 0; font-size: 18px; font-weight: 500;}
 .boxed .heading-image {margin-bottom: 0;}
 .boxed .heading-image h2 {font-family: Tahoma; font-size: 20px;}
 
@@ -270,10 +275,9 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
 
 /* SIDEBAR */
 #sidebar {padding: 0; width: 270px;}
-.widget {padding: 10px; /* border-bottom: 1px solid #eaeaea; *//* border: 1px #ddd solid; */   background: #fff;border-bottom: none; clear: both; margin-bottom: 30px;}
+.widget {padding: 10px; /* border-bottom: 1px solid #eaeaea; *//* border: 1px #ddd solid; */   background: #fff;border-bottom: none; clear: both; margin:0 0 30px;}
 .widget h3 {  border-left: 3px solid orange;   margin: -10px -10px 15px;display: block;padding: 15px 10px;  font-family: "Gotham-Thin";  text-transform: uppercase;  font-size:15px;  color: #999; text-align: center;}
-.widget ul[class^="arrow-"] li {padding: 10px 0px 10px 15px;}
-.widget .arrow-square-orange li {  background: url(../images/arrow_square_orange.png) no-repeat left 17px;}
+.widget .arrow-square-orange li {  background: url(../images/arrow_square_orange.png) no-repeat left 22px;}
 .widget ul li {padding: 0 0 15px;  float: left; width: 100%;}
 .widget ul li:before{height: 1px; width: 100%; background: url(../images/separator.png); content: ''; display: block; margin-bottom: 15px;}
 .widget ul li:last-child {/* border:none; */}
@@ -282,11 +286,13 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
 .fileUpload {position: relative;overflow: hidden;}
 .fileUpload input.upload {position: absolute;top: 0;right: 0;margin: 0;   padding: 0;font-size: 20px;cursor: pointer;opacity: 0;filter: alpha(opacity=0);}
 #uploadFile {  background: transparent;  border: none;  padding: 0;  font-style: italic;}
-
-
-
-
-
+.management-order .arrow-square-orange li:first-child:before{padding: 0; background: none;}
+.management-order h4 {color: #999; text-transform: uppercase; font-family: "Gotham-Thin"; font-size: 11px;}
+.support {background: #f5f5f5; padding: 10px;}
+.support .heading-image {margin: -10px -10px 20px;}
+.support-info img {border-radius: 50%; display: block; width: 120px; margin: 0 auto 20px; border: 10px solid #fdfdfd;}
+.support-info ul li ul {margin: 15px 0 15px 15px;}
+.support-info ul li {padding: 5px 0;}
 
 
 
