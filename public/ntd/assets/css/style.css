@@ -140,7 +140,7 @@ body.modal-open {padding: 0 !important; overflow: visible !important;}
 #content, #sidebar { float: left;}
 #content.right {width: 700px; background: #F5F5F5; padding: 20px !important;}
 #content {padding-left: 0 !important; width: 700px;}
-.boxed {padding: 20px; box-shadow: 0px 1px 1px #d5d5d5; border:1px #ddd solid; float: left; width: 100%;background: #fff; margin-bottom: 20px;}
+.boxed {padding: 20px; float: left; width: 100%;background: #F5F5F5; margin-bottom: 20px;}
 .rows {float: left; width: 100%; padding: 20px 0;background: #fff;}
 .box {margin: 0 0 20px 0; float: left; position: relative; padding: 15px; border: 1px solid #eaeaea; width: 100%; background: #fff;}
 .box:before {width: 10px; height: 10px; border-left: 1px solid #f7941d;border-top: 1px solid #f7941d;content: ""; display: inline-block; position: absolute; top: 0; left: 0;}
@@ -225,7 +225,8 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
 .heading-image {  margin: -20px -20px 30px; padding: 15px 20px 20px; text-align: center;background:#fff url(../images/super-divider2.png) bottom center no-repeat}
 .heading-image h2 {  vertical-align: bottom;font-size: 26px;font-weight: 200;text-transform: uppercase; font-family: "Gotham-Thin";}
 .heading-image h2 img {vertical-align: top; margin-right: 10px}
-
+.boxed .heading-image {margin-bottom: 0;}
+.boxed .heading-image h2 {font-family: Tahoma; font-size: 20px;}
 
 .arrow-square-orange li {background: url(../images/arrow_square_orange.png) no-repeat left 6px; padding-left: 15px;   padding-bottom: 7px;}
 .arrow-square-blue li {background: url(../images/arrow_square_blue.png) no-repeat left 5px; padding-left: 15px;   padding-bottom: 5px;}
@@ -244,6 +245,8 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
   font-weight: 600;
 }
 .filter span select {width: 150px; margin-left: 10px;}
+.text-align-center{text-align: center;}
+
 
 .update-info {margin-right: -30px;}
 .update-info .col-sm-6.row {margin: 0; padding: 0}
@@ -268,7 +271,7 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
 /* SIDEBAR */
 #sidebar {padding: 0; width: 270px;}
 .widget {padding: 10px; /* border-bottom: 1px solid #eaeaea; *//* border: 1px #ddd solid; */   background: #fff;border-bottom: none; clear: both; margin-bottom: 30px;}
-.widget h3 {  border-left: 3px solid orange;   margin: -10px -10px 15px;display: block;padding: 15px 10px;  font-family: "Gotham-Thin";  text-transform: uppercase;  font-size: 20px;  color: #999; text-align: center;}
+.widget h3 {  border-left: 3px solid orange;   margin: -10px -10px 15px;display: block;padding: 15px 10px;  font-family: "Gotham-Thin";  text-transform: uppercase;  font-size:15px;  color: #999; text-align: center;}
 .widget ul[class^="arrow-"] li {padding: 10px 0px 10px 15px;}
 .widget .arrow-square-orange li {  background: url(../images/arrow_square_orange.png) no-repeat left 17px;}
 .widget ul li {padding: 0 0 15px;  float: left; width: 100%;}
