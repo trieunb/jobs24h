@@ -8,6 +8,7 @@
 				<?php include('includes/widget-find-actions.php') ?>
 			</aside>
 			<section id="content" class="pull-right right">
+				<div class="box">
 				<div id="list-actions-by-user">
 					<div class="heading-image">
 						<h2 class="text-blue"><img src="assets/images/actions.png"> Các tác vụ đã thực hiện</h2>
@@ -122,6 +123,7 @@
 							<li><a href="#">&raquo;</a></li>
 						</ul>
 					</div>
+				</div>
 				</div>
 			</section>
 		</div>

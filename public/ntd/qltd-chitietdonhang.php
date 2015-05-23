@@ -4,8 +4,10 @@
 		<div class="container">
 			<aside id="sidebar" class="col-sm-3">
 				<?php include('includes/widget-details-order.php') ?>
+				<?php include('includes/widget-support.php') ?>
 			</aside>
 			<section id="content" class="pull-right right">
+				<div class="box">
 					<div class="heading-image">
 						<h2 class="text-blue"><img src="assets/images/chi-tiet-don-hang.png">Chi tiết đơn hàng</h2>
 					</div>
@@ -73,6 +75,7 @@
 							</tbody>
 						</table>
 					</div>
+				</div>
 			</section>
 		</div>
 	</section>

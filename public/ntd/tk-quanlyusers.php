@@ -7,6 +7,7 @@
 				<?php include('includes/widget-sample-email.php') ?>
 			</aside>
 			<section id="content" class="pull-right right">
+				<div class="box">
 				<div id="management-users">
 					<div class="heading-image">
 						<h2 class="text-blue"><img src="assets/images/user.png">Danh Sách User</h2>
@@ -44,6 +45,7 @@
 						</tbody>
 					</table>
 					<button type="button" class="btn btn-lg bg-orange">Tạo User Phụ</button>
+				</div>
 				</div>
 			</section>
 		</div>

@@ -7,6 +7,7 @@
 				<?php include('includes/widget-sample-email.php') ?>
 			</aside>
 			<section id="content" class="pull-right right">
+				<div class="box">
 					<div class="heading-image">
 						<h2 class="text-blue"><img src="assets/images/email.png">Danh sách các thư trả lời tự động</h2>
 					</div>
@@ -177,7 +178,8 @@
 							<li><a href="#">...<i class="fa fa-sort-down"></i></a></li>
 							<li><a href="#">»</a></li>
 						</ul>
-					</div>	
+					</div>
+				</div>
 			</section>
 		</div>
 	</section>

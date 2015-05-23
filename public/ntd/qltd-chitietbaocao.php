@@ -7,6 +7,7 @@
 				<?php include('includes/widget-management-order.php') ?>
 			</aside>
 			<section id="content" class="pull-right right">
+				<div class="box">
 					<div class="heading-image">
 						<h2 class="text-blue"><img src="assets/images/list.png">Danh sách gói hồ sơ đã sử dụng</h2>
 					</div>
@@ -165,6 +166,7 @@
 						</table>
 							<a class="text-blue decoration italic"><img src="assets/images/excel.png">Chuyển danh sách sang file excel</a>
 					</div>
+				</div>
 			</section>
 		</div>
 	</section>

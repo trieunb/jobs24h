@@ -123,11 +123,7 @@ footer #above ul.bottom-navigation li a {
 	border-radius: 0;
 	border-left: 3px solid #1ac6ff;
 }
-.form-group label {
-	color: #4c4c4c;
-	font-family: "Arial",Helvetica,sans-serif;
-	font-size: 13px;
-}
+
 .text-required {
 	color: #FF0000;
 }
@@ -135,9 +131,7 @@ span.nomal-text {
 	font-weight: normal;
 	font-size: 12px;
 }
-label.control-label {
-	text-align: left !important;
-}
+
 .form-group span.pull-right {
 	font-size: 11px;
 	font-family: arial;

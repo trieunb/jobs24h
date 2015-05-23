@@ -7,6 +7,7 @@
 				<?php include('includes/widget-sample-email.php') ?>
 			</aside>
 			<section id="content" class="pull-right right">
+				<div class="box">
 					<div class="heading-image">
 						<h2 class="text-blue"><img src="assets/images/email.png">Danh sách các thư thông báo đã tạo</h2>
 					</div>
@@ -58,6 +59,7 @@
 					</table>
 					<button type="button" class="btn btn-lg bg-orange">Tạo Thư Mới</button>
 					<button type="button" class="btn btn-lg bg-blue">Xóa Thư</button>
+				</div>
 			</section>
 		</div>
 	</section>

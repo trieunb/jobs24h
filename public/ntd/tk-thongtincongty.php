@@ -6,6 +6,7 @@
 				<?php include('includes/widget-post-recruitment.php') ?>
 			</aside>
 			<section id="content" class="col-sm-9 pull-right right">
+				<div class="box">
 				<div id="company-info">
 					<div class="heading-image">
 						<h2 class="text-blue"><img src="assets/images/book.png"> Thông tin công ty</h2>
@@ -135,6 +136,7 @@
 							</div>
 						</div>
 					</form>
+				</div>
 				</div>
 			</section>
 		</div>
