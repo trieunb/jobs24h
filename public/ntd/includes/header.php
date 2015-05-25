@@ -15,7 +15,7 @@
 			<div class="head-main">
 				<div class="page">
 					<header>
-						<div class="row">
+						<div class="container">
 							<div class="col-xs-4">
 								<a href="#"><img src="assets/images/logo.png" alt=""></a>
 							</div>
@@ -43,4 +43,3 @@
 							</div>
 						</div>
 					</header>
-					<div class="row">

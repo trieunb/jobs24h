@@ -7,11 +7,11 @@ body {
 }
 .head-main {
 	background: none;
-	max-width: 1024px;
+	/* max-width: 1024px; */
 	margin: 0 auto;
 }
 .page {
-	max-width: 935px;
+	/* max-width: 935px; */
 	margin: 0 auto;
 }
 .full-page {
@@ -41,7 +41,7 @@ ul.nav-menu li a {
 	padding-right: 30px;
 }
 ul.nav-menu li.active a {
-	color: #1ac6ff;
+	color: #00B0EA;
 	padding-left: 10px;
 	background: url('../images/li-active.png') no-repeat center left;
 }
@@ -68,7 +68,7 @@ footer {
 	bottom: 0;
 }
 footer .footer-page {
-	max-width: 1025px;
+	/* max-width: 1025px; */
 	margin: 0 auto;
 }
 footer #above {

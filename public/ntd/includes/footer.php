@@ -1,10 +1,9 @@
-</div>
 				</div>
 			</div>
 			<footer>
 				<div id="above">
 					<div class="footer-page">
-						<div class="row">
+						<div class="container">
 							<div class="col-xs-12">
 								<ul class="pull-right bottom-navigation">
 									<li><a href="#">Giới Thiệu</a></li>
