@@ -31,7 +31,7 @@
 	    	</div>
 	    	<div class="form-group push-bottom">
 		   	{{Form::submit('Đăng nhập', array('class'=>'btn btn-lg bg-orange'))}}
-		   	<i class="fa fa-arrow-circle-o-right fa-1x"></i> <a href="{{URL::route('jobseekers.register')}}" class="text-blue italic">Quên mật khẩu</a>
+		   	<i class="fa fa-arrow-circle-o-right fa-1x"></i> <a href="{{URL::route('forgot-password')}}" class="text-blue italic">Quên mật khẩu</a>
 		   	</div>
 	    {{ Form::close() }}
 	    <p  class="push-top"> <a href="{{URL::route('jobseekers.register')}}" class="btn btn-lg bg-gray-light">Đăng ký ngay</a></p>

@@ -8,7 +8,7 @@ class JobSeeker extends Controller
 	
 	public function home()
 	{
-		return View::make('jobseekers.home')->with('user', $GLOBALS['user']);
+		return View::make('jobseekers.home');
 	}
 	public function editBasicHome(){
 		$js = Sentry::getUser();

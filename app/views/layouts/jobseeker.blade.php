@@ -34,7 +34,9 @@
 						<span class="employer-site"><a href="#"><i class="fa fa-caret-right"></i> Nhà tuyển dụng</a></span>
 					</div>
 					<ul class="menu pull-right">
+					<?php $user = Sentry::getUser(); ?>
 						@if(Sentry::check())
+
 								<a href="#" class="text-blue">
 									<img src="assets/images/ruibu.jpg" class="avatar">
 									<strong><em><a href="{{ URL::route('jobseekers.login') }}">Chào, {{$user->first_name}}</a></em></strong>

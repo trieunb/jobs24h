@@ -1,21 +1,30 @@
 @extends('layouts.jobseeker')
 @section('content')
+	<div class="container">
+		@include('includes.jobseekers.breadcrumb')
+	</div>
 	<section class="main-content container">
 		<div class="forgot-password push-top">
-			<h2>Quên mật khẩu</h2>
-			@include('includes.notifications')
-			<p class="text-gray-light">Vui lòng nhập email bạn đã đăng ký.<br>Chúng tôi sẽ gửi cho bạn các hướng dẫn về cách làm thế nào để thiết lập lại mật khẩu của bạn</p>
-			{{Form::open(array('route'=>array('forgot-password', null), 'class'=>'form-horizontal','method'=>'POST'))}}
-				<div class="form-group">
-					<label for="input" class="col-sm-1 control-label">Email<abbr>*</abbr></label>
-					<div class="col-sm-4">
+			<div class="col-sm-5">
+				{{HTML::image('assets/images/quen-mat-khau.png')}}
+			</div>
+			<div class="col-sm-6 pull-right">
+				<h2 class="text-orange">Quên mật khẩu</h2>
+				@include('includes.notifications')
+				<p class="text-gray-light">Vui lòng nhập email bạn đã đăng ký tài khoản trên VnJobs.vn
+<br>Chúng tôi sẽ gửi email hướng dẫn bạn tạo mật khẩu mới</p>
+				{{Form::open(array('route'=>array('forgot-password', null),'method'=>'POST'))}}
+					<div class="form-group">
+						<label for="input" class="control-label">Email truy cập<abbr>*</abbr></label>
 						{{ Form::input('email', 'email',null, array('class'=>'form-control', 'id'=>'email') ) }}
+						<div class="push-top">
+							{{ Form::submit('Gửi', array('class'=>'btn bg-orange btn-lg')) }}
+						</div>
 					</div>
-					<div class="col-sm-2">
-						{{ Form::submit('Gởi', array('class'=>'btn bg-orange')) }}
-					</div>
-				</div>
-			{{Form::close()}}
+				{{Form::close()}}
+				<div class="clearfix push-top"></div>
+				<p>Nếu bạn cần trợ giúp, vui lòng <a href="#" class="decoration">xem hướng dẫn</a> hoặc <a href="#" class="decoration">liên hệ</a> với chúng tôi</p>
+			</div>
 		</div>
 	</section>
 @stop
