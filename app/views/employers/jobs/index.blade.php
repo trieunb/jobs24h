@@ -86,8 +86,8 @@
 									<div class="panel-heading">
 										<h2>Tìm tuyển dụng của tôi</h2>
 									</div>
-									{{ dd($input) }}
-									@if( ! isset($input) ) $input = ['keyword'=>'','nganhnghe'=>[],'noilamviec'=>''] @endif
+									<?php if( ! isset($input) ) $input = ['keyword'=>'','nganhnghe'=>[],'noilamviec'=>'','ngaydang1'=>'','ngaydang2'=>'','ngayhethan1'=>'','ngayhethan2'=>'']; ?>
+									<?php if( ! isset($input['nganhnghe']) ) $input['nganhnghe'] = []; ?>
 									<div class="panel-body">
 										<form action="{{ URL::route('employers.jobs.search') }}" method="GET" class="form-horizontal" role="form">
 											<div class="form-group">
@@ -99,7 +99,7 @@
 											<div class="form-group">
 												<label for="" class="col-sm-2 control-label">Ngành nghề:</label>
 												<div class="col-sm-10">
-													{{ Form::select('nganhnghe[]', Category::getList(), null, array('class'=>'form-control chosen-select', 'multiple') ) }}
+													{{ Form::select('nganhnghe[]', Category::getList(), $input['nganhnghe'], array('class'=>'form-control chosen-select', 'multiple') ) }}
 												</div>
 											</div>
 											<div class="form-group">
@@ -120,13 +120,13 @@
 												</div>
 												<label for="input" class="col-sm-3 control-label">Ngày đăng:</label>
 												<div class="col-sm-3">
-													{{ Form::text('ngaydang1', null, ['class'=>'datepicker form-control'] ) }}
+													{{ Form::text('ngaydang1', $input['ngaydang1'], ['class'=>'datepicker form-control'] ) }}
 												</div>
 												<div class="col-sm-1">
 													<i class="glyphicon glyphicon-calendar"></i>
 												</div>
 												<div class="col-sm-3">
-													{{ Form::text('ngaydang2', null, ['class'=>'datepicker form-control'] ) }}
+													{{ Form::text('ngaydang2', $input['ngaydang2'], ['class'=>'datepicker form-control'] ) }}
 												</div>
 												<div class="col-sm-1">
 													<i class="glyphicon glyphicon-calendar"></i>
@@ -144,13 +144,13 @@
 												</div>
 												<label for="input" class="col-sm-3 control-label">Ngày hết hạn:</label>
 												<div class="col-sm-3">
-													{{ Form::text('ngayhethan1', null, ['class'=>'datepicker form-control'] ) }}
+													{{ Form::text('ngayhethan1', $input['ngayhethan1'], ['class'=>'datepicker form-control'] ) }}
 												</div>
 												<div class="col-sm-1">
 													<i class="glyphicon glyphicon-calendar"></i>
 												</div>
 												<div class="col-sm-3">
-													{{ Form::text('ngayhethan1', null, ['class'=>'datepicker form-control'] ) }}
+													{{ Form::text('ngayhethan2', $input['ngayhethan2'], ['class'=>'datepicker form-control'] ) }}
 												</div>
 												<div class="col-sm-1">
 													<i class="glyphicon glyphicon-calendar"></i>

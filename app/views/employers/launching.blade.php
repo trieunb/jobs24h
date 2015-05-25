@@ -1,4 +1,4 @@
-@extends('layouts.employer')
+@extends('layouts.launchinglayout')
 @section('title') Trang chủ Nhà tuyển dụng - VnJobs @stop
 @section('content')
 <div class="col-xs-12 main-content">

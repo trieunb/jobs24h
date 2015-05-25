@@ -43,8 +43,9 @@
 							</div>
 						</div>
 					</header>
+					@include('includes.employers.menu')
 					<div class="row">
-
+					
 					@yield('content')
 
 					</div>

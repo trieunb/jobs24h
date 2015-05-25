@@ -1,5 +1,6 @@
 				</div>
 			</div>
+		</div>
 			<footer>
 				<div id="above">
 					<div class="footer-page">

@@ -317,6 +317,28 @@ class JobController extends \Controller {
 					$query->with('category');
 				}));
 			}
+			if(Input::get('ngaydang1'))
+			{
+				$jobs->whereRaw('YEAR(created_at)>='.date("Y",strtotime(Input::get('ngaydang1'))).' AND 
+					MONTH(created_at)>='.date("m",strtotime(Input::get('ngaydang1'))).' AND
+					DAY(created_at)>='.date("d",strtotime(Input::get('ngaydang1'))).'
+					' );
+			}
+			if(Input::get('ngaydang2'))
+			{
+				$jobs->whereRaw('YEAR(created_at)<='.date("Y",strtotime(Input::get('ngaydang2'))).' AND 
+					MONTH(created_at)<='.date("m",strtotime(Input::get('ngaydang2'))).' AND
+					DAY(created_at)<='.date("d",strtotime(Input::get('ngaydang2'))).'
+					' );
+			}
+			if(Input::get('ngayhethan1'))
+			{
+				$jobs->where('hannop', '>=', Input::get('ngayhethan1') );
+			}
+			if(Input::get('ngayhethan2'))
+			{
+				$jobs->where('hannop', '<=', Input::get('ngayhethan2') );
+			}
 
 			$jobs = $jobs->paginate(5);
 			foreach (Input::all() as $key => $value) {
