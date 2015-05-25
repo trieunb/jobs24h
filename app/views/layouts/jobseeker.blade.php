@@ -34,8 +34,18 @@
 						<span class="employer-site"><a href="#"><i class="fa fa-caret-right"></i> Nhà tuyển dụng</a></span>
 					</div>
 					<ul class="menu pull-right">
-						<li><a href="{{ URL::route('jobseekers.login') }}">Đăng nhập</a></li>
-						<li><a href="{{ URL::route('jobseekers.register') }}">Đăng ký</a></li>
+						@if(Sentry::check())
+								<a href="#" class="text-blue">
+									<img src="assets/images/ruibu.jpg" class="avatar">
+									<strong><em><a href="{{ URL::route('jobseekers.login') }}">Chào, {{$user->first_name}}</a></em></strong>
+								</a>
+								<nav class="ntv-menu navbar-right">
+									@include('includes.jobseekers.menu-ntv')
+								</nav>
+						@else
+							<li><a href="{{ URL::route('jobseekers.login') }}">Đăng nhập</a></li>
+							<li><a href="{{ URL::route('jobseekers.register') }}">Đăng ký</a></li>
+						@endif
 					</ul>
 				</div>
 			</div>

@@ -126,4 +126,69 @@ class JobSeekerAuth extends Controller
 			}
 		}
 	}
+
+	public function doResetPass(){
+		$params = Input::only('email');
+		try
+		{
+		    // Find the user using the user email address
+		    $user = Sentry::findUserByLogin($params['email']);
+
+		    // Get the password reset code
+		    $resetCode = $user->getResetPasswordCode();
+		    $subject = "Tao mat khau dang nhap moi tren VNJobs / Create new password on VNJobs";
+			$message = "Chào ".$user->first_name. $user->last_name."<br>Đây là email giúp bạn tạo mật khẩu mới cho tài khoản trên VNJobs. Vui lòng <a href='".URL::to(''.App::getLocale().'/jobseekers/forgot-password/reset-password/'.$params['email']).'/'.$resetCode."'>click vào đây</a> để tạo mật khẩu mới.<br><small style='font-style:italic;'>Lưu ý: Nếu bạn không gửi yêu cầu đến chúng tôi, vui lòng bỏ qua email này.</small>";
+		   	// setting the server, port and encryption
+			if(App\DTT\Services\SendMail::send($params['email'],$user->last_name, $subject, $message ) )
+			{
+				return Redirect::back()->with('success', 'Yêu cầu của bạn được chuyển đi thành công! <br>Vui lòng mở email và làm theo hướng dẫn.');
+			} else {
+				return Redirect::back()->withErrors('success', 'Hiện tại bạn không thể thực hiện yêu cầu này. Xin vui lòng thử lại sau.');
+			}
+		}
+		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+		{
+		    return Redirect::back()->withInput->withErrors('Không tìm thấy email');
+		}
+	}
+
+	public function ChangePass($email, $code){
+		return View::make('jobseekers.reset-password')->with('email',$email)->with('code',$code);
+	}
+	public function doChangePass($email, $code){
+		$params = Input::only('password');
+		$validator = new App\DTT\Forms\JobseekerResetPass;
+		if($validator->fails())
+		{
+			return Redirect::back()->withInput()->withErrors($validator);
+		} else {
+			try
+			{
+			    // Find the user using the user id
+			    $user = Sentry::findUserByLogin($email);
+
+			    // Check if the reset password code is valid
+			    if ($user->checkResetPasswordCode($code))
+			    {
+			        // Attempt to reset the user password
+			        if ($user->attemptResetPassword($code, $params['password']))
+			        {
+			            return Redirect::route('jobseekers.login')->with('success', 'Thay đổi mật khẩu mới thành công. Đăng nhập và tìm kiếm cơ hội việc làm của bạn');
+			        }
+			        else
+			        {
+			            return Redirect::back()->withErrors('Hiện tại bạn không thể thực hiện yêu cầu này. Xin vui lòng thử lại sau.');
+			        }
+			    }
+			    else
+			    {
+			        return Redirect::back()->withErrors('Hiện tại bạn không thể thực hiện yêu cầu này. ');
+			    }
+			}
+			catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+			{
+			    return Redirect::back()->withErrors('Không tìm thấy email');
+			}
+		}
+	}
 }

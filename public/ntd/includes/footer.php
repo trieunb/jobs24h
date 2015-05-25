@@ -44,5 +44,10 @@
 				</div>
 			</footer>
 		</div> <!-- end #wrapper -->
+		<!-- jQuery -->
+		<script src="//code.jquery.com/jquery.js"></script>
+		<!-- Bootstrap JavaScript -->
+		<script src="assets/js/bootstrap.min.js"></script>
+		<script src="assets/js/main.js"></script>
 	</body>
 </html>

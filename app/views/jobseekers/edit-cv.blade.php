@@ -262,13 +262,13 @@
 			                <label class="col-sm-3 control-label">Mức lương mong muốn<abbr>*</abbr></label>
 							<div class="radio col-sm-4">
 				                	<div for="specific-salary">
-				                    	{{Form::radio('specific_salary', 1, null, array('id'=>'specific-salary'))}}
-				                        {{Form::input('number','salary', null, array('class'=>'specific form-control edit-control text-blue','id'=>'specific-salary-input', 'placeholder'=>'Ví dụ: 8.000.000', 'disabled'))}}
+				                    	{{Form::radio('specific_salary_radio', 1, null, array('id'=>'specific-salary'))}}
+				                        {{Form::input('number','specific_salary', null, array('class'=>'specific_salary form-control edit-control text-blue','id'=>'specific-salary-input', 'placeholder'=>'Ví dụ: 8.000.000', 'disabled'))}}
 				                    	<span>VND / tháng</span>
 				                    </div>
 								</div>
 				                <div class="radio col-sm-4">
-				                    {{Form::radio('specific_salary', 0, null, array('id'=>'specific-salary-0', 'checked'=>'checked'))}}
+				                    {{Form::radio('specific_salary_radio', 0, null, array('id'=>'specific-salary-0', 'checked'=>'checked'))}}
 				                    <span>Thương lượng </span>
 				                </div>
 						</div>
@@ -878,28 +878,31 @@
 	$('#saveGeneralInfo').submit(function(e) {
 		e.preventDefault();
 		$('.loading-icon').show();
+		var a = $('.select2-selection__choice').html();
+
         url = '{{ URL::route("jobseekers.save-cv", array("general", $id_cv )) }}';
 		$.ajax({
 			url: url,
 			type: 'POST',
 			dataType: 'json',
 			data: {
-				info_years_of_exp: $('#saveGeneralInfo .info_years_of_exp').val(),
-				info_highest_degree: $('#saveGeneralInfo .info_highest_degree').val(),
-				info_current_level: $('#saveGeneralInfo .info_current_level').val(),
-				info_wish_position: $('#saveGeneralInfo .info_wish_position').val(),
-				info_wish_level: $('#saveGeneralInfo .info_wish_level').val(),
-				info_wish_place: $('#saveGeneralInfo .info_wish_place').val(),
-				info_category: $('#saveGeneralInfo .info_category').val(),
-				specific_salary: $('#saveGeneralInfo .specific_salary').val(),
-				info_latest_company: $('#saveGeneralInfo .info_latest_company').val(),
-				info_latest_job: $('#saveGeneralInfo .info_latest_job').val(),
-				foreign_languages_1: $('#saveGeneralInfo .foreign_languages_1').val(),
-				foreign_languages_2: $('#saveGeneralInfo .foreign_languages_2').val(),
-				foreign_languages_3: $('#saveGeneralInfo .foreign_languages_3').val(),
-				level_languages_1: $('#saveGeneralInfo .level_languages_1').val(),
-				level_languages_2: $('#saveGeneralInfo .level_languages_2').val(),
-				level_languages_3: $('#saveGeneralInfo .level_languages_3').val(),
+				info_years_of_exp: 		$('#saveGeneralInfo .info_years_of_exp').val(),
+				info_highest_degree: 	$('#saveGeneralInfo .info_highest_degree').val(),
+				info_current_level: 	$('#saveGeneralInfo .info_current_level').val(),
+				info_wish_position: 	$('#saveGeneralInfo .info_wish_position').val(),
+				info_wish_level: 		$('#saveGeneralInfo .info_wish_level').val(),
+				info_wish_place: 		$('#saveGeneralInfo .info_wish_place').val(),
+				specific_salary: 		$('#saveGeneralInfo .specific_salary').val(),
+				info_latest_company: 	$('#saveGeneralInfo .info_latest_company').val(),
+				info_latest_job: 		$('#saveGeneralInfo .info_latest_job').val(),
+				info_category: 			$('#saveGeneralInfo .info_category').val(),
+				info_wish_place_work: 	$('#saveGeneralInfo .info_wish_place_work').val(),
+				foreign_languages_1: 	$('#saveGeneralInfo .foreign_languages_1').val(),
+				foreign_languages_2: 	$('#saveGeneralInfo .foreign_languages_2').val(),
+				foreign_languages_3: 	$('#saveGeneralInfo .foreign_languages_3').val(),
+				level_languages_1: 		$('#saveGeneralInfo .level_languages_1').val(),
+				level_languages_2: 		$('#saveGeneralInfo .level_languages_2').val(),
+				level_languages_3: 		$('#saveGeneralInfo .level_languages_3').val(),
 
 			},
 			success : function(json) {

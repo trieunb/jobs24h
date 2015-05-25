@@ -16,7 +16,6 @@ class AddResumesTable extends Migration {
 		{
 			$table->string('tieude_cv')->after('ntv_id');
 			$table->tinyInteger('is_default')->after('is_visible');
-
 		});
 	}
 

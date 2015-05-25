@@ -23,7 +23,6 @@ class CreateResumesTable extends Migration {
 			$table->integer('capbachientai');
 			$table->string('vitrimongmuon');
 			$table->integer('capbacmongmuon');
-			$table->integer('noilamviecmongmuon');
 			$table->integer('mucluong');
 			$table->integer('loaitien');
 			$table->text('dinhhuongnn');
@@ -36,7 +35,6 @@ class CreateResumesTable extends Migration {
 			$table->boolean('is_public');
 			$table->boolean('is_visible');
 			$table->string('file_name');
-
 			$table->timestamps();
 		});
 	}

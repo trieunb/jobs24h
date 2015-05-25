@@ -8,7 +8,6 @@ class JobseekersGeneralInfo extends FormValidator {
 		"info_wish_level"=>"required",
 		"info_wish_place_work"=>"required",
 		"info_category" =>"required",
-		"specific_salary"=>"required|numeric",
 		"foreign_languages_1"=>"required",
 		"level_languages_1" =>"required",
 		);
