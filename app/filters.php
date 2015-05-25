@@ -50,16 +50,10 @@ Route::filter('sentry.admin', function() { //chan chua dang nhap
 	}
 	View::share('user', AdminAuth::getUser() );
 });
-Route::filter('sentry.ntd', function() {
-	if( ! Sentry::check())
+Route::filter('ntd.guest', function() {
+	if(Auth::check())
 	{
-		return Redirect::to('/employer/login');
-	} else {
-		$user = Sentry::getUser();
-		if( ! $user->hasAccess('ntd'))
-		{
-			return Redirect::to('/employer/login');
-		}
+		return Redirect::route('employers.jobs.index');
 	}
 });
 Route::filter('sentry.ntv', function() {
@@ -75,14 +69,10 @@ Route::filter('sentry.logged.admin', function() {
 	}
 	
 });
-Route::filter('sentry.logged.ntd', function() {
-	if( Sentry::check())
+Route::filter('ntd.auth', function() {
+	if( ! Auth::check())
 	{
-		$user = Sentry::getUser();
-		if($user->hasAccess('ntd'))
-		{
-			return Redirect::to('/employer/');
-		}
+		return Redirect::route('employers.login');
 	}
 });
 Route::filter('sentry.logged.ntv', function() {
@@ -96,7 +86,7 @@ Route::filter('sentry.logged.ntv', function() {
  * Filter languages
  */
 Route::filter('detectLang', function($lang = "vi")
-{echo 'aaaaaa';
+{
     if($lang != "vi" && in_array($lang , Config::get('app.available_language')))
     {
         Config::set('app.locale', $lang);

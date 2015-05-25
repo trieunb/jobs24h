@@ -1,0 +1,11 @@
+.heading-text {
+	color: #1ac6ff;
+}
+.btn-color {
+	background: #1ac6ff;
+	border: 1px solid #1ac6ff;
+}
+.btn-color:hover {
+	background: none;
+	border: 1px solid #FFF;
+}

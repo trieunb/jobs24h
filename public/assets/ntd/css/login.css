@@ -1,0 +1,43 @@
+@import url('page.css');
+
+.login-form .panel .panel-heading .heading-title {
+	background: url('../images/login-heading-lock.jpg') no-repeat;
+}
+.login-form h3.form-legend {
+	font-size: 20px;
+	line-height: 45px;
+	text-align: right;
+	text-transform: uppercase;
+	font-family: "Gotham-Medium";
+	margin-bottom: 55px;
+	color: #494949;
+}
+.login-form .panel .panel-body {
+	background: url('../images/login-bg.jpg') no-repeat #eff3f6;
+	margin-top: -1px;
+}
+.login-form .panel .panel-body .form-input {
+	  padding: 0 50px;
+}
+.login-form .panel .panel-body .form-group a {
+	color: #8f8f8f;
+	font-size: 13px;
+	text-decoration: underline;
+}
+.login-form .panel .panel-body .form-group a:hover {
+	text-decoration: none;
+}
+.login-form .panel .panel-body button.btn-login:hover {
+	background: #5AADC8;
+}
+.login-form .panel .panel-body button.btn-login {
+	background: #1ac6ff;
+	border: none;
+	border-radius: 0;
+	text-transform: uppercase;
+	font-weight: bold;
+	width: 200px;
+	height: 70px;
+	font-size: 18px;
+	border-radius: 3px;
+}

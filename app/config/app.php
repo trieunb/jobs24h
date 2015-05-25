@@ -200,6 +200,7 @@ return array(
 		'Cookies'	=>	'DTT\Sentry\Cookies\NativeCookie',
 		'Hasher'	=>	'DTT\Sentry\Hashing\Sha256Hasher',
 		'Breadcrumbs' => 'DaveJamesMiller\Breadcrumbs\Facade',
+		'Form'		=>	'App\DTT\Services\Form',
 		
 	),
 
@@ -208,4 +209,5 @@ return array(
 	 */
 	'available_language' => array('en', 'vi'),
 	'default_language'	=>	'vi',
+	'upload_path'		=>	public_path() . '/uploads/',
 );
