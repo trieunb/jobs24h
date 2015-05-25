@@ -3,6 +3,7 @@
 	<div class="container">
 		@include('includes.jobseekers.breadcrumb')
 	</div>
+	<?php var_dump($slug);?>
 	<section class="main-content container login-form">
 	<div class="col-sm-5">
 		<h2 class="push-bottom">Đăng nhập để xem chi tiết...</h2>
