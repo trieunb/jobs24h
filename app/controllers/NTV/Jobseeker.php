@@ -409,4 +409,21 @@ class JobSeeker extends Controller
 			return Redirect::route('jobseekers.edit-cv', array($id_cv));
 		}
 	}
+
+	public function saveJob($job_id){
+		$date = date('Y-m-d', time());
+		$my_job = MyJob::firstOrCreate(array('ntv_id' => $GLOBALS['user']->id, 'job_id' => $job_id));
+		$my_job->save_date = $date;
+		$my_job->save();
+		$job = Job::with(array('ntd'=>function($q) {
+			$q->with('company');
+		}))->find($job_id);
+		$status_job = '';
+		if(strtotime($job->expired_date) <= strtotime($date)){
+			$status_job = 'Hết hạn';
+		}
+		return View::make('jobseekers.my-job',compact('my_job','job', 'status_job'));
+	}
+
+
 }

@@ -14,11 +14,11 @@
 					</div>
 					<div class="clearfix link-list">
 						<i class="fa fa-bookmark"></i>
-						<a href="">Lưu việc làm này</a>
+						<a href="{{URL::route('jobseekers.save-job', array($job->id))}}">Lưu việc làm này</a>
 						<i class="fa fa-envelope"></i>
-						<a href="">Gởi email việc làm tương tự</a>
+						<a class="get-job-by-tags">Gởi email việc làm tương tự</a>
 						<i class="fa fa-share"></i>
-						<strong><a href="">Giới thiệu bạn bè</a></strong>
+						<strong><a class="share-to-friends">Giới thiệu bạn bè</a></strong>
 					</div>
 					<h2>Mô Tả Công Việc</h2>
 					<div class="job-description">
@@ -209,4 +209,8 @@
 				</div>
 		</aside>
 	</section>
+@stop
+	@section('scripts')
+	<script type="text/javascript">
+	</script>
 @stop
