@@ -12,10 +12,10 @@ class CreateEmployerFoldersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('employer_folders', function(Blueprint $table)
+		Schema::create('employer_folders', function($table)
 		{
 			$table->increments('id');
-			$table->interger('ntd_id');
+			$table->integer('ntd_id');
 			$table->string('folder_name');
 			$table->timestamps();
 		});
