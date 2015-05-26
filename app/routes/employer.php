@@ -21,6 +21,14 @@ Route::group(array('prefix'=>$locale), function() {
 				'getDelete'		=>	'employers.jobs.delete',
 				'getSearch'		=>	'employers.jobs.search',
 			));
+			Route::controller('candidates', 'CandidateController', array(
+				'getIndex'		=>	'employers.candidates.index',
+				'getJob'		=>	'employers.candidates.job',
+				'getReport'		=>	'employers.candidates.report',
+				'getAlert'		=>	'employers.candidates.alert',
+				'getRespond'	=>	'employers.candidates.respond',
+				'getTest'		=>	'employers.candidates.test',
+			));
 		});
 
 		Route::group(array('before'=>'ntd.guest'), function() {

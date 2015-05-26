@@ -13,7 +13,7 @@
 			<div class="head-main">
 				<div class="page">
 					<header>
-						<div class="row">
+						<div class="container">
 							<div class="col-xs-4">
 								<a href="{{ URL::route('employers.home') }}">
 									{{ HTML::image('assets/ntd/images/logo.png') }}
@@ -44,17 +44,15 @@
 						</div>
 					</header>
 					@include('includes.employers.menu')
-					<div class="row">
-					
-					@yield('content')
-
+					<div class="container">
+						@yield('content')
 					</div>
 				</div>
 			</div>
 			<footer>
 				<div id="above">
 					<div class="footer-page">
-						<div class="row">
+						<div class="container">
 							<div class="col-xs-12">
 								<ul class="pull-right bottom-navigation">
 									<li><a href="#">Giới Thiệu</a></li>

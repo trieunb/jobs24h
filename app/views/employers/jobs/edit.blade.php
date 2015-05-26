@@ -1,29 +1,18 @@
 @extends('layouts.employer')
 @section('title') Chỉnh sửa tin tuyển dụng - VnJobs @stop
 @section('content')
-	<div class="col-xs-12 main-content">
-							<div class="col-xs-3 sidebar">
-								<h3 class="sidebar-title">Đăng tuyển dụng</h3>
-								<div class="sidebar-info">
-									<h4 class="info-title">1. Thông tin đăng tuyển</h4>
-									<span class="info-des">
-										Thông tin chi tiết về việc đăng tuyển sẽ giúp quý khách thu hút nhiều ứng viên và tìm được hồ sơ nhiều nhất.
-									</span>
-								</div>
-								<div class="sidebar-info">
-									<h4 class="info-title">2. Xem lại và hoàn tất</h4>
-									<span class="info-des">
-										Xem lại và hoàn tất thông tin đăng tuyển.
-									</span>
-								</div>
-							</div>
-							{{ Form::open(array('route'=>array('employers.jobs.update', $job->id), 'method'=>'POST', 'class'=>'form-horizontal')) }}
-							<div class="col-xs-9 primary">
-								<div class="panel panel-default sub-panel">
-									<div class="panel-heading">
-										<h2>Thông tin đăng tuyển</h2>
-									</div>
-									<div class="panel-body">
+	<section class="boxed-content-wrapper clearfix">
+		<div class="container">
+			<aside id="sidebar" class="col-sm-3">
+				@include('includes.employers.jobs_navbar')
+			</aside>
+			
+			<section id="content" class="pull-right right">
+							{{ Form::open(array('route'=>array('employers.jobs.update', $job->id), 'method'=>'POST', 'class'=>'form-horizontal', 'files'=>true)) }}
+							<div class="boxed">
+					<div class="heading-image">
+						<h2 class="text-blue">{{ HTML::image('assets/ntd/images/doc.png') }} Thông tin đăng tuyển</h2>
+					</div>
 											@include('includes.notifications')
 											<div class="form-group">
 												<label for="vitri" class="col-sm-2 control-label">Vị trí tuyển dụng:</label>
@@ -177,7 +166,11 @@
 												</div>
 												
 											</div>
-
+										</div>
+										<div class="boxed">
+											<div class="heading-image">
+												<h2 class="text-blue">{{ HTML::image('assets/ntd/images/thong-tin-ung-tuyen.png') }} Thông tin ứng tuyển</h2>
+											</div>
 											<div class="form-group">
 												<label for="nguoilienhe" class="col-sm-2 control-label">Tên người liên hệ:</label>
 												<div class="col-sm-10">
@@ -221,15 +214,11 @@
 													{{ Form::select('status', array(1=>'Chờ đăng', 2=>'Đăng ngay'), $job->status, array('class'=>'form-control') ) }}
 												</div>
 											</div>
-											
-										</form>
-									</div>
-								</div> <!-- panel -->
-								
-								
-								<div class="center">
+										</div>
+									</div>		
+									<div class="center">
 									{{ Form::button('Tiếp tục', array('type'=>'submit', 'class'=>'btn btn-warning')) }}
-									<button type="button" class="btn btn-warning">Hủy</button>
+									<a href="{{ URL::route('employers.jobs.index') }}" class="btn btn-warning">Hủy</a>
 								</div>
 							</div> <!-- primary -->
 							{{ Form::close() }}

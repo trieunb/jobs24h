@@ -1,9 +1,9 @@
 <nav class="menu-tab">
 	<div class="container">
 	<ul>
-		<li><a href="#">Trang chủ</a></li>
-		<li class="active">
-			<a href="#">Tìm hồ sơ</a>
+		<li><a href="{{ URL::route('employers.launching') }}">Trang chủ</a></li>
+		<li>
+			<a href="#" onclick="return false;">Tìm hồ sơ</a>
 			<ul>
 				<div class="container">
 				<li><a href="#">Quản lý đăng tuyển</a></li>
@@ -16,31 +16,22 @@
 				</div>
 			</ul>
 		</li>
-		<li>
-			<a href="#">Đăng tuyển dụng</a>
-			<ul>
-				<div class="container">
-				<li><a href="#">Quản lý việc làm</a></li>
-				<li><a href="#">Quản lý ứng viên</a></li>
-				</div>
-			</ul>
-		</li>
-		<li>
+		<li><a href="{{ URL::route('employers.jobs.add') }}">Đăng tuyển dụng</a></li>
+		<li class="{{ HTML::active(['employers.jobs.*', 'employers.candidates.*']) }}">
 			<a href="#">Quản lý tuyển dụng</a>
 			<ul>
 				<div class="container">
 				<li><a href="#">Đơn hàng</a></li>
-				<li><a href="#">Quản lý việc làm</a></li>
-				<li><a href="#">Quản lý ứng viên</a></li>
-				<li><a href="#">Báo cáo dịch vụ hồ sơ</a></li>
-				<li><a href="#">Thông báo hồ sơ</a></li>
-				<li><a href="#">Phản hồi của UV</a></li>
-				<li><a href="#">Bài kiểm tra</a></li>
-				<li><a href="#">Thoát</a></li>
+				<li class="{{ HTML::active(['employers.jobs.index'], 'selected') }}"><a href="{{ URL::route('employers.jobs.index') }}">Quản lý việc làm</a></li>
+				<li class="{{ HTML::active(['employers.candidates.index'], 'selected') }}"><a href="{{ URL::route('employers.candidates.index') }}">Quản lý ứng viên</a></li>
+				<li class="{{ HTML::active(['employers.candidates.report'], 'selected') }}"><a href="{{ URL::route('employers.candidates.report') }}">Báo cáo dịch vụ hồ sơ</a></li>
+				<li class="{{ HTML::active(['employers.candidates.alert'], 'selected') }}"><a href="{{ URL::route('employers.candidates.alert') }}">Thông báo hồ sơ</a></li>
+				<li class="{{ HTML::active(['employers.candidates.respond'], 'selected') }}"><a href="{{ URL::route('employers.candidates.respond') }}">Phản hồi của UV</a></li>
+				<li class="{{ HTML::active(['employers.candidates.test'], 'selected') }}"><a href="{{ URL::route('employers.candidates.test') }}">Bài kiểm tra</a></li>
 				</div>
 			</ul>
 		</li>
-		<li>
+		<li class="{{ HTML::active(['employers.account.*']) }}">
 			<a href="#">Tài khoản</a>
 			<ul>
 				<div class="container">
@@ -51,7 +42,7 @@
 				</div>
 			</ul>
 		</li>
-		<li>
+		<li class="{{ HTML::active(['employers.hiring.*']) }}">
 			<a href="#">Tư vấn tuyển dụng</a>
 			<ul>
 				<div class="container">

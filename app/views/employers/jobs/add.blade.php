@@ -1,29 +1,18 @@
 @extends('layouts.employer')
 @section('title') Đăng tin tuyển dụng - VnJobs @stop
 @section('content')
-	<div class="col-xs-12 main-content">
-							<div class="col-xs-3 sidebar">
-								<h3 class="sidebar-title">Đăng tuyển dụng</h3>
-								<div class="sidebar-info">
-									<h4 class="info-title">1. Thông tin đăng tuyển</h4>
-									<span class="info-des">
-										Thông tin chi tiết về việc đăng tuyển sẽ giúp quý khách thu hút nhiều ứng viên và tìm được hồ sơ nhiều nhất.
-									</span>
-								</div>
-								<div class="sidebar-info">
-									<h4 class="info-title">2. Xem lại và hoàn tất</h4>
-									<span class="info-des">
-										Xem lại và hoàn tất thông tin đăng tuyển.
-									</span>
-								</div>
-							</div>
+	<section class="boxed-content-wrapper clearfix">
+		<div class="container">
+			<aside id="sidebar" class="col-sm-3">
+				@include('includes.employers.jobs_navbar')
+			</aside>
+			
+			<section id="content" class="pull-right right">
 							{{ Form::open(array('route'=>'employers.jobs.add', 'method'=>'POST', 'class'=>'form-horizontal', 'files'=>true)) }}
-							<div class="col-xs-9 primary">
-								<div class="panel panel-default sub-panel">
-									<div class="panel-heading">
-										<h2>Thông tin đăng tuyển</h2>
-									</div>
-									<div class="panel-body">
+							<div class="boxed">
+					<div class="heading-image">
+						<h2 class="text-blue">{{ HTML::image('assets/ntd/images/doc.png') }} Thông tin đăng tuyển</h2>
+					</div>
 											@include('includes.notifications')
 											<div class="form-group">
 												<label for="vitri" class="col-sm-2 control-label">Vị trí tuyển dụng:</label>
@@ -110,11 +99,8 @@
 												<label for="mota" class="col-sm-2 control-label">Mô tả công việc:</label>
 												<div class="col-sm-10">
 													{{ Form::textarea('mota', null, array('class'=>'form-control', 'rows'=>5,'required') ) }}
-													<div class="clearfix"></div>
-													<div class="left-control-info">
-														<span>Bạn có thể nhập thêm (14500 ký tự)</span>
-													</div>
-													<div class="right-control-info"><a href="#">Xem mẫu mô tả công việc</a></div>
+													<span class="italic text-gray-light">(Bạn có thể nhập thêm 14.500 ký tự)</span>
+													<span class="pull-right"><a class="text-blue decoration">Xem mẫu mô tả công việc</a></span>
 												</div>
 												
 											</div>
@@ -122,11 +108,8 @@
 												<label for="input" class="col-sm-2 control-label">Quyền lợi:</label>
 												<div class="col-sm-10">
 													{{ Form::textarea('quyenloi', null, array('class'=>'form-control', 'rows'=>5) ) }}
-													<div class="clearfix"></div>
-													<div class="left-control-info">
-														<span>Bạn có thể nhập thêm (14500 ký tự)</span>
-													</div>
-													<div class="right-control-info"><a href="#">Xem mẫu mô tả công việc</a></div>
+													<span class="italic text-gray-light">(Bạn có thể nhập thêm 14.500 ký tự)</span>
+													<span class="pull-right"><a class="text-blue decoration">Xem mẫu Quyền lợi</a></span>
 												</div>
 												
 											</div>
@@ -154,9 +137,8 @@
 													{{ Form::select('hinhthucnop', Config::get('custom_hinhthucnop.hinh_thuc'), null, array('class'=>'form-control') ) }}
 												</div>
 											</div>
-											<div class="tags-box">
-												<h4><strong>Gia tăng chất lượng hồ sơ ứng tuyển</strong> bằng cách xác định <strong>3 thẻ từ khóa.</strong>
-		Điều này sẽ giúp các ứng viên nhanh chóng xác định rõ yêu cầu chính của công việc.</h4>
+											<div class="tags-box bg-little-blue push-padding-30-full border-blue">
+												<p><strong>Gia tăng chất lượng hồ sơ ứng tuyển</strong> bằng cách xác định <strong>3 thẻ từ khóa</strong>.<br>Điều này sẽ giúp các ứng viên nhanh chóng xác định rõ yêu cầu chính của công việc.</p>
 												<div class="form-group">
 													<label for="keyword_tags" class="col-sm-4 control-label">Thẻ từ khóa 1:</label>
 													<div class="col-sm-8">
@@ -177,91 +159,105 @@
 												</div>
 												
 											</div>
-
-											<div class="form-group">
-												<label for="nguoilienhe" class="col-sm-2 control-label">Tên người liên hệ:</label>
-												<div class="col-sm-10">
-													{{ Form::text('nguoilienhe', null, array('class'=>'form-control') ) }}
-												</div>
-												<div class="clearfix"></div>
-												<div class="checkbox">
-													<input type="checkbox" id="ttct" name="is_display" value="">
-													<label for="ttct">
-														<span></span>
-														Hiển thị trong thông tin công ty
-													</label>
-												</div>
+										</div>
+										<div class="boxed">
+											<div class="heading-image">
+												<h2 class="text-blue">{{ HTML::image('assets/ntd/images/thong-tin-ung-tuyen.png') }} Thông tin ứng tuyển</h2>
 											</div>
-											<div class="form-group">
-												<label for="dclienhe" class="col-sm-2 control-label">Địa chỉ liên hệ:</label>
-												<div class="col-sm-10">
-													{{ Form::text('dclienhe', null, array('class'=>'form-control') ) }}
+												<div class="form-group">
+													<label for="nguoilienhe" class="col-sm-2 control-label">Tên người liên hệ:</label>
+													<div class="col-sm-10">
+														{{ Form::text('nguoilienhe', null, array('class'=>'form-control') ) }}
+														<div class="clearfix"></div>
+														<div class="checkbox">
+															<input type="checkbox" id="ttct" name="is_display" value="">
+															<label for="ttct">
+																<span></span>
+																Hiển thị trong thông tin công ty
+															</label>
+														</div>
+													</div>
+													
 												</div>
-												
-											</div>
-											<div class="form-group">
-												<label for="dienthoailienhe" class="col-sm-2 control-label">Điện thoại:</label>
-												<div class="col-sm-4">
-													{{ Form::text('dienthoailienhe', null, array('class'=>'form-control') ) }}
+												<div class="form-group">
+													<label for="dclienhe" class="col-sm-2 control-label">Địa chỉ liên hệ:</label>
+													<div class="col-sm-10">
+														{{ Form::text('dclienhe', null, array('class'=>'form-control') ) }}
+													</div>
+													
 												</div>
-												<label for="emaillienhe" class="col-sm-2 control-label">Email:</label>
-												<div class="col-sm-4">
-													{{ Form::text('emaillienhe', null, array('class'=>'form-control') ) }}
+												<div class="form-group">
+													<label for="dienthoailienhe" class="col-sm-2 control-label">Điện thoại:</label>
+													<div class="col-sm-4">
+														{{ Form::text('dienthoailienhe', null, array('class'=>'form-control') ) }}
+													</div>
+													<label for="emaillienhe" class="col-sm-2 control-label">Email:</label>
+													<div class="col-sm-4">
+														{{ Form::text('emaillienhe', null, array('class'=>'form-control') ) }}
+													</div>
 												</div>
-											</div>
-											<div class="form-group">
-												<label for="yeucaulienhe" class="col-sm-2 control-label">Yêu cầu:</label>
-												<div class="col-sm-10">
-													{{ Form::textarea('yeucaulienhe', null, array('class'=>'form-control', 'rows'=>'3')) }}
+												<div class="form-group">
+													<label for="yeucaulienhe" class="col-sm-2 control-label">Yêu cầu:</label>
+													<div class="col-sm-10">
+														{{ Form::textarea('yeucaulienhe', null, array('class'=>'form-control', 'rows'=>'3')) }}
+													</div>
 												</div>
-											</div>
-											<div class="form-group">
-												<label for="input" class="col-sm-2 control-label">Trạng thái tin:</label>
-												<div class="col-sm-4">
-													{{ Form::select('status', array(1=>'Chờ đăng', 2=>'Đăng ngay'), 1, array('class'=>'form-control') ) }}
+												<div class="form-group">
+													<label for="input" class="col-sm-2 control-label">Trạng thái tin:</label>
+													<div class="col-sm-4">
+														{{ Form::select('status', array(1=>'Chờ đăng', 2=>'Đăng ngay'), 1, array('class'=>'form-control') ) }}
+													</div>
 												</div>
-											</div>
-											
-										</form>
-									</div>
-								</div> <!-- panel -->
+										</div>
 								
-								<div class="panel panel-default sub-panel">
-									<div class="panel-heading">
-										<h2>Hình ảnh và video</h2>
-									</div>
-									<div class="panel-body">
+									<div class="boxed">
+										<div class="heading-image">
+											<h2 class="text-blue">{{ HTML::image('assets/ntd/images/photo.png') }} Hình ảnh và Video</h2>
+										</div>
 										<div class="form-group">
-											<label for="input" class="col-sm-2 control-label">Video:</label>
-											<div class="col-sm-8">
+											<span class="col-sm-3 col-sm-offset-1"><strong>Video Clip:</strong><br><small class="legend">(Không bắt buộc)</small></span>
+										</div>
+
+										<div class="form-group">
+											<div class="col-sm-offset-1 col-sm-6">
 												{{ Form::text('video', null, array('class'=>'form-control')) }}
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="input" class="col-sm-2 control-label">Hình ảnh 1:</label>
-											<div class="col-sm-8">
-												{{ Form::file('hinhanh1') }}
-											</div>
+											<span class="col-sm-3 col-sm-offset-1"><strong>Hình ảnh:</strong><br><small class="legend">(Không bắt buộc)</small></span>
 										</div>
 										<div class="form-group">
-											<label for="input" class="col-sm-2 control-label">Hình ảnh 2:</label>
-											<div class="col-sm-8">
-												{{ Form::file('hinhanh2') }}
+											<div class="col-sm-offset-1 col-sm-12 push-bottom">
+												<div class="fileUpload btn bg-little-blue border-blue col-sm-2">
+												    Chọn hình
+												    {{ Form::file('hinhanh1', array('class'=>'upload')) }}
+												</div>
+												<div class="col-sm-7">
+													<input class="uploadFile" placeholder=".jpg .png .gif, dung lượng <1MB, chiều cao >200px" disabled="disabled" class="form-control">
+												</div>
 											</div>
-										</div>
-										<div class="form-group">
-											<label for="input" class="col-sm-2 control-label">Hình ảnh 3:</label>
-											<div class="col-sm-8">
-												{{ Form::file('hinhanh3') }}
+											<div class="col-sm-offset-1 col-sm-12 push-bottom">
+												<div class="fileUpload btn bg-little-blue border-blue col-sm-2">
+												    Chọn hình
+												    {{ Form::file('hinhanh2', array('class'=>'upload')) }}
+												</div>
+												<div class="col-sm-7">
+													<input class="uploadFile" placeholder=".jpg .png .gif, dung lượng <1MB, chiều cao >200px" disabled="disabled" class="form-control">
+												</div>
 											</div>
-										</div>
-										<div class="form-group">
-											<span><strong>Lưu ý</strong>: Hình ảnh sẽ áp dụng cho tất cả việc làm đăng tuyển của Quý khách</span>
-											
-										</div>
+											<div class="col-sm-offset-1 col-sm-12 push-bottom">
+												<div class="fileUpload btn bg-little-blue border-blue col-sm-2">
+												    Chọn hình
+												    {{ Form::file('hinhanh3', array('class'=>'upload')) }}
+												</div>
+												<div class="col-sm-7">
+													<input class="uploadFile" placeholder=".jpg .png .gif, dung lượng <1MB, chiều cao >200px" disabled="disabled" class="form-control">
+												</div>
+											</div>
+											<p class="col-sm-offset-1 col-sm-12"><strong>Lưu ý:</strong> Hình ảnh sẽ áp dụng cho tất cả việc làm đăng tuyển của Quý khách.</p>
 										
-									</div>
-								</div>
+										</div>
+										</div>
 								<div class="center">
 									{{ Form::button('Tiếp tục', array('type'=>'submit', 'class'=>'btn btn-warning')) }}
 									<button type="button" class="btn btn-warning">Hủy</button>
@@ -288,6 +284,7 @@
 @section('script')
 	{{ HTML::script('assets/js/chosen.jquery.min.js') }}
 	{{ HTML::script('assets/js/bootstrap-datepicker.min.js') }}
+	{{ HTML::script('assets/ntd/js/main.js') }}
 	<script type="text/javascript">
 		$('.chosen-select').chosen({allow_single_deselect:true, max_selected_options: 3}); 
 		$('input.datepicker').datepicker({

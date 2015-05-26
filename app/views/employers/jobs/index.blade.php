@@ -1,19 +1,19 @@
 @extends('layouts.employer')
 @section('title') Quản lý đăng tuyển - VnJobs @stop
 @section('content')
-	<div class="col-xs-12 main-content">
-							<div class="col-xs-3 sidebar">
-								@include('includes.employers.navbar')
-							</div>
-							<div class="col-xs-9 primary">
-								<div class="panel panel-default sub-panel">
-									<div class="panel-heading">
-										<h2>{{ $title }}</h2>
-									</div>
-									<div class="panel-body">
+	<section class="boxed-content-wrapper clearfix">
+		<div class="container">
+			<aside id="sidebar" class="col-sm-3">
+				@include('includes.employers.jobs_navbar')
+			</aside>
+			<section id="content" class="pull-right right">
+				<div class="header-image">
+					DS <span class="text-blue">{{ $title }}</span>
+				</div>
+				<div class="box bg-white">
 									{{ Form::open(array('method'=>'POST', 'route'=>'employers.jobs.action')) }}
 										@include('includes.notifications')
-										<table class="table table-hover table-striped table-bordered">
+										<table class="table table-striped table-bordered">
 											<thead>
 												<tr class="center">
 													<th>
@@ -56,8 +56,8 @@
 													@endforeach
 													</td>
 													<td>
-														<a href="{{ URL::route('employers.jobs.edit', $job->id) }}" class="btn btn-xs btn-info"><i class="glyphicon glyphicon-pencil"></i> Sửa</a>
-														<a href="{{ URL::route('employers.jobs.delete', $job->id) }}" class="btn btn-xs btn-danger" onclick="return confirm('Bạn có muốn xóa công việc này ?');"><i class="glyphicon glyphicon-trash"></i> Xóa</a>
+														<a href="{{ URL::route('employers.jobs.edit', $job->id) }}" class="btn btn-mini btn-action btn-info"><i class="glyphicon glyphicon-pencil"></i></a>
+														<a href="{{ URL::route('employers.jobs.delete', $job->id) }}" class="btn btn-mini btn-action btn-danger" onclick="return confirm('Bạn có muốn xóa công việc này ?');"><i class="glyphicon glyphicon-trash"></i></a>
 													</td>
 												</tr>
 												@endforeach
@@ -79,94 +79,98 @@
 											{{ $jobs->links() }}
 										</div>
 										{{ Form::close() }}
-									</div>
-								</div>
-								
-								<div class="panel panel-default sub-panel">
-									<div class="panel-heading">
-										<h2>Tìm tuyển dụng của tôi</h2>
-									</div>
+					</div>
+					<div class="box find-my-recruitment">
+						<div class="heading-image">
+							<h2 class="text-blue">{{ HTML::image('assets/ntd/images/search-lg.png') }} Tìm tuyển dụng của tôi</h2>
+						</div>
 									<?php if( ! isset($input) ) $input = ['keyword'=>'','nganhnghe'=>[],'noilamviec'=>'','ngaydang1'=>'','ngaydang2'=>'','ngayhethan1'=>'','ngayhethan2'=>'']; ?>
 									<?php if( ! isset($input['nganhnghe']) ) $input['nganhnghe'] = []; ?>
-									<div class="panel-body">
 										<form action="{{ URL::route('employers.jobs.search') }}" method="GET" class="form-horizontal" role="form">
 											<div class="form-group">
-												<label for="inputKeyword" class="col-sm-2 control-label">Từ khóa:</label>
-												<div class="col-sm-10">
+												<label for="inputKeyword" class="col-sm-4 control-label">Từ khóa:</label>
+												<div class="col-sm-6">
 													{{ Form::text('keyword', $input['keyword'] ) }}
 												</div>
 											</div>
 											<div class="form-group">
-												<label for="" class="col-sm-2 control-label">Ngành nghề:</label>
-												<div class="col-sm-10">
+												<label for="" class="col-sm-4 control-label">Ngành nghề:</label>
+												<div class="col-sm-6">
 													{{ Form::select('nganhnghe[]', Category::getList(), $input['nganhnghe'], array('class'=>'form-control chosen-select', 'multiple') ) }}
 												</div>
 											</div>
 											<div class="form-group">
-												<label for="inputNoilamviec" class="col-sm-2 control-label">Nơi làm việc:</label>
-												<div class="col-sm-10">
+												<label for="inputNoilamviec" class="col-sm-4 control-label">Nơi làm việc:</label>
+												<div class="col-sm-6">
 													{{ Form::select('noilamviec', array('all'=>'Tất cả') + Province::lists('province_name', 'id'), $input['noilamviec'] ) }}
 												</div>
 											</div>
 											<div class="form-group">
-												<div class="col-sm-1">
-													<div class="checkbox">
-														<input type="checkbox" id="s1" value="">
-														<label for="s1">
-															<span></span>
-								
+												<label for="input" class="col-sm-4 control-label">
+													<div class="checkbox pull-right">
+														<label>
+															<input type="checkbox" value="">
+															<strong>Ngày đăng</strong>
 														</label>
 													</div>
-												</div>
-												<label for="input" class="col-sm-3 control-label">Ngày đăng:</label>
+												</label>
 												<div class="col-sm-3">
-													{{ Form::text('ngaydang1', $input['ngaydang1'], ['class'=>'datepicker form-control'] ) }}
-												</div>
-												<div class="col-sm-1">
-													<i class="glyphicon glyphicon-calendar"></i>
+													<p>Từ</p>
+													<div class="input-group date" id="">
+										                {{ Form::text('ngaydang1', $input['ngaydang1'], ['class'=>'datepicker form-control'] ) }}
+										                <span class="input-group-addon have-img">
+										                	{{ HTML::image('assets/ntd/images/calendar.png') }}
+										            	</span>
+										            </div>
 												</div>
 												<div class="col-sm-3">
-													{{ Form::text('ngaydang2', $input['ngaydang2'], ['class'=>'datepicker form-control'] ) }}
-												</div>
-												<div class="col-sm-1">
-													<i class="glyphicon glyphicon-calendar"></i>
+													<p>Đến</p>
+													<div class="input-group date" id="">
+										                {{ Form::text('ngaydang2', $input['ngaydang2'], ['class'=>'datepicker form-control'] ) }}
+										                <span class="input-group-addon have-img">
+										                   	{{ HTML::image('assets/ntd/images/calendar.png') }}
+										            	</span>
+										            </div>
 												</div>
 											</div>
 											<div class="form-group">
-												<div class="col-sm-1">
-													<div class="checkbox">
-														<input type="checkbox" id="s2" value="">
-														<label for="s2">
-															<span></span>
-								
+												<label for="input" class="col-sm-4 control-label">
+													<div class="checkbox pull-right">
+														<label>
+															<input type="checkbox" value="">
+															<strong>Ngày kết thúc</strong>
 														</label>
 													</div>
-												</div>
-												<label for="input" class="col-sm-3 control-label">Ngày hết hạn:</label>
+												</label>
 												<div class="col-sm-3">
-													{{ Form::text('ngayhethan1', $input['ngayhethan1'], ['class'=>'datepicker form-control'] ) }}
-												</div>
-												<div class="col-sm-1">
-													<i class="glyphicon glyphicon-calendar"></i>
+													<p>Từ</p>
+													<div class="input-group date" id="">
+										                {{ Form::text('ngayhethan1', $input['ngayhethan1'], ['class'=>'datepicker form-control'] ) }}
+										                <span class="input-group-addon have-img">
+										                	{{ HTML::image('assets/ntd/images/calendar.png') }}
+										            	</span>
+										            </div>
 												</div>
 												<div class="col-sm-3">
-													{{ Form::text('ngayhethan2', $input['ngayhethan2'], ['class'=>'datepicker form-control'] ) }}
-												</div>
-												<div class="col-sm-1">
-													<i class="glyphicon glyphicon-calendar"></i>
+													<p>Đến</p>
+													<div class="input-group date" id="">
+										                {{ Form::text('ngayhethan2', $input['ngayhethan2'], ['class'=>'datepicker form-control'] ) }}
+										                <span class="input-group-addon have-img">
+										                   	{{ HTML::image('assets/ntd/images/calendar.png') }}
+										            	</span>
+										            </div>
 												</div>
 											</div>
-												<div class="form-group">
-													<div class="col-sm-10 col-sm-offset-2">
-														<button type="submit" class="btn btn-primary">Tìm</button>
-													</div>
+											<div class="form-group">
+												<div class="col-sm-offset-4 col-sm-7">
+													<button type="submit" class="btn btn-lg bg-orange">Tìm</button>
 												</div>
+											</div>
 										</form>
 									</div>
-								</div>
-
-							</div> <!-- primary -->
-						</div> <!-- main-content -->
+			</section>
+		</div>
+	</section>
 @stop
 
 @section('style')
@@ -176,6 +180,9 @@
 		.center {
 			text-align: center;
 			vertical-align: middle;
+		}
+		.btn-action {
+			padding: 5px 10px;
 		}
 	</style>
 @stop

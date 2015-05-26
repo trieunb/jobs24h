@@ -63,7 +63,7 @@ hr {
     padding:0;
 }
 
-input, select, button, textarea,.input-group-addon,.pagination-lg>li:first-child>a, .pagination-lg>li:first-child>span,.pagination-lg>li:last-child>a, .pagination-lg>li:last-child>span {
+input, select, button, a.btn, textarea,.input-group-addon,.pagination-lg>li:first-child>a, .pagination-lg>li:first-child>span,.pagination-lg>li:last-child>a, .pagination-lg>li:last-child>span {
     vertical-align:middle;
     border-radius: 0 !important;
 }
@@ -210,7 +210,7 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
 .heading-item { background: #1AC6FF; line-height: 44px; margin:0; text-transform: uppercase; color: #fff;}
 .heading-item .first {background: url(../images/bg-item.png) no-repeat left center;}
 .service-price .heading-border-blue h4{margin: 0; font-family: "Gotham-Thin";letter-spacing: -1px;}
-.header-image {background: url(../images/quan-ly-don-hang.png) no-repeat; width: 100%; float: right; height: 147px; margin-bottom: 30px; text-align: center; line-height: 147px; font-size: 35px;font-family: "Gotham-Thin"; padding-left: 90px;}
+.header-image {background: url(../images/quan-ly-don-hang.png) no-repeat; width: 100%; float: right; height: 147px; margin-bottom: 30px; text-align: center; line-height: 147px; font-size: 35px;text-transform: uppercase; font-family: "Gotham-Thin"; padding-left: 90px;}
 
 
 .arrow-square-orange li {background: url(../images/arrow_square_orange.png) no-repeat left 6px; padding-left: 15px;   padding-bottom: 7px;}
@@ -269,7 +269,7 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
 .widget.ads img {border: 5px solid #D8D4D4;}
 .fileUpload {position: relative;overflow: hidden;}
 .fileUpload input.upload {position: absolute;top: 0;right: 0;margin: 0;   padding: 0;font-size: 20px;cursor: pointer;opacity: 0;filter: alpha(opacity=0);}
-#uploadFile {  background: transparent;  border: none;  padding: 0;  font-style: italic;}
+.uploadFile {  background: transparent;  border: none;  padding: 0;  font-style: italic;}
 .management-order .arrow-square-orange li:first-child:before{padding: 0; background: none;}
 .management-order h4 {color: #999; text-transform: uppercase; font-family: "Gotham-Thin"; font-size: 11px;}
 .support {background: #f5f5f5; padding: 10px;}
@@ -493,3 +493,15 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
 .menu-tab ul li ul li a {color: #00b9f2 !important; padding: 5px 12px;}
 .menu-tab ul li ul li.selected a, .menu-tab ul li ul li a:hover {background: #565656; color: #00b9f2;}
 .menu-tab ul li ul li {background: none !important; margin-right: 5px;}
+
+
+/******* PHONGDATGL CSS ******/
+.menu-management-resume ul li ul li.selected a {
+  color: #F7941D;
+}
+.menu-management-resume ul li ul li a {
+  padding: 10px 0 10px 50px;
+}
+.menu-management-resume ul li.active a i {
+  display: inline-block;
+}

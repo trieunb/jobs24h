@@ -1,7 +1,7 @@
 <?php
 
 class Job extends \Eloquent {
-	protected $fillable = [];
+	protected $fillable = ['ntd_id'];
 	protected $table = 'jobs';
 	public function province()
 	{
