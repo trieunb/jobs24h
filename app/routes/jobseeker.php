@@ -28,7 +28,12 @@ Route::group(array('prefix'=>$locale), function() {
 			Route::get('/edit-career-objectives/{id}', array('as'=>'jobseekers.edit-career-objectives', 'uses'=>'JobSeeker@editCareerObjectivesHome') );
 			Route::post('/edit-career-objectives/{id}', array('as'=>'edit-career-objectives', 'uses'=>'JobSeeker@editCareerObjectives'));
 		});
+		Route::controller('/view/{slug}/{id}', 'JobController', array(
+			'getIndex'	=>	'jobseekers.job',
+		));
 	});
 });
+
+
 
  
