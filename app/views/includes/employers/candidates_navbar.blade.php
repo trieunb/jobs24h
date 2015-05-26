@@ -16,13 +16,16 @@
   			</ul>
 
 		</li>
-		<li class="">
-			<a href="#" onclick="return false;"><i class="fa fa-plus-square-o fa-2x"></i><span class="text-orange">Hồ sơ đã chọn</span></a>
+		<li class="{{ HTML::active(['employers.candidates.folder', 'employers.candidates.folderManager']) }}">
+			<a href="{{ URL::route('employers.candidates.folder', 'all') }}"><i class="fa fa-plus-square-o fa-2x"></i><span class="text-orange">Hồ sơ đã chọn</span></a>
   			<ul>
-  				<li class="selected"><a href="#"><i class="fa fa-folder-o"></i>Quản lý thư mục</a></li>
-  				<li><a href="#"><i class="fa fa-folder-o"></i>Quản lý thư mục</a></li>
-  				<li><a href="#"><i class="fa fa-folder-o"></i>Quản lý thư mục</a></li>
-  				<li><a href="#">Quản lý thư mục</a></li>
+  				@if(count($folders))
+					@foreach($folders as $id=>$name)
+						<li class="{{ HTML::active(['employers.candidates.folder'], 'selected') }}"><a href="{{ URL::route('employers.candidates.folder', $id) }}"><i class="fa fa-folder-o"></i>{{ $name }}</a></li>
+					@endforeach
+  				@endif
+  				<li class="{{ HTML::active(['employers.candidates.folderManager'], 'selected') }}"><a href="{{ URL::route('employers.candidates.folderManager') }}">Quản lý thư mục</a></li>
+  				
   			</ul>
 		</li>
 		<li>

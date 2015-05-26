@@ -24,6 +24,11 @@ Route::group(array('prefix'=>$locale), function() {
 			Route::controller('candidates', 'CandidateController', array(
 				'getIndex'		=>	'employers.candidates.index',
 				'getJob'		=>	'employers.candidates.job',
+				'getFolder'		=>	'employers.candidates.folder',
+				'getFolderManager'=>	'employers.candidates.folderManager',
+				'postFolderCreate'=>	'employers.candidates.createFolder',
+				'postFolderUpdate'=>	'employers.candidates.updateFolder',
+				'getFolderDelete'=>	'employers.candidates.deleteFolder',
 				'getReport'		=>	'employers.candidates.report',
 				'getAlert'		=>	'employers.candidates.alert',
 				'getRespond'	=>	'employers.candidates.respond',

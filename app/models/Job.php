@@ -19,6 +19,10 @@ class Job extends \Eloquent {
 	{
 		return $this->belongsTo('WorkType', 'hinhthuc');
 	}
+	public function application()
+	{
+		return $this->hasMany('Application', 'job_id');
+	}
 	public function arrayLocation($keyGet = 'province_id')
 	{
 		$location = $this->province->toArray();

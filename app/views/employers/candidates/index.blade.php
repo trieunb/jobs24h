@@ -1,5 +1,5 @@
 @extends('layouts.employer')
-@section('title') Quản lý hồ sơ - VnJobs @stop
+@section('title') Quản lý hồ sơ @stop
 @section('content')
 <section class="boxed-content-wrapper clearfix">
 		<div class="container">
