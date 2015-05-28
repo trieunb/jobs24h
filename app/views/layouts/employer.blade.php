@@ -95,5 +95,6 @@
 	</body>
 	{{ HTML::script('assets/js/jquery.1.11.1.min.js') }}
 	{{ HTML::script('assets/ntd/js/bootstrap.min.js') }}
+	
 	@yield('script')
 </html>

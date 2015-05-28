@@ -9,7 +9,7 @@ Route::group(array('prefix'=>$locale), function() {
 			));
 			Route::controller('jobs', 'JobController', array(
 				'getIndex'		=>	'employers.jobs.index',
-				'getAdd'		=>	'employers.jobs.add',
+				'getAdd'		=>	'employers.job.add',
 				'getActive'	=>	'employers.jobs.active',
 				'getExpiring'	=>	'employers.jobs.expiring',
 				'getInActive'	=>	'employers.jobs.inactive',
@@ -29,10 +29,22 @@ Route::group(array('prefix'=>$locale), function() {
 				'postFolderCreate'=>	'employers.candidates.createFolder',
 				'postFolderUpdate'=>	'employers.candidates.updateFolder',
 				'getFolderDelete'=>	'employers.candidates.deleteFolder',
+				'getDeleted'	=>	'employers.candidates.deleted',
+				'getBlocked'	=>	'employers.candidates.blocked',
+
 				'getReport'		=>	'employers.candidates.report',
 				'getAlert'		=>	'employers.candidates.alert',
 				'getRespond'	=>	'employers.candidates.respond',
 				'getTest'		=>	'employers.candidates.test',
+			));
+
+			Route::controller('account', 'AccountController', array(
+				'getIndex'			=>	'employers.account.index',
+				'getCompany'		=>	'employers.account.company',
+				'getCompanyReview'	=>	'employers.account.companyreview',
+				'getChangePass'		=>	'employers.account.changepass',
+				'getChangeEmail'	=>	'employers.account.changeemail',
+				'getLogout'			=>	'employers.account.logout',
 			));
 		});
 

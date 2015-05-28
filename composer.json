@@ -12,7 +12,8 @@
 		"fzaninotto/faker": "1.5.*@dev",
 		"swiftmailer/swiftmailer": "~5.4",
 		"davejamesmiller/laravel-breadcrumbs": "~2.2",
-		"doctrine/dbal": "2.4.*"
+		"doctrine/dbal": "2.4.*",
+		"mews/captcha": "dev-master-l4"
 	},
 	"autoload": {
 		"classmap": [

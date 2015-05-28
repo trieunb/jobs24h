@@ -16,14 +16,14 @@
 				</div>
 			</ul>
 		</li>
-		<li><a href="{{ URL::route('employers.jobs.add') }}">Đăng tuyển dụng</a></li>
+		<li class="{{ HTML::active(['employers.job.add'], 'active') }}"><a href="{{ URL::route('employers.job.add') }}">Đăng tuyển dụng</a></li>
 		<li class="{{ HTML::active(['employers.jobs.*', 'employers.candidates.*']) }}">
 			<a href="#">Quản lý tuyển dụng</a>
 			<ul>
 				<div class="container">
 				<li><a href="#">Đơn hàng</a></li>
-				<li class="{{ HTML::active(['employers.jobs.index'], 'selected') }}"><a href="{{ URL::route('employers.jobs.index') }}">Quản lý việc làm</a></li>
-				<li class="{{ HTML::active(['employers.candidates.index'], 'selected') }}"><a href="{{ URL::route('employers.candidates.index') }}">Quản lý ứng viên</a></li>
+				<li class="{{ HTML::active(['employers.jobs.*'], 'selected') }}"><a href="{{ URL::route('employers.jobs.index') }}">Quản lý việc làm</a></li>
+				<li class="{{ HTML::active(['employers.candidates.*'], 'selected') }}"><a href="{{ URL::route('employers.candidates.job', 'all') }}">Quản lý ứng viên</a></li>
 				<li class="{{ HTML::active(['employers.candidates.report'], 'selected') }}"><a href="{{ URL::route('employers.candidates.report') }}">Báo cáo dịch vụ hồ sơ</a></li>
 				<li class="{{ HTML::active(['employers.candidates.alert'], 'selected') }}"><a href="{{ URL::route('employers.candidates.alert') }}">Thông báo hồ sơ</a></li>
 				<li class="{{ HTML::active(['employers.candidates.respond'], 'selected') }}"><a href="{{ URL::route('employers.candidates.respond') }}">Phản hồi của UV</a></li>
@@ -32,13 +32,13 @@
 			</ul>
 		</li>
 		<li class="{{ HTML::active(['employers.account.*']) }}">
-			<a href="#">Tài khoản</a>
+			<a>Tài khoản</a>
 			<ul>
 				<div class="container">
-				<li><a href="#">Cập nhật thông tin</a></li>
-				<li><a href="#">Đổi mật khẩu</a></li>
-				<li><a href="#">Đổi email truy cập</a></li>
-				<li><a href="#">Thoát</a></li>
+				<li class="{{ HTML::active(['employers.account.company'], 'selected') }}"><a href="{{ URL::route('employers.account.index') }}">Cập nhật thông tin</a></li>
+				<li class="{{ HTML::active(['employers.account.changepass'], 'selected') }}"><a href="{{ URL::route('employers.account.changepass') }}">Đổi mật khẩu</a></li>
+				<li class="{{ HTML::active(['employers.account.changeemail'], 'selected') }}"><a href="{{ URL::route('employers.account.changeemail') }}">Đổi email truy cập</a></li>
+				<li><a href="{{ URL::route('employers.account.logout') }}">Thoát</a></li>
 				</div>
 			</ul>
 		</li>

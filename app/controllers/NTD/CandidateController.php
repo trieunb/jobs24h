@@ -4,34 +4,50 @@ use View, Redirect, Input, EFolder, Job, Auth, Response, Application;
 class CandidateController extends \Controller {
 	public function __construct()
 	{
-		$job_name = Job::where('ntd_id', Auth::id())->lists('vitri', 'id');
+		$job_name = Job::where('ntd_id', Auth::id())->with('application')->get();
 		View::share('job_name', $job_name);
-		$folders = EFolder::where('ntd_id', Auth::id())->orderBy('id', 'desc')->lists('folder_name', 'id');
+		$folders = EFolder::where('ntd_id', Auth::id())->with('application')->orderBy('id', 'desc')->get();
 		View::share('folders', $folders);
 	}
 	public function getIndex()
 	{
-		return View::make('employers.candidates.index');
+		return Redirect::route('employers.candidates.job', 'all');
 	}
-	public function getJob()
+	public function getJob($id = false)
 	{
+		$apply = Application::orderBy('id', 'desc')
+		->whereHas('job', function($q) {
+			$q->where('ntd_id', Auth::id());
+		});
+		if(is_numeric($id))
+		{
+			$apply->whereHas('job', function($q) use($id) {
+				$q->where('id', $id);
+			});
+		}
 
+		$apply = $apply->paginate(10);
+		return View::make('employers.candidates.job', compact('apply'))->with('job_id', $id);
 	}
 	public function getFolder($id = false)
 	{
 		if($id)
 		{
-			$jobs = Application::orderBy('id', 'desc');
+			$apply = Application::orderBy('id', 'desc')->where('nav_id', 2);
 			if(is_numeric($id))
 			{
-
+				$apply->whereHas('job', function($q) {
+					$q->where('ntd_id', Auth::id());
+				})->where('folder_id', $id);
 			}
-			return View::make('employers.candidates.folders');
+			$apply = $apply->paginate(10);
+			return View::make('employers.candidates.folder', compact('apply'))->with('folder_id', $id);
 		}
+		return Redirect::route('employers.candidates.folder', 'all');
 	}
 	public function getFolderManager()
 	{
-		$fds = EFolder::orderBy('created_at', 'desc')->paginate(10);
+		$fds = EFolder::orderBy('created_at', 'desc')->with('application')->paginate(10);
 		return View::make('employers.candidates.folder_list', compact('fds'));
 	}
 	public function postFolderCreate()
@@ -60,9 +76,32 @@ class CandidateController extends \Controller {
 			$folder = EFolder::where('ntd_id', Auth::id())
 				->where('id', $id)
 				->first();
-			$folder->delete();
+			if($folder->application->count() == 0)
+				$folder->delete();
 		}
 		return Redirect::back()->with('success', 'Xóa folder thành công !');
+	}
+	public function getDeleted()
+	{
+		$apply = Application::orderBy('id', 'desc')
+		->where('nav_id', 3)
+		->whereHas('job', function($q) {
+			$q->where('ntd_id', Auth::id());
+		});
+		
+		$jobs = $apply->paginate(10);
+		return View::make('employers.candidates.deleted', compact('jobs'));
+	}
+	public function getBlocked()
+	{
+		$apply = Application::orderBy('id', 'desc')
+		->where('nav_id', 4)
+		->whereHas('job', function($q) {
+			$q->where('ntd_id', Auth::id());
+		});
+		
+		$jobs = $apply->paginate(10);
+		return View::make('employers.candidates.blocked', compact('jobs'));
 	}
 	public function getReport()
 	{

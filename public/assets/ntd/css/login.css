@@ -32,7 +32,7 @@
 .login-form .panel .panel-body button:hover {
 	background: #5AADC8;
 }
-.login-form .panel .panel-body button {
+.login-form .panel .panel-body button.btn-login {
 	background: #1ac6ff;
 	border: none;
 	border-radius: 0;

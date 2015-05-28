@@ -126,6 +126,7 @@ return array(
 		'Way\Generators\GeneratorsServiceProvider',
 		'Barryvdh\Debugbar\ServiceProvider',
 		'DaveJamesMiller\Breadcrumbs\ServiceProvider',
+		'Mews\Captcha\CaptchaServiceProvider',
 
 	),
 
@@ -201,6 +202,7 @@ return array(
 		'Hasher'	=>	'DTT\Sentry\Hashing\Sha256Hasher',
 		'Breadcrumbs' => 'DaveJamesMiller\Breadcrumbs\Facade',
 		'Form'		=>	'App\DTT\Services\Form',
+		'Captcha' => 'Mews\Captcha\Facades\Captcha',
 		
 	),
 

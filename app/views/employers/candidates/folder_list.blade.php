@@ -9,14 +9,18 @@
 			
 			<section id="content" class="pull-right right">
 				<div class="header-image">
-					Quản Lý <span class="text-blue">Thư Mục</span>
+					QUẢN LÝ <span class="text-blue">ỨNG VIÊN</span>
 				</div>
 				<div class="boxed">
 					<div class="heading-image">
-						<h2 class="text-orange">Danh sách thư mục lưu trữ</h2>
+						<h2 class="text-orange">Cập nhật thư mục - hồ sơ ứng tuyển</h2>
 					</div>
+					<div class="filter">
+						<p>Chú ý: quý khách chỉ xóa được các thư mục không chứa hồ sơ</p>
+					</div>
+					<div class="clearfix"></div>
 					@include('includes.notifications')
-					<button type="button" data-toggle="modal" data-target="#modalCreate" class="btn btn-warning">Tạo thư mục</button>
+					
 					<table class="table table-bordered table-blue-bordered white">
 						<thead>
 							<tr>
@@ -34,8 +38,10 @@
 									<td id="fn_{{ $folder->id }}">{{ $folder->folder_name }}</td>
 									<td>{{ $folder->application->count() }}</td>
 									<td>
-										<button type="button" id="f_{{ $folder->id }}" class="btn btn-info btn-xs btn-edit"><i class="fa fa-pencil"></i> Sửa</button>
+										<button type="button" id="f_{{ $folder->id }}" class="btn btn-info btn-xs btn-edit"><i class="fa fa-edit"></i> Sửa</button>
+										@if($folder->application->count() == 0)
 										<a href="{{ URL::route('employers.candidates.deleteFolder', $folder->id) }}" class="btn btn-xs btn-danger" onclick="return confirm('Bạn có muốn xóa folder này ?')"><i class="fa fa-trash"></i> Xóa</button>
+										@endif
 									</td>
 								</tr>
 								@endforeach
@@ -47,6 +53,7 @@
 							
 						</tbody>
 					</table>
+					<button type="button" class="btn btn-lg bg-orange" data-toggle="modal" data-target="#modalCreate">Tạo thư mục mới</button>
 				</div>		
 			</section>
 		</div>
@@ -70,7 +77,7 @@
 						</div>
 						<div class="form-group">
 							<div class="col-sm-10 col-sm-offset-2">
-								<button type="submit" id="submit-create" class="btn btn-warning">Tạo ngay</button>
+								<button type="submit" id="submit-create" class="btn btn-lg bg-orange">Tạo ngay</button>
 							</div>
 						</div>
 					</form>

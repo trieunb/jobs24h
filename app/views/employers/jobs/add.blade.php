@@ -8,7 +8,7 @@
 			</aside>
 			
 			<section id="content" class="pull-right right">
-							{{ Form::open(array('route'=>'employers.jobs.add', 'method'=>'POST', 'class'=>'form-horizontal', 'files'=>true)) }}
+							{{ Form::open(array('route'=>'employers.job.add', 'method'=>'POST', 'class'=>'form-horizontal', 'files'=>true)) }}
 							<div class="boxed">
 					<div class="heading-image">
 						<h2 class="text-blue">{{ HTML::image('assets/ntd/images/doc.png') }} Thông tin đăng tuyển</h2>
