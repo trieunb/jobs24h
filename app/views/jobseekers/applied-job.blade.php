@@ -18,7 +18,7 @@
 		<div class="boxed">
 			<div class="rows">
 				<div class="title-page">
-					<h2>Việc làm của tôi</h2>
+					<h2>Việc làm đã nộp</h2>
 				</div>
 					<p><strong>Lưu ý</strong>: Bạn không xem được việc làm đã hết thời hạn đăng tuyển hoặc tạm ngưng nhận hồ sơ.
             		</p>
@@ -36,7 +36,7 @@
 										<th><input type="checkbox" value=""></th>
 										<th>Chức danh</th>
 										<th>Công ty</th>
-										<th>Ngày lưu</th>
+										<th>Ngày nộp</th>
 										<th>Nhà tuyển dụng phản hồi</th>
 										<th>Tình trạng</th>
 									</tr>
@@ -44,6 +44,7 @@
 								<tbody>
 									@if($my_job_list !=null)
 									@foreach($my_job_list as $mjl)
+									@if(count($mjl->application) > 0)
 									<tr>
 										<td><input type="checkbox" value=""></td>
 										<td>
@@ -59,13 +60,10 @@
 										<td>{{$mjl->save_date}}</td>
 										<td>{{$mjl->respond}}</td>
 										<td>
-											@if(count($mjl->application) > 0)
-												Đã ứng tuyển<br>({{date('d-m-Y',strtotime($mjl->application->apply_date))}})
-											@else
-												{{ HTML::linkRoute('jobseekers.job', 'Ứng tuyển', array($mjl->jobs->slug, "$mjl->job_id"), array('class' => 'btn btn-sm bg-orange btn-apply'))}}
-											@endif
+											Đã ứng tuyển
 										</td>
 									</tr>
+									@endif
 									@endforeach
 									@else
 										<tr>

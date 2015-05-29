@@ -20,7 +20,11 @@
 				<div class="box">
 					<div class="col-sm-3">
 						<div class="avatar">
-							{{ HTML::image('assets/images/ruibu.jpg') }}
+							@if($user->avatar !=null)
+								{{ HTML::image('uploads/jobseekers/avatar/'.$user->avatar.'') }}
+							@else
+								{{ HTML::image('assets/images/avatar.jpg') }}
+							@endif
 						</div>
 					</div>
 					<div class="col-sm-9">
@@ -60,7 +64,7 @@
 								<label for="" class="col-sm-3 control-label">Ngày sinh<abbr>*</abbr></label>
 								<div class="col-sm-3">
 									<div class="input-group date" id="DOB">
-					                    {{Form::input('text','date_of_birth', $user->date_of_birth, array('class'=>'date_of_birth form-control', 'placeholder'=>'YYYY-MM-DD','data-date-format'=>'YYYY-MM-DD'))}}
+					                  {{Form::input('text','date_of_birth', date('m-d-Y',strtotime($user->date_of_birth)), array('class'=>'date_of_birth form-control','placeholder'=>'DD-MM-YYYY','data-date-format'=>'DD-MM-YYYY'))}}
 					                    <span class="input-group-addon have-img">
 					                    	{{HTML::image('assets/images/calendar.png')}}
 					                    </span>
@@ -155,12 +159,13 @@
 						<div class="form-group">
 			                <label class="col-sm-3 control-label">Số năm kinh nghiệm<abbr>*</abbr></label>
 			                <div class="col-sm-3">
-			                	{{Form::input('text', 'info_years_of_exp', null, array('class'=>'info_years_of_exp form-control', 'maxlength'=>'2', 'placeholder'=>'Ví dụ 2', 'disabled' =>'disabled'))}} 
+			                	<?php if ($my_resume->namkinhnghiem == 0){$namkinhnghiem = '';}else{$namkinhnghiem=null;}?>
+			                	{{Form::input('text', 'info_years_of_exp', $namkinhnghiem, array('class'=>'info_years_of_exp form-control', 'maxlength'=>'2', 'placeholder'=>'Ví dụ 2', 'disabled' =>'disabled'))}} 
 			                </div>
 			                <div class="col-sm-6">
 			                    <div class="checkbox">
 			                    	<label>
-			                    		{{Form::checkbox('info_years_of_exp', 0, null, array('class'=>'default_years_of_exp','checked'=>'checked'))}}
+			                    		{{Form::checkbox('info_years_of_exp', 0, $my_resume->namkinhnghiem, array('class'=>'default_years_of_exp','checked'=>'checked'))}}
 			                    		  Tôi mới tốt nghiệp/chưa có kinh nghiệm làm việc
 			                    	</label>
 			                    </div>
@@ -169,11 +174,10 @@
 			            <div class="form-group">
 			            	<label class="col-sm-3 control-label">Bằng cấp cao nhất<abbr>*</abbr></label>
 			            	<div class="col-sm-3">
-			            		{{ Form::select('info_highest_degree', Country::lists('country_name', 'id'),null, array('class'=>'info_highest_degree form-control', 'id' => 'HighestDegree') ) }}
+			            		{{ Form::select('info_highest_degree',array(''=>'- Vui lòng chọn -')+Education::lists('name', 'id'),$my_resume->bangcapcaonhat, array('class'=>'info_highest_degree form-control', 'id' => 'HighestDegree') ) }}
 			            	</div>
 			            </div>
 			            <div class="form-group">
-			            	
 			            	<div class="row fr-lang lang block">
 				            	<label class="col-sm-3 control-label">Ngoại ngữ<abbr>*</abbr></label>
 				            	<div class="col-sm-3 ">
@@ -223,27 +227,27 @@
 			            <div class="form-group">
 			            	<label class="col-sm-3 control-label">Công ty gần đây nhất</label>
 			            	<div class="col-sm-9">
-			            		{{Form::input('text', 'info_latest_company', null, array('class'=>'info_latest_company form-control'))}}
+			            		{{Form::input('text', 'info_latest_company', $my_resume->ctyganday, array('class'=>'info_latest_company form-control'))}}
 			            	</div>
 			            </div>
 			            <div class="form-group">
 			            	<label class="col-sm-3 control-label">Công việc gần đây nhất</label>
 			            	<div class="col-sm-3">
-			            		{{Form::input('text', 'info_latest_job', null, array('class'=>'info_latest_job form-control'))}}
+			            		{{Form::input('text', 'info_latest_job', $my_resume->cvganday, array('class'=>'info_latest_job form-control'))}}
 			            	</div>
 			            	<label class="col-sm-3 control-label">Cấp bậc hiện tại<abbr>*</abbr></label>
 			            	<div class="col-sm-3">
-			            		{{ Form::select('info_current_level', array(""=>"- Vui lòng chọn -")+Level::lists('name', 'id'),null, array('class'=>'info_current_level form-control', 'id' => 'CurrentLevel') ) }}
+			            		{{ Form::select('info_current_level', array(""=>"- Vui lòng chọn -")+Level::lists('name', 'id'),$my_resume->capbachientai, array('class'=>'info_current_level form-control', 'id' => 'CurrentLevel') ) }}
 			            	</div>
 			            </div>
 			            <div class="form-group">
 			            	<label class="col-sm-3 control-label">Vị trí mong muốn<abbr>*</abbr></label>
 			            	<div class="col-sm-3">
-			            		{{Form::input('text', 'info_wish_position', null, array('class'=>'info_wish_position form-control'))}}
+			            		{{Form::input('text', 'info_wish_position', $my_resume->vitrimongmuon, array('class'=>'info_wish_position form-control'))}}
 			            	</div>
 			            	<label class="col-sm-3 control-label">Cấp bậc mong muốn<abbr>*</abbr></label>
 			            	<div class="col-sm-3">
-			            		{{ Form::select('info_wish_level', array(""=>"- Vui lòng chọn -")+Level::lists('name', 'id'),null, array('class'=>'info_wish_level form-control', 'id' => 'WishLevel') ) }}
+			            		{{ Form::select('info_wish_level', array(""=>"- Vui lòng chọn -")+Level::lists('name', 'id'),$my_resume->capbacmongmuon, array('class'=>'info_wish_level form-control', 'id' => 'WishLevel') ) }}
 			            	</div>
 			            </div>
 			            <div class="form-group">
@@ -262,13 +266,18 @@
 			                <label class="col-sm-3 control-label">Mức lương mong muốn<abbr>*</abbr></label>
 							<div class="radio col-sm-4">
 				                	<div for="specific-salary">
-				                    	{{Form::radio('specific_salary_radio', 1, null, array('id'=>'specific-salary'))}}
-				                        {{Form::input('number','specific_salary', null, array('class'=>'specific_salary form-control edit-control text-blue','id'=>'specific-salary-input', 'placeholder'=>'Ví dụ: 8.000.000', 'disabled'))}}
+				                		<?php 
+				                		if($my_resume->mucluong != 0)
+				                		{$mucluong = $my_resume->mucluong;$check='checked';}
+				                		else{$mucluong=null;$checked='sadd';}
+				                		?>
+				                    	{{Form::radio('specific_salary_radio', $mucluong, '$mucluong', array('id'=>'specific-salary'))}}
+				                        {{Form::input('number','specific_salary', $mucluong, array('class'=>'specific_salary form-control edit-control text-blue','id'=>'specific-salary-input', 'placeholder'=>'Ví dụ: 8.000.000', 'disabled'))}}
 				                    	<span>VND / tháng</span>
 				                    </div>
 								</div>
 				                <div class="radio col-sm-4">
-				                    {{Form::radio('specific_salary_radio', 0, null, array('id'=>'specific-salary-0', 'checked'=>'checked'))}}
+				                    {{Form::radio('specific_salary_radio',0, '$mucluong', array('id'=>'specific-salary-0'))}}
 				                    <span>Thương lượng </span>
 				                </div>
 						</div>
@@ -702,12 +711,12 @@
         url = '{{ URL::route("jobseekers.save-cv", array("basic", $id_cv )) }}';
         $.ajax({
             type: "POST",
-            url: url,//Relative or absolute path to response.php file
+            url: url,
           	dataType: 'json',
             data: {
             	date_of_birth: $('.date_of_birth').val(),
-		        gender:$('.gender').val(),
-		        marital_status: $('.marital_status').val(),
+		        gender:$('.gender:checked').val(),
+		        marital_status: $('.marital_status:checked').val(),
 		        nationality_id: $('.nationality_id').val(),
 		        address: $('.address').val(),
 		        country_id: $('.country_id').val(),

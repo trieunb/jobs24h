@@ -138,7 +138,7 @@
 			<div class="clearfix"></div>
 			<p class="copy-right">Copyright 2015 Công ty TNHH Minh Phúc - MPTelecom</p>
 		</footer>
-		<div class="loading-icon">{{ HTML::image('assets/images/loading.gif') }}</div>
+		<div class="loading-icon"></div>
 		<!-- jQuery -->
 		{{ HTML::script('assets/js/jquery.1.11.1.min.js') }}
 		{{ HTML::script('assets/js/bootstrap.min.js') }}

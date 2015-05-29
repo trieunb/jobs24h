@@ -10,7 +10,7 @@
 					<div class="top">
 						<h1>{{$job->vitri}}</h1>	
 						<h2>{{$job->ntd->company->company_name}}</h2>
-						<button type="button" class="btn btn-lg bg-orange">Nộp đơn</button>
+						<a href="{{URL::route('jobseekers.applying-job', array($job->id))}}" class="btn btn-lg bg-orange">Nộp đơn</a>
 					</div>
 					<div class="clearfix link-list">
 						<i class="fa fa-bookmark"></i>

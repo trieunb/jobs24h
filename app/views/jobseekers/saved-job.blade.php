@@ -18,7 +18,7 @@
 		<div class="boxed">
 			<div class="rows">
 				<div class="title-page">
-					<h2>Việc làm của tôi</h2>
+					<h2>Việc làm đã lưu</h2>
 				</div>
 					<p><strong>Lưu ý</strong>: Bạn không xem được việc làm đã hết thời hạn đăng tuyển hoặc tạm ngưng nhận hồ sơ.
             		</p>

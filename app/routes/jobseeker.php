@@ -24,15 +24,20 @@ Route::group(array('prefix'=>$locale), function() {
 			Route::post('/my-resume', array('as'=>'jobseekers.my-resume', 'uses'=>'JobSeeker@createResume'));
 			Route::get('/edit-career-objectives', 'JobSeeker@returnLogin');
 			Route::get('/edit-basic-info', array('as'=>'jobseekers.edit-basic-info', 'uses'=>'JobSeeker@editBasicHome') );
-			Route::post('/edit-basic-info', array('as'=>'edit-basic-info', 'uses'=>'JobSeeker@editBasic'));
+			Route::post('/edit-basic-info/{action}', array('as'=>'jobseekers.edit-basic-info', 'uses'=>'JobSeeker@editBasic'));
 			Route::get('/edit-career-objectives/{id}', array('as'=>'jobseekers.edit-career-objectives', 'uses'=>'JobSeeker@editCareerObjectivesHome') );
 			Route::post('/edit-career-objectives/{id}', array('as'=>'edit-career-objectives', 'uses'=>'JobSeeker@editCareerObjectives'));
 			Route::get('/my-job/{job_id}', array('as'=>'jobseekers.save-job','uses'=>'JobSeeker@saveJob'));
-
+			Route::get('/my-job', array('as'=>'jobseekers.my-job','uses'=>'JobSeeker@myJob'));
+			Route::get('/saved-job', array('as'=>'jobseekers.saved-job','uses'=>'JobSeeker@savedJob'));
+			Route::get('/applied-job', array('as'=>'jobseekers.applied-job','uses'=>'JobSeeker@appliedJob'));
+			Route::get('/respond-from-employment', array('as'=>'jobseekers.respond-from-employment','uses'=>'JobSeeker@repondFromEmployment'));
 		});
 		Route::controller('/view/{slug}/{id}', 'JobController', array(
 			'getIndex'	=>	'jobseekers.job',
 		));
+		Route::get('/applying-job/{job_id}', array('as'=>'jobseekers.applying-job','uses'=>'JobSeeker@applyingJob'));
+		Route::post('/applying-job/{job_id}', array('as'=>'jobseekers.applying-job','uses'=>'JobSeeker@doApplyingJob'));
 	});
 });
 

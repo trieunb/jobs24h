@@ -7,4 +7,7 @@ class MyJob extends \Eloquent {
 	public function application(){
 		return $this->beLongsTo('Application', 'job_id');
 	}
+	public function jobs(){
+		return $this->beLongsTo('Job', 'job_id');
+	}
 }

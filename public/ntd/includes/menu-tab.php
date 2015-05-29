@@ -2,7 +2,7 @@
 	<div class="container">
 	<ul>
 		<li><a href="#">Trang chủ</a></li>
-		<li class="active">
+		<li>
 			<a href="#">Tìm hồ sơ</a>
 			<ul>
 				<div class="container">
@@ -25,7 +25,7 @@
 				</div>
 			</ul>
 		</li>
-		<li>
+		<li class="active">
 			<a href="#">Quản lý tuyển dụng</a>
 			<ul>
 				<div class="container">

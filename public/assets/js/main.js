@@ -152,11 +152,12 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
     $("#locationMainSearch, #categoryMainSearch, #WishPlaceWork, #Fields,#Specialized").select2({
         maximumSelectionLength: 3,
     });
-    $("#ForeignLanguages,#CurrentLevel,#WishLevel,#FieldOfStudy,#Scope,#LatestLevel,#Diploma,#HighestDegree,#District,#Cities,#Nationality,#jobLevelMainSearch, #jobObjMainSearch,#jobExpMainSearch,#DateOfBirth,#MonthOfBirth,#YearOfBirth,#Gender,#Country,#MaritalStatus,#Category,#Province,#Level,#AverageGrade").select2({
+    $("#ForeignLanguages,#CurrentLevel,#WishLevel,#FieldOfStudy,#Scope,#LatestLevel,#Diploma,#HighestDegree,#District,#Cities,#Nationality,#jobLevelMainSearch, #jobObjMainSearch,#jobExpMainSearch,#DateOfBirth,#MonthOfBirth,#YearOfBirth,#Gender,#Country,#MaritalStatus,#Category,#Province,#Level,#AverageGrade,#choose_cv").select2({
         minimumResultsForSearch: Infinity
     });
     $("#From_date,#To_date,#DOB,#Study_to,#Study_from").datetimepicker({
         pickTime: false,
+        locale: 'ru'
     });
 
 
@@ -199,8 +200,12 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
     });
 
    
+    if($('#specific-salary').is(':checked')){
+        $('#specific-salary-input').removeAttr('disabled');
+    };
     $('#specific-salary-0').change(function(){
         $('#specific-salary-input').attr('disabled', true);
+        $('#specific-salary-input').val('');
     });
      $('#specific-salary').change(function(){
         $('#specific-salary-input').removeAttr('disabled');
