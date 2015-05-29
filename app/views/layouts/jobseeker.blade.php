@@ -38,7 +38,11 @@
 						@if(Sentry::check())
 
 								<a href="#" class="text-blue">
-									<img src="assets/images/ruibu.jpg" class="avatar">
+									@if($user->avatar !=null)
+										{{ HTML::image('uploads/jobseekers/avatar/'.$user->avatar.'',null, array('class'=>'avatar')) }}
+									@else
+										{{ HTML::image('assets/images/avatar.jpg',null, array('class'=>'avatar')) }}
+									@endif
 									<strong><em><a href="{{ URL::route('jobseekers.login') }}">Chào, {{$user->first_name}}</a></em></strong>
 								</a>
 								<nav class="ntv-menu navbar-right">

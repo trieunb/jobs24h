@@ -24,7 +24,7 @@ Route::group(array('prefix'=>$locale), function() {
 			Route::post('/my-resume', array('as'=>'jobseekers.my-resume', 'uses'=>'JobSeeker@createResume'));
 			Route::get('/edit-career-objectives', 'JobSeeker@returnLogin');
 			Route::get('/edit-basic-info', array('as'=>'jobseekers.edit-basic-info', 'uses'=>'JobSeeker@editBasicHome') );
-			Route::post('/edit-basic-info/{action}', array('as'=>'jobseekers.edit-basic-info', 'uses'=>'JobSeeker@editBasic'));
+			Route::post('/edit-basic-info/{action}', array('as'=>'edit-basic-info', 'uses'=>'JobSeeker@editBasic'));
 			Route::get('/edit-career-objectives/{id}', array('as'=>'jobseekers.edit-career-objectives', 'uses'=>'JobSeeker@editCareerObjectivesHome') );
 			Route::post('/edit-career-objectives/{id}', array('as'=>'edit-career-objectives', 'uses'=>'JobSeeker@editCareerObjectives'));
 			Route::get('/my-job/{job_id}', array('as'=>'jobseekers.save-job','uses'=>'JobSeeker@saveJob'));
