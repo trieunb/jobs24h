@@ -36,8 +36,6 @@ class CreateJobseekersTable extends Migration {
 			$table->string('facebook_ID');
 			$table->string('gplus_ID');
 			$table->string('linkedin_ID');
-			$table->string('vocational');
-			$table->string('hobbies');
 			$table->timestamps();
 		});
 	}
