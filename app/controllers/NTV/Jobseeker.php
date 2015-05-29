@@ -57,7 +57,7 @@ class JobSeeker extends Controller
 					$user->gender = $params['gender'];
 				    $user->first_name = $params['first_name'];
 				    $user->last_name = $params['last_name'];
-				    $user->vocational = $params['vocational'];
+				    $user->nghenghiep = $params['vocational'];
 				    $user->date_of_birth = date('Y-m-d',strtotime($params['date_of_birth']));
 				    $user->country_id = $params['country_id'];
 				    $user->marital_status = $params['marital_status'];

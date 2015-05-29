@@ -11,7 +11,7 @@
 				</div>
 				<div class="box">
 					@include('includes.notifications')
-					{{ Form::open( array('route'=>array('jobseekers.edit-basic-info', 'basic-info',$user->id), 'class'=>'form-horizontal', 'method'=>'POST', 'files'=>'true') ) }}
+					{{ Form::open( array('route'=>array('edit-basic-info', 'basic-info',$user->id), 'class'=>'form-horizontal', 'method'=>'POST', 'files'=>'true') ) }}
 						<div class="col-sm-3">
 							<div class="avatar">
 								@if($user->avatar !=null)
@@ -45,7 +45,7 @@
 							<div class="form-group">
 								<label for="" class="col-sm-3 control-label">Nghề nghiệp</label>
 								<div class="col-sm-6">
-									{{Form::input('text', 'vocational', $user->vocational,array('class'=>'form-control', 'placeholder'=>'Digital Marketing Manager at Minh Phuc (MP Telecom)'))}}
+									{{Form::input('text', 'vocational', $user->nghenghiep,array('class'=>'form-control', 'placeholder'=>'Digital Marketing Manager at Minh Phuc (MP Telecom)'))}}
 								</div>
 							</div>
 							<div class="form-group">
@@ -85,7 +85,7 @@
 							    </div>
 							</div>
 					{{Form::close() }}
-					{{ Form::open( array('route'=>array('jobseekers.edit-basic-info', 'change-pass'), 'class'=>'form-horizontal', 'method'=>'POST') ) }}
+					{{ Form::open( array('route'=>array('edit-basic-info', 'change-pass'), 'class'=>'form-horizontal', 'method'=>'POST') ) }}
 						<h3 class="text-orange">* Đổi mật khẩu</h3>
 						<div class="form-group">
 							<label for="" class="col-sm-3 control-label">Mật khẩu hiện tại</label>
