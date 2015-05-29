@@ -46,6 +46,11 @@ Route::group(array('prefix'=>$locale), function() {
 				'getChangeEmail'	=>	'employers.account.changeemail',
 				'getLogout'			=>	'employers.account.logout',
 			));
+
+			Route::controller('report', 'ReportController', array(
+				'getCandidate'			=>	'employers.report.candidates',
+				
+			));
 		});
 
 		Route::group(array('before'=>'ntd.guest'), function() {
