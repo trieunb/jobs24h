@@ -57,7 +57,7 @@
 				<div class="rows">
 					<div class="title-page">
 						<h2>Thông tin cá nhân</h2> 
-						<a href="#" class=" pull-right"><i class="fa fa-edit"></i> Chỉnh sửa</a>
+						<!--<a href="#" class=" pull-right"><i class="fa fa-edit"></i> Chỉnh sửa</a>-->
 					</div>
 						{{Form::open(array('class'=>'form-horizontal', 'id'=>'saveBasicInfo'))}}
 							<div class="form-group">
@@ -153,7 +153,7 @@
 				<div class="rows">
 					<div class="title-page">
 						<h2>Thông tin chung</h2> 
-						<a href="#" class=" pull-right"><i class="fa fa-edit"></i> Chỉnh sửa</a>
+						<!--<a href="#" class=" pull-right"><i class="fa fa-edit"></i> Chỉnh sửa</a>-->
 					</div>
 					{{Form::open(array('class'=>'form-horizontal','id'=>'saveGeneralInfo'))}}
 						<div class="form-group">
@@ -316,26 +316,27 @@
 					<div class="rows">
 						<div class="title-page">
 							<h2>Kinh nghiệm làm việc</h2>
-							<a href="#" class=" pull-right"><i class="fa fa-edit"></i> Chỉnh sửa</a>
+							<!--<a href="#" class=" pull-right"><i class="fa fa-edit"></i> Chỉnh sửa</a>-->
 						</div>
 							{{Form::open(array('class'=>'form-horizontal', 'id'=>'saveWorkExp'))}}
 							<div class="form-group">
 								<label for="" class="col-sm-2 control-label">Chức danh<abbr>*</abbr></label>
 								<div class="col-sm-10">
-									{{Form::input('text','position', null, array('class'=>'position form-control'))}}
+
+									{{Form::input('text','position', $my_resume->experience[0]->position, array('class'=>'position form-control'))}}
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="" class="col-sm-2 control-label">Công ty<abbr>*</abbr></label>
 								<div class="col-sm-10">
-									{{Form::input('text', 'company_name', null, array('class'=>'company_name form-control'))}}
+									{{Form::input('text', 'company_name', $my_resume->experience[0]->company_name, array('class'=>'company_name form-control'))}}
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="" class="col-sm-2 control-label">Từ tháng<abbr>*</abbr></label>
 								<div class="col-sm-3">
 									<div class="input-group date" id="From_date">
-					                    {{Form::input('text','from_date', null, array('class'=>'from_date form-control', 'placeholder'=>'Ví dụ: 09/2008','data-date-format'=>'MM-YYYY'))}}
+					                    {{Form::input('text','from_date', $my_resume->experience[0]->from_date, array('class'=>'from_date form-control', 'placeholder'=>'Ví dụ: 09/2008','data-date-format'=>'MM-YYYY'))}}
 					                    <span class="input-group-addon have-img">
 					                    	{{HTML::image('assets/images/calendar.png')}}
 					                    </span>
@@ -344,7 +345,7 @@
 								<label for="" class="col-sm-2 control-label">Đến tháng<abbr>*</abbr></label>
 								<div class="col-sm-3">
 									<div class="input-group date" id="To_date">
-					                    {{Form::input('text','to_date', null, array('class'=>'to_date form-control', 'placeholder'=>'Ví dụ: 04/2012','data-date-format'=>'MM-YYYY'))}}
+					                    {{Form::input('text','to_date', $my_resume->experience[0]->to_date, array('class'=>'to_date form-control', 'placeholder'=>'Ví dụ: 04/2012','data-date-format'=>'MM-YYYY'))}}
 					                    <span class="input-group-addon have-img">
 					                    	{{HTML::image('assets/images/calendar.png')}}
 					                    </span>
@@ -362,27 +363,27 @@
 							<div class="form-group">
 				            	<label class="col-sm-2 control-label">Lĩnh vực<abbr>*</abbr></label>
 				            	<div class="col-sm-4">
-				            		{{ Form::select('field',array(''=>'- Vui lòng chọn -')+FieldsInWorkExp::lists('name', 'id'),null, array('class'=>'field form-control', 'id' => 'Fields') ) }}
+				            		{{ Form::select('field',array(''=>'- Vui lòng chọn -')+FieldsInWorkExp::lists('name', 'id'),$my_resume->experience[0]->field, array('class'=>'field form-control', 'id' => 'Fields') ) }}
 				            	</div>
 				            	<label class="col-sm-2 control-label">Chuyên ngành<abbr>*</abbr></label>
 				            	<div class="col-sm-4">
-				            		{{ Form::select('specialized', array(''=>'- Vui lòng chọn -')+Specialized::lists('name', 'id'),null, array('class'=>'specialized form-control', 'id' => 'Specialized') ) }}
+				            		{{ Form::select('specialized', array(''=>'- Vui lòng chọn -')+Specialized::lists('name', 'id'),$my_resume->experience[0]->specialized, array('class'=>'specialized form-control', 'id' => 'Specialized') ) }}
 				            	</div>
 				            </div>
 				            <div class="form-group">
 				            	<label class="col-sm-2 control-label">Cấp bậc<abbr>*</abbr></label>
 				            	<div class="col-sm-4">
-				            		{{ Form::select('level', array(''=>'- Vui lòng chọn -')+Level::lists('name', 'id'),null, array('class'=>'level form-control', 'id' => 'LatestLevel') ) }}
+				            		{{ Form::select('level', array(''=>'- Vui lòng chọn -')+Level::lists('name', 'id'),$my_resume->experience[0]->level, array('class'=>'level form-control', 'id' => 'LatestLevel') ) }}
 				            	</div>
 				            	<label class="col-sm-2 control-label">Mức lương</label>
 				            	<div class="col-sm-4">
-				            		{{Form::input('text', 'salary', null, array('class'=>'salary form-control'))}}
+				            		{{Form::input('text', 'salary', $my_resume->experience[0]->salary, array('class'=>'salary form-control'))}}
 				            	</div>
 				            </div>
 				            <div class="form-group">
 				            	<label class="col-sm-2 control-label">Mô tả</label>
 				            	<div class="col-sm-10">
-									{{Form::textarea( 'job_detail', null, array('class'=>'job_detail form-control', 'rows'=>'5'))}}
+									{{Form::textarea( 'job_detail', $my_resume->experience[0]->job_detail, array('class'=>'job_detail form-control', 'rows'=>'5'))}}
 									<em class="text-gray-light"><span class="countdown">5000</span> ký tự có thể nhập thêm</em>
 								</div>
 							</div>
@@ -402,27 +403,29 @@
 							<h2>Học vấn và Bằng Cấp</h2>
 						</div>
 						{{Form::open(array('class'=>'form-horizontal','id'=>'saveEducation'))}}
+
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Chuyên ngành<abbr>*</abbr></label>
 				            	<div class="col-sm-9">
-				            		{{Form::input('text', 'specialized', null, array('class'=>'specialized form-control', 'placeholder'=>'Ví dụ: Kinh doanh quốc tế'))}}
+				            		<?php ?>
+				            		{{Form::input('text', 'specialized', $my_resume->education[0]->specialized, array('class'=>'specialized form-control', 'placeholder'=>'Ví dụ: Kinh doanh quốc tế'))}}
 				            	</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Trường<abbr>*</abbr></label>
 				            	<div class="col-sm-4">
-				            		{{Form::input('text', 'school', null, array('class'=>'school form-control', 'placeholder'=>'Ví dụ: Đại học Kinh Tế Tp.Hồ Chí Minh'))}}
+				            		{{Form::input('text', 'school', $my_resume->education[0]->school, array('class'=>'school form-control', 'placeholder'=>'Ví dụ: Đại học Kinh Tế Tp.Hồ Chí Minh'))}}
 				            	</div>
 				            	<label class="col-sm-2 control-label">Bằng cấp<abbr>*</abbr></label>
 				            	<div class="col-sm-3">
-				            		{{ Form::select('level', Education::lists('name', 'id'),null, array('class'=>'level form-control', 'id' => 'Diploma') ) }}
+				            		{{ Form::select('level', Education::lists('name', 'id'),$my_resume->education[0]->level, array('class'=>'level form-control', 'id' => 'Diploma') ) }}
 				            	</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Từ tháng</label>
 				            	<div class="col-sm-4">
 				            		<div class="input-group date" id="Study_from">
-					                    {{Form::input('text','study_from', null, array('class'=>'study_from form-control', 'placeholder'=>'Ví dụ: 09/2008','data-date-format'=>'MM-YYYY'))}}
+					                    {{Form::input('text','study_from', $my_resume->education[0]->study_from, array('class'=>'study_from form-control', 'placeholder'=>'Ví dụ: 09/2008','data-date-format'=>'MM-YYYY'))}}
 					                    <span class="input-group-addon have-img">
 					                    	{{HTML::image('assets/images/calendar.png')}}
 					                    </span>
@@ -431,7 +434,7 @@
 				            	<label class="col-sm-2 control-label">Đến tháng</label>
 				            	<div class="col-sm-3">
 				            		<div class="input-group date" id="Study_to">
-					                    {{Form::input('text','study_to', null, array('class'=>'study_to form-control', 'placeholder'=>'Ví dụ: 04/2012','data-date-format'=>'MM-YYYY'))}}
+					                    {{Form::input('text','study_to', $my_resume->education[0]->study_to, array('class'=>'study_to form-control', 'placeholder'=>'Ví dụ: 04/2012','data-date-format'=>'MM-YYYY'))}}
 					                    <span class="input-group-addon have-img">
 					                    	{{HTML::image('assets/images/calendar.png')}}
 					                    </span>
@@ -441,17 +444,17 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Lĩnh vực nghiên cứu<abbr>*</abbr></label>
 				            	<div class="col-sm-4">
-				            		{{ Form::select('field_of_study', array(''=>'- Vui lòng chọn -')+FieldsInWorkExp::lists('name', 'id'),null, array('class'=>'field_of_study form-control', 'id' => 'FieldOfStudy') ) }}
+				            		{{ Form::select('field_of_study', array(''=>'- Vui lòng chọn -')+FieldsInWorkExp::lists('name', 'id'),$my_resume->education[0]->field_of_study, array('class'=>'field_of_study form-control', 'id' => 'FieldOfStudy') ) }}
 				            	</div>
 				            	<label class="col-sm-2 control-label">Điểm<abbr>*</abbr></label>
 				            	<div class="col-sm-3">
-				            		{{ Form::select('average_grade_id', array(''=>'- Vui lòng chọn -')+AverageGrade::lists('name', 'id'),null, array('class'=>'average_grade_id form-control', 'id' => 'AverageGrade') ) }}
+				            		{{ Form::select('average_grade_id', array(''=>'- Vui lòng chọn -')+AverageGrade::lists('name', 'id'),$my_resume->education[0]->average_grade_id, array('class'=>'average_grade_id form-control', 'id' => 'AverageGrade') ) }}
 				            	</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Thành tựu</label>
 								<div class="col-sm-9">
-									{{Form::textarea( 'achievement', null, array('class'=>'achievement form-control', 'rows'=>'5'))}}
+									{{Form::textarea( 'achievement', $my_resume->education[0]->achievement, array('class'=>'achievement form-control', 'rows'=>'5'))}}
 									<em class="text-gray-light"><span class="countdown">5000</span> ký tự có thể nhập thêm</em>
 								</div>
 							</div>

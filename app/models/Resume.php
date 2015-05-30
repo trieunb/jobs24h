@@ -23,6 +23,10 @@ class Resume extends \Eloquent {
 	{
 		return $this->hasMany('Experience', 'rs_id');
 	}
+	public function education()
+	{
+		return $this->hasMany('MTEducation', 'rs_id');
+	}
 	public function cvcategory()
 	{
 		return $this->hasMany('CVCategory', 'rs_id');

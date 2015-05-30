@@ -128,10 +128,7 @@ class JobSeeker extends Controller
 	// Edit CV
 	public function editCvHome($id_cv){
 		$my_resume = Resume::where('id', $id_cv)->first();
-		$mt_work_exp = Experience::where('rs_id', $id_cv)->get();
-		if(count($my_resume) == 0) $my_resume = null;
-		if(count($mt_work_exp) == 0) $mt_work_exp = null;
-		return View::make('jobseekers.edit-cv')->with('user', $GLOBALS['user'])->with('id_cv', $id_cv)->with('my_resume', $my_resume)->with('mt_work_exp',$mt_work_exp);
+		return View::make('jobseekers.edit-cv')->with('user', $GLOBALS['user'])->with('id_cv', $id_cv)->with('my_resume', $my_resume);
 	}
 	public function saveInfo($action = false, $id_cv){
 		if($action == 'basic'){
