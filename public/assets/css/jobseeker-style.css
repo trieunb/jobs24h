@@ -390,11 +390,11 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
 
 /*   HEADER  */
 #header {padding-top: 15px; width: 100%; z-index: 9999; background: #ffffff; position: fixed;}
-.site-title {display: inline-block; }
+.site-title,.header-right,.header-right .ntv-menu {display: inline-block; float: left;}
 .header-right .list-link span{display: inline-block; margin-right: 10px;}
 .header-right .list-link span.employer-site {margin-right: 0;}
 .header-right .list-link span.employer-site a{text-transform: uppercase; color: #FF0000; font-weight: 600;}
-.header-right .menu {margin: 10px 0 0;}
+.header-right .menu {margin: 10px 0 0; width: 100%;}
 .header-right .menu li {display: inline-block;}
 .header-right .menu li a {padding: 10px 0px 0 15px; color: #333; margin: 0}
 .header-right .menu li a:hover,.header-right .nav li:hover {background: transparent !important;}

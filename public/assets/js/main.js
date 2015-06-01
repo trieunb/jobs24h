@@ -254,6 +254,30 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
     });
 
 
+    $('.fr-lang').each(function () {
+        if($(this).find('select[class^="foreign_languages"]').val() != 0){
+            $(this).removeClass('hidden-xs');
+            $(this).addClass('block');
+            if ( $('.fr-lang.block').length == 3) {
+            $('.add-language-button-wrapper').slideUp();
+            } else {
+                $('.add-language-button-wrapper').slideDown();
+            }
+        }else{
+            $(this).find('select[class^="level_languages"]').prop("disabled", true);
+        }
+        $(this).find('select[class^="foreign_languages"]').change(function(event) {
+            event.preventDefault();
+            if($(this).val() == 0){
+                $(this).closest('.fr-lang').find('select[class^="level_languages"]').prop("disabled", true);
+                $(this).closest('.fr-lang').find('select[class^="level_languages"] option[value=0]').attr('selected','selected');
+                $(this).closest('.fr-lang').find('#select2-Level-container').text('- Vui lòng chọn -')
+            }
+            else{
+                $(this).closest('.fr-lang').find('select[class^="level_languages"]').prop("disabled", false);   
+            }
+        });
+    });
 
     // Toggle language button functions
     function toggleLanguageButton() {
@@ -308,6 +332,16 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
             $("<div class='form-group'><div class='col-sm-8'><input class='skill form-control' name='skill-"+i+"' type='text'></div><div class='col-sm-4'><select class='level_skill form-control' name='level_skill"+i+"'><option value='' selected='selected'>- Vui lòng chọn -</option><option value='0'>Sơ cấp</option><option value='1'>Trung cấp</option><option value='2'>Cao cấp</option></select></div></div>").insertBefore('#saveSkills .form-submit');
     });
 
+    if($('.specific_salary').val() != 0) {
+        $('.specific_salary').prop('disabled', false);
+        $('#specific-salary-0').prop('checked', false);
+        $('#specific-salary').prop('checked', true);
+        
+    };
+    if($('.info_years_of_exp').val() != 0){
+        $('.info_years_of_exp').prop('disabled', false);
+        $('.default_years_of_exp').prop('checked', false);
+    };
     $('.default_years_of_exp').change(function(event) {
         event.preventDefault();
         if (this.checked) {
@@ -318,7 +352,6 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
         }
 
     });
-    
 
 })(jQuery);
 

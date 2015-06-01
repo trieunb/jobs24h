@@ -204,6 +204,10 @@ class JobSeeker extends Controller
 				$respond['message'] = $validator->getMessageBag()->toJson();
 				return Response::json($respond);
 			} else {
+				if(!isset($params['foreign_languages_2'])){$params['foreign_languages_2']=null;}
+				if(!isset($params['foreign_languages_3'])){$params['foreign_languages_3']=null;}
+				if(!isset($params['level_languages_2'])){$params['level_languages_2']=null;}
+				if(!isset($params['level_languages_3'])){$params['level_languages_3']=null;}
 				// Languages
 				$chk = CVLanguage::where('rs_id',$id_cv)->get();
 				if(count($chk) == 0){
@@ -459,6 +463,11 @@ class JobSeeker extends Controller
 	    	}elseif(isset($data['is_delete'])){
 	    		$del = Resume::find($data['is_delete']);
 				$del->delete();
+				$education = MTEducation::where('rs_id',$data['is_delete'])->delete();
+				$exp = Experience::where('rs_id',$data['is_delete'])->delete();
+				$locations = WorkLocation::where('rs_id',$data['is_delete'])->delete();
+				$lang = CVLanguage::where('rs_id',$data['is_delete'])->delete();
+				$cate = CVCategory::where('rs_id',$data['is_delete'])->delete();
 	    	}
 
 	    }
@@ -469,6 +478,13 @@ class JobSeeker extends Controller
 	public function createResume(){
 		$rs = Resume::create(array('ntv_id'=>$GLOBALS['user']->id ));
 		$id_cv = $rs->id;
+		$education = MTEducation::create(array('rs_id' => $id_cv,));
+		$work_exp = Experience::create(array('rs_id'=>$id_cv));
+		$lang = CVLanguage::insert(array(
+			array('rs_id' => $id_cv,'count_lang' => 1),
+			array('rs_id' => $id_cv,'count_lang' => 2),
+			array('rs_id' => $id_cv,'count_lang' => 3),
+		));
 		if($rs)
 		{
 			return Redirect::route('jobseekers.edit-cv', array($id_cv));
@@ -587,4 +603,26 @@ class JobSeeker extends Controller
 			}
 	}
 
+	// My Resume by upload file
+	public function myResumeByUpload(){
+		$my_resume = Resume::where('ntv_id', $GLOBALS['user']->id)->where('file_name','!=','')->first();
+		return View::make('jobseekers.my-resume-by-upload')->with('my_resume', $my_resume)->with('user',$GLOBALS['user']);
+	}
+
+	public function downloadCV($id_cv){
+		/*$entry = Resume::find($id_cv);
+		$file = Storage::disk('local')->get($entry->file_name);
+			return (new Response($file, 200))
+	              ->header('Content-Type', 'jpg');
+	    */
+	    
+		    $file= Config::get('app.upload_path') . 'jobseekers/avatar/URsnsLqxrte.png';
+		  
+	      	 $headers = array(
+              'Content-Type: image/png',
+            );
+	      	return Response::download($file, 'abc.png', $headers);
+
+        //}
+	}
 }

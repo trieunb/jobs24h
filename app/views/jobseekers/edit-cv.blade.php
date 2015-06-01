@@ -2,18 +2,7 @@
 @section('content')
 
 	<div class="container">
-		<div class="col-sm-8">
-			@include('includes.jobseekers.breadcrumb')
-		</div>
-		<div class="user-menu col-sm-4 pull-right">
-			<a href="#" class="text-blue">
-				{{HTML::image('assets/images/ruibu.jpg', null, array('class'=>'avatar'))}}
-				<strong><em>Hi, Anh Điệp</em></strong>
-			</a>
-			<nav class="ntv-menu navbar-right">
-				@include('includes.jobseekers.menu-ntv')
-			</nav>
-		</div>
+		@include('includes.jobseekers.breadcrumb')
 	</div>
 	<section class="main-content container single-post">
 		<section id="content" class="col-sm-9">
@@ -156,16 +145,34 @@
 						<!--<a href="#" class=" pull-right"><i class="fa fa-edit"></i> Chỉnh sửa</a>-->
 					</div>
 					{{Form::open(array('class'=>'form-horizontal','id'=>'saveGeneralInfo'))}}
+						<?php 
+							$location_arr = array();
+							$categories = array();
+				        	if(count($my_resume->location) > 0){
+				        		foreach ($my_resume->location as $value) {
+				        			$location_arr[] = $value->province_id;
+				        		}
+				        	}else{
+				            	$location_arr[] = null;
+				            }
+				            if(count($my_resume->cvcategory) > 0){
+				        		foreach ($my_resume->cvcategory as $value) {
+				        			$categories[] = $value->cat_id;
+				        		}
+				        	}else{
+				            	$categories[] = null;
+				            }
+				        ?>
 						<div class="form-group">
 			                <label class="col-sm-3 control-label">Số năm kinh nghiệm<abbr>*</abbr></label>
 			                <div class="col-sm-3">
-			                	<?php if ($my_resume->namkinhnghiem == 0){$namkinhnghiem = '';}else{$namkinhnghiem=null;}?>
-			                	{{Form::input('text', 'info_years_of_exp', $namkinhnghiem, array('class'=>'info_years_of_exp form-control', 'maxlength'=>'2', 'placeholder'=>'Ví dụ 2', 'disabled' =>'disabled'))}} 
+			                	<?php if ($my_resume->namkinhnghiem == 0){$namkinhnghiem = null;}else{$namkinhnghiem= $my_resume->namkinhnghiem;}?>
+			                	{{Form::input('text', 'info_years_of_exp', $namkinhnghiem, array('class'=>'info_years_of_exp form-control', 'maxlength'=>'2', 'placeholder'=>'Ví dụ 2', 'disabled'))}} 
 			                </div>
 			                <div class="col-sm-6">
 			                    <div class="checkbox">
 			                    	<label>
-			                    		{{Form::checkbox('info_years_of_exp', 0, $my_resume->namkinhnghiem, array('class'=>'default_years_of_exp','checked'=>'checked'))}}
+			                    		{{Form::checkbox('info_years_of_exp', 0, $my_resume->namkinhnghiem, array('class'=>'default_years_of_exp'))}}
 			                    		  Tôi mới tốt nghiệp/chưa có kinh nghiệm làm việc
 			                    	</label>
 			                    </div>
@@ -181,21 +188,21 @@
 			            	<div class="row fr-lang lang block">
 				            	<label class="col-sm-3 control-label">Ngoại ngữ<abbr>*</abbr></label>
 				            	<div class="col-sm-3 ">
-				            		{{ Form::select('foreign_languages_1', array(""=>"- Vui lòng chọn -")+Language::lists('lang_name', 'id'),null, array('class'=>'foreign_languages_1 form-control', 'id' => 'ForeignLanguages') ) }}
+				            		{{ Form::select('foreign_languages_1', array("0"=>"- Vui lòng chọn -")+Language::lists('lang_name', 'id'),$my_resume->cvlanguage[0]->lang_id, array('class'=>'foreign_languages_1 form-control', 'id' => 'ForeignLanguages') ) }}
 				            	</div>
 				            	<label class="col-sm-3 control-label">Trình độ</label>
 				            	<div class="col-sm-3 row">
-				            		{{ Form::select('level_languages_1', array(""=>"- Vui lòng chọn -")+LevelLang::lists('name', 'id'),null, array('class'=>'level_languages_1 form-control', 'id' => 'Level') ) }}
+				            		{{ Form::select('level_languages_1', array("0"=>"- Vui lòng chọn -")+LevelLang::lists('name', 'id'),$my_resume->cvlanguage[0]->level, array('class'=>'level_languages_1 form-control', 'id' => 'Level') ) }}
 				            	</div>
 			            	</div>
 			            	<div class="row fr-lang lang hidden-xs">
 				            	<label class="col-sm-3 control-label"></label>
 				            	<div class="col-sm-3 ">
-				            		{{ Form::select('foreign_languages_2', array(""=>"- Vui lòng chọn -")+Language::lists('lang_name', 'id'),null, array('class'=>'foreign_languages_2 form-control', 'id' => 'ForeignLanguages') ) }}
+				            		{{ Form::select('foreign_languages_2', array("0"=>"- Vui lòng chọn -")+Language::lists('lang_name', 'id'),$my_resume->cvlanguage[1]->lang_id, array('class'=>'foreign_languages_2 form-control', 'id' => 'ForeignLanguages') ) }}
 				            	</div>
 				            	<label class="col-sm-3 control-label">Trình độ</label>
 				            	<div class="col-sm-3 row">
-				            		{{ Form::select('level_languages_2', array(""=>"- Vui lòng chọn -")+LevelLang::lists('name', 'id'),null, array('class'=>'level_languages_2 form-control', 'id' => 'Level') ) }}
+				            		{{ Form::select('level_languages_2', array("0"=>"- Vui lòng chọn -")+LevelLang::lists('name', 'id'),$my_resume->cvlanguage[1]->level, array('class'=>'level_languages_2 form-control', 'id' => 'Level') ) }}
 				            	</div>
 				            	<div class="col-sm-1">
 		                            <div class="fa fa-remove text-red remove-fr-lang"></div>
@@ -204,11 +211,11 @@
 			            	<div class="row fr-lang lang hidden-xs">
 				            	<label class="col-sm-3 control-label"></label>
 				            	<div class="col-sm-3 ">
-				            		{{ Form::select('foreign_languages_3', array(""=>"- Vui lòng chọn -")+Language::lists('lang_name', 'id'),null, array('class'=>'foreign_languages_3 form-control', 'id' => 'ForeignLanguages') ) }}
+				            		{{ Form::select('foreign_languages_3', array("0"=>"- Vui lòng chọn -")+Language::lists('lang_name', 'id'),$my_resume->cvlanguage[2]->lang_id, array('class'=>'foreign_languages_3 form-control', 'id' => 'ForeignLanguages') ) }}
 				            	</div>
 				            	<label class="col-sm-3 control-label">Trình độ</label>
 				            	<div class="col-sm-3 row">
-				            		{{ Form::select('level_languages_3', array(""=>"- Vui lòng chọn -")+LevelLang::lists('name', 'id'),null, array('class'=>'level_languages_3 form-control', 'id' => 'Level') ) }}
+				            		{{ Form::select('level_languages_3', array("0"=>"- Vui lòng chọn -")+LevelLang::lists('name', 'id'),$my_resume->cvlanguage[2]->level, array('class'=>'level_languages_3 form-control', 'id' => 'Level') ) }}
 				            	</div>
 				            	<div class="col-sm-1">
 		                            <div class="fa fa-remove text-red remove-fr-lang"></div>
@@ -254,12 +261,12 @@
 				            <label class="col-sm-3 control-label">Nơi làm việc<abbr>*</abbr></label>
 				            	<div class="col-sm-3">
 				 
-			            		{{Form::select('info_wish_place_work', Province::lists('province_name', 'id'), null, array('class'=>'info_wish_place_work form-control chosen-select', 'id' => 'WishPlaceWork', 'multiple'=>'true','data-placeholder'=>'VD: Hồ Chí Minh') )}}
+			            		{{Form::select('info_wish_place_work', Province::lists('province_name', 'id'), $location_arr, array('class'=>'info_wish_place_work form-control chosen-select', 'id' => 'WishPlaceWork', 'multiple'=>'true','data-placeholder'=>'VD: Hồ Chí Minh') )}}
 				            		<small class="legend">(Tối đa 3 địa điểm mong muốn)</small>
 			            		</div>
 			            	<label class="col-sm-3 control-label">Ngành nghề<abbr>*</abbr></label>
 			            	<div class="col-sm-3">
-			            		{{Form::select('info_category', Category::lists('cat_name', 'id'), null, array('class'=>'info_category form-control chosen-select', 'id' => 'categoryMainSearch', 'multiple'=>'true','data-placeholder'=>'VD: Kế toán') )}}
+			            		{{Form::select('info_category', Category::lists('cat_name', 'id'), $categories, array('class'=>'info_category form-control chosen-select', 'id' => 'categoryMainSearch', 'multiple'=>'true','data-placeholder'=>'VD: Kế toán') )}}
 			            	</div>
 			            </div>
 			            <div class="form-group">
@@ -319,24 +326,25 @@
 							<!--<a href="#" class=" pull-right"><i class="fa fa-edit"></i> Chỉnh sửa</a>-->
 						</div>
 							{{Form::open(array('class'=>'form-horizontal', 'id'=>'saveWorkExp'))}}
+							@foreach($my_resume->experience as $exp)
 							<div class="form-group">
 								<label for="" class="col-sm-2 control-label">Chức danh<abbr>*</abbr></label>
 								<div class="col-sm-10">
 
-									{{Form::input('text','position', $my_resume->experience[0]->position, array('class'=>'position form-control'))}}
+									{{Form::input('text','position', $exp->position, array('class'=>'position form-control'))}}
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="" class="col-sm-2 control-label">Công ty<abbr>*</abbr></label>
 								<div class="col-sm-10">
-									{{Form::input('text', 'company_name', $my_resume->experience[0]->company_name, array('class'=>'company_name form-control'))}}
+									{{Form::input('text', 'company_name', $exp->company_name, array('class'=>'company_name form-control'))}}
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="" class="col-sm-2 control-label">Từ tháng<abbr>*</abbr></label>
 								<div class="col-sm-3">
 									<div class="input-group date" id="From_date">
-					                    {{Form::input('text','from_date', $my_resume->experience[0]->from_date, array('class'=>'from_date form-control', 'placeholder'=>'Ví dụ: 09/2008','data-date-format'=>'MM-YYYY'))}}
+					                    {{Form::input('text','from_date', $exp->from_date, array('class'=>'from_date form-control', 'placeholder'=>'Ví dụ: 09/2008','data-date-format'=>'MM-YYYY'))}}
 					                    <span class="input-group-addon have-img">
 					                    	{{HTML::image('assets/images/calendar.png')}}
 					                    </span>
@@ -345,7 +353,7 @@
 								<label for="" class="col-sm-2 control-label">Đến tháng<abbr>*</abbr></label>
 								<div class="col-sm-3">
 									<div class="input-group date" id="To_date">
-					                    {{Form::input('text','to_date', $my_resume->experience[0]->to_date, array('class'=>'to_date form-control', 'placeholder'=>'Ví dụ: 04/2012','data-date-format'=>'MM-YYYY'))}}
+					                    {{Form::input('text','to_date', $exp->to_date, array('class'=>'to_date form-control', 'placeholder'=>'Ví dụ: 04/2012','data-date-format'=>'MM-YYYY'))}}
 					                    <span class="input-group-addon have-img">
 					                    	{{HTML::image('assets/images/calendar.png')}}
 					                    </span>
@@ -363,27 +371,27 @@
 							<div class="form-group">
 				            	<label class="col-sm-2 control-label">Lĩnh vực<abbr>*</abbr></label>
 				            	<div class="col-sm-4">
-				            		{{ Form::select('field',array(''=>'- Vui lòng chọn -')+FieldsInWorkExp::lists('name', 'id'),$my_resume->experience[0]->field, array('class'=>'field form-control', 'id' => 'Fields') ) }}
+				            		{{ Form::select('field',array(''=>'- Vui lòng chọn -')+FieldsInWorkExp::lists('name', 'id'),$exp->field, array('class'=>'field form-control', 'id' => 'Fields') ) }}
 				            	</div>
 				            	<label class="col-sm-2 control-label">Chuyên ngành<abbr>*</abbr></label>
 				            	<div class="col-sm-4">
-				            		{{ Form::select('specialized', array(''=>'- Vui lòng chọn -')+Specialized::lists('name', 'id'),$my_resume->experience[0]->specialized, array('class'=>'specialized form-control', 'id' => 'Specialized') ) }}
+				            		{{ Form::select('specialized', array(''=>'- Vui lòng chọn -')+Specialized::lists('name', 'id'),$exp->specialized, array('class'=>'specialized form-control', 'id' => 'Specialized') ) }}
 				            	</div>
 				            </div>
 				            <div class="form-group">
 				            	<label class="col-sm-2 control-label">Cấp bậc<abbr>*</abbr></label>
 				            	<div class="col-sm-4">
-				            		{{ Form::select('level', array(''=>'- Vui lòng chọn -')+Level::lists('name', 'id'),$my_resume->experience[0]->level, array('class'=>'level form-control', 'id' => 'LatestLevel') ) }}
+				            		{{ Form::select('level', array(''=>'- Vui lòng chọn -')+Level::lists('name', 'id'),$exp->level, array('class'=>'level form-control', 'id' => 'LatestLevel') ) }}
 				            	</div>
 				            	<label class="col-sm-2 control-label">Mức lương</label>
 				            	<div class="col-sm-4">
-				            		{{Form::input('text', 'salary', $my_resume->experience[0]->salary, array('class'=>'salary form-control'))}}
+				            		{{Form::input('text', 'salary', $exp->salary, array('class'=>'salary form-control'))}}
 				            	</div>
 				            </div>
 				            <div class="form-group">
 				            	<label class="col-sm-2 control-label">Mô tả</label>
 				            	<div class="col-sm-10">
-									{{Form::textarea( 'job_detail', $my_resume->experience[0]->job_detail, array('class'=>'job_detail form-control', 'rows'=>'5'))}}
+									{{Form::textarea( 'job_detail', $exp->job_detail, array('class'=>'job_detail form-control', 'rows'=>'5'))}}
 									<em class="text-gray-light"><span class="countdown">5000</span> ký tự có thể nhập thêm</em>
 								</div>
 							</div>
@@ -394,6 +402,7 @@
 									<span>(<span class="text-red">*</span>) Thông tin bắt buộc</span>
 								</div>
 							</div>
+							@endforeach
 						{{Form::close()}}
 					</div><!-- rows -->
 				</div><!-- boxed -->
@@ -403,29 +412,29 @@
 							<h2>Học vấn và Bằng Cấp</h2>
 						</div>
 						{{Form::open(array('class'=>'form-horizontal','id'=>'saveEducation'))}}
-
+						@foreach($my_resume->education as $education)
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Chuyên ngành<abbr>*</abbr></label>
 				            	<div class="col-sm-9">
 				            		<?php ?>
-				            		{{Form::input('text', 'specialized', $my_resume->education[0]->specialized, array('class'=>'specialized form-control', 'placeholder'=>'Ví dụ: Kinh doanh quốc tế'))}}
+				            		{{Form::input('text', 'specialized', $education->specialized, array('class'=>'specialized form-control', 'placeholder'=>'Ví dụ: Kinh doanh quốc tế'))}}
 				            	</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Trường<abbr>*</abbr></label>
 				            	<div class="col-sm-4">
-				            		{{Form::input('text', 'school', $my_resume->education[0]->school, array('class'=>'school form-control', 'placeholder'=>'Ví dụ: Đại học Kinh Tế Tp.Hồ Chí Minh'))}}
+				            		{{Form::input('text', 'school', $education->school, array('class'=>'school form-control', 'placeholder'=>'Ví dụ: Đại học Kinh Tế Tp.Hồ Chí Minh'))}}
 				            	</div>
 				            	<label class="col-sm-2 control-label">Bằng cấp<abbr>*</abbr></label>
 				            	<div class="col-sm-3">
-				            		{{ Form::select('level', Education::lists('name', 'id'),$my_resume->education[0]->level, array('class'=>'level form-control', 'id' => 'Diploma') ) }}
+				            		{{ Form::select('level', array(''=>'- Vui lòng chọn -')+Education::lists('name', 'id'),$education->level, array('class'=>'level form-control', 'id' => 'Diploma') ) }}
 				            	</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Từ tháng</label>
 				            	<div class="col-sm-4">
 				            		<div class="input-group date" id="Study_from">
-					                    {{Form::input('text','study_from', $my_resume->education[0]->study_from, array('class'=>'study_from form-control', 'placeholder'=>'Ví dụ: 09/2008','data-date-format'=>'MM-YYYY'))}}
+					                    {{Form::input('text','study_from', $education->study_from, array('class'=>'study_from form-control', 'placeholder'=>'Ví dụ: 09/2008','data-date-format'=>'MM-YYYY'))}}
 					                    <span class="input-group-addon have-img">
 					                    	{{HTML::image('assets/images/calendar.png')}}
 					                    </span>
@@ -434,7 +443,7 @@
 				            	<label class="col-sm-2 control-label">Đến tháng</label>
 				            	<div class="col-sm-3">
 				            		<div class="input-group date" id="Study_to">
-					                    {{Form::input('text','study_to', $my_resume->education[0]->study_to, array('class'=>'study_to form-control', 'placeholder'=>'Ví dụ: 04/2012','data-date-format'=>'MM-YYYY'))}}
+					                    {{Form::input('text','study_to', $education->study_to, array('class'=>'study_to form-control', 'placeholder'=>'Ví dụ: 04/2012','data-date-format'=>'MM-YYYY'))}}
 					                    <span class="input-group-addon have-img">
 					                    	{{HTML::image('assets/images/calendar.png')}}
 					                    </span>
@@ -444,17 +453,17 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Lĩnh vực nghiên cứu<abbr>*</abbr></label>
 				            	<div class="col-sm-4">
-				            		{{ Form::select('field_of_study', array(''=>'- Vui lòng chọn -')+FieldsInWorkExp::lists('name', 'id'),$my_resume->education[0]->field_of_study, array('class'=>'field_of_study form-control', 'id' => 'FieldOfStudy') ) }}
+				            		{{ Form::select('field_of_study', array(''=>'- Vui lòng chọn -')+FieldsInWorkExp::lists('name', 'id'),$education->field_of_study, array('class'=>'field_of_study form-control', 'id' => 'FieldOfStudy') ) }}
 				            	</div>
 				            	<label class="col-sm-2 control-label">Điểm<abbr>*</abbr></label>
 				            	<div class="col-sm-3">
-				            		{{ Form::select('average_grade_id', array(''=>'- Vui lòng chọn -')+AverageGrade::lists('name', 'id'),$my_resume->education[0]->average_grade_id, array('class'=>'average_grade_id form-control', 'id' => 'AverageGrade') ) }}
+				            		{{ Form::select('average_grade_id', array(''=>'- Vui lòng chọn -')+AverageGrade::lists('name', 'id'),$education->average_grade_id, array('class'=>'average_grade_id form-control', 'id' => 'AverageGrade') ) }}
 				            	</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Thành tựu</label>
 								<div class="col-sm-9">
-									{{Form::textarea( 'achievement', $my_resume->education[0]->achievement, array('class'=>'achievement form-control', 'rows'=>'5'))}}
+									{{Form::textarea( 'achievement', $education->achievement, array('class'=>'achievement form-control', 'rows'=>'5'))}}
 									<em class="text-gray-light"><span class="countdown">5000</span> ký tự có thể nhập thêm</em>
 								</div>
 							</div>
@@ -465,6 +474,7 @@
 									<span>(<span class="text-red">*</span>) Thông tin bắt buộc</span>
 								</div>
 							</div>
+							@endforeach
 						{{Form::close()}}
 					</div><!-- rows -->
 				</div><!-- boxed -->
@@ -909,12 +919,12 @@
 				info_latest_job: 		$('#saveGeneralInfo .info_latest_job').val(),
 				info_category: 			$('#saveGeneralInfo .info_category').val(),
 				info_wish_place_work: 	$('#saveGeneralInfo .info_wish_place_work').val(),
-				foreign_languages_1: 	$('#saveGeneralInfo .foreign_languages_1').val(),
-				foreign_languages_2: 	$('#saveGeneralInfo .foreign_languages_2').val(),
-				foreign_languages_3: 	$('#saveGeneralInfo .foreign_languages_3').val(),
-				level_languages_1: 		$('#saveGeneralInfo .level_languages_1').val(),
-				level_languages_2: 		$('#saveGeneralInfo .level_languages_2').val(),
-				level_languages_3: 		$('#saveGeneralInfo .level_languages_3').val(),
+				foreign_languages_1: 	$('#saveGeneralInfo .fr-lang.block .foreign_languages_1').val(),
+				foreign_languages_2: 	$('#saveGeneralInfo .fr-lang.block .foreign_languages_2').val(),
+				foreign_languages_3: 	$('#saveGeneralInfo .fr-lang.block .foreign_languages_3').val(),
+				level_languages_1: 		$('#saveGeneralInfo .fr-lang.block .level_languages_1').val(),
+				level_languages_2: 		$('#saveGeneralInfo .fr-lang.block .level_languages_2').val(),
+				level_languages_3: 		$('#saveGeneralInfo .fr-lang.block .level_languages_3').val(),
 
 			},
 			success : function(json) {
