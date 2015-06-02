@@ -123,7 +123,19 @@ class JobSeeker extends Controller
 	}
 	
 
-
+	public function viewResume($id_cv){
+		$my_resume = Resume::with(array('cvlanguage'=>function($q) {
+			$q->with('lang')->with('lvlang');
+		}))->with(array('location'=>function($p) {
+			$p->with('province');
+		}))->with(array('experience'=>function($e) {
+			$e->with('fieldofwork')->with('chuyennganh')->with('capbac');
+		}))->with(array('education'=>function($ed) {
+			$ed->with('edu');
+		}))->where('id', $id_cv)->first();
+		//var_dump($my_resume->education); die();
+		return View::make('jobseekers.resume')->with('user', $GLOBALS['user'])->with('id_cv', $id_cv)->with('my_resume', $my_resume);
+	}
 
 	// Edit CV
 	public function editCvHome($id_cv){
@@ -608,21 +620,62 @@ class JobSeeker extends Controller
 		$my_resume = Resume::where('ntv_id', $GLOBALS['user']->id)->where('file_name','!=','')->first();
 		return View::make('jobseekers.my-resume-by-upload')->with('my_resume', $my_resume)->with('user',$GLOBALS['user']);
 	}
-
+	public function uploadCV($action = false, $id_cv){
+		if($action == 'download'){
+			return $this->downloadCV($id_cv);
+		}
+		if($action == 'update'){
+			return $this->updateUploadCV($id_cv);
+		}
+		if($action == 'delete'){
+			return $this->deleteUploadCV($id_cv);
+		}
+	}
 	public function downloadCV($id_cv){
-		/*$entry = Resume::find($id_cv);
-		$file = Storage::disk('local')->get($entry->file_name);
-			return (new Response($file, 200))
-	              ->header('Content-Type', 'jpg');
-	    */
-	    
-		    $file= Config::get('app.upload_path') . 'jobseekers/avatar/URsnsLqxrte.png';
-		  
-	      	 $headers = array(
-              'Content-Type: image/png',
-            );
-	      	return Response::download($file, 'abc.png', $headers);
-
-        //}
+		$cv = Resume::find($id_cv);
+		$file= Config::get('app.upload_path') . 'jobseekers/cv/'.$cv->file_name.'';
+		$name = explode('.', $cv->file_name);
+		$name = $GLOBALS['user']->first_name.$GLOBALS['user']->last_name.'_'.date('m-d-Y',strtotime($cv->updated_at)).'.'.$name[1];
+		$headers = array(
+           'Content-Type: image/png',
+           'Content-Type: image/jpeg',
+           'Content-Type: image/gif',
+           'Content-Type: application/vnd.ms-excel',
+           'Content-Type: application/msword',
+           'Content-Type: application/pdf',
+           'Content-Type: application/x-rar-compressed',
+           'Content-Type: application/zip',
+           'Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+           'Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        );
+	    return Response::download($file, $name, $headers);
+	}
+	public function updateUploadCV($id_cv){
+		$params = Input::all();
+		if(Request::ajax()){
+			Log::info($params);
+			$extension = $params['cv_upload']->getClientOriginalExtension();
+			$name = Str::random(11) . '.' . $extension;
+			$params['cv_upload']->move(Config::get('app.upload_path') . 'jobseekers/cv/', $name);
+			
+			$cv = Resume::find($id_cv);
+			$cv->file_name = $name;
+			if($cv->save()){
+				return Redirect::back()->with('success','Tải hồ sơ mới thành công');	
+			}else{
+				return Redirect::back()->withErrors('Lỗi');
+			}
+		}
+	}
+	public function deleteUploadCV($id_cv){
+		if(Request::ajax()){
+		    $del = Resume::find($id_cv);
+			$del->delete();
+			$education = MTEducation::where('rs_id',$id_cv)->delete();
+			$exp = Experience::where('rs_id',$id_cv)->delete();
+			$locations = WorkLocation::where('rs_id',$id_cv)->delete();
+			$lang = CVLanguage::where('rs_id',$id_cv)->delete();
+			$cate = CVCategory::where('rs_id',$id_cv)->delete();
+		}
 	}
 }

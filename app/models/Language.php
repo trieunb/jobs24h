@@ -1,6 +1,6 @@
 <?php
 
 class Language extends \Eloquent {
-	protected $fillable = [];
+	protected $fillable = ['lang_name'];
 	protected $table = 'languages';
 }

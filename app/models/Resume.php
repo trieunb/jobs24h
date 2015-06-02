@@ -11,6 +11,15 @@ class Resume extends \Eloquent {
 	{
 		return $this->beLongsTo('NTV', 'ntv_id');
 	}
+	public function level(){
+		return $this->beLongsTo('Level', 'capbachientai');
+	}
+	public function capbac(){
+		return $this->beLongsTo('Level', 'capbacmongmuon');
+	}
+	public function bangcap(){
+		return $this->beLongsTo('Education', 'bangcapcaonhat');
+	}
 	public function location()
 	{
 		return $this->hasMany('WorkLocation', 'rs_id');

@@ -353,6 +353,7 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
 
     });
 
+    
 })(jQuery);
 
 
