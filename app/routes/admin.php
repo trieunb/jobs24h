@@ -9,8 +9,13 @@ Route::group(array('prefix'=>'admin'), function() {
 		Route::resource('users', 'UserController');
 		Route::get('jobseekers/datatables', array('as'=>'jobseekers.datatables', 'uses'=>'JobSeekerController@datatables'));
 		Route::resource('jobseekers', 'JobSeekerController');
+		
 		Route::get('employers/datatables', array('as'=>'employers.datatables', 'uses'=>'EmployerController@datatables'));
 		Route::resource('employers', 'EmployerController');
+
+		Route::resource('jobs', 'AJobController');
+
+		
 		Route::get('resumes/creates/{id}', array('as'=>'resumes.creates', 'uses'=>'ResumeController@creates'));
 		Route::get('resumes/{id}/download', array('as'=>'resumes.download', 'uses'=>'ResumeController@download'));
 		Route::get('resumes/datatables', array('as'=>'resumes.datatables', 'uses'=>'ResumeController@datatables'));

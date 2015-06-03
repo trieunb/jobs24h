@@ -230,6 +230,63 @@
 							</li>
 						</ul>
 					</li>
+					<li class="{{ HTML::active(['admin.employers.*', 'admin.jobs.*']) }}">
+						<a href="#" class="dropdown-toggle">
+							<i class="menu-icon fa fa-pencil-square-o"></i>
+							<span class="menu-text"> Nhà tuyển dụng </span>
+
+							<b class="arrow fa fa-angle-down"></b>
+						</a>
+
+						<b class="arrow"></b>
+
+						<ul class="submenu">
+							<li class="">
+								<a href="{{ URL::route('admin.employers.index') }}">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Danh sách
+								</a>
+								<b class="arrow"></b>
+							</li>
+							<li class="">
+								<a href="{{ URL::route('admin.employers.create') }}">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Thêm mới
+								</a>
+								<b class="arrow"></b>
+							</li>
+
+							<li class="{{ HTML::active(['admin.jobs.*']) }}">
+								<a href="#" class="dropdown-toggle">
+									<i class="menu-icon fa fa-pencil orange"></i>
+										Tin tuyển dụng
+									<b class="arrow fa fa-angle-down"></b>
+								</a>
+
+								<b class="arrow"></b>
+
+								<ul class="submenu">
+									<li class="">
+										<a href="{{ URL::route('admin.jobs.index') }}">
+											<i class="menu-icon fa fa-plus purple"></i>
+											Danh sách
+										</a>
+
+										<b class="arrow"></b>
+									</li>
+
+									<li class="">
+										<a href="{{ URL::route('admin.jobs.create') }}">
+											<i class="menu-icon fa fa-eye pink"></i>
+											Thêm tin tuyển dụng
+										</a>
+
+										<b class="arrow"></b>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</li> <!-- end ntd -->
 
 						
 				</ul><!-- /.nav-list -->

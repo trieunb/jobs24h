@@ -6,7 +6,7 @@ class NTV extends \Eloquent {
 
 	public function resume()
 	{
-		return $this->hasMany('Resume');
+		return $this->hasMany('Resume', 'ntv_id');
 	}
 	public function full_name()
 	{

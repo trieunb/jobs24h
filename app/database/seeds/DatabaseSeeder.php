@@ -11,19 +11,24 @@ class DatabaseSeeder extends Seeder {
 	{
 		Eloquent::unguard();
 
-		$this->call('AdminUserTableSeeder');
-		$this->call('CategoryTableSeeder');
-		$this->call('CountryTableSeeder');
-		$this->call('EducationTableSeeder');
-		$this->call('LanguageTableSeeder');
-		$this->call('LevelTableSeeder');
-		$this->call('ProvinceTableSeeder');
-		$this->call('WorkTypeTableSeeder');
-		$this->call('JobseekerTableSeeder');
-		$this->call('LevelLangTableSeeder');
-		$this->call('FieldsInWorkExpTableSeeder');
-		$this->call('SpecializedTableSeeder');
-		$this->call('AverageGradeTableSeeder');
+		// $this->call('AdminUserTableSeeder');
+		// $this->call('CategoryTableSeeder');
+		// $this->call('CountryTableSeeder');
+		// $this->call('EducationTableSeeder');
+		// $this->call('LanguageTableSeeder');
+		// $this->call('LevelTableSeeder');
+		// $this->call('ProvinceTableSeeder');
+		// $this->call('WorkTypeTableSeeder');
+		// $this->call('JobseekerTableSeeder');
+		// $this->call('LevelLangTableSeeder');
+		// $this->call('FieldsInWorkExpTableSeeder');
+		// $this->call('SpecializedTableSeeder');
+		// $this->call('AverageGradeTableSeeder');
+		// $this->call('PackageTableSeeder');
+		// $this->call('OrderTableSeeder');
+		// $this->call('OrderDetailTableSeeder');
+		 $this->call('RespondTableSeeder');
+
 	}
 
 }

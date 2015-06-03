@@ -11,6 +11,8 @@ class EmployerController extends \BaseController {
 	public function index()
 	{
 		//
+		$employers = User::orderBy('id', 'desc');
+		return View::make('admin.employers.index', compact('employers'));
 	}
 
 	/**

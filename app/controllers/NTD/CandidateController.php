@@ -107,15 +107,7 @@ class CandidateController extends \Controller {
 	{
 
 	}
-	public function getAlert()
-	{
-
-
-	}
-	public function getRespond()
-	{
-
-	}
+	
 	public function getTest()
 	{
 		
