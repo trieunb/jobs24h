@@ -33,8 +33,7 @@ Route::group(array('prefix'=>$locale), function() {
 				'getBlocked'	=>	'employers.candidates.blocked',
 
 				'getReport'		=>	'employers.candidates.report',
-				'getAlert'		=>	'employers.candidates.alert',
-				'getRespond'	=>	'employers.candidates.respond',
+				
 				'getTest'		=>	'employers.candidates.test',
 			));
 
@@ -49,6 +48,17 @@ Route::group(array('prefix'=>$locale), function() {
 
 			Route::controller('report', 'ReportController', array(
 				'getCandidate'			=>	'employers.report.candidates',
+				'getViewCandidate'		=>	'employers.report.viewcandidate',
+				'getAlert'				=>	'employers.report.alert',
+				'getRespond'			=>	'employers.report.respond',
+				'getTest'			=>	'employers.report.test',
+				
+			));
+			Route::controller('orders', 'OrderController', array(
+				'getShow'			=>	'employers.orders.index',
+				'getAdd'			=>	'employers.orders.add',
+				'getDetail'			=>	'employers.orders.detail',
+				'getContact'			=>	'employers.orders.contact',
 				
 			));
 		});

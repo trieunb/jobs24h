@@ -20,17 +20,17 @@
 			
 		</li>
 			
-		<li class="{{ HTML::active(['employers.jobs.*', 'employers.candidates.*']) }}">
+		<li class="{{ HTML::active(['employers.jobs.*', 'employers.candidates.*', 'employers.report.*', 'employers.orders.*']) }}">
 			<a href="#">Quản lý tuyển dụng</a>
 			<ul>
 				<div class="container">
-				<li><a href="#">Đơn hàng</a></li>
+				<li class="{{ HTML::active(['employers.orders.index', 'employers.orders.add', 'employers.orders.contact'], 'selected') }}"><a href="{{ URL::route('employers.orders.index') }}">Đơn hàng</a></li>
 				<li class="{{ HTML::active(['employers.jobs.*'], 'selected') }}"><a href="{{ URL::route('employers.jobs.index') }}">Quản lý việc làm</a></li>
 				<li class="{{ HTML::active(['employers.candidates.*'], 'selected') }}"><a href="{{ URL::route('employers.candidates.job', 'all') }}">Quản lý ứng viên</a></li>
 				<li class="{{ HTML::active(['employers.report.candidates'], 'selected') }}"><a href="{{ URL::route('employers.report.candidates') }}">Báo cáo dịch vụ hồ sơ</a></li>
-				<li class="{{ HTML::active(['employers.candidates.alert'], 'selected') }}"><a href="{{ URL::route('employers.candidates.alert') }}">Thông báo hồ sơ</a></li>
-				<li class="{{ HTML::active(['employers.candidates.respond'], 'selected') }}"><a href="{{ URL::route('employers.candidates.respond') }}">Phản hồi của UV</a></li>
-				<li class="{{ HTML::active(['employers.candidates.test'], 'selected') }}"><a href="{{ URL::route('employers.candidates.test') }}">Bài kiểm tra</a></li>
+				<li class="{{ HTML::active(['employers.report.alert'], 'selected') }}"><a href="{{ URL::route('employers.report.alert') }}">Thông báo hồ sơ</a></li>
+				<li class="{{ HTML::active(['employers.report.respond'], 'selected') }}"><a href="{{ URL::route('employers.report.respond') }}">Phản hồi của UV</a></li>
+				<li class="{{ HTML::active(['employers.report.test'], 'selected') }}"><a href="{{ URL::route('employers.report.test') }}">Bài kiểm tra</a></li>
 				</div>
 			</ul>
 		</li>
