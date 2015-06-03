@@ -21,7 +21,7 @@
 							<h2>{{$user->first_name}} {{$user->last_name}}</h2>
 							<p>Điện thoại: <span class="text-blue">{{$user->phone_number}}</span></p>
 							<p>Email: <span class="text-blue">{{$user->email}}</span></p>
-							<p>Hồ Sơ: <a href="#" class="text-blue" target="_blank">http://www.vnjobs.com/myjobs/tran.diep.4</a></p>
+							<p>Hồ Sơ: <a href="{{URL::route('jobseekers.view-resume', array($my_resume->id))}}" class="text-blue" target="_blank">{{URL::route('jobseekers.view-resume', array($my_resume->id))}}</a></p>
 						</div>
 					</div>
 					<div class="clearfix"></div>

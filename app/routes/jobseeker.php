@@ -35,12 +35,13 @@ Route::group(array('prefix'=>$locale), function() {
 			Route::get('/saved-job', array('as'=>'jobseekers.saved-job','uses'=>'JobSeeker@savedJob'));
 			Route::get('/applied-job', array('as'=>'jobseekers.applied-job','uses'=>'JobSeeker@appliedJob'));
 			Route::get('/respond-from-employment', array('as'=>'jobseekers.respond-from-employment','uses'=>'JobSeeker@repondFromEmployment'));
-			Route::get('/my-resume-by-upload/{action}/{id_cv}', array('as'=>'jobseekers.download-cv','uses'=>'JobSeeker@downloadCV'));
-			
+			Route::get('/my-resume-by-upload/{action}/{id_cv}', array('as'=>'jobseekers.action-cv','uses'=>'JobSeeker@actionCV'));
+			Route::post('/my-resume-by-upload/{id_cv}', array('as'=>'jobseekers.update-upload-cv','uses'=>'JobSeeker@updateUploadCV'));
 		});
 		Route::controller('/view/{slug}/{id}', 'JobController', array(
 			'getIndex'	=>	'jobseekers.job',
 		));
+		Route::get('q', array('as'=>'jobseekers.search-job','uses'=>'JobController@searchJob'));
 		Route::get('/applying-job/{job_id}', array('as'=>'jobseekers.applying-job','uses'=>'JobSeeker@applyingJob'));
 		Route::post('/applying-job/{job_id}', array('as'=>'jobseekers.applying-job','uses'=>'JobSeeker@doApplyingJob'));
 	});

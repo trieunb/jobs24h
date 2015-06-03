@@ -40,7 +40,11 @@
 									@foreach($my_resume as $mr)
 									<tr>
 										<td>
-											<a href="{{URL::route('jobseekers.save-cv', array($mr->id))}}" class="text-blue"><strong><em>{{$mr->created_at}}</em> {{$user->first_name}} {{$user->last_name}}</strong><br></a>
+											@if($mr->file_name == '')
+												<a href="{{URL::route('jobseekers.save-cv', array($mr->id))}}" class="text-blue"><strong><em>{{date('d-m-Y',strtotime($mr->created_at))}}</em>_{{$user->first_name}} {{$user->last_name}}</strong><br></a>
+											@else
+												<a href='{{ URL::route("jobseekers.action-cv", array("download",$mr->id)) }}' class="text-blue"><strong><em>{{date('d-m-Y',strtotime($mr->created_at))}}</em>_{{$user->first_name}} {{$user->last_name}}</strong><br></a>
+											@endif
 											@if($mr->trangthai == 0 )
 												<small class="legend text-orange">Chưa hoàn thiện</small> 
 											@else
@@ -53,8 +57,13 @@
 										<td>{{$mr->updated_at}}</td>
 										<td>0</td>
 										<td>
+											@if($mr->file_name == '')
 											<a href="{{URL::route('jobseekers.view-resume', array($mr->id))}}"><i class="glyphicon glyphicon-eye-open"></i> Xem</a> 
 											<a href="{{URL::route('jobseekers.save-cv', array($mr->id))}}"><i class="glyphicon glyphicon-refresh"></i> Cập nhật</a> 
+											@else
+											<a href='{{ URL::route("jobseekers.action-cv", array("download",$mr->id)) }}'><i class="glyphicon glyphicon-eye-open"></i> Xem</a> 
+											<a href="{{URL::route('jobseekers.get-my-resume-by-upload')}}"><i class="glyphicon glyphicon-refresh"></i> Cập nhật</a> 
+											@endif
 											<a id="del_resume" data-rs="{{$mr->id}}"><i class="glyphicon glyphicon-trash"></i> Xóa</a>
 										</td>
 									</tr>

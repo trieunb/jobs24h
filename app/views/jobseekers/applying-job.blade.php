@@ -76,9 +76,7 @@
 											Chọn tệp tin
 											{{ Form::file('cv_upload',array('class'=>'upload', 'id' =>'uploadBtn')) }}
 										</div>
-										<div class="col-sm-7">
-											{{Form::input('text', 'file_name', null, array('class'=>'form-control', 'id'=>'uploadFile', 'disable', 'placeholder'=>'không có tệp nào được chọn'))}}
-										</div>
+										
 									</label>
 								</div>
 								<div class="clearfix"></div>

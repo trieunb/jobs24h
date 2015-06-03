@@ -11,6 +11,10 @@ class Job extends \Eloquent {
 	{
 		return $this->hasMany('CVCategory');
 	}
+	public function level()
+	{
+		return $this->belongsTo('Level', 'chucvu');
+	}
 	public function ntd()
 	{
 		return $this->belongsTo('NTD', 'ntd_id');

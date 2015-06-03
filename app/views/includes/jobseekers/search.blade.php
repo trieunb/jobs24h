@@ -1,7 +1,8 @@
 <div class="boxed-search">
 	<div class="bg-search row">
 				<div class="search-form container">
-					<form action="" method="POST" role="form">
+					{{Form::open(array('route'=>array('jobseekers.search-job'), 'class'=>'form', 'method'=>'GET' ))}}
+					
 						<div class="col-sm-9">
 							<div class="col-sm-8">
 			                    <label class="hidden-xs text-white">Tìm việc làm...</label>
@@ -9,17 +10,17 @@
 			                </div>
 			                <div class="col-sm-4">
 			                	<label class="hidden-xs text-white">Tại Việt Nam</label>
-			                	{{Form::select('location_main_search', Province::lists('province_name'),null, array('class'=>'form-control chosen-select', 'id'=>'locationMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả địa điểm','multiple'))}}
+			                	{{Form::select('province[]', Province::lists('province_name', 'id'),null, array('class'=>'form-control chosen-select', 'id'=>'locationMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả địa điểm','multiple'))}}
 		                    </div>
 		                    <div class="clearfix"></div>
 		                    <div class="col-sm-4">
-		                   		{{Form::select('category_main_search', Category::lists('cat_name'),null, array('class'=>'form-control chosen-select', 'id'=>'categoryMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả ngành nghề','multiple'))}}
+		                   		{{Form::select('categories[]', Category::lists('cat_name', 'id'),null, array('class'=>'form-control chosen-select', 'id'=>'categoryMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả ngành nghề','multiple'))}}
 		                    </div>
 		                    <div class="col-sm-4">
-		                    	<input class="form-control" type="number" step="50" placeholder="Mức lương tối thiểu hàng tháng (USD)" >
+		                    	{{Form::input('number','salary', null, array('class'=>'form-control search-all','step'=>'50' ,'placeholder'=>'Mức lương tối thiểu hàng tháng (USD)'))}}
 		                    </div>
 		                    <div class="col-sm-4">
-		                    	{{Form::select('job_level_main_search', Level::lists('name'),null, array('class'=>'form-control chosen-select', 'id'=>'jobLevelMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả cấp bậc','multiple'))}}
+		                    	{{Form::select('level', array('all'=>'Tất cả cấp bậc')+Level::lists('name', 'id'),null, array('class'=>'form-control chosen-select', 'id'=>'jobLevelMainSearch','data-placeholder'=>'Tất cả cấp bậc'))}}
 		                    </div>
 						</div>
 						<div class="col-sm-9">
@@ -29,7 +30,7 @@
                        			</div>
                    			</div>
 		                    <div class="col-sm-3 col-sm-push-6 push-top-xs">
-		                        <button class="btn-search btn bg-orange" type="button">
+		                        <button class="btn-search btn bg-orange" type="submit">
 		                            <span><strong class="text-white">Tìm ngay!</strong></span>
 		                        </button>
 		                    </div>
@@ -37,7 +38,7 @@
 		                    	<a href="#"><strong class="text-white">Ngành nghề hấp dẫn <i class="glyphicon glyphicon-arrow-right"></i></strong></a>
 		                	</div>
 		                </div>
-					</form>
+					{{Form::close()}}
 				</div>
 					<div class="shadow"></div>
 				</div>

@@ -19,4 +19,47 @@ class JobController extends Controller
 		->where('id', $job_id)->first();
 		return View::make('jobseekers.job', compact('slug','job'));
 	}
+	public function searchJob(){
+		$keyword = Input::get('keyword');
+		$province = Input::get('province');
+		$categories = Input::get('categories');
+		$salary = Input::get('salary');
+		$level = Input::get('level');
+		$jobs = Job::where('is_display',1)->where('status',1)->with('province')->with('category');
+		if($keyword)
+		{
+			$jobs->where('vitri', 'LIKE', "%".$keyword."%");
+		}
+		if(count($province) > 0)
+		{
+			$jobs->whereHas('province', function($query) use($province) {
+				$query->whereIn('province_id', $province);
+			});
+		}else {
+			$jobs->with(array('province'	=>	function($query) {
+				$query->with('province');
+			}));
+		}
+		if(count($categories) > 0 )
+		{
+			$jobs->whereHas('category', function($query) use($categories)  {
+				$query->whereIn('cat_id', $categories);
+			});
+		}else {
+			$jobs->with(array('category'=>function($query) {
+				$query->with('category');
+			}));
+		}
+		if($salary)
+		{
+			$jobs->where('mucluong_min', 'LIKE', "%".$salary."%")->orWhere('mucluong_max', 'LIKE', "%".$salary."%");
+		}
+		if(is_numeric($level))
+		{
+			$jobs->where('chucvu', $level);
+		}
+		$jobs = $jobs->paginate(10);
+
+		return View::make('jobseekers.result-from-search')->with('jobs',$jobs);
+	}
 }

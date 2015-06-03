@@ -4,7 +4,7 @@ class Resume extends \Eloquent {
 	protected $fillable = ['ntv_id', 'tieude_cv', 'bangcapcaonhat', 'namkinhnghiem','bangcapcaonhat','ctyganday',
 	'cvganday','capbachientai','vitrimongmuon','capbacmongmuon','mucluong','loaitien',
 	'dinhhuongnn','kynang','danhgiabanthan','sothich','hinhthuclamviec','loaihs','trangthai',
-	'is_public','is_visible','is_default'];
+	'is_public','is_visible','is_default','file_name'];
 	protected $table = 'resumes';
 
 	public function ntv()

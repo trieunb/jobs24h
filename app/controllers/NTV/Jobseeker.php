@@ -172,7 +172,7 @@ class JobSeeker extends Controller
 			} else {
 				try
 				{	
-					Log::info($params); 
+					//Log::info($params); 
 					if($params['date_of_birth']=='') $params['date_of_birth'] = null;
 					$user = $GLOBALS['user'];
 					$user->date_of_birth 	= date('Y-m-d',strtotime($params['date_of_birth']));
@@ -474,6 +474,7 @@ class JobSeeker extends Controller
 		    	}
 	    	}elseif(isset($data['is_delete'])){
 	    		$del = Resume::find($data['is_delete']);
+	    		File::delete(Config::get('app.upload_path') . 'jobseekers/cv/'.$del->file_name.'');
 				$del->delete();
 				$education = MTEducation::where('rs_id',$data['is_delete'])->delete();
 				$exp = Experience::where('rs_id',$data['is_delete'])->delete();
@@ -490,7 +491,7 @@ class JobSeeker extends Controller
 	public function createResume(){
 		$rs = Resume::create(array('ntv_id'=>$GLOBALS['user']->id ));
 		$id_cv = $rs->id;
-		$education = MTEducation::create(array('rs_id' => $id_cv,));
+		$education = MTEducation::create(array('rs_id' => $id_cv));
 		$work_exp = Experience::create(array('rs_id'=>$id_cv));
 		$lang = CVLanguage::insert(array(
 			array('rs_id' => $id_cv,'count_lang' => 1),
@@ -620,12 +621,9 @@ class JobSeeker extends Controller
 		$my_resume = Resume::where('ntv_id', $GLOBALS['user']->id)->where('file_name','!=','')->first();
 		return View::make('jobseekers.my-resume-by-upload')->with('my_resume', $my_resume)->with('user',$GLOBALS['user']);
 	}
-	public function uploadCV($action = false, $id_cv){
+	public function actionCV($action = false, $id_cv){
 		if($action == 'download'){
 			return $this->downloadCV($id_cv);
-		}
-		if($action == 'update'){
-			return $this->updateUploadCV($id_cv);
 		}
 		if($action == 'delete'){
 			return $this->deleteUploadCV($id_cv);
@@ -651,31 +649,69 @@ class JobSeeker extends Controller
 	    return Response::download($file, $name, $headers);
 	}
 	public function updateUploadCV($id_cv){
-		$params = Input::all();
-		if(Request::ajax()){
-			Log::info($params);
-			$extension = $params['cv_upload']->getClientOriginalExtension();
-			$name = Str::random(11) . '.' . $extension;
-			$params['cv_upload']->move(Config::get('app.upload_path') . 'jobseekers/cv/', $name);
-			
-			$cv = Resume::find($id_cv);
-			$cv->file_name = $name;
-			if($cv->save()){
-				return Redirect::back()->with('success','Tải hồ sơ mới thành công');	
-			}else{
-				return Redirect::back()->withErrors('Lỗi');
+		$params= Input::all();
+		$rules = array(
+		   // 'file_name' => 'mimes:png,jpeg,gif,application/vnd.ms-excel,application/msword,application/pdf,application/x-rar-compressed,application/zip,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.wordprocessingml.document|max:2000'
+		);	
+		$messages = array(
+			'required'	=>	'Thông này tin bắt buộc',
+			'mimes' 	=>  'Vui lòng tải file đúng định dạng',
+			'max'		=>  'File vượt quá dung lượng cho phép'
+		);
+		$validator = Validator::make($params, $rules, $messages);
+		if($validator->fails()){			
+	       	return Redirect::back()->withInput()->withErrors($validator);
+		}else{
+			if($params['cv_update'] != null){
+				
+				$extension = $params['cv_update']->getClientOriginalExtension();
+				$name = Str::random(11) . '.' . $extension;
+				$params['cv_update']->move(Config::get('app.upload_path') . 'jobseekers/cv/', $name);
+				$cv = Resume::find($id_cv);
+				File::delete(Config::get('app.upload_path') . 'jobseekers/cv/'.$cv->file_name.'');
+				$cv->file_name = $name;
+				if($cv->save()){
+					return Redirect::back()->with('success','Cập nhật hồ sơ mới thành công');	
+				}else{
+					return Redirect::back()->withErrors('Hiện tại bạn không thể cập nhật, vui lòng thử lại sau');
+				}
 			}
 		}
 	}
 	public function deleteUploadCV($id_cv){
 		if(Request::ajax()){
 		    $del = Resume::find($id_cv);
+		    File::delete(Config::get('app.upload_path') . 'jobseekers/cv/'.$del->file_name.'');
 			$del->delete();
-			$education = MTEducation::where('rs_id',$id_cv)->delete();
-			$exp = Experience::where('rs_id',$id_cv)->delete();
-			$locations = WorkLocation::where('rs_id',$id_cv)->delete();
-			$lang = CVLanguage::where('rs_id',$id_cv)->delete();
-			$cate = CVCategory::where('rs_id',$id_cv)->delete();
+		}
+	}
+	public function createResumeByUpload(){
+		$params= Input::all();
+		$rules = array(
+		   // 'file_name' => 'mimes:png,jpeg,gif,application/vnd.ms-excel,application/msword,application/pdf,application/x-rar-compressed,application/zip,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.wordprocessingml.document|max:2000'
+		);	
+		$messages = array(
+			'required'	=>	'Thông này tin bắt buộc',
+			'mimes' 	=>  'Vui lòng tải file đúng định dạng',
+			'max'		=>  'File vượt quá dung lượng cho phép'
+		);
+		$validator = Validator::make($params, $rules, $messages);
+		if($validator->fails()){			
+	       	return Redirect::back()->withInput()->withErrors($validator);
+		}else{
+			if($params['cv_upload'] != null){
+				$extension = $params['cv_upload']->getClientOriginalExtension();
+				$name = Str::random(11) . '.' . $extension;
+				$params['cv_upload']->move(Config::get('app.upload_path') . 'jobseekers/cv/', $name);
+				$create = Resume::create(array('file_name' => $name, 'ntv_id' => $GLOBALS['user']->id));
+				if($create){
+					return Redirect::back()->with('success','Tải hồ sơ thành công');
+				}
+				else{
+					return Redirect::back()->withErrors('Tải hồ sơ không thành công');
+				}
+			}
+			
 		}
 	}
 }
