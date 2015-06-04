@@ -58,8 +58,15 @@ class JobController extends Controller
 		{
 			$jobs->where('chucvu', $level);
 		}
-		$jobs = $jobs->paginate(10);
 
-		return View::make('jobseekers.result-from-search')->with('jobs',$jobs);
+		if(Input::get('perpage') == null){
+			$per_page = 20;	
+		}else{
+			$per_page = Input::get('perpage');	
+		}
+		
+		$jobs = $jobs->paginate($per_page);
+
+		return View::make('jobseekers.result-from-search', compact('jobs', 'per_page', 'keyword', 'province','categories','salary','level'));
 	}
 }

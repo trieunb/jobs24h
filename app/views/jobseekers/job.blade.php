@@ -16,7 +16,7 @@
 						<i class="fa fa-bookmark"></i>
 						<a href="{{URL::route('jobseekers.save-job', array($job->id))}}">Lưu việc làm này</a>
 						<i class="fa fa-envelope"></i>
-						<a class="get-job-by-tags">Gởi email việc làm tương tự</a>
+						<a href="{{URL::route('jobseekers.notification-jobs', array('jobid'=>$job->id))}}">Gởi email việc làm tương tự</a>
 						<i class="fa fa-share"></i>
 						<strong><a class="share-to-friends">Giới thiệu bạn bè</a></strong>
 					</div>

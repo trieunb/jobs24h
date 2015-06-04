@@ -12,7 +12,7 @@ class AddJobv2Table extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('jobv2', function(Blueprint $table)
+		Schema::table('jobs', function(Blueprint $table)
 		{
 			$table->integer('luotxem');
 		});
@@ -26,7 +26,7 @@ class AddJobv2Table extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('jobv2', function(Blueprint $table)
+		Schema::table('jobs', function(Blueprint $table)
 		{
 			$table->dropColumn('luotxem');
 		});

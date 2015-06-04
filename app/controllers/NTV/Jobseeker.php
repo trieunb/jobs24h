@@ -714,4 +714,10 @@ class JobSeeker extends Controller
 			
 		}
 	}
+	public function notificationJobs(){
+		return View::make('jobseekers.notification-jobs');
+		if(isset(Input::get('job_id'))){
+			$job = Job::find(Input::get('job_id'));
+		}
+	}
 }

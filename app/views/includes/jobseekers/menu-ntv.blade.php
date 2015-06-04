@@ -7,7 +7,7 @@
 	      	<h3>Quản lý My Jobs</h3>
 	      	<li><a href="{{URL::route('jobseekers.edit-basic-info')}}">{{ HTML::image('assets/images/icons/user.png') }} Chỉnh sửa thông tin tài khoản</a></li>
 	      	<li><a href="{{URL::route('jobseekers.my-resume')}}">{{ HTML::image('assets/images/icons/profile.png') }} Hồ sơ và thư tự giới thiệu</a></li>
-	      	<li><a href="#">{{ HTML::image('assets/images/icons/computer.png') }} Hồ sơ tải từ máy tính</a></li>
+	      	<li><a href="{{URL::route('jobseekers.get-my-resume-by-upload')}}">{{ HTML::image('assets/images/icons/computer.png') }} Hồ sơ tải từ máy tính</a></li>
 	      	<li><a href="{{URL::route('jobseekers.my-job')}}">{{ HTML::image('assets/images/icons/jobs.png') }} Việc làm phù hợp với bạn<span class="badge">2</span></a></li>
 	      	<li><a href="{{URL::route('jobseekers.saved-job')}}">{{ HTML::image('assets/images/icons/save.png') }} Việc làm đã lưu<span class="badge">2</span></a></li>
 	      	<li><a href="{{URL::route('jobseekers.applied-job')}}">{{ HTML::image('assets/images/icons/job_submitted.png') }} Việc làm đã nộp<span class="badge">2</span></a></li>

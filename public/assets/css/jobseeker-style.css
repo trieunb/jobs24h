@@ -424,7 +424,7 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
 .search-form [class^="col-"] {  padding-left: 3px; padding-right: 3px; padding-top: 0px; padding-bottom: 5px;}
 .search-form .btn-search {width: 100%; border: 1px solid #ffffff !important;}
 .search-form .btn {padding: 6px 15px !important; border-radius: 0px !important;}
-
+.display-job-per-page .select2{display: none;}
 
 /* FEATURED ITEMS */
 .featured-items .header-page {font-size: 20px; text-transform: uppercase; margin:40px 0 10px;}

@@ -223,7 +223,7 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
     });
 
 
-    
+    // Publish a resume in my-resume
     $(document).on('change','#is_publish',function(){
         var data = $(this).val();
         $('#popup_is_publish').modal('show');
@@ -239,7 +239,7 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
             });    
         });
     });
-
+    // Del a resume in my-resume
     $(document).on('click','#del_resume',function(){
         var data = $(this).attr('data-rs');
         $('#delete_modal').modal('show');
@@ -257,7 +257,7 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
         });
     });
 
-
+    // Add new languages
     $('.fr-lang').each(function () {
         if($(this).find('select[class^="foreign_languages"]').val() != 0){
             $(this).removeClass('hidden-xs');
@@ -336,6 +336,8 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
             $("<div class='form-group'><div class='col-sm-8'><input class='skill form-control' name='skill-"+i+"' type='text'></div><div class='col-sm-4'><select class='level_skill form-control' name='level_skill"+i+"'><option value='' selected='selected'>- Vui lòng chọn -</option><option value='0'>Sơ cấp</option><option value='1'>Trung cấp</option><option value='2'>Cao cấp</option></select></div></div>").insertBefore('#saveSkills .form-submit');
     });
 
+
+
     if($('.specific_salary').val() != 0) {
         $('.specific_salary').prop('disabled', false);
         $('#specific-salary-0').prop('checked', false);
@@ -355,9 +357,8 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
             $('.info_years_of_exp').removeAttr('disabled');
         }
 
-    });
+    });    
 
-    
 })(jQuery);
 
 

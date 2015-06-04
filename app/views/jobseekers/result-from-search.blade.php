@@ -1,23 +1,27 @@
 @extends('layouts.jobseeker')
 @section('content')
-
-	<div class="container">
-		@include('includes.jobseekers.breadcrumb')
-	</div>
 	@include('includes.jobseekers.search')
 	<section class="main-content container">
 		<section id="content" class="col-sm-9">
 			<div class="boxed">
 				<div class="filter">
-					<span>Tìm thấy <span class="text-orange">1423</span> việc làm cho bạn</span>
+					<span>Tìm thấy <span class="text-orange">{{count($jobs)}}</span> việc làm cho bạn</span>
 					<span class="display-job-per-page pull-right">
+					{{Form::open(array('route'=>array('jobseekers.search-job'),'method'=>'GET', 'id'=>'getPerPage' ))}}
 						<span>Hiển thị</span>
-						<select name="" id="input" class="form-control" required="required" style="width:125px;">
-							<option value="">20 việc làm</option>
-							<option value="">30 việc làm</option>
-							<option value="">50 việc làm</option>
-						</select>
+
+						{{Form::select('perpage', array('20'=>'20 việc làm','30'=>'30 việc làm','2'=>'50 việc làm'), $per_page, array('class'=>'form-control', 'id'=>'perpage','name'=>'perpage','style'=>'width:125px'))}}
+						{{Form::input('hidden', 'keyword', $keyword)}}
+						
+						{{Form::select('province[]', Province::lists('province_name', 'id'),$province, array('class'=>'form-control chosen-select hidden-xs', 'id'=>'locationMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả địa điểm','multiple'))}}
+						
+						{{Form::select('province[]', Province::lists('province_name', 'id'),$categories, array('class'=>'form-control chosen-select hidden-xs', 'id'=>'locationMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả địa điểm','multiple'))}}
+						
+						{{Form::input('hidden', 'salary', $salary)}}
+						
+						{{Form::input('hidden', 'level', $level)}}
 						<span>mỗi trang</span>
+					{{Form::close()}}
 					</span>
 				</div>
 				<div id="searchresult">
@@ -118,4 +122,13 @@
 
 		</aside>
 	</section>
+@stop
+@section('scripts')
+	<script type="text/javascript">
+		// phân trang cho search
+	    $('#perpage').change(function(event) {
+	        event.preventDefault();
+	        $('#getPerPage').submit();
+	    });
+	</script>
 @stop
