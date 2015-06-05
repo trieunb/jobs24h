@@ -714,10 +714,75 @@ class JobSeeker extends Controller
 			
 		}
 	}
+
+
+	// Thông báo việc làm
 	public function notificationJobs(){
-		return View::make('jobseekers.notification-jobs');
-		if(isset(Input::get('job_id'))){
-			$job = Job::find(Input::get('job_id'));
+		$user = $GLOBALS['user'];
+		$modal = 'hide';
+		$jobs_alert = Subscribe::where('ntv_id', $GLOBALS['user']->id)->get();
+
+		if(Input::get('jobid') != null){
+			$job = Job::find(Input::get('jobid'));
+			$modal = 'show';
+		}else{
+			$job = null;
+		}
+		return View::make('jobseekers.notification-jobs', compact('modal', 'job', 'user','jobs_alert'));
+	}
+	public function creatNotificationJobs(){
+		$params = Input::all();
+		$respond['has'] = false;
+		if(Request::ajax()){
+			$rules = array(
+		       'salary' => 'numeric ',
+		    );
+			$validator = Validator::make($params, $rules);
+			if($validator->fails()){			
+	        	$respond['message'] = 'Vui lòng nhập mức lương là số';
+				return Response::json($respond);
+			}else{
+				$jobs_alert = Subscribe::where('ntv_id', $GLOBALS['user']->id)->count();
+				Log::info($jobs_alert);
+				if($jobs_alert < 5){
+					if($params['keyword'] == '' && $params['categories'] == '' && $params['level'] == 'all' && $params['province'] == '' && $params['salary'] == ''){
+						$respond['message'] = 'Vui lòng điền đầy đủ các điều kiện';
+						return Response::json($respond);
+					}else{
+						$create = Subscribe::create(array(
+							'ntv_id' 	=> $GLOBALS['user']->id,
+							'keyword' 	=> ''.$params['keyword'].'',
+							'times' 	=> $params['time'],
+							'categories'=> ''.json_encode($params['categories']).'',
+							'provinces' => ''.json_encode($params['province']).'',
+							'level'		=> ''.$params['level'].'',
+							'salary'	=> $params['salary'],
+						));
+						if($create){
+							$respond['has'] = true;
+							$respond['message'] = 'Tạo thành công';
+							return Response::json($respond);
+						}
+					}
+				}else{
+					$respond['message'] = 'Bạn đã tạo tối đa 5 thông báo việc làm.';
+					return Response::json($respond);
+				}
+			}
 		}
 	}
+
+	public function getUpdate($id){
+		if(Request::ajax()){
+			$jobs_alert = Subscribe::where('ntv_id', $GLOBALS['user']->id)->get();
+			Log::info($id); 
+		}
+	}
+
+	public function postUpdate(){
+		if(Request::ajax()){
+
+		}
+	}
+
 }

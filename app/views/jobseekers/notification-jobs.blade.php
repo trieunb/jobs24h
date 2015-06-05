@@ -14,7 +14,7 @@
 				</div>
 				<p>Đăng ký Thông Báo Việc Làm để nhận việc làm qua email phù hợp với tiêu chí tìm kiếm của bạn.</p>
 				<p class="clearfix">
-					<button type="button" class="btn bg-orange btn-lg">Tạo mới</button>
+					<button type="button" class="btn bg-orange btn-lg create-job-alert">Tạo mới</button>
 				</p>
 				<form action="" method="POST" role="form" class="form-horizontal">
 					<table class="table table-striped table-hover table-bordered">
@@ -27,16 +27,34 @@
 									</tr>
 								</thead>
 								<tbody>
+									@if(count($jobs_alert) > 0)
+									@foreach($jobs_alert as $ja)
 									<tr>
-										<td><strong class="text-blue"><em>N/A</em></strong></td>
-										<td>19-03-2015</td>
-										<td>Mỗi tuần</td>
+										<td><strong class="text-blue"><em>
+											@if($ja->keyword == null)
+												N/A
+											@else
+												{{$ja->keyword}}
+											@endif
+										</em></strong></td>
+										<td>{{$ja->updated_at}}</td>
 										<td>
-											<a href=""><i class="glyphicon glyphicon-eye-open"></i> Xem</a> 
-											<a href=""><i class="glyphicon glyphicon-refresh"></i> Cập nhật</a> 
-											<a href=""><i class="glyphicon glyphicon-trash"></i> Xóa</a>
+											@if($ja->times == 0)
+												Mỗi ngày
+											@else
+												Mỗi tuần
+											@endif
+										</td>
+										<td>
+											<a href="{{URL::route('jobseekers.get-update-notification-jobs')}}"><i class="glyphicon glyphicon-eye-open"></i> Xem</a> 
+											<a id="update_job_alert" data-id="{{$ja->id}}"><i class="glyphicon glyphicon-refresh"></i> Cập nhật</a> 
+											<a id="del_job_alert" data-id="{{$ja->id}}"><i class="glyphicon glyphicon-trash"></i> Xóa</a>
 										</td>
 									</tr>
+									@endforeach
+									@else
+										<tr><td colspan="4">Bạn chưa có bất kỳ thông báo việc làm nào</td></tr>
+									@endif
 								</tbody>
 							</table>
 				</form>
@@ -125,6 +143,145 @@
 				<a href="#" class="pull-right push-top"><strong>Xem tất cả việc làm tương tự</strong></a>
 			</div>
 		</div>
+		<div class="modal fade" id="modal-id">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					{{Form::open(array('class'=>'form-horizontal', 'id'=>'JobAlertForm'))}}
+					<?php 
+						
+						if($job != null){
+							$location_arr = array();
+							$categories = array();
+				        	if(count($job->province) > 0){
+				        		foreach ($job->province as $value) {
+				        			$location_arr[] = $value->province_id;
+				        		}
+				        	}else{
+				            	$location_arr[] = null;
+				            }
+				            if(count($job->category) > 0){
+				        		foreach ($job->category as $value) {
+				        			$categories[] = $value->cat_id;
+				        		}
+				        	}else{
+				            	$categories[] = null;
+				            }
+				            $vitri = $job->vitri;
+				        }else{
+				        	$vitri = null;
+				        	$location_arr = null;
+							$categories = null;
+				        }
+				    ?>
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h2 class="modal-title text-orange">THÔNG BÁO VIỆC LÀM</h2>
+					</div>
+					<div class="modal-body row">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Gửi các việc làm</label>
+							<div class="col-sm-9">
+								{{Form::input('text','keyword',$vitri, array('class'=>'form-control keyword'))}}
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Trong ngành nghề</label>
+							<div class="col-sm-9">
+								{{Form::select('categories[]', Category::lists('cat_name', 'id'),$categories, array('class'=>'form-control chosen-select categories', 'id'=>'categoryMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả ngành nghề','multiple'))}}
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Vị trí</label>
+							<div class="col-sm-9">
+								{{Form::select('level', array('all'=>'Tất cả cấp bậc')+Level::lists('name', 'id'),null, array('class'=>'form-control chosen-select level', 'id'=>'jobLevelMainSearch','data-placeholder'=>'Tất cả cấp bậc'))}}
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Địa điểm</label>
+							<div class="col-sm-9">
+								{{Form::select('province[]', Province::lists('province_name', 'id'),$location_arr, array('class'=>'form-control chosen-select province', 'id'=>'locationMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả địa điểm','multiple'))}}
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Với mức lương</label>
+							<div class="col-sm-9">
+								{{Form::input('text','salary',null, array('class'=>'form-control min_salary','placeholder'=>'Mức lương tối thiểu hàng tháng (USD)'))}}
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label">Đến địa chỉ email "{{$user->email}}" mỗi</label>
+							<div class="col-sm-2">
+								{{Form::select('time',array('0'=>'Ngày', '1'=>'Tuần'), null, array('class'=>'time form-control'))}}
+							</div>
+						</div>
+						<label class="text-red error"></label>
+					</div>
+					<div class="modal-footer">
+						{{Form::button('Trở về', array('class'=>'btn btn-lg bg-gray-light', 'data-dismiss'=>'modal'))}}
+						{{Form::submit('Tạo mới', array('class'=>'btn btn-lg bg-orange'))}}
+					</div>
+					{{Form::close()}}
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
 	</section>
 @stop
+@section('scripts')
+	<script type="text/javascript">
+		$(function(){
+			var option = '{{$modal}}';
+			$('#modal-id').modal(option);
+		});
+		$('#JobAlertForm').submit(function(e){
+			e.preventDefault();
+			var url = '{{URL::route("jobseekers.post-notification-jobs")}}';
+			var result= '{{URL::route("jobseekers.notification-jobs")}}';
+			$.ajax({
+				url: url,
+				type: 'POST',
+				dataType : 'json',
+				data: {
+					keyword: $('.keyword').val(),
+					categories: $('.categories').val(),
+					level: $('.level').val(),
+					province: $('.province').val(),
+					salary: $('.min_salary').val(),
+					time: $('.time').val(),
+				},
+				success : function(json){
+					if(!json.has)
+	            	{
+	            		
+	            		$('.error').text(json.message);
+					}else{
+						window.location.replace(result);
+					}
+				}
+			})
+		});
+		$('.create-job-alert').click(function(event) {
+			event.preventDefault();
+			$('.keyword').val('');
+			$('.categories').val('');
+			$('.select2-selection__rendered').html('');
+			$('.level').val('');
+			$('.province').val('');
+			$('.min_salary').val('');
+			$('#modal-id').modal('show');
+		});
 
+		$(document).on('click', '#update_job_alert', function(event) {
+			event.preventDefault();
+			alert('ádasd');
+			var url = '{{URL::route("jobseekers.get-update-notification-jobs")}}';
+			$.ajax({
+				url: url,
+				type: 'GET',
+				data: {id: $(this).attr('data-id')},	
+				success : function(data){
+					console.log(data);
+				}
+			})			
+		});
+	</script>
+@stop

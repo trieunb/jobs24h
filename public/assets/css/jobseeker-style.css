@@ -632,3 +632,5 @@ img.avatar {width: 35px; height: 35px; border-radius: 50%; vertical-align: middl
 .loading-icon {display: none; position: fixed; top: 45%; left: 37%; background: url(../images/loading.gif) no-repeat; width: auto; height: 42px; padding-left: 47px; line-height: 42px; }
 .loading-icon span {font-weight: 600;}
 .input-group-addon.have-img {padding: 0; width: 35px; background: transparent; border-color: transparent; cursor: pointer; }
+#JobAlertForm label {font-weight: normal; text-align: left; float: left;}
+#JobAlertForm .select2-container {width: 100% !important; border-radius: 0 !important; min-height: 32px !important;font-size: 12px !important; text-overflow: ellipsis;}

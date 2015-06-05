@@ -38,6 +38,13 @@ Route::group(array('prefix'=>$locale), function() {
 			Route::get('/my-resume-by-upload/{action}/{id_cv}', array('as'=>'jobseekers.action-cv','uses'=>'JobSeeker@actionCV'));
 			Route::post('/my-resume-by-upload/{id_cv}', array('as'=>'jobseekers.update-upload-cv','uses'=>'JobSeeker@updateUploadCV'));
 			Route::get('/notification-jobs', array('as'=>'jobseekers.notification-jobs','uses'=>'JobSeeker@notificationJobs'));
+			Route::post('/notification-jobs/', array('as'=>'jobseekers.post-notification-jobs','uses'=>'JobSeeker@creatNotificationJobs'));
+			Route::post('/notification-jobs/{action}/{id}', array('as'=>'jobseekers.action-notification-jobs','uses'=>'JobSeeker@actionNotificationJobs'));
+			Route::controller('notification-jobs', 'JobSeeker', array(
+				'getUpdate' => 'jobseekers.get-update-notification-jobs',
+				'postUpdate' => 'jobseekers.post-update-notification-jobs',
+			));
+			
 		});
 		Route::controller('/view/{slug}/{id}', 'JobController', array(
 			'getIndex'	=>	'jobseekers.job',
