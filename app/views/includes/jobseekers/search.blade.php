@@ -3,8 +3,9 @@
 				<div class="search-form container">
 					{{Form::open(array('route'=>array('jobseekers.search-job'), 'class'=>'form', 'method'=>'GET' ))}}
 						<?php
-							if(!isset($keyword) && !isset($province)&& !isset($categories)&& !isset($salary)&& !isset($level)){
-								$keyword = $province = $categories = $salary = $level = null;
+							$keyword = $province = $categories = $salary = $level = null;
+							if(isset($keyword) && isset($province)&& isset($categories)&& isset($salary)&& isset($level)){
+								$keyword = $keyword;$province = $province;$categories = $categories;$salary = $salary;$level = $level;
 							}
 						?>
 						<div class="col-sm-9">

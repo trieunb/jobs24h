@@ -9,8 +9,21 @@ class JobSeeker extends Controller
 	
 	public function home()
 	{
-		return View::make('jobseekers.home');
+		$categories_default = Category::all();
+		$categories_alpha = Category::orderBy('cat_name', 'ASC')->get();
+		$categories_hot = Category::with('mtcategory')->orderBy(count('cat_id'),'ASC')->get();
+		$jobs = Job::with(array('ntd'=>function($q) {
+			$q->with('company');
+		}))
+		->with(array('category'=>function($q) {
+			$q->with('category');
+		}))
+		->with(array('province'=>function($q) {
+			$q->with('province');
+		}))->take(30)->get();
+		return View::make('jobseekers.home', compact('jobs', 'categories_default', 'categories_alpha', 'categories_hot'));
 	}
+
 	public function editBasicHome(){
 		return View::make('jobseekers.edit-basic-info')->with('user', $GLOBALS['user']);	
 	}
@@ -521,20 +534,48 @@ class JobSeeker extends Controller
 		}	
 	}
 	public function savedJob(){
-		$my_job_list = MyJob::where('ntv_id',$GLOBALS['user']->id)->paginate(10);
-		return View::make('jobseekers.saved-job',compact('my_job_list'));	
+		$applied_job = Application::where('ntv_id',$GLOBALS['user']->id)->get();
+
+		$my_job_list = MyJob::Where('ntv_id',$GLOBALS['user']->id)->paginate(10);
+		return View::make('jobseekers.saved-job',compact('my_job_list','applied_job'));	
 	}
 
 	public function delMyJob(){
 		$params = Input::all();
-		$job = MyJob::whereIn('id', $params['check'])->delete();
-		if($job){
+		if(isset($params['check'])){
+			$job = MyJob::whereIn('id', $params['check'])->delete();
+			if($job){
+				return Redirect::back();
+			}
+		}
+		else{
 			return Redirect::back();
 		}
 	}
+	public function delAppliedJob(){
+		$params = Input::all();
+		if(isset($params['check'])){
+			$job = Application::whereIn('job_id', $params['check'])->delete();
+			if($job){
+				return Redirect::back();
+			}
+		}
+		else{
+			return Redirect::back();
+		}	
+	}
 
 	public function appliedJob(){
-		$my_job_list = MyJob::where('ntv_id',$GLOBALS['user']->id)->paginate(10);
+		$my_job_list = Application::where('ntv_id',$GLOBALS['user']->id)->get();
+		if(count($my_job_list) > 0 ){
+			foreach ($my_job_list as $key => $value) {
+				$arr = array($value->job_id);
+			}
+			$my_job_list = MyJob::where('ntv_id',$GLOBALS['user']->id)->whereIn('job_id', $arr)->paginate(10);
+		}else{
+			$my_job_list = null;
+		}
+
 		return View::make('jobseekers.applied-job',compact('my_job_list'));	
 	}
 

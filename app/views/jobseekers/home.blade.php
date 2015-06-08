@@ -29,210 +29,16 @@
 					<div class="clearfix"></div>
 					<div class="top-job container">
 						<ul class="arrow-square-orange">
-							<div class="col-sm-4">
-								<ul>
-								<li>
-									<div class="desc-job">
-									<a href="#">
-										<strong>Corporate Communications Manager</strong>
-										<span>City International Hospital (CIH)</span>
+						@foreach($jobs as $job)
+							<li>
+								<div class="desc-job">
+									<a href="{{URL::route('jobseekers.job', array($job->slug, $job->id))}}">
+										<strong>{{$job->vitri}}</strong>
+										<span>{{$job->ntd->company->company_name}}</span>
 									</a>
-									</div>
-								</li>
-								<li>
-									<div class="desc-job">
-									<a href="#">
-										<strong>Corporate Communications Manager</strong>
-										<span>City International Hospital (CIH)</span>
-									</a>
-									</div>
-								</li>
-								<li class="hot-job">
-									<div class="desc-job">
-									<a href="#">
-										<strong>Corporate Communications Manager</strong>
-										<span>City International Hospital (CIH)</span>
-									</a>
-									</div>
-								</li>
-								<li>
-									<div class="desc-job">
-									<a href="#">
-										<strong>Corporate Communications Manager</strong>
-										<span>City International Hospital (CIH)</span>
-									</a>
-									</div>
-								</li>
-								<li>
-									<div class="desc-job">
-									<a href="#">
-										<strong>Corporate Communications Manager</strong>
-										<span>City International Hospital (CIH)</span>
-									</a>
-									</div>
-								</li>
-								<li>
-									<div class="desc-job">
-									<a href="#">
-										<strong>Corporate Communications Manager</strong>
-										<span>City International Hospital (CIH)</span>
-									</a>
-									</div>
-								</li>
-								<li>
-									<div class="desc-job">
-									<a href="#">
-										<strong>Corporate Communications Manager</strong>
-										<span>City International Hospital (CIH)</span>
-									</a>
-									</div>
-								</li>
-								<li>
-									<div class="desc-job">
-									<a href="#">
-										<strong>Corporate Communications Manager</strong>
-										<span>City International Hospital (CIH)</span>
-									</a>
-									</div>
-								</li>
-								</ul>
-							</div>
-							<div class="col-sm-4 bg-silver-light">
-								<ul>
-								<li>
-									<div class="desc-job">
-									<a href="#">
-										<strong>Corporate Communications Manager</strong>
-										<span>City International Hospital (CIH)</span>
-									</a>
-									</div>
-								</li>
-								<li>
-									<div class="desc-job">
-									<a href="#">
-										<strong>Corporate Communications Manager</strong>
-										<span>City International Hospital (CIH)</span>
-									</a>
-									</div>
-								</li>
-								<li>
-									<div class="desc-job">
-									<a href="#">
-										<strong>Corporate Communications Manager</strong>
-										<span>City International Hospital (CIH)</span>
-									</a>
-									</div>
-								</li>
-								<li>
-									<div class="desc-job">
-									<a href="#">
-										<strong>Corporate Communications Manager</strong>
-										<span>City International Hospital (CIH)</span>
-									</a>
-									</div>
-								</li>
-								<li>
-									<div class="desc-job">
-									<a href="#">
-										<strong>Corporate Communications Manager</strong>
-										<span>City International Hospital (CIH)</span>
-									</a>
-									</div>
-								</li>
-								<li>
-									<div class="desc-job">
-									<a href="#">
-										<strong>Corporate Communications Manager</strong>
-										<span>City International Hospital (CIH)</span>
-									</a>
-									</div>
-								</li>
-								<li>
-									<div class="desc-job">
-									<a href="#">
-										<strong>Corporate Communications Manager</strong>
-										<span>City International Hospital (CIH)</span>
-									</a>
-									</div>
-								</li>
-								<li>
-									<div class="desc-job">
-									<a href="#">
-										<strong>Corporate Communications Manager</strong>
-										<span>City International Hospital (CIH)</span>
-									</a>
-									</div>
-								</li>
-								</ul>
-							</div>
-							<div class="col-sm-4">
-								<ul>
-								<li>
-									<div class="desc-job">
-									<a href="#">
-										<strong>Corporate Communications Manager</strong>
-										<span>City International Hospital (CIH)</span>
-									</a>
-									</div>
-								</li>
-								<li>
-									<div class="desc-job">
-									<a href="#">
-										<strong>Corporate Communications Manager</strong>
-										<span>City International Hospital (CIH)</span>
-									</a>
-									</div>
-								</li>
-								<li class="hot-job">
-									<div class="desc-job">
-									<a href="#">
-										<strong>Corporate Communications Manager</strong>
-										<span>City International Hospital (CIH)</span>
-									</a>
-									</div>
-								</li>
-								<li>
-									<div class="desc-job">
-									<a href="#">
-										<strong>Corporate Communications Manager</strong>
-										<span>City International Hospital (CIH)</span>
-									</a>
-									</div>
-								</li>
-								<li>
-									<div class="desc-job">
-									<a href="#">
-										<strong>Corporate Communications Manager</strong>
-										<span>City International Hospital (CIH)</span>
-									</a>
-									</div>
-								</li>
-								<li>
-									<div class="desc-job">
-									<a href="#">
-										<strong>Corporate Communications Manager</strong>
-										<span>City International Hospital (CIH)</span>
-									</a>
-									</div>
-								</li>
-								<li>
-									<div class="desc-job">
-									<a href="#">
-										<strong>Corporate Communications Manager</strong>
-										<span>City International Hospital (CIH)</span>
-									</a>
-									</div>
-								</li>
-								<li>
-									<div class="desc-job">
-									<a href="#">
-										<strong>Corporate Communications Manager</strong>
-										<span>City International Hospital (CIH)</span>
-									</a>
-									</div>
-								</li>	
-								</ul>
-							</div>
+								</div>
+							</li>
+						@endforeach
 						</ul>
 						<div class="clearfix"></div>
 						<a href="#" class="load-more-ajax"></a>
@@ -246,7 +52,7 @@
 					<div class="panel">
 						<div class="col-sm-7 panel-left">
 							<span><strong>Bạn đang xem danh sách ngành nghề sắp xếp theo:</strong></span>
-							<a href="#" class="btn bg-orange upc">Ngành Hot</a>
+							<a class="btn bg-orange upc">Ngành Hot</a>
 						</div>
 						<div class="col-sm-5 panel-right pull-right">
 							<div class="sort-by-categories bg-blue">
@@ -261,127 +67,21 @@
 						<div class="clearfix"></div>
 						<div class="categories-list">
 							<ul class="arrow-square-orange">
-								<div class="col-sm-3">
-									<strong><a href="#">Kế toán-Kiếm toán</a></strong> (1272)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Kế toán-Kiếm toán</a></strong> (1272)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Kế toán-Kiếm toán</a></strong> (1272)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Kế toán-Kiếm toán</a></strong> (1272)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Điện-Điện tử</a></strong> (546)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Điện-Điện tử</a></strong> (546)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Điện-Điện tử</a></strong> (546)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Điện-Điện tử</a></strong> (546)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Nhân viên kinh doanh</a></strong> (2597)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Nhân viên kinh doanh</a></strong> (2597)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Nhân viên kinh doanh</a></strong> (2597)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Nhân viên kinh doanh</a></strong> (2597)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">IT phần mềm</a></strong> (834)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">IT phần mềm</a></strong> (834)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">IT phần mềm</a></strong> (834)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">IT phần mềm</a></strong> (834)
-								</div>
-								
-								<div class="col-sm-3">
-									<strong><a href="#">Kỹ thuật</a></strong> (539)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Kỹ thuật</a></strong> (539)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Kỹ thuật</a></strong> (539)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Kỹ thuật</a></strong> (539)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Biên-Phiên dịch</a></strong> (466)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Biên-Phiên dịch</a></strong> (466)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Biên-Phiên dịch</a></strong> (466)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Biên-Phiên dịch</a></strong> (466)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">IT phần cứng/mạng</a></strong> (326)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">IT phần cứng/mạng</a></strong> (326)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">IT phần cứng/mạng</a></strong> (326)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">IT phần cứng/mạng</a></strong> (326)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Tư vấn</a></strong> (233)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Tư vấn</a></strong> (233)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Tư vấn</a></strong> (233)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Tư vấn</a></strong> (233)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Báo chí truyền hình</a></strong> (194)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Báo chí truyền hình</a></strong> (194)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Báo chí truyền hình</a></strong> (194)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Báo chí truyền hình</a></strong> (194)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Thương mại điện tử</a></strong> (136)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Thương mại điện tử</a></strong> (136)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Thương mại điện tử</a></strong> (136)
-								</div>
-								<div class="col-sm-3">
-									<strong><a href="#">Thương mại điện tử</a></strong> (136)
-								</div>
+								<?php 
+									$arr_cate = array();
+								?>
+								@foreach ($categories_default as $key => $cate)
+								<li>
+									<strong><a href="{{URL::route('jobseekers.get-category', array('id'=>$cate->id))}}">{{$cate->cat_name}}</a></strong> ({{$cate->mtcategory->count()}})
+								</li>
+								@endforeach
+							</ul>
+							<ul class="arrow-square-orange cate_alphaB">
+								@foreach ($categories_alpha as $key => $cate)
+								<li>
+									<strong><a href="{{URL::route('jobseekers.get-category', array('id'=>$cate->id))}}">{{$cate->cat_name}}</a></strong> ({{$cate->mtcategory->count()}})
+								</li>
+								@endforeach
 							</ul>
 							<div class="clearfix"></div>
 							<a href="#" class="load-more-ajax"></a>

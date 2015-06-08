@@ -323,14 +323,14 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
         }
 
     });    
-    $('#a_selectall').click(function(event) {
+    $('#a_selectall,#a_selectall_u').click(function(event) {
         event.preventDefault();
         $('#selectall').prop('checked', true);
         $('.checkbox').each(function() { //loop through each checkbox
             this.checked = true;  //select all checkboxes with class "checkbox1"               
         });
     });
-    $('#a_deselectall').click(function(event) {
+    $('#a_deselectall,#a_deselectall_u').click(function(event) {
         $('#selectall').prop('checked', false);
         $('.checkbox').each(function() { //loop through each checkbox
             this.checked = false;  //select all checkboxes with class "checkbox1"               

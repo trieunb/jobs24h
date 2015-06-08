@@ -5,7 +5,7 @@ class MyJob extends \Eloquent {
 	protected $table = 'my_jobs';
 
 	public function application(){
-		return $this->beLongsTo('Application', 'job_id');
+		return $this->hasMany('Application', 'job_id');
 	}
 	public function jobs(){
 		return $this->beLongsTo('Job', 'job_id');

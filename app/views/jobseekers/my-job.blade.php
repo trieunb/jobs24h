@@ -24,13 +24,13 @@
 					<p><strong>Lưu ý</strong>: Bạn không xem được việc làm đã hết thời hạn đăng tuyển hoặc tạm ngưng nhận hồ sơ.
             		</p>
 					<p>
-						<a href="#" class="text-blue decoration">Chọn tất cả</a> | 
-						<a href="#" class="text-orange decoration">Bỏ chọn tất cả</a>
-					</p>
-					<p><strong>Với việc làm đã chọn:</strong></p>
-					<p class="clearfix">
-						{{Form::submit('Xóa', array('class'=>'btn-delete btn bg-orange btn-lg'))}}
-					</p>
+								<a id="a_selectall" class="text-blue decoration" >Chọn tất cả</a> | 
+								<a id="a_deselectall" class="text-orange decoration">Bỏ chọn tất cả</a>
+							</p>
+							<p><strong>Với việc làm đã chọn:</strong></p>
+							<p class="clearfix">
+								{{Form::submit('Xóa', array('class'=>'btn-delete btn bg-orange btn-lg'))}}
+							</p>
 					<table class="table table-striped table-hover table-bordered">
 								<thead>
 									<tr>
@@ -81,16 +81,16 @@
 							</nav>
 							@endif
 							
-					<p>
-						<a href="#" class="text-blue decoration">Chọn tất cả</a> | 
-						<a href="#" class="text-orange decoration">Bỏ chọn tất cả</a>
-					</p>
-					<p><strong>Với việc làm đã chọn:</strong></p>
-					<p class="clearfix">
-						<button type="button" class="btn bg-orange btn-lg">Xóa</button>
-					</p>
-					
+							<p>
+								<a id="a_selectall" class="text-blue decoration" >Chọn tất cả</a> | 
+								<a id="a_deselectall" class="text-orange decoration">Bỏ chọn tất cả</a>
+							</p>
+							<p><strong>Với việc làm đã chọn:</strong></p>
+							<p class="clearfix">
+								{{Form::submit('Xóa', array('class'=>'btn-delete btn bg-orange btn-lg'))}}
+							</p>
 			</div>
+			{{Form::close()}}
 		</div>
 		<div class="boxed">
 			<div class="rows">
