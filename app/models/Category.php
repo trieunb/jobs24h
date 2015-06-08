@@ -27,4 +27,8 @@ class Category extends \Eloquent {
 		}
 		return array();
 	}
+
+	public function mtcategory(){
+		return $this->hasMany('CVCategory', 'cat_id');
+	}
 }

@@ -16,6 +16,7 @@
 	</div>
 	<section class="main-content container single-post">
 		<div class="boxed">
+			{{Form::open(array('action'=>array('JobSeeker@delAppliedJob'), 'method'=>'POST', 'id'=>'DelSavedJob'))}}
 			<div class="rows">
 				<div class="title-page">
 					<h2>Việc làm đã nộp</h2>
@@ -23,17 +24,17 @@
 					<p><strong>Lưu ý</strong>: Bạn không xem được việc làm đã hết thời hạn đăng tuyển hoặc tạm ngưng nhận hồ sơ.
             		</p>
 					<p>
-						<a href="#" class="text-blue decoration">Chọn tất cả</a> | 
-						<a href="#" class="text-orange decoration">Bỏ chọn tất cả</a>
-					</p>
-					<p><strong>Với việc làm đã chọn:</strong></p>
-					<p class="clearfix">
-						{{Form::button('Xóa', array('class'=>'btn-delete btn bg-orange btn-lg'))}}
-					</p>
+								<a id="a_selectall" class="text-blue decoration" >Chọn tất cả</a> | 
+								<a id="a_deselectall" class="text-orange decoration">Bỏ chọn tất cả</a>
+							</p>
+							<p><strong>Với việc làm đã chọn:</strong></p>
+							<p class="clearfix">
+								{{Form::submit('Xóa', array('class'=>'btn-delete btn bg-orange btn-lg'))}}
+							</p>
 					<table class="table table-striped table-hover table-bordered">
 								<thead>
 									<tr>
-										<th><input type="checkbox" value=""></th>
+										<th>{{Form::checkbox('', null,null, array('id'=>'selectall'))}}</th>
 										<th>Chức danh</th>
 										<th>Công ty</th>
 										<th>Ngày nộp</th>
@@ -44,50 +45,54 @@
 								<tbody>
 									@if($my_job_list !=null)
 									@foreach($my_job_list as $mjl)
-									@if(count($mjl->application) > 0)
-									<tr>
-										<td><input type="checkbox" value=""></td>
-										<td>
-											<strong><em>{{ HTML::linkRoute('jobseekers.job', $mjl->jobs->vitri, array($mjl->jobs->slug, "$mjl->job_id"), array('class' => 'text-blue'))}}</em></strong>
-											<small><div class="legend text-orange">
-												@if(strtotime($mjl->jobs->expired_date) < strtotime(date('Y-m-d', time())))
-													Hết hạn
-												@endif
-											</div></small>
-											<button type="button" class="btn bg-gray-light btn-sm">Thêm ghi chú</button>
-										</td>
-										<td>{{$mjl->jobs->ntd->company->company_name}}</td>
-										<td>{{$mjl->save_date}}</td>
-										<td>{{$mjl->respond}}</td>
-										<td>
-											Đã ứng tuyển
-										</td>
-									</tr>
-									@endif
+
+
+										<tr>
+											<td>
+												{{Form::checkbox('check[]', $mjl->job_id, null, array('class'=>'checkbox'))}}
+											</td>
+											<td>
+												<strong><em>{{ HTML::linkRoute('jobseekers.job', $mjl->jobs->vitri, array($mjl->jobs->slug, "$mjl->job_id"), array('class' => 'text-blue'))}}</em></strong>
+												<small><div class="legend text-orange">
+													@if(strtotime($mjl->jobs->expired_date) < strtotime(date('Y-m-d', time())))
+														Hết hạn
+													@endif
+												</div></small>
+												<button type="button" class="btn bg-gray-light btn-sm">Thêm ghi chú</button>
+											</td>
+											<td>{{$mjl->jobs->ntd->company->company_name}}</td>
+											<td>{{date('d-m-Y',strtotime($mjl->save_date))}}</td>
+											<td>{{$mjl->respond}}</td>
+											<td>
+												Đã ứng tuyển
+											</td>
+										</tr>
+								
 									@endforeach
 									@else
 										<tr>
-											<td rowspan="6">Chưa có việc làm nào</td>
+											<td colspan="6" class="text-align-center">Bạn chưa nộp đơn cho bất kỳ công việc nào</td>
 										</tr>
 									@endif
 								</tbody>
 							</table>
 							@if($my_job_list !=null)
 							<nav class="navbar-right pagination-sm">
-								{{$my_job_list->links()}}
+							
 							</nav>
 							@endif
 							
-					<p>
-						<a href="#" class="text-blue decoration">Chọn tất cả</a> | 
-						<a href="#" class="text-orange decoration">Bỏ chọn tất cả</a>
-					</p>
-					<p><strong>Với việc làm đã chọn:</strong></p>
-					<p class="clearfix">
-						<button type="button" class="btn bg-orange btn-lg">Xóa</button>
-					</p>
+							<p>
+								<a id="a_selectall" class="text-blue decoration" >Chọn tất cả</a> | 
+								<a id="a_deselectall" class="text-orange decoration">Bỏ chọn tất cả</a>
+							</p>
+							<p><strong>Với việc làm đã chọn:</strong></p>
+							<p class="clearfix">
+								{{Form::submit('Xóa', array('class'=>'btn-delete btn bg-orange btn-lg'))}}
+							</p>
 					
 			</div>
+			{{Form::close()}}
 		</div>
 		<div class="boxed">
 			<div class="rows">

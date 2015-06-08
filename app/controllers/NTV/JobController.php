@@ -69,4 +69,26 @@ class JobController extends Controller
 
 		return View::make('jobseekers.result-from-search', compact('jobs', 'per_page', 'keyword', 'province','categories','salary','level'));
 	}
+
+
+	public function getCategory(){
+		$categories = Category::all();
+	
+		if(Input::get('id') != null){
+			$id = Input::get('id');
+			$jobs = Job::where('is_display',1)->where('status',1)->with('category');
+			$jobs->whereHas('category', function($query) use($id)  {
+				$query->where('cat_id', $id);
+			});
+			if(Input::get('perpage') == null){
+				$per_page = 20;	
+			}else{
+				$per_page = Input::get('perpage');	
+			}
+			$jobs = $jobs->paginate($per_page);
+		}else{
+			$jobs = $per_page = $id= null;
+		}
+		return View::make('jobseekers.result-from-category', compact('jobs','per_page','id', 'categories')); 
+	}
 }

@@ -62,11 +62,13 @@
 										<td>{{$mjl->save_date}}</td>
 										<td>{{$mjl->respond}}</td>
 										<td>
-											@if(count($mjl->application) > 0)
-												Đã ứng tuyển<br>({{date('d-m-Y',strtotime($mjl->application->apply_date))}})
-											@else
+											@foreach($applied_job as $val)
+												@if($val->job_id == $mjl->job_id)
+												Đã ứng tuyển<br>({{date('d-m-Y',strtotime($val->apply_date))}})
+												@else
 												{{ HTML::linkRoute('jobseekers.job', 'Ứng tuyển', array($mjl->jobs->slug, "$mjl->job_id"), array('class' => 'btn btn-sm bg-orange btn-apply'))}}
-											@endif
+												@endif
+											@endforeach
 										</td>
 									</tr>
 									@endforeach
@@ -82,15 +84,14 @@
 								{{$my_job_list->links()}}
 							</nav>
 							@endif
-							
-					<p>
-						<a href="#" class="text-blue decoration">Chọn tất cả</a> | 
-						<a href="#" class="text-orange decoration">Bỏ chọn tất cả</a>
-					</p>
-					<p><strong>Với việc làm đã chọn:</strong></p>
-					<p class="clearfix">
-						<button type="button" class="btn bg-orange btn-lg">Xóa</button>
-					</p>
+							<p>
+								<a id="a_selectall_u" class="text-blue decoration" >Chọn tất cả</a> | 
+								<a id="a_deselectall_u" class="text-orange decoration">Bỏ chọn tất cả</a>
+							</p>
+							<p><strong>Với việc làm đã chọn:</strong></p>
+							<p class="clearfix">
+								{{Form::submit('Xóa', array('class'=>'btn-delete btn bg-orange btn-lg'))}}
+							</p>
 					
 			</div>
 			{{Form::close()}}

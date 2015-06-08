@@ -434,15 +434,19 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
 .categories-list [class^="col-"] {border-bottom: 1px dotted #ccc; width: 30%; margin: 0 15px 0px;background: url(../images/arrow_square_orange.png) no-repeat left 20px;padding: 0;}
 .top-job {margin-top: 20px;}
 .top-job [class^="col-"] li:last-child{border: none;}
-.top-job li {border-bottom: 1px solid #ccc;  margin: 0 15px 0px;background: url(../images/arrow_square_orange.png) no-repeat left 16px;padding: 0;}
+.top-job li {margin: 0 5px;background: url(../images/arrow_square_orange.png) no-repeat 15px 16px;padding: 0; float: left; width: 30%;}
+.top-job li:nth-child(3n+2){background: #f3f3f3;}
+.top-job li:nth-child(2){border-radius: 10px 10px 0 0;}
+.top-job li:nth-last-child(2){border-radius:0 0  10px 10px ;}
+.top-job li:nth-last-child(2) .desc-job, .top-job li:nth-last-child(3) .desc-job, .top-job li:last-child .desc-job{border:none;}
 .top-job li a strong {display: block;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;width: 90%;}
 .top-job .bg-silver-light {padding: 0; border-radius: 10px;}
-.desc-job {padding: 10px; margin: 5px 0; border-radius: 4px;position: relative;}
+.desc-job {padding: 12px 10px; margin: 0px 15px; border-radius: 4px;position: relative;border-bottom: 1px solid #ccc;  }
 .top-job li span {font-size: 11px; color: #5c5b5b;}
 .top-job li:hover .desc-job {background-color: #00b9f2;}
 .top-job li:hover .desc-job a,.top-job li:hover .desc-job span{color: #fff;}
 .categories-list {margin-top: 30px;}
-.categories-list [class^="col-"] {width: 21.8%; padding: 0 30px 10px 15px; border: none;background: url(../images/arrow_square_orange.png) no-repeat left 6px;}
+.categories-list li {width: 25%; padding: 0 0px 10px 15px; border: none;background: url(../images/arrow_square_orange.png) no-repeat left 6px; float: left;}
 .top-job .col-sm-4 strong a {display: block;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;}
 .top-job .col-sm-4 em {color: #888; font-size: 12px;}
 .load-more-ajax, .load-more-ajax-2 {display: block; background: url(../images/load_more.png) no-repeat; width: 60px; height: 60px; margin: 30px auto;}

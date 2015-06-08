@@ -49,6 +49,7 @@
 						<label class="col-sm-3 control-label">Chọn CV<abbr title="Trường này là bắt buộc">*</abbr></label>
 						<div class="col-sm-5">
 							<?php 
+							//var_dump($resumes);die();
 								if($resumes != null){
 									$list_cv = array();
 									foreach ($resumes as $key=> $value) {
