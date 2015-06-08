@@ -10,8 +10,11 @@ class JobSeeker extends Controller
 	public function home()
 	{
 		$categories_default = Category::all();
-		$categories_alpha = Category::orderBy('cat_name', 'ASC')->get();
-		$categories_hot = Category::with('mtcategory')->orderBy(count('cat_id'),'ASC')->get();
+		$categories_alpha = Category::orderBy('cat_name', 'ASC')->get();	
+		$categories_hot = Category::with('mtcategory')->get()->sortBy(function($categories_hot) {
+		    return $categories_hot->mtcategory->count();
+		})->reverse();
+
 		$jobs = Job::with(array('ntd'=>function($q) {
 			$q->with('company');
 		}))
@@ -20,10 +23,16 @@ class JobSeeker extends Controller
 		}))
 		->with(array('province'=>function($q) {
 			$q->with('province');
-		}))->take(30)->get();
+		}))->take(45)->get();
+
 		return View::make('jobseekers.home', compact('jobs', 'categories_default', 'categories_alpha', 'categories_hot'));
 	}
-
+	public function getCountMenu(){
+		$count_my_jobs = MyJob::where('ntv_id',$GLOBALS['user']->id)->count();
+		$count_applied_job = Application::where('ntv_id',$GLOBALS['user']->id)->count();
+		$count_my_resume = Resume::where('ntv_id', $GLOBALS['user']->id)->count();
+		return View::view('includes.jobseeker.menu-ntv', compact('count_my_jobs','count_applied_job','count_my_resume'));
+	}
 	public function editBasicHome(){
 		return View::make('jobseekers.edit-basic-info')->with('user', $GLOBALS['user']);	
 	}

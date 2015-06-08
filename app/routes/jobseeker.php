@@ -4,6 +4,7 @@ Route::group(array('prefix'=>$locale), function() {
 		Route::get('/', array('as'=>'jobseekers.home', 'uses'=>'JobSeeker@home'));
 		Route::get('/login', array('as'=>'jobseekers.login', 'uses'=>'JobSeekerAuth@login') );
 		Route::post('/login', 'JobSeekerAuth@doLogin' );
+		Route::get('/logout', array('as'=>'jobseekers.logout', 'uses'=>'JobSeekerAuth@logout') );
 		Route::get('/register', array('as'=>'jobseekers.register', 'uses'=>'JobSeekerAuth@register') );
 		Route::post('/register', 'JobSeekerAuth@doRegister' );
 		Route::get('/account-active',array('as'=>'account-active', function() {

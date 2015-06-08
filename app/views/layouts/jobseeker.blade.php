@@ -31,10 +31,10 @@
 						@endif
 						<span class="local"><a href="#" class="text-blue">Join VnJobs Network</a></span>
 						<span class="envelope"><a href="#" class="text-blue"><i class="fa fa-envelope"></i> Nhận việc làm mới</a></span>
-						<span class="employer-site"><a href="#"><i class="fa fa-caret-right"></i> Nhà tuyển dụng</a></span>
+						<span class="employer-site"><a href="{{ URL::route('employers.launching') }}"><i class="fa fa-caret-right"></i> Nhà tuyển dụng</a></span>
 					</div>
 					<ul class="menu pull-right">
-					<?php $user = Sentry::getUser(); ?>
+					<?php $user = Sentry::getUser();?>
 						@if(Sentry::check())
 								<nav class="ntv-menu navbar-right">
 									@include('includes.jobseekers.menu-ntv')
@@ -56,10 +56,10 @@
 			</div>
 			<nav id="navigation" class="bg-blue">
 				<ul class="main-menu container">
-					<li><a href="#">Trang chủ</a></li>
+					<li><a href="{{ URL::route('jobseekers.home') }}">Trang chủ</a></li>
 					<li><a href="#">Cung ứng lao động</a></li>
-					<li><a href="#">Người tìm việc</a></li>
-					<li><a href="#">Nhà tuyển dụng</a></li>
+					<li><a href="{{ URL::route('jobseekers.home') }}">Người tìm việc</a></li>
+					<li><a href="{{ URL::route('employers.launching') }}">Nhà tuyển dụng</a></li>
 					<li><a href="#">Đào tạo</a></li>
 					<li><ul class="nav navbar-nav navbar-right">
 						<form class="navbar-form navbar-right relative" role="search">

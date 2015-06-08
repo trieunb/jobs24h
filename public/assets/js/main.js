@@ -323,6 +323,8 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
         }
 
     });    
+
+    // select all
     $('#a_selectall,#a_selectall_u').click(function(event) {
         event.preventDefault();
         $('#selectall').prop('checked', true);
@@ -348,7 +350,7 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
             }
         });
 
-
+    // Nộp đơn
     if($('#choose_cv').val() == null){
         $('.is_file').prop('checked', true);
         $("#choose_cv").prop("disabled", true);
@@ -361,6 +363,26 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
             $("#choose_cv").prop("disabled", false);
         }
     });
+
+    // sort category hompage
+    $('.search-by-categories .sort-by-categories ul li a').click(function(event) {
+        event.preventDefault();
+        $('.search-by-categories .sort-by-categories ul li a').removeClass('active');
+        $(this).addClass('active');
+        $('.search-by-categories .sort-name').text($(this).text());
+        $('.search-by-categories .categories-list ul').addClass('hidden-xs');
+        var cate_show = $(this).parent('li').attr('class');
+        $('.search-by-categories .categories-list .'+cate_show).removeClass('hidden-xs');
+    }); 
+
+    // show more jobs top jobs on homepage
+    $('.top-job .load-more-ajax').click(function(event) {
+        event.preventDefault();
+        $('.top-job li').each(function(index, el) {
+            $(this).removeClass('hidden-xs');
+        });
+    });
+
 })(jQuery);
 
 

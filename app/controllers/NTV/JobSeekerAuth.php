@@ -191,4 +191,8 @@ class JobSeekerAuth extends Controller
 			}
 		}
 	}
+	public function logout(){
+		Sentry::logout();
+		return Redirect::route('jobseekers.home');
+	}
 }

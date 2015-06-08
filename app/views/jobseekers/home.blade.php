@@ -29,7 +29,8 @@
 					<div class="clearfix"></div>
 					<div class="top-job container">
 						<ul class="arrow-square-orange">
-						@foreach($jobs as $job)
+						@foreach($jobs as $key => $job)
+							@if($key < 30)
 							<li>
 								<div class="desc-job">
 									<a href="{{URL::route('jobseekers.job', array($job->slug, $job->id))}}">
@@ -38,10 +39,20 @@
 									</a>
 								</div>
 							</li>
+							@else
+							<li class="hidden-xs">
+								<div class="desc-job">
+									<a href="{{URL::route('jobseekers.job', array($job->slug, $job->id))}}">
+										<strong>{{$job->vitri}}</strong>
+										<span>{{$job->ntd->company->company_name}}</span>
+									</a>
+								</div>
+							</li>
+							@endif
 						@endforeach
 						</ul>
 						<div class="clearfix"></div>
-						<a href="#" class="load-more-ajax"></a>
+						<a class="load-more-ajax"></a>
 					</div>
 				</section>
 				<div class="padding bg-silver-dark">
@@ -52,39 +63,41 @@
 					<div class="panel">
 						<div class="col-sm-7 panel-left">
 							<span><strong>Bạn đang xem danh sách ngành nghề sắp xếp theo:</strong></span>
-							<a class="btn bg-orange upc">Ngành Hot</a>
+							<a class="btn bg-orange upc sort-name">Ngành Hot</a>
 						</div>
 						<div class="col-sm-5 panel-right pull-right">
 							<div class="sort-by-categories bg-blue">
 								<span>Sắp xếp theo: </span>
 								<ul>
-									<li><a href="#">ABC</a></li>
-									<li><a href="#" class="active">Nhóm ngành</a></li>
-									<li><a href="#">Ngành HOT</a></li>
+									<li class="cate_alpha"><a href="#">ABC</a></li>
+									<li class="cate_default"><a href="#" class="active">Nhóm ngành</a></li>
+									<li class="cate_hot"><a href="#">Ngành HOT</a></li>
 								</ul>
 							</div>
 						</div>
 						<div class="clearfix"></div>
 						<div class="categories-list">
-							<ul class="arrow-square-orange">
-								<?php 
-									$arr_cate = array();
-								?>
+							<ul class="arrow-square-orange cate_default">
 								@foreach ($categories_default as $key => $cate)
 								<li>
 									<strong><a href="{{URL::route('jobseekers.get-category', array('id'=>$cate->id))}}">{{$cate->cat_name}}</a></strong> ({{$cate->mtcategory->count()}})
 								</li>
 								@endforeach
 							</ul>
-							<ul class="arrow-square-orange cate_alphaB">
+							<ul class="arrow-square-orange cate_alpha hidden-xs">
 								@foreach ($categories_alpha as $key => $cate)
 								<li>
 									<strong><a href="{{URL::route('jobseekers.get-category', array('id'=>$cate->id))}}">{{$cate->cat_name}}</a></strong> ({{$cate->mtcategory->count()}})
 								</li>
 								@endforeach
 							</ul>
-							<div class="clearfix"></div>
-							<a href="#" class="load-more-ajax"></a>
+							<ul class="arrow-square-orange cate_hot hidden-xs">
+								@foreach ($categories_hot as $key => $cate)
+								<li>
+									<strong><a href="{{URL::route('jobseekers.get-category', array('id'=>$cate->id))}}">{{$cate->cat_name}}</a></strong> ({{$cate->mtcategory->count()}})
+								</li>
+								@endforeach
+							</ul>
 						</div>
 					</div>
 				</section>
