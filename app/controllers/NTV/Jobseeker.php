@@ -525,6 +525,14 @@ class JobSeeker extends Controller
 		return View::make('jobseekers.saved-job',compact('my_job_list'));	
 	}
 
+	public function delMyJob(){
+		$params = Input::all();
+		$job = MyJob::whereIn('id', $params['check'])->delete();
+		if($job){
+			return Redirect::back();
+		}
+	}
+
 	public function appliedJob(){
 		$my_job_list = MyJob::where('ntv_id',$GLOBALS['user']->id)->paginate(10);
 		return View::make('jobseekers.applied-job',compact('my_job_list'));	
@@ -539,7 +547,8 @@ class JobSeeker extends Controller
 		$job = Job::find($job_id);
 		if($job != null){
 			if ($GLOBALS['user'] != null) {
-				$resumes = Resume::where('ntv_id', $GLOBALS['user']->id)->where('is_visible',1)->where('is_public',1)->lists('tieude_cv', 'id');
+				$resumes = Resume::where('ntv_id', $GLOBALS['user']->id)->where('is_visible',1)->where('is_public',1)->get();
+
 				return View::make('jobseekers.applying-job')->with('user', $GLOBALS['user'])->with('job', $job)->with('resumes',$resumes);	
 			}else{
 				return View::make('jobseekers.applying-job-not-login')->with('job', $job);
@@ -565,7 +574,7 @@ class JobSeeker extends Controller
 			if ($is_file) {
 				$rules = array(
 		       		'headline' => 'required',
-		       		//'file_name' => 'mimes:jpeg,png,gif,bmp|max:2000|required',
+		       		'file_name' => 'mimes:jpeg,png,gif,bmp|max:2000|required',
 		    	);
 			}else {
 				$rules = array(
@@ -587,10 +596,16 @@ class JobSeeker extends Controller
 					$check = Application::where('job_id', $job_id)->where('ntv_id', $GLOBALS['user']->id)->count();
 				}else {$check = 0;}
 				if($check == 0){
-					$extension = $params['cv_upload']->getClientOriginalExtension();
-					$name = Str::random(11) . '.' . $extension;
-					$params['cv_upload']->move(Config::get('app.upload_path') . 'companies/images/', $name);
-					$apply = Application::insert(array(
+				
+					if($params['cv_upload'] != null ){
+						$extension = $params['cv_upload']->getClientOriginalExtension();
+						$name = Str::random(11) . '.' . $extension;
+						$params['cv_upload']->move(Config::get('app.upload_path') . 'companies/images/', $name);
+					}else{
+						$name = null;
+					}
+
+					$apply = Application::create(array(
 						'job_id' 		=> $job_id,
 						'ntv_id' 		=> $GLOBALS['user']->id,
 						'cv_id'  		=> $cv,
@@ -603,7 +618,7 @@ class JobSeeker extends Controller
 						'address' 		=> ''.$params['address'].'',
 						'province_id' 	=> $params['province_id'],
 						'file_name'		=> ''.$name.'',
-						'apply_date'	=> date('d-m-Y', time())
+						'apply_date'	=> date('Y-m-d', time()),
 					));
 					if($apply){
 						return Redirect::back()->with('success','Bạn đã nộp đơn thành công. Chúc bạn may mắn');
@@ -743,7 +758,6 @@ class JobSeeker extends Controller
 				return Response::json($respond);
 			}else{
 				$jobs_alert = Subscribe::where('ntv_id', $GLOBALS['user']->id)->count();
-				Log::info($jobs_alert);
 				if($jobs_alert < 5){
 					if($params['keyword'] == '' && $params['categories'] == '' && $params['level'] == 'all' && $params['province'] == '' && $params['salary'] == ''){
 						$respond['message'] = 'Vui lòng điền đầy đủ các điều kiện';
@@ -772,17 +786,48 @@ class JobSeeker extends Controller
 		}
 	}
 
-	public function getUpdate($id){
+	public function postUpdate(){
+		$params = Input::all();
+		$respond['has'] = false;
 		if(Request::ajax()){
-			$jobs_alert = Subscribe::where('ntv_id', $GLOBALS['user']->id)->get();
-			Log::info($id); 
+			$rules = array(
+		       'salary' => 'numeric ',
+		    );
+			$validator = Validator::make($params, $rules);
+			if($validator->fails()){			
+		       	$respond['message'] = 'Vui lòng nhập mức lương là số';
+				return Response::json($respond);
+			}else{
+				$jobs_alert = Subscribe::where('ntv_id', $GLOBALS['user']->id)->where('id', $params['id']);
+				if($params['keyword'] == '' && $params['categories'] == '' && $params['level'] == 'all' && $params['province'] == '' && $params['salary'] == ''){
+					$respond['message'] = 'Vui lòng điền đầy đủ các điều kiện';
+					return Response::json($respond);
+				}else{
+					$update = $jobs_alert->update(array(
+						'ntv_id' 	=> $GLOBALS['user']->id,
+						'keyword' 	=> ''.$params['keyword'].'',
+						'times' 	=> $params['time'],
+						'categories'=> ''.json_encode($params['categories']).'',
+						'provinces' => ''.json_encode($params['province']).'',
+						'level'		=> ''.$params['level'].'',
+						'salary'	=> $params['salary'],
+					));
+					if($update){
+						$respond['has'] = true;
+						$respond['message'] = 'Tạo thành công';
+						return Response::json($respond);
+					}
+				}
+			}
 		}
 	}
-
-	public function postUpdate(){
+	
+	public function postDelete(){
+		$params = Input::all();
 		if(Request::ajax()){
-
-		}
+		    $del = Subscribe::find($params['id']);
+			$del->delete();
+		}		
 	}
 
 }

@@ -394,9 +394,9 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
 .header-right .list-link span{display: inline-block; margin-right: 10px;}
 .header-right .list-link span.employer-site {margin-right: 0;}
 .header-right .list-link span.employer-site a{text-transform: uppercase; color: #FF0000; font-weight: 600;}
-.header-right .menu {margin: 10px 0 0; width: 100%;}
-.header-right .menu li {display: inline-block;}
-.header-right .menu li a {padding: 10px 0px 0 15px; color: #333; margin: 0}
+.header-right .menu {margin: 10px 0 0; width: 100%; text-align: right;}
+.header-right .menu li {display: inline-block;margin: 10px 0px 0 15px;}
+.header-right .menu li a {padding: 0; color: #333; margin: 0}
 .header-right .menu li a:hover,.header-right .nav li:hover {background: transparent !important;}
 
 
@@ -505,11 +505,11 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
 .ntv-menu span {padding: 7px 10px; border-radius: 50%; display: inline-block; margin-left: 5px;}
 .ntv-menu span a {color: #fff;}
 .ntv-menu span.caret {padding: 0;  margin: 7px 5px 0px;}
-.ntv-menu ul li {display: inline-block;padding: 8px 0;vertical-align: top;border-top: 1px solid #EDEDED;border-bottom: 1px solid #EDEDED;float: left;}
+.ntv-menu ul li {display: inline-block;padding: 8px 0;vertical-align: top;float: left;}
 .ntv-menu ul li:first-child a {border-left: none; }
 .ntv-menu ul li a {display: block; padding: 0px 7px; border-left: 1px dotted #DBDBDB;}
 .ntv-menu .dropdown-menu {padding: 0; border-radius: 0;}
-.ntv-menu .dropdown-menu li {display: block;border-bottom: 1px dotted #DADADA;padding: 0; width: 100%;}
+.ntv-menu .dropdown-menu li {display: block;border-bottom: 1px dotted #DADADA;padding: 0; width: 100%; margin: 0;}
 .ntv-menu .dropdown-menu li a {padding: 0; color: #333;display: block;border-left: none;padding: 7px 24px 7px 10px; font-size: 12px;}
 .ntv-menu .dropdown-menu li a i {display: inline-block; margin-right: 5px;}
 .ntv-menu .dropdown-menu li a:hover {color: #f7941d;} 
@@ -632,5 +632,5 @@ img.avatar {width: 35px; height: 35px; border-radius: 50%; vertical-align: middl
 .loading-icon {display: none; position: fixed; top: 45%; left: 37%; background: url(../images/loading.gif) no-repeat; width: auto; height: 42px; padding-left: 47px; line-height: 42px; }
 .loading-icon span {font-weight: 600;}
 .input-group-addon.have-img {padding: 0; width: 35px; background: transparent; border-color: transparent; cursor: pointer; }
-#JobAlertForm label {font-weight: normal; text-align: left; float: left;}
-#JobAlertForm .select2-container {width: 100% !important; border-radius: 0 !important; min-height: 32px !important;font-size: 12px !important; text-overflow: ellipsis;}
+#JobAlertForm label, #UpdateJobAlert label {font-weight: normal; text-align: left; float: left;}
+#JobAlertForm .select2-container, #UpdateJobAlert .select2-container {width: 100% !important; border-radius: 0 !important; min-height: 32px !important;font-size: 12px !important; text-overflow: ellipsis;}

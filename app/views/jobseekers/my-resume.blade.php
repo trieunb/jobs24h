@@ -21,7 +21,6 @@
 					<h2>Hồ Sơ Của Tôi</h2>
 				</div>
 				<p>Bạn đã có <strong class="text-orange"><span id="number_of_resumes">{{count($my_resume)}}</span> trong số 4</strong> hồ sơ. Hãy chọn một hồ sơ được "<strong>cho phép tìm kiếm</strong>" để nhà tuyển dụng có thể tìm thấy bạn.</p>
-						<form action="" method="POST" role="form" class="form-horizontal">
 						@if(count($my_resume) < 3)
 							<p><button type="submit" class="btn btn-lg bg-orange">Tạo Hồ Sơ</button></p>
 						@endif
@@ -66,40 +65,40 @@
 											@endif
 											<a id="del_resume" data-rs="{{$mr->id}}"><i class="glyphicon glyphicon-trash"></i> Xóa</a>
 										</td>
+										<div class="modal fade delete_rs" id="delete_rs_{{$mr->id}}">
+											<div class="modal-dialog modal-sm">
+												<div class="modal-content">
+													<div class="modal-body">
+														<p>Khi bị xóa, hồ sơ không thể phục hồi lại được. Bạn có thực sự muốn xóa hồ sơ "@if(count($my_resume)>0){{$mr->created_at}} {{$mr->first_name}} {{$mr->last_name}}@endif"?</p>
+													</div>
+													<div class="modal-footer">
+														{{Form::button('Hủy', array('class'=>'btn btn-default', 'data-dismiss'=>'modal'))}}
+														{{Form::button('Xóa', array('class'=>'del-rs btn bg-orange'))}}
+													</div>
+												</div><!-- /.modal-content -->
+											</div><!-- /.modal-dialog -->
+										</div><!-- /.modal -->
+										<div class="modal fade popup_is_publish" id="popup_is_publish_{{$mr->id}}">
+										<div class="modal-dialog modal-sm">
+											<div class="modal-content">
+												<div class="modal-body">
+													<p>Tại một thời điểm chỉ có tối đa một hồ sơ được "cho phép tìm kiếm". Bạn có muốn cập nhật không?</p>
+												</div>
+												<div class="modal-footer">
+													{{Form::button('Hủy', array('class'=>'btn btn-default', 'data-dismiss'=>'modal'))}}
+													{{Form::button('Cập nhật', array('class'=>'is_publish btn bg-orange'))}}
+												</div>
+											</div><!-- /.modal-content -->
+										</div><!-- /.modal-dialog -->
+									</div><!-- /.modal -->
 									</tr>
+
 									@endforeach
 									@else
 									<tr><td colspan="5" class="text-align-center">Bạn chưa có hồ sơ nào</td></tr>
 									@endif
 								</tbody>
 							</table>		
-						</form>
-						<div class="modal fade" id="popup_is_publish">
-							<div class="modal-dialog modal-sm">
-								<div class="modal-content">
-									<div class="modal-body">
-										<p>Tại một thời điểm chỉ có tối đa một hồ sơ được "cho phép tìm kiếm". Bạn có muốn cập nhật không?</p>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-										<button type="button" class="is_publish btn bg-orange">Cập nhật</button>
-									</div>
-								</div><!-- /.modal-content -->
-							</div><!-- /.modal-dialog -->
-						</div><!-- /.modal -->
-						<div class="modal fade" id="delete_modal">
-							<div class="modal-dialog modal-sm">
-								<div class="modal-content">
-									<div class="modal-body">
-										<p>Khi bị xóa, hồ sơ không thể phục hồi lại được. Bạn có thực sự muốn xóa hồ sơ "@if(count($my_resume)>0){{$mr->created_at}} {{$mr->first_name}} {{$mr->last_name}}@endif"?</p>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-										<button type="button" class="del-modal btn bg-orange">Xóa</button>
-									</div>
-								</div><!-- /.modal-content -->
-							</div><!-- /.modal-dialog -->
-						</div><!-- /.modal -->
 				</div>
 			</div>
 		</div>
@@ -109,4 +108,44 @@
 			</div>
 		</div>
 	</section>
+@stop
+@section('scripts')
+	<script type="text/javascript">
+		// Publish a resume in my-resume
+	    $(document).on('change','#is_publish',function(){
+	        var data = $(this).val();
+	        
+	        var url = '{{URL::route("jobseekers.my-resume")}}'
+	        $('#popup_is_publish_'+data).modal('show');
+	        $('.is_publish').click(function(e){
+	            e.preventDefault();
+	            $.ajax({
+	                type: "GET",
+	                url: url, //Relative or absolute path to response.php file
+	                data: {is_publish: data},
+	                success : function(data){
+	                    $('.popup_is_publish').modal('hide');
+	                }
+	            });    
+	        });
+	    });
+	    // Del a resume in my-resume
+	    $(document).on('click','#del_resume',function(){
+	        var data = $(this).attr('data-rs');
+	        var url = '{{URL::route("jobseekers.my-resume")}}';
+	        $('#delete_rs_'+data).modal('show');
+	        $('.del-rs').click(function(e){
+	            e.preventDefault();
+	            $.ajax({
+	                type: "GET",
+	                url: url, //Relative or absolute path to response.php file
+	                data: {is_delete: data },
+	                success : function(data){
+	                   location.reload();
+	                    $('.delete_rs').modal('hide');
+	                }
+	            });    
+	        });
+	    });
+	</script>
 @stop

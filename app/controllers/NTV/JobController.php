@@ -54,7 +54,7 @@ class JobController extends Controller
 		{
 			$jobs->where('mucluong_min', 'LIKE', "%".$salary."%")->orWhere('mucluong_max', 'LIKE', "%".$salary."%");
 		}
-		if(is_numeric($level))
+		if(is_numeric($level) && $level != 0)
 		{
 			$jobs->where('chucvu', $level);
 		}

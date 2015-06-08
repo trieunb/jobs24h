@@ -29,7 +29,11 @@
 					<div class="form-group">
 						<div class="col-sm-3">
 							<div class="avatar">
-								<img src="assets/images/ruibu.jpg">
+								@if($user->avatar != null)
+									{{HTML::image('uploads/jobseekers/avatar/'.$user->avatar.'')}}
+								@else
+									{{HTML::image('images/avatar.jpg')}}
+								@endif
 							</div>
 						</div>
 						<div class="col-sm-5">
@@ -44,7 +48,20 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Chọn CV<abbr title="Trường này là bắt buộc">*</abbr></label>
 						<div class="col-sm-5">
-							{{Form::select('cv_id', $resumes, null, array('class'=>'form-control cv_id', 'id'=>'choose_cv'))}}
+							<?php 
+								if($resumes != null){
+									$list_cv = array();
+									foreach ($resumes as $key=> $value) {
+										$key = $value->id;
+										$val = date('d-m-Y H:i',strtotime($value->updated_at))."_".$user->first_name."_".$user->last_name;
+										$list_cv[$key] = $val;
+									}	
+								}
+								else{
+									$list_cv = null;
+								}
+							?>
+							{{Form::select('cv_id',$list_cv, null, array('class'=>'form-control cv_id', 'id'=>'choose_cv'))}}
 							<span class="error-message">{{$errors->first('cv_id')}}</span>
 						</div>
 					</div>
@@ -64,19 +81,21 @@
 					</div>
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Chọn CV</label>
-						<div class="col-sm-8">
+						<div class="col-sm-9">
 								<div class="checkbox">
-									<label>
+									<label class="col-sm-12">
 										@if($resumes != null)
 											{{Form::checkbox('is_file', 1, null, array('class'=>'is_file'))}}	
 										@else
 											{{Form::checkbox('is_file', 'is_file', 'checked',array('class'=>'is_file'))}}
 										@endif
-										<div class="fileUpload btn bg-orange col-sm-5">
+										<div class="fileUpload btn bg-orange col-sm-2">
 											Chọn tệp tin
 											{{ Form::file('cv_upload',array('class'=>'upload', 'id' =>'uploadBtn')) }}
 										</div>
-										
+										<div class="col-sm-4">
+											<input class="form-control" id="uploadFile" disable="disable" placeholder="không có tệp nào được chọn" name="file_name" type="text">
+										</div>
 									</label>
 								</div>
 								<div class="clearfix"></div>

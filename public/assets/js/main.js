@@ -222,41 +222,6 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
             $(this).addClass("text-orange");
     });
 
-
-    // Publish a resume in my-resume
-    $(document).on('change','#is_publish',function(){
-        var data = $(this).val();
-        $('#popup_is_publish').modal('show');
-        $('.is_publish').click(function(e){
-            e.preventDefault();
-            $.ajax({
-                type: "GET",
-                url: "my-resume", //Relative or absolute path to response.php file
-                data: {is_publish: data},
-                success : function(data){
-                    $('#popup_is_publish').modal('hide');
-                }
-            });    
-        });
-    });
-    // Del a resume in my-resume
-    $(document).on('click','#del_resume',function(){
-        var data = $(this).attr('data-rs');
-        $('#delete_modal').modal('show');
-        $('.del-modal').click(function(e){
-            e.preventDefault();
-            $.ajax({
-                type: "GET",
-                url: "my-resume", //Relative or absolute path to response.php file
-                data: {is_delete: data },
-                success : function(data){
-                   location.reload();
-                    $('#delete_modal').modal('hide');
-                }
-            });    
-        });
-    });
-
     // Add new languages
     $('.fr-lang').each(function () {
         if($(this).find('select[class^="foreign_languages"]').val() != 0){
@@ -358,7 +323,44 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
         }
 
     });    
+    $('#a_selectall').click(function(event) {
+        event.preventDefault();
+        $('#selectall').prop('checked', true);
+        $('.checkbox').each(function() { //loop through each checkbox
+            this.checked = true;  //select all checkboxes with class "checkbox1"               
+        });
+    });
+    $('#a_deselectall').click(function(event) {
+        $('#selectall').prop('checked', false);
+        $('.checkbox').each(function() { //loop through each checkbox
+            this.checked = false;  //select all checkboxes with class "checkbox1"               
+        });
+    });
+    $('#selectall').click(function(event) {  //on click 
+            if(this.checked) { // check select status
+                $('.checkbox').each(function() { //loop through each checkbox
+                    this.checked = true;  //select all checkboxes with class "checkbox1"               
+                });
+            }else{
+                $('.checkbox').each(function() { //loop through each checkbox
+                    this.checked = false; //deselect all checkboxes with class "checkbox1"                       
+                });         
+            }
+        });
 
+
+    if($('#choose_cv').val() == null){
+        $('.is_file').prop('checked', true);
+        $("#choose_cv").prop("disabled", true);
+    }
+    
+    $('.is_file').click(function(event) {
+        if(this.checked){
+            $("#choose_cv").prop("disabled", true);       
+        }else{
+            $("#choose_cv").prop("disabled", false);
+        }
+    });
 })(jQuery);
 
 

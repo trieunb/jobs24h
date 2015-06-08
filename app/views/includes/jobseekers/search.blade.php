@@ -2,25 +2,29 @@
 	<div class="bg-search row">
 				<div class="search-form container">
 					{{Form::open(array('route'=>array('jobseekers.search-job'), 'class'=>'form', 'method'=>'GET' ))}}
-					
+						<?php
+							if(!isset($keyword) && !isset($province)&& !isset($categories)&& !isset($salary)&& !isset($level)){
+								$keyword = $province = $categories = $salary = $level = null;
+							}
+						?>
 						<div class="col-sm-9">
 							<div class="col-sm-8">
 			                    <label class="hidden-xs text-white">Tìm việc làm...</label>
-			                    {{Form::input('text','keyword', null, array('class'=>'form-control search-all', 'placeholder'=>'Nhập Chức Danh, Vị Trí Công Việc, Kỹ Năng Liên Quan...'))}}
+			                    {{Form::input('text','keyword', $keyword, array('class'=>'form-control search-all', 'placeholder'=>'Nhập Chức Danh, Vị Trí Công Việc, Kỹ Năng Liên Quan...'))}}
 			                </div>
 			                <div class="col-sm-4">
 			                	<label class="hidden-xs text-white">Tại Việt Nam</label>
-			                	{{Form::select('province[]', Province::lists('province_name', 'id'),null, array('class'=>'form-control chosen-select', 'id'=>'locationMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả địa điểm','multiple'))}}
+			                	{{Form::select('province[]', Province::lists('province_name', 'id'),$province, array('class'=>'form-control chosen-select', 'id'=>'locationMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả địa điểm','multiple'))}}
 		                    </div>
 		                    <div class="clearfix"></div>
 		                    <div class="col-sm-4">
-		                   		{{Form::select('categories[]', Category::lists('cat_name', 'id'),null, array('class'=>'form-control chosen-select', 'id'=>'categoryMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả ngành nghề','multiple'))}}
+		                   		{{Form::select('categories[]', Category::lists('cat_name', 'id'),$categories, array('class'=>'form-control chosen-select', 'id'=>'categoryMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả ngành nghề','multiple'))}}
 		                    </div>
 		                    <div class="col-sm-4">
-		                    	{{Form::input('number','salary', null, array('class'=>'form-control search-all','step'=>'50' ,'placeholder'=>'Mức lương tối thiểu hàng tháng (USD)'))}}
+		                    	{{Form::input('number','salary', $salary, array('class'=>'form-control search-all','step'=>'10' ,'placeholder'=>'Mức lương tối thiểu hàng tháng (USD)'))}}
 		                    </div>
 		                    <div class="col-sm-4">
-		                    	{{Form::select('level', array('all'=>'Tất cả cấp bậc')+Level::lists('name', 'id'),null, array('class'=>'form-control chosen-select', 'id'=>'jobLevelMainSearch','data-placeholder'=>'Tất cả cấp bậc'))}}
+		                    	{{Form::select('level', array('all'=>'Tất cả cấp bậc')+Level::lists('name', 'id'),$level, array('class'=>'form-control chosen-select', 'id'=>'jobLevelMainSearch','data-placeholder'=>'Tất cả cấp bậc'))}}
 		                    </div>
 						</div>
 						<div class="col-sm-9">

@@ -16,6 +16,7 @@
 	</div>
 	<section class="main-content container single-post">
 		<div class="boxed">
+			{{Form::open(array('action'=>array('JobSeeker@delMyJob'), 'method'=>'POST', 'id'=>'DelSavedJob'))}}
 			<div class="rows">
 				<div class="title-page">
 					<h2>Việc làm của tôi</h2>
@@ -28,13 +29,13 @@
 					</p>
 					<p><strong>Với việc làm đã chọn:</strong></p>
 					<p class="clearfix">
-						{{Form::button('Xóa', array('class'=>'btn-delete btn bg-orange btn-lg'))}}
+						{{Form::submit('Xóa', array('class'=>'btn-delete btn bg-orange btn-lg'))}}
 					</p>
 					<table class="table table-striped table-hover table-bordered">
 								<thead>
 									<tr>
-										<th><input type="checkbox" value=""></th>
-										<th>Chức danh</th>
+										<th>{{Form::checkbox('', null,null, array('id'=>'selectall'))}}</th>
+										<th class="col-sm-5">Chức danh</th>
 										<th>Công ty</th>
 										<th>Ngày lưu</th>
 										<th>Nhà tuyển dụng phản hồi</th>
@@ -45,7 +46,7 @@
 									@if($my_job_list !=null)
 									@foreach($my_job_list as $mjl)
 									<tr>
-										<td><input type="checkbox" value=""></td>
+										<td>{{Form::checkbox('check[]', $mjl->id, null, array('class'=>'checkbox'))}}</td>
 										<td>
 											<strong><em>{{ HTML::linkRoute('jobseekers.job', $mjl->jobs->vitri, array($mjl->jobs->slug, "$mjl->job_id"), array('class' => 'text-blue'))}}</em></strong>
 											<small><div class="legend text-orange">

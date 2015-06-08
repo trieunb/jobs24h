@@ -1,7 +1,7 @@
 <?php
 
 class Application extends \Eloquent {
-	protected $fillable = [];
+	protected $fillable = ['job_id','ntv_id','cv_id' ,'prefix_title','first_name','last_name','headline','email','contact_phone','address','province_id','file_name','apply_date'];
 	protected $table = 'application';
 	public function job()
 	{

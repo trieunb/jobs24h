@@ -9,13 +9,12 @@
 					<span class="display-job-per-page pull-right">
 					{{Form::open(array('route'=>array('jobseekers.search-job'),'method'=>'GET', 'id'=>'getPerPage' ))}}
 						<span>Hiển thị</span>
-
-						{{Form::select('perpage', array('20'=>'20 việc làm','30'=>'30 việc làm','2'=>'50 việc làm'), $per_page, array('class'=>'form-control', 'id'=>'perpage','name'=>'perpage','style'=>'width:125px'))}}
+						{{Form::select('perpage', array('20'=>'20 việc làm','30'=>'30 việc làm','50'=>'50 việc làm'), $per_page, array('class'=>'form-control', 'id'=>'perpage','name'=>'perpage','style'=>'width:125px'))}}
 						{{Form::input('hidden', 'keyword', $keyword)}}
 						
 						{{Form::select('province[]', Province::lists('province_name', 'id'),$province, array('class'=>'form-control chosen-select hidden-xs', 'id'=>'locationMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả địa điểm','multiple'))}}
 						
-						{{Form::select('province[]', Province::lists('province_name', 'id'),$categories, array('class'=>'form-control chosen-select hidden-xs', 'id'=>'locationMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả địa điểm','multiple'))}}
+						{{Form::select('categories[]', Category::lists('cat_name', 'id'),$categories, array('class'=>'form-control chosen-select hidden-xs', 'id'=>'categoryMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả ngành nghề','multiple'))}}
 						
 						{{Form::input('hidden', 'salary', $salary)}}
 						

@@ -33,16 +33,16 @@ Route::group(array('prefix'=>$locale), function() {
 			Route::get('/my-job/{job_id}', array('as'=>'jobseekers.save-job','uses'=>'JobSeeker@saveJob'));
 			Route::get('/my-job', array('as'=>'jobseekers.my-job','uses'=>'JobSeeker@myJob'));
 			Route::get('/saved-job', array('as'=>'jobseekers.saved-job','uses'=>'JobSeeker@savedJob'));
+			Route::post('/saved-job', array('as'=>'jobseekers.post-del-my-job','uses'=>'JobSeeker@delMyJob'));
 			Route::get('/applied-job', array('as'=>'jobseekers.applied-job','uses'=>'JobSeeker@appliedJob'));
 			Route::get('/respond-from-employment', array('as'=>'jobseekers.respond-from-employment','uses'=>'JobSeeker@repondFromEmployment'));
 			Route::get('/my-resume-by-upload/{action}/{id_cv}', array('as'=>'jobseekers.action-cv','uses'=>'JobSeeker@actionCV'));
 			Route::post('/my-resume-by-upload/{id_cv}', array('as'=>'jobseekers.update-upload-cv','uses'=>'JobSeeker@updateUploadCV'));
 			Route::get('/notification-jobs', array('as'=>'jobseekers.notification-jobs','uses'=>'JobSeeker@notificationJobs'));
 			Route::post('/notification-jobs/', array('as'=>'jobseekers.post-notification-jobs','uses'=>'JobSeeker@creatNotificationJobs'));
-			Route::post('/notification-jobs/{action}/{id}', array('as'=>'jobseekers.action-notification-jobs','uses'=>'JobSeeker@actionNotificationJobs'));
 			Route::controller('notification-jobs', 'JobSeeker', array(
-				'getUpdate' => 'jobseekers.get-update-notification-jobs',
 				'postUpdate' => 'jobseekers.post-update-notification-jobs',
+				'postDelete' => 'jobseekers.post-del-notification-jobs',
 			));
 			
 		});

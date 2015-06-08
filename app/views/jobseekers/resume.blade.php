@@ -56,7 +56,7 @@
 								</div>
 								<label for="" class="col-sm-3 control-label">Quốc tịch:</label>
 								<div class="col-sm-3">
-									{{$user->country->country_name}}									
+									{{$user->country->country_name}}		
 								</div>
 							</div>
 							<div class="clearfix"></div>
@@ -70,11 +70,15 @@
 							<div class="form-group">
 								<label for="" class="col-sm-3 control-label">Quốc gia:</label>
 								<div class="col-sm-3">
-									{{$user->country->country_name}}
+									@if($user->country != null)
+										{{$user->country->country_name}}
+									@endif
 								</div>
 								<label for="" class="col-sm-3 control-label">Tỉnh/Thành phố:</label>
 								<div class="col-sm-3">
-									{{$user->province->province_name}}
+									@if($user->province != null)
+										{{$user->province->province_name}}
+									@endif
 								</div>
 							</div>
 				</div><!-- rows -->
