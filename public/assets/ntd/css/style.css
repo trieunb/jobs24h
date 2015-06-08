@@ -2,7 +2,7 @@
 /* 
 Author: Thong Ho
 */
-@import "http://fonts.googleapis.com/css?family=Calligraffitti";
+@import "http://fonts.googleapis.com/css?family=Calligraffitti|Open+Sans";
 
 
 label {font-weight: 600;}
@@ -65,7 +65,7 @@ hr {
 
 input, select, button, a.btn, textarea,.input-group-addon,.pagination-lg>li:first-child>a, .pagination-lg>li:first-child>span,.pagination-lg>li:last-child>a, .pagination-lg>li:last-child>span {
     vertical-align:middle;
-    border-radius: 0 !important;
+    border-radius: 0;
 }
 
 
@@ -242,7 +242,8 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
 
 .pagination-blue.push-top {margin-top: 20px;}
 .pagination-blue {margin: 0;}
-.pagination-blue>li>a {padding: 1px 7px; margin: 0 2px; border: 1px solid #1ac6ff;}
+.pagination-blue>ul>li>a {padding: 1px 7px; margin: 0 2px; border: 1px solid #1ac6ff;}
+.pagination-blue>ul>li>span {padding: 1px 7px; margin: 0 2px; border: 1px solid #1ac6ff;}
 .sosial-share li{float: left; margin-right: 10px;} 
 .company-info {background: #fff; margin: 30px 0 0;}
 .snapshot li strong {display: block;}
@@ -250,8 +251,8 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
 .panel.boxed,.panel.box {float: none;}
 .gallery-photo li {margin: 0; padding: 0;}
 .gallery-photo li img {border: 3px solid #333;}
-.list-actions li {float: left; margin:0 7px; border: 1px solid #00b9f2; padding: 3px 15px; border-radius: 20px; cursor: pointer;}
-.list-actions li.active {border-color: red; color: red;}
+.list-actions button {float: left; margin:0 7px; border: 1px solid #00b9f2; padding: 3px 15px; border-radius: 20px; cursor: pointer;}
+.list-actions button:hover {border-color: red; color: red;}
 .form-inline-label{line-height: 33px; text-align: right;}
 
 
@@ -343,6 +344,7 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
   font-family: "Gotham-Thin";
   font-size: 48px;
   color: #454f57;
+  font-weight: normal;
 }
 .sales .sales-info {
   margin-top: 30px;
@@ -367,7 +369,7 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
   color: #16cc53;
 }
 .sales button.btn {
-  border-radius: 25px;
+  border-radius: 25px !important;
   text-transform: uppercase;
   color: #FFF;
   padding: 10px 60px;
@@ -460,6 +462,7 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
 }
 .customer-respond {
   padding: 10px 0 35px 0;
+  background: #FFF;
 }
 .customer-respond .respond-note, .customer-respond .boxes .box-info, .more-info .short-description {
   font-size: 18px;
@@ -505,4 +508,106 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
 }
 .menu-management-resume ul li.active a i {
   display: inline-block;
+}
+.btn-radius {
+  border-radius: 2px !important;
+}
+.calendar-content {
+  background: url(../images/separator.png) repeat-x;
+  padding-top: 20px;
+}
+.calendar {
+  font-family: "Open Sans";
+  font-style: normal;
+}
+.calendar thead th {
+  background: #274760;
+  color: #FFF;
+  border-right: 1px solid #FFF;
+}
+.calendar thead th:last-child {
+  border-right: none;
+}
+.calendar tbody {
+  color: #274760;
+}
+.calendar tbody tr td {
+  text-align: center;
+  padding: 5px 0;
+}
+.calendar tbody tr td a {
+  font-size: 14px;
+  padding: 5px 5px;
+}
+.calendar tbody tr td:hover a {
+  background: #DDD;
+}
+.calendar tbody tr td:nth-child(6) a, .calendar tbody tr td:nth-child(7) a {
+  color: #fc6b18;
+}
+.calendar .bg-orange {
+  background: #fc6b18;
+}
+.advance-search a {
+  color: #1ac6ff;
+  text-decoration: underline;
+  padding: 0px 5px;
+}
+.advance-search a:hover {
+  color: #111;
+}
+.title-image {
+  float: left;
+}
+.search-info {
+  background: #f7941d;
+  padding: 15px 25px;
+  color: #FFF;
+  font-size: 14px;
+  border-radius: 2px;
+}
+.info-text span {
+  padding-left: 20px;
+}
+.btn-search {
+  padding: 6px 21px !important;
+}
+.search-page .pagination {
+  margin: 12px 0;
+}
+
+.search-page .pagination li a, .search-page .pagination li span {
+  margin-right: 10px;
+  border: 1px solid #1ac6ff;
+  color: #1ac6ff;
+}
+.search-page .pagination>li>a, .search-page .pagination>li>span {
+  padding: 4px 12px;
+}
+.search-page table.table-result a {
+  color: #007dc2;
+  text-decoration: underline;
+}
+.search-page table.table-result i {
+  padding-left: 10px;
+}
+.search-page table.table-result i:first-child {
+  padding-left: 0;
+}
+.search-page table.table-result a:hover {
+  text-decoration: none;
+  color: #111;
+}
+.search-page table.table-result tr td:nth-child(2), .search-page table.table-result tr td:nth-child(3),
+.search-page table.table-result tr td:nth-child(4), .search-page table.table-result tr td:nth-child(5) {
+  text-align: center;
+}
+.js-level {
+  color: #007dc2;
+}
+.invisible {
+  display: none;
+}
+.visible {
+  display: block;
 }

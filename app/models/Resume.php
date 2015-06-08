@@ -1,5 +1,5 @@
 <?php
-
+use Carbon\Carbon;
 class Resume extends \Eloquent {
 	protected $fillable = ['ntv_id', 'tieude_cv', 'bangcapcaonhat', 'namkinhnghiem','bangcapcaonhat','ctyganday',
 	'cvganday','capbachientai','vitrimongmuon','capbacmongmuon','mucluong','loaitien',
@@ -84,6 +84,44 @@ class Resume extends \Eloquent {
 			}
 		}
 		return true;
+	}
+	public function getUpdateAt()
+	{
+		$txt = 'diff.timediff.';
+
+		$isNow = true;
+		$other = Carbon::now();
+
+		$delta = abs($other->diffInSeconds($this->updated_at));
+
+		// 30 days per month, 365 days per year... good enough!!
+		$divs = array(
+		   'second' => Carbon::SECONDS_PER_MINUTE,
+		   'minute' => Carbon::MINUTES_PER_HOUR,
+		   'hour'   => Carbon::HOURS_PER_DAY,
+		   'day'    => 30,
+		  
+		   'month'  => Carbon::MONTHS_PER_YEAR,
+		   
+		);
+
+		$unit = 'year';
+
+		foreach ($divs as $divUnit => $divValue) {
+		   if ($delta < $divValue) {
+		      $unit = $divUnit;
+		      break;
+		   }
+
+		   $delta = floor($delta / $divValue);
+		}
+
+		if ($delta == 0) {
+		   $delta = 1;
+		}
+
+		$txt .= $unit;
+		return Lang::choice($txt, $delta, compact('delta'));
 	}
 	
 

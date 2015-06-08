@@ -34,5 +34,5 @@
 								
 							</tbody>
 						</table>
-							<a class="text-blue decoration italic">{{ HTML::image('assets/ntd/images/excel.png') }}Chuyển danh sách sang file excel</a>
+							<a href="{{ URL::route('employers.report.export', $order->id) }}" class="text-blue decoration italic">{{ HTML::image('assets/ntd/images/excel.png') }}Chuyển danh sách sang file excel</a>
 					</div>

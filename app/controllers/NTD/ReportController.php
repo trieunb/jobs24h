@@ -54,5 +54,37 @@ class ReportController extends \Controller {
 	{
 		return View::make('employers.candidates.test');
 	}
+	public function getExport($id = false)
+	{
+		$detail = OrderDetail::select(DB::raw('YEAR(viewed_date) year, MONTH(viewed_date) month, DAY(viewed_date) day, COUNT(*) post_count'))
+		->whereHas('order', function($q) {
+			$q->where('ntd_id', Auth::id());
+		})
+		->where('order_id', $id)
+		->groupBy('year')
+	    ->groupBy('month')
+	    ->groupBy('day')
+	    ->orderBy('year', 'desc')
+	    ->orderBy('month', 'desc')
+	    ->orderBy('day', 'desc')
+		->get()->toArray();
+		$result = array();
+		if(count($detail))
+		{
+			foreach ($detail as $key => $value) {
+				$result[] = [
+					'NGÀY SỬ DỤNG'	=>	$value['year'] . "-" . $value['month'] . "-" . $value['day'],
+					'SỐ LƯỢNG HỒ SƠ SỬ DỤNG'	=>	$value['post_count'],
+				];
+			}
+		}
+		\Excel::create('Filename', function($excel) use($result) {
+			$excel->sheet('Sheetname', function($sheet) use($result) {
+				
+		        $sheet->fromArray($result);
+
+		    });
+		})->download('xlsx');
+	}
 	
 }

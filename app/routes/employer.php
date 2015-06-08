@@ -51,7 +51,8 @@ Route::group(array('prefix'=>$locale), function() {
 				'getViewCandidate'		=>	'employers.report.viewcandidate',
 				'getAlert'				=>	'employers.report.alert',
 				'getRespond'			=>	'employers.report.respond',
-				'getTest'			=>	'employers.report.test',
+				'getTest'				=>	'employers.report.test',
+				'getExport'				=>	'employers.report.export',
 				
 			));
 			Route::controller('orders', 'OrderController', array(
@@ -59,6 +60,15 @@ Route::group(array('prefix'=>$locale), function() {
 				'getAdd'			=>	'employers.orders.add',
 				'getDetail'			=>	'employers.orders.detail',
 				'getContact'			=>	'employers.orders.contact',
+				
+			));
+			Route::controller('search', 'SearchController', array(
+				'getAdvance'			=>	'employers.search.advance',
+				'getBasic'				=>	'employers.search.basic',
+				'postBasic'				=>	'employers.search.postbasic',
+				'getCategory'			=>	'employers.search.category',
+				'postCalendar'			=>	'employers.search.calendar',
+				'getHistory'			=>	'employers.search.history',
 				
 			));
 		});

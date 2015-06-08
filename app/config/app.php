@@ -52,7 +52,7 @@ return array(
 	|
 	*/
 
-	'locale' => 'en',
+	'locale' => 'vi',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -127,6 +127,7 @@ return array(
 		'Barryvdh\Debugbar\ServiceProvider',
 		'DaveJamesMiller\Breadcrumbs\ServiceProvider',
 		'Mews\Captcha\CaptchaServiceProvider',
+		'Maatwebsite\Excel\ExcelServiceProvider',
 
 	),
 
@@ -203,6 +204,7 @@ return array(
 		'Breadcrumbs' => 'DaveJamesMiller\Breadcrumbs\Facade',
 		'Form'		=>	'App\DTT\Services\Form',
 		'Captcha' => 'Mews\Captcha\Facades\Captcha',
+		'Excel' => 'Maatwebsite\Excel\Facades\Excel',
 		
 	),
 

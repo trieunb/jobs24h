@@ -5,8 +5,8 @@
 							<div class="jumbotron">
 								<h2 class="text-center">Giúp <span class="heading-text">doanh nghiệp</span> của bạn vươn xa</h2>
 								<center>
-									{{ HTML::link(URL::route('employers.login'), 'Đăng Nhập', array('class'=>'btn btn-vnjob btn-color btn-primary') ) }}
-									{{ HTML::link(URL::route('employers.register'), 'Đăng Ký', array('class'=>'btn btn-vnjob btn-transparent btn-primary') ) }}
+									{{ HTML::link(URL::route('employers.login'), 'Đăng Nhập', array('class'=>'btn btn-vnjob btn-color btn-radius btn-primary') ) }}
+									{{ HTML::link(URL::route('employers.register'), 'Đăng Ký', array('class'=>'btn btn-vnjob btn-transparent btn-radius btn-primary') ) }}
 								</center>
 							</div>
 						</div>

@@ -13,7 +13,8 @@
 		"swiftmailer/swiftmailer": "~5.4",
 		"davejamesmiller/laravel-breadcrumbs": "~2.2",
 		"doctrine/dbal": "2.4.*",
-		"mews/captcha": "dev-master-l4"
+		"mews/captcha": "dev-master-l4",
+		"maatwebsite/excel": "1.*"
 	},
 	"autoload": {
 		"classmap": [

@@ -1,23 +1,28 @@
 <nav class="menu-tab">
 	<div class="container">
 	<ul>
-		<li><a href="{{ URL::route('employers.launching') }}">Trang chủ</a></li>
-		<li>
-			<a href="#" onclick="return false;">Tìm hồ sơ</a>
+		<li><a href="{{ URL::route('employers.launching') }}">Trang chủ</a>
+			<ul>
+				<li><a href="">&nbsp;</a></li>
+			</ul>
+		</li>
+		<li class="{{ HTML::active(['employers.search.*'], 'active') }}">
+			<a href="{{ URL::route('employers.search.basic') }}" onclick="return false;">Tìm hồ sơ</a>
 			<ul>
 				<div class="container">
-				<li><a href="#">Quản lý đăng tuyển</a></li>
-				<li><a href="#">Quản lý hồ sơ ứng viên</a></li>
-				<li><a href="#">Đơn hàng dịch vụ</a></li>
-				<li><a href="#">Báo cáo dịch vụ hồ sơ</a></li>
-				<li><a href="#">Quản lý tìm kiếm hồ sơ</a></li>
-				<li class="selected"><a href="#">Quản lý tài khoản</a></li>
-				<li><a href="#">Mua dịch vụ</a></li>
+				<li class="{{ HTML::active(['employers.search.basic'], 'selected') }}"><a href="{{ URL::route('employers.search.basic') }}">Tìm kiếm nhanh</a></li>
+				<li class="{{ HTML::active(['employers.search.advance'], 'selected') }}"><a href="{{ URL::route('employers.search.advance') }}">Tìm kiếm nâng cao</a></li>
+				<li class="{{ HTML::active(['employers.search.category'], 'selected') }}"><a href="{{ URL::route('employers.search.category') }}">Tìm theo ngành nghề</a></li>
+				
 				</div>
 			</ul>
 		</li>
 		<li class="{{ HTML::active(['employers.job.add'], 'active') }}"><a href="{{ URL::route('employers.job.add') }}">Đăng tuyển dụng</a>
-			
+			<ul>
+				<div class="container">
+					<li><a href="">&nbsp;</a></li>
+				</div>
+			</ul>
 		</li>
 			
 		<li class="{{ HTML::active(['employers.jobs.*', 'employers.candidates.*', 'employers.report.*', 'employers.orders.*']) }}">
@@ -28,7 +33,7 @@
 				<li class="{{ HTML::active(['employers.jobs.*'], 'selected') }}"><a href="{{ URL::route('employers.jobs.index') }}">Quản lý việc làm</a></li>
 				<li class="{{ HTML::active(['employers.candidates.*'], 'selected') }}"><a href="{{ URL::route('employers.candidates.job', 'all') }}">Quản lý ứng viên</a></li>
 				<li class="{{ HTML::active(['employers.report.candidates'], 'selected') }}"><a href="{{ URL::route('employers.report.candidates') }}">Báo cáo dịch vụ hồ sơ</a></li>
-				<li class="{{ HTML::active(['employers.report.alert'], 'selected') }}"><a href="{{ URL::route('employers.report.alert') }}">Thông báo hồ sơ</a></li>
+				<li class="{{ HTML::active(['employers.report.alert'], 'selected') }}"><a href="{{ URL::route('employers.report.alert') }}">Thông báo</a></li>
 				<li class="{{ HTML::active(['employers.report.respond'], 'selected') }}"><a href="{{ URL::route('employers.report.respond') }}">Phản hồi của UV</a></li>
 				<li class="{{ HTML::active(['employers.report.test'], 'selected') }}"><a href="{{ URL::route('employers.report.test') }}">Bài kiểm tra</a></li>
 				</div>

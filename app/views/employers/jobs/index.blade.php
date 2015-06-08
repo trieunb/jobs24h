@@ -69,13 +69,15 @@
 											@endif
 											</tbody>
 										</table>
+										<div class="list-actions">
 										{{ Form::button('Đăng tuyển', array('type'=>'submit', 'name'=>'submit', 'value'=>'active', 'class'=>'btn btn-default')) }}
 										{{ Form::button('Ngừng đăng', array('type'=>'submit', 'name'=>'submit', 'value'=>'inactive', 'class'=>'btn btn-default')) }}
 										{{ Form::button('Ngưng nhận HS', array('type'=>'submit', 'name'=>'submit', 'value'=>'unapply', 'class'=>'btn btn-default')) }}
 										{{ Form::button('Mở nhận HS', array('type'=>'submit', 'name'=>'submit', 'value'=>'apply', 'class'=>'btn btn-default')) }}
 										{{ Form::button('Xóa', array('type'=>'submit', 'name'=>'submit', 'value'=>'delete', 'class'=>'btn btn-default', 'onclick'=>"return confirm('Bạn có muốn xóa công việc đã chọn ?');")) }}
+										</div>
 										<div class="clearfix"></div>
-										<div id="pagination" class="pull-right">
+										<div id="pagination" class="pull-right pagination-sm pagination-blue push-top">
 											{{ $jobs->links() }}
 										</div>
 										{{ Form::close() }}
@@ -182,7 +184,7 @@
 			vertical-align: middle;
 		}
 		.btn-action {
-			padding: 5px 10px;
+			padding: 1px 6px;
 		}
 	</style>
 @stop
