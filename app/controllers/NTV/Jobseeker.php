@@ -6,7 +6,42 @@
 
 class JobSeeker extends Controller
 {
-	
+	public function __construct(){
+		$suggested_jobs = Subscribe::where('ntv_id', $GLOBALS['user']->id)->get();
+		foreach ($suggested_jobs as $key => $value) {
+			$keyword[] = $value->keyword;
+			$categories[] = json_decode($value->categories);
+			$provinces[] = json_decode($value->provinces);
+		}
+		$jobs = Job::where('is_display',1)->where('status',1)->with('province')->with('category');
+		if(count($provinces) > 0)
+		{
+			foreach($provinces as $province){
+				$jobs->whereHas('province', function($query) use($province) {
+					$query->whereIn('province_id', $province);
+				});
+			}
+		}else {
+				$jobs->with(array('province'	=>	function($query) {
+					$query->with('province');
+				}));
+		}
+		if(count($categories) > 0 )
+		{
+			foreach($categories as $cate){
+				$jobs->whereHas('category', function($query) use($cate)  {
+					$query->whereIn('cat_id', $cate);
+				});
+			}
+		}else {
+			$jobs->with(array('category'=>function($query) {
+				$query->with('category');
+			}));
+		}
+		$jobs = $jobs->orderBy('updated_at', 'ASC')->take(3)->get();
+		return View::share('jobs', $jobs);
+		
+	}
 	public function home()
 	{
 		$categories_default = Category::all();
@@ -27,12 +62,7 @@ class JobSeeker extends Controller
 
 		return View::make('jobseekers.home', compact('jobs', 'categories_default', 'categories_alpha', 'categories_hot'));
 	}
-	public function getCountMenu(){
-		$count_my_jobs = MyJob::where('ntv_id',$GLOBALS['user']->id)->count();
-		$count_applied_job = Application::where('ntv_id',$GLOBALS['user']->id)->count();
-		$count_my_resume = Resume::where('ntv_id', $GLOBALS['user']->id)->count();
-		return View::view('includes.jobseeker.menu-ntv', compact('count_my_jobs','count_applied_job','count_my_resume'));
-	}
+
 	public function editBasicHome(){
 		return View::make('jobseekers.edit-basic-info')->with('user', $GLOBALS['user']);	
 	}
@@ -155,8 +185,10 @@ class JobSeeker extends Controller
 		}))->with(array('education'=>function($ed) {
 			$ed->with('edu');
 		}))->where('id', $id_cv)->first();
+
+		$user = NTVSentry::find($my_resume->ntv_id);
 		//var_dump($my_resume->education); die();
-		return View::make('jobseekers.resume')->with('user', $GLOBALS['user'])->with('id_cv', $id_cv)->with('my_resume', $my_resume);
+		return View::make('jobseekers.resume')->with('user', $user)->with('id_cv', $id_cv)->with('my_resume', $my_resume);
 	}
 
 	// Edit CV

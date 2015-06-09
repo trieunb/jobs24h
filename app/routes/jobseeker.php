@@ -1,6 +1,7 @@
 <?php 
 Route::group(array('prefix'=>$locale), function() {
 	Route::group(array('prefix'=>'jobseekers'), function() {
+
 		Route::get('/', array('as'=>'jobseekers.home', 'uses'=>'JobSeeker@home'));
 		Route::get('/login', array('as'=>'jobseekers.login', 'uses'=>'JobSeekerAuth@login') );
 		Route::post('/login', 'JobSeekerAuth@doLogin' );
@@ -21,7 +22,6 @@ Route::group(array('prefix'=>$locale), function() {
 			Route::get('/edit-cv', array('as'=>'jobseekers.edit-cv', 'uses'=>'JobSeeker@editCvHome') );
 			Route::post('/edit-cv/{action}/{id_cv}', array('as'=>'jobseekers.save-cv', 'uses'=>'JobSeeker@saveInfo'));
 			Route::get('/edit-cv/{id_cv}', array('as'=>'jobseekers.edit-cv', 'uses'=>'JobSeeker@editCvHome'));
-			Route::get('/resume/{id_cv}', array('as'=>'jobseekers.view-resume', 'uses'=>'JobSeeker@viewResume'));
 			Route::get('/my-resume', array('as'=>'jobseekers.my-resume', 'uses'=>'JobSeeker@myResume'));
 			Route::post('/my-resume', array('as'=>'jobseekers.my-resume', 'uses'=>'JobSeeker@createResume'));
 			Route::get('/my-resume-by-upload', array('as'=>'jobseekers.get-my-resume-by-upload', 'uses'=>'JobSeeker@myResumeByUpload'));
@@ -51,7 +51,7 @@ Route::group(array('prefix'=>$locale), function() {
 		Route::controller('/view/{slug}/{id}', 'JobController', array(
 			'getIndex'	=>	'jobseekers.job',
 		));
-
+		Route::get('/resume/{id_cv}', array('as'=>'jobseekers.view-resume', 'uses'=>'JobSeeker@viewResume'));
 		Route::get('/category', array('as'=>'jobseekers.get-category', 'uses' =>'JobController@getCategory'));
 		Route::get('q', array('as'=>'jobseekers.search-job','uses'=>'JobController@searchJob'));
 		Route::get('/applying-job/{job_id}', array('as'=>'jobseekers.applying-job','uses'=>'JobSeeker@applyingJob'));

@@ -34,19 +34,12 @@
 						<span class="employer-site"><a href="{{ URL::route('employers.launching') }}"><i class="fa fa-caret-right"></i> Nhà tuyển dụng</a></span>
 					</div>
 					<ul class="menu pull-right">
-					<?php $user = Sentry::getUser();?>
+						<?php $user = Sentry::getUser();?>
 						@if(Sentry::check())
 								<nav class="ntv-menu navbar-right">
 									@include('includes.jobseekers.menu-ntv')
 								</nav>
-								<a href="{{ URL::route('jobseekers.edit-basic-info') }}" class="text-blue user-links pull-right">
-									@if($user->avatar !=null)
-										{{ HTML::image('uploads/jobseekers/avatar/'.$user->avatar.'',null, array('class'=>'avatar')) }}
-									@else
-										{{ HTML::image('assets/images/avatar.jpg',null, array('class'=>'avatar')) }}
-									@endif
-									<strong><em>Chào, {{$user->first_name}}</em></strong>
-								</a>
+								
 						@else
 							<li><a href="{{ URL::route('jobseekers.login') }}">Đăng nhập</a></li>
 							<li><a href="{{ URL::route('jobseekers.register') }}">Đăng ký</a></li>

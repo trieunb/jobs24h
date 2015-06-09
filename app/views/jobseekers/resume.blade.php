@@ -8,11 +8,13 @@
 				<div class="box">
 					<div class="col-sm-3">
 						<div class="avatar">
+						@if(isset($user))
 							@if($user->avatar !=null)
 								{{ HTML::image('uploads/jobseekers/avatar/'.$user->avatar.'') }}
 							@else
 								{{ HTML::image('assets/images/avatar.jpg') }}
 							@endif
+						@endif
 						</div>
 					</div>
 					<div class="col-sm-9">

@@ -10,7 +10,7 @@
 				$count_applied_job = Application::where('ntv_id',$GLOBALS['user']->id)->count();
 				$count_my_resume = Resume::where('ntv_id', $GLOBALS['user']->id)->count();
 				$count_repond = MyJob::where('ntv_id', $GLOBALS['user']->id)->where('respond','!=','')->count();
-				$my_resume = $applied_job = $my_job = 0;
+				$my_resume = $applied_job = $my_job = $repond = 0;
 
 		   		if(isset($count_my_resume)){
 		   			$my_resume = $count_my_resume;
@@ -38,7 +38,7 @@
 	      	<li><a href="{{URL::route('jobseekers.respond-from-employment')}}">{{ HTML::image('assets/images/icons/repond.png') }} Phản hồi của nhà tuyển dụng<span class="badge">{{$repond}}</span></a></li>
 	      	<!--<li><a href="ntv-hanchecty.php">{{ HTML::image('assets/images/icons/limit.png') }} Hạn chê công ty xem hồ sơ<span class="badge">2</span></a></li>-->
 	      	<li><a href="#">{{ HTML::image('assets/images/icons/interview_letter.png') }} Thư mời phỏng vấn</a></li>
-	      	<li><a href="#">{{ HTML::image('assets/images/icons/notify.png') }} Thông báo việc làm</a></li>
+	      	<li><a href="{{URL::route('jobseekers.notification-jobs')}}">{{ HTML::image('assets/images/icons/notify.png') }} Thông báo việc làm</a></li>
 	      	<li><a href="{{URL::route('jobseekers.logout')}}">{{ HTML::image('assets/images/icons/log_out.png') }} Thoát</a></li>
 	   	</ul>
 	</span> 

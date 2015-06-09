@@ -1,18 +1,7 @@
 @extends('layouts.jobseeker')
 @section('content')
 	<div class="container">
-		<div class="col-sm-8">
 			@include('includes.jobseekers.breadcrumb')
-		</div>
-		<div class="user-menu col-sm-4 pull-right">
-			<a href="#" class="text-blue">
-				<img src="assets/images/ruibu.jpg" class="avatar">
-				<strong><em>Hi, Anh Điệp</em></strong>
-			</a>
-			<nav class="ntv-menu navbar-right">
-				@include('includes.jobseekers.menu-ntv')
-			</nav>
-		</div>
 	</div>
 	<section class="main-content container single-post">
 		<div class="boxed">
@@ -104,7 +93,7 @@
 		</div>
 		<div class="boxed">
 			<div class="rows">
-				@include('includes.jobseekers.block-job-suggest')
+				@include('includes.jobseekers.widget.suggested-jobs')
 			</div>
 		</div>
 	</section>

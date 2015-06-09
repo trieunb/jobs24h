@@ -1,13 +1,24 @@
 <div class="boxed-search">
 	<div class="bg-search row">
 				<div class="search-form container">
+					<?php 
+					if (!isset($keyword)) {
+						$keyword = null;
+					} 
+					if (!isset($province)) {
+						$province = null;
+					} 
+					if (!isset($categories)) {
+						$categories = null;
+					} 
+					if (!isset($salary)) {
+						$salary = null;
+					} 
+					if (!isset($level)) {
+						$level = null;
+					} 
+					?>
 					{{Form::open(array('route'=>array('jobseekers.search-job'), 'class'=>'form', 'method'=>'GET' ))}}
-						<?php
-							$keyword = $province = $categories = $salary = $level = null;
-							if(isset($keyword) && isset($province)&& isset($categories)&& isset($salary)&& isset($level)){
-								$keyword = $keyword;$province = $province;$categories = $categories;$salary = $salary;$level = $level;
-							}
-						?>
 						<div class="col-sm-9">
 							<div class="col-sm-8">
 			                    <label class="hidden-xs text-white">Tìm việc làm...</label>
