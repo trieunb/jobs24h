@@ -1,7 +1,54 @@
 <?php 
 Route::group(array('prefix'=>$locale), function() {
 	Route::group(array('prefix'=>'jobseekers'), function() {
-
+		// Widget VIệc làm phù hơp
+		if($GLOBALS['user'] != null){
+			$suggested_jobs = Subscribe::where('ntv_id', $GLOBALS['user']->id)->get();
+			if(count($suggested_jobs) > 0){
+				foreach ($suggested_jobs as $key => $value) {
+					$keyword[] = $value->keyword;
+					$categories[] = json_decode($value->categories);
+					$provinces[] = json_decode($value->provinces);
+				}
+				$jobs = Job::where('is_display',1)->where('status',1)->with('province')->with('category');
+				if(count($provinces) > 0)
+				{
+					foreach($provinces as $province){
+						$jobs->whereHas('province', function($query) use($province) {
+							$query->whereIn('province_id', $province);
+						});
+					}
+				}else {
+						$jobs->with(array('province'	=>	function($query) {
+							$query->with('province');
+						}));
+				}
+				if(count($categories) > 0 )
+				{
+					foreach($categories as $cate){
+						$jobs->whereHas('category', function($query) use($cate)  {
+							$query->whereIn('cat_id', $cate);
+						});
+					}
+				}else {
+					$jobs->with(array('category'=>function($query) {
+						$query->with('category');
+					}));
+				}
+				$jobs_for_widget = $jobs->orderBy('updated_at', 'ASC')->take(3)->get();
+			}else{
+				$jobs_for_widget = Job::all()->orderBy('updated_at', 'ASC')->take(3)->get();
+			}
+			View::share('jobs_for_widget', $jobs_for_widget);
+		}
+		// Widget Ngành nghề hấp dẫn
+		$widget_categories_hot = Category::with('mtcategory')->get()->sortBy(function($categories_hot) {
+		    return $categories_hot->mtcategory->count();
+		})->reverse();
+		// Widget tìm công việc theo cấp bậc
+		$all_level = Level::all();
+		View::share('widget_categories_hot', $widget_categories_hot);
+		View::share('all_level', $all_level);
 		Route::get('/', array('as'=>'jobseekers.home', 'uses'=>'JobSeeker@home'));
 		Route::get('/login', array('as'=>'jobseekers.login', 'uses'=>'JobSeekerAuth@login') );
 		Route::post('/login', 'JobSeekerAuth@doLogin' );
@@ -23,7 +70,7 @@ Route::group(array('prefix'=>$locale), function() {
 			Route::post('/edit-cv/{action}/{id_cv}', array('as'=>'jobseekers.save-cv', 'uses'=>'JobSeeker@saveInfo'));
 			Route::get('/edit-cv/{id_cv}', array('as'=>'jobseekers.edit-cv', 'uses'=>'JobSeeker@editCvHome'));
 			Route::get('/my-resume', array('as'=>'jobseekers.my-resume', 'uses'=>'JobSeeker@myResume'));
-			Route::post('/my-resume', array('as'=>'jobseekers.my-resume', 'uses'=>'JobSeeker@createResume'));
+			Route::post('/my-resume', array('as'=>'jobseekers.create-my-resume', 'uses'=>'JobSeeker@createResume'));
 			Route::get('/my-resume-by-upload', array('as'=>'jobseekers.get-my-resume-by-upload', 'uses'=>'JobSeeker@myResumeByUpload'));
 			Route::post('/my-resume-by-upload', array('as'=>'jobseekers.post-my-resume-by-upload', 'uses'=>'JobSeeker@createResumeByUpload'));
 			Route::get('/edit-career-objectives', 'JobSeeker@returnLogin');
@@ -42,6 +89,8 @@ Route::group(array('prefix'=>$locale), function() {
 			Route::post('/my-resume-by-upload/{id_cv}', array('as'=>'jobseekers.update-upload-cv','uses'=>'JobSeeker@updateUploadCV'));
 			Route::get('/notification-jobs', array('as'=>'jobseekers.notification-jobs','uses'=>'JobSeeker@notificationJobs'));
 			Route::post('/notification-jobs/', array('as'=>'jobseekers.post-notification-jobs','uses'=>'JobSeeker@creatNotificationJobs'));
+			Route::get('/employer-view-resume', array('as'=>'jobseekers.employer-view-resume','uses'=>'JobSeeker@employerViewResume'));
+			Route::get('/message', array('as'=>'jobseekers.messages','uses'=>'JobSeeker@messages'));
 			Route::controller('notification-jobs', 'JobSeeker', array(
 				'postUpdate' => 'jobseekers.post-update-notification-jobs',
 				'postDelete' => 'jobseekers.post-del-notification-jobs',

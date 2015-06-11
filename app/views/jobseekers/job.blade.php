@@ -18,7 +18,9 @@
 						<i class="fa fa-envelope"></i>
 						<a href="{{URL::route('jobseekers.notification-jobs', array('jobid'=>$job->id))}}">Gởi email việc làm tương tự</a>
 						<i class="fa fa-share"></i>
-						<strong><a class="share-to-friends">Giới thiệu bạn bè</a></strong>
+						<strong><a class="share-to-friends" data-container="body" title="Giới Thiệu Việc Làm Đến Bạn Bè" data-toggle="popover" data-placement="bottom" data-content='<form action="" method="POST" role="form" class="form-horizontal" id="ShareToFriends"><div class="form-group"><input type="text" class="form-control first_name_friend" name="first_name_friend" id="" placeholder="Họ"></div><div class="form-group"><input type="text" class="form-control last_name_friend" name="last_name_friend"  placeholder="Tên"></div><div class="form-group"><input type="email" class="form-control email_name_friend" name="email_name_friend" placeholder="Email"></div><div class="form-group"><button type="submit" class="btn btn-sm bg-orange pull-right">Giới thiệu</button></div></form>'>Giới thiệu bạn bè</a></strong>
+
+
 					</div>
 					<h2>Mô Tả Công Việc</h2>
 					<div class="job-description">
@@ -90,13 +92,9 @@
 					<div class="jcarousel-wrapper" id="company-info">
 	                	<div class="jcarousel">
 							<ul>
-								<li><img src="assets/images/office.jpg"></li>
-								<li><img src="assets/images/office.jpg"></li>
-								<li><img src="assets/images/office.jpg"></li>
-								<li><img src="assets/images/office.jpg"></li>
-								<li><img src="assets/images/office.jpg"></li>
-								<li><img src="assets/images/office.jpg"></li>
-								<li><img src="assets/images/office.jpg"></li>
+							@foreach(json_decode($job->ntd->company->company_images) as $img)
+								<li>{{HTML::image('/uploads/companies/images/'.$img.'')}}</li>
+							@endforeach
 							</ul>
 						</div>
 						<a href="#" class="jcarousel-control-prev">&lsaquo;</a>
@@ -104,7 +102,7 @@
 					</div>
 					<p>{{$job->ntd->company->full_description}}</p>
 				</div>
-				<a href="#" class="pull-right text-blue"><i class="fa fa-arrow-circle-right"></i> Việc làm khác từ công ty này</a>
+				<a href="{{URL::route('jobseekers.search-job', array('id'=>$job->ntd_id))}}" class="pull-right text-blue"><i class="fa fa-arrow-circle-right"></i> Việc làm khác từ công ty này</a>
 				</div>
 			</div>
 			<div class="boxed related-jobs">
@@ -113,12 +111,9 @@
 					<h2>Việc làm từ công ty khác</h2>
 				</div>
 				<ul class="arrow-square-orange">
-						<li><a href="#">IOS Developer Đà Nẵng</a></li>
-						<li><a href="#">IOS Developer Đà Nẵng</a></li>
-						<li><a href="#">IOS Developer Đà Nẵng</a></li>
-						<li><a href="#">IOS Developer Đà Nẵng</a></li>
-						<li><a href="#">IOS Developer Đà Nẵng</a></li>
-						<li><a href="#">IOS Developer Đà Nẵng</a></li>
+						@foreach($jobs_for_widget as $job)
+						<li><a href="{{URL::route('jobseekers.job', array($job->slug, $job->id))}}">{{$job->vitri}}</a></li>
+						@endforeach
 					</ul>
 				</div>
 			</div>
@@ -133,80 +128,8 @@
 						</div>
 		</section>
 		<aside id="sidebar" class="col-sm-3 pull-right">
-				<div class="widget row">
-					<h3>Việc làm phù hợp</h3>
-					<ul>
-						<li>
-							<div class="col-sm-3"><img src="assets/images/mp.png"></div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue"><strong>Trưởng phòng nhân sự</strong></a>
-								<div>Minh Phúc Telecom, <span class="text-orange">3000$</span></div>
-							</div>
-						</li>
-						<li>
-							<div class="col-sm-3"><img src="assets/images/mp.png"></div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue"><strong>Trưởng phòng nhân sự</strong></a>
-								<div>Minh Phúc Telecom, <span class="text-orange">3000$</span></div>
-							</div>
-						</li>
-						<li>
-							<div class="col-sm-3"><img src="assets/images/mp.png"></div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue"><strong>Trưởng phòng nhân sự</strong></a>
-								<div>Minh Phúc Telecom, <span class="text-orange">3000$</span></div>
-							</div>
-						</li>
-						<li>
-							<div class="col-sm-3"><img src="assets/images/mp.png"></div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue"><strong>Trưởng phòng nhân sự</strong></a>
-								<div>Minh Phúc Telecom, <span class="text-orange">3000$</span></div>
-							</div>
-						</li>
-						<li>
-							<div class="col-sm-3"><img src="assets/images/mp.png"></div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue"><strong>Trưởng phòng nhân sự</strong></a>
-								<div>Minh Phúc Telecom, <span class="text-orange">3000$</span></div>
-							</div>
-						</li>
-						<li>
-							<div class="col-sm-3"><img src="assets/images/mp.png"></div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue"><strong>Trưởng phòng nhân sự</strong></a>
-								<div>Minh Phúc Telecom, <span class="text-orange">3000$</span></div>
-							</div>
-						</li>
-						<li>
-							<div class="col-sm-3"><img src="assets/images/mp.png"></div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue"><strong>Trưởng phòng nhân sự</strong></a>
-								<div>Minh Phúc Telecom, <span class="text-orange">3000$</span></div>
-							</div>
-						</li>
-						<li>
-							<div class="col-sm-3"><img src="assets/images/mp.png"></div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue"><strong>Trưởng phòng nhân sự</strong></a>
-								<div>Minh Phúc Telecom, <span class="text-orange">3000$</span></div>
-							</div>
-						</li>
-						<li>
-							<div class="col-sm-3"><img src="assets/images/mp.png"></div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue"><strong>Trưởng phòng nhân sự</strong></a>
-								<div>Minh Phúc Telecom, <span class="text-orange">3000$</span></div>
-							</div>
-						</li>
-					</ul>
-				</div>
-				<div class="widget row ads">
-					<a href="#"><img src="assets/images/ads01.jpg"></a>
-				</div>
-				<div class="widget row ads">
-					<a href="#"><img src="assets/images/ads02.jpg"></a>
-				</div>
+				@include('includes.jobseekers.widget.right-suggested-jobs')
+				
 		</aside>
 	</section>
 @stop

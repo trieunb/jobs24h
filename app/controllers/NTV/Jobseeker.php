@@ -7,40 +7,8 @@
 class JobSeeker extends Controller
 {
 	public function __construct(){
-		$suggested_jobs = Subscribe::where('ntv_id', $GLOBALS['user']->id)->get();
-		foreach ($suggested_jobs as $key => $value) {
-			$keyword[] = $value->keyword;
-			$categories[] = json_decode($value->categories);
-			$provinces[] = json_decode($value->provinces);
-		}
-		$jobs = Job::where('is_display',1)->where('status',1)->with('province')->with('category');
-		if(count($provinces) > 0)
-		{
-			foreach($provinces as $province){
-				$jobs->whereHas('province', function($query) use($province) {
-					$query->whereIn('province_id', $province);
-				});
-			}
-		}else {
-				$jobs->with(array('province'	=>	function($query) {
-					$query->with('province');
-				}));
-		}
-		if(count($categories) > 0 )
-		{
-			foreach($categories as $cate){
-				$jobs->whereHas('category', function($query) use($cate)  {
-					$query->whereIn('cat_id', $cate);
-				});
-			}
-		}else {
-			$jobs->with(array('category'=>function($query) {
-				$query->with('category');
-			}));
-		}
-		$jobs = $jobs->orderBy('updated_at', 'ASC')->take(3)->get();
-		return View::share('jobs', $jobs);
 		
+
 	}
 	public function home()
 	{
@@ -543,18 +511,23 @@ class JobSeeker extends Controller
 		return View::make('jobseekers.my-resume')->with('my_resume', $my_resume)->with('user',$GLOBALS['user']);
 	}
 	public function createResume(){
-		$rs = Resume::create(array('ntv_id'=>$GLOBALS['user']->id ));
-		$id_cv = $rs->id;
-		$education = MTEducation::create(array('rs_id' => $id_cv));
-		$work_exp = Experience::create(array('rs_id'=>$id_cv));
-		$lang = CVLanguage::insert(array(
-			array('rs_id' => $id_cv,'count_lang' => 1),
-			array('rs_id' => $id_cv,'count_lang' => 2),
-			array('rs_id' => $id_cv,'count_lang' => 3),
-		));
-		if($rs)
-		{
-			return Redirect::route('jobseekers.edit-cv', array($id_cv));
+		$chk = Resume::where('ntv_id', $GLOBALS['user']->id)->count();
+		if($chk < 4){
+			$rs = Resume::create(array('ntv_id'=>$GLOBALS['user']->id ));
+			$id_cv = $rs->id;
+			$education = MTEducation::create(array('rs_id' => $id_cv));
+			$work_exp = Experience::create(array('rs_id'=>$id_cv));
+			$lang = CVLanguage::insert(array(
+				array('rs_id' => $id_cv,'count_lang' => 1),
+				array('rs_id' => $id_cv,'count_lang' => 2),
+				array('rs_id' => $id_cv,'count_lang' => 3),
+			));
+			if($rs)
+			{
+				return Redirect::route('jobseekers.edit-cv', array($id_cv));
+			}
+		}else{
+			return Redirect::back()->withErrors('Bạn đã tạo nhiều hơn 4 Hồ Sơ.');
 		}
 	}
 	public function myJob(){
@@ -910,6 +883,17 @@ class JobSeeker extends Controller
 		    $del = Subscribe::find($params['id']);
 			$del->delete();
 		}		
+	}
+
+
+	// nhà tuyển dụng xem hồ sơ
+	public function employerViewResume(){
+		return View::make('jobseekers.employer-view-resume'); 
+	}
+
+	// Thư mời pv & tin nhắn từ nhà tuyển dụng 
+	public function messages(){
+		return View::make('jobseekers.messages'); 
 	}
 
 }

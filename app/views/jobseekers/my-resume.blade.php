@@ -10,8 +10,10 @@
 					<h2>Hồ Sơ Của Tôi</h2>
 				</div>
 				<p>Bạn đã có <strong class="text-orange"><span id="number_of_resumes">{{count($my_resume)}}</span> trong số 4</strong> hồ sơ. Hãy chọn một hồ sơ được "<strong>cho phép tìm kiếm</strong>" để nhà tuyển dụng có thể tìm thấy bạn.</p>
-						@if(count($my_resume) < 3)
-							<p><button type="submit" class="btn btn-lg bg-orange">Tạo Hồ Sơ</button></p>
+						@if(count($my_resume) < 4)
+							{{Form::open(array('route'=> array('jobseekers.create-my-resume'), 'method'=>'POST'))}}
+								<p><button type="submit" class="btn btn-lg bg-orange">Tạo Hồ Sơ</button></p>
+							{{Form::close()}}
 						@endif
 							<table class="table table-striped table-hover table-bordered">
 								<thead>

@@ -3,11 +3,10 @@
 				</div>
 				<div id="searchresult">
 				<ul>
-						@foreach($jobs as $job)
+						@foreach($jobs_for_widget as $job)
 						<li>
 							<div class="col-sm-1">
 								<a href="{{URL::route('jobseekers.job', array($job->slug, $job->id))}}">{{HTML::image('../uploads/companies/images/'.$job->ntd->company->logo.'')}}</a>
-								
 							</div>
 							<div class="col-sm-5">
 								<div class="job-title">

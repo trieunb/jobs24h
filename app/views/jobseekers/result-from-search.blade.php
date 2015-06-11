@@ -82,45 +82,9 @@
 			</div>
 		</section>
 		<aside id="sidebar" class="col-sm-3 pull-right">
-			<div class="widget row">
-				<h3>Ngành nghề hấp dẫn</h3>
-				<ul class="arrow-plus">
-					<li><a href="#">Biên/Phiên dịch</a></li>
-					<li><a href="#">Biên/Phiên dịch</a></li>
-					<li><a href="#">Biên/Phiên dịch</a></li>
-					<li><a href="#">Biên/Phiên dịch</a></li>
-					<li><a href="#">Biên/Phiên dịch</a></li>
-					<li><a href="#">Biên/Phiên dịch</a></li>
-					<li><a href="#">Biên/Phiên dịch</a></li>
-					<li><a href="#">Biên/Phiên dịch</a></li>
-					<li><a href="#">Biên/Phiên dịch</a></li>
-					<li><a href="#">Biên/Phiên dịch</a></li>
-				</ul>
-				<a href="#" class="text-blue decoration"><i class="fa fa-arrow-circle-o-right"></i> Tất cả ngành nghề việc làm</a>
-			</div>
-			<div class="widget row">
-					<h3>Việc làm theo cấp bậc</h3>
-					<ul class="arrow-plus">
-						<li><a href="#">Sinh viên/Thực tập sinh</a></li>
-						<li><a href="#">Mới tốt nghiệp/Nhân viên</a></li>
-						<li><a href="#">Trưởng nhóm/Giám sát</a></li>
-						<li><a href="#">Quản lý</a></li>
-						<li><a href="#">Quản lý cấp cao(Phó giám đốc, Giám đốc, CTO, CFO, COO,...)</a></li>
-						<li><a href="#">Điều hành cấp cao(Tổng giám đốc, Chủ tịch, Phó chủ tịch,...)</a></li>
-					</ul>
-				</div>
-				<div class="widget row">
-					<h3>Việc làm theo đối tượng</h3>
-					<ul class="arrow-plus">
-						<li><a href="#">Việc làm 1000$+</a></li>
-						<li><a href="#">Mới tốt nghiệp</a></li>
-						<li><a href="#">Quản lý điều hành</a></li>
-						<li><a href="#">Bán thời gian</a></li>
-						<li><a href="#">Tự do</a></li>
-						<li><a href="#">Tạm thời/Dự án</a></li>
-					</ul>
-				</div>
-
+			@include('includes.jobseekers.widget.categories-hot')
+			@include('includes.jobseekers.widget.browse-jobs-by-level')
+			@include('includes.jobseekers.widget.browse-jobs-by-object')	
 		</aside>
 	</section>
 @stop

@@ -507,8 +507,9 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
 
 
 .ntv-menu .dropdown-menu li a img {vertical-align: middle; margin-right: 10px;}
-.ntv-menu span {padding: 7px 10px; border-radius: 50%; display: inline-block; margin-left: 5px;}
-.ntv-menu span a {color: #fff;}
+.ntv-menu span {padding: 0px; border-radius: 50%; display: inline-block; margin-left: 5px;}
+.ntv-menu span a {color: #fff; display: block; padding: 7px 10px;}
+.ntv-menu span.badge {padding: 7px 10px;}
 .ntv-menu span.caret {padding: 0;  margin: 7px 5px 0px;}
 .ntv-menu ul li {display: inline-block;padding: 8px 0;vertical-align: top;float: left;}
 .ntv-menu ul li:first-child a {border-left: none; }

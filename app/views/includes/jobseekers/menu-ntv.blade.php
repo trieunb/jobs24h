@@ -34,10 +34,10 @@
 	      	<li><a href="{{URL::route('jobseekers.my-job')}}">{{ HTML::image('assets/images/icons/jobs.png') }} Việc làm phù hợp với bạn<span class="badge">{{$my_job}}</span></a></li>
 	      	<li><a href="{{URL::route('jobseekers.saved-job')}}">{{ HTML::image('assets/images/icons/save.png') }} Việc làm đã lưu<span class="badge">{{$my_job}}</span></a></li>
 	      	<li><a href="{{URL::route('jobseekers.applied-job')}}">{{ HTML::image('assets/images/icons/job_submitted.png') }} Việc làm đã nộp<span class="badge">{{$applied_job}}</span></a></li>
-	      	<li><a href="#">{{ HTML::image('assets/images/icons/view_profile.png') }} Nhà tuyển dụng xem hồ sơ<span class="badge">0</span></a></li>
+	      	<li><a href="{{URL::route('jobseekers.employer-view-resume')}}">{{ HTML::image('assets/images/icons/view_profile.png') }} Nhà tuyển dụng xem hồ sơ<span class="badge">0</span></a></li>
 	      	<li><a href="{{URL::route('jobseekers.respond-from-employment')}}">{{ HTML::image('assets/images/icons/repond.png') }} Phản hồi của nhà tuyển dụng<span class="badge">{{$repond}}</span></a></li>
 	      	<!--<li><a href="ntv-hanchecty.php">{{ HTML::image('assets/images/icons/limit.png') }} Hạn chê công ty xem hồ sơ<span class="badge">2</span></a></li>-->
-	      	<li><a href="#">{{ HTML::image('assets/images/icons/interview_letter.png') }} Thư mời phỏng vấn</a></li>
+	      	<li><a href="{{URL::route('jobseekers.messages')}}">{{ HTML::image('assets/images/icons/interview_letter.png') }} Thư mời phỏng vấn</a></li>
 	      	<li><a href="{{URL::route('jobseekers.notification-jobs')}}">{{ HTML::image('assets/images/icons/notify.png') }} Thông báo việc làm</a></li>
 	      	<li><a href="{{URL::route('jobseekers.logout')}}">{{ HTML::image('assets/images/icons/log_out.png') }} Thoát</a></li>
 	   	</ul>

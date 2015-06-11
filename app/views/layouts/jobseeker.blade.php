@@ -39,7 +39,10 @@
 								<nav class="ntv-menu navbar-right">
 									@include('includes.jobseekers.menu-ntv')
 								</nav>
-								
+								<a href="{{URL::route('jobseekers.edit-basic-info')}}" class="text-blue pull-right">
+									<img src='/uploads/jobseekers/avatar/{{$user->avatar}}' class="avatar">
+									<strong><em>Chào, {{$user->first_name}} {{$user->last_name}}</em></strong>
+								</a>
 						@else
 							<li><a href="{{ URL::route('jobseekers.login') }}">Đăng nhập</a></li>
 							<li><a href="{{ URL::route('jobseekers.register') }}">Đăng ký</a></li>

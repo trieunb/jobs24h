@@ -25,7 +25,12 @@ class JobController extends Controller
 		$categories = Input::get('categories');
 		$salary = Input::get('salary');
 		$level = Input::get('level');
+		$work_type = Input::get('type');
+		$id_emp = Input::get('id');
 		$jobs = Job::where('is_display',1)->where('status',1)->with('province')->with('category');
+		if(is_numeric($id_emp) && $id_emp != null){
+			$jobs->where('ntd_id',$id_emp);
+		}
 		if($keyword)
 		{
 			$jobs->where('vitri', 'LIKE', "%".$keyword."%");
@@ -58,6 +63,10 @@ class JobController extends Controller
 		{
 			$jobs->where('chucvu', $level);
 		}
+		if(is_numeric($work_type) && $work_type != 0)
+		{
+			$jobs->where('hinhthuc', $work_type);
+		}
 
 		if(Input::get('perpage') == null){
 			$per_page = 20;	
@@ -69,7 +78,6 @@ class JobController extends Controller
 
 		return View::make('jobseekers.result-from-search', compact('jobs', 'per_page', 'keyword', 'province','categories','salary','level'));
 	}
-
 
 	public function getCategory(){
 		$categories = Category::all();

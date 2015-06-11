@@ -81,14 +81,14 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
 
     $(function() {
         var jcarousel = $('#company-info .jcarousel');
-
+        var number_img = $('#company-info .jcarousel li').length;
         jcarousel
             .on('jcarousel:reload jcarousel:create', function () {
                 var carousel = $(this),
                     width = carousel.innerWidth();
 
                 if (width >= 600) {
-                    width = width / 4;
+                    width = width / number_img;
                 } else if (width >= 350) {
                     width = width / 2;
                 }
@@ -174,17 +174,11 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
       $('.countdown').text(length);
     });
 
-     $('.what-is-this-skill-section').popover({
-        trigger: 'hover focus',
-        html: true,
-        placemennt: 'right'
-    });
 
 
 
     // POPOVER 
-    $('.what-is-this-skill-section').popover({
-        trigger: 'hover focus',
+    $('.share-to-friends').popover({
         html: true,
         placemennt: 'right'
     });
