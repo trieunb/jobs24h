@@ -1,4 +1,5 @@
 @extends('layouts.jobseeker')
+@section('title') Kết quả việc làm - VnJobs @stop
 @section('content')
 	@include('includes.jobseekers.search')
 	<section class="main-content container">

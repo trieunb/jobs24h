@@ -1,4 +1,5 @@
 @extends('layouts.jobseeker')
+@section('title') Quên mật khẩu - VnJobs @stop
 @section('content')
 	<section class="main-content container">
 		<div class="reset-password push-top">

@@ -32,7 +32,8 @@ class JobSeeker extends Controller
 	}
 
 	public function editBasicHome(){
-		return View::make('jobseekers.edit-basic-info')->with('user', $GLOBALS['user']);	
+		$title = 'Chỉnh sửa thông tin tài khoản';
+		return View::make('jobseekers.edit-basic-info')->with('user', $GLOBALS['user'])->with('title',$title);	
 	}
 	public function editBasic($action)
 	{

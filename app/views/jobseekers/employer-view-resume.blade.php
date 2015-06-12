@@ -1,4 +1,5 @@
 @extends('layouts.jobseeker')
+@section('title') Nhà tuyển dụng xem hồ sơ - VnJobs @stop
 @section('content')
 
 	<div class="container">

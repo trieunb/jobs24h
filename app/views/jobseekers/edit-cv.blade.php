@@ -1,4 +1,5 @@
 @extends('layouts.jobseeker')
+@section('title') Chỉnh sửa thông tin hồ sơ - VnJobs @stop
 @section('content')
 
 	<div class="container">
@@ -26,20 +27,21 @@
 					</div>
 					<div class="clearfix"></div>
 						<div class="complete-profile col-sm-8">
-							<div class="col-sm-5">
-								<div class="progress-radial progress-70">
+							<!--<div class="col-sm-5">
+								<div class="progress-radial progress-25">
 			  						<div class="overlay">25%</div>
 								</div>
 								<span class="text-orange">Hồ sơ chưa hoàn tất</span>
-							</div>
+							</div>-->
 							<div class="col-sm-7 ">
-								<a href="#"><i class="glyphicon glyphicon-search"></i>Cho phép tìm kiếm hồ sơ này</a>
+								{{Form::checkbox('is_visible', 1, 'checked')}}
+								Cho phép tìm kiếm hồ sơ này
 							</div>
 						</div>
 						<div class="print-trash col-sm-4">
 							<a href="#"><i class="glyphicon glyphicon-print"></i></a>	
 							<a href="#"><i class="glyphicon glyphicon-trash"></i></a>	
-							{{Form::button('Đăng Hồ Sơ', array('class'=>'btn btn-lg bg-orange'))}}
+							{{Form::button('Đăng Hồ Sơ', array('class'=>'btn btn-lg bg-orange publish_resume', 'disabled'=>'disabled'))}}
 						</div>
 				</div><!-- Box -->
 				<div class="boxed">
@@ -298,7 +300,12 @@
 					{{Form::close()}}
 				</div><!-- rows -->
 				</div><!-- boxed -->
-								<div class="boxed">
+				<?php
+				$hidden_dinhhuongnn = 'block';
+				if($my_resume->dinhhuongnn == null){
+						$hidden_dinhhuongnn = 'hidden-xs';
+					}?>
+				<div class="boxed {{$hidden_dinhhuongnn}}" id="box-dinhhuongnn">
 				<div class="rows">
 					<div class="title-page">
 						<h2>Định hướng nghề nghiệp</h2>
@@ -319,7 +326,15 @@
 					{{Form::close()}}
 				</div><!-- rows -->
 				</div><!-- boxed -->
-				<div class="boxed">
+				<?php
+				$hidden_exp = 'block';
+				foreach($my_resume->experience as $exp){
+					if( $exp->position == null && $exp->company_name == null && $exp->from_date == null && $exp->to_date == null && $exp->field == null && $exp->specialized == null && $exp->level == null){
+						$hidden_exp = 'hidden-xs';
+					}
+				}
+				?>
+				<div class="boxed {{$hidden_exp}}" id="box-exp">
 					<div class="rows">
 						<div class="title-page">
 							<h2>Kinh nghiệm làm việc</h2>
@@ -406,7 +421,15 @@
 						{{Form::close()}}
 					</div><!-- rows -->
 				</div><!-- boxed -->
-				<div class="boxed">
+				<?php
+				$hidden_education = 'block';
+				foreach($my_resume->education as $education){
+					if( $education->specialized == null && $education->school == null && $education->level == null && $education->field_of_study == null && $education->average_grade_id == null){
+						$hidden_education = 'hidden-xs';
+					}
+				}
+				?>
+				<div class="boxed {{$hidden_education}}" id="box-education">
 					<div class="rows">
 						<div class="title-page">
 							<h2>Học vấn và Bằng Cấp</h2>
@@ -478,69 +501,23 @@
 						{{Form::close()}}
 					</div><!-- rows -->
 				</div><!-- boxed -->
-				<div class="boxed">
+				<?php
+				$skills = json_decode($my_resume->kynang);
+				$hidden_skill = 'block';
+				if(count($skills) ==  0){
+					$hidden_skill = 'hidden-xs';
+				}
+				?>
+				<div class="boxed {{$hidden_skill}}" id="box-skills">
 					<div class="rows">
 						<div class="title-page">
 							<h2>Kỹ năng</h2>
 							<a class="pull-right text-blue add-new-skill"><i class="fa fa-plus-circle"></i> Thêm mới</a>
 						</div>
-						<!-- Thêm kỹ năng cũ
-						<label>Thêm kỹ năng nghề nghiệp đề nhận được những đề nghị công việc phù hợp hơn</label>
-						
-						<div class="box">
-							<div id="tags-edit">
-								<span class="tag-xs" title="Developer">
-	                                <span class="tag-name">Developer</span>
-	                                	<a class="ic-close" href="#"><i class="glyphicon glyphicon-remove"></i></a>
-	                                <input class="input-tag-name" type="hidden" name="" data-tag-name="Developer">
-                                </span>
-                                <span class="tag-xs" title="Developer">
-	                                <span class="tag-name">Developer</span>
-	                                	<a class="ic-close" href="#"><i class="glyphicon glyphicon-remove"></i></a>
-	                                <input class="input-tag-name" type="hidden" name="" data-tag-name="Developer">
-                                </span>
-                                <span class="tag-xs" title="Developer">
-	                                <span class="tag-name">Developer</span>
-	                                	<a class="ic-close" href="#"><i class="glyphicon glyphicon-remove"></i></a>
-	                                <input class="input-tag-name" type="hidden" name="" data-tag-name="Developer">
-                                </span>
-                                <span class="tag-xs" title="Developer">
-	                                <span class="tag-name">Developer</span>
-	                                	<a class="ic-close" href="#"><i class="glyphicon glyphicon-remove"></i></a>
-	                                <input class="input-tag-name" type="hidden" name="" data-tag-name="Developer">
-                                </span>
-                                <span class="tag-xs" title="Developer">
-	                                <span class="tag-name">Developer</span>
-	                                	<a class="ic-close" href="#"><i class="glyphicon glyphicon-remove"></i></a>
-	                                <input class="input-tag-name" type="hidden" name="" data-tag-name="Developer">
-                                </span>
-							</div>
-
-						</div>
-						<div class="add-new-tag">
-							<div class="row">
-								<div class="col-sm-10">
-									{{Form::input('text', 'study-from', null, array('class'=>'form-control input-sm', 'id'=>'key-skills', 'placeholder'=>'Hãy điền thông tin về lĩnh vực chuyên môn của bạn'))}}
-								</div>
-									{{Form::submit('Thêm', array('class'=>'btn btn-default col-sm-2 btn-sm'))}}
-							</div>
-							<div class="clearfix push-top-sm">
-								<a class="text-blue pull-left what-is-this-skill-section clickable" data-toggle="popover"  data-content="<p>Ngay bây giờ bạn có thể làm giàu hồ sơ của mình bằng cách <strong>thêm các kỹ năng nghề nghiệp</strong>.</p> Kỹ năng sẽ giúp chúng tôi rất nhiều trong việc <strong>đề xuất việc làm phù hợp nhất với bạn</strong> (dựa vào giải thuật về <strong>Điểm số phù hợp</strong> sẽ được cập nhật trong thời gian tới).">Thêm kỹ năng là gì?</a>
-							</div>
-						</div>
-						<div class="clearfix"></div>
-						<div class="form-group">
-							<div class="col-sm-offset-3 col-sm-7">
-								{{Form::submit('Hủy', array('class'=>'btn btn-lg bg-gray-light'))}}
-									{{Form::submit('Lưu', array('class'=>'btn btn-lg bg-orange'))}}
-								<span>(<span class="text-red">*</span>) Thông tin bắt buộc</span>
-							</div>
-						</div>-->
 						<div class="col-sm-8"><h3 class="text-gray-light">Kỹ năng</h3></div>
 						<div class="col-sm-4"><h3 class="text-gray-light">Mức độ thành thạo</h3></div>
 						<div class="box">
 							{{Form::open(array('class'=>'form-horizontal','id'=>'saveSkills'))}}
-								<?php $skills = json_decode($my_resume->kynang);?>
 								@if(count($skills) > 0)
 									@for ($i=0; $i < count($skills) ; $i++)
 										<div class='form-group'>
@@ -574,7 +551,7 @@
 				</div><!-- boxed -->
 	</section>
 	<aside id="sidebar" class="col-sm-3 pull-right">
-				<div class="col-sm-12 card-item alert-warning">
+				<div class="col-sm-12 card-item alert-warning" id="link-box-dinhhuongnn">
 					<div class="col-sm-1 col-xs-1">
 	                	<div class="row">
 	                        <a href="#" class="card-button bg-orange"><i class="glyphicon glyphicon-plus"></i></a>
@@ -591,7 +568,7 @@
 	                </div>
 	                <div class="col-sm-2 box-label warning"><strong>10%</strong></div>
 	            </div> 
-	            <div class="col-sm-12 card-item alert-info">
+	            <div class="col-sm-12 card-item alert-info" id="link-box-exp">
 					<div class="col-sm-1 col-xs-1">
 	                	<div class="row">
 	                        <a href="#" class="card-button bg-blue"><i class="glyphicon glyphicon-plus"></i></a>
@@ -608,7 +585,7 @@
 	                </div>
 	                <div class="col-sm-2 box-label primary"><strong>10%</strong></div>
 	            </div> 
-	            <div class="col-sm-12 card-item alert-success">
+	            <div class="col-sm-12 card-item alert-success" id="link-box-education">
 					<div class="col-sm-1 col-xs-1">
 	                	<div class="row">
 	                        <a href="#" class="card-button bg-green"><i class="glyphicon glyphicon-plus"></i></a>
@@ -625,7 +602,7 @@
 	                </div>
 	                <div class="col-sm-2 box-label success"><strong>10%</strong></div>
 	            </div> 
-	            <div class="col-sm-12 card-item alert-danger">
+	            <div class="col-sm-12 card-item alert-danger" id="link-box-skills">
 					<div class="col-sm-1 col-xs-1">
 	                	<div class="row">
 	                        <a href="#" class="card-button bg-red"><i class="glyphicon glyphicon-plus"></i></a>
@@ -638,7 +615,7 @@
 	                    </span>
 	                </div>
 	                <div class="col-sm-7 col-xs-9 box-sm">
-						<h4>Thông Tin Tham Khảo</h4>
+						<h4>Kỹ Năng</h4>
 	                </div>
 	                <div class="col-sm-2 box-label danger"><strong>10%</strong></div>
 	            </div> 
@@ -943,6 +920,7 @@
 	            }else{
 	           		$('#saveGeneralInfo').find(".has-error").removeClass('has-error');
 	           		$('#saveGeneralInfo').find(".error-message").remove();
+	           		$('.publish_resume').removeAttr('disabled');
 					$('.loading-icon').hide();
 	           	}
 	           	$('.loading-icon').hide();

@@ -1,4 +1,9 @@
 @extends('layouts.jobseeker')
+@if($job != null)
+	@section('title') {{$job->vitri}} - VnJobs @stop
+@else
+	@section('title') Không tìm thấy việc làm - VnJobs @stop
+@endif
 @section('content')
 	<div class="container">
 		@include('includes.jobseekers.breadcrumb')

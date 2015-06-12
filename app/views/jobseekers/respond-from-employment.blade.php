@@ -1,4 +1,5 @@
 @extends('layouts.jobseeker')
+@section('title') Phản hồi từ Nhà tuyển dụng - VnJobs @stop
 @section('content')
 	<div class="container">
 			@include('includes.jobseekers.breadcrumb')

@@ -376,6 +376,25 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
         });
     });
 
+
+    //scroll to div in edit cv
+    function goToByScroll(id){
+          // Scroll
+        $('html,body').animate({
+            scrollTop: $("#"+id).offset().top},
+            'slow');
+    }
+
+    $(".card-item").click(function(e) { 
+        // Prevent a page reload when a link is pressed
+        e.preventDefault(); 
+        var id = $(this).attr("id");
+        id = id.replace("link-", "");
+        // Call the scroll function
+        $('#'+id).removeClass('hidden-xs');
+        goToByScroll(id);           
+    });
 })(jQuery);
+
 
 
