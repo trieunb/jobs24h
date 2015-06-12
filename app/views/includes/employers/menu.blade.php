@@ -10,7 +10,7 @@
 			<a href="{{ URL::route('employers.search.basic') }}" onclick="return false;">Tìm hồ sơ</a>
 			<ul>
 				<div class="container">
-				<li class="{{ HTML::active(['employers.search.basic'], 'selected') }}"><a href="{{ URL::route('employers.search.basic') }}">Tìm kiếm nhanh</a></li>
+				<li class="{{ HTML::active(['employers.search.basic', 'employers.search.postbasic'], 'selected') }}"><a href="{{ URL::route('employers.search.basic') }}">Tìm kiếm nhanh</a></li>
 				<li class="{{ HTML::active(['employers.search.advance'], 'selected') }}"><a href="{{ URL::route('employers.search.advance') }}">Tìm kiếm nâng cao</a></li>
 				<li class="{{ HTML::active(['employers.search.category'], 'selected') }}"><a href="{{ URL::route('employers.search.category') }}">Tìm theo ngành nghề</a></li>
 				
@@ -46,6 +46,9 @@
 				<li class="{{ HTML::active(['employers.account.company'], 'selected') }}"><a href="{{ URL::route('employers.account.index') }}">Cập nhật thông tin</a></li>
 				<li class="{{ HTML::active(['employers.account.changepass'], 'selected') }}"><a href="{{ URL::route('employers.account.changepass') }}">Đổi mật khẩu</a></li>
 				<li class="{{ HTML::active(['employers.account.changeemail'], 'selected') }}"><a href="{{ URL::route('employers.account.changeemail') }}">Đổi email truy cập</a></li>
+				<li class="{{ HTML::active(['employers.account.tasklog'], 'selected') }}"><a href="{{ URL::route('employers.account.tasklog') }}">Báo cáo tác vụ</a></li>
+				<li class="{{ HTML::active(['employers.account.respond'], 'selected') }}"><a href="{{ URL::route('employers.account.respond') }}">Thư phản hồi ứng viên</a></li>
+				<li class="{{ HTML::active(['employers.account.auto'], 'selected') }}"><a href="{{ URL::route('employers.account.auto') }}">Thư trả lời tự động</a></li>
 				<li><a href="{{ URL::route('employers.account.logout') }}">Thoát</a></li>
 				</div>
 			</ul>

@@ -2,6 +2,11 @@
 namespace NTD;
 use View, Redirect, NTD, Auth, Job, Validator, Hash, Input;
 class AccountController extends \Controller {
+	public function __construct()
+	{
+		$user = Auth::getUser();
+		View::share('user', $user);
+	}
 	public function getIndex()
 	{
 		return Redirect::route('employers.account.company');
@@ -36,6 +41,7 @@ class AccountController extends \Controller {
 			} else {
 				$user->password = Hash::make(Input::get('password'));
 				$user->save();
+				\TaskLog::create(['ntd_id'=>Auth::id(), 'action_type'=>'create_folder','target'=>'Đổi mật khẩu user: ' . $user->full_name ]);
 				return Redirect::back()->with('success', 'Thay đổi mật khẩu thành công.');
 			}
 		}
@@ -73,6 +79,36 @@ class AccountController extends \Controller {
 			}
 		}
 	}
+	public function getTaskLogs()
+	{
+		$task = \TaskLog::where('ntd_id', Auth::id())->orderBy('id', 'desc')->paginate(20);
+		return View::make('employers.account.task_logs', compact('task'));
+	}
+	public function getUserManager()
+	{
+
+	}
+	public function getUserInformation()
+	{
+		return View::make('employers.account.user_information');
+	}
+	public function postUserInformation()
+	{
+
+		$user = Auth::getUser();
+		if($user->update(Input::all())) return Redirect::back()->with('success', 'Cập nhật thông tin thành công.');
+		return Redirect::back()->withErrors('Có lỗi khi cập nhật.');
+
+	}
+	public function getJobseekerRespond()
+	{
+		return View::make('employers.account.respond');
+	}
+	public function getAutoReply()
+	{
+
+	}
+
 	public function getLogout()
 	{
 		Auth::logout();

@@ -206,7 +206,7 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
 .heading-border-blue {padding: 10px 20px 10px 10px; border-left: 5px solid #1ac6ff; margin-bottom: 20px;}
 .heading-border-blue h3 {margin: 0; font-size: 18px; font-weight: 500;}
 .boxed .heading-image {margin-bottom: 0;}
-.boxed .heading-image h2 {font-family: Tahoma; font-size: 20px;}
+.boxed .heading-image h2 {/*font-family: Tahoma;*/ font-size: 20px;}
 .heading-item { background: #1AC6FF; line-height: 44px; margin:0; text-transform: uppercase; color: #fff;}
 .heading-item .first {background: url(../images/bg-item.png) no-repeat left center;}
 .service-price .heading-border-blue h4{margin: 0; font-family: "Gotham-Thin";letter-spacing: -1px;}
@@ -584,6 +584,9 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
 .search-page .pagination>li>a, .search-page .pagination>li>span {
   padding: 4px 12px;
 }
+.search-page table.table-result {
+  float: left;
+}
 .search-page table.table-result a {
   color: #007dc2;
   text-decoration: underline;
@@ -610,4 +613,51 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
 }
 .visible {
   display: block;
+}
+#modal-history .modal-dialog {
+  width: 1076px;
+  margin: 20px auto 30px !important;
+
+}
+#modal-history .float-left {
+  float:left;
+}
+#modal-history #modal-content {
+    width: 800px;
+}
+#modal-history .thoat {
+  float: right;
+  margin-top: -10px; 
+  margin-right: -10px;
+}
+#modal-history .calendar-content td a.active {
+  background: #DDD;
+}
+#content-alone {
+  width: 724px;
+  margin: 0 auto;
+}
+.align-center {
+  text-align: center;
+  vertical-align: middle;
+  margin-top: 10px;
+}
+.align-middle {
+  vertical-align: middle;
+  margin-top: 10px;
+}
+
+.cl-orange {
+  color: #f7941d;
+}
+.heading-title {
+  height: 34px;
+  background: #3497c9;
+  padding: 7px;
+  margin-bottom: 10px;
+}
+.heading-title span {
+  font-size: 13px;
+  font-weight: bold;
+  color: #FFF;
 }

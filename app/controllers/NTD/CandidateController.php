@@ -55,6 +55,7 @@ class CandidateController extends \Controller {
 		if(Input::get('folderName'))
 		{
 			$folder_name = substr(Input::get('folderName'),0,20);
+			\TaskLog::create(['ntd_id'=>Auth::id(), 'action_type'=>'create_folder','target'=>'Tạo thư mục: ' . Input::get("folderName") ]);
 			$created = EFolder::firstOrCreate(['folder_name'=>$folder_name, 'ntd_id'=>Auth::id()]);
 			
 		}
@@ -76,8 +77,12 @@ class CandidateController extends \Controller {
 			$folder = EFolder::where('ntd_id', Auth::id())
 				->where('id', $id)
 				->first();
-			if($folder->application->count() == 0)
+			if($folder->application->count() == 0) {
+				\TaskLog::create(['ntd_id'=>Auth::id(), 'action_type'=>'del_folder','target'=>'Xóa thư mục: ' . $folder->folder_name ]);
 				$folder->delete();
+			}
+
+
 		}
 		return Redirect::back()->with('success', 'Xóa folder thành công !');
 	}

@@ -109,26 +109,31 @@ class JobController extends \Controller {
 			if($submit == 'active')
 			{
 				$check = Job::whereIn('id', $job)->update(array('is_display'=>1));
+				\TaskLog::create(['ntd_id'=>Auth::id(), 'action_type'=>'resume_job','target'=>'Đăng lại tin tuyển dụng: '.implode(",",$job)]);
 				$message = 'Đăng thành công';
 			}
 			if($submit == 'inactive')
 			{
 				$check = Job::whereIn('id', $job)->update(array('is_display'=>0));
+				\TaskLog::create(['ntd_id'=>Auth::id(), 'action_type'=>'pause_job','target'=>'Ngưng hiển thị tin tuyển dụng: '.implode(",",$job)]);
 				$message = 'Tạm ngừng đăng thành công';
 			}
 			if($submit == 'unapply')
 			{
 				$check = Job::whereIn('id', $job)->update(array('is_apply'=>0));
+				\TaskLog::create(['ntd_id'=>Auth::id(), 'action_type'=>'pause_rs','target'=>'Ngưng nhận hồ sơ tại tin tuyển dụng: '.implode(",",$job)]);
 				$message = 'Ngưng nhận hồ sơ thành công';
 			}
 			if($submit == 'apply')
 			{
 				$check = Job::whereIn('id', $job)->update(array('is_apply'=>1));
+				\TaskLog::create(['ntd_id'=>Auth::id(), 'action_type'=>'resume_rs','target'=>'Mở nhận hồ sơ tại tin tuyển dụng: '.implode(",",$job)]);
 				$message = 'Mở nhận hồ sơ thành công';
 			}
 			if($submit == 'delete')
 			{
-				$check = Job::destroy($job);
+				$check = Job::destroy($jobs);
+				\TaskLog::create(['ntd_id'=>Auth::id(), 'action_type'=>'delete_job','target'=>'Xóa tin tuyển dụng: '.implode(",",$job)]);
 				$message = 'Xóa thành công';
 			}
 			return Redirect::back()->with('success', $message);

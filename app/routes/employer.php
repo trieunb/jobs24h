@@ -43,7 +43,12 @@ Route::group(array('prefix'=>$locale), function() {
 				'getCompanyReview'	=>	'employers.account.companyreview',
 				'getChangePass'		=>	'employers.account.changepass',
 				'getChangeEmail'	=>	'employers.account.changeemail',
+				'getTaskLogs'		=>	'employers.account.tasklog',
+				'getJobseekerRespond'=>	'employers.account.respond',
+				'getAutoReply'		=>	'employers.account.auto',
 				'getLogout'			=>	'employers.account.logout',
+				'getUserManager'	=>	'employers.account.usermanager',
+				'getUserInformation'=>	'employers.account.userinformation',
 			));
 
 			Route::controller('report', 'ReportController', array(
@@ -65,10 +70,12 @@ Route::group(array('prefix'=>$locale), function() {
 			Route::controller('search', 'SearchController', array(
 				'getAdvance'			=>	'employers.search.advance',
 				'getBasic'				=>	'employers.search.basic',
-				'postBasic'				=>	'employers.search.postbasic',
 				'getCategory'			=>	'employers.search.category',
+				'getCat'				=>	'employers.search.viewcat',
 				'postCalendar'			=>	'employers.search.calendar',
+				'postCalendarView'		=>	'employers.search.calendarview',
 				'getHistory'			=>	'employers.search.history',
+				'getHistoryInfo'		=>	'employers.search.historyinfo',
 				
 			));
 		});
