@@ -5,7 +5,7 @@ use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
 class NTD extends \Eloquent implements UserInterface, RemindableInterface {
 	use UserTrait, RemindableTrait;
-	protected $fillable = [];
+	protected $fillable = ['email', 'password', 'full_name', 'position', 'address', 'province_id', 'country_id', 'phone_number', 'tel', 'fax', 'tax_number', 'is_active', 'subscribe'];
 	protected $table = 'employers';
 	protected $hidden = array('password', 'remember_token');
 

@@ -12,11 +12,11 @@
 						<h2 class="text-blue">{{ HTML::image('assets/ntd/images/search-lg.png') }} Tìm nhanh</h2>
 					</div>
 					@if(!isset($input)) <?php $input = ['category'=>'all', 'level'=>'all', 'location'=>'all', 'keyword'=>'']  ?> @endif
-					<form action="" method="POST" class="form" role="form">
+					<form action="{{ URL::route('employers.search.basic') }}" method="GET" class="form" role="form" id="search-fo">
 						<div class="form-group">
 							<label for="inputS" class="col-xs-12 control-label">Từ khóa:</label>
 							<div class="col-sm-7">
-								{{ Form::text('keyword', $input['keyword']) }}
+								{{ Form::text('keyword', $input['keyword'], ['id'=>'keyword']) }}
 							</div>
 							<div class="col-xs-5">
 								<div class="checkbox">
@@ -42,31 +42,31 @@
 							<div class="col-xs-4">
 								<div class="form-group">
 									<?php $cats = Category::where('parent_id', 1)->lists('cat_name', 'id'); ?>
-									{{ Form::select('category', ['all'=>'Bất kỳ'] + $cats, $input['category'] ) }}
+									{{ Form::select('category', ['all'=>'Bất kỳ'] + $cats, $input['category'],['id'=>'category'] ) }}
 									
 								</div>
 							</div>
 							<div class="col-xs-3">
 								<div class="form-group">
 									<?php $levs = Level::lists('name', 'id'); ?>
-									{{ Form::select('level', ['all'=>'Bất kỳ'] + $levs, $input['level'] ) }}
+									{{ Form::select('level', ['all'=>'Bất kỳ'] + $levs, $input['level'],['id'=>'level'] ) }}
 								</div>
 							</div>
 							<div class="col-xs-3">
 								<div class="form-group">
 									<?php $locas = Province::lists('province_name', 'id'); ?>
-									{{ Form::select('location', ['all'=>'Bất kỳ'] + $locas, $input['location'] ) }}
+									{{ Form::select('location', ['all'=>'Bất kỳ'] + $locas, $input['location'],['id'=>'location'] ) }}
 								</div>
 							</div>
 							<div class="col-xs-2">
-								<button type="submit" class="btn btn btn-lg bg-orange btn-search">Tìm Kiếm</button>
+								<button type="submit" name="submit" class="btn btn btn-lg bg-orange btn-search">Tìm Kiếm</button>
 								
 							</div>
 						</div>
 					</form>
 					<div class="col-xs-7 col-xs-offset-5 advance-search">
 							<a href="#">Tạo thông báo hồ sơ</a>
-							<a href="#">Mở rộng tiêu chí tìm kiếm</a>
+							<a href="{{ URL::route('employers.search.advance') }}">Mở rộng tiêu chí tìm kiếm</a>
 						</div>
 					<div id="result" class="@if(isset($result)) visible @else invisible @endif">
 						@if(isset($result))
@@ -82,7 +82,7 @@
 								| Địa điểm: <strong>@if($input['location'] == 'all') Bất Kỳ @else {{ $locas[$input['location']] }} @endif</strong></span>
 							</div>
 						</div>
-						<div class="pull-right pagi">&nbsp;
+						<div class="pull-right">&nbsp;
 							{{ $result->links() }}
 						</div>
 						<table class="table table-blue-bordered table-bordered table-result">
@@ -143,7 +143,7 @@
 								@endif
 							</tbody>
 						</table>
-						<div class="pull-right pagi">&nbsp;
+						<div class="pull-right">&nbsp;
 							{{ $result->links() }}
 						</div>
 
@@ -158,20 +158,28 @@
 			</section>
 		</div>
 	</section>
+
 	<div class="modal fade" id="modal-history">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Modal title</h4>
+			<div class="float-left">
+				@include('includes.employers.search_navbar1')
 			</div>
-			<div class="modal-body">
-				
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
-			</div>
+			<section id="modal-content" class="pull-right right">
+				<div class="box">
+					<div class="heading-image">
+						<div class="thoat"><a href="#" data-dismiss="modal">Thoát <i class="fa fa-close"></i></a></div>
+						<h2 class="text-blue">{{ HTML::image('assets/ntd/images/icon-history.png') }} Lịch sử tìm kiếm</h2>
+						
+					</div>
+					<p>
+						Mục "Lịch sử tìm kiếm" sẽ tự động lưu trữ 100 kết quả tìm kiếm mới nhất của bạn trong 7 ngày. Để xem lại các kết quả trước đây, nhấn vào tên kết quả tìm kiếm trong lịch sử tìm kiếm của bạn
+					</p>
+					<div id="table-search-info">
+						
+					</div>
+				</div>
+			</section>
 		</div>
 	</div>
 </div>
