@@ -180,7 +180,6 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
     // POPOVER 
     $('.share-to-friends').popover({
         html: true,
-        placemennt: 'right'
     });
 
 

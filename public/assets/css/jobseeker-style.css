@@ -635,7 +635,7 @@ img.avatar {width: 35px; height: 35px; border-radius: 50%; vertical-align: middl
 .fr-lang .col-sm-1 {width: 10px;}
 .fr-lang .remove-fr-lang {cursor: pointer;}
 .has-error .form-group, .has-error .form-control, .has-error .select2-container {border:1px solid  #ff5051 !important;}
-.error-message {color: #ff5051; display: block; margin-top: 2px;}
+.error-message {color: #ff5051; display: block; margin-top: 2px; font-size: 12px;}
 .loading-icon {display: none; position: fixed; top: 45%; left: 37%; background: url(../images/loading.gif) no-repeat; width: auto; height: 42px; padding-left: 47px; line-height: 42px; }
 .loading-icon span {font-weight: 600;}
 .input-group-addon.have-img {padding: 0; width: 35px; background: transparent; border-color: transparent; cursor: pointer; }

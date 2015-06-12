@@ -5,6 +5,7 @@
 	</div>
 	<section class="main-content container single-post">
 		<section id="content" class="col-sm-9">
+			@if($job != null)
 			<div class="boxed">
 				<div class="details">
 					<div class="top">
@@ -12,15 +13,14 @@
 						<h2>{{$job->ntd->company->company_name}}</h2>
 						<a href="{{URL::route('jobseekers.applying-job', array($job->id))}}" class="btn btn-lg bg-orange">Nộp đơn</a>
 					</div>
+					<div class="alert alert-success hidden-xs"></div>
 					<div class="clearfix link-list">
 						<i class="fa fa-bookmark"></i>
 						<a href="{{URL::route('jobseekers.save-job', array($job->id))}}">Lưu việc làm này</a>
 						<i class="fa fa-envelope"></i>
 						<a href="{{URL::route('jobseekers.notification-jobs', array('jobid'=>$job->id))}}">Gởi email việc làm tương tự</a>
 						<i class="fa fa-share"></i>
-						<strong><a class="share-to-friends" data-container="body" title="Giới Thiệu Việc Làm Đến Bạn Bè" data-toggle="popover" data-placement="bottom" data-content='<form action="" method="POST" role="form" class="form-horizontal" id="ShareToFriends"><div class="form-group"><input type="text" class="form-control first_name_friend" name="first_name_friend" id="" placeholder="Họ"></div><div class="form-group"><input type="text" class="form-control last_name_friend" name="last_name_friend"  placeholder="Tên"></div><div class="form-group"><input type="email" class="form-control email_name_friend" name="email_name_friend" placeholder="Email"></div><div class="form-group"><button type="submit" class="btn btn-sm bg-orange pull-right">Giới thiệu</button></div></form>'>Giới thiệu bạn bè</a></strong>
-
-
+						<strong><a class="share-to-friends" role="button" data-toggle="popover" data-placement="bottom" title="Giới Thiệu Việc Làm Đến Bạn Bè" data-content='<form role="form" class="form-horizontal" id="ShareToFriends"><div class="form-group"><input type="text" class="form-control first_name_friend" name="first_name_friend" placeholder="Họ"></div><div class="form-group"><input type="text" class="form-control last_name_friend" name="last_name_friend"  placeholder="Tên"></div><div class="form-group"><input type="email" class="form-control email_name_friend" name="email_name_friend" placeholder="Email"></div><div class="form-group"><button type="submit" class="btn btn-sm bg-orange pull-right">Giới thiệu</button></div></form>'>Giới thiệu bạn bè</a></strong>
 					</div>
 					<h2>Mô Tả Công Việc</h2>
 					<div class="job-description">
@@ -105,6 +105,11 @@
 				<a href="{{URL::route('jobseekers.search-job', array('id'=>$job->ntd_id))}}" class="pull-right text-blue"><i class="fa fa-arrow-circle-right"></i> Việc làm khác từ công ty này</a>
 				</div>
 			</div>
+			@else
+			<div class="boxed">
+				<h2>Không tìm thấy công việc này</h2>
+			</div>
+			@endif
 			<div class="boxed related-jobs">
 				<div class="rows">
 				<div class="title-page">
@@ -135,5 +140,46 @@
 @stop
 	@section('scripts')
 	<script type="text/javascript">
+		$(document).on('submit', '#ShareToFriends', function(event) {
+			event.preventDefault();
+			var url = '{{URL::route("jobseekers.share-job", array($job->slug,$job->id))}}';
+			$.ajax({
+				url: url,
+				type: 'POST',
+				dataType: 'json',
+				data: {
+					first_name_friend: $('.first_name_friend').val(),
+					last_name_friend: $('.last_name_friend').val(),
+					email_name_friend: $('.email_name_friend').val(),
+				},
+				success : function(json){
+					if(! json.has)
+		            {	
+		            	$('#ShareToFriends').find(".has-error").removeClass('has-error');
+			            $('#ShareToFriends').find(".error-message").remove();
+		            	var j = $.parseJSON(json.message);
+		            	$.each(j, function(index, val) {
+			            	$('.'+index).parents('.form-group').addClass('has-error');
+			            	if($('.'+index).parents('.form-group').find(".error-message").length < 1){
+			           			$('.'+index).parents('.form-group').append('<span class="error-message">'+val+'</span>')
+			            	}
+			           		$('.loading-icon').hide();           		
+		           		});
+		            }else{
+		           		$('#ShareToFriends').find(".has-error").removeClass('has-error');
+		           		$('#ShareToFriends').find(".error-message").remove();
+		           		$('.share-to-friends').popover('hide')
+
+		           		$('.alert-success').slideDown('slow/400/fast', function() {
+		           			$('.alert-success').removeClass('hidden-xs');
+		           			$('.alert-success').html('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+json.message);
+		           		});
+						
+		           	}
+				}
+			})
+			
+			
+		});
 	</script>
 @stop

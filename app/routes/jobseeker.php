@@ -99,6 +99,7 @@ Route::group(array('prefix'=>$locale), function() {
 		});
 		Route::controller('/view/{slug}/{id}', 'JobController', array(
 			'getIndex'	=>	'jobseekers.job',
+			'postIndex'	=>	'jobseekers.share-job',
 		));
 		Route::get('/resume/{id_cv}', array('as'=>'jobseekers.view-resume', 'uses'=>'JobSeeker@viewResume'));
 		Route::get('/category', array('as'=>'jobseekers.get-category', 'uses' =>'JobController@getCategory'));

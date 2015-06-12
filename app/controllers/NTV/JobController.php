@@ -16,7 +16,7 @@ class JobController extends Controller
 		->with(array('province'=>function($q) {
 			$q->with('province');
 		}))
-		->where('id', $job_id)->first();
+		->where('id', $job_id)->where('is_display', 1)->first();
 		return View::make('jobseekers.job', compact('slug','job'));
 	}
 	public function searchJob(){
@@ -98,5 +98,72 @@ class JobController extends Controller
 			$jobs = $per_page = $id= null;
 		}
 		return View::make('jobseekers.result-from-category', compact('jobs','per_page','id', 'categories')); 
+	}
+
+	public function postIndex($slug, $job_id){
+		$params = Input::all();
+		$respond['has'] = false;
+		if(Request::ajax()){
+			Log::info($params);
+			$rules = array(
+		       'first_name_friend' => 'required',
+		       'last_name_friend' => 'required',
+		       'email_name_friend' => 'required|email',
+		    );
+		    $messages = array(
+				'required'	=>	'Thông tin này bắt buộc',
+				'email'		=>	'Email không đúng định dạng.',
+			);
+			$validator = Validator::make($params, $rules, $messages);
+			if($validator->fails()){			
+	        	$messages = $validator->messages();
+	        	$respond['message'] = $validator->getMessageBag()->toJson();
+				return Response::json($respond);
+			}else{
+				$job = Job::where('id',$job_id)->with(array('ntd'=>function($q) {
+					$q->with('company');
+				}))
+				->with(array('category'=>function($q) {
+					$q->with('category');
+				}))
+				->with(array('province'=>function($q) {
+					$q->with('province');
+				}))->first();
+				if($job->mucluong_max != 0){
+					$salary = "Tới $".$job->mucluong_max;
+				}
+				elseif($job->mucluong_max == 0 && $job->mucluong_min != 0){
+					$salary = "$".$job->mucluong_min;
+				}
+				else{
+					$salary = "Thỏa thuận";
+				}
+				foreach($job->province as $key=>$val){
+					$provinces[] = $job->province[$key]->province->province_name;
+				};
+				$subject = "".$params['first_name_friend'].": Bạn của bạn, ".$GLOBALS['user']->first_name." ".$GLOBALS['user']->last_name." vừa giới thiệu việc làm ".$job->vitri." đến bạn.";
+				$message = "Chào ".$params['first_name_friend'].",<br> Bạn của bạn, ".$GLOBALS['user']->first_name." ".$GLOBALS['user']->last_name." vừa giới thiệu việc làm ".$job->vitri." đến bạn:<br><br>
+				<h2 style='argin-bottom:5px;margin-top:0;font-family:Arial,sans-serif;font-size:18px;margin-bottom:0px;'>
+					<a href='".URL::to(App::getLocale()."/jobseekers/view/".$job->slug."/".$job->id)."' style='font-family:arial,sans-serif;text-decoration:none;color:#00b9f2' target='_blank'>".$job->vitri."</a></h2>
+				<span style='color:#999;font-size:14px;font-family:Arial,sans-serif'>".$job->ntd->company->company_name."</span><br>
+				<span style='color:#666;font-family:Arial,sans-serif'> 
+				Địa điểm: <strong>".implode(',', $provinces)."</strong><br>
+				Mức lương: <strong style='color:#f7941d'>".$salary."</strong></span><br>
+				<h3>Mô tả công việc</h3>
+				<div>".$job->mota."</div><br><br>
+				<div><p style='margin:20px 0'><strong><a href='".URL::to(App::getLocale()."/jobseekers/view/".$job->slug."/".$job->id)."' style='font-family:Arial,sans-serif;font-size:12px;text-decoration:underline;color:#555' target='_blank'>Xem toàn bộ thông tin đăng tuyển</a></strong></p></div>";
+
+			   	// setting the server, port and encryption
+				if(App\DTT\Services\SendMail::send($params['email_name_friend'], $params['first_name_friend'], $subject, $message ) )
+				{
+					$respond['has'] = true;
+					$respond['message'] = 'Việc làm "'.$job->vitri.'" đã được giới thiệu đến '.$params['first_name_friend'].'';
+					return Response::json($respond);
+				} else {
+					$respond['message'] = 'Việc làm "'.$job->vitri.'" hiện tại không thể giới thiệu đến '.$params['first_name_friend'].'';
+					return Response::json($respond);
+				}
+			}
+		}
 	}
 }
