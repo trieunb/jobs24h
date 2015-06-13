@@ -504,6 +504,10 @@ class JobSeeker extends Controller
 				$locations = WorkLocation::where('rs_id',$data['is_delete'])->delete();
 				$lang = CVLanguage::where('rs_id',$data['is_delete'])->delete();
 				$cate = CVCategory::where('rs_id',$data['is_delete'])->delete();
+	    	}elseif(isset($data['danghoso'])){
+	    		$hoso = Resume::find($data['danghoso']);
+	    		$hoso->trangthai = 2;
+	    		$hoso->save();
 	    	}
 
 	    }
@@ -896,5 +900,9 @@ class JobSeeker extends Controller
 	public function messages(){
 		return View::make('jobseekers.messages'); 
 	}
-
+	// Nhận việc làm mới
+	public function regiterJobAlert(){
+		return View::make('jobseekers.register-job-alert'); 
+	}
+	
 }

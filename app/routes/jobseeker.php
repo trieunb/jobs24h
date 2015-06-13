@@ -106,6 +106,8 @@ Route::group(array('prefix'=>$locale), function() {
 		Route::get('q', array('as'=>'jobseekers.search-job','uses'=>'JobController@searchJob'));
 		Route::get('/applying-job/{job_id}', array('as'=>'jobseekers.applying-job','uses'=>'JobSeeker@applyingJob'));
 		Route::post('/applying-job/{job_id}', array('as'=>'jobseekers.applying-job','uses'=>'JobSeeker@doApplyingJob'));
+		Route::get('/register-job-alert', array('as'=>'jobseekers.register-job-alert', 'uses'=>'JobSeeker@regiterJobAlert'));
+		Route::post('/register-job-alert/', array('as'=>'jobseekers.post-notification-jobs','uses'=>'JobSeeker@creatNotificationJobs'));
 	});
 });
 

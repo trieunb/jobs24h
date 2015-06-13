@@ -49,15 +49,23 @@
 				<table class="table table-striped table-hover table-bordered">
 					<tbody>
 						<tr>
-							<td>Job Level</td>
+							<td>Cấp bậc</td>
 							<td>{{$job->chucvu}}</td>
 						</tr>
 						<tr>
-							<td>Salary</td>
-							<td>{{$job->mucluong_min}}-{{$job->mucluong_max}}</td>
+							<td>Mức lương</td>
+							<td>@if($job->mucluong_min != 0 && $job->mucluong_min != 0)
+									${{$job->mucluong_min}} - ${{$job->mucluong_max}}
+								@elseif($job->mucluong_max == 0 && $job->mucluong_min != 0)
+									${{$job->mucluong_min}}
+								@elseif($job->mucluong_min == 0 && $job->mucluong_max != 0)
+									${{$job->mucluong_max}}
+								@else 
+									Thỏa thuận
+								@endif</td>
 						</tr>
 						<tr>
-							<td>Industry</td>
+							<td>Ngành nghề</td>
 							<td>
 								@foreach($job->category as $key=>$val)
 									{{$job->category[$key]->category->cat_name}}<br>
@@ -65,7 +73,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>Location</td>
+							<td>Địa điểm</td>
 							<td>
 								@foreach($job->province as $key=>$val)
 									{{$job->province[$key]->province->province_name}}<br>
@@ -73,12 +81,12 @@
 							</td>
 						</tr>
 						<tr>
-							<td>Job Type</td>
+							<td>Loại hình</td>
 							<td>{{$job->work->name}}</td>
 						</tr>
 						<tr>
-							<td>Posted</td>
-							<td>10 Apr 2015</td>
+							<td>Đăng ngày</td>
+							<td>{{date('d-m-Y',strtotime($job->work->updated_at))}}</td>
 						</tr>
 					</tbody>
 				</table>

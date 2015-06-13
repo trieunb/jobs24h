@@ -38,8 +38,10 @@
 											@endif
 											@if($mr->trangthai == 0 )
 												<small class="legend text-orange">Chưa hoàn thiện</small> 
-											@else
+											@elseif($mr->trangthai == 1 )
 												<small class="legend text-green">Đã duyệt <i class="fa fa-check-square-o"></i></small>
+											@else
+												<small class="legend text-orange">Đang chờ duyệt</small>												
 											@endif
 										</td>
 										<td>

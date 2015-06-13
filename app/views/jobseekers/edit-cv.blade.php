@@ -39,10 +39,31 @@
 							</div>
 						</div>
 						<div class="print-trash col-sm-4">
-							<a href="#"><i class="glyphicon glyphicon-print"></i></a>	
-							<a href="#"><i class="glyphicon glyphicon-trash"></i></a>	
-							{{Form::button('Đăng Hồ Sơ', array('class'=>'btn btn-lg bg-orange publish_resume', 'disabled'=>'disabled'))}}
+							<a id="print"><i class="glyphicon glyphicon-print"></i></a>	
+							<a id="del_resume" data-rs="{{$id_cv}}"><i class="glyphicon glyphicon-trash"></i></a>
+							<div class="trangthai">
+							@if($my_resume->trangthai == 1)
+								<p><h3 class="text-green">Hồ sơ đang hoạt động</h3></p>
+							@elseif($my_resume->trangthai == 2)
+								<p><h3 class="text-silver">Hồ sơ đang chờ phê duyệt</h3></p>
+							@else
+							{{Form::button('Đăng Hồ Sơ', array('class'=>'btn btn-lg bg-orange publish_resume', 'disabled'=>'disabled', 'data-rs'=> $id_cv))}}
+							@endif
+							</div>
 						</div>
+						<div class="modal fade delete_rs" id="delete_rs_{{$id_cv}}">
+								<div class="modal-dialog modal-sm">
+									<div class="modal-content">
+										<div class="modal-body">
+											<p>Khi bị xóa, hồ sơ không thể phục hồi lại được. Bạn có thực sự muốn xóa hồ sơ "@if(count($my_resume)>0){{$my_resume->created_at}}_{{$my_resume->ntv->first_name}}{{$my_resume->ntv->last_name}}@endif"?</p>
+										</div>
+										<div class="modal-footer">
+											{{Form::button('Hủy', array('class'=>'btn btn-default', 'data-dismiss'=>'modal'))}}
+											{{Form::button('Xóa', array('class'=>'del-rs btn bg-orange'))}}
+										</div>
+									</div><!-- /.modal-content -->
+								</div><!-- /.modal-dialog -->
+							</div><!-- /.modal -->
 				</div><!-- Box -->
 				<div class="boxed">
 				<div class="rows">
@@ -189,17 +210,17 @@
 			            <div class="form-group">
 			            	<div class="row fr-lang lang block">
 				            	<label class="col-sm-3 control-label">Ngoại ngữ<abbr>*</abbr></label>
-				            	<div class="col-sm-3 ">
-				            		{{ Form::select('foreign_languages_1', array("0"=>"- Vui lòng chọn -")+Language::lists('lang_name', 'id'),$my_resume->cvlanguage[0]->lang_id, array('class'=>'foreign_languages_1 form-control', 'id' => 'ForeignLanguages') ) }}
+				            	<div class="col-sm-3">
+				            		{{ Form::select('foreign_languages_1', array(""=>"- Vui lòng chọn -")+Language::lists('lang_name', 'id'),$my_resume->cvlanguage[0]->lang_id, array('class'=>'foreign_languages_1 form-control', 'id' => 'ForeignLanguages') ) }}
 				            	</div>
 				            	<label class="col-sm-3 control-label">Trình độ</label>
 				            	<div class="col-sm-3 row">
-				            		{{ Form::select('level_languages_1', array("0"=>"- Vui lòng chọn -")+LevelLang::lists('name', 'id'),$my_resume->cvlanguage[0]->level, array('class'=>'level_languages_1 form-control', 'id' => 'Level') ) }}
+				            		{{ Form::select('level_languages_1', array(""=>"- Vui lòng chọn -")+LevelLang::lists('name', 'id'),$my_resume->cvlanguage[0]->level, array('class'=>'level_languages_1 form-control', 'id' => 'Level') ) }}
 				            	</div>
 			            	</div>
 			            	<div class="row fr-lang lang hidden-xs">
 				            	<label class="col-sm-3 control-label"></label>
-				            	<div class="col-sm-3 ">
+				            	<div class="col-sm-3">
 				            		{{ Form::select('foreign_languages_2', array("0"=>"- Vui lòng chọn -")+Language::lists('lang_name', 'id'),$my_resume->cvlanguage[1]->lang_id, array('class'=>'foreign_languages_2 form-control', 'id' => 'ForeignLanguages') ) }}
 				            	</div>
 				            	<label class="col-sm-3 control-label">Trình độ</label>
@@ -212,7 +233,7 @@
 			            	</div>
 			            	<div class="row fr-lang lang hidden-xs">
 				            	<label class="col-sm-3 control-label"></label>
-				            	<div class="col-sm-3 ">
+				            	<div class="col-sm-3">
 				            		{{ Form::select('foreign_languages_3', array("0"=>"- Vui lòng chọn -")+Language::lists('lang_name', 'id'),$my_resume->cvlanguage[2]->lang_id, array('class'=>'foreign_languages_3 form-control', 'id' => 'ForeignLanguages') ) }}
 				            	</div>
 				            	<label class="col-sm-3 control-label">Trình độ</label>
@@ -927,6 +948,42 @@
 	        }
 		});		
 	});
+	// Del a resume in my-resume
+	$(document).on('click','#del_resume',function(){
+	        var data = $(this).attr('data-rs');
+	        var url = '{{URL::route("jobseekers.my-resume")}}';
+	        var result= '{{URL::route("jobseekers.my-resume")}}';
+	        $('#delete_rs_'+data).modal('show');
+	        $('.del-rs').click(function(e){
+	            e.preventDefault();
+	            $.ajax({
+	                type: "GET",
+	                url: url, //Relative or absolute path to response.php file
+	                data: {is_delete: data },
+	                success : function(data){
+	                   window.location.replace(result);
+	                }
+	            });    
+	        });
+	    });
 
+	$('#print').click(function(event) {
+		event.preventDefault();
+		//window.print();
+	});
+
+	$('.publish_resume').click(function(event) {
+		event.preventDefault();
+		var data = $(this).attr('data-rs');
+		var url = '{{URL::route("jobseekers.my-resume")}}';
+		$.ajax({
+	        type: "GET",
+	        url: url, //Relative or absolute path to response.php file
+	        data: {danghoso: data },
+	        success : function(data){
+	        	$('.trangthai').html('<p><h3>Hồ sơ đang chờ phê duyệt</h3></p>')
+	    	}
+	    });  
+	});
 	</script>
 @stop
