@@ -11,6 +11,7 @@ Route::group(array('prefix'=>$locale), function() {
 					$provinces[] = json_decode($value->provinces);
 				}
 				$jobs = Job::where('is_display',1)->where('status',1)->with('province')->with('category');
+
 				if(count($provinces) > 0)
 				{
 					foreach($provinces as $province){
@@ -37,7 +38,7 @@ Route::group(array('prefix'=>$locale), function() {
 				}
 				$jobs_for_widget = $jobs->orderBy('updated_at', 'ASC')->take(3)->get();
 			}else{
-				$jobs_for_widget = Job::all()->orderBy('updated_at', 'ASC')->take(3)->get();
+				$jobs_for_widget = Job::orderBy('updated_at', 'ASC')->take(3)->get();
 			}
 			View::share('jobs_for_widget', $jobs_for_widget);
 		}

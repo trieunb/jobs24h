@@ -168,7 +168,7 @@
 			            	<label class="col-sm-3 control-label">Ngành nghề:</label>
 			            	<div class="col-sm-3">
 			            		@foreach($my_resume->cvcategory as $value)
-				 					{{$value->category->cat_name}}<br>
+				 					{{$value->category['cat_name']}}<br>
 				 				@endforeach
 			            	</div>
 			            </div>
