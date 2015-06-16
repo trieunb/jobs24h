@@ -48,7 +48,9 @@ Route::group(array('prefix'=>$locale), function() {
 			}else{
 				$jobs_for_widget = Job::where('is_display',1)->where('status',1)->orderBy('updated_at', 'ASC')->take(3)->get();
 			}
-			View::share('jobs_for_widget', $jobs_for_widget);
+			
+		}else{
+			$jobs_for_widget = Job::where('is_display',1)->where('status',1)->orderBy('updated_at', 'ASC')->take(3)->get();
 		}
 		// Widget Ngành nghề hấp dẫn
 		$widget_categories_hot = Category::where('parent_id', '!=', 0)->with('mtcategory')->get()->sortBy(function($widget_categories_hot) {
@@ -60,7 +62,7 @@ Route::group(array('prefix'=>$locale), function() {
 		$widget_province_hot = Province::with('mtprovince')->get()->sortBy(function($widget_province_hot) {
 		    return $widget_province_hot->mtprovince->count();
 		})->reverse();
-
+		View::share('jobs_for_widget', $jobs_for_widget);
 		View::share('widget_categories_hot', $widget_categories_hot);
 		View::share('widget_province_hot', $widget_province_hot);
 		View::share('all_level', $all_level);
