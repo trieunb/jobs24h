@@ -12,9 +12,9 @@ class JobSeeker extends Controller
 	}
 	public function home()
 	{
-		$categories_default = Category::all();
-		$categories_alpha = Category::orderBy('cat_name', 'ASC')->get();	
-		$categories_hot = Category::with('mtcategory')->get()->sortBy(function($categories_hot) {
+		$categories_default = Category::where('parent_id', '!=', 0)->get();
+		$categories_alpha = Category::where('parent_id', '!=', 0)->orderBy('cat_name', 'ASC')->get();	
+		$categories_hot = Category::where('parent_id', '!=', 0)->with('mtcategory')->get()->sortBy(function($categories_hot) {
 		    return $categories_hot->mtcategory->count();
 		})->reverse();
 
@@ -811,35 +811,47 @@ class JobSeeker extends Controller
 		if(Request::ajax()){
 			$rules = array(
 		       'salary' => 'numeric ',
+		       'email'  => 'required|email'
 		    );
-			$validator = Validator::make($params, $rules);
+			$messages = array(
+				'email.required'	=>	'Vui lòng nhập Email của bạn',
+				'email' 	=>  'Email không đúng định dạng',
+			);
+			$validator = Validator::make($params, $rules, $messages);
 			if($validator->fails()){			
-	        	$respond['message'] = 'Vui lòng nhập mức lương là số';
+		       	$respond['message'] = $validator->getMessageBag()->toJson();
 				return Response::json($respond);
 			}else{
 				$jobs_alert = Subscribe::where('ntv_id', $GLOBALS['user']->id)->count();
 				if($jobs_alert < 5){
-					if($params['keyword'] == '' && $params['categories'] == '' && $params['level'] == 'all' && $params['province'] == '' && $params['salary'] == ''){
-						$respond['message'] = 'Vui lòng điền đầy đủ các điều kiện';
+					if($params['keyword'] == '' && $params['categories'] == '' && $params['level'] == 0 && $params['province'] == ''){
+						$respond['message'] = json_encode(array('Lỗi'=>'Vui lòng điền đầy đủ các điều kiện'));
 						return Response::json($respond);
 					}else{
+						if($params['categories'] != ''){
+							$cat = json_encode($params['categories']);
+						}else{$cat = null;}
+						if($params['province'] != ''){
+							$province = json_encode($params['province']);
+						}else{$province = null;}
 						$create = Subscribe::create(array(
 							'ntv_id' 	=> $GLOBALS['user']->id,
 							'keyword' 	=> ''.$params['keyword'].'',
 							'times' 	=> $params['time'],
-							'categories'=> ''.json_encode($params['categories']).'',
-							'provinces' => ''.json_encode($params['province']).'',
+							'categories'=> ''.$cat.'',
+							'provinces' => ''.$province.'',
 							'level'		=> ''.$params['level'].'',
 							'salary'	=> $params['salary'],
+							'email'		=> ''.$params['email'].'',
 						));
 						if($create){
 							$respond['has'] = true;
-							$respond['message'] = 'Tạo thành công';
+							$respond['message'] = 'Tạo thông báo việc làm thành công.';
 							return Response::json($respond);
 						}
 					}
 				}else{
-					$respond['message'] = 'Bạn đã tạo tối đa 5 thông báo việc làm.';
+					$respond['message'] = json_encode(array('Lỗi'=>'Bạn đã tạo tối đa 5 thông báo việc làm.'));
 					return Response::json($respond);
 				}
 			}
@@ -891,7 +903,7 @@ class JobSeeker extends Controller
 	}
 
 
-	// nhà tuyển dụng xem hồ sơ
+	// Nhà tuyển dụng xem hồ sơ
 	public function employerViewResume(){
 		return View::make('jobseekers.employer-view-resume'); 
 	}
@@ -900,9 +912,25 @@ class JobSeeker extends Controller
 	public function messages(){
 		return View::make('jobseekers.messages'); 
 	}
+
 	// Nhận việc làm mới
 	public function regiterJobAlert(){
-		return View::make('jobseekers.register-job-alert'); 
+		return View::make('jobseekers.register-job-alert')->with('user', $GLOBALS['user']); 
 	}
 	
+	// Lấy danh sách ngành nghề
+	public function getListCategory(){
+		$list_parent = Category::where('parent_id', 0)->orderBy('parent_id', 'ASC')->get();
+		foreach ($list_parent as $key => $value) {
+			$cate = Category::where('parent_id', $value->id)->get();
+			$list_category[$value->cat_name] = $cate;
+		}
+		return View::make('jobseekers.list-category', compact('list_category'));
+	}
+
+	// Lấy danh sách địa điểm
+	public function getListProvince(){
+		return View::make('jobseekers.list-province');
+	}
+
 }

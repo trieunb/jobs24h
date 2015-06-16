@@ -6,7 +6,7 @@
 class JobController extends Controller
 {
 	public function getIndex($slug, $job_id){
-		$job = Job::where('slug',$slug)
+		$job = Job::where('id', $job_id)
 		->with(array('ntd'=>function($q) {
 			$q->with('company');
 		}))
@@ -16,8 +16,10 @@ class JobController extends Controller
 		->with(array('province'=>function($q) {
 			$q->with('province');
 		}))
-		->where('id', $job_id)->where('is_display', 1)->first();
+		->where('is_display', 1)->first();
+		
 		return View::make('jobseekers.job', compact('slug','job'));
+
 	}
 	public function searchJob(){
 		$keyword = Input::get('keyword');
@@ -104,7 +106,6 @@ class JobController extends Controller
 		$params = Input::all();
 		$respond['has'] = false;
 		if(Request::ajax()){
-			Log::info($params);
 			$rules = array(
 		       'first_name_friend' => 'required',
 		       'last_name_friend' => 'required',
@@ -152,7 +153,7 @@ class JobController extends Controller
 				<h3>Mô tả công việc</h3>
 				<div>".$job->mota."</div><br><br>
 				<div><p style='margin:20px 0'><strong><a href='".URL::to(App::getLocale()."/jobseekers/view/".$job->slug."/".$job->id)."' style='font-family:Arial,sans-serif;font-size:12px;text-decoration:underline;color:#555' target='_blank'>Xem toàn bộ thông tin đăng tuyển</a></strong></p></div>";
-
+				Log::info($message);
 			   	// setting the server, port and encryption
 				if(App\DTT\Services\SendMail::send($params['email_name_friend'], $params['first_name_friend'], $subject, $message ) )
 				{

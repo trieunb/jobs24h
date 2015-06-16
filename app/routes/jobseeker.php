@@ -12,6 +12,11 @@ Route::group(array('prefix'=>$locale), function() {
 				}
 				$jobs = Job::where('is_display',1)->where('status',1)->with('province')->with('category');
 
+				if(count($keyword) > 0){
+					foreach($keyword as $kw){
+						$jobs->where('vitri', 'LIKE', "%".$kw."%");
+					}	
+				}
 				if(count($provinces) > 0)
 				{
 					foreach($provinces as $province){
@@ -37,18 +42,27 @@ Route::group(array('prefix'=>$locale), function() {
 					}));
 				}
 				$jobs_for_widget = $jobs->orderBy('updated_at', 'ASC')->take(3)->get();
+				if(count($jobs_for_widget) == 0){
+					$jobs_for_widget = Job::where('is_display',1)->where('status',1)->orderBy('updated_at', 'ASC')->take(3)->get();	
+				}
 			}else{
-				$jobs_for_widget = Job::orderBy('updated_at', 'ASC')->take(3)->get();
+				$jobs_for_widget = Job::where('is_display',1)->where('status',1)->orderBy('updated_at', 'ASC')->take(3)->get();
 			}
 			View::share('jobs_for_widget', $jobs_for_widget);
 		}
 		// Widget Ngành nghề hấp dẫn
-		$widget_categories_hot = Category::with('mtcategory')->get()->sortBy(function($categories_hot) {
-		    return $categories_hot->mtcategory->count();
+		$widget_categories_hot = Category::where('parent_id', '!=', 0)->with('mtcategory')->get()->sortBy(function($widget_categories_hot) {
+		    return $widget_categories_hot->mtcategory->count();
 		})->reverse();
 		// Widget tìm công việc theo cấp bậc
 		$all_level = Level::all();
+		// Widget Địa điểm hấp dẫn
+		$widget_province_hot = Province::with('mtprovince')->get()->sortBy(function($widget_province_hot) {
+		    return $widget_province_hot->mtprovince->count();
+		})->reverse();
+
 		View::share('widget_categories_hot', $widget_categories_hot);
+		View::share('widget_province_hot', $widget_province_hot);
 		View::share('all_level', $all_level);
 		Route::get('/', array('as'=>'jobseekers.home', 'uses'=>'JobSeeker@home'));
 		Route::get('/login', array('as'=>'jobseekers.login', 'uses'=>'JobSeekerAuth@login') );
@@ -108,7 +122,8 @@ Route::group(array('prefix'=>$locale), function() {
 		Route::get('/applying-job/{job_id}', array('as'=>'jobseekers.applying-job','uses'=>'JobSeeker@applyingJob'));
 		Route::post('/applying-job/{job_id}', array('as'=>'jobseekers.applying-job','uses'=>'JobSeeker@doApplyingJob'));
 		Route::get('/register-job-alert', array('as'=>'jobseekers.register-job-alert', 'uses'=>'JobSeeker@regiterJobAlert'));
-		Route::post('/register-job-alert/', array('as'=>'jobseekers.post-notification-jobs','uses'=>'JobSeeker@creatNotificationJobs'));
+		Route::get('/categories', array('as'=>'jobseekers.get-list-category', 'uses'=>'JobSeeker@getListCategory'));
+		Route::get('/provinces', array('as'=>'jobseekers.get-list-province', 'uses'=>'JobSeeker@getListProvince'));
 	});
 });
 

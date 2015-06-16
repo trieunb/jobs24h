@@ -30,7 +30,7 @@
 							<span class="language"><a href="{{ URL::to('/vi') }}" class="text-blue">Tiếng Việt</a></span>
 						@endif
 						<span class="local"><a href="#" class="text-blue">Join VnJobs Network</a></span>
-						<span class="envelope"><a href="#" class="text-blue"><i class="fa fa-envelope"></i> Nhận việc làm mới</a></span>
+						<span class="envelope"><a href="{{URL::route('jobseekers.register-job-alert')}}" class="text-blue"><i class="fa fa-envelope"></i> Nhận việc làm mới</a></span>
 						<span class="employer-site"><a href="{{ URL::route('employers.launching') }}"><i class="fa fa-caret-right"></i> Nhà tuyển dụng</a></span>
 					</div>
 					<ul class="menu pull-right">
@@ -40,7 +40,11 @@
 									@include('includes.jobseekers.menu-ntv')
 								</nav>
 								<a href="{{URL::route('jobseekers.edit-basic-info')}}" class="text-blue pull-right">
+									@if($user->avatar != null)
 									<img src='/uploads/jobseekers/avatar/{{$user->avatar}}' class="avatar">
+									@else
+									{{ HTML::image('assets/images/avatar.jpg', null, array("class"=>"avatar")) }}
+									@endif
 									<strong><em>Chào, {{$user->first_name}} {{$user->last_name}}</em></strong>
 								</a>
 						@else

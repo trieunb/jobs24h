@@ -118,6 +118,49 @@
 				<a href="{{URL::route('jobseekers.search-job', array('id'=>$job->ntd_id))}}" class="pull-right text-blue"><i class="fa fa-arrow-circle-right"></i> Việc làm khác từ công ty này</a>
 				</div>
 			</div>
+			@section('scripts')
+				<script type="text/javascript">
+					$(document).on('submit', '#ShareToFriends', function(event) {
+						event.preventDefault();
+						var url = '{{URL::route("jobseekers.share-job", array($job->slug,$job->id))}}';
+						$.ajax({
+							url: url,
+							type: 'POST',
+							dataType: 'json',
+							data: {
+								first_name_friend: $('.first_name_friend').val(),
+								last_name_friend: $('.last_name_friend').val(),
+								email_name_friend: $('.email_name_friend').val(),
+							},
+							success : function(json){
+								if(! json.has)
+					            {	
+					            	$('#ShareToFriends').find(".has-error").removeClass('has-error');
+						            $('#ShareToFriends').find(".error-message").remove();
+					            	var j = $.parseJSON(json.message);
+					            	$.each(j, function(index, val) {
+						            	$('.'+index).parents('.form-group').addClass('has-error');
+						            	if($('.'+index).parents('.form-group').find(".error-message").length < 1){
+						           			$('.'+index).parents('.form-group').append('<span class="error-message">'+val+'</span>')
+						            	}
+						           		$('.loading-icon').hide();           		
+					           		});
+					            }else{
+					           		$('#ShareToFriends').find(".has-error").removeClass('has-error');
+					           		$('#ShareToFriends').find(".error-message").remove();
+					           		$('.share-to-friends').popover('hide')
+
+					           		$('.alert-success').slideDown('slow/400/fast', function() {
+					           			$('.alert-success').removeClass('hidden-xs');
+					           			$('.alert-success').html('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+json.message);
+					           		});
+									
+					           	}
+							}
+						})
+					});
+				</script>
+			@stop
 			@else
 			<div class="boxed">
 				<h2>Không tìm thấy công việc này</h2>
@@ -129,9 +172,11 @@
 					<h2>Việc làm từ công ty khác</h2>
 				</div>
 				<ul class="arrow-square-orange">
+					@if(count($jobs_for_widget) > 0)
 						@foreach($jobs_for_widget as $job)
 						<li><a href="{{URL::route('jobseekers.job', array($job->slug, $job->id))}}">{{$job->vitri}}</a></li>
 						@endforeach
+					@endif
 					</ul>
 				</div>
 			</div>
@@ -149,50 +194,6 @@
 				@include('includes.jobseekers.widget.right-suggested-jobs')
 				
 		</aside>
-	</section>
-@stop
-	@section('scripts')
-	<script type="text/javascript">
-		$(document).on('submit', '#ShareToFriends', function(event) {
-			event.preventDefault();
-			var url = '{{URL::route("jobseekers.share-job", array($job->slug,$job->id))}}';
-			$.ajax({
-				url: url,
-				type: 'POST',
-				dataType: 'json',
-				data: {
-					first_name_friend: $('.first_name_friend').val(),
-					last_name_friend: $('.last_name_friend').val(),
-					email_name_friend: $('.email_name_friend').val(),
-				},
-				success : function(json){
-					if(! json.has)
-		            {	
-		            	$('#ShareToFriends').find(".has-error").removeClass('has-error');
-			            $('#ShareToFriends').find(".error-message").remove();
-		            	var j = $.parseJSON(json.message);
-		            	$.each(j, function(index, val) {
-			            	$('.'+index).parents('.form-group').addClass('has-error');
-			            	if($('.'+index).parents('.form-group').find(".error-message").length < 1){
-			           			$('.'+index).parents('.form-group').append('<span class="error-message">'+val+'</span>')
-			            	}
-			           		$('.loading-icon').hide();           		
-		           		});
-		            }else{
-		           		$('#ShareToFriends').find(".has-error").removeClass('has-error');
-		           		$('#ShareToFriends').find(".error-message").remove();
-		           		$('.share-to-friends').popover('hide')
 
-		           		$('.alert-success').slideDown('slow/400/fast', function() {
-		           			$('.alert-success').removeClass('hidden-xs');
-		           			$('.alert-success').html('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+json.message);
-		           		});
-						
-		           	}
-				}
-			})
-			
-			
-		});
-	</script>
+	</section>
 @stop

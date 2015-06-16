@@ -35,14 +35,14 @@
 										        $location_arr[] = $value;
 										    }
 										}else{
-										    $location_arr[] = null;
+										    $location_arr = null;
 										}
 										if(json_decode($ja->categories) != null){
 										    foreach (json_decode($ja->categories) as $value) {
 										       	$categories[] = $value;
 										    }
 										}else{
-										    $categories[] = null;
+										    $categories = null;
 										}
 									?>
 									<tr>
@@ -243,6 +243,7 @@
 			e.preventDefault();
 			var url = '{{URL::route("jobseekers.post-notification-jobs")}}';
 			var result= '{{URL::route("jobseekers.notification-jobs")}}';
+			var email = "{{$user->email}}";
 			$.ajax({
 				url: url,
 				type: 'POST',
@@ -254,6 +255,7 @@
 					province: $('.province').val(),
 					salary: $('.min_salary').val(),
 					time: $('.time').val(),
+					email: email,
 				},
 				success : function(json){
 					if(!json.has)
@@ -333,6 +335,4 @@
 		});
 	</script>
 @stop
-				</p>
-			</div>
-		</div>
+

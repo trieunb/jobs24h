@@ -108,7 +108,7 @@
 		// Publish a resume in my-resume
 	    $(document).on('change','#is_publish',function(){
 	        var data = $(this).val();
-	        
+	        alert('ádasd');
 	        var url = '{{URL::route("jobseekers.my-resume")}}'
 	        $('#popup_is_publish_'+data).modal('show');
 	        $('.is_publish').click(function(e){

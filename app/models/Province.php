@@ -7,4 +7,7 @@ class Province extends \Eloquent {
         'created_at',
         'updated_at'
     );
+    public function mtprovince(){
+		return $this->hasMany('WorkLocation', 'province_id');
+	}
 }

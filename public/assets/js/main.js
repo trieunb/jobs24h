@@ -152,12 +152,9 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
     $("#locationMainSearch, #categoryMainSearch, #WishPlaceWork, #Fields,#Specialized").select2({
         maximumSelectionLength: 3,
     });
-    $("#ForeignLanguages,#CurrentLevel,#WishLevel,#FieldOfStudy,#Scope,#LatestLevel,#Diploma,#HighestDegree,#District,#Cities,#Nationality, #jobObjMainSearch,#jobExpMainSearch,#DateOfBirth,#MonthOfBirth,#YearOfBirth,#Gender,#Country,#MaritalStatus,#Category,#Province,#Level,#AverageGrade,#choose_cv").select2({
+    $("#jobLevelMainSearch,#ForeignLanguages,#CurrentLevel,#WishLevel,#FieldOfStudy,#Scope,#LatestLevel,#Diploma,#HighestDegree,#District,#Cities,#Nationality, #jobObjMainSearch,#jobExpMainSearch,#DateOfBirth,#MonthOfBirth,#YearOfBirth,#Gender,#Country,#MaritalStatus,#Category,#Province,#Level,#AverageGrade,#choose_cv,.up_time").select2({
         minimumResultsForSearch: Infinity
     });
-     $("#jobLevelMainSearch").select2({
-  placeholder: "Select a state"
-});
 
     $("#From_date,#To_date,#DOB,#Study_to,#Study_from").datetimepicker({
         pickTime: false,
@@ -394,6 +391,18 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
         $('#'+id).removeClass('hidden-xs');
         goToByScroll(id);           
     });
+
+    $('.top-category ul h4 span i, .top-province ul h4 span i').click(function(event) {
+        event.preventDefault();
+        $(this).closest('ul').addClass('hidden-xs');
+    });
+
+    $('.top-category, .top-province').mouseup(function() {
+        $('.bottom-search li ul').addClass('hidden-xs');
+        $(this).children('ul').removeClass('hidden-xs');
+    });
+
+    
 })(jQuery);
 
 

@@ -60,8 +60,30 @@
 				</div>
 				<div class="container">
 					<ul class="fa-ul bottom-search">
-						<li><i class="fa-li fa fa-square"></i><a href="">Top Ngành Nghề</a></li>
-						<li><i class="fa-li fa fa-square"></i><a href="">Top Địa Điểm</a></li>
+						<li class="top-category"><i class="fa-li fa fa-square"></i>Top Ngành Nghề
+							<ul class="arrow-square-orange hidden-xs">
+								<h4>Top Ngành Nghề <span><i class="fa-li fa fa-remove"></i></span></h4>
+								@foreach($widget_categories_hot as $key => $cate)
+								@if($key < 12)
+									<li class="col-sm-6"><a href="{{URL::route('jobseekers.get-category', array('id'=>$cate->id))}}">{{$cate->cat_name}}</a></li>
+									@endif
+								@endforeach
+								<div class="clearfix"></div>
+								<a href="{{URL::route('jobseekers.get-list-category')}}" class="btn btn-sm bg-orange pull-right">Xem thêm</a>
+							</ul>
+						</li>
+						<li class="top-province"><i class="fa-li fa fa-square"></i>Top Địa Điểm
+							<ul class="arrow-square-orange hidden-xs">
+								<h4>Top Địa Điểm <span><i class="fa-li fa fa-remove"></i></span></h4>
+								@foreach($widget_province_hot as $key => $province)
+									@if($key < 12)
+									<li class="col-sm-6"><a href="{{URL::route('jobseekers.search-job', array('province[]'=>$province->id))}}">{{$province->province_name}}</a></li>
+									@endif
+								@endforeach
+								<div class="clearfix"></div>
+								<a href="{{URL::route('jobseekers.get-list-province')}}" class="btn btn-sm bg-orange pull-right">Xem thêm</a>
+							</ul>
+						</li>
 						<li><i class="fa-li fa fa-square"></i><a href="" class="new">Việc Làm Toàn Cầu</a></li>
 						<li><i class="fa-li fa fa-square"></i><a href="">Download Ứng Dụng VNJobs</a></li>
 					</ul>

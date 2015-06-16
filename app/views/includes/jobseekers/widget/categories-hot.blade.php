@@ -7,5 +7,5 @@
 		@endif
 		@endforeach
 	</ul>
-	<a href="{{URL::route('jobseekers.get-category')}}" class="text-blue decoration"><i class="fa fa-arrow-circle-o-right"></i> Tất cả ngành nghề việc làm</a>
+	<a href="{{URL::route('jobseekers.get-list-category')}}" class="text-blue decoration"><i class="fa fa-arrow-circle-o-right"></i> Tất cả ngành nghề việc làm</a>
 </div>
