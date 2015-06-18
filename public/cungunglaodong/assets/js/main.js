@@ -1,3 +1,3 @@
 $(function () {
-  	$('#carousel-custom-review').carousel()
+  	$('#carousel-custom').carousel()
 })
