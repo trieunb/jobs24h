@@ -95,3 +95,4 @@ $GLOBALS['user'] = Sentry::getUser();
 require app_path().'/routes/admin.php';
 require app_path().'/routes/jobseeker.php';
 require app_path().'/routes/employer.php';
+require app_path().'/routes/training.php';
