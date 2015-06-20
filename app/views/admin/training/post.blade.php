@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title')Danh sách chương trình đào tạo @stop
-@section('page-header') Chương trình đào tạo @stop
+@section('title')Danh sách tin tức @stop
+@section('page-header') Tin tức đã đăng @stop
 @section('content')
 @include('includes.notifications')
 	<div class="clearfix"></div>
@@ -15,15 +15,11 @@
 				</th>
 				<th>ID</th>
 				<th>Tiêu đề</th>
-				<th>Thời lượng</th>
-				<th>Học phí</th>
-				<th>Ngày khai giảng</th>
-				<th>Ca</th>
-				<th>Ngày học</th>
-				<th>Giờ học</th>
-				<th>Nội dung</th>
-				<th>Giảm giá</th>
-				<th>Giảng viên</th>
+				<th>Nội dung giới thiệu</th>
+				<th>Nội dung chính</th>
+				<th>Ảnh đại diện</th>
+				<th>Thuộc Thể loại</th>
+				 
 				<th>#</th>
 			</tr>
 		</thead>
@@ -39,14 +35,8 @@
 				</td>
 				<td>{{$value['id']}}</td>				
 				<td>{{$value['title']}}</td>
-				<td>{{$value['time_day']}} giờ</td>
-				<td>{{$value['fee']}}</td>
-				<td>{{$value['date_open']}}</td>
-				<td>{{$value['shift']}}</td>
-				<td>{{$value['date_study']}}</td>
-				<td>{{$value['time_hour']}} buổi</td>
-				<td>
-					<a data-toggle="modal" data-target="#myModal{{$value['id']}}">
+				<td>{{$value['subtitle']}} giờ</td>
+				<td><a data-toggle="modal" data-target="#myModal{{$value['id']}}">
   					Xem nội dung
 					</a>	
 					<div class="modal fade" id="myModal{{$value['id']}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -65,21 +55,21 @@
 					      </div>
 					    </div>
 					  </div>
-					</div>				
-				</td>
-				<td>{{$value['discount']}}</td>
-				<td>{{$value['name_teacher']}}</td>
+					</div></td>
+				<td>{{$value['thumbnail']}}</td>
+				<td>{{$value['name_cat']}}</td>
+				  
 				<td>
-					<a class="btn btn-xs btn-info" title="sửa"  href="{{URL::to('admin/training/edit-couser/'.$value['id'].'')}}"><i class="ace-icon fa fa-pencil bigger-120"></i></a>
+					<a class="btn btn-xs btn-info" title="sửa" href="{{URL::to('admin/training/edit-post/'.$value['id'].'')}}"><i class="ace-icon fa fa-pencil bigger-120"></i></a>
 					<div style="padding:10px"></div>
-					 <a class="btn btn-xs btn-danger" title="Xóa" href="{{URL::to('admin/training/delete/'.$value['id'].'')}}"><i class="ace-icon fa fa-trash-o bigger-120"></i></a>
+					 <a class="btn btn-xs btn-danger" title="Xóa" href="{{URL::to('admin/training/delete-post/'.$value['id'].'')}}"><i class="ace-icon fa fa-trash-o bigger-120"></i></a>
 				</td>
 				</tr>
 				@endforeach	
+			
 		</tbody>
-
 	</table>
-	<a href="{{URL::to('admin/training/add-couser')}}" class="btn">Đăng Khóa học mới</a>
+	<a href="{{URL::to('admin/training/add-post')}}" class="btn">Đăng Khóa học mới</a>
 
 	<div id="pagination">
 		{{ $data->links() }}

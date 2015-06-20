@@ -19,44 +19,12 @@
 				{{ Form::input('text', 'title', $value['title'], array('class'=>'form-control', 'required') ) }}
 			</div>
 		</div>
+		 
 		<div class="form-group">
-			<label for="inputTitle" class="col-sm-2 control-label">Thời lượng:</label>
-			<div class="col-sm-1">
-				{{ Form::input('text', 'time_day', $value['time_day'], array('class'=>'form-control', 'required') ) }}
-			</div>
-			<label for="inputTitle" class="control-label">Buổi</label>
-		</div>
-		<div class="form-group">
-			<label for="inputFullname" class="col-sm-2 control-label">Học phí:</label>
+			<label for="inputFullname" class="col-sm-2 control-label">Giới thiệu nội dung</label>
 			<div class="col-sm-6">
-				{{ Form::input('text', 'fee', $value['fee'], array('class'=>'form-control') ) }}
+				{{ Form::input('text', 'subtitle', $value['subtitle'], array('class'=>'form-control') ) }}
 			</div>
-		</div>
-		<div class="form-group">
-			<label for="input" class="col-sm-2 control-label">Ngày khai giảng:</label>
-			<div class="col-sm-2">
-				{{ Form::input('text', 'date_open', date('Y-m-d'), array('class'=>'form-control datepicker') ) }}
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="input" class="col-sm-2 control-label">Ca:</label>
-			<div class="col-sm-2">
-				{{ Form::input('text', 'shift',$value['shift'], array('class'=>'form-control') ) }}
-			</div>
-		</div>
-		
-		<div class="form-group">
-			<label for="input" class="col-sm-2 control-label">Ngày học:</label>
-			<div class="col-sm-2">
-				{{ Form::input('text', 'date_study', date('Y-m-d'), array('class'=>'form-control datepicker') ) }}
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="inputTitle" class="col-sm-2 control-label">Giờ học:</label>
-			<div class="col-sm-1">
-				{{ Form::input('text', 'time_hour', $value['time_hour'], array('class'=>'form-control', 'required') ) }}
-			</div>
-			<label for="inputTitle" class="control-label">Giờ</label>
 		</div>
 		 
 		<div class="form-group">
@@ -79,16 +47,16 @@
 		</div>
 
 		<div class="form-group">
-			<label for="input" class="col-sm-2 control-label">Giảm giá:</label>
+			<label for="input" class="col-sm-2 control-label">Ảnh đại diện</label>
 			<div class="col-sm-6">
-				{{ Form::input('text', 'discount', $value['discount'], array('class'=>'form-control') ) }}
+				{{ Form::input('text', 'thumbnail', $value['thumbnail'], array('class'=>'form-control') ) }}
 			</div>
 		</div>
 		 
 		<div class="form-group">
-			<label for="input" class="col-sm-2 control-label">Tên giáo viên:</label>
+			<label for="input" class="col-sm-2 control-label">Chuyên mục:</label>
 			<div class="col-sm-2">
-				{{ Form::select('teacher_id',$teacher)}}
+				{{ Form::select('cat_id',$cat)}}
 			</div>
 		</div>
 		@endforeach
