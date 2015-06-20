@@ -12,7 +12,7 @@
 						<div class="col-xs-12">
 							@foreach($category as $cat)
 							<div class="col-xs-4">
-								<a href="{{ URL::route('employers.search.viewcat', $cat->id) }}">{{ $cat->cat_name }}</a> <span class="cl-orange">({{ $cat->mtcategory->count() }})</span>
+								<a href="{{ URL::route('employers.search.category', $cat->id) }}">{{ $cat->cat_name }}</a> <span class="cl-orange">({{ $cat->mtcategory->count() }})</span>
 							</div>
 
 						@endforeach

@@ -1,5 +1,5 @@
 @extends('layouts.employer')
-@section('title') Thư phản hồi ứng viên @stop
+@section('title') Thư trả lời tự động @stop
 @section('content')
 	<section class="boxed-content-wrapper clearfix">
 		<div class="container">
@@ -10,15 +10,18 @@
 			<section id="content" class="pull-right right">
 				<div class="boxed">
 					<div class="heading-image">
-						<h2 class="text-blue">{{ HTML::image('assets/ntd/images/icon-logs-lg.png') }} Danh sách thư thông báo đã tạo</h2>
+						<h2 class="text-blue">{{ HTML::image('assets/ntd/images/icon-respond-auto.png') }} Danh sách các thư trả lời tự động</h2>
 					</div>
-					<div class="filter">
-						<label>Quý khách tạo và sử dụng email mẫu để tiết kiệm thời gian liên lạc với ứng viên!
-						</label>
-					</div>
+					
 					<div class="clearfix"></div>
 					@include('includes.notifications')
-					{{ Form::open(['route'=>'employers.account.delete_letter']) }}
+					<div class="row">
+						<div class="col-xs-6">
+							Hiển thị <span class="cl-orange">{{ $letters->getFrom() }}</span> - <span class="cl-orange">{{ $letters->getTo() }}</span> của <span class="cl-orange">{{ $letters->getTotal() }}</span> thư
+						</div>
+						<div class="col-xs-6"></div>
+					</div>
+					{{ Form::open(['route'=>'employers.account.delete_letter_auto']) }}
 					<table class="table table-bordered table-blue-bordered white">
 						<thead>
 							<tr>
@@ -33,7 +36,6 @@
 								<th>Ngày tạo thư</th>
 								<th>Tiêu đề thư</th>
 								<th>Loại</th>
-								<th>Trạng thái</th>
 								<th>Người tạo</th>
 								<th>Thao tác</th>
 							</tr>
@@ -58,19 +60,12 @@
 									Dùng chung
 									@endif
 								</td>
-								<td class="text-center">
-									@if($letter->status == 2)
-									{{ HTML::image('assets/ntd/images/icon-active.png', '', ['title'=>'Đã gửi cho ứng viên']) }}
-									@else
-									{{ HTML::image('assets/ntd/images/icon-inactive.png', '', ['title'=>'Chưa gửi cho ứng viên']) }}
-									@endif
-								</td>
 								<td>
 									{{ $letter->ntd->full_name }}
 								</td>
 								<td>
-									<a href="{{ URL::route('employers.account.copy_letter', $letter->id) }}">{{ HTML::image('assets/ntd/images/icon-view.png') }}</a>
-									<a href="{{ URL::route('employers.account.edit_letter', $letter->id) }}">{{ HTML::image('assets/ntd/images/icon-edit.png') }}</a>
+									<a href="{{ URL::route('employers.account.copy_letter_auto', $letter->id) }}">{{ HTML::image('assets/ntd/images/icon-view.png') }}</a>
+									<a href="{{ URL::route('employers.account.edit_letter_auto', $letter->id) }}">{{ HTML::image('assets/ntd/images/icon-edit.png') }}</a>
 									
 								</td>
 							</tr>
@@ -82,8 +77,8 @@
 							@endif
 						</tbody>
 					</table>
-					<a href="{{ URL::route('employers.account.create_letter') }}" class="btn btn-lg bg-orange">Tạo thư mới</a>
-					<button type="submit" class="btn btn-lg bg-orange bg-green"onclick="return confirm('Bạn có muốn xóa các thư đã chọn ?')">Xóa thư</button>
+					<a href="{{ URL::route('employers.account.create_letter_auto') }}" class="btn btn-lg bg-orange">Tạo thư mới</a>
+					<button type="submit" class="btn btn-lg bg-orange bg-green" onclick="return confirm('Bạn có muốn xóa các thư đã chọn ?')">Xóa thư</button>
 					{{ Form::close() }}
 					<div class="pull-right">&nbsp;
 						{{ $letters->links() }}

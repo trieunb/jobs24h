@@ -33,10 +33,17 @@
 						<tbody>
 							@foreach($apply as $ap)
 							<tr>
-								<td><a href="#" class="text-blue decoration"><strong>{{ $ap->full_name() }}</strong></a></td>
+								@if($ap->ntv_id > 0)
+								<td><a href="{{ URL::route('employers.search.resumeinfo', $ap->cv_id) }}" class="text-blue decoration"><strong>{{ $ap->ntv->full_name() }}</strong></a></td>
+								<td>{{ $ap->resume->cvganday }}</td>
+								<td>{{ $ap->apply_date }}</td>
+								<td>{{ Config::get('custom_apply.apply_status')[$ap->status] }}</td>
+								@else
+								<td><a href="{{ URL::route('employers.search.resumeinfo', $ap->cv_id) }}" class="text-blue decoration"><strong>{{ $ap->full_name() }}</strong></a></td>
 								<td>{{ $ap->headline }}</td>
 								<td>{{ $ap->apply_date }}</td>
 								<td>{{ Config::get('custom_apply.apply_status')[$ap->status] }}</td>
+								@endif
 							</tr>
 							@endforeach
 							

@@ -43,7 +43,7 @@
 															</label>
 														</div>
 													</td>
-													<td>{{ $job->vitri }}</td>
+													<td><a href="{{ URL::route('jobseekers.job', [$job->slug, $job->id]) }}" target="_blank">{{ $job->vitri }}</a></td>
 													<td>{{ $job->matin }}</td>
 													<td>
 													@foreach($job->category as $cate)

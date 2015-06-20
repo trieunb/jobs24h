@@ -1,6 +1,6 @@
 <?php 
 namespace NTD;
-use View, Redirect, Input, Job, CVCategory, WorkLocation, Auth, Config, Str, File, Company;
+use View, Redirect, Input, Job, CVCategory, WorkLocation, Auth, Config, Str, File, Company,RespondAuto, Response;
 use App\DTT\Forms\EmployerAddJob;
 class JobController extends \Controller {
 	
@@ -183,6 +183,16 @@ class JobController extends \Controller {
 			$data['status'] = 1;
 			$data['keyword_tags'] = json_encode($data['keyword_tags']);
 			$data['matin'] = Job::orderBy('matin', 'desc')->first()->matin + 1;
+			if(@$data['show_auto_reply'] && is_numeric($data['letter_auto']))
+			{
+				$data['letter_auto_id'] = $data['letter_auto'];
+			} else if($data['letter_auto'] == 'none')
+			{
+				$data['letter_auto_id'] = 0;
+			}
+			unset($data['show_auto_reply']);
+			unset($data['letter_auto']);
+			
 			$hinhanh = array();
 
 			for($i = 1; $i <= 3; $i++)
@@ -263,7 +273,16 @@ class JobController extends \Controller {
 			$data['ntd_id'] = Auth::id();
 			$data['status'] = 1;
 			$data['keyword_tags'] = json_encode($data['keyword_tags']);
-
+			if(@$data['show_auto_reply'] && is_numeric($data['letter_auto']))
+			{
+				$data['letter_auto_id'] = $data['letter_auto'];
+			} else if($data['letter_auto'] == 'none')
+			{
+				$data['letter_auto_id'] = 0;
+			}
+			unset($data['show_auto_reply']);
+			unset($data['letter_auto']);
+			//dd($data);
 			$job = Job::where('ntd_id', Auth::id())->where('id', $id)->first();
 			if( ! $job) return Redirect::route('employers.jobs.index')->withErrors('Không tìm thấy công việc.');
 			foreach ($data as $key => $value) {
@@ -356,5 +375,18 @@ class JobController extends \Controller {
 		$title = 'Tìm kiếm việc làm';
 		$input = Input::all();
 		return View::make('employers.jobs.index', compact('jobs', 'title', 'input'));
+	}
+	public function postAjax()
+	{
+		if(Input::get('action') == 'getLetter')
+		{
+			$letter = RespondAuto::where('ntd_id', Auth::id())->where('id', Input::get('letterId'))->first();
+			if( ! $letter)
+			{
+				return Response::json(['has'=>false, 'message'=>'Không tìm thấy thư']);
+			} else {
+				return Response::json(['has'=>true, 'subject'=>$letter->subject, 'content'=>$letter->content]);
+			}
+		}
 	}
 }

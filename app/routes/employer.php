@@ -20,6 +20,7 @@ Route::group(array('prefix'=>$locale), function() {
 				'postEdit'		=>	'employers.jobs.update',
 				'getDelete'		=>	'employers.jobs.delete',
 				'getSearch'		=>	'employers.jobs.search',
+				'postAjax'		=>'employers.jobs.ajax',
 			));
 			Route::controller('candidates', 'CandidateController', array(
 				'getIndex'		=>	'employers.candidates.index',
@@ -49,6 +50,15 @@ Route::group(array('prefix'=>$locale), function() {
 				'getLogout'			=>	'employers.account.logout',
 				'getUserManager'	=>	'employers.account.usermanager',
 				'getUserInformation'=>	'employers.account.userinformation',
+				'getEditLetter'		=>	'employers.account.edit_letter',
+				'getCopyLetter'		=>	'employers.account.copy_letter',
+				'getCreateLetter'	=>	'employers.account.create_letter',
+				'postDeleteLetter'	=>	'employers.account.delete_letter',
+				'getEditLetterAuto'	=>	'employers.account.edit_letter_auto',
+				'getCopyLetterAuto'	=>	'employers.account.copy_letter_auto',
+				'getCreateLetterAuto'=>	'employers.account.create_letter_auto',
+				'postDeleteLetterAuto'=>'employers.account.delete_letter_auto',
+				
 			));
 
 			Route::controller('report', 'ReportController', array(
@@ -76,6 +86,8 @@ Route::group(array('prefix'=>$locale), function() {
 				'postCalendarView'		=>	'employers.search.calendarview',
 				'getHistory'			=>	'employers.search.history',
 				'getHistoryInfo'		=>	'employers.search.historyinfo',
+				'getResumeInfo'			=>	'employers.search.resumeinfo',
+				'postAjax'				=>	'employers.search.ajax',
 				
 			));
 		});
