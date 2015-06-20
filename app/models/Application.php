@@ -15,4 +15,12 @@ class Application extends \Eloquent {
 	{
 		return $this->first_name . " " . $this->last_name;
 	}
+	public function ntv()
+	{
+		return $this->belongsTo('NTV', 'ntv_id');
+	}
+	public function resume()
+	{
+		return $this->belongsTo('Resume', 'cv_id');
+	}
 }

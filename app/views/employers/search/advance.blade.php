@@ -46,8 +46,17 @@
 						</div>
 						<div class="form-group">
 							<label for="namkinhnghiem" class="col-sm-4 control-label">Năm Kinh Nghiệm:</label>
-							<div class="col-sm-8">
-								{{ Form::number('namkinhnghiem', 0 ) }}
+							<div class="col-sm-4">
+								{{ Form::number('namkinhnghiem', '', ['id'=>'namkinhnghiem']) }}
+
+							</div>
+							<div class="col-sm-4">
+								<div class="checkbox">
+									<label>
+										{{ Form::checkbox('khongyeucau', 1, 0, ['id'=>'khongyeucau']) }} Không yêu cầu
+										
+									</label>
+								</div>
 							</div>
 						</div>
 						<div class="form-group">
@@ -84,12 +93,12 @@
 									{{ Form::select('education',['all'=>'Bất kỳ'] + Education::lists('name', 'id') ) }}
 								</div>
 							</div>
-							<div class="form-group">
+							<!-- <div class="form-group">
 								<label for="input" class="col-sm-4 control-label">Trường:</label>
 								<div class="col-sm-8">
 									{{ Form::text('school_name') }}
 								</div>
-							</div>
+							</div> -->
 							<div class="form-group">
 								<label for="input" class="col-sm-4 control-label">Giới tính:</label>
 								<div class="col-sm-8">
@@ -105,7 +114,7 @@
 									</div>
 									<div class="col-xs-1 align-center">đến</div>
 									<div class="col-xs-3">
-										{{ Form::text('luong_from') }}
+										{{ Form::text('luong_to') }}
 									</div>
 									<div class="col-xs-2 align-center">(USD/tháng)</div>
 								</div>
@@ -115,11 +124,11 @@
 								<div class="col-sm-8">
 									<div class="col-xs-1 align-center">từ</div>
 									<div class="col-xs-3">
-										{{ Form::text('tuoi_tu') }}
+										{{ Form::text('tuoi_from') }}
 									</div>
 									<div class="col-xs-1 align-center">đến</div>
 									<div class="col-xs-3">
-										{{ Form::text('tuoi_from') }}
+										{{ Form::text('tuoi_to') }}
 									</div>
 								</div>
 							</div>
@@ -134,93 +143,7 @@
 						</div>
 					</form>
 					
-					<div id="result" class="@if(isset($result)) visible @else invisible @endif">
-						@if(isset($result))
-						<div class="col-xs-12 search-info">
-							<div class="title-image">
-								{{ HTML::image('assets/ntd/images/search-list.png') }}
-							</div>
-							<div class="info-text">
-								<span>Tìm thấy {{ $result->getTotal() }} hồ sơ theo yêu cầu tìm kiếm.</span>
-							</div>
-							<div class="info-text">
-								<span>Ngành nghề <strong>@if($input['category'] == 'all') Bất Kỳ @else {{ $cats[$input['category']] }} @endif</strong> 
-								| Địa điểm: <strong>@if($input['location'] == 'all') Bất Kỳ @else {{ $locas[$input['location']] }} @endif</strong></span>
-							</div>
-						</div>
-						<div class="pull-right">&nbsp;
-							{{ $result->links() }}
-						</div>
-						<table class="table table-blue-bordered table-bordered table-result">
-							<thead>
-								<tr>
-									<th class="col-sm-4">Ứng viên</th>
-									<th class="col-sm-1">Kinh nghiệm</th>
-									<th class="col-sm-1">Mức lương</th>
-									<th class="col-sm-2">Nơi làm việc</th>
-									<th class="col-sm-2">Cập nhật</th>
-								</tr>
-							</thead>
-							<tbody>
-								@if(count($result))
-								@foreach($result as $resume)
-								<tr>
-									<td>
-										<a href="#">{{ $resume->tieude_cv }}</a>
-										<div class="js-info">
-											<i class="fa fa-eye"></i> {{ $resume->views }}
-											<i class="fa fa-download"></i> {{ $resume->downloaded }}
-											<!--<i class="fa fa-bookmark"></i> 100%-->
-										</div>
-										@if($resume->file_name)
-										<div class="js-download">
-											<i class="fa fa-paperclip"></i>
-											Hồ sơ này bao gồm 1 CV đính kèm
-										</div>
-										@endif
-										<div class="js-level">
-											Cấp bậc: <strong>{{ $levs[$resume->capbachientai] }}</strong>
-										</div>
-									</td>
-									<td>
-										{{ $resume->namkinhnghiem }} năm
-									</td>
-									<td>
-										@if($resume->mucluong == 0)
-										Thương lượng
-										@else 
-										${{ $resume->mucluong }}
-										@endif
-									</td>
-									<td>
-										@foreach($resume->location as $v)
-										{{ $v->province->province_name }}<br>
-										@endforeach
-									</td>
-									<td>
-										{{ $resume->getUpdateAt() }}
-									</td>
-								</tr>	
-								@endforeach
-								@else
-								<tr>
-									<td colspan="5">Không tìm thấy hồ sơ nào với yêu cầu của bạn</td>
-								</tr>
-								@endif
-							</tbody>
-						</table>
-						<div class="pull-right">&nbsp;
-							{{ $result->links() }}
-						</div>
-
-						@endif
-					</div>
-					
-				</div>
-					
-				<div class="box" id="order-detail" style="display: none;">
-					
-				</div>
+					@include('employers.search.all_result')
 			</section>
 		</div>
 	</section>
@@ -249,4 +172,25 @@
 		</div>
 	</div>
 </div>
+@stop
+
+@section('script')
+	<script type="text/javascript">
+	$('#khongyeucau').click(function(event) {
+		formHandle();
+	});
+	var formHandle = function()
+	{
+		if($('#khongyeucau').is(':checked'))
+		{
+			$('#namkinhnghiem').attr('disabled', 'disabled');;
+		} else {
+			$('#namkinhnghiem').removeAttr('disabled');
+		}
+	}
+	var iskn = {{ (Input::get('khongyeucau')?1:0) }};
+	if(iskn == 1) {
+		$('#khongyeucau').trigger('click');
+	}
+	</script>
 @stop

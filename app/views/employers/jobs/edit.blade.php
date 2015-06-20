@@ -23,7 +23,8 @@
 											<div class="form-group">
 												<label for="chucvu" class="col-sm-2 control-label">Chức vụ:</label>
 												<div class="col-sm-4">
-													{{ Form::text('chucvu', $job->chucvu, array('class'=>'form-control', 'required', 'placeholder'=>'Ví dụ: Teamleader') ) }}
+													{{ Form::select('chucvu', Level::lists('name', 'id'), $job->chucvu) }}
+													
 												</div>
 												<label for="namkinhnghiem" class="col-sm-2 control-label">Số năm kinh nghiệm:</label>
 												<div class="col-sm-4">
@@ -143,7 +144,7 @@
 													{{ Form::select('hinhthucnop', Config::get('custom_hinhthucnop.hinh_thuc'), $job->hinhthucnop, array('class'=>'form-control') ) }}
 												</div>
 											</div>
-											<div class="tags-box">
+											<div class="tags-box bg-little-blue push-padding-30-full border-blue">
 												<h4><strong>Gia tăng chất lượng hồ sơ ứng tuyển</strong> bằng cách xác định <strong>3 thẻ từ khóa.</strong>
 		Điều này sẽ giúp các ứng viên nhanh chóng xác định rõ yêu cầu chính của công việc.</h4>
 												<div class="form-group">
@@ -165,6 +166,37 @@
 													</div>
 												</div>
 												
+											</div>
+											<div class="form-group">
+												<label for="input" class="col-sm-2 control-label"></label>
+												<div class="col-sm-10">
+													<div class="checkbox">
+														<label>
+															<input type="checkbox" name="show_auto_reply" value="1" id="show-auto-reply">
+															Thiết lập thư trả lời tự động khi có ứng viên nộp đơn ứng tuyển
+														</label>
+													</div>
+												</div>
+											</div>
+											<div id="auto-reply" class="collapse ">
+												<div class="form-group">
+													<label for="input" class="col-sm-2 control-label">Chọn thư:</label>
+													<div class="col-sm-10">
+														{{ Form::select('letter_auto', ['none'=>'Vui lòng chọn'] + RespondAuto::where('ntd_id', Auth::id())->lists('subject', 'id'), null, ['id'=>'select-auto'] ) }}
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="inputSubject" class="col-sm-2 control-label">Tiêu đề:</label>
+													<div class="col-sm-10">
+														<input type="text" name="subject" id="inputSubject" class="form-control" value="" disabled="disabled">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="inputSubject" class="col-sm-2 control-label">Nội dung thư:</label>
+													<div class="col-sm-10">
+														<textarea name="content" id="inputContent" class="form-control" rows="10" disabled="disabled"></textarea>
+													</div>
+												</div>
 											</div>
 										</div>
 										<div class="boxed">
@@ -217,8 +249,8 @@
 										</div>
 									</div>		
 									<div class="center">
-									{{ Form::button('Tiếp tục', array('type'=>'submit', 'class'=>'btn btn-warning')) }}
-									<a href="{{ URL::route('employers.jobs.index') }}" class="btn btn-warning">Hủy</a>
+									{{ Form::button('Tiếp tục', array('type'=>'submit', 'class'=>'btn btn-lg bg-orange')) }}
+									<a href="{{ URL::route('employers.jobs.index') }}" class="btn btn-lg bg-orange">Hủy</a>
 								</div>
 							</div> <!-- primary -->
 							{{ Form::close() }}
@@ -251,5 +283,50 @@
 			language: "vi",
 			autoclose: true
 		});
+		$('#show-auto-reply').click(function(event) {
+			if($(this).is(':checked'))
+			{
+				$('#auto-reply').collapse('show');
+			} else {
+				$('#auto-reply').collapse('hide');
+			}
+		});
+		function fillToTextbox()
+		{
+			var letterId = $('#select-auto').val();
+			if( isNaN(letterId))
+			{
+				$('#inputSubject').val('');
+				$('#inputContent').val('');
+			} else {
+				$.ajax({
+					url: '{{ URL::route('employers.jobs.ajax') }}',
+					data: {action: 'getLetter', letterId: letterId},
+					type: 'POST',
+					dataType: 'json',
+					success: function(json)
+					{
+						if(json.has) {
+							$('#inputSubject').val(json.subject);
+							$('#inputContent').val(json.content);
+						} else {
+							alert(json.message);
+						}
+						
+					}
+				});
+			}
+		}
+		$('#select-auto').change(function(event) {
+			fillToTextbox();
+		});
+		
+		var show_auto_reply = '{{ $job->letter_auto_id }}';
+		if(show_auto_reply != 0) {
+			$('#show-auto-reply').trigger('click');
+			$('#select-auto').val(show_auto_reply);
+			fillToTextbox();
+		}
+		
 	</script>
 @stop

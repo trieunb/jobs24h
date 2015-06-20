@@ -44,6 +44,17 @@ class Resume extends \Eloquent {
 	{
 		return $this->hasMany('CVLanguage', 'rs_id');
 	}
+	public function worktype()
+	{
+		return $this->beLongsTo('WorkType', 'hinhthuclamviec');
+	}
+	public function kynang()
+	{
+		$kynang = json_decode($this->kynang);
+		if(json_last_error() == JSON_ERROR_NONE) return $kynang;
+		return [];
+		
+	}
 	public function arrayLocation($keyGet = 'province_id')
 	{
 		$location = $this->location->toArray();

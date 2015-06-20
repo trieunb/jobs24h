@@ -50,9 +50,11 @@
 	<script type="text/javascript">
 	$('#select-year').change(function(event) {
 		getCalendar();
+		getCalendar1();
 	});
 	$('#select-month').change(function(event) {
 		getCalendar();
+		getCalendar1();
 	});
 	var getCalendar = function()
 	{
@@ -76,12 +78,16 @@
 	});
 	$('#select-year1').change(function(event) {
 		getCalendar1();
+		getCalendar();
 	});
 	$('#select-month1').change(function(event) {
 		getCalendar1();
+		getCalendar();
 	});
 	var getCalendar1 = function()
 	{
+		$('#select-year').val($('#select-year1').val());
+		$('#select-month').val($('#select-month1').val());
 		var year = $('#select-year1').val();
 		var month = $('#select-month1').val();
 		$.ajax({
@@ -127,7 +133,7 @@
 		}
 		
 	});
-	$(document).on('click', '.pagi a', function() {
+	$(document).on('click', '#pagination a', function() {
 		var href = $(this).attr('href');
 		$.ajax({
 			url: href,
@@ -137,6 +143,12 @@
 			}
 		})
 		return false;
+	});
+	$(document).on('click', '.show-modal', function () {
+		var thisId = this.id;
+		var id = thisId.split('_');
+		id = id[1];
+		$('#view_'+id).trigger('click');
 	});
 	</script>
 @stop
