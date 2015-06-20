@@ -22,7 +22,15 @@ Route::group(array('prefix'=>'admin'), function() {
 		Route::post('resumes/search', array('as'=>'resumes.search', 'uses'=>'ResumeController@search'));
 		
 		Route::resource('resumes', 'ResumeController');
+
+
+		 
+
+		Route::controller('training','TrainController');
+		
 		Route::get('logout', array('as'=>'admin.logout', 'uses'=>'AuthController@logout'));
+
+
 	});
 
 	Route::group(array('before'=>'sentry.logged.admin'), function() {
