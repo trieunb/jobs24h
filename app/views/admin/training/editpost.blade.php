@@ -23,7 +23,7 @@
 		<div class="form-group">
 			<label for="inputFullname" class="col-sm-2 control-label">Giới thiệu nội dung</label>
 			<div class="col-sm-6">
-				{{ Form::input('text', 'subtitle', $value['subtitle'], array('class'=>'form-control') ) }}
+				{{ Form::input('text', 'subtitle', $value['subtitle'], array('class'=>'form-control','required') ) }}
 			</div>
 		</div>
 		 

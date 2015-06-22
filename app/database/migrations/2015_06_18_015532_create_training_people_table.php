@@ -26,6 +26,7 @@ class CreateTrainingPeopleTable extends Migration {
 			$table->string('linkedin');// 
 			$table->integer('training_roll_id');// là học viên hay giảng vien
 			$table->integer('training_id');// thuộc khóa đào tạo nào
+			$table->string('thumbnail');// ảnh đại diện
 			$table->timestamps();
 		});	
 	}

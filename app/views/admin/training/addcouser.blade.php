@@ -94,7 +94,7 @@
 		 
 		<div class="form-group">
 			<div class="col-sm-10 col-sm-offset-2">
-				{{ Form::button('Lưu thay đổi', array('type'=>'submit', 'class'=>'btn btn-primary')) }}
+				{{ Form::button('Thêm', array('type'=>'submit', 'class'=>'btn btn-primary')) }}
 			</div>
 		</div>
 	{{ Form::close() }}

@@ -18,6 +18,7 @@ class CreateTrainingDocumentTable extends Migration {
 			$table->string('title'); // 
 			$table->text('content');//nội dung giới thiệu
 			$table->string('author');// tác giả 
+			$table->string('thumbnail');
 			$table->integer('view');// lượt view
 			$table->integer('download');// lượt download
 			$table->string('store');//nơi lưu
