@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title')Add new Jobseeker @stop
-@section('page-header')Thêm mới người tìm việc @stop
+@section('title')Add new Training @stop
+@section('page-header')Thêm mới khóa học @stop
 @section('style')
 
  

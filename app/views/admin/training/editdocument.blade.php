@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title')Add new training @stop
-@section('page-header')Thêm mới tài liệu @stop
+@section('page-header')Chỉnh sửa tài liệu @stop
 @section('style')
 
  {{ HTML::script(URL::to('packages/ckeditor/ckeditor/ckeditor.js')) }}

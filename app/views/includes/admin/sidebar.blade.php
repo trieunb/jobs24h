@@ -308,7 +308,7 @@
 								<b class="arrow"></b>
 							</li>
 							<li class="">
-								<a href="{{ URL::route('admin.employers.create') }}">
+								<a href="{{ URL::to('admin/training/post') }}">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Tin tức 
 								</a>
@@ -316,7 +316,7 @@
 							</li>
 
 							<li class="">
-								<a href="{{ URL::route('admin.employers.create') }}">
+								<a href="{{ URL::to('admin/training/document') }}">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Tài liệu
 								</a>
@@ -335,7 +335,7 @@
 
 								<ul class="submenu">
 									<li class="">
-										<a href="{{ URL::route('admin.jobs.index') }}">
+										<a href="{{ URL::to('admin/training/people/1') }}">
 											<i class="menu-icon fa fa-plus purple"></i>
 											Giảng viên
 										</a>
@@ -344,7 +344,7 @@
 									</li>
 
 									<li class="">
-										<a href="{{ URL::route('admin.jobs.create') }}">
+										<a href="{{ URL::to('admin/training/people/2') }}">
 											<i class="menu-icon fa fa-eye pink"></i>
 											Học viên
 										</a>
