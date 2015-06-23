@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title')Add new Training @stop
-@section('page-header')Chỉnh sửa người tìm việc @stop
+@section('page-header')Chỉnh sửa khóa học @stop
 @section('style')
 
  

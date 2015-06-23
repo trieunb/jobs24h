@@ -289,7 +289,7 @@
 					</li> <!-- end ntd -->
 
 					<!--start training-->
-					<li class="{{ HTML::active(['admin.training.*', 'admin.jobs.*']) }}">
+					<li class="{{ HTML::active(['admin/training/*','admin/training/*']) }}">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-pencil-square-o"></i>
 							<span class="menu-text"> Đào tạo </span>
@@ -300,14 +300,14 @@
 						<b class="arrow"></b>
 
 						<ul class="submenu">
-							<li class="">
+							<li class="{{ HTML::active(['admin/training/']) }}">
 								<a href="{{ URL::to('admin/training/') }}">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Chương trình đào tạo
 								</a>
 								<b class="arrow"></b>
 							</li>
-							<li class="">
+							<li class="{{ HTML::active(['admin/training/post/*']) }}">
 								<a href="{{ URL::to('admin/training/post') }}">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Tin tức 
@@ -315,7 +315,7 @@
 								<b class="arrow"></b>
 							</li>
 
-							<li class="">
+							<li class="{{ HTML::active(['admin/training/document/*']) }}">
 								<a href="{{ URL::to('admin/training/document') }}">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Tài liệu
@@ -324,7 +324,7 @@
 							</li>
 
 
-							<li class="{{ HTML::active(['admin.jobs.*']) }}">
+							<li class="{{ HTML::active(['admin/training/people/*']) }}">
 								<a href="#" class="dropdown-toggle">
 									<i class="menu-icon fa fa-pencil orange"></i>
 										Giảng viên và học viên
@@ -334,7 +334,7 @@
 								<b class="arrow"></b>
 
 								<ul class="submenu">
-									<li class="">
+									<li class="{{ HTML::active(['admin/training/people/*']) }}">
 										<a href="{{ URL::to('admin/training/people/1') }}">
 											<i class="menu-icon fa fa-plus purple"></i>
 											Giảng viên
@@ -343,7 +343,7 @@
 										<b class="arrow"></b>
 									</li>
 
-									<li class="">
+									<li class="{{ HTML::active(['admin/training/people/*']) }}">
 										<a href="{{ URL::to('admin/training/people/2') }}">
 											<i class="menu-icon fa fa-eye pink"></i>
 											Học viên
