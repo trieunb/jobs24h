@@ -36,7 +36,8 @@
 				<td>{{$value['id']}}</td>				
 				<td>{{$value['title']}}</td>
 				<td>{{$value['subtitle']}} giờ</td>
-				<td><a data-toggle="modal" data-target="#myModal{{$value['id']}}">
+				<td>
+					<a data-toggle="modal" data-target="#myModal{{$value['id']}}">
   					Xem nội dung
 					</a>	
 					<div class="modal fade" id="myModal{{$value['id']}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -55,7 +56,8 @@
 					      </div>
 					    </div>
 					  </div>
-					</div></td>
+					</div>
+				</td>
 				<td>{{$value['thumbnail']}}</td>
 				<td>{{$value['name_cat']}}</td>
 				  

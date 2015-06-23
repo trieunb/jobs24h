@@ -3,8 +3,7 @@
 @section('page-header')Thêm mới tài liệu @stop
 @section('style')
 
- 
-{{ HTML::script('http://localhost/vnjobs/vendor/ckeditor/ckeditor/ckeditor.js') }}
+ {{ HTML::script(URL::to('packages/ckeditor/ckeditor/ckeditor.js')) }}
 @stop
 @section('content')
 
