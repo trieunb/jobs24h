@@ -16,7 +16,7 @@ class JobController extends Controller
 		->with(array('province'=>function($q) {
 			$q->with('province');
 		}))
-		->where('is_display', 1)->where('hannop', '<=', date('Y-m-d', time()))->first();
+		->where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->first();
 		
 		return View::make('jobseekers.job', compact('slug','job'));
 
@@ -29,7 +29,7 @@ class JobController extends Controller
 		$level = Input::get('level');
 		$work_type = Input::get('type');
 		$id_emp = Input::get('id');
-		$jobs = Job::where('is_display',1)->where('hannop', '<=', date('Y-m-d', time()))->where('status',1)->with('province')->with('category');
+		$jobs = Job::where('is_display',1)->where('hannop', '>=', date('Y-m-d', time()))->where('status',1)->with('province')->with('category');
 		if(is_numeric($id_emp) && $id_emp != null){
 			$jobs->where('ntd_id',$id_emp);
 		}
