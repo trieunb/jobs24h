@@ -69,7 +69,7 @@
 							<span class="error-message">{{$errors->first('address')}}</span>
 						</div>
 						<div class="col-sm-2">
-							{{Form::select('province_id',Province::lists('province_name'),null, array('class'=>'form-control', 'id'=>'Cities'))}}
+							{{Form::select('province_id',Province::lists('province_name', 'id'),null, array('class'=>'form-control', 'id'=>'Cities'))}}
 						</div>
 					</div>
 					<div class="form-group">

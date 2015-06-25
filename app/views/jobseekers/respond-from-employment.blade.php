@@ -35,7 +35,7 @@
 									<tr>
 										<td>{{Form::checkbox('check[]', $rsp->id, null, array('class'=>'checkbox'))}}</td>
 										<td><strong><em>{{$rsp->title}}</em></strong></td>
-										<td>{{$rsp->ntd->company->company_name}}</td>
+									
 										<td>{{$rsp->content}}</td>
 										<td>{{$rsp->updated_at}}</td>
 									</tr>

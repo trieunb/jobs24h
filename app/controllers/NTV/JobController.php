@@ -188,10 +188,8 @@ class JobController extends Controller
 		if(Request::ajax()){
 			
 			$rules = array(
-		       'first_name' => 'required',
-		       'last_name' => 'required',
 		       'feedback' => 'required',
-		       'email' => 'required|email',
+		       'title' => 'required',
 		    );
 		    $messages = array(
 				'required'	=>	'Thông tin này bắt buộc',
@@ -204,10 +202,11 @@ class JobController extends Controller
 				return Response::json($respond);
 			}else{
 				$create = VResponse::create(array(
-					'first_name' => ''.$params['first_name'].'',
-					'last_name' => ''.$params['last_name'].'',
-					'email' => ''.$params['email'].'',
-					'feedback' => ''.$params['feedback'].'',
+					'ntv_id' 		=> $GLOBALS['user']->id,
+					'user_submit' 	=> $GLOBALS['user']->id,
+					'content' 		=> ''.$params['feedback'].'',
+					'submited_date' => date('Y-m-d H:i:s', time()),
+					'title' 		=> ''.$params['title'].''
 				));
 				if($create){
 					$respond['has'] = true;

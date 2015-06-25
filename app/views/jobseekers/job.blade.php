@@ -32,9 +32,9 @@
 						<strong><a class="share-to-friends" role="button" data-toggle="popover" data-placement="bottom" title="Giới Thiệu Việc Làm Đến Bạn Bè" data-content='<form role="form" class="form-horizontal" id="ShareToFriends"><div class="form-group"><input type="text" class="form-control first_name_friend" name="first_name_friend" placeholder="Họ"></div><div class="form-group"><input type="text" class="form-control last_name_friend" name="last_name_friend"  placeholder="Tên"></div><div class="form-group"><input type="email" class="form-control email_name_friend" name="email_name_friend" placeholder="Email"></div><div class="form-group"><button type="submit" class="btn btn-sm bg-orange pull-right">Giới thiệu</button></div></form>'>Giới thiệu bạn bè</a></strong>
 						<i class="fa fa-comment"></i>
 						@if(Sentry::check())
-						<strong><a class="feedback-to-emp" role="button" data-toggle="popover" data-placement="bottom" title="Gởi phản hồi đến Nhà tuyển dụng" data-content='<form role="form" class="form-horizontal" id="FeedbackToEmp"><div class="form-group"><textarea rows="3" name="feedback" class="form-control feedback" placeholder="Nhập nội dung phản hồi"></textarea></div><div class="form-group"><button type="submit" class="btn btn-sm bg-orange pull-right">Phản hồi</button></div></form>'>Gởi phản hồi</a></strong>
+						<a class="feedback-to-emp" role="button" data-toggle="popover" data-placement="bottom" title="Gởi phản hồi đến Nhà tuyển dụng" data-content='<form role="form" class="form-horizontal" id="FeedbackToEmp"><div class="form-group"><input type="text" class="form-control title" name="title"  placeholder="Nhập tiêu đề"></div><div class="form-group"><textarea rows="3" name="feedback" class="form-control feedback" placeholder="Nhập nội dung phản hồi"></textarea></div><div class="form-group"><button type="submit" class="btn btn-sm bg-orange pull-right">Phản hồi</button></div></form>'>Gởi phản hồi</a>
 						@else
-						<strong><a class="feedback-to-emp" role="button" data-toggle="popover" data-placement="bottom" title="Gởi phản hồi đến Nhà tuyển dụng" data-content='Login để phản hồi'>Gởi phản hồi</a></strong>
+						<a class="feedback-to-emp" role="button" data-toggle="popover" data-placement="bottom" title="Gởi phản hồi đến Nhà tuyển dụng" data-content='Login để phản hồi'>Gởi phản hồi</a>
 						@endif
 					</div>
 					<h2>Mô Tả Công Việc</h2>
@@ -183,9 +183,7 @@
 							type: 'POST',
 							dataType: 'json',
 							data: {
-								first_name: $('.first_name').val(),
-								last_name: $('.last_name').val(),
-								email: $('.email').val(),
+								title : $('.title').val(),
 								feedback: $('.feedback').val(),
 							},
 							success : function(json){

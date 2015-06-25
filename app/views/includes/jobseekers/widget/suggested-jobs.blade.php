@@ -75,7 +75,7 @@
 		$(document).on('submit', '#ShareToFriends', function(event) {
 			event.preventDefault();
 
-			var url = '{{ URL::route("jobseekers.share-job", array(":slug",":id")) }}';
+			var url = '{{ URL::route("jobseekers.post-view-job", array(":slug",":id", "share")) }}';
 			url = url.replace(':id', $(this).find('.job_id').val());
 			url = url.replace(':slug', $(this).find('.job_slug').val());
 			$.ajax({
