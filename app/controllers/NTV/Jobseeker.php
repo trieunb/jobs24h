@@ -706,6 +706,7 @@ class JobSeeker extends Controller
 					$check = Application::where('job_id', $job_id)->where('ntv_id', $GLOBALS['user']->id)->count();
 				}else {$check = 0;}
 				if($check == 0){
+					$cv = '';
 					if(isset($params['cv_id'])){
 						$cv = $params['cv_id'];
 					}else{
@@ -724,27 +725,31 @@ class JobSeeker extends Controller
 					}else{
 						$ntv_id = 0;
 					}
-					$apply = Application::create(array(
-						'job_id' 		=> $job_id,
-						'ntv_id' 		=> $ntv_id,
-						'cv_id'  		=> $cv,
-						'prefix_title' 	=> ''.$params['prefix_title'].'',
-						'first_name' 	=> ''.$params['first_name'].'',
-						'last_name' 	=> ''.$params['last_name'].'',
-						'headline' 		=> ''.$params['headline'].'',
-						'email' 		=> ''.$params['email'].'',
-						'contact_phone' => ''.$params['contact_phone'].'',
-						'address' 		=> ''.$params['address'].'',
-						'province_id' 	=> $params['province_id'],
-						'apply_date'	=> date('Y-m-d', time()),
-					));
-					if($apply){
-						return Redirect::back()->with('success','Bạn đã nộp đơn thành công. Chúc bạn may mắn');
+					if($cv != null){
+						$apply = Application::create(array(
+							'job_id' 		=> $job_id,
+							'ntv_id' 		=> $ntv_id,
+							'cv_id'  		=> $cv,
+							'prefix_title' 	=> ''.$params['prefix_title'].'',
+							'first_name' 	=> ''.$params['first_name'].'',
+							'last_name' 	=> ''.$params['last_name'].'',
+							'headline' 		=> ''.$params['headline'].'',
+							'email' 		=> ''.$params['email'].'',
+							'contact_phone' => ''.$params['contact_phone'].'',
+							'address' 		=> ''.$params['address'].'',
+							'province_id' 	=> $params['province_id'],
+							'apply_date'	=> date('Y-m-d', time()),
+						));
+						if($apply){
+							return Redirect::back()->with('success','Bạn đã nộp đơn thành công. Chúc bạn may mắn');
+						}else{
+							return Redirect::back()->withInput()->with('loi','Hiện tại bạn không thể nộp đơn cho công việc này');
+						}
 					}else{
-						return Redirect::back()->with('loi','Hiện tại bạn không thể nộp đơn cho công việc này');
+						return Redirect::back()->withInput()->with('loi','Vui lòng Chọn CV');
 					}
 				}else{
-					return Redirect::back()->with('loi','Bạn đã nộp đơn cho công việc này.');
+					return Redirect::back()->withInput()->with('loi','Bạn đã nộp đơn cho công việc này.');
 				}
 			}
 	}
