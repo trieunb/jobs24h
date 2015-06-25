@@ -1,7 +1,7 @@
 <?php
 
 class TrainingCat extends \Eloquent {
-	protected $fillable = ['name'];
+	protected $fillable = ['name','banner'];
 	protected $table='training_cat';
 	
 }

@@ -13,7 +13,7 @@ class TrainController extends \BaseController {
 	// bảng training
 	public function getIndex()
 	{
-		$data=Training::join('training_people as tp','tp.id','=','training.teacher_id')->select(array('training.*','tp.name as name_teacher'))->paginate(10);
+		$data=Training::join('training_people as tp','tp.id','=','training.teacher_id')->select(array('training.*','tp.name as name_teacher'))->get();
 
 		 return View::make('admin.training.index')->with('data',$data);
 	}
@@ -75,6 +75,7 @@ class TrainController extends \BaseController {
 				'title'		=>	$data['title'],
 				'time_day'	=>	$data['time_day'],
 				'fee'		=>	$data['fee'],
+				'shift'		=>	$data['shift'],
 				'date_open'	=>	$data['date_open'],
 				'date_study'=>	$data['date_study'],
 				'time_hour'	=>	$data['time_hour'],
@@ -113,7 +114,7 @@ class TrainController extends \BaseController {
 	public function getPost()
 	{
 		//get data dào tạo
-		$data=TrainingPost::join('training_cat as tc','tc.id','=','training_post.training_cat_id')->select('training_post.*','tc.name as name_cat' )->paginate(10);
+		$data=TrainingPost::where('training_cat_id','=',1)->join('training_cat as tc','tc.id','=','training_post.training_cat_id')->select('training_post.*','tc.name as name_cat' )->get();
 		if(count((array)$data)==0)
 			return View::make('admin.training.post')->with('success','Chưa có dữ liệu');
 		else
@@ -126,7 +127,7 @@ class TrainController extends \BaseController {
 		if(isset($id))
 		{
 		$data=TrainingPost::where('training_post.id','=',$id)->join('training_cat as tc','tc.id','=','training_post.training_cat_id')->select(array('training_post.*','tc.name as name_cat','tc.id as cat_id'))->get();
-		$cat=TrainingCat::lists('name','id');
+		$cat=TrainingCat::where('id','=',1)->lists('name','id');
 		return View::make('admin.training.editpost')->with(array('data'=>$data,'cat'=>$cat));
 		}
 
@@ -134,12 +135,37 @@ class TrainController extends \BaseController {
 	public function postEditPost($id)
 	{
 		 
-		$data=Input::only('title','subtitle','editor1','thumbnail','cat_id');
+		$data=Input::only('title','subtitle','editor1','cat_id');
+		$logo=Input::file('thumbnail');
+		 
 		$insert_data=TrainingPost::find($id);
+		if ($logo!=null) { //nếu chọn image
+	
+		$file1=array('logo'=>$logo);
+
+		$rules1 = array('logo' => 'image|mimes:jpeg,jpg,bmp,png,gif|max:1000');
+		$validator_image=Validator::make($file1,$rules1);
+		$output = ['name' => $logo->getClientOriginalName(),'tmp_name'=>$logo->getClientOriginalExtension(), 'size' => $logo->getClientSize()];
+			 
+			if ($validator_image->fails())
+			 	return Redirect::back()->withErrors('Bạn phải chọn ảnh và ảnh đó phải dưới 1mb');
+			else
+				{
+					$path=str_replace(URL::to('/'), public_path(), $insert_data['thumbnail']);// xóa ảnh trước khi thêm
+				 	if(File::exists($path))
+						unlink($path);
+					$fileName = rand(11111,99999).'.'.$output['tmp_name'];
+					 $logo->move('uploads/training/', $fileName);
+					 $path_logo=URL::to('uploads/training/'.$fileName.'');
+				}
+		}
+		else 
+			$path_logo=$insert_data['thumbnail'];
+
 		$insert_data->title=$data['title'];
 		$insert_data->subtitle=$data['subtitle'];
 		$insert_data->content=$data['editor1'];
-		$insert_data->thumbnail=$data['thumbnail'];
+		$insert_data->thumbnail=$path_logo;
 		$insert_data->training_cat_id=$data['cat_id'];
 		$insert_data->save();
 		if($insert_data)
@@ -167,7 +193,7 @@ class TrainController extends \BaseController {
 
 	public function getAddPost()
 	{
-		$cat=TrainingCat::lists('name','id');
+		$cat=TrainingCat::where('id','=',1)->lists('name','id');
 
 		return View::make('admin.training.addpost')->with('cat',$cat);
 	}
@@ -176,14 +202,38 @@ class TrainController extends \BaseController {
 	{
 
 		 
-		$data=Input::only('title','subtitle','editor1','thumbnail','cat_id');
+		$data=Input::only('title','subtitle','editor1','cat_id');
+		$logo=Input::file('thumbnail');
+	 
+		if ($logo!=null) { // nếu chọn image thì upload lên
+	
+			$file1=array('logo'=>$logo);
+
+			$rules1 = array('logo' => 'image|mimes:jpeg,jpg,bmp,png,gif|max:1000');
+			$validator_image=Validator::make($file1,$rules1);
+			$output = ['name' => $logo->getClientOriginalName(),'tmp_name'=>$logo->getClientOriginalExtension(), 'size' => $logo->getClientSize()];
+			 
+			if ($validator_image->fails())
+			 	return Redirect::back()->withErrors('Bạn phải chọn ảnh và ảnh đó phải dưới 1mb');
+			else
+				{
+					$fileName = rand(11111,99999).'.'.$output['tmp_name'];
+					 $logo->move('uploads/training/', $fileName);
+					 $path_logo=URL::to('uploads/training/'.$fileName.'');
+				}
+		}
+
+		else 
+			$path_logo=URL::to('uploads/training/avatar.jpg'); //nếu không chọn imahe thì lấy mặc định
+
+
 
 		$insert_data=TrainingPost::create(
 			array(
 				'title'		=>	$data['title'],
 				'subtitle'	=>	$data['subtitle'],
 				'content'	=>	$data['editor1'],
-				'thumbnail'	=>	$data['thumbnail'],
+				'thumbnail'	=>	$path_logo,
 				'training_cat_id'=>	$data['cat_id']
 				)
 			);
@@ -201,12 +251,20 @@ class TrainController extends \BaseController {
 	// Học viên giảng viên 
 	public function getPeople($id)
 	{
+		// id =1 là giảng viên, 2 là học viên mới, 3 là  học viên cũ, 4 la học viên tiêu biểu 
+			if($id==2)
+				$check=2; //biến kiểm tra là học viên mới 	
+			else $check=1;
 		$data=TrainingPeople::where('training_roll_id','=',$id)
 		->join('training_roll as tr','tr.id','=','training_people.training_roll_id')
 		->join('training as t','t.id','=','training_people.training_id')
 		->select('training_people.*','tr.name as roll','t.title as name_datao')
-		->paginate(10);
-		return View::make('admin.training.people')->with('data',$data);
+		->get();
+		
+		 
+	
+
+		return View::make('admin.training.people')->with(array('data'=>$data,'check'=>$check));
 	}
 
 	public function getEditPeople($id)
@@ -223,7 +281,7 @@ class TrainController extends \BaseController {
 	{
 		 
 
-		$data=Input::only('name','sex','address','phone','email','facebook','twitter','skype','linkedin','training_roll_id','training_id');
+		$data=Input::only('name','sex','address','phone','email','worked','yourself','feeling','facebook','twitter','skype','linkedin','training_roll_id','training_id');
 		$logo=Input::file('thumbnail');
 
 		$insert_data=TrainingPeople::find($id);
@@ -256,7 +314,10 @@ class TrainController extends \BaseController {
 		$insert_data->sex=$data['sex'];
 		$insert_data->address=$data['address'];
 		$insert_data->phone=$data['phone'];
+		$insert_data->feeling=$data['feeling'];
 		$insert_data->email=$data['email'];
+		$insert_data->worked=$data['worked'];
+		$insert_data->yourself=$data['yourself'];
 		$insert_data->facebook=$data['facebook'];
 		$insert_data->twitter=$data['twitter'];
 		$insert_data->skype=$data['skype'];
@@ -309,7 +370,7 @@ class TrainController extends \BaseController {
 	{
 		
 		  
-		$data=Input::only('name','sex','address','phone','email','facebook','twitter','skype','linkedin','roll_id','training_id');
+		$data=Input::only('name','sex','address','phone','email','worked','yourself','feeling','facebook','twitter','skype','linkedin','roll_id','training_id');
 		
 		$logo=Input::file('thumbnail');
 	 
@@ -332,7 +393,7 @@ class TrainController extends \BaseController {
 		}
 
 		else 
-			$path_logo=URL::to('uploads/training/72618.png'); //nếu không chọn imahe thì lấy mặc định
+			$path_logo=URL::to('uploads/training/avatar.jpg'); //nếu không chọn imahe thì lấy mặc định
 
 		$insert_data=TrainingPeople::create(
 			array(
@@ -341,6 +402,9 @@ class TrainController extends \BaseController {
 				'address'=>$data['address'],
 				'phone'=>$data['phone'],
 				'email'=>$data['email'],
+				'worked'=>$data['worked'],
+				'yourself'=>$data['yourself'],
+				'feeling'=>$data['feeling'],
 				'facebook'=>$data['facebook'],
 				'twitter'=>$data['twitter'],
 				'skype'=>$data['skype'],
@@ -363,7 +427,7 @@ class TrainController extends \BaseController {
 	// document
 	public function getDocument()
 	{
-		$data=TrainingDocument::paginate(10);
+		$data=TrainingDocument::get();
 		return View::make('admin.training.document')->with('data',$data);
 	}
 
@@ -387,7 +451,7 @@ class TrainController extends \BaseController {
 	
 			$file1=array('logo'=>$logo);
 
-			$rules1 = array('logo' => 'image|mimes:jpeg,jpg,bmp,png,gif|max:1000');
+			$rules1 = array('logo' => 'image|mimes:jpeg,jpg,bmp,png,gif|max:10000');
 			$validator_image=Validator::make($file1,$rules1);
 			$output = ['name' => $logo->getClientOriginalName(),'tmp_name'=>$logo->getClientOriginalExtension(), 'size' => $logo->getClientSize()];
 			 

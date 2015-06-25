@@ -27,6 +27,9 @@ Route::group(array('prefix'=>'admin'), function() {
 		 
 
 		Route::controller('training','TrainController');
+		Route::controller('cungunglaodong','CungunglaodongController');
+
+		 
 		
 		Route::get('logout', array('as'=>'admin.logout', 'uses'=>'AuthController@logout'));
 

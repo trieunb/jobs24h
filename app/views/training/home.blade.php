@@ -4,7 +4,7 @@
 <header id="header">
 		<div class="container">
 			<div class="col-md-3 column logo">
-			<a href="#">
+			<a href="{{URL::to('/')}}">
 			{{HTML::image('training/assets/img/logo.png')}}
 			 
 
@@ -63,11 +63,11 @@
 @section('content')
 			<div class="container">
 				<div class="main1">		 	
-		 			<div class="col-md-6 main1_image">
+		 			<div class="col-md-6 main1_image wow bounceInLeft" data-wow-duration="0.3s">
 		 				{{HTML::image('training/assets/img/content.png')}}
 		 			</div>
 		 			<div class="col-md-6">
-		 				<div class="main1_text">
+		 				<div class="main1_text wow bounceInRight" data-wow-duration="0.3s">
 		 					<h2>Nhóm chương trình đào tạo</h2>
 		 					<h3>Thăng tiến trong sự nghiệp luôn là khát vọng và mục tiêu lớn của hầu hết giới trẻ hiện nay. Để thực hiện được điều này các bạn cần hiểu rõ qui trình cơ bản trong nắm bắt công việc. </h3>
 		 					<button class="btn more3">Xem chi tiết</button>
@@ -81,38 +81,27 @@
 		 			<h2>Sắp khai giảng</h2>
 		 			<h3>Một số khóa học mà chúng tôi sắp khai giảng. Đăng ký ngay để có nhiều kỹ năng cho mình nhé!</h3>
 		 			<ul>
-		 				<li>
-		 					{{HTML::image('training/assets/img/study1.jpg')}}
-		 					<h2>Tiếng anh giao tiếp thương mại</h2>
-		 					<h3>Thời lượng : 20 buổi <br> Học phí 2.000.000 đ đến 2.500.000 đ</h3>
+
+		 				@foreach($training as $tr)
+		 				<li class="wow bounceInLeft" data-wow-duration="0.3s">
+		 					<?php preg_match('/<img[^>]+>/i',$tr['content'], $image); 
+		 					 ?>
+		 					 @if($tr['thumbnail']==null)
+		 					 {{$image[0]}}
+		 					 @else
+		 					 {{HTML::image($tr['thumbnail'])}}
+		 					 @endif
+		 					
+		 					<h2><a href="{{URL::route('trainings.detailcouser',array($tr['id']))}}">{{$tr['title']}}</a></h2>
+		 					<h3>Thời lượng : {{$tr['time_day']}} buổi <br> Học phí {{$tr['fee']}}</h3>
+
 		 				</li>
-		 				<li>
-		 					{{HTML::image('training/assets/img/study2.jpg')}}
-		 					<h2>Tiếng anh giao tiếp thương mại</h2>
-		 					<h3>Thời lượng : 20 buổi <br> Học phí 2.000.000 đ đến 2.500.000 đ</h3>
-		 				</li>
-		 				<li>
-		 					{{HTML::image('training/assets/img/study3.jpg')}}
-		 					<h2>Tiếng anh giao tiếp thương mại</h2>
-		 					<h3>Thời lượng : 20 buổi <br> Học phí 2.000.000 đ đến 2.500.000 đ</h3>
-		 				</li>
-		 				<li>
-		 					{{HTML::image('training/assets/img/study4.jpg')}}
-		 					<h2>Tiếng anh giao tiếp thương mại</h2>
-		 					<h3>Thời lượng : 20 buổi <br> Học phí 2.000.000 đ đến 2.500.000 đ</h3>
-		 				</li>
-		 				<li>
-		 					{{HTML::image('training/assets/img/study2.jpg')}}
-		 					<h2>Tiếng anh giao tiếp thương mại</h2>
-		 					<h3>Thời lượng : 20 buổi <br> Học phí 2.000.000 đ đến 2.500.000 đ</h3>
-		 				</li>
-		 				<li>
-		 					{{HTML::image('training/assets/img/study2.jpg')}}
-		 					<h2>Tiếng anh giao tiếp thương mại</h2>
-		 					<h3>Thời lượng : 20 buổi <br> Học phí 2.000.000 đ đến 2.500.000 đ</h3>
-		 				</li>
+
+		 				@endforeach
+		 				
 		 			</ul>
-		 			<button class="btn more3">Xem tất cả</button>
+		 			<div class="clearfix"></div>
+		 		<a href="{{URL::route('trainings.allcouser')}}"><button class="btn more3">Xem tất cả</button></a>	
 		 		</div>
 		 		<div class="clearfix"></div>
 
@@ -136,71 +125,52 @@
 		 			<div class="tab-content">
     					<div role="tabpanel" class="tab-pane active" id="home">
     					<ul>
-			 				<li>
-			 					<div class="date-book">December 5 2014</div>
-			 					{{HTML::image('training/assets/img/sach.jpg')}}
+    						@foreach($document[0] as $doc)
+    						<?php $create=explode(" ", $doc['created_at']);
+    						$date= date("d-m-Y", strtotime($create[0]));
+    						?>
+			 				<li class='wow bounceInUp'>
+			 					<div class="date-book">{{$date}}</div>
+			 					{{HTML::image($doc['thumbnail'])}}
 			 					 
-			 					<h2>Tôi thấy hoa vàng trên cỏ xanh</h2>
-			 					<span>By Nguyễn nhật ánh</span>
-			 					<p><i class="glyphicon glyphicon-eye-open"></i> Lượt xem : 23</p>
-			 					<p><i class="glyphicon glyphicon-save"></i> Download : 9</p>
-			 					<div class="more-book">Xem thêm</div>
+			 					<h2>{{$doc['title']}}</h2>
+			 					<span>By {{$doc['author']}}</span>
+			 					<p><i class="glyphicon glyphicon-eye-open"></i> Lượt xem : {{$doc['view']}}</p>
+			 					<p><i class="glyphicon glyphicon-save"></i> Download : {{$doc['download']}}</p>
+			 					<a href="{{URL::route('trainings.detaildoc',array($doc['id']))}}"><button class="btn btn-default more-book">Xem thêm</button></a>
 			 				</li>
-			 				<li>
-			 					<div class="date-book">December 5 2014</div>
-			 					{{HTML::image('training/assets/img/sach.jpg')}}
-			 					<h2>Tôi thấy hoa vàng trên cỏ xanh</h2>
-			 					<span>By Nguyễn nhật ánh</span>
-			 					<p><i class="glyphicon glyphicon-eye-open"></i> Lượt xem : 23</p>
-			 					<p><i class="glyphicon glyphicon-save"></i> Download : 9</p>
-			 					<div class="more-book">Xem thêm</div>
-			 				</li>
-			 				<li>
-			 					<div class="date-book">December 5 2014</div>
-			 					{{HTML::image('training/assets/img/sach.jpg')}}
-			 					<h2>Tôi thấy hoa vàng trên cỏ xanh</h2>
-			 					<span>By Nguyễn nhật ánh</span>
-			 					<p><i class="glyphicon glyphicon-eye-open"></i> Lượt xem : 23</p>
-			 					<p><i class="glyphicon glyphicon-save"></i> Download : 9</p>
-			 					<div class="more-book">Xem thêm</div>
-			 				</li>
-			 				<li>
-			 					<div class="date-book">December 5 2014</div>
-			 					{{HTML::image('training/assets/img/sach.jpg')}}
-			 					<h2>Tôi thấy hoa vàng trên cỏ xanh</h2>
-			 					<span>By Nguyễn nhật ánh</span>
-			 					<p><i class="glyphicon glyphicon-eye-open"></i> Lượt xem : 23</p>
-			 					<p><i class="glyphicon glyphicon-save"></i> Download : 9</p>
-			 					<div class="more-book">Xem thêm</div>
-			 				</li>
-			 				<li>
-			 					<div class="date-book">December 5 2014</div>
-			 					{{HTML::image('training/assets/img/sach.jpg')}}
-			 					<h2>Tôi thấy hoa vàng trên cỏ xanh</h2>
-			 					<span>By Nguyễn nhật ánh</span>
-			 					<p><i class="glyphicon glyphicon-eye-open"></i> Lượt xem : 23</p>
-			 					<p><i class="glyphicon glyphicon-save"></i> Download : 9</p>
-			 					<div class="more-book">Xem thêm</div>
-			 				</li>
-			 				<li>
-			 					<div class="date-book">December 5 2014</div>
-			 					{{HTML::image('training/assets/img/sach.jpg')}}
-			 					<h2>Tôi thấy hoa vàng trên cỏ xanh</h2>
-			 					<span>By Nguyễn nhật ánh</span>
-			 					<p><i class="glyphicon glyphicon-eye-open"></i> Lượt xem : 23</p>
-			 					<p><i class="glyphicon glyphicon-save"></i> Download : 9</p>
-			 					<div class="more-book">Xem thêm</div>
-			 				</li>
+			 				@endforeach
+			 				 
 		 				</ul>	
     											
     					</div>
     					<div role="tabpanel" class="tab-pane" id="profile">
-    					</div>
+    					<ul>
+    						@foreach($document[1] as $doc)
+    						<?php $create=explode(" ", $doc['created_at']);
+    						$date= date("d-m-Y", strtotime($create[0]));
+    						?>
+			 				<li class='wow bounceInDown'>
+			 					<div class="date-book">{{$date}}</div>
+			 					{{HTML::image($doc['thumbnail'])}}
+			 					 
+			 					<h2>{{$doc['title']}}</h2>
+			 					<span>By {{$doc['author']}}</span>
+			 					<p><i class="glyphicon glyphicon-eye-open"></i> Lượt xem : {{$doc['view']}}</p>
+			 					<p><i class="glyphicon glyphicon-save"></i> Download : {{$doc['download']}}</p>
+			 					<div class="btn btn-default more-book">Xem thêm</div>
+			 				</li>
+			 				@endforeach
+			 				 
+		 				</ul>
+		 				</div>
      
   					</div>
 		 			
 
-		 			<div class="clearfix"></div>
+		 		<div class="clearfix"></div>
+		 				<a href="{{URL::route('trainings.alldoc')}}"><button class="btn more3">Xem tất cả</button></a>	
+    						 	
 		 		</div>
 		 		<div class="clearfix"></div>
 
@@ -214,88 +184,67 @@
 					  <ol class="carousel-indicators">
 					    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
 					    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-					    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-					  </ol>
+ 					  </ol>
 
 					  <!-- Wrapper for slides -->
 					  <div class="carousel-inner nx" role="listbox">
+					   
+
 					    <div class="item active">
-					       
+					      
+					      
 					      <div class="carousel-caption">
 					        <ul>
+					        @foreach($people[2] as $index=>$hvcu)
+					        	 @if ($index < 3 )
 					        	<li>
 					        		<div class="col-md-4 image-nx">
-					        		{{HTML::image('training/assets/img/images.jpg')}}
+					        		{{HTML::image($hvcu['thumbnail'])}}
 					        			 
-					        			<p>Tiếng anh giao tiếp thương mại</p>
+					        			<p>{{$hvcu['couser']}}</p>
 					        		</div>
 					        		<div class="col-md-8 text-nx">
-					        			<h2>Phạm Nguyễn Vân</h2>
-					        			<p>Mình đã có thời gian rất tuyệt ở lớp tiếng anh giao tiếp, học mà chơi chơi mà học. Hi vọng sẽ có nhiều khóa học bổ ích hơn nữa</p>
+					        			<h2>{{$hvcu['name']}}</h2>
+					        			<h2>{{$hvcu['couser']}}</h2>
+					        			<p data-toggle="tooltip" data-placement="top" title="{{$hvcu['feeling']}}">{{str_limit($hvcu['feeling'], $limit = 100, $end = '...')}}
+					        			</p>
 					        		</div>
 					        	</li>
-					        	<li>
-					        		<div class="col-md-4 image-nx">
-					        			{{HTML::image('training/assets/img/images.jpg')}}
-					        			<p>Tiếng anh giao tiếp thương mại</p>
-					        		</div>
-					        		<div class="col-md-8 text-nx">
-					        			<h2>Phạm Nguyễn Vân</h2>
-					        			<p>Mình đã có thời gian rất tuyệt ở lớp tiếng anh giao tiếp, học mà chơi chơi mà học. Hi vọng sẽ có nhiều khóa học bổ ích hơn nữa</p>
-					        		</div>
-					        	</li>
-					        	<li>
-					        		<div class="col-md-4 image-nx">
-					        			{{HTML::image('training/assets/img/images.jpg')}}
-					        			<p>Tiếng anh giao tiếp thương mại</p>
-					        		</div>
-					        		<div class="col-md-8 text-nx">
-					        			<h2>Phạm Nguyễn Vân</h2>
-					        			<p>Mình đã có thời gian rất tuyệt ở lớp tiếng anh giao tiếp, học mà chơi chơi mà học. Hi vọng sẽ có nhiều khóa học bổ ích hơn nữa</p>
-					        		</div>
-					        	</li>
+					        	@endif
+					         @endforeach	
+					        	 
 					        </ul>
 					      </div>
+					       
 					    </div>
-
+					     
 					     <div class="item">
 					       
 					      <div class="carousel-caption">
 					        <ul>
+					        @foreach($people[2] as $index=>$hvcu)
+					         @if ($index > 2 && $index < 5)
 					        	<li>
 					        		<div class="col-md-4 image-nx">
-					        			{{HTML::image('training/assets/img/images.jpg')}}
-					        			<p>Tiếng anh giao tiếp thương mại</p>
+					        		{{HTML::image($hvcu['thumbnail'])}}
+					        			 
+					        			<p>{{$hvcu['couser']}}</p>
 					        		</div>
 					        		<div class="col-md-8 text-nx">
-					        			<h2>Phạm Nguyễn Vân</h2>
-					        			<p>Mình đã có thời gian rất tuyệt ở lớp tiếng anh giao tiếp, học mà chơi chơi mà học. Hi vọng sẽ có nhiều khóa học bổ ích hơn nữa</p>
+					        			<h2>{{$hvcu['name']}}</h2>
+					        			<h2>{{$hvcu['couser']}}</h2>
+					        			<p data-toggle="tooltip" data-placement="top" title="{{$hvcu['feeling']}}">{{str_limit($hvcu['feeling'], $limit = 100, $end = '...')}}
+					        			</p>
 					        		</div>
 					        	</li>
-					        	<li>
-					        		<div class="col-md-4 image-nx">
-					        			{{HTML::image('training/assets/img/images.jpg')}}
-					        			<p>Tiếng anh giao tiếp thương mại</p>
-					        		</div>
-					        		<div class="col-md-8 text-nx">
-					        			<h2>Phạm Nguyễn Vân</h2>
-					        			<p>Mình đã có thời gian rất tuyệt ở lớp tiếng anh giao tiếp, học mà chơi chơi mà học. Hi vọng sẽ có nhiều khóa học bổ ích hơn nữa</p>
-					        		</div>
-					        	</li>
-					        	<li>
-					        		<div class="col-md-4 image-nx">
-					        			{{HTML::image('training/assets/img/images.jpg')}}
-					        			<p>Tiếng anh giao tiếp thương mại</p>
-					        		</div>
-					        		<div class="col-md-8 text-nx">
-					        			<h2>Phạm Nguyễn Vân</h2>
-					        			<p>Mình đã có thời gian rất tuyệt ở lớp tiếng anh giao tiếp, học mà chơi chơi mà học. Hi vọng sẽ có nhiều khóa học bổ ích hơn nữa</p>
-					        		</div>
-					        	</li>
+					        @endif
+					        @endforeach	
+					        	 
 					        </ul>
 					      </div>
 					    </div>
-
+					     
+					   
 					     
 					  </div>
 
@@ -308,51 +257,26 @@
 		 		<div class="clearfix"></div>
 
 
-				<div class="main5">
+				<div class="main5" id="hvtb">
 		 			<h2>Giảng viên tiêu biểu</h2>
 		 			<h3>Một số hình ảnh của học viện và giảng viên được chúng tôi lưu trữ lại</h3>
 
 					<ul>
+							@foreach($people[0] as $gv)
 					        	<li>
-					        		 <div class="image">{{HTML::image('training/assets/img/images.jpg')}}</div>
+					        		 <div class="image  wow bounceInLeft">{{HTML::image($gv['thumbnail'])}}</div>
 					        		 <div class="linkgv">
-					        		 	<a href=""><i class="fa fa-facebook"></i></a>
-					        		 	<a href=""><i class="fa fa-twitter"></i></a>
-					        		 	<a href=""><i class="fa fa-linkedin"></i></a>
-					        		 	<a href=""><i class="fa fa-skype"></i></a>
+					        		 	<a href="{{$gv['facebook']}}"><i class="fa fa-facebook"></i></a>
+					        		 	<a href="{{$gv['twitter']}}"><i class="fa fa-twitter"></i></a>
+					        		 	<a href="{{$gv['linkedin']}}"><i class="fa fa-linkedin"></i></a>
+					        		 	<a href="{{$gv['skype']}}"><i class="fa fa-skype"></i></a>
 					        		 </div>
-					        		 <p>Nguyễn Thu Vân</p>
+					        		 <p>{{$gv['name']}}</p>
 					        	</li>
-					        	<li>
-					        		 <div class="image">{{HTML::image('training/assets/img/images.jpg')}}</div>
-					        		 <div class="linkgv">
-					        		 	<a href=""><i class="fa fa-facebook"></i></a>
-					        		 	<a href=""><i class="fa fa-twitter"></i></a>
-					        		 	<a href=""><i class="fa fa-linkedin"></i></a>
-					        		 	<a href=""><i class="fa fa-skype"></i></a>
-					        		 </div>
-					        		 <p>Nguyễn Thu Vân</p>
-					        	</li>
-					        	<li>
-					        		 <div class="image">{{HTML::image('training/assets/img/images.jpg')}}</div>
-					        		 <div class="linkgv">
-					        		 	<a href=""><i class="fa fa-facebook"></i></a>
-					        		 	<a href=""><i class="fa fa-twitter"></i></a>
-					        		 	<a href=""><i class="fa fa-linkedin"></i></a>
-					        		 	<a href=""><i class="fa fa-skype"></i></a>
-					        		 </div>
-					        		 <p>Nguyễn Thu Vân</p>
-					        	</li>
-					        	<li>
-					        		 <div class="image">{{HTML::image('training/assets/img/images.jpg')}}</div>
-					        		 <div class="linkgv">
-					        		 	<a href=""><i class="fa fa-facebook"></i></a>
-					        		 	<a href=""><i class="fa fa-twitter"></i></a>
-					        		 	<a href=""><i class="fa fa-linkedin"></i></a>
-					        		 	<a href=""><i class="fa fa-skype"></i></a>
-					        		 </div>
-					        		 <p>Nguyễn Thu Vân</p>
-					        	</li>
+					        @endforeach
+					        	 
+					        	 
+					        	 
 					        	 
 					</ul>
 
@@ -363,42 +287,25 @@
 		 			<h3>Một số hình ảnh của học viện và giảng viên được chúng tôi lưu trữ lại</h3>
 
 					<ul>
+								@foreach($people[1] as $hvtb)
 					        	<li>
-					        		{{HTML::image('training/assets/img/hocvien.jpg')}}
- 					        		 <p>Nguyễn Thu Vân</p>
+					        		{{HTML::image($hvtb['thumbnail'])}}
+ 					        		 <p>{{$hvtb['name']}}</p>
 					        	</li>
-					        	<li>
-					        		 {{HTML::image('training/assets/img/hocvien.jpg')}}
-					        		 <p>Nguyễn Thu Vân</p>
-					        	</li>
-					        	<li>
-					        		 {{HTML::image('training/assets/img/hocvien.jpg')}}
-					        		 <p>Nguyễn Thu Vân</p>
-					        	</li>
-					        	<li>
-					        		 {{HTML::image('training/assets/img/hocvien.jpg')}}
-					        		 <p>Nguyễn Thu Vân</p>
-					        	</li>
-					        	<li>
-					        		 {{HTML::image('training/assets/img/hocvien.jpg')}}
-					        		 <p>Nguyễn Thu Vân</p>
-					        	</li>
-					        	<li>
-					        		 {{HTML::image('training/assets/img/hocvien.jpg')}}
-					        		 <p>Nguyễn Thu Vân</p>
-					        	</li>
-					        	<li>
-					        		 {{HTML::image('training/assets/img/hocvien.jpg')}}
-					        		 <p>Nguyễn Thu Vân</p>
-					        	</li>
-					        	<li>
-					        		 {{HTML::image('training/assets/img/hocvien.jpg')}}
-					        		 <p>Nguyễn Thu Vân</p>
-					        	</li>
+					        	@endforeach
+					        	 
 					        	 
 					</ul>
 				</div>
 		 	</div>
 		 	</div>
+		 	<script>
+		 	$(function () {
+  			$('[data-toggle="tooltip"]').tooltip()
+			})
+			</script>
+			<script>
+			 new WOW().init();
+			</script>
 
 @stop

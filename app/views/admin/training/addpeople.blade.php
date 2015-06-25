@@ -49,6 +49,28 @@
 			</div>
 		</div>
 		<div class="form-group">
+			<label for="input" class="col-sm-2 control-label">Cảm nhận:</label>
+			<div class="col-sm-6">
+				{{ Form::input('text', 'feeling',null, array('class'=>'form-control') ) }}
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input" class="col-sm-2 control-label">Quá trình làm việc:</label>
+			<div class="col-sm-6">
+				{{ Form::textarea('worked',null, array('class'=>'form-control','placeholder'=>'Quá trình làm việc của giảng viên, chỉ dành cho giảng viên') ) }}
+			</div>
+		</div>
+
+		 <div class="form-group">
+			<label for="input" class="col-sm-2 control-label">Giới thiệu bản thân:</label>
+			<div class="col-sm-6">
+				{{ Form::textarea('yourself',null, array('class'=>'form-control','placeholder'=>'Giới thiệu sơ qua về bản thân') ) }}
+			</div>
+		</div>
+
+
+		<div class="form-group">
 			<label for="inputFullname" class="col-sm-2 control-label">Facebook:</label>
 			<div class="col-sm-6">
 				{{ Form::input('text', 'facebook', null, array('class'=>'form-control') ) }}

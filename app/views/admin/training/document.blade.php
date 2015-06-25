@@ -4,7 +4,7 @@
 @section('content')
 @include('includes.notifications')
 	<div class="clearfix"></div>
-	<table class="table table-hover table-bordered table-striped" id="jobseekers">
+	<table class="table table-hover table-bordered table-striped dataTable" id="table">
 		<thead>
 			<tr>
 				<th class="center">
@@ -57,7 +57,7 @@
 					</div>
 				</td>
 				<td>{{$value['author']}}</td>
-				<td>{{HTML::image($value['thumbnail'],null,array('style' => 'width:100%'))}}</td>
+				<td>{{HTML::image($value['thumbnail'],null,array('style' => 'width:100px'))}}</td>
 				<td>{{$value['view']}}</td>
 				<td>{{$value['download']}}</td>
 				<td>{{$value['store']}}</td>
@@ -77,9 +77,7 @@
 	</table>
 	<a href="{{URL::to('admin/training/add-document')}}" class="btn">Thêm mới</a>
 
-	<div id="pagination">
-		{{ $data->links() }}
-	</div>
+	 
 @stop
 
 @section('style')
@@ -89,5 +87,7 @@
 @section('script')
 	{{ HTML::script('assets/js/jquery.dataTables.min.js') }}
 	{{ HTML::script('assets/js/jquery.dataTables.bootstrap.min.js') }}
-	 
+	  <script>$(document).ready(function() {
+    $('#table').dataTable();
+	} );</script>
 @stop

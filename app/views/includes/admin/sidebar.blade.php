@@ -344,17 +344,74 @@
 									</li>
 
 									<li class="{{ HTML::active(['admin/training/people/*']) }}">
-										<a href="{{ URL::to('admin/training/people/2') }}">
+										<a href="{{ URL::to('admin/training/people/3') }}">
 											<i class="menu-icon fa fa-eye pink"></i>
-											Học viên
+											Học viên Cũ
 										</a>
 
 										<b class="arrow"></b>
 									</li>
+
+									<li class="{{ HTML::active(['admin/training/people/*']) }}">
+										<a href="{{ URL::to('admin/training/people/2') }}">
+											<i class="menu-icon fa fa-eye pink"></i>
+											Học viên vừa đăng ký
+										</a>
+
+										<b class="arrow"></b>
+									</li>
+
+									<li class="{{ HTML::active(['admin/training/people/*']) }}">
+										<a href="{{ URL::to('admin/training/people/4') }}">
+											<i class="menu-icon fa fa-eye pink"></i>
+											Học viên Tiêu biểu
+										</a>
+
+										<b class="arrow"></b>
+									</li>
+
+
 								</ul>
 							</li>
 						</ul>
 					</li><!--end- traning-->
+
+
+
+					<!--Cung ung lao dong-->
+					<li class="{{ HTML::active(['admin/cungunglaodong/*','admin/cungunglaodong/*']) }}">
+						<a href="#" class="dropdown-toggle">
+							<i class="menu-icon fa fa-pencil-square-o"></i>
+							<span class="menu-text"> Cung ứng lao động </span>
+
+							<b class="arrow fa fa-angle-down"></b>
+						</a>
+
+						<b class="arrow"></b>
+
+						<ul class="submenu">
+							<li class="{{ HTML::active(['admin/cungunglaodong/']) }}">
+								<a href="{{ URL::to('admin/cungunglaodong/') }}">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Tất cả dịch vụ
+								</a>
+								<b class="arrow"></b>
+							</li>
+							<li class="{{ HTML::active(['admin/cungunglaodong/post-services/*']) }}">
+								<a href="{{ URL::to('admin/cungunglaodong/post-services') }}">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Bài đăng của các dịch vụ 
+								</a>
+								<b class="arrow"></b>
+							</li>
+
+							 
+
+
+							 
+						</ul>
+					</li><!--end- cungunglaodong-->
+
 
 
 

@@ -3,8 +3,13 @@
 @section('page-header') Chương trình đào tạo @stop
 @section('content')
 @include('includes.notifications')
+	
+		 
+
+	
 	<div class="clearfix"></div>
-	<table class="table table-hover table-bordered table-striped" id="jobseekers">
+	
+	<table class="table table-hover table-bordered table-striped dataTable" id="table">
 		<thead>
 			<tr>
 				<th class="center">
@@ -81,9 +86,7 @@
 	</table>
 	<a href="{{URL::to('admin/training/add-couser')}}" class="btn">Đăng Khóa học mới</a>
 
-	<div id="pagination">
-		{{ $data->links() }}
-	</div>
+	 
 @stop
 
 @section('style')
@@ -93,5 +96,7 @@
 @section('script')
 	{{ HTML::script('assets/js/jquery.dataTables.min.js') }}
 	{{ HTML::script('assets/js/jquery.dataTables.bootstrap.min.js') }}
-	 
+	 <script>$(document).ready(function() {
+    $('#table').dataTable();
+	} );</script>
 @stop

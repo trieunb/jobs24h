@@ -4,7 +4,7 @@
 @section('content')
 @include('includes.notifications')
 	<div class="clearfix"></div>
-	<table class="table table-hover table-bordered table-striped" id="jobseekers">
+	<table class="table table-hover table-bordered table-striped dataTable" id="table">
 		<thead>
 			<tr>
 				<th class="center">
@@ -18,10 +18,12 @@
 				<th>Địa chỉ</th>
 				<th>Phone</th>
 				<th>Email</th>
-				<th>Facebook</th>
-				<th>Twitter</th>
-				<th>Skype</th>
-				<th>Linkedin</th>
+				@if($check==2)
+				<th>Số người đăng ký</th>
+				@else 
+				<th>Cảm nhận</th>
+				@endif
+				<th>Thông tin khác</th>
 				<th>Avatar</th>
 				<th>Là</th>
 				<th>Chương trình đào tạo</th>
@@ -43,11 +45,69 @@
 				<td>{{$value['address']}}</td>
 				<td>{{$value['phone']}}</td>
 				<td>{{$value['email']}}</td>
-				<td>{{$value['facebook']}}</td>
-				<td>{{$value['twitter']}}</td>
-				<td>{{$value['skype']}}</td>
-				<td>{{$value['linkedin']}}</td>
-				<td>{{HTML::image($value['thumbnail'],null,array('style' => 'width:100%'))}}</td>
+				@if($check==2)
+				<td>{{$value['feeling']}}</td>
+				@else
+				<td>
+					<a data-toggle="modal" data-target="#myModal{{$value['id']}}">
+  					Xem nội dung
+					</a>	
+					<div class="modal fade" id="myModal{{$value['id']}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					        <h4 class="modal-title" id="myModalLabel">Nội dung</h4>
+					      </div>
+					      <div class="modal-body">
+					        {{$value['feeling']}}
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					        
+					      </div>
+					    </div>
+					  </div>
+					</div>
+				</td>
+				@endif
+
+				 
+				 <td>
+					<a data-toggle="modal" data-target="#myModal1{{$value['id']}}">
+  					Xem nội dung
+					</a>	
+					<div class="modal fade" id="myModal1{{$value['id']}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					        <h4 class="modal-title" id="myModalLabel">Nội dung</h4>
+					      </div>
+					      <div class="modal-body">
+
+					      <p>Quá trình làm việc :  {{$value['worked']}}</p>
+					      <p>Giới thiệu về bản thân :  {{$value['yourself']}}</p>
+					      <p>Nick Facebook :  {{$value['facebook']}}</p>
+					      <p>Nick Twitter :  {{$value['twitter']}}</p>
+					      <p>Nick Skype :  {{$value['skype']}}</p>
+					      <p>Nick Linkedin :  {{$value['linkedin']}}</p>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					        
+					      </div>
+					    </div>
+					  </div>
+					</div>
+				</td>
+				<td>
+				@if($value['thumbnail']!=null)
+				{{HTML::image($value['thumbnail'],null,array('style' => 'width:100px'))}}
+				@else 
+				Không có Avatar
+				@endif
+				</td>
 				<td>{{$value['roll']}}</td>
 				<td>{{$value['name_datao']}}</td>
 
@@ -65,9 +125,7 @@
 	</table>
 	<a href="{{URL::to('admin/training/add-people')}}" class="btn">Thêm mới</a>
 
-	<div id="pagination">
-		{{ $data->links() }}
-	</div>
+	 
 @stop
 
 @section('style')
@@ -77,5 +135,7 @@
 @section('script')
 	{{ HTML::script('assets/js/jquery.dataTables.min.js') }}
 	{{ HTML::script('assets/js/jquery.dataTables.bootstrap.min.js') }}
-	 
+	  <script>$(document).ready(function() {
+    $('#table').dataTable();
+	} );</script>
 @stop

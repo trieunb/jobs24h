@@ -22,7 +22,7 @@
 		{{ HTML::style('assets/css/ace-ie.min.css') }}
 		<![endif]-->
 
-
+ 		 
 	@yield('style')
 </head>
 <body class="no-skin">

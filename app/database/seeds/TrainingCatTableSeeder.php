@@ -10,10 +10,19 @@ class TrainingCatTableSeeder extends Seeder {
 		$faker = Faker::create();
 
 
-		$faker = Faker::create();
+		 
+		DB::table('training_cat')->truncate();
 		$levels = array(
-			'Cung ứng lao động',
-			'Đào tạo'
+			'Phần Đào tạo',
+			'DỊCH VỤ ĐÀO TẠO NHÂN SỰ',
+			'DỊCH VỤ HEAD HUNTING',
+			'THUÊ NGOÀI NHÂN SỰ',
+			'DỊCH VỤ TUYỂN DỤNG',
+			'TƯ VẤN CHIẾN LƯỢC NHÂN SỰ',
+			'LƯƠNG VÀ CHẾ ĐỘ',
+			'QUẢN LÝ NHÂN SỰ'
+
+
 			);
 		foreach($levels as $index)
 		{

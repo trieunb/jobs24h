@@ -10,7 +10,7 @@
 
 
 
-	 {{ Form::open(['role' => 'form','class'=>'form form-horizontal']) }}
+	 {{ Form::open(['role' => 'form','class'=>'form form-horizontal','files'=>true]) }}
 		@include('includes.notifications')
 		@foreach($data as $value)
 		<div class="form-group">
@@ -47,16 +47,25 @@
 		</div>
 
 		<div class="form-group">
-			<label for="input" class="col-sm-2 control-label">Ảnh đại diện</label>
-			<div class="col-sm-6">
-				{{ Form::input('text', 'thumbnail', $value['thumbnail'], array('class'=>'form-control') ) }}
+			<label for="input" class="col-sm-2 control-label">Ảnh đại diện:</label>
+			<div class="col-sm-3">
+				{{ Form::file('thumbnail',array('class'=>'form-control','id'=>'thumbnail') ) }}
+
 			</div>
+
+			<div class="col-sm-3">
+				<img style="width:50%" id="blah" src="{{$value['thumbnail']}}" alt="avatar" />
+
+			</div>
+
+
+			 
 		</div>
 		 
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Chuyên mục:</label>
 			<div class="col-sm-2">
-				{{ Form::select('cat_id',$cat)}}
+				{{ Form::select('cat_id',$cat,$value['training_cat_id'])}}
 			</div>
 		</div>
 		@endforeach
@@ -82,5 +91,21 @@
 			todayHighlight: true,
 			endDate: new Date(),
 		});
+	function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+                $('#blah').attr('src', e.target.result);
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+    $("#thumbnail").change(function(){
+        readURL(this);
+    });
 	</script>
+
 @stop

@@ -4,7 +4,7 @@
 @section('content')
 @include('includes.notifications')
 	<div class="clearfix"></div>
-	<table class="table table-hover table-bordered table-striped" id="jobseekers">
+	<table class="table table-hover table-bordered table-striped dataTable" id="table">
 		<thead>
 			<tr>
 				<th class="center">
@@ -35,11 +35,15 @@
 				</td>
 				<td>{{$value['id']}}</td>				
 				<td>{{$value['title']}}</td>
-				<td>{{$value['subtitle']}} giờ</td>
+				<td>{{$value['subtitle']}}</td>
 				<td>
 					<a data-toggle="modal" data-target="#myModal{{$value['id']}}">
   					Xem nội dung
-					</a>	
+					</a>
+					<style>
+						.modal-body img {
+ 						 width: 100% !important;
+}					</style>	
 					<div class="modal fade" id="myModal{{$value['id']}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 					  <div class="modal-dialog" role="document">
 					    <div class="modal-content">
@@ -58,7 +62,7 @@
 					  </div>
 					</div>
 				</td>
-				<td>{{$value['thumbnail']}}</td>
+				<td>{{HTML::image($value['thumbnail'],$value['title'],array('style'=>'width:100px'))}}</td>
 				<td>{{$value['name_cat']}}</td>
 				  
 				<td>
@@ -71,11 +75,9 @@
 			
 		</tbody>
 	</table>
-	<a href="{{URL::to('admin/training/add-post')}}" class="btn">Đăng Khóa học mới</a>
+	<a href="{{URL::to('admin/training/add-post')}}" class="btn">Đăng Tin mới</a>
 
-	<div id="pagination">
-		{{ $data->links() }}
-	</div>
+	 
 @stop
 
 @section('style')
@@ -85,5 +87,7 @@
 @section('script')
 	{{ HTML::script('assets/js/jquery.dataTables.min.js') }}
 	{{ HTML::script('assets/js/jquery.dataTables.bootstrap.min.js') }}
-	 
+	  <script>$(document).ready(function() {
+    $('#table').dataTable();
+	} );</script>
 @stop

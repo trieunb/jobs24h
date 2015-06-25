@@ -15,6 +15,7 @@
     {{ HTML::style('training/assets/css/bootstrap.min.css') }}
     {{ HTML::style('training/assets/css/style.css') }}
     {{ HTML::style('training/assets/css/font-awesome.css') }}
+    {{ HTML::style('training/assets/css/animate.css') }}
 
 
   <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -26,6 +27,8 @@
    {{ HTML::script('training/assets/js/jquery.min.js') }}
    {{ HTML::script('training/assets/js/bootstrap.min.js') }}
    {{ HTML::script('training/assets/js/scripts.js') }}
+   {{ HTML::script('training/assets/js/wow.min.js') }}
+   
   
 @yield('style')
 	 
@@ -53,8 +56,9 @@
 
 <footer id="footer">
     
-  <div class="container">
+  
     <div class="top-footer">
+      <div class="container">
       <div class="col-md-6"><i class="glyphicon glyphicon-circle-arrow-right"></i>     Hổ trợ ứng viên: (84.4) 3577-1608         <i class="glyphicon glyphicon-earphone"></i>   Hotline : 1900 585853  </div>
       <div class="col-md-6">
         <div class="col-md-6">Kết nối với Vnjob.vn
@@ -67,13 +71,15 @@
         {{HTML::image('training/assets/img/pinterest.png')}}
         {{HTML::image('training/assets/img/ico-linkkedin.png')}}      
            
-
+        </div>
         </div>
       </div>
+
     </div>
 
 
     <div class="bottom-footer">
+    <div class="container">
       <ul>
         <li>
           <h2>Chức năng</h2>
@@ -121,10 +127,10 @@
         </li>
 
       </ul>
-
+      </div>
       <div class="copy-right">Copyright 2015 Công ty TNHH Minh Phúc (MPTelecon)</div>
     </div>
-  </div>
+ 
      
   </footer>
 
