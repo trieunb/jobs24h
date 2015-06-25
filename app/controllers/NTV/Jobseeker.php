@@ -170,14 +170,28 @@ class JobSeeker extends Controller
 			return $this->editBasicInfo();
 		}if($action == 'career-goal'){
 			return $this->editCareerGoal($id_cv);
-		}if($action == 'work-exp') {
+		}if($action == 'work-exp'){
 			return $this->editWorkExperience($id_cv);
 		}if($action == 'education-history') {
 			return $this->editEducationHistory($id_cv);
-		}if($action == 'skills') {
+		}if($action == 'skills'){
 			return $this->editSkills($id_cv);
 		}if($action == 'general'){
 			return $this->editGeneralInfo($id_cv);
+		}if($action == 'del-exp'){
+			return $this->delWorkExperience($id_cv);
+		}if($action == 'del-edu'){
+			return $this->delEducationHistory($id_cv);
+		}if($action == 'del-dhnn'){
+			return $this->delDinhHuongNN($id_cv);
+		}
+	}
+
+	public function delDinhHuongNN($id_cv){
+		if(Request::ajax()){
+			$cv = Resume::find($id_cv);
+			$cv->dinhhuongnn = '';
+			$cv->save();
 		}
 	}
 
@@ -303,7 +317,7 @@ class JobSeeker extends Controller
 						));
 					}
 				}
-				Log::info($params['specific_salary']);
+				
 				if($params['specific_salary'] == '') $params['specific_salary'] = 0;
 				$rs = Resume::where('id',$id_cv)->where('ntv_id',$GLOBALS['user']->id)->update(array(
 					'namkinhnghiem' 		=> $params['info_years_of_exp'],
@@ -368,9 +382,26 @@ class JobSeeker extends Controller
 				$respond['message'] = $validator->getMessageBag()->toJson();
 				return Response::json($respond);
 			} else {
-				$sl = Experience::where('rs_id', $id_cv)->get();
-				if(count($sl) == 0){
-					$create = Experience::insert(array(
+				if(isset($params['id_exp'])){
+					$update = Experience::where('id', $params['id_exp'])->update(array(
+						'position' => ''.$params['position'].'', 
+			    		'company_name' => ''.$params['company_name'].'', 
+			    		'from_date'=> ''.$params['from_date'].'',
+			    		'to_date'=> ''.$params['to_date'].'',
+			    		'job_detail'=> ''.$params['job_detail'].'',
+			    		'field'=> ''.$params['field'].'', 
+			    		'specialized'=> ''.$params['specialized'].'',
+			    		'level'=> ''.$params['level'].'',
+						'salary'=> ''.$params['salary'].'',
+					));
+					if($update){
+						$respond['has'] = true;
+						return Response::json($respond);
+					}else{
+						$respond['message']='Hiện tại bạn không thể chỉnh sửa mục này';
+					}
+				}else{
+					$create = Experience::create(array(
 			    		'rs_id' => $id_cv, 
 			    		'position' => ''.$params['position'].'', 
 			    		'company_name' => ''.$params['company_name'].'', 
@@ -388,26 +419,15 @@ class JobSeeker extends Controller
 					}else{
 						$respond['message']='Hiện tại bạn không thể chỉnh sửa mục này';
 					}
-				}else{
-					$update = Experience::where('rs_id', $id_cv)->update(array(
-						'position' => ''.$params['position'].'', 
-			    		'company_name' => ''.$params['company_name'].'', 
-			    		'from_date'=> ''.$params['from_date'].'',
-			    		'to_date'=> ''.$params['to_date'].'',
-			    		'job_detail'=> ''.$params['job_detail'].'',
-			    		'field'=> ''.$params['field'].'', 
-			    		'specialized'=> ''.$params['specialized'].'',
-			    		'level'=> ''.$params['level'].'',
-						'salary'=> ''.$params['salary'].'',
-					));
-					if($update){
-						$respond['has'] = true;
-						return Response::json($respond);
-					}else{
-						$respond['message']='Hiện tại bạn không thể chỉnh sửa mục này';
-					}
 				}
 			}
+		}
+	}
+	public function delWorkExperience($id_cv){
+		$params = Input::all();
+		if (Request::ajax()) {
+			$exp = Experience::find($params['id_exp']);
+			$exp->delete();
 		}
 	}
 
@@ -423,9 +443,26 @@ class JobSeeker extends Controller
 				$respond['message'] = $validator->getMessageBag()->toJson();
 				return Response::json($respond);
 			} else {
-				$mte = MTEducation::where('rs_id', $id_cv)->get();
-				if(count($mte) == 0){
-					$create_mte = MTEducation::insert(array(
+				if(isset($params['id_edu'])){
+					$update_mte = MTEducation::where('id', $params['id_edu'])->update(array(
+			    		'school' => ''.$params['school'].'', 
+			    		'field_of_study' => $params['field_of_study'], 
+			    		'level'=> $params['level'],
+			    		'study_from'=> ''.$params['study_from'].'',
+			    		'study_to'=> ''.$params['study_to'].'',
+			    		'achievement'=> ''.$params['achievement'].'', 
+			    		'specialized'=> ''.$params['specialized'].'',
+			    		'average_grade_id'=> $params['average_grade_id'],
+					));
+					if($update_mte){
+						$respond['has'] = true;
+						return Response::json($respond);
+					}else{
+						$respond['message']='Hiện tại bạn không thể chỉnh sửa mục này';
+					}
+					
+				}else{
+					$create_mte = MTEducation::create(array(
 			    		'rs_id' => $id_cv, 
 			    		'school' => ''.$params['school'].'', 
 			    		'field_of_study' => $params['field_of_study'], 
@@ -442,25 +479,16 @@ class JobSeeker extends Controller
 					}else{
 						$respond['message']='Hiện tại bạn không thể chỉnh sửa mục này';
 					}
-				}else{
-					$update_mte = MTEducation::where('rs_id', $id_cv)->update(array(
-			    		'school' => ''.$params['school'].'', 
-			    		'field_of_study' => $params['field_of_study'], 
-			    		'level'=> $params['level'],
-			    		'study_from'=> ''.$params['study_from'].'',
-			    		'study_to'=> ''.$params['study_to'].'',
-			    		'achievement'=> ''.$params['achievement'].'', 
-			    		'specialized'=> ''.$params['specialized'].'',
-			    		'average_grade_id'=> $params['average_grade_id'],
-					));
-					if($update_mte){
-						$respond['has'] = true;
-						return Response::json($respond);
-					}else{
-						$respond['message']='Hiện tại bạn không thể chỉnh sửa mục này';
-					}
 				}
 			}
+		}
+	}
+
+	public function delEducationHistory($id_cv){
+		$params = Input::all();
+		if (Request::ajax()) {
+			$edu = MTEducation::find($params['id_edu']);
+			$edu->delete();
 		}
 	}
 
@@ -599,9 +627,23 @@ class JobSeeker extends Controller
 	}
 
 	public function repondFromEmployment(){
-		$my_job_list = MyJob::where('ntv_id',$GLOBALS['user']->id)->paginate(10);
-		return View::make('jobseekers.respond-from-employment',compact('my_job_list'));
+		$reponds = VResponse::where('ntv_id',$GLOBALS['user']->id)->paginate(10);
+		return View::make('jobseekers.respond-from-employment',compact('reponds'));
 	}
+
+	public function delRepondFromEmployment(){
+		$params = Input::all();
+		if(isset($params['check'])){
+			$reponds = VResponse::whereIn('id', $params['check'])->delete();
+			if($reponds){
+				return Redirect::back();
+			}
+		}
+		else{
+			return Redirect::back();
+		}	
+	}
+
 
 	public function applyingJob($job_id){
 		$job = Job::find($job_id);
@@ -619,10 +661,6 @@ class JobSeeker extends Controller
 	}
 	public function doApplyingJob($job_id){
 		$params = Input::all();
-			$cv = 0;
-			if(isset($params['cv_id'])){
-				$cv = $params['cv_id'];
-			}
 			$is_file = false;
 			if(isset($params['is_file'])){
 				$is_file =  true;
@@ -631,16 +669,28 @@ class JobSeeker extends Controller
 			if(isset($params['prefix_title'])){
 				$prefix_title = $params['prefix_title'];
 			}
-			if ($is_file) {
+			if($params['login'] == 1){
+				
+				if($is_file) {
+					$rules = array(
+			       		'headline' => 'required',
+			       		'cv_upload' => 'mimes:png,jpeg,doc,docx,xsl,xslx,pdf|max:2000|required',
+			    	);
+				}else {
+					$rules = array(
+						'cv_id' => 'required',
+			       		'headline' => 'required',
+			    	);
+				}
+			}else{
 				$rules = array(
-		       		'headline' => 'required',
-		       		'file_name' => 'mimes:jpeg,png,gif,bmp|max:2000|required',
-		    	);
-			}else {
-				$rules = array(
-					'cv_id' => 'required',
-		       		'headline' => 'required',
-		    	);
+			       		'headline' => 'required',
+			       		'first_name' => 'required',
+			       		'last_name' => 'required',
+			       		'email' => 'required',
+			       		'contact_phone' => 'required',
+			       		'cover_letter' => 'required',
+			    );
 			}
 		    $messages = array(
 				'required'	=>	'Thông này tin bắt buộc',
@@ -656,18 +706,27 @@ class JobSeeker extends Controller
 					$check = Application::where('job_id', $job_id)->where('ntv_id', $GLOBALS['user']->id)->count();
 				}else {$check = 0;}
 				if($check == 0){
-				
-					if($params['cv_upload'] != null ){
-						$extension = $params['cv_upload']->getClientOriginalExtension();
-						$name = Str::random(11) . '.' . $extension;
-						$params['cv_upload']->move(Config::get('app.upload_path') . 'companies/images/', $name);
+					if(isset($params['cv_id'])){
+						$cv = $params['cv_id'];
 					}else{
-						$name = null;
+						if($params['cv_upload'] != null){
+							$extension = $params['cv_upload']->getClientOriginalExtension();
+							$name = Str::random(11) . '.' . $extension;
+							$params['cv_upload']->move(Config::get('app.upload_path') . 'jobseekers/cv/', $name);
+							$create = Resume::create(array('file_name' => $name));
+							if($create){
+								$cv = $create->id;
+							}
+						}
 					}
-
+					if($GLOBALS['user'] != null){
+						$ntv_id = $GLOBALS['user']->id;
+					}else{
+						$ntv_id = 0;
+					}
 					$apply = Application::create(array(
 						'job_id' 		=> $job_id,
-						'ntv_id' 		=> $GLOBALS['user']->id,
+						'ntv_id' 		=> $ntv_id,
 						'cv_id'  		=> $cv,
 						'prefix_title' 	=> ''.$params['prefix_title'].'',
 						'first_name' 	=> ''.$params['first_name'].'',
@@ -677,7 +736,6 @@ class JobSeeker extends Controller
 						'contact_phone' => ''.$params['contact_phone'].'',
 						'address' 		=> ''.$params['address'].'',
 						'province_id' 	=> $params['province_id'],
-						'file_name'		=> ''.$name.'',
 						'apply_date'	=> date('Y-m-d', time()),
 					));
 					if($apply){
@@ -726,7 +784,7 @@ class JobSeeker extends Controller
 	public function updateUploadCV($id_cv){
 		$params= Input::all();
 		$rules = array(
-		   // 'file_name' => 'mimes:png,jpeg,gif,application/vnd.ms-excel,application/msword,application/pdf,application/x-rar-compressed,application/zip,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.wordprocessingml.document|max:2000'
+		  	'cv_upload' => 'mimes:png,jpeg,doc,docx,xsl,xslx,pdf|max:2000',
 		);	
 		$messages = array(
 			'required'	=>	'Thông này tin bắt buộc',
@@ -763,7 +821,7 @@ class JobSeeker extends Controller
 	public function createResumeByUpload(){
 		$params= Input::all();
 		$rules = array(
-		   // 'file_name' => 'mimes:png,jpeg,gif,application/vnd.ms-excel,application/msword,application/pdf,application/x-rar-compressed,application/zip,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.wordprocessingml.document|max:2000'
+		    'cv_upload' => 'mimes:png,jpeg,doc,docx,xsl,xslx,pdf|max:2000',
 		);	
 		$messages = array(
 			'required'	=>	'Thông này tin bắt buộc',

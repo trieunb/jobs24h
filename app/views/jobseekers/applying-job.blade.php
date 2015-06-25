@@ -124,6 +124,7 @@
 					{{Form::input('hidden','email', $user->email)}}
 					{{Form::input('hidden','address', $user->address)}}
 					{{Form::input('hidden','contact_phone', $user->phone_number)}}
+					{{Form::input('hidden','login', true)}}
 				{{Form::close()}}
 			</div>
 			</div>

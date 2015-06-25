@@ -83,7 +83,7 @@ Route::group(array('prefix'=>$locale), function() {
 		Route::get('/forgot-password/reset-password/{email}/{code}',array('as'=>'jobseekers.reset-password', 'uses'=>'JobSeekerAuth@ChangePass'));
 		Route::post('/forgot-password/reset-password/{email}/{code}',array('as'=>'jobseekers.reset-password', 'uses'=>'JobSeekerAuth@doChangePass'));
 		Route::group(array('before'=>'sentry.ntv'), function() {
-			Route::get('/edit-cv', array('as'=>'jobseekers.edit-cv', 'uses'=>'JobSeeker@editCvHome') );
+			Route::get('/edit-cv', array('as'=>'jobseekers.edit-cv', 'uses'=>'JobSeeker@myResume') );
 			Route::post('/edit-cv/{action}/{id_cv}', array('as'=>'jobseekers.save-cv', 'uses'=>'JobSeeker@saveInfo'));
 			Route::get('/edit-cv/{id_cv}', array('as'=>'jobseekers.edit-cv', 'uses'=>'JobSeeker@editCvHome'));
 			Route::get('/my-resume', array('as'=>'jobseekers.my-resume', 'uses'=>'JobSeeker@myResume'));
@@ -102,6 +102,7 @@ Route::group(array('prefix'=>$locale), function() {
 			Route::get('/applied-job', array('as'=>'jobseekers.applied-job','uses'=>'JobSeeker@appliedJob'));
 			Route::post('/applied-job', array('as'=>'jobseekers.del-applied-job','uses'=>'JobSeeker@delAppliedJob'));
 			Route::get('/respond-from-employment', array('as'=>'jobseekers.respond-from-employment','uses'=>'JobSeeker@repondFromEmployment'));
+			Route::post('/respond-from-employment', array('as'=>'jobseekers.del-respond-from-employment','uses'=>'JobSeeker@delRepondFromEmployment'));
 			Route::get('/my-resume-by-upload/{action}/{id_cv}', array('as'=>'jobseekers.action-cv','uses'=>'JobSeeker@actionCV'));
 			Route::post('/my-resume-by-upload/{id_cv}', array('as'=>'jobseekers.update-upload-cv','uses'=>'JobSeeker@updateUploadCV'));
 			Route::get('/notification-jobs', array('as'=>'jobseekers.notification-jobs','uses'=>'JobSeeker@notificationJobs'));
@@ -114,10 +115,9 @@ Route::group(array('prefix'=>$locale), function() {
 			));
 			
 		});
-		Route::controller('/view/{slug}/{id}', 'JobController', array(
-			'getIndex'	=>	'jobseekers.job',
-			'postIndex'	=>	'jobseekers.share-job',
-		));
+		Route::get('/view/{slug}/{id}', array( 'as' =>	'jobseekers.job', 'uses' =>	'JobController@getIndex'));
+		Route::post('/view/{slug}/{id}/{action}', array( 'as' =>'jobseekers.post-view-job', 'uses' =>'JobController@postIndex'));
+
 		Route::get('/resume/{id_cv}', array('as'=>'jobseekers.view-resume', 'uses'=>'JobSeeker@viewResume'));
 		Route::get('/category', array('as'=>'jobseekers.get-category', 'uses' =>'JobController@getCategory'));
 		Route::get('q', array('as'=>'jobseekers.search-job','uses'=>'JobController@searchJob'));

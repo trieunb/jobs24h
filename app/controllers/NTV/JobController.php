@@ -16,7 +16,7 @@ class JobController extends Controller
 		->with(array('province'=>function($q) {
 			$q->with('province');
 		}))
-		->where('is_display', 1)->first();
+		->where('is_display', 1)->where('hannop', '<=', date('Y-m-d', time()))->first();
 		
 		return View::make('jobseekers.job', compact('slug','job'));
 
@@ -29,7 +29,7 @@ class JobController extends Controller
 		$level = Input::get('level');
 		$work_type = Input::get('type');
 		$id_emp = Input::get('id');
-		$jobs = Job::where('is_display',1)->where('status',1)->with('province')->with('category');
+		$jobs = Job::where('is_display',1)->where('hannop', '<=', date('Y-m-d', time()))->where('status',1)->with('province')->with('category');
 		if(is_numeric($id_emp) && $id_emp != null){
 			$jobs->where('ntd_id',$id_emp);
 		}
@@ -101,11 +101,24 @@ class JobController extends Controller
 		}
 		return View::make('jobseekers.result-from-category', compact('jobs','per_page','id', 'categories')); 
 	}
+	
 
-	public function postIndex($slug, $job_id){
+	public function postIndex($slug,$id,$action = false){
+
+		if($action == 'share'){
+			return $this->shareJob($id);
+		}
+		if($action == 'feedback'){
+			return $this->feedBack($id);
+		}
+	}
+
+
+	public function shareJob($id){
 		$params = Input::all();
 		$respond['has'] = false;
 		if(Request::ajax()){
+			
 			$rules = array(
 		       'first_name_friend' => 'required',
 		       'last_name_friend' => 'required',
@@ -121,7 +134,7 @@ class JobController extends Controller
 	        	$respond['message'] = $validator->getMessageBag()->toJson();
 				return Response::json($respond);
 			}else{
-				$job = Job::where('id',$job_id)->with(array('ntd'=>function($q) {
+				$job = Job::where('id',$id)->with(array('ntd'=>function($q) {
 					$q->with('company');
 				}))
 				->with(array('category'=>function($q) {
@@ -165,6 +178,46 @@ class JobController extends Controller
 					return Response::json($respond);
 				}
 			}
+		}
+	}
+
+
+	public function feedBack(){
+		$params = Input::all();
+		$respond['has'] = false;
+		if(Request::ajax()){
+			
+			$rules = array(
+		       'first_name' => 'required',
+		       'last_name' => 'required',
+		       'feedback' => 'required',
+		       'email' => 'required|email',
+		    );
+		    $messages = array(
+				'required'	=>	'Thông tin này bắt buộc',
+				'email'		=>	'Email không đúng định dạng.',
+			);
+			$validator = Validator::make($params, $rules, $messages);
+			if($validator->fails()){			
+	        	$messages = $validator->messages();
+	        	$respond['message'] = $validator->getMessageBag()->toJson();
+				return Response::json($respond);
+			}else{
+				$create = VResponse::create(array(
+					'first_name' => ''.$params['first_name'].'',
+					'last_name' => ''.$params['last_name'].'',
+					'email' => ''.$params['email'].'',
+					'feedback' => ''.$params['feedback'].'',
+				));
+				if($create){
+					$respond['has'] = true;
+					$respond['message'] = 'Bạn đã gởi phản hồi đến Nhà tuyển dụng thành công';
+					return Response::json($respond);
+				}else{
+					$respond['message'] = 'Hiện tại không thể gởi phản hồi đến Nhà tuyển dụng';
+					return Response::json($respond);
+				}
+			}	
 		}
 	}
 }

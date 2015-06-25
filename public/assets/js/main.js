@@ -1,5 +1,4 @@
 
-
 // DELETE TAGS
 var $tags = {
     tagList: $('#tags-edit'),
@@ -176,6 +175,9 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
 
     // POPOVER 
     $('.share-to-friends').popover({
+        html: true,
+    });
+    $('.feedback-to-emp').popover({
         html: true,
     });
 
@@ -389,6 +391,7 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
         id = id.replace("link-", "");
         // Call the scroll function
         $('#'+id).removeClass('hidden-xs');
+        $('#'+id).removeAttr('style');
         goToByScroll(id);           
     });
 
@@ -402,7 +405,7 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
         $(this).children('ul').removeClass('hidden-xs');
     });
 
-    
+   
 })(jQuery);
 
 

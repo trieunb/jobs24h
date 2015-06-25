@@ -153,7 +153,6 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-3 col-sm-7">
-									{{Form::button('Hủy', array('class'=>'btn btn-lg bg-gray-light'))}}
 									{{Form::submit('Lưu', array('class'=>'btn btn-lg bg-orange'))}}
 									<span>(<span class="text-red">*</span>) Thông tin bắt buộc</span>
 								</div>
@@ -313,7 +312,6 @@
 						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-3 col-sm-7">
-								{{Form::button('Hủy', array('class'=>'btn btn-lg bg-gray-light'))}}
 								{{Form::submit('Lưu', array('class'=>'btn btn-lg bg-orange'))}}
 								<span>(<span class="text-red">*</span>) Thông tin bắt buộc</span>
 							</div>
@@ -339,7 +337,11 @@
 						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-3 col-sm-7">
-								{{Form::button('Hủy', array('class'=>'btn btn-lg bg-gray-light'))}}
+								@if($my_resume->dinhhuongnn != null)
+								{{Form::button('Xóa', array('class'=>'btn btn-lg bg-gray-light delete-dhnn', 'data' => $my_resume->id))}}
+								@else
+								{{Form::button('Hủy', array('class'=>'btn btn-lg bg-gray-light cancel-dhnn'))}}
+								@endif
 								{{Form::submit('Lưu', array('class'=>'btn btn-lg bg-orange'))}}
 								<span>(<span class="text-red">*</span>) Thông tin bắt buộc</span>
 							</div>
@@ -349,24 +351,29 @@
 				</div><!-- boxed -->
 				<?php
 				$hidden_exp = 'block';
+				if(count($my_resume->experience) == 0){
+					$hidden_exp = 'hidden-xs';
+				}
 				foreach($my_resume->experience as $exp){
 					if( $exp->position == null && $exp->company_name == null && $exp->from_date == null && $exp->to_date == null && $exp->field == null && $exp->specialized == null && $exp->level == null){
 						$hidden_exp = 'hidden-xs';
 					}
 				}
 				?>
+				@if(count($my_resume->experience))
 				<div class="boxed {{$hidden_exp}}" id="box-exp">
 					<div class="rows">
 						<div class="title-page">
 							<h2>Kinh nghiệm làm việc</h2>
-							<!--<a href="#" class=" pull-right"><i class="fa fa-edit"></i> Chỉnh sửa</a>-->
+							<a class="add-new-work-exp pull-right italic text-blue"><i class="fa fa-plus"></i> Bổ sung</a>
 						</div>
-							{{Form::open(array('class'=>'form-horizontal', 'id'=>'saveWorkExp'))}}
+							<?php $n = 1;?>
 							@foreach($my_resume->experience as $exp)
+							<div class="items block" id="saveWorkExp_{{$n}}">
+							{{Form::open(array('class'=>'form-horizontal', 'id'=>'saveWorkExp'))}}
 							<div class="form-group">
 								<label for="" class="col-sm-2 control-label">Chức danh<abbr>*</abbr></label>
 								<div class="col-sm-10">
-
 									{{Form::input('text','position', $exp->position, array('class'=>'position form-control'))}}
 								</div>
 							</div>
@@ -433,34 +440,138 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-3 col-sm-7">
-									{{Form::button('Hủy', array('class'=>'btn btn-lg bg-gray-light'))}}
+									{{Form::button('Xóa', array('class'=>'btn btn-lg bg-gray-light delete-exp', 'data' => $exp->id))}}
 									{{Form::submit('Lưu', array('class'=>'btn btn-lg bg-orange'))}}
 									<span>(<span class="text-red">*</span>) Thông tin bắt buộc</span>
+									{{Form::input('hidden', 'id_exp', $exp->id, array('class'=>'id_exp form-control'))}}
+				            		{{ Form::select('field',array(''=>'- Vui lòng chọn -')+FieldsInWorkExp::lists('name', 'id'),null, array('class'=>'field_list form-control hidden-xs') ) }}
+				            		{{ Form::select('specialized', array(''=>'- Vui lòng chọn -')+Specialized::lists('name', 'id'),null, array('class'=>'specialized_list form-control hidden-xs') ) }}
+				            		{{ Form::select('level', array(''=>'- Vui lòng chọn -')+Level::lists('name', 'id'),null, array('class'=>'level_list form-control hidden-xs') ) }}
 								</div>
 							</div>
-							@endforeach
-						{{Form::close()}}
+							{{Form::close()}}
+							</div>
+							<?php $n+=1;?>
+						@endforeach
 					</div><!-- rows -->
 				</div><!-- boxed -->
+				@else 
+				<div class="boxed {{$hidden_exp}}" id="box-exp">
+					<div class="rows">
+						<div class="title-page">
+							<h2>Kinh nghiệm làm việc</h2>
+							<a class="add-new-work-exp pull-right italic text-blue"><i class="fa fa-plus"></i> Bổ sung</a>
+						</div>
+							<?php $n = 1;?>
+							<div class="items block" id="saveWorkExp_{{$n}}">
+							{{Form::open(array('class'=>'form-horizontal', 'id'=>'saveWorkExp'))}}
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">Chức danh<abbr>*</abbr></label>
+								<div class="col-sm-10">
+									{{Form::input('text','position', null, array('class'=>'position form-control'))}}
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">Công ty<abbr>*</abbr></label>
+								<div class="col-sm-10">
+									{{Form::input('text', 'company_name', null, array('class'=>'company_name form-control'))}}
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-sm-2 control-label">Từ tháng<abbr>*</abbr></label>
+								<div class="col-sm-3">
+									<div class="input-group date" id="From_date">
+					                    {{Form::input('text','from_date', null, array('class'=>'from_date form-control', 'placeholder'=>'Ví dụ: 09/2008','data-date-format'=>'MM-YYYY'))}}
+					                    <span class="input-group-addon have-img">
+					                    	{{HTML::image('assets/images/calendar.png')}}
+					                    </span>
+					                </div>
+								</div>
+								<label for="" class="col-sm-2 control-label">Đến tháng<abbr>*</abbr></label>
+								<div class="col-sm-3">
+									<div class="input-group date" id="To_date">
+					                    {{Form::input('text','to_date', null, array('class'=>'to_date form-control', 'placeholder'=>'Ví dụ: 04/2012','data-date-format'=>'MM-YYYY'))}}
+					                    <span class="input-group-addon have-img">
+					                    	{{HTML::image('assets/images/calendar.png')}}
+					                    </span>
+					                </div>
+								</div>
+								<div class="col-sm-2">
+									<div class="checkbox">
+										<label>
+											{{Form::checkbox('is-current-job', null)}}
+											Công việc hiện tại
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+				            	<label class="col-sm-2 control-label">Lĩnh vực<abbr>*</abbr></label>
+				            	<div class="col-sm-4">
+				            		{{ Form::select('field',array(''=>'- Vui lòng chọn -')+FieldsInWorkExp::lists('name', 'id'),null, array('class'=>'field form-control', 'id' => 'Fields') ) }}
+				            	</div>
+				            	<label class="col-sm-2 control-label">Chuyên ngành<abbr>*</abbr></label>
+				            	<div class="col-sm-4">
+				            		{{ Form::select('specialized', array(''=>'- Vui lòng chọn -')+Specialized::lists('name', 'id'),null, array('class'=>'specialized form-control', 'id' => 'Specialized') ) }}
+				            	</div>
+				            </div>
+				            <div class="form-group">
+				            	<label class="col-sm-2 control-label">Cấp bậc<abbr>*</abbr></label>
+				            	<div class="col-sm-4">
+				            		{{ Form::select('level', array(''=>'- Vui lòng chọn -')+Level::lists('name', 'id'),null, array('class'=>'level form-control', 'id' => 'LatestLevel') ) }}
+				            	</div>
+				            	<label class="col-sm-2 control-label">Mức lương</label>
+				            	<div class="col-sm-4">
+				            		{{Form::input('text', 'salary', null, array('class'=>'salary form-control'))}}
+				            	</div>
+				            </div>
+				            <div class="form-group">
+				            	<label class="col-sm-2 control-label">Mô tả</label>
+				            	<div class="col-sm-10">
+									{{Form::textarea( 'job_detail', null, array('class'=>'job_detail form-control', 'rows'=>'5'))}}
+									<em class="text-gray-light"><span class="countdown">5000</span> ký tự có thể nhập thêm</em>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-7">
+									{{Form::button('Hủy', array('class'=>'btn btn-lg bg-gray-light cancel-exp'))}}
+									{{Form::submit('Lưu', array('class'=>'btn btn-lg bg-orange'))}}
+									<span>(<span class="text-red">*</span>) Thông tin bắt buộc</span>
+									{{ Form::select('field',array(''=>'- Vui lòng chọn -')+FieldsInWorkExp::lists('name', 'id'),null, array('class'=>'field_list form-control hidden-xs') ) }}
+				            		{{ Form::select('specialized', array(''=>'- Vui lòng chọn -')+Specialized::lists('name', 'id'),null, array('class'=>'specialized_list form-control hidden-xs') ) }}
+				            		{{ Form::select('level', array(''=>'- Vui lòng chọn -')+Level::lists('name', 'id'),null, array('class'=>'level_list form-control hidden-xs') ) }}
+								</div>
+							</div>
+							{{Form::close()}}
+							</div>
+					</div><!-- rows -->
+				</div><!-- boxed -->
+				@endif
 				<?php
 				$hidden_education = 'block';
+				if(count($my_resume->education) == 0){
+					$hidden_education = 'hidden-xs';
+				}
 				foreach($my_resume->education as $education){
 					if( $education->specialized == null && $education->school == null && $education->level == null && $education->field_of_study == null && $education->average_grade_id == null){
 						$hidden_education = 'hidden-xs';
 					}
 				}
 				?>
+				@if(count($my_resume->education))
 				<div class="boxed {{$hidden_education}}" id="box-education">
 					<div class="rows">
 						<div class="title-page">
 							<h2>Học vấn và Bằng Cấp</h2>
+							<a class="add-new-edu pull-right italic text-blue"><i class="fa fa-plus"></i> Bổ sung</a>
 						</div>
-						{{Form::open(array('class'=>'form-horizontal','id'=>'saveEducation'))}}
+						<?php $n = 1;?>
 						@foreach($my_resume->education as $education)
+						<div class="items block" id="saveEducation_{{$n}}">
+						{{Form::open(array('class'=>'form-horizontal','id'=>'saveEducation'))}}
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Chuyên ngành<abbr>*</abbr></label>
 				            	<div class="col-sm-9">
-				            		<?php ?>
 				            		{{Form::input('text', 'specialized', $education->specialized, array('class'=>'specialized form-control', 'placeholder'=>'Ví dụ: Kinh doanh quốc tế'))}}
 				            	</div>
 							</div>
@@ -513,15 +624,100 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-3 col-sm-7">
-									{{Form::button('Hủy', array('class'=>'btn btn-lg bg-gray-light'))}}
+									{{Form::button('Xóa', array('class'=>'btn btn-lg bg-gray-light delete-education', 'data' => $education->id))}}
 									{{Form::submit('Lưu', array('class'=>'btn btn-lg bg-orange'))}}
 									<span>(<span class="text-red">*</span>) Thông tin bắt buộc</span>
+									{{Form::input('hidden', 'id_edu', $education->id, array('class'=>'id_edu form-control'))}}
+									{{ Form::select('capbac_list', array(''=>'- Vui lòng chọn -')+Education::lists('name', 'id'),null, array('class'=>'hidden-xs capbac_list form-control') ) }}
+									{{ Form::select('linhvuc_list', array(''=>'- Vui lòng chọn -')+FieldsInWorkExp::lists('name', 'id'),null, array('class'=>'hidden-xs linhvuc_list form-control') ) }}
+									{{ Form::select('average_list', array(''=>'- Vui lòng chọn -')+AverageGrade::lists('name', 'id'),null, array('class'=>'hidden-xs average_list form-control') ) }}
 								</div>
 							</div>
-							@endforeach
 						{{Form::close()}}
+						</div>
+						<?php $n+= 1;?>
+						@endforeach
+						
 					</div><!-- rows -->
 				</div><!-- boxed -->
+				@else
+				<div class="boxed {{$hidden_education}}" id="box-education">
+					<div class="rows">
+						<div class="title-page">
+							<h2>Học vấn và Bằng Cấp</h2>
+							<a class="add-new-edu pull-right italic text-blue"><i class="fa fa-plus"></i> Bổ sung</a>
+						</div>
+						<?php $n = 1;?>
+						<div class="items block" id="saveEducation_{{$n}}">
+						{{Form::open(array('class'=>'form-horizontal','id'=>'saveEducation'))}}
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Chuyên ngành<abbr>*</abbr></label>
+				            	<div class="col-sm-9">
+				            		{{Form::input('text', 'specialized', null, array('class'=>'specialized form-control', 'placeholder'=>'Ví dụ: Kinh doanh quốc tế'))}}
+				            	</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Trường<abbr>*</abbr></label>
+				            	<div class="col-sm-4">
+				            		{{Form::input('text', 'school', null, array('class'=>'school form-control', 'placeholder'=>'Ví dụ: Đại học Kinh Tế Tp.Hồ Chí Minh'))}}
+				            	</div>
+				            	<label class="col-sm-2 control-label">Bằng cấp<abbr>*</abbr></label>
+				            	<div class="col-sm-3">
+				            		{{ Form::select('level', array(''=>'- Vui lòng chọn -')+Education::lists('name', 'id'),null, array('class'=>'level form-control', 'id' => 'Diploma') ) }}
+				            	</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Từ tháng</label>
+				            	<div class="col-sm-4">
+				            		<div class="input-group date" id="Study_from">
+					                    {{Form::input('text','study_from', null, array('class'=>'study_from form-control', 'placeholder'=>'Ví dụ: 09/2008','data-date-format'=>'MM-YYYY'))}}
+					                    <span class="input-group-addon have-img">
+					                    	{{HTML::image('assets/images/calendar.png')}}
+					                    </span>
+					                </div>
+				            	</div>
+				            	<label class="col-sm-2 control-label">Đến tháng</label>
+				            	<div class="col-sm-3">
+				            		<div class="input-group date" id="Study_to">
+					                    {{Form::input('text','study_to', null, array('class'=>'study_to form-control', 'placeholder'=>'Ví dụ: 04/2012','data-date-format'=>'MM-YYYY'))}}
+					                    <span class="input-group-addon have-img">
+					                    	{{HTML::image('assets/images/calendar.png')}}
+					                    </span>
+					                </div>
+				            	</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Lĩnh vực nghiên cứu<abbr>*</abbr></label>
+				            	<div class="col-sm-4">
+				            		{{ Form::select('field_of_study', array(''=>'- Vui lòng chọn -')+FieldsInWorkExp::lists('name', 'id'),null, array('class'=>'field_of_study form-control', 'id' => 'FieldOfStudy') ) }}
+				            	</div>
+				            	<label class="col-sm-2 control-label">Điểm<abbr>*</abbr></label>
+				            	<div class="col-sm-3">
+				            		{{ Form::select('average_grade_id', array(''=>'- Vui lòng chọn -')+AverageGrade::lists('name', 'id'),null, array('class'=>'average_grade_id form-control', 'id' => 'AverageGrade') ) }}
+				            	</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Thành tựu</label>
+								<div class="col-sm-9">
+									{{Form::textarea( 'achievement', null, array('class'=>'achievement form-control', 'rows'=>'5'))}}
+									<em class="text-gray-light"><span class="countdown">5000</span> ký tự có thể nhập thêm</em>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-7">
+									{{Form::button('Hủy', array('class'=>'btn btn-lg bg-gray-light cancel-education'))}}
+									{{Form::submit('Lưu', array('class'=>'btn btn-lg bg-orange'))}}
+									<span>(<span class="text-red">*</span>) Thông tin bắt buộc</span>
+									{{ Form::select('capbac_list', array(''=>'- Vui lòng chọn -')+Education::lists('name', 'id'),null, array('class'=>'hidden-xs capbac_list form-control') ) }}
+									{{ Form::select('linhvuc_list', array(''=>'- Vui lòng chọn -')+FieldsInWorkExp::lists('name', 'id'),null, array('class'=>'hidden-xs linhvuc_list form-control') ) }}
+									{{ Form::select('average_list', array(''=>'- Vui lòng chọn -')+AverageGrade::lists('name', 'id'),null, array('class'=>'hidden-xs average_list form-control') ) }}
+								</div>
+							</div>
+						{{Form::close()}}
+						</div>
+					</div><!-- rows -->
+				</div><!-- boxed -->
+				@endif
 				<?php
 				$skills = json_decode($my_resume->kynang);
 				$hidden_skill = 'block';
@@ -562,7 +758,7 @@
 								@endif
 								<div class="form-submit">
 									<div class="col-sm-offset-3 col-sm-7">
-										{{Form::button('Hủy', array('class'=>'btn btn-lg bg-gray-light'))}}
+										{{Form::button('Hủy', array('class'=>'btn btn-lg bg-gray-light cancel-skill'))}}
 										{{Form::submit('Lưu', array('class'=>'btn btn-lg bg-orange'))}}
 									</div>
 								</div>
@@ -752,6 +948,7 @@
             	}else{
             		$('#saveBasicInfo').find(".has-error").removeClass('has-error');
             		$('#saveBasicInfo').find(".error-message").remove();
+            		location.reload();
             	}
             	$('.loading-icon').hide();
             }
@@ -783,88 +980,99 @@
             		$('#saveCareerGoal').find(".has-error").removeClass('has-error');
             		$('#saveCareerGoal').find(".error-message").remove();
 					$('.loading-icon').hide();
+					location.reload();
             	}
             	$('.loading-icon').hide();
             }
         });    
     });
-	$('#saveWorkExp').submit(function(e) {
+
+	$(document).on('submit', '#saveWorkExp', function(e) {
 		e.preventDefault();
 		$('.loading-icon').show();
-        url = '{{ URL::route("jobseekers.save-cv", array("work-exp", $id_cv )) }}';
+        var url = '{{ URL::route("jobseekers.save-cv", array("work-exp", $id_cv )) }}';
+        var parent_name = $(this).closest('div[id^="saveWorkExp"]').attr('id');
 		$.ajax({
 			url: url,
 			type: 'POST',
 			dataType: 'json',
 			data: {
-				position: $('.position').val(),
-				company_name: $('.company_name').val(),
-				from_date: $('.from_date').val(),
-				to_date: $('.to_date').val(),
-				job_detail: $('.job_detail').val(),
-				field: $('.field').val(),
-				specialized: $('.specialized').val(),
-				level: $('.level').val(),
-				salary: $('.salary').val()
+				id_exp : $(this).find('.id_exp').val(),
+				position: $(this).find('.position').val(),
+				company_name: $(this).find('.company_name').val(),
+				from_date: $(this).find('.from_date').val(),
+				to_date: $(this).find('.to_date').val(),
+				job_detail: $(this).find('.job_detail').val(),
+				field: $(this).find('.field').val(),
+				specialized: $(this).find('.specialized').val(),
+				level: $(this).find('.level').val(),
+				salary: $(this).find('.salary').val()
 			},
 			success : function(json) {
 				if(! json.has)
 	            {	
-	            	$('#saveWorkExp').find(".has-error").removeClass('has-error');
-		            $('#saveWorkExp').find(".error-message").remove();
+	            	$('#'+parent_name).find(".has-error").removeClass('has-error');
+		            $('#'+parent_name).find(".error-message").remove();
+
 	            	var j = $.parseJSON(json.message);
 	            	$.each(j, function(index, val) {
-		            	$('.'+index).parent().closest('div[class^="col-sm"]').addClass('has-error');
-		            	if($('.'+index).parent().closest('div[class^="col-sm"]').find(".error-message").length < 1){
-		           			$('.'+index).parent().closest('div[class^="col-sm"]').append('<span class="error-message">'+val+'</span>')
+
+		            	$('#'+parent_name).find('.'+index).parent().closest('div[class^="col-sm"]').addClass('has-error');
+		            	if($('#'+parent_name).find('.'+index).parent().closest('div[class^="col-sm"]').find(".error-message").length < 1){
+		           			$('#'+parent_name).find('.'+index).parent().closest('div[class^="col-sm"]').append('<span class="error-message">'+val+'</span>')
 		            	}
 		           		$('.loading-icon').hide();           		
 	           		});
 	            }else{
-	           		$('#saveWorkExp').find(".has-error").removeClass('has-error');
-	           		$('#saveWorkExp').find(".error-message").remove();
+	           		$('#'+parent_name).find(".has-error").removeClass('has-error');
+	           		$('#'+parent_name).find(".error-message").remove();
 					$('.loading-icon').hide();
+					location.reload();
 	           	}
 	           	$('.loading-icon').hide();
 	        }
 		});		
 	});
 
-	$('#saveEducation').submit(function(e) {
+	$(document).on('submit', '#saveEducation', function(e) {
 		e.preventDefault();
 		$('.loading-icon').show();
         url = '{{ URL::route("jobseekers.save-cv", array("education-history", $id_cv )) }}';
+        var parent_name = $(this).closest('div[id^="saveEducation"]').attr('id');
 		$.ajax({
 			url: url,
 			type: 'POST',
 			dataType: 'json',
 			data: {
-				school: $('#saveEducation .school').val(),
-				field_of_study: $('#saveEducation .field_of_study').val(),
-				level: $('#saveEducation .level').val(),
-				study_from: $('#saveEducation .study_from').val(),
-				study_to: $('#saveEducation .study_to').val(),
-				achievement: $('#saveEducation .achievement').val(),
-				specialized: $('#saveEducation .specialized').val(),
-				average_grade_id: $('#saveEducation .average_grade_id').val()
+				id_edu: $(this).find('.id_edu').val(),
+				school: $(this).find('.school').val(),
+				field_of_study: $(this).find('.field_of_study').val(),
+				level: $(this).find('.level').val(),
+				study_from: $(this).find('.study_from').val(),
+				study_to: $(this).find('.study_to').val(),
+				achievement: $(this).find('.achievement').val(),
+				specialized: $(this).find('.specialized').val(),
+				average_grade_id: $(this).find('.average_grade_id').val()
 			},
 			success : function(json) {
 				if(! json.has)
 	            {	
-	            	$('#saveEducation').find(".has-error").removeClass('has-error');
-		            $('#saveEducation').find(".error-message").remove();
+	            	$('#'+parent_name).find(".has-error").removeClass('has-error');
+		            $('#'+parent_name).find(".error-message").remove();
 	            	var j = $.parseJSON(json.message);
 	            	$.each(j, function(index, val) {
-		            	$('.'+index).parent().closest('div[class^="col-sm"]').addClass('has-error');
-		            	if($('.'+index).parent().closest('div[class^="col-sm"]').find(".error-message").length < 1){
-		           			$('.'+index).parent().closest('div[class^="col-sm"]').append('<span class="error-message">'+val+'</span>')
+		            	$('#'+parent_name).find('.'+index).parent().closest('div[class^="col-sm"]').addClass('has-error');
+		            	if($('#'+parent_name).find('.'+index).parent().closest('div[class^="col-sm"]').find(".error-message").length < 1){
+		           			$('#'+parent_name).find('.'+index).parent().closest('div[class^="col-sm"]').append('<span class="error-message">'+val+'</span>')
 		            	}
 		           		$('.loading-icon').hide();           		
 	           		});
 	            }else{
-	           		$('#saveEducation').find(".has-error").removeClass('has-error');
-	           		$('#saveEducation').find(".error-message").remove();
+	           		$('#'+parent_name).find(".has-error").removeClass('has-error');
+	           		$('#'+parent_name).find(".error-message").remove();
 					$('.loading-icon').hide();
+					location.reload();
+
 	           	}
 	           	$('.loading-icon').hide();
 	        }
@@ -891,6 +1099,7 @@
  			data: {skills: arr},
  			success : function(data){
  				$('.loading-icon').hide();
+ 				location.reload();
  			}
  		})
 	});
@@ -899,7 +1108,6 @@
 		e.preventDefault();
 		$('.loading-icon').show();
 		var a = $('.select2-selection__choice').html();
-
         url = '{{ URL::route("jobseekers.save-cv", array("general", $id_cv )) }}';
 		$.ajax({
 			url: url,
@@ -943,6 +1151,7 @@
 	           		$('#saveGeneralInfo').find(".error-message").remove();
 	           		$('.publish_resume').removeAttr('disabled');
 					$('.loading-icon').hide();
+					location.reload();
 	           	}
 	           	$('.loading-icon').hide();
 	        }
@@ -984,6 +1193,145 @@
 	        	$('.trangthai').html('<p><h3>Hồ sơ đang chờ phê duyệt</h3></p>')
 	    	}
 	    });  
+	});
+	
+	//scroll to div in edit cv
+    function goToByScroll(id){
+          // Scroll
+        $('html,body').animate({
+            scrollTop: $("#"+id).offset().top},
+            'slow');
+    }
+	 $('.add-new-work-exp').click(function(event) {
+        event.preventDefault();
+        var linhvuc = $('.field_list').html();
+        var chuyennganh = $('.specialized_list').html();
+        var capbac = $('.level_list').html();
+        var n = $('.field').length;
+        n = n+1;
+	 	$.ajax({
+	 		url : '{{ URL::route("jobseekers.edit-cv", $id_cv) }}',
+	 		type: 'GET',
+	 		data: '',	
+	 		success : function(data){
+	 			$('#box-exp').append('<div class="items block" id="saveWorkExp_'+n+'"><form class="form-horizontal" id="saveWorkExp"><div class="form-group"><label for="" class="col-sm-2 control-label">Chức danh<abbr>*</abbr></label><div class="col-sm-10"><input class="position form-control" name="position" type="text"></div></div><div class="form-group"><label for="" class="col-sm-2 control-label">Công ty<abbr>*</abbr></label><div class="col-sm-10"><input class="company_name form-control" name="company_name" type="text"></div></div><div class="form-group"><label for="" class="col-sm-2 control-label">Từ tháng<abbr>*</abbr></label><div class="col-sm-3"><div class="input-group date" id="From_date"><input class="from_date form-control" placeholder="Ví dụ: 09/2008" data-date-format="MM-YYYY" name="from_date" type="text"><span class="input-group-addon have-img"><img src="/assets/images/calendar.png"></span></div></div><label for="" class="col-sm-2 control-label">Đến tháng<abbr>*</abbr></label><div class="col-sm-3"><div class="input-group date" id="To_date"><input class="to_date form-control" placeholder="Ví dụ: 04/2012" data-date-format="MM-YYYY" name="to_date" type="text"><span class="input-group-addon have-img"><img src="/assets/images/calendar.png"></span></div></div><div class="col-sm-2"><div class="checkbox"><label><input name="is-current-job" type="checkbox">Công việc hiện tại</label></div></div></div><div class="form-group"><label class="col-sm-2 control-label">Lĩnh vực<abbr>*</abbr></label><div class="col-sm-4"><select name="field" id="field_'+n+'" class="field form-control" required="required">'+linhvuc+'</select></div><label class="col-sm-2 control-label">Chuyên ngành<abbr>*</abbr></label><div class="col-sm-4"><select name="specialized" id="specialized_'+n+'" class="specialized form-control" required="required">'+chuyennganh+'</select></div></div><div class="form-group"><label class="col-sm-2 control-label">Cấp bậc<abbr>*</abbr></label><div class="col-sm-4"><select name="level" id="level_'+n+'" class="level form-control" required="required">'+capbac+'</select></div><label class="col-sm-2 control-label">Mức lương</label><div class="col-sm-4"><input class="salary form-control" name="salary" type="text"></div></div><div class="form-group"><label class="col-sm-2 control-label">Mô tả</label><div class="col-sm-10"><textarea class="job_detail form-control" rows="5" name="job_detail" cols="50"></textarea><em class="text-gray-light"><span class="countdown">5000</span> ký tự có thể nhập thêm</em></div></div><div class="form-group"><div class="col-sm-offset-3 col-sm-7"><button class="btn btn-lg bg-gray-light cancel-exp" type="button">Hủy</button><input class="btn btn-lg bg-orange" type="submit" value="Lưu"><span>(<span class="text-red">*</span>) Thông tin bắt buộc</span></div></div></form></div>');
+	 			$('#field_'+n).select2({
+        			minimumResultsForSearch: Infinity
+    			});
+    			$('#specialized_'+n).select2({
+        			minimumResultsForSearch: Infinity
+    			});
+    			$('#level_'+n).select2({
+        			minimumResultsForSearch: Infinity
+    			});
+    			$("#From_date,#To_date").datetimepicker({
+			        pickTime: false,
+			        locale: 'ru'
+			    });
+		     	goToByScroll('saveWorkExp_'+n); 
+	 		}
+	 	});
+	});
+	 $('.add-new-edu').click(function(event) {
+        event.preventDefault();
+        var linhvuc = $('.linhvuc_list').html();
+        var diem = $('.average_list').html();
+        var capbac = $('.capbac_list').html();
+        var n = $('.linhvuc_list').length;
+        n = n+1;
+	 	$.ajax({
+	 		url : '{{ URL::route("jobseekers.edit-cv", $id_cv) }}',
+	 		type: 'GET',
+	 		data: '',	
+	 		success : function(data){
+	 			$('#box-education').append('<div class="items block" id="saveEducation_'+n+'"><form class="form-horizontal" id="saveEducation"><div class="form-group"><label class="col-sm-3 control-label">Chuyên ngành<abbr>*</abbr></label><div class="col-sm-9"><input class="specialized form-control" placeholder="Ví dụ: Kinh doanh quốc tế" name="specialized" type="text"></div></div><div class="form-group"><label class="col-sm-3 control-label">Trường<abbr>*</abbr></label><div class="col-sm-4"><input class="school form-control" placeholder="Ví dụ: Đại học Kinh Tế Tp.Hồ Chí Minh" name="school" type="text"></div><label class="col-sm-2 control-label">Bằng cấp<abbr>*</abbr></label><div class="col-sm-3"><select class="level form-control" id="level_'+n+'" name="level">'+capbac+'</select></div></div><div class="form-group"><label class="col-sm-3 control-label">Từ tháng</label><div class="col-sm-4"><div class="input-group date" id="Study_from"><input class="study_from form-control" placeholder="Ví dụ: 09/2008" data-date-format="MM-YYYY" name="study_from" type="text"><span class="input-group-addon have-img"><img src="/assets/images/calendar.png"></span></div></div><label class="col-sm-2 control-label">Đến tháng</label><div class="col-sm-3"><div class="input-group date" id="Study_to"><input class="study_to form-control" placeholder="Ví dụ: 04/2012" data-date-format="MM-YYYY" name="study_to" type="text"><span class="input-group-addon have-img"><img src="/assets/images/calendar.png"></span></div></div></div><div class="form-group"><label class="col-sm-3 control-label">Lĩnh vực nghiên cứu<abbr>*</abbr></label><div class="col-sm-4"><select class="field_of_study form-control" id="field_'+n+'" name="field_of_study">'+linhvuc+'</select></div><label class="col-sm-2 control-label">Điểm<abbr>*</abbr></label><div class="col-sm-3"><select class="average_grade_id form-control" id="average_'+n+'" name="average_grade_id">'+diem+'</select></div></div><div class="form-group"><label class="col-sm-3 control-label">Thành tựu</label><div class="col-sm-9"><textarea class="achievement form-control" rows="5" name="achievement" cols="50"></textarea><em class="text-gray-light"><span class="countdown">5000</span> ký tự có thể nhập thêm</em></div></div><div class="form-group"><div class="col-sm-offset-3 col-sm-7"><button class="btn btn-lg bg-gray-light cancel-education" type="button">Hủy</button><input class="btn btn-lg bg-orange" type="submit" value="Lưu"><span>(<span class="text-red">*</span>) Thông tin bắt buộc</span></div></div></form></div>');
+	 			$('#field_'+n).select2({
+        			minimumResultsForSearch: Infinity
+    			});
+    			$('#average_'+n).select2({
+        			minimumResultsForSearch: Infinity
+    			});
+    			$('#level_'+n).select2({
+        			minimumResultsForSearch: Infinity
+    			});
+    			$("#Study_from,#Study_to").datetimepicker({
+			        pickTime: false,
+			        locale: 'ru'
+			    });
+		     	goToByScroll('saveEducation_'+n); 
+	 		}
+	 	});
+	});
+
+	
+	$('.delete-dhnn').click(function(event) {
+		event.preventDefault();
+		var url = '{{ URL::route("jobseekers.save-cv", array("del-dhnn", $id_cv )) }}';
+		$.ajax({
+			url: url,
+			type: 'POST',
+			success : function(data){
+				location.reload();
+			}
+		})
+	});
+
+	$('.cancel-dhnn').click(function(event) {
+		event.preventDefault();
+		$('#box-dinhhuongnn').slideUp();
+	});
+
+	$('.delete-exp').click(function(event) {
+		event.preventDefault();
+		var id = $(this).attr('data');
+		var url = '{{ URL::route("jobseekers.save-cv", array("del-exp", $id_cv )) }}';
+		$.ajax({
+			url: url,
+			type: 'POST',
+			data: {id_exp: id},
+			success : function(data){
+				location.reload();
+			}
+		})
+	});
+
+	$(document).on('click', '.cancel-exp', function(event) {
+		event.preventDefault();
+		var count = $('#box-exp .items.block').length;
+		if(count == 1){
+			$('#box-exp').slideUp('fast');
+		}else{
+			parent_name = $(this).closest('div[id^="saveWorkExp_"]').attr('id');
+			$('#'+parent_name).slideUp('fast').removeClass('block');
+			$('#'+parent_name).slideUp('fast').addClass('hidden-xs');
+		}
+	});
+
+	$('.delete-education').click(function(event) {
+		event.preventDefault();
+		var id = $(this).attr('data');
+		var url = '{{ URL::route("jobseekers.save-cv", array("del-edu", $id_cv )) }}';
+		$.ajax({
+			url: url,
+			type: 'POST',
+			data: {id_edu: id},
+			success : function(data){
+				location.reload();
+			}
+		})
+	});
+
+	$(document).on('click', '.cancel-education', function(event) {
+		event.preventDefault();
+		var count = $('#box-education .items.block').length;
+		alert(count);
+		if(count == 1){
+			$('#box-education').slideUp('fast');
+		}else{
+			parent_name = $(this).closest('div[id^="saveEducation_"]').attr('id');
+			$('#'+parent_name).slideUp('fast').removeClass('block');
+			$('#'+parent_name).slideUp('fast').addClass('hidden-xs');
+		}
 	});
 	</script>
 @stop
