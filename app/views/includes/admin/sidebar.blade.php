@@ -377,8 +377,6 @@
 					</li>
 					<!--end- traning-->
 
-
-
 					<!--Cung ung lao dong-->
 					<li class="{{ HTML::active(['admin/cungunglaodong/*','admin/cungunglaodong/*']) }}">
 						<a href="#" class="dropdown-toggle">
