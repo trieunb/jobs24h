@@ -374,7 +374,8 @@
 								</ul>
 							</li>
 						</ul>
-					</li><!--end- traning-->
+					</li>
+					<!--end- traning-->
 
 
 
