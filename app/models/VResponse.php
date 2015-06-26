@@ -1,7 +1,7 @@
 <?php
 
 class VResponse extends \Eloquent {
-	protected $fillable = ['ntv_id', 'ntd_id', 'title', 'content', 'submited_date'];
+	protected $fillable = ['ntv_id', 'ntd_id', 'title', 'content', 'submited_date', 'first_name', 'last_name', 'feedback', 'email', 'user_submit'];
 	protected $table ='responds';
 	public function ntd()
 	{

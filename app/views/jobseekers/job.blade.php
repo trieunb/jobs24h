@@ -30,6 +30,12 @@
 						<a href="{{URL::route('jobseekers.notification-jobs', array('jobid'=>$job->id))}}">Gởi email việc làm tương tự</a>
 						<i class="fa fa-share"></i>
 						<strong><a class="share-to-friends" role="button" data-toggle="popover" data-placement="bottom" title="Giới Thiệu Việc Làm Đến Bạn Bè" data-content='<form role="form" class="form-horizontal" id="ShareToFriends"><div class="form-group"><input type="text" class="form-control first_name_friend" name="first_name_friend" placeholder="Họ"></div><div class="form-group"><input type="text" class="form-control last_name_friend" name="last_name_friend"  placeholder="Tên"></div><div class="form-group"><input type="email" class="form-control email_name_friend" name="email_name_friend" placeholder="Email"></div><div class="form-group"><button type="submit" class="btn btn-sm bg-orange pull-right">Giới thiệu</button></div></form>'>Giới thiệu bạn bè</a></strong>
+						<i class="fa fa-comment"></i>
+						@if(Sentry::check())
+						<a class="feedback-to-emp" role="button" data-toggle="popover" data-placement="bottom" title="Gởi phản hồi đến Nhà tuyển dụng" data-content='<form role="form" class="form-horizontal" id="FeedbackToEmp"><div class="form-group"><input type="text" class="form-control title" name="title"  placeholder="Nhập tiêu đề"></div><div class="form-group"><textarea rows="3" name="feedback" class="form-control feedback" placeholder="Nhập nội dung phản hồi"></textarea></div><div class="form-group"><button type="submit" class="btn btn-sm bg-orange pull-right">Phản hồi</button></div></form>'>Gởi phản hồi</a>
+						@else
+						<a class="feedback-to-emp" role="button" data-toggle="popover" data-placement="bottom" title="Gởi phản hồi đến Nhà tuyển dụng" data-content='Login để phản hồi'>Gởi phản hồi</a>
+						@endif
 					</div>
 					<h2>Mô Tả Công Việc</h2>
 					<div class="job-description">
@@ -92,6 +98,10 @@
 							<td>Đăng ngày</td>
 							<td>{{date('d-m-Y',strtotime($job->work->updated_at))}}</td>
 						</tr>
+						<tr>
+							<td>Hạn nộp</td>
+							<td>{{date('d-m-Y',strtotime($job->work->hannop))}}</td>
+						</tr>
 					</tbody>
 				</table>
 				</div>
@@ -106,6 +116,7 @@
 					<span><i class="fa fa-map-marker"></i>&nbsp;&nbsp;{{$job->ntd->company->company_address}}.</span>
 					<span><i class="fa fa-envelope"></i>&nbsp;&nbsp;Contact person: {{$job->nguoilienhe}}.</span>
 					<span><i class="fa fa-user"></i>&nbsp;&nbsp;Company size: {{$job->ntd->company->total_staff}}.</span>
+					@if(count(json_decode($job->ntd->company->company_images)))
 					<div class="jcarousel-wrapper" id="company-info">
 	                	<div class="jcarousel">
 							<ul>
@@ -117,6 +128,7 @@
 						<a href="#" class="jcarousel-control-prev">&lsaquo;</a>
 	                	<a href="#" class="jcarousel-control-next">&rsaquo;</a>
 					</div>
+					@endif
 					<p>{{$job->ntd->company->full_description}}</p>
 				</div>
 				<a href="{{URL::route('jobseekers.search-job', array('id'=>$job->ntd_id))}}" class="pull-right text-blue"><i class="fa fa-arrow-circle-right"></i> Việc làm khác từ công ty này</a>
@@ -126,7 +138,7 @@
 				<script type="text/javascript">
 					$(document).on('submit', '#ShareToFriends', function(event) {
 						event.preventDefault();
-						var url = '{{URL::route("jobseekers.share-job", array($job->slug,$job->id))}}';
+						var url = '{{URL::route("jobseekers.post-view-job", array($job->slug,$job->id, "share"))}}';
 						$.ajax({
 							url: url,
 							type: 'POST',
@@ -153,6 +165,44 @@
 					           		$('#ShareToFriends').find(".has-error").removeClass('has-error');
 					           		$('#ShareToFriends').find(".error-message").remove();
 					           		$('.share-to-friends').popover('hide')
+
+					           		$('.alert-success').slideDown('slow/400/fast', function() {
+					           			$('.alert-success').removeClass('hidden-xs');
+					           			$('.alert-success').html('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+json.message);
+					           		});
+									
+					           	}
+							}
+						})
+					});
+					$(document).on('submit', '#FeedbackToEmp', function(event) {
+						event.preventDefault();
+						var url = '{{URL::route("jobseekers.post-view-job", array($job->slug,$job->id, "feedback"))}}';
+						$.ajax({
+							url: url,
+							type: 'POST',
+							dataType: 'json',
+							data: {
+								title : $('.title').val(),
+								feedback: $('.feedback').val(),
+							},
+							success : function(json){
+								if(! json.has)
+					            {	
+					            	$('#FeedbackToEmp').find(".has-error").removeClass('has-error');
+						            $('#FeedbackToEmp').find(".error-message").remove();
+					            	var j = $.parseJSON(json.message);
+					            	$.each(j, function(index, val) {
+						            	$('.'+index).parents('.form-group').addClass('has-error');
+						            	if($('.'+index).parents('.form-group').find(".error-message").length < 1){
+						           			$('.'+index).parents('.form-group').append('<span class="error-message">'+val+'</span>')
+						            	}
+						           		$('.loading-icon').hide();           		
+					           		});
+					            }else{
+					           		$('#FeedbackToEmp').find(".has-error").removeClass('has-error');
+					           		$('#FeedbackToEmp').find(".error-message").remove();
+					           		$('.feedback-to-emp').popover('hide')
 
 					           		$('.alert-success').slideDown('slow/400/fast', function() {
 					           			$('.alert-success').removeClass('hidden-xs');

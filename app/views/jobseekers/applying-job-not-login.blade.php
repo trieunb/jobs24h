@@ -13,6 +13,19 @@
 			<div class="box">
 				<div class="tag">Apply Job</div>
 				{{ Form::open( array('route'=>array('jobseekers.applying-job', $job->id), 'class'=>'form form-horizontal', 'method'=>'POST', 'files'=>true) ) }}
+					@if ($loi = Session::get('loi'))
+						<div class="alert alert-danger">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+							{{ $loi }}
+						</div>
+					@endif
+
+					@if ($success = Session::get('success'))
+						<div class="alert alert-success">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+							{{ $success }}
+						</div>
+					@endif
 					<div class="form-group">
 						<label class="control-label col-sm-2">Fullname</label>
 						<div class="col-sm-2">
@@ -20,9 +33,11 @@
 						</div>
 						<div class="col-sm-3">
 							{{Form::input('text','first_name', null, array('class'=>'form-control', 'placeholder'=>'First Name'))}}
+							<span class="error-message">{{$errors->first('first_name')}}</span>
 						</div>
 						<div class="col-sm-3">
 							{{Form::input('text','last_name', null, array('class'=>'form-control', 'placeholder'=>'Last Name'))}}
+							<span class="error-message">{{$errors->first('last_name')}}</span>
 						</div>
 					</div>
 					<div class="form-group">
@@ -37,27 +52,31 @@
 						<label class="control-label col-sm-2">Email</label>
 						<div class="col-sm-5">
 							{{Form::input('text','email', null, array('class'=>'form-control'))}}
+							<span class="error-message">{{$errors->first('email')}}</span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2">Contact phone</label>
 						<div class="col-sm-5">
 							{{Form::input('text','contact_phone', null, array('class'=>'form-control'))}}
+							<span class="error-message">{{$errors->first('contact_phone')}}</span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2">Live in</label>
 						<div class="col-sm-3">
 							{{Form::input('text','address', null, array('class'=>'form-control'))}}
+							<span class="error-message">{{$errors->first('address')}}</span>
 						</div>
 						<div class="col-sm-2">
-							{{Form::select('province_id',Province::lists('province_name'),null, array('class'=>'form-control', 'id'=>'Cities'))}}
+							{{Form::select('province_id',Province::lists('province_name', 'id'),null, array('class'=>'form-control', 'id'=>'Cities'))}}
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2">Cover letter</label>
 						<div class="col-sm-5">
 							{{Form::textarea('cover_letter', null, array('class'=>'form-control headline', 'rows'=> '5'))}}
+							<span class="error-message">{{$errors->first('cover_letter')}}</span>
 						</div>
 					</div>
 					<div class="form-group">
@@ -80,6 +99,7 @@
 						{{Form::submit('Nộp đơn', array('class'=>'btn btn-lg bg-dark'))}}
 					</div>
 					{{Form::input('hidden','is_file', 'is_file',array('class'=>'is_file'))}}
+					{{Form::input('hidden','login', false)}}
 				{{Form::close()}}
 			</div>
 			</div>

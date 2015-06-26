@@ -1,7 +1,7 @@
 <?php
 
 class Experience extends \Eloquent {
-	protected $fillable = ['rs_id'];
+	protected $fillable = ['rs_id','position','company_name','from_date','to_date','job_detail','field','specialized','level','salary'];
 	protected $table = 'mt_work_exps';
 	public function fieldofwork(){
 		return $this->beLongsTo('FieldsInWorkExp', 'field');

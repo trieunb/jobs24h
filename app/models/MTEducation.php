@@ -1,7 +1,7 @@
 <?php
 
 class MTEducation extends \Eloquent {
-	protected $fillable = ['rs_id'];
+	protected $fillable = ['rs_id','school','field_of_study','level','study_from','study_to','achievement','specialized','average_grade_id'];
 	protected $table = 'mt_education_history';
 	
 	public function edu(){
