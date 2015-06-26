@@ -33,7 +33,7 @@
 				<td>{{$value['name']}}</td>
 				 
 				 
-				<td>{{HTML::image($value['banner'],$value['title'],array('style'=>'width:100px'))}}</td>
+				<td><a href="{{$value['banner']}}"  target="blank">{{HTML::image($value['banner'],$value['title'],array('style'=>'width:100px'))}}</a></td>
 				 
 				  
 				<td>

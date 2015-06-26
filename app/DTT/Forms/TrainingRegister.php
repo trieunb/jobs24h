@@ -6,13 +6,13 @@ class TrainingRegister extends FormValidator {
 
 	protected $rules = array(
 		'name'	=>	'required|min:4',
-		'worked' => 'required|min:10',
+		'address' => 'required|min:4',
 		'phone' =>'required|numeric|min:10',
 		'captcha'	=>	'required|captcha',			
 		);
 	protected $messages = array(
 		'name.required'	=>	'Bạn phải nhập họ và tên.',
-		'worked.required'	=>	'Nhập nơi học tập và làm việc',
+		'address.required'	=>	'Nhập nơi học tập và làm việc',
 		'phone.numeric'	=>	'Phải nhập đúng số điện thoại.',
 		'phone.required'	=>	'Phải nhập đúng số điện thoại.',
 		'phone.min'	=>	'Phải nhập đúng số điện thoại.',

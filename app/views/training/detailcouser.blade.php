@@ -134,7 +134,7 @@
             <div class="col-md-9 pull-left dk1">
             <ul>
               <li>
-                <h2>Khai giảng: </h2> <p>{{$couser['date_open']}}</p>
+                <h2>Khai giảng: </h2> <p>{{date("d-m-Y", strtotime($couser['date_open']))}}</p>
               </li>
               <li>
                 <h2>Ca học : </h2> <p>{{$couser['shift']}}</p>
@@ -143,7 +143,7 @@
                 <h2>Giờ học : </h2> <p>{{$couser['time_hour']}} giờ</p>
               </li>
               <li>
-                <h2>Ngày học : </h2> <p>{{$couser['date_study']}}</p>
+                <h2>Ngày học : </h2> <p>{{date("d-m-Y", strtotime($couser['date_study']))}}</p>
               </li>
               <li>
                 <h2>Thời lượng : </h2> <p>{{$couser['time_day']}} buổi</p>
@@ -303,5 +303,17 @@
             src: '{{ URL::to('captcha') }}?t='+Math.random()
           });
         });
+
         </script>
+
+        <?php
+          if(Session::get('ok')=='ok')
+          {
+          echo'<script>'; 
+          echo'alert("Bạn đã đăng ký thành công, chúng tôi sẽ liên hệ với bạn sớm nhất")'; 
+          echo'</script>'; 
+          }
+          
+        ?>
+
 @stop

@@ -118,10 +118,11 @@ class TrainingController extends Controller
 
 	public function post_detail_couser($id)
 	{
-
+		 
 		$validator = new \App\DTT\Forms\TrainingRegister;
 		if($validator->fails())
 		{
+			//return Redirect::back()->with('ok',$validator);
 			return Redirect::back()->withErrors($validator);
 		}
 		else{
@@ -138,6 +139,7 @@ class TrainingController extends Controller
 					'training_id'=>$id
 					)
 				);
+			return Redirect::back()->with('ok','ok');
 		 
 		}
 

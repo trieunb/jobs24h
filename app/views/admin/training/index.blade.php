@@ -53,7 +53,10 @@
 				<td>
 					<a data-toggle="modal" data-target="#myModal{{$value['id']}}">
   					Xem nội dung
-					</a>	
+					</a>
+					<style type="text/css">
+						.modal-body img{ width: 100% !important;height: auto !important}
+					</style>	
 					<div class="modal fade" id="myModal{{$value['id']}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 					  <div class="modal-dialog" role="document">
 					    <div class="modal-content">

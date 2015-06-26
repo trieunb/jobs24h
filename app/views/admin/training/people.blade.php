@@ -103,7 +103,7 @@
 				</td>
 				<td>
 				@if($value['thumbnail']!=null)
-				{{HTML::image($value['thumbnail'],null,array('style' => 'width:100px'))}}
+				<a href="{{$value['thumbnail']}}" target="blank">{{HTML::image($value['thumbnail'],null,array('style' => 'width:100px'))}}</a>
 				@else 
 				Không có Avatar
 				@endif

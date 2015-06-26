@@ -300,7 +300,7 @@
 						<b class="arrow"></b>
 
 						<ul class="submenu">
-							<li class="{{ HTML::active(['admin/training/']) }}">
+							<li class="{{ HTML::active(['admin/training']) }}">
 								<a href="{{ URL::to('admin/training/') }}">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Chương trình đào tạo

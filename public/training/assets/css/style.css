@@ -107,6 +107,7 @@ header#header {
 .main2 {
   text-align: center;
   background-color: #f7f7f7;
+  padding-bottom: 22px;
 }.main2 ul li h2 {
   font-size: 14px !important;
   text-transform: uppercase;
@@ -134,6 +135,7 @@ header#header {
   text-align: center;
   margin-top: 34px;
   background-color: #f5f5f5;
+  padding-bottom: 28px;
 }a#profile-tab {
   background-color: rgb(114, 114, 114);
   color: white;
@@ -661,8 +663,8 @@ div#thongtinchung .text ul li {
 }.main5 ul li img:hover {
   opacity: 1;
   transition: all ease .5s;    
-  -webkit-transition: all ease 1s;
-  border: 2px solid rgb(122, 203, 229);
+  -webkit-transition: all ease .1s;
+  border: 10px solid rgb(122, 203, 229);
   /* width: 240px !important; */
   /* height: 240px !important; */
   padding: 13px;
@@ -815,4 +817,6 @@ button.btn.more3:hover
   background-color: rgba(255, 0, 0, 0);
   border: 1px solid white;
   color: rgb(236, 93, 96);
+}.bottom-footer ul li a {
+  color: rgb(195, 195, 195);
 }
