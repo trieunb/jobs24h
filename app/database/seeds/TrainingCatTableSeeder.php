@@ -20,8 +20,10 @@ class TrainingCatTableSeeder extends Seeder {
 			'DỊCH VỤ TUYỂN DỤNG',
 			'TƯ VẤN CHIẾN LƯỢC NHÂN SỰ',
 			'LƯƠNG VÀ CHẾ ĐỘ',
-			'QUẢN LÝ NHÂN SỰ'
-
+			'QUẢN LÝ NHÂN SỰ',
+			'Tin tức Người tìm việc',
+			'Cẩm nang Người tìm việc',
+			'Cẩm nang Nhà tuyển dụng',
 
 			);
 		foreach($levels as $index)
