@@ -99,7 +99,7 @@ p{margin-bottom: 5px;}
 }
 .row {  margin-left: -5px;  margin-right: -5px;}
 body.modal-open {padding: 0 !important; overflow: visible !important;}
-.modal-dialog {margin: 150px auto 30px !important;}
+.modal-dialog {margin: 50px auto 30px !important;}
 .modal-content {border-radius: 0px !important;}
 .main-content{padding: 0 !important;}
 #content, #sidebar { float: left;}
@@ -748,4 +748,7 @@ div.info-right {
 }
 .float-left {
   float:left;
+}
+.checkbox input[type=checkbox] {
+  margin-left: 0;
 }

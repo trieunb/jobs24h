@@ -87,6 +87,14 @@
 			</section>
 @stop
 
+@section('style')
+	<style type="text/css">
+	.checkbox input[type=checkbox] {
+		margin-left: -20px;
+	}
+	</style>
+@stop
+
 @section('script')
 	<script>
 		$('#checkall').click(function(event) {  //on click 

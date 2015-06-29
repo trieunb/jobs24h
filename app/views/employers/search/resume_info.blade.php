@@ -12,7 +12,7 @@
 								<ul>
 									<li><a href="#modalSaveFolder" data-toggle="modal" data-target="#modalSaveFolder">{{ HTML::image('assets/ntd/images/icon-save-cv.png') }} Lưu thư mục</a></li>
 									<li><a href="{{ URL::to($locale.'/employers/search/basic?' . implode('&', ['keyword=', 'category=all', 'level='.$resume->capbachientai, 'location=all'])) }}" target="_blank">{{ HTML::image('assets/ntd/images/icon-view-cv.png') }} Xem hồ sơ tương tự</a></li>
-									<li><a href="#">{{ HTML::image('assets/ntd/images/icon-send-cv.png') }} Gửi hồ sơ</a></li>
+									<li><a href="#modalSend" data-toggle="modal" data-target="#modalSend">{{ HTML::image('assets/ntd/images/icon-send-cv.png') }} Gửi hồ sơ</a></li>
 								</ul>
 							</div>
 						</div>
@@ -32,7 +32,7 @@
 												Ứng viên
 											</div>
 											<div class="col-xs-7">
-												{{ $resume->ntv->first_name }} {{ $resume->ntv->last_name }}
+												{{ $resume->ntv->full_name() }}
 											</div>
 										</div>
 										<div class="row td-info">
@@ -239,9 +239,9 @@
 						<div class="col-xs-12 info-action">
 							<div class="pull-right">
 								<ul>
-									<li><a href="#">{{ HTML::image('assets/ntd/images/icon-save-cv.png') }} Lưu thư mục</a></li>
-									<li><a href="#">{{ HTML::image('assets/ntd/images/icon-view-cv.png') }} Xem hồ sơ tương tự</a></li>
-									<li><a href="#">{{ HTML::image('assets/ntd/images/icon-send-cv.png') }} Gửi hồ sơ</a></li>
+									<li><a href="#modalSaveFolder" data-toggle="modal" data-target="#modalSaveFolder">{{ HTML::image('assets/ntd/images/icon-save-cv.png') }} Lưu thư mục</a></li>
+									<li><a href="{{ URL::to($locale.'/employers/search/basic?' . implode('&', ['keyword=', 'category=all', 'level='.($resume->capbachientai>0?$resume->capbachientai:'all'), 'location=all'])) }}" target="_blank">{{ HTML::image('assets/ntd/images/icon-view-cv.png') }} Xem hồ sơ tương tự</a></li>
+									<li><a href="#modalSend" data-toggle="modal" data-target="#modalSend">{{ HTML::image('assets/ntd/images/icon-send-cv.png') }} Gửi hồ sơ</a></li>
 								</ul>
 							</div>
 						</div>
@@ -302,6 +302,59 @@
 		</div>
 	</div>
 </div>
+
+<!-- modal send to friend -->
+<div class="modal fade" id="modalSend">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Gửi hồ sơ</h4>
+			</div>
+			<div class="modal-body">
+				<form action="" method="POST" class="form-horizontal" role="form" name="" onsubmit="sendResume();return false;">
+					<div id="result_send"></div>
+					
+					<h4>Thông tin yêu cầu</h4>
+					<p>Bạn có thể sử dụng mẫu bên dưới để gửi hồ sơ đến người quen</p>
+					<div class="form-group">
+						<label for="input" class="col-sm-2 control-label">Email của người bạn:</label>
+						<div class="col-sm-10">
+							{{ Form::email('email', null, ['required', 'id'=>'send_email']) }}
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="input" class="col-sm-2 control-label">Tiêu đề:</label>
+						<div class="col-sm-10">
+							{{ Form::text('subject', null, ['required', 'id'=>'send_subject']) }}
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="input" class="col-sm-2 control-label">Nội dung:</label>
+						<div class="col-sm-10">
+							{{ Form::textarea('content', null, ['rows'=>5, 'id'=>'send_content']) }}
+						</div>
+					</div>
+				
+						<div class="form-group">
+							<div class="col-sm-8 col-sm-offset-4">
+								<button type="submit" id="btn-send" class="btn btn-lg bg-orange">Gửi cho bạn bè</button>
+								<button type="button" class="btn btn-lg bg-orange" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+				</form>
+			</div>
+			
+		</div>
+	</div>
+</div>
+@stop
+@section('style')
+	<style type="text/css">
+	.modal-dialog {
+		margin-top: 50px !important; 
+	}
+	</style>
 @stop
 @section('script')
 	<script type="text/javascript">
@@ -343,8 +396,67 @@
 				setTimeout(function(){ $('#result').html(''); }, 1500);
 				setTimeout(function(){ $('#modalSaveFolder').modal('hide');  }, 1500);
 			}
-		})
+		});
+
+	}//
+	var sendResume = function()
+	{
+		var send_email = $('#send_email').val();
+		var send_subject = $('#send_subject').val();
+		var send_content = $('#send_content').val();
+		$('#send_email').attr('disabled', 'disabled');
+		$('#send_subject').attr('disabled', 'disabled');
+		$('#send_content').attr('disabled', 'disabled');
+		$('#btn-send').attr('disabled', 'disabled');
+		var cv_id = {{ $resume->id }};
+		$('#result_send').attr('style', 'display: none');
+		$('#result_send').html('<div class="progress"><div class="progress-bar progress-bar-success progress-bar-striped active" id="pg_send" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%">25%</div></div>');
+		$('#result_send').slideDown();
+		blockInput();
+		$.ajax({
+			url: '{{ URL::route('employers.search.ajax') }}',
+			data: {action: 'sendMail', send_email: send_email, send_subject: send_subject, send_content: send_content, cv_id: cv_id},
+			type: 'POST',
+			dataType: 'json',
+			success: function(json)
+			{
+				if(json.has)
+				{
+					$('#result_send').html('<div class="alert alert-success">Gửi mail thành công.</div>');
+				} else {
+					$('#result_send').html('<div class="alert alert-danger">Có lỗi khi thực hiện.</div>');
+				}
+				$('#send_email').removeAttr('disabled');
+				$('#send_subject').removeAttr('disabled');
+				$('#send_content').removeAttr('disabled');
+				$('#btn-send').removeAttr('disabled');
+				setTimeout(function(){ 
+					$('#result_send').html(''); 
+					$('#send_email').val('');
+					$('#send_subject').val('');
+					$('#send_content').val('');
+
+				}, 3000);
+				setTimeout(function(){ $('#modalSend').modal('hide');  }, 3000);
+			}
+		});
+
+	}//sendResume
+	var blockInput = function()
+	{
+		setTimeout(function(){ 
+			var div = $('#pg_send').attr('aria-valuenow');
+			if (typeof div != 'undefined' && div < 75) {
+				div = parseInt(div) + 25;
+				$('#pg_send').attr('aria-valuenow', div);
+				$('#pg_send').attr('style', 'width: '+div+'%');
+				$('#pg_send').text(div + '%');
+				blockInput();
+			};
+			
+		}, 2000);
 	}
 	
 	</script>
+</div>
 @stop

@@ -6,6 +6,8 @@ class ReportController extends \Controller {
 	{
 		$newest = Order::where('ntd_id', Auth::id())->first();
 		View::share('newest', $newest);
+		$jobs = Job::where('ntd_id', Auth::id())->where('is_display', 1)->where('expired_date', '>=', date('Y-m-d'))->count();
+		View::share('active_job', $jobs);
 	}
 	public function getCandidate($type = false)
 	{

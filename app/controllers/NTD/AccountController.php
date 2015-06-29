@@ -1,6 +1,7 @@
 <?php 
 namespace NTD;
 use View, Redirect, NTD, Auth, Job, Validator, Hash, Input, RespondLetter, Response, RespondAuto;
+use Company, Config;
 class AccountController extends \Controller {
 	public function __construct()
 	{
@@ -13,7 +14,42 @@ class AccountController extends \Controller {
 	}
 	public function getCompany()
 	{
-		return View::make('employers.account.company');
+		$com = Company::where('ntd_id', Auth::id())->first();
+		return View::make('employers.account.company', compact('com'));
+	}
+	public function postCompany()
+	{
+		$params = Input::all();
+		$validator = new \App\DTT\Forms\EmployerUpdateCompany;
+		if($validator->fails())
+		{
+			return Redirect::back()->withInput()->withErrors($validator);
+		} else {
+			if (Input::hasFile('filelogo')) {
+				$path = Config::get('app.upload_path').'companies/logos/';
+				Input::file('filelogo')->move($path, Input::file('filelogo')->getClientOriginalName());
+				$params['logo'] = Input::file('filelogo')->getClientOriginalName();
+			}
+			unset($params['filelogo']);
+			unset($params['_token']);
+			$path = Config::get('app.upload_path').'companies/images/';
+			$company_images = array();
+			$hasImage = false;
+			for ($i=1; $i <= 5; $i++) { 
+				if (Input::hasFile('image'.$i)) {
+					Input::file('image'.$i)->move($path, Input::file('image'.$i)->getClientOriginalName());
+					$company_images[] = Input::file('image'.$i)->getClientOriginalName();
+					$hasImage = true;
+				} else {
+					$company_images[] = "";
+				}
+				unset($params['image'.$i]);
+				
+			}
+			if($hasImage) $params['company_images'] = json_encode($company_images);
+			Company::where('ntd_id', Auth::id())->update($params);
+			return Redirect::route('employers.account.companyreview');
+		}
 	}
 	public function getCompanyReview()
 	{
@@ -83,10 +119,6 @@ class AccountController extends \Controller {
 	{
 		$task = \TaskLog::where('ntd_id', Auth::id())->orderBy('id', 'desc')->paginate(20);
 		return View::make('employers.account.task_logs', compact('task'));
-	}
-	public function getUserManager()
-	{
-
 	}
 	public function getUserInformation()
 	{
@@ -245,6 +277,11 @@ class AccountController extends \Controller {
 			}
 		}
 		return Redirect::back()->withSuccess('Xóa thư thành công.');
+	}
+	public function getUserManager()
+	{
+		$users = 1;
+		return View::make('employers.account.users');
 	}
 
 	public function getLogout()

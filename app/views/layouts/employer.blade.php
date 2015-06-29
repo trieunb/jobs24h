@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>@yield('title', isset($title) ?: 'Nhà tuyển dụng' ) - VnJobs</title>
-		{{ HTML::style('assets/ntd/css/bootstrap.min.css') }}
+		{{ HTML::style('assets/ntd/css/bootstrap343.min.css') }}
 		{{ HTML::style('assets/ntd/css/style.css') }}
 		@yield('style')
 	</head>
@@ -15,7 +15,7 @@
 					<header>
 						<div class="container">
 							<div class="col-xs-4">
-								<a href="{{ URL::route('employers.home') }}">
+								<a href="{{ URL::route('employers.launching') }}">
 									{{ HTML::image('assets/ntd/images/logo.png') }}
 								</a>
 							</div>

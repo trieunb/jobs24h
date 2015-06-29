@@ -1,6 +1,6 @@
 <?php 
 namespace NTD;
-use View, Redirect, Input, EFolder, Job, Auth, Response, Application;
+use View, Redirect, Input, EFolder, Job, Auth, Response, Application,RSFolder;
 class CandidateController extends \Controller {
 	public function __construct()
 	{
@@ -36,12 +36,13 @@ class CandidateController extends \Controller {
 			$apply = Application::orderBy('id', 'desc')->where('nav_id', 2);
 			if(is_numeric($id))
 			{
-				$apply->whereHas('job', function($q) {
-					$q->where('ntd_id', Auth::id());
-				})->where('folder_id', $id);
+				$apply = RSFolder::where('ntd_id', Auth::id())->where('folder_id', $id)->orderBy('id','desc')->paginate(10);
+				$isFolder = 1;
+				return View::make('employers.candidates.folder', compact('apply', 'isFolder'))->with('folder_id', $id);
 			}
+			$isFolder = 0;
 			$apply = $apply->paginate(10);
-			return View::make('employers.candidates.folder', compact('apply'))->with('folder_id', $id);
+			return View::make('employers.candidates.folder', compact('apply', 'isFolder'))->with('folder_id', $id);
 		}
 		return Redirect::route('employers.candidates.folder', 'all');
 	}

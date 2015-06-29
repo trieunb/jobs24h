@@ -23,7 +23,7 @@
 						<td>{{ $v->ntv->first_name }} {{ $v->ntv->last_name }}</td>
 						<td>
 							@if($v->ntv->resume->count() > 0)
-								{{ HTML::link(URL::to('vi/jobseekers/resume/'.$v->ntv->resume->first()->id), null, ['class'=>'text-blue'] ) }}
+								{{ HTML::link(URL::route('employers.search.resumeinfo', $v->ntv->resume->first()->id), null, ['class'=>'text-blue'] ) }}
 							@else
 				
 							@endif
