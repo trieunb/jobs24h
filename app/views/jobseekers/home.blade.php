@@ -148,13 +148,17 @@
 								@foreach($news as $new)
 								<li>
 									<div class="thumbs">
+										@if($new->thumbnail != null)
 										<img src="/uploads/news/{{$new->thumbnail}}">
+										@else
+										<img src="/images/photo_default.png">
+										@endif
 									</div>
 									<div class="meta">
 										<span class="date">{{date('d M, Y', strtotime($new->updated_at))}}</span>
 									</div>
 									<article>
-										<h3><a href="#">{{$new->title}}</a></h3>
+										<h3><a href="{{URL::route('news.view', array($new->id))}}">{{$new->title}}</a></h3>
 										<?php
 										// strip tags to avoid breaking any html
 										$string = $new->content;
@@ -170,7 +174,7 @@
 										}
 										echo "<p>$string</p>";
 										?>
-										<a href="#" class="read-more">Chi tiết</a>
+										<a href="{{URL::route('news.view', array($new->id))}}" class="read-more">Chi tiết</a>
 									</article>
 								</li>
 								@endforeach
@@ -186,19 +190,17 @@
 					<div class="col-sm-4">
 						<h2 class="text-orange">Cẩm nang Người tìm việc</h2>
 						<ul class="arrow-square-blue">
-							<li><a href="#">Nếu bạn quản lý công việc tốt và nhận thấy</a></li>
-							<li><a href="#">Tiến xa hơn trong nghề nghiệp một cách</a></li>
-							<li><a href="#">Thông tin phong phú & chính xác nhất</a></li>
-							<li><a href="#">Dịch vụ khách hàng chu đáo 24/7</a></li>
+						@foreach($camnang_ntv as $val)
+							<li><a href="{{URL::route('news.view', array($val->id) )}}">{{$val->title}}</a></li>
+						@endforeach
 						</ul>
 					</div>
 					<div class="col-sm-4">
 						<h2 class="text-orange">Cẩm nang Nhà Tuyển Dụng</h2>
 						<ul class="arrow-square-blue">
-							<li><a href="#">Nếu bạn quản lý công việc tốt và nhận thấy</a></li>
-							<li><a href="#">Tiến xa hơn trong nghề nghiệp một cách</a></li>
-							<li><a href="#">Thông tin phong phú & chính xác nhất</a></li>
-							<li><a href="#">Dịch vụ khách hàng chu đáo 24/7</a></li>
+							@foreach($camnang_ntd as $val)
+								<li><a href="{{URL::route('news.view', array($val->id) )}}">{{$val->title}}</a></li>
+							@endforeach
 						</ul>
 					</div>
 					<div class="col-sm-4 last">

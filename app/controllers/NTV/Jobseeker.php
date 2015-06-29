@@ -33,7 +33,9 @@ class JobSeeker extends Controller
 
 
 		$news = TrainingPost::where('training_cat_id', 9)->take(8)->get();
-		return View::make('jobseekers.home', compact('jobs', 'categories_default', 'categories_alpha', 'categories_hot','emp_hot', 'news'));
+		$camnang_ntv = TrainingPost::where('training_cat_id', 10)->take(4)->get();
+		$camnang_ntd = TrainingPost::where('training_cat_id', 11)->take(4)->get();
+		return View::make('jobseekers.home', compact('jobs', 'categories_default', 'categories_alpha', 'categories_hot','emp_hot', 'news','camnang_ntv','camnang_ntd'));
 	}
 
 	public function editBasicHome(){
