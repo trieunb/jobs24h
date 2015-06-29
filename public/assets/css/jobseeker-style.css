@@ -470,6 +470,7 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
 .vnjobs h3 { font-size: 24px; text-align: center; padding: 10px 0; font-weight: normal;}
 .vnjobs p {font-size: 14px;}
 .top-employer li {padding: 10px 20px;}
+.top-employer li img {max-height: 100px; width: auto; display: block; margin: 0 auto;}
 .top-companies {margin: 0;background: #E7E7E7;margin: 0 0px -50px 0px;padding: 0 30px;}
 .top-companies li {text-align: center; text-transform: uppercase; color: #333;padding: 20px 0; border: none !important;/* border-right: 1px solid #DDD !important; */ font-weight: 600; font-size: 10px; margin: 0px 0 20px;/* background: #f7f8f9; */position: relative;}
 .top-companies li.active{background: #fff; cursor: pointer;}

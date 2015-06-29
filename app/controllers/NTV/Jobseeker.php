@@ -17,6 +17,9 @@ class JobSeeker extends Controller
 		$categories_hot = Category::where('parent_id', '!=', 0)->with('mtcategory')->get()->sortBy(function($categories_hot) {
 		    return $categories_hot->mtcategory->count();
 		})->reverse();
+		$emp_hot = NTD::with('job')->get()->sortBy(function($emp_hot) {
+		    return $emp_hot->job->count();
+		})->reverse();
 
 		$jobs = Job::with(array('ntd'=>function($q) {
 			$q->with('company');
@@ -28,7 +31,7 @@ class JobSeeker extends Controller
 			$q->with('province');
 		}))->take(45)->get();
 
-		return View::make('jobseekers.home', compact('jobs', 'categories_default', 'categories_alpha', 'categories_hot'));
+		return View::make('jobseekers.home', compact('jobs', 'categories_default', 'categories_alpha', 'categories_hot','emp_hot'));
 	}
 
 	public function editBasicHome(){
@@ -563,11 +566,22 @@ class JobSeeker extends Controller
 			return Redirect::back()->withErrors('Bạn đã tạo nhiều hơn 4 Hồ Sơ.');
 		}
 	}
+	public function saveNote(){
+		$params = Input::all();
+		if(Request::ajax()){
+			$save = MyJob::find($params['id']);
+			$save->note = ''.$params['note'].'';
+			$save->save();
+		}
+	}
+
 	public function myJob(){
+		$applied_job = Application::where('ntv_id',$GLOBALS['user']->id)->get();
 		$my_job_list = MyJob::where('ntv_id',$GLOBALS['user']->id)->paginate(10);
-		return View::make('jobseekers.my-job',compact('my_job_list'));
+		return View::make('jobseekers.my-job',compact('my_job_list', 'applied_job'));
 	}
 	public function saveJob($job_id){
+		$applied_job = Application::where('ntv_id',$GLOBALS['user']->id)->get();
 		$check = Job::find($job_id);
 		if($check != null){
 			$date = date('Y-m-d', time());
@@ -575,7 +589,7 @@ class JobSeeker extends Controller
 			$my_job->save_date = $date;
 			$my_job->save();
 			$my_job_list = MyJob::where('ntv_id',$GLOBALS['user']->id)->paginate(10);	
-			return View::make('jobseekers.my-job',compact('my_job_list'));
+			return View::make('jobseekers.my-job',compact('my_job_list','applied_job'));
 		}else{
 			return View::make('jobseekers.home');
 		}	
@@ -590,19 +604,32 @@ class JobSeeker extends Controller
 	public function delMyJob(){
 		$params = Input::all();
 		if(isset($params['check'])){
-			$job = MyJob::whereIn('id', $params['check'])->delete();
+			
+			$job = MyJob::whereIn('id', $params['check'])->where('ntv_id',$GLOBALS['user']->id)->get();
+			foreach ($job as $key => $value) {
+				$job_id = $value->job_id;	
+				$app = Application::where('job_id', $job_id)->where('ntv_id',$GLOBALS['user']->id)->get();
+				foreach ($app as $val) {
+					$applied_id = array($val->job_id);
+				}
+			}
+			$job = MyJob::whereNotIn('job_id', $applied_id)->where('ntv_id',$GLOBALS['user']->id)->delete();
+			$applied_job = Application::where('ntv_id',$GLOBALS['user']->id)->get();
+			$my_job_list = MyJob::Where('ntv_id',$GLOBALS['user']->id)->paginate(10);
 			if($job){
-				return Redirect::back();
+				return View::make('jobseekers.saved-job',compact('my_job_list','applied_job'));	
+			}else{
+				return View::make('jobseekers.saved-job',compact('my_job_list','applied_job'));	
 			}
 		}
 		else{
-			return Redirect::back();
+			return View::make('jobseekers.saved-job',compact('my_job_list','applied_job'));	
 		}
 	}
 	public function delAppliedJob(){
 		$params = Input::all();
 		if(isset($params['check'])){
-			$job = Application::whereIn('job_id', $params['check'])->delete();
+			$job = Application::whereIn('job_id', $params['check'])->where('ntv_id',$GLOBALS['user']->id)->delete();
 			if($job){
 				return Redirect::back();
 			}
@@ -627,7 +654,7 @@ class JobSeeker extends Controller
 	}
 
 	public function repondFromEmployment(){
-		$reponds = VResponse::where('ntv_id',$GLOBALS['user']->id)->paginate(10);
+		$reponds = VResponse::where('ntv_id',$GLOBALS['user']->id)->where('user_submit','!=', $GLOBALS['user']->id)->paginate(10);
 		return View::make('jobseekers.respond-from-employment',compact('reponds'));
 	}
 
@@ -968,7 +995,8 @@ class JobSeeker extends Controller
 
 	// Nhà tuyển dụng xem hồ sơ
 	public function employerViewResume(){
-		return View::make('jobseekers.employer-view-resume'); 
+		$view_resume = ViewResume::where('ntv_id', $GLOBALS['user']->id)->get();
+		return View::make('jobseekers.employer-view-resume', compact('view_resume')); 
 	}
 
 	// Thư mời pv & tin nhắn từ nhà tuyển dụng 
@@ -995,5 +1023,6 @@ class JobSeeker extends Controller
 	public function getListProvince(){
 		return View::make('jobseekers.list-province');
 	}
+
 
 }

@@ -121,17 +121,24 @@
 						</div>
 					</div>
 				</section>
+				@if(count($emp_hot))
 				<section class="top-employer clearfix padding bg-silver-dark">
 					<div class="header-page">
 						<h2>Nhà tuyển dụng hàng đầu</h2>
 					</div>
 					<ul>
-						@foreach(range(1, 18) as $index)
-							<li class="col-sm-2">{{ HTML::image('assets/images/brand0'.rand(1,3).'.png') }}</li>
+						@foreach($emp_hot as $key => $val)
+							@if($key < 18)
+								@if($val->company->logo != null)
+								<li class="col-sm-2"><img src="/uploads/companies/images/{{$val->company->logo}}"></li>
+								@else
+								<li class="col-sm-2">{{ HTML::image('assets/images/default_logo.png') }}</li>
+								@endif
+							@endif
 						@endforeach
-						
 					</ul>
 				</section>
+				@endif
 				<section class="news clearfix">
 					<div class="header-page">
 						<h2>Tin tức mới nhất</h2>

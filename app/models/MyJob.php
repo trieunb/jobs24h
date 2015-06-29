@@ -10,4 +10,5 @@ class MyJob extends \Eloquent {
 	public function jobs(){
 		return $this->beLongsTo('Job', 'job_id');
 	}
+	
 }

@@ -103,23 +103,23 @@
 				<div class="col-sm-3">
 					<h3>Chức năng</h3>
 					<ul class="arrow-right-dark">
-						<li><a href="#">Tài Khoản</a></li>
-						<li><a href="#">Tạo/Đăng Hồ Sơ</a></li>
-						<li><a href="#">Tạo Thông Báo Việc Làm</a></li>
-						<li><a href="#">Việc Làm Phù Hợp Với Bạn</a></li>
-						<li><a href="#">Phản Hồi Từ Nhà Tuyển Dụng</a></li>
+						<li><a href="{{URL::route('jobseekers.edit-basic-info')}}">Tài Khoản</a></li>
+						<li><a href="{{URL::route('jobseekers.my-resume')}}">Tạo/Đăng Hồ Sơ</a></li>
+						<li><a href="{{URL::route('jobseekers.notification-jobs')}}">Tạo Thông Báo Việc Làm</a></li>
+						<li><a href="{{URL::route('jobseekers.my-job')}}">Việc Làm Phù Hợp Với Bạn</a></li>
+						<li><a href="{{URL::route('jobseekers.respond-from-employment')}}">Phản Hồi Từ Nhà Tuyển Dụng</a></li>
 						<li><a href="#">Talent Community</a></li>
 					</ul>
 				</div>
 				<div class="col-sm-3">
 					<h3>Website đối tác</h3>
 					<ul class="arrow-right-dark">
-						<li><a href="#">Vieclam.Tuoitre.Vn</a></li>
-						<li><a href="#">Affiliate Program</a></li>
-						<li><a href="#">Vieclam.Tuoitre.Vn</a></li>
-						<li><a href="#">Affiliate Program</a></li>
-						<li><a href="#">Vieclam.Tuoitre.Vn</a></li>
-						<li><a href="#">Affiliate Program</a></li>
+						<li><a href="http://vieclam.tuoitre.vn/" target="_blank">Vieclam.Tuoitre.Vn</a></li>
+						<li><a href="#" target="_blank">Affiliate Program</a></li>
+						<li><a href="#" target="_blank">Vieclam.Tuoitre.Vn</a></li>
+						<li><a href="#" target="_blank">Affiliate Program</a></li>
+						<li><a href="http://vieclam.tuoitre.vn/" target="_blank">Vieclam.Tuoitre.Vn</a></li>
+						<li><a href="#" target="_blank">Affiliate Program</a></li>
 					</ul>
 				</div>
 				<div class="col-sm-3">
