@@ -17,15 +17,14 @@ class JobSeeker extends Controller
 			$q->whereHas('job', function ($q1) {
 				$q1->where('is_display', 1)->where('hannop', '>=' , date('Y-m-d'));
 			});
-		})
-		->get();
+		})->with('mtcategory')->get();
 		$categories_alpha = Category::where('parent_id', '!=', 0)->whereHas('mtcategory', function($q) {
 			$q->whereHas('job', function ($q1) {
 				$q1->where('is_display', 1)->where('hannop', '>=' , date('Y-m-d'));
 			});
-		})->orderBy('cat_name', 'ASC')->get();	
+		})->orderBy('cat_name', 'ASC')->with('mtcategory')->get();	
 
-		$categories_hot = Category::where('parent_id', '!=', 0)->whereHas('mtcategory', function($q) {
+		$categories_hot = Category::where('parent_id', '!=', 0)->with('mtcategory')->whereHas('mtcategory', function($q) {
 			$q->whereHas('job', function ($q1) {
 				$q1->where('is_display', 1)->where('hannop', '>=' , date('Y-m-d'));
 			});
