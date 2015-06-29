@@ -88,6 +88,8 @@ Route::group(array('prefix'=>$locale), function() {
 				'getHistoryInfo'		=>	'employers.search.historyinfo',
 				'getResumeInfo'			=>	'employers.search.resumeinfo',
 				'postAjax'				=>	'employers.search.ajax',
+				'getResumeIframe'		=>	'employers.search.resume_viewer',
+				'getPrintCv'			=>	'employers.search.print_cv',
 				
 			));
 		});

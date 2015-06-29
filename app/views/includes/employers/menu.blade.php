@@ -44,6 +44,7 @@
 			<ul>
 				<div class="container">
 				<li class="{{ HTML::active(['employers.account.company'], 'selected') }}"><a href="{{ URL::route('employers.account.index') }}">Cập nhật thông tin</a></li>
+				<li class="{{ HTML::active(['employers.account.userinformation'], 'selected') }}"><a href="{{ URL::route('employers.account.userinformation') }}">Thông tin liên hệ</a></li>
 				<li class="{{ HTML::active(['employers.account.changepass'], 'selected') }}"><a href="{{ URL::route('employers.account.changepass') }}">Đổi mật khẩu</a></li>
 				<li class="{{ HTML::active(['employers.account.changeemail'], 'selected') }}"><a href="{{ URL::route('employers.account.changeemail') }}">Đổi email truy cập</a></li>
 				<li class="{{ HTML::active(['employers.account.tasklog'], 'selected') }}"><a href="{{ URL::route('employers.account.tasklog') }}">Báo cáo tác vụ</a></li>

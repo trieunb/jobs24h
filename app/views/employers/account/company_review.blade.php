@@ -9,7 +9,7 @@
 			<div class="row push-padding-20 company-info">
 				<div class="col-sm-2">
 					@if(file_exists(Config::get('app.upload_path') . 'companies/logos/'.$company->logo))
-					{{ HTML::image('assets/ntd/images/logo_company.png') }}
+					{{ HTML::image('uploads/companies/logos/'.$company->logo) }}
 					@endif
 				</div>
 				<div class="col-sm-10">
@@ -39,7 +39,7 @@
 						<div class="push-padding-20">
 							<ul class="arrow-square-orange">
 								<li>
-								{{ implode('<li></li>', explode(',', $company->chonchungtoi) ) }}
+								{{ nl2br($company->chonchungtoi) }}
 								</li>
 							</ul>
 						</div>
@@ -121,9 +121,13 @@
 						</div>
 						<div class="push-padding-20">
 							<ul>
+							@if(json_decode($company->company_images))
 								@foreach(json_decode($company->company_images) as $image)
+									@if($image)
 									<li class="col-sm-4"><a>{{ HTML::image('uploads/companies/images/'.$image) }}</a></li>
+									@endif
 								@endforeach
+							@endif
 							</ul>
 						</div>
 					</div>

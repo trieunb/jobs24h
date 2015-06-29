@@ -23,4 +23,8 @@ class Application extends \Eloquent {
 	{
 		return $this->belongsTo('Resume', 'cv_id');
 	}
+	public function province()
+	{
+		return $this->belongsTo('Province', 'province_id');
+	}
 }

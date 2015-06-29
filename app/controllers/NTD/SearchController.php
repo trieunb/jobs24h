@@ -1,13 +1,14 @@
 <?php 
 namespace NTD;
-use View, Redirect, NTD, Auth, Job, Validator, Hash, Input, DB, Resume, RSFolder, EFolder, Response, Category;
+use Config, File, View, Redirect, NTD, Auth, Job, Validator, Hash, Input, DB, Resume, RSFolder, EFolder, Response, Category, Mail,Application;
+use VResponse, RespondLetter;
 class SearchController extends \Controller {
 	public function getBasic()
 	{
 		if(Input::get('category'))
 		{
 			$history = array();
-			$resumes = \Resume::orderBy('id', 'desc');
+			$resumes = \Resume::orderBy('id', 'desc')->where('is_public', 1)->where('is_visible', 0);
 			if(Input::get('keyword'))
 			{
 				if(Input::get('full_keyword')) $resumes->where('tieude_cv', Input::get('keyword'));
@@ -53,7 +54,7 @@ class SearchController extends \Controller {
 	{
 		if(Input::get('category'))
 		{
-			$resume = Resume::orderBy('id', 'desc');
+			$resume = Resume::orderBy('id', 'desc')->where('is_public', 1)->where('is_visible', 0);
 			if (Input::get('keyword')) {
 				if(Input::get('full_keyword')) $resume->where('tieude_cv', Input::get('keyword'));
 				else $resume->where('tieude_cv', 'LIKE', "%".Input::get('keyword')."%");
@@ -234,10 +235,61 @@ class SearchController extends \Controller {
 			$resume->views += 1;
 			$resume->timestamps = false;
 			$resume->save();
+			//chỗ này có 3 loại cv up và cv theo bước và cv apply chỉ có file_name
 			if(@$resume->ntv->id) {
-				return View::make('employers.search.resume_info', compact('resume'));
+				if($resume->file_name)
+				{
+					$file = str_replace(['.doc', '.docx'], '.pdf', $resume->file_name);
+					$dir = Config::get('app.upload_path') . 'jobseekers/cv/' . $file;
+					if(File::isFile($dir)) $pdf = true;
+					else $pdf = false;
+					return View::make('employers.search.upload', compact('resume', 'pdf'));
+				} else {
+					return View::make('employers.search.resume_info', compact('resume'));
+				}
 			} else {
-				return View::make('employers.search.resume_info_nologin', compact('resume'));
+				$file = str_replace(['.doc', '.docx'], '.pdf', $resume->file_name);
+				$dir = Config::get('app.upload_path') . 'jobseekers/cv/' . $file;
+				if(File::isFile($dir)) $pdf = true;
+				else $pdf = false;
+				return View::make('employers.search.resume_info_nologin', compact('resume', 'pdf'));
+			}
+		}
+	}
+	public function getResumeIframe()
+	{
+		$file = str_replace(['.doc', '.docx'], '.pdf', Input::get('file'));
+		$file = explode('jobseekers/cv/', $file);
+		$file = $file[1];
+		$ext = explode('.', $file);
+		$fname = $ext[0];
+		$ext = $ext[1];
+		$dir = Config::get('app.upload_path') . 'jobseekers/cv/' . $fname . '.pdf';
+		if(! File::isFile($dir))
+		{
+            return '<button type="button" class="btn btn-default">button</button>';
+        } else {
+        	return View::make('employers.search.iframe', compact('file'));
+        }
+		
+		
+	}
+	public function getPrintCv($cvId = false)
+	{
+		if($cvId)
+		{
+			$resume = Resume::where('id', $cvId)->first();
+			if( ! $resume->file_name)
+			{
+				return View::make('employers.search.print', compact('resume'));
+			} else {
+				$path = Config::get('app.upload_path').'jobseekers/cv/' . $resume->file_name;
+				//return $path;
+				if (\File::isFile($path)) {
+					return Response::download($path, $resume->tieude_cv);
+				} else {
+					return Response::make('File not Found !', 404);
+				}
 			}
 		}
 	}
@@ -259,6 +311,51 @@ class SearchController extends \Controller {
 			$data['folder_id'] = $folder->id;
 			$data['cv_id'] = Input::get('cvid');
 			$rs = RSFolder::firstOrCreate($data);
+			if($rs) return Response::json(['has'=>true]);
+			return Response::json(['has'=>false]);
+		}
+		if(Input::get('action') == 'sendMail')
+		{
+			$data['ntd_id'] = Auth::id();
+			$data['send_email'] = Input::get('send_email');
+			$data['send_subject'] = Input::get('send_subject');
+			$data['send_content'] = Input::get('send_content');
+			$data['cv_id'] = Input::get('cv_id');
+			$resume = Resume::where('id', Input::get('cv_id'))->first();
+			//return View::make('employers.search.mail', array('send_email'=> Input::get('send_email'), 'send_content'=> Input::get('send_content'), 'ntd_email'=>Auth::getUser()->email, 'firstname'=>Input::get('send_email'), 'resume'=> $resume));
+			Mail::send('employers.search.mail', array('send_email'=> Input::get('send_email'), 'send_content'=> Input::get('send_content'), 'ntd_email'=>Auth::getUser()->email, 'firstname'=>Input::get('send_email'), 'resume'=> $resume), function($message){
+		        $message->to(Input::get('send_email'), Input::get('send_email'))->subject('[VNJOBS.VN] ' . Input::get("send_subject"));
+		    });
+			return Response::json(['has'=>true]);
+			return Response::json(['has'=>false]);
+		}
+		if(Input::get('action') == 'saveStatus')
+		{
+			$rs = Application::where('id', Input::get('apid'))
+			->whereHas('job', function($q) {
+				$q->where('ntd_id', Auth::id());
+			})
+			->update(['status'=>Input::get('status', 1)]);
+			if($rs) return Response::json(['has'=>true]);
+			return Response::json(['has'=>false]);
+		}
+		if(Input::get('action') == 'sendLetter')
+		{
+			$letter = RespondLetter::find(Input::get('letter'));
+			$apply = Application::where('id', Input::get('apid'))
+			->whereHas('job', function($q) {
+				$q->where('ntd_id', Auth::id());
+			})
+			->first();
+			$content = str_replace(['[firstname]', '[lastname]', '[contact-name]'], [$apply->ntv->first_name, $apply->ntv->last_name, Auth::getUser()->full_name], $letter->content);
+			$rs = VResponse::create([
+				'ntv_id' => $apply->ntv_id,
+				'ntd_id' => Auth::id(),
+				'title' => $letter->subject,
+				'content' => $content,
+				'submited_date' => date('Y-m-d H:i:s'),
+				'user_submit' => Auth::id(),
+				]);
 			if($rs) return Response::json(['has'=>true]);
 			return Response::json(['has'=>false]);
 		}

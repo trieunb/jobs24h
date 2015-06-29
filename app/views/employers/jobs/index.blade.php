@@ -109,7 +109,7 @@
 											</div>
 											<div class="form-group">
 												<label for="input" class="col-sm-4 control-label">
-													<div class="checkbox pull-right">
+													<div class="checkbox cb-right pull-right">
 														<label>
 															<input type="checkbox" value="">
 															<strong>Ngày đăng</strong>
@@ -137,7 +137,7 @@
 											</div>
 											<div class="form-group">
 												<label for="input" class="col-sm-4 control-label">
-													<div class="checkbox pull-right">
+													<div class="checkbox cb-right pull-right">
 														<label>
 															<input type="checkbox" value="">
 															<strong>Ngày kết thúc</strong>
@@ -185,6 +185,9 @@
 		}
 		.btn-action {
 			padding: 1px 6px;
+		}
+		.cb-right input {
+			margin-left: -20px !important;
 		}
 	</style>
 @stop
