@@ -32,7 +32,7 @@ class JobSeeker extends Controller
 		    return $categories_hot->mtcategory->count();
 		})->reverse();
 
-		$emp_hot = NTD::with('job')->get()->sortBy(function($emp_hot) {
+		$emp_hot = NTD::with('job')->with('ntd')->get()->sortBy(function($emp_hot) {
 		    return $emp_hot->job->count();
 		})->reverse()->take(18);
 
@@ -47,9 +47,9 @@ class JobSeeker extends Controller
 		}))->where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->take(45)->get();
 
 
-		$news = TrainingPost::where('training_cat_id', 9)->take(8)->get();
-		$camnang_ntv = TrainingPost::where('training_cat_id', 10)->take(4)->get();
-		$camnang_ntd = TrainingPost::where('training_cat_id', 11)->take(4)->get();
+		$news = TrainingPost::where('training_cat_id', 9)->with('trainingCat')->take(8)->get();
+		$camnang_ntv = TrainingPost::where('training_cat_id', 10)->with('trainingCat')->take(4)->get();
+		$camnang_ntd = TrainingPost::where('training_cat_id', 11)->with('trainingCat')->take(4)->get();
 		return View::make('jobseekers.home', compact('jobs', 'categories_default', 'categories_alpha', 'categories_hot','emp_hot', 'news','camnang_ntv','camnang_ntd'));
 	}
 
@@ -1030,14 +1030,18 @@ class JobSeeker extends Controller
 	
 	// Lấy danh sách ngành nghề
 	public function getListCategory(){
-		$list_parent = Category::whereHas('mtcategory', function($q) {
+		$list_parent = Category::with('mtcategory')->whereHas('mtcategory', function($q) {
 			$q->whereHas('job', function ($q1) {
 				$q1->where('is_display', 1)->where('hannop', '>=' , date('Y-m-d'));
 			});
 		})->where('parent_id', 0)->orderBy('parent_id', 'ASC')->get();
-		foreach ($list_parent as $key => $value) {
-			$cate = Category::where('parent_id', $value->id)->get();
-			$list_category[$value->cat_name] = $cate;
+		if(count($list_parent)){
+			foreach ($list_parent as $key => $value) {
+				$cate = Category::where('parent_id', $value->id)->get();
+				$list_category[$value->cat_name] = $cate;
+			}
+		}else{
+			$list_parent = null;
 		}
 		return View::make('jobseekers.list-category', compact('list_category'));
 	}
