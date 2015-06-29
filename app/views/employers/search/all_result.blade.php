@@ -43,7 +43,7 @@
 										</div>
 										@endif
 										<div class="js-level">
-											Cấp bậc: <strong>{{ $levs[$resume->capbachientai] }}</strong>
+											Cấp bậc: <strong>{{ @$levs[$resume->capbachientai] }}</strong>
 										</div>
 									</td>
 									<td>

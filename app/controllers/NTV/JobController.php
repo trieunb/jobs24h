@@ -17,7 +17,10 @@ class JobController extends Controller
 			$q->with('province');
 		}))
 		->where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->first();
-		
+		$luotxem = Job::find($job_id);
+		$tangluotxem = $luotxem->luotxem;
+		$luotxem->luotxem = $tangluotxem + 1;
+		$luotxem->save();
 		return View::make('jobseekers.job', compact('slug','job'));
 
 	}
@@ -82,11 +85,15 @@ class JobController extends Controller
 	}
 
 	public function getCategory(){
-		$categories = Category::all();
+		$categories = Category::whereHas('mtcategory', function($q) {
+			$q->whereHas('job', function ($q1) {
+				$q1->where('is_display', 1)->where('hannop', '>=' , date('Y-m-d'));
+			});
+		})->get();
 	
 		if(Input::get('id') != null){
 			$id = Input::get('id');
-			$jobs = Job::where('is_display',1)->where('status',1)->with('category');
+			$jobs = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->with('category');
 			$jobs->whereHas('category', function($query) use($id)  {
 				$query->where('cat_id', $id);
 			});

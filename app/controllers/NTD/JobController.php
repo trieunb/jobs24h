@@ -1,7 +1,7 @@
 <?php 
 namespace NTD;
 use View, Redirect, Input, Job, CVCategory, WorkLocation, Auth, Config, Str, File, Company,RespondAuto, Response;
-use App\DTT\Forms\EmployerAddJob;
+use App\DTT\Forms\EmployerAddJob, RespondLetter;
 class JobController extends \Controller {
 	
 	public function __construct()
@@ -181,6 +181,7 @@ class JobController extends \Controller {
 			$video = $data['video']; unset($data['video']);
 			$data['ntd_id'] = Auth::id();
 			$data['status'] = 1;
+			$data['slug'] = Str::slug(Input::get('vitri'));
 			$data['keyword_tags'] = json_encode($data['keyword_tags']);
 			$data['matin'] = Job::orderBy('matin', 'desc')->first()->matin + 1;
 			if(@$data['show_auto_reply'] && is_numeric($data['letter_auto']))
@@ -381,6 +382,16 @@ class JobController extends \Controller {
 		if(Input::get('action') == 'getLetter')
 		{
 			$letter = RespondAuto::where('ntd_id', Auth::id())->where('id', Input::get('letterId'))->first();
+			if( ! $letter)
+			{
+				return Response::json(['has'=>false, 'message'=>'Không tìm thấy thư']);
+			} else {
+				return Response::json(['has'=>true, 'subject'=>$letter->subject, 'content'=>$letter->content]);
+			}
+		}
+		if(Input::get('action') == 'getRespond')
+		{
+			$letter = RespondLetter::where('ntd_id', Auth::id())->where('id', Input::get('letterId'))->first();
 			if( ! $letter)
 			{
 				return Response::json(['has'=>false, 'message'=>'Không tìm thấy thư']);

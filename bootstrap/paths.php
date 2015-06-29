@@ -1,5 +1,5 @@
 <?php
-
+if( ! defined('PHPWORD_BASE_DIR')) define('PHPWORD_BASE_DIR', realpath(__DIR__));
 return array(
 
 	/*

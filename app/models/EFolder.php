@@ -7,4 +7,8 @@ class EFolder extends \Eloquent {
 	{
 		return $this->hasMany('Application', 'folder_id');
 	}
+	public function rsfolder()
+	{
+		return $this->hasMany('RSFolder', 'folder_id');
+	}
 }

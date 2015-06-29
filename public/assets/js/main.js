@@ -174,10 +174,7 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
 
 
     // POPOVER 
-    $('.share-to-friends').popover({
-        html: true,
-    });
-    $('.feedback-to-emp').popover({
+    $('.share-to-friends, .feedback-to-emp, .add-note').popover({
         html: true,
     });
 

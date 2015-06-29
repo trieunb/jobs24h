@@ -174,6 +174,14 @@
 </div>
 @stop
 
+@section('style')
+	<style type="text/css">
+	.checkbox input[type=checkbox] {
+		margin-left: -20px;	
+	}
+	</style>
+@stop
+
 @section('script')
 	<script type="text/javascript">
 	$('#khongyeucau').click(function(event) {

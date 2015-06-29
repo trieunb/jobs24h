@@ -16,16 +16,28 @@
 								<thead>
 									<tr>
 										<th class="col-sm-4">Công ty</th>
-										<th class="col-sm-2">Lần xem</th>
-										<th class="col-sm-3">Ngày xem mới nhất</th>
-										<th class="col-sm-1">Đã lưu</th>
+										<th class="col-sm-1">Lần xem</th>
+										<th class="col-sm-2">Ngày xem mới nhất</th>
+										<th class="col-sm-2">Đã lưu</th>
 										<th class="col-sm-2">Thao tác</th>
 									</tr>
 								</thead>
 								<tbody>
+									@if(count($view_resume))
+									@foreach($view_resume as $view)
 									<tr>
-										<td colspan="5" class="text-align-center">Nhà tuyển dụng chưa xem hồ sơ của bạn.</td>
+										<td>{{$view->ntd->company->company_name}}</td>
+										<td>{{$view->counter}}</td>
+										<td>{{date('d-m-Y',strtotime($view->updated_at))}}</td>
+										<td>{{date('d-m-Y',strtotime($view->created_at))}}</td>
+										<td></td>
 									</tr>
+									@endforeach
+									@else
+										<tr>
+										<td colspan="5" class="text-align-center">Nhà tuyển dụng chưa xem hồ sơ của bạn.</td>
+										</tr>
+									@endif
 								</tbody>
 							</table>
 				</form>

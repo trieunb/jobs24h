@@ -135,5 +135,8 @@ class Resume extends \Eloquent {
 		return Lang::choice($txt, $delta, compact('delta'));
 	}
 	
-
+	public function application()
+	{
+		return $this->hasMany('Application', 'cv_id');
+	}
 }

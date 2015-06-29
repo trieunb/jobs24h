@@ -13,4 +13,8 @@ class NTD extends \Eloquent implements UserInterface, RemindableInterface {
 	{
 		return $this->hasOne('Company', 'ntd_id');
 	}
+	public function job()
+	{
+		return $this->hasMany('Job', 'ntd_id');
+	}
 }

@@ -41,7 +41,7 @@
 								</nav>
 								<a href="{{URL::route('jobseekers.edit-basic-info')}}" class="text-blue pull-right">
 									@if($user->avatar != null)
-									<img src='/uploads/jobseekers/avatar/{{$user->avatar}}' class="avatar">
+									<img src="{{URL::to("uploads/jobseekers/avatar/".$user->avatar."")}}" class="avatar">
 									@else
 									{{ HTML::image('assets/images/avatar.jpg', null, array("class"=>"avatar")) }}
 									@endif
@@ -57,10 +57,10 @@
 			<nav id="navigation" class="bg-blue">
 				<ul class="main-menu container">
 					<li><a href="{{ URL::route('jobseekers.home') }}">Trang chủ</a></li>
-					<li><a href="#">Cung ứng lao động</a></li>
+					<li><a href="{{ URL::route('cungunglaodong.home') }}">Cung ứng lao động</a></li>
 					<li><a href="{{ URL::route('jobseekers.home') }}">Người tìm việc</a></li>
 					<li><a href="{{ URL::route('employers.launching') }}">Nhà tuyển dụng</a></li>
-					<li><a href="#">Đào tạo</a></li>
+					<li><a href="{{ URL::route('trainings.home') }}">Đào tạo</a></li>
 					<li><ul class="nav navbar-nav navbar-right">
 						<form class="navbar-form navbar-right relative" role="search">
 							<div class="form-group">
@@ -103,23 +103,23 @@
 				<div class="col-sm-3">
 					<h3>Chức năng</h3>
 					<ul class="arrow-right-dark">
-						<li><a href="#">Tài Khoản</a></li>
-						<li><a href="#">Tạo/Đăng Hồ Sơ</a></li>
-						<li><a href="#">Tạo Thông Báo Việc Làm</a></li>
-						<li><a href="#">Việc Làm Phù Hợp Với Bạn</a></li>
-						<li><a href="#">Phản Hồi Từ Nhà Tuyển Dụng</a></li>
+						<li><a href="{{URL::route('jobseekers.edit-basic-info')}}">Tài Khoản</a></li>
+						<li><a href="{{URL::route('jobseekers.my-resume')}}">Tạo/Đăng Hồ Sơ</a></li>
+						<li><a href="{{URL::route('jobseekers.notification-jobs')}}">Tạo Thông Báo Việc Làm</a></li>
+						<li><a href="{{URL::route('jobseekers.my-job')}}">Việc Làm Phù Hợp Với Bạn</a></li>
+						<li><a href="{{URL::route('jobseekers.respond-from-employment')}}">Phản Hồi Từ Nhà Tuyển Dụng</a></li>
 						<li><a href="#">Talent Community</a></li>
 					</ul>
 				</div>
 				<div class="col-sm-3">
 					<h3>Website đối tác</h3>
 					<ul class="arrow-right-dark">
-						<li><a href="#">Vieclam.Tuoitre.Vn</a></li>
-						<li><a href="#">Affiliate Program</a></li>
-						<li><a href="#">Vieclam.Tuoitre.Vn</a></li>
-						<li><a href="#">Affiliate Program</a></li>
-						<li><a href="#">Vieclam.Tuoitre.Vn</a></li>
-						<li><a href="#">Affiliate Program</a></li>
+						<li><a href="http://vieclam.tuoitre.vn/" target="_blank">Vieclam.Tuoitre.Vn</a></li>
+						<li><a href="#" target="_blank">Affiliate Program</a></li>
+						<li><a href="#" target="_blank">Vieclam.Tuoitre.Vn</a></li>
+						<li><a href="#" target="_blank">Affiliate Program</a></li>
+						<li><a href="http://vieclam.tuoitre.vn/" target="_blank">Vieclam.Tuoitre.Vn</a></li>
+						<li><a href="#" target="_blank">Affiliate Program</a></li>
 					</ul>
 				</div>
 				<div class="col-sm-3">

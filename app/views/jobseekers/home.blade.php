@@ -121,17 +121,23 @@
 						</div>
 					</div>
 				</section>
+				@if(count($emp_hot))
 				<section class="top-employer clearfix padding bg-silver-dark">
 					<div class="header-page">
 						<h2>Nhà tuyển dụng hàng đầu</h2>
 					</div>
 					<ul>
-						@foreach(range(1, 18) as $index)
-							<li class="col-sm-2">{{ HTML::image('assets/images/brand0'.rand(1,3).'.png') }}</li>
+						@foreach($emp_hot as $val)
+							@if(@$val->company->logo != null)
+								<li class="col-sm-2"><img src="{{URL::to("uploads/companies/logos/".$val->company->logo."")}}"></li>
+							@else
+								<li class="col-sm-2">{{ HTML::image('assets/images/default_logo.png') }}</li>
+							@endif
 						@endforeach
-						
 					</ul>
 				</section>
+				@endif
+				@if(count($news))
 				<section class="news clearfix">
 					<div class="header-page">
 						<h2>Tin tức mới nhất</h2>
@@ -139,96 +145,62 @@
 					<div class="jcarousel-wrapper" id="news">
 	                	<div class="jcarousel">
 							<ul>
+								@foreach($news as $new)
 								<li>
 									<div class="thumbs">
-										{{ HTML::image('assets/images/demo.png') }}
+										@if($new->thumbnail != null)
+										<img src="{{URL::to("uploads/news/".$new->thumbnail."")}}">
+										@else
+										<img src="/images/photo_default.png">
+										@endif
 									</div>
 									<div class="meta">
-										<span class="date">03.FEB.2015</span>
+										<span class="date">{{date('d M, Y', strtotime($new->updated_at))}}</span>
 									</div>
 									<article>
-										<h3><a href="#">4 điều bạn học được từ nghề Sales</a></h3>
-										<p>Mọi ngành nghề, mọi công việc đều dạy cho chúng ta những điều khác nhau. Người làm kế toán rất nhạy bén với những con số. Người làm marketing có</p>
-										<a href="#" class="read-more">Chi tiết</a>
-									</article>
-								</li>
-								<li>
-									<div class="thumbs">
-										{{ HTML::image('assets/images/demo.png') }}
-									</div>
-									<div class="meta">
-										<span class="date">03.FEB.2015</span>
-									</div>
-									<article>
-										<h3><a href="#">4 điều bạn học được từ nghề Sales</a></h3>
-										<p>Mọi ngành nghề, mọi công việc đều dạy cho chúng ta những điều khác nhau. Người làm kế toán rất nhạy bén với những con số. Người làm marketing có</p>
-										<a href="#" class="read-more">Chi tiết</a>
-									</article>
-								</li>
-								<li>
-									<div class="thumbs">
-										{{ HTML::image('assets/images/demo.png') }}
-									</div>
-									<div class="meta">
-										<span class="date">03.FEB.2015</span>
-									</div>
-									<article>
-										<h3><a href="#">4 điều bạn học được từ nghề Sales</a></h3>
-										<p>Mọi ngành nghề, mọi công việc đều dạy cho chúng ta những điều khác nhau. Người làm kế toán rất nhạy bén với những con số. Người làm marketing có</p>
-										<a href="#" class="read-more">Chi tiết</a>
-									</article>
-								</li>
-								<li>
-									<div class="thumbs">
-										{{ HTML::image('assets/images/demo.png') }}
-									</div>
-									<div class="meta">
-										<span class="date">03.FEB.2015</span>
-									</div>
-									<article>
-										<h3><a href="#">4 điều bạn học được từ nghề Sales</a></h3>
-										<p>Mọi ngành nghề, mọi công việc đều dạy cho chúng ta những điều khác nhau. Người làm kế toán rất nhạy bén với những con số. Người làm marketing có</p>
-										<a href="#" class="read-more">Chi tiết</a>
-									</article>
-								</li>
-								<li>
-									<div class="thumbs">
-										{{ HTML::image('assets/images/demo.png') }}
-									</div>
-									<div class="meta">
-										<span class="date">03.FEB.2015</span>
-									</div>
-									<article>
-										<h3><a href="#">4 điều bạn học được từ nghề Sales</a></h3>
-										<p>Mọi ngành nghề, mọi công việc đều dạy cho chúng ta những điều khác nhau. Người làm kế toán rất nhạy bén với những con số. Người làm marketing có</p>
-										<a href="#" class="read-more">Chi tiết</a>
-									</article>
-								</li>
+										<h3><a href="{{URL::route('news.view', array($new->id))}}">{{$new->title}}</a></h3>
+										<?php
+										// strip tags to avoid breaking any html
+										$string = $new->content;
+										$string = strip_tags($string);
 
+										if (strlen($string) > 200) {
+
+										    // truncate string
+										    $stringCut = substr($string, 0, 200);
+
+										    // make sure it ends in a word so assassinate doesn't become ass...
+										    $string = substr($stringCut, 0, strrpos($stringCut, ' ')); 
+										}
+										echo "<p>$string</p>";
+										?>
+										<a href="{{URL::route('news.view', array($new->id))}}" class="read-more">Chi tiết</a>
+									</article>
+								</li>
+								@endforeach
 							</ul>
 						</div>
 						<a href="#" class="jcarousel-control-prev">&lsaquo;</a>
 	                	<a href="#" class="jcarousel-control-next">&rsaquo;</a>
 						</div>
 				</section>
+				@endif
 				<div class="padding bg-silver-dark push-bottom-30">
 				<section class="bottom container">
 					<div class="col-sm-4">
 						<h2 class="text-orange">Cẩm nang Người tìm việc</h2>
 						<ul class="arrow-square-blue">
-							<li><a href="#">Nếu bạn quản lý công việc tốt và nhận thấy</a></li>
-							<li><a href="#">Tiến xa hơn trong nghề nghiệp một cách</a></li>
-							<li><a href="#">Thông tin phong phú & chính xác nhất</a></li>
-							<li><a href="#">Dịch vụ khách hàng chu đáo 24/7</a></li>
+						@foreach($camnang_ntv as $val)
+							<li><a href="{{URL::route('news.view', array($val->id) )}}">{{$val->title}}</a></li>
+						@endforeach
 						</ul>
 					</div>
 					<div class="col-sm-4">
 						<h2 class="text-orange">Cẩm nang Nhà Tuyển Dụng</h2>
 						<ul class="arrow-square-blue">
-							<li><a href="#">Nếu bạn quản lý công việc tốt và nhận thấy</a></li>
-							<li><a href="#">Tiến xa hơn trong nghề nghiệp một cách</a></li>
-							<li><a href="#">Thông tin phong phú & chính xác nhất</a></li>
-							<li><a href="#">Dịch vụ khách hàng chu đáo 24/7</a></li>
+							@foreach($camnang_ntd as $val)
+								<li><a href="{{URL::route('news.view', array($val->id) )}}">{{$val->title}}</a></li>
+							@endforeach
 						</ul>
 					</div>
 					<div class="col-sm-4 last">
@@ -238,4 +210,12 @@
 				</section>
 				</div>
 		</div>
+@stop
+@section('scripts')
+@parent
+<script type="text/javascript">
+	$(function() {
+		$('body').addClass('home');
+	});
+</script>
 @stop

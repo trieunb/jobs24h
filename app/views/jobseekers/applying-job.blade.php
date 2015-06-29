@@ -101,7 +101,7 @@
 									</label>
 								</div>
 								<div class="clearfix"></div>
-								<span class="small">Formats: MS Word, PDF, Image, Rar, Zip (2MB maximum)</span>
+								<span class="small">Formats: MS Word, PDF, Image (2MB maximum)</span>
 								<span class="error-message">{{$errors->first('file_name')}}</span>
 						</div>
 					</div>
