@@ -13,18 +13,44 @@ class TrainController extends \BaseController {
 	// bảng training
 	public function getIndex()
 	{
-		$data=Training::join('training_people as tp','tp.id','=','training.teacher_id')->select(array('training.*','tp.name as name_teacher'))->get();
 
+		$data=Training::get();
+		/*
+		$data=Training::join('training_people', function($join)
+				        {
+				            $join->on('training.id', '=', 'training_people.training_id')
+				                 ->where('training_people.training_roll_id', '=', 1);
+				        })
+				        ->get();
+		//$giangvien=TrainingPeople::where('training_roll_id','=',1)->lists('name','id');
+		*/
 		 return View::make('admin.training.index')->with('data',$data);
 	}
 
 	public function getEditCouser($id) // chỉnh sửa các khóa học
 	{
 		//return $id;
-		$data=Training::where('training.id','=',$id)->join('training_people as tp','tp.id','=','training.teacher_id')->select(array('training.*','tp.name as name_teacher','tp.id as teacher_id'))->get();
-		$teacher=TrainingPeople::where('training_roll_id','=',1)->lists('name','id');
 
+		$training=Training::find($id);
+		 $couser=$training->trainingpeoples;
 
+		 foreach ($couser as  $value) {
+
+		  	$data['id']= $value->training->id;
+		 	$data['content']= $value->training->content;
+		 	$data['title']= $value->training->title;
+		 	$data['date_open']= $value->training->date_open;
+		 	$data['shift']= $value->training->shift;
+		 	$data['time_hour']= $value->training->time_hour;
+		 	$data['date_study']= $value->training->date_study;
+		 	$data['time_day']= $value->training->time_day;
+		 	$data['fee']= $value->training->fee;
+		 	$data['discount']= $value->training->discount;
+		 	$data['content']= $value->training->content;
+		 	$data['name']= $value->trainingpeople->name;
+		 }
+
+		 $teacher=TrainingPeople::lists('name','id');
 
 		return View::make('admin.training.editcouser')->with(array('data'=>$data,'teacher'=>$teacher));
 	}
@@ -34,7 +60,8 @@ class TrainController extends \BaseController {
 	{
 
 		 
-		$data=Input::only('title','time_day','fee','date_open','shift','date_study','time_hour','editor1','discount','teacher_id');
+		$data=Input::only('title','time_day','fee','date_open','shift','date_study','time_hour','editor1','discount');
+		$teacher=Input::get('teacher');
 
 
 		$insert_data=Training::find($id);
@@ -47,8 +74,21 @@ class TrainController extends \BaseController {
 		$insert_data->time_hour=$data['time_hour'];
 		$insert_data->content=$data['editor1'];
 		$insert_data->discount=$data['discount'];
-		$insert_data->teacher_id=$data['teacher_id'];
 		$insert_data->save();
+
+		$delete_data=TrainingTrainingPeople::where('training_id','=',$insert_data->id)->delete();
+		 
+		foreach ($teacher as  $value) {
+
+			 $insert_teacher=TrainingTrainingPeople::create(
+			 	array(
+			 		'training_people_id'=>$value,
+			 		'training_id'=>$insert_data->id,
+			 		));
+
+		}
+		//chuwa xong
+
 		if($insert_data)
 			return Redirect::back()->with('success','Đã lưu thành công');
 		else
@@ -67,9 +107,10 @@ class TrainController extends \BaseController {
 	public function postAddCouser() 
 	{
 
-		 
-		$data=Input::only('title','time_day','fee','date_open','shift','date_study','time_hour','editor1','discount','teacher_id');
 
+		$data=Input::only('title','time_day','fee','date_open','shift','date_study','time_hour','editor1','discount');
+		$teacher=Input::get('teacher');
+		 
 		$insert_data=Training::create(
 			array(
 				'title'		=>	$data['title'],
@@ -81,9 +122,20 @@ class TrainController extends \BaseController {
 				'time_hour'	=>	$data['time_hour'],
 				'content'	=>	$data['editor1'],
 				'discount'	=>	$data['discount'],
-				'teacher_id'=>	$data['teacher_id']
+
 				)
 			);
+//
+		
+
+		foreach ($teacher as  $value) {
+			 $inser_many=TrainingTrainingPeople::create(
+			 	array(
+			 	'training_people_id'	=>	$value,
+			 	'training_id'=>  $insert_data->id,
+			 	));
+		}
+
 		
 		if($insert_data)
 			return Redirect::back()->with('success','Đã lưu thành công');
@@ -98,6 +150,9 @@ class TrainController extends \BaseController {
 		if(isset($id))
 		{
 			$training=Training::find($id);
+			
+			$delete_data=TrainingTrainingPeople::where('training_id','=',$training->id)
+			->delete();
 			$training->delete();
 			return Redirect::back()->with('success','Đã xóa chương trình đào tạo');
 		}
@@ -255,27 +310,33 @@ class TrainController extends \BaseController {
 	{
 		// id =1 là giảng viên, 2 là học viên mới, 3 là  học viên cũ, 4 la học viên tiêu biểu 
 			if($id==2)
+			{
+				$data=TrainingPeople::where('training_roll_id','=',$id)
+				->join('training as tr','tr.id','=','training_people.training_id')
+				->select('training_people.*','tr.title as name_datao')
+				->get();
 				$check=2; //biến kiểm tra là học viên mới 	
-			else $check=1;
-		$data=TrainingPeople::where('training_roll_id','=',$id)
-		->join('training_roll as tr','tr.id','=','training_people.training_roll_id')
-		->join('training as t','t.id','=','training_people.training_id')
-		->select('training_people.*','tr.name as roll','t.title as name_datao')
-		->get();
-		
-		 
-	
+			}
 
+			else{ $check=1;
+			$data=TrainingPeople::where('training_roll_id','=',$id)->get();
+				 
+		 }
 		return View::make('admin.training.people')->with(array('data'=>$data,'check'=>$check));
 	}
 
 	public function getEditPeople($id)
 	{
 
-		$data=TrainingPeople::where('training_people.id','=',$id)->join('training_roll as tr','tr.id','=','training_people.training_roll_id')->join('training as t','t.id','=','training_people.training_id')->select('training_people.*','tr.name as roll','tr.id as roll_id','t.title as name_datao','t.id as id_daotao')->get();
+
+		$data=TrainingPeople::where('training_people.id','=',$id)
+		->join('training_roll as tr','tr.id','=','training_people.training_roll_id')
+		->join('training as t','t.id','=','training_people.training_id')
+		->select('training_people.*','tr.name as roll','tr.id as roll_id','t.title as name_datao','t.id as id_daotao')
+		->get();
 		$people=TrainingRoll::lists('name','id');
-		$training=Training::lists('title','id');
-		return View::make('admin.training.editpeople')->with(array('data'=>$data,'people'=>$people,'training'=>$training));
+		 
+		return View::make('admin.training.editpeople')->with(array('data'=>$data,'people'=>$people));
 
 	}	
 	
@@ -326,7 +387,7 @@ class TrainController extends \BaseController {
 		$insert_data->thumbnail=$path_logo;
 		$insert_data->linkedin=$data['linkedin'];
 		$insert_data->training_roll_id=$data['training_roll_id'];
-		$insert_data->training_id=$data['training_id'];
+		 
 		 
 
 
@@ -342,6 +403,7 @@ class TrainController extends \BaseController {
 		if (isset($id)) {
 			$delete_data=TrainingPeople::find($id);
 
+			$del=TrainingTrainingPeople::where('training_people_id','=',$delete_data->id);
 			//kiểm tra có ảnh đại diện hay hok, nếu có thì xóa
 			if ($delete_data['thumbnail']!=URL::to('uploads/training/avatar.jpg')) {
 				
@@ -413,7 +475,6 @@ class TrainController extends \BaseController {
 				'linkedin'=>$data['linkedin'],
 				'skype'=>$data['skype'],
 				'training_roll_id'=>$data['roll_id'],
-				'training_id'=>$data['training_id'],
 				'thumbnail'=>$path_logo
 
 
@@ -657,7 +718,14 @@ class TrainController extends \BaseController {
 	{
 		$data=Input::get();
 		$table_string='TrainingPeople';
+		foreach ($data['check'] as $value) {
+					$delete_data=$table_string::find($value);
+					$del=TrainingTrainingPeople::where('training_people_id','=',$delete_data->id)->delete();
+		}
 		$delete=$this->delete_all($data,$table_string);
+
+		
+
 		 if ($delete) 
 			return Response::json(array( 'success' => true ));
 		else
@@ -670,6 +738,10 @@ class TrainController extends \BaseController {
 	{
 		$data=Input::get();
 		$table_string='Training';
+		foreach ($data['check'] as  $value) {
+					$delete_data=$table_string::find($value);
+					$del=TrainingTrainingPeople::where('training_id','=',$delete_data->id)->delete();
+		}
 		$delete=$this->delete_all($data,$table_string);
 		if ($delete) 
 			return Response::json(array( 'success' => true ));
@@ -681,9 +753,12 @@ class TrainController extends \BaseController {
 
 	private function delete_all($data,$string)
 	{
+
 		foreach ($data['check'] as  $value) {
 
 					$delete_data=$string::find($value);
+
+
 					$del=$delete_data->delete();
 
 					}
@@ -692,9 +767,14 @@ class TrainController extends \BaseController {
 					return true;
 			 	else
 			 		return false;
-			
-			
 	}
 
+
+
+
+
+
+
+	 
 
 }

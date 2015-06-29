@@ -56,9 +56,9 @@
 		</div>
 
 		<div class="form-group">
-			<label for="input" class="col-sm-2 control-label">Quá trình làm việc:</label>
+			<label for="input" class="col-sm-2 control-label">Quá trình làm việc hoặc học tập:</label>
 			<div class="col-sm-6">
-				{{ Form::textarea('worked',null, array('class'=>'form-control','placeholder'=>'Quá trình làm việc của giảng viên, chỉ dành cho giảng viên') ) }}
+				{{ Form::textarea('worked',null, array('class'=>'form-control','placeholder'=>'Quá trình làm việc đối với giảng viên, Sinh viên thì khóa học đã trải qua') ) }}
 			</div>
 		</div>
 
@@ -118,12 +118,7 @@
 			</div>
 		</div>
 
-		<div class="form-group">
-			<label for="input" class="col-sm-2 control-label">Khóa:</label>
-			<div class="col-sm-6">
-				{{ Form::select('training_id',$training_id)}}
-			</div>
-		</div>
+		 
 		 
 		<div class="form-group">
 			<div class="col-sm-10 col-sm-offset-2">

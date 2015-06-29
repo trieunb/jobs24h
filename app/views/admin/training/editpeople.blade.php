@@ -128,14 +128,7 @@
 			 
 		</div>
 
-		<div class="form-group">
-			<label for="inputTitle" class="col-sm-2 control-label">Đối tượng:</label>
-			<div class="col-sm-6">
-				{{ Form::select('training_id',$training, $value['id_daotao']
-					 ) }}
-			</div>
-			 
-		</div>
+		 
 
 		@endforeach
 		<div class="form-group">
