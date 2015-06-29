@@ -128,8 +128,8 @@
 					</div>
 					<ul>
 						@foreach($emp_hot as $key => $val)
-							@if($val->company->logo != null)
-								<li class="col-sm-2"><img src="/uploads/companies/images/{{$val->company->logo}}"></li>
+							@if(@$val->company->logo != null)
+								<li class="col-sm-2"><img src="{{URL::to("uploads/companies/images/".$val->company->logo."")}}"></li>
 							@else
 								<li class="col-sm-2">{{ HTML::image('assets/images/default_logo.png') }}</li>
 							@endif
@@ -149,7 +149,7 @@
 								<li>
 									<div class="thumbs">
 										@if($new->thumbnail != null)
-										<img src="/uploads/news/{{$new->thumbnail}}">
+										<img src="{{URL::to("uploads/news/".$new->thumbnail."")}}">
 										@else
 										<img src="/images/photo_default.png">
 										@endif

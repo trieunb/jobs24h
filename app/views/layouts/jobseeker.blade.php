@@ -41,7 +41,7 @@
 								</nav>
 								<a href="{{URL::route('jobseekers.edit-basic-info')}}" class="text-blue pull-right">
 									@if($user->avatar != null)
-									<img src='/uploads/jobseekers/avatar/{{$user->avatar}}' class="avatar">
+									<img src="{{URL::to("uploads/jobseekers/avatar/".$user->avatar."")}}" class="avatar">
 									@else
 									{{ HTML::image('assets/images/avatar.jpg', null, array("class"=>"avatar")) }}
 									@endif

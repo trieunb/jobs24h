@@ -4,7 +4,7 @@
 		@foreach($jobs_for_widget as $job)
 		<li>
 			<div class="col-sm-3">
-				<a href="{{URL::route('jobseekers.job', array($job->slug, $job->id))}}">{{HTML::image('../uploads/companies/images/'.$job->ntd->company->logo.'')}}</a>
+				<a href="{{URL::route('jobseekers.job', array($job->slug, $job->id))}}">{{HTML::image('/uploads/companies/images/'.$job->ntd->company->logo.'')}}</a>
 			</div>
 			<div class="col-sm-9">
 				<a href="{{URL::route('jobseekers.job', array($job->slug, $job->id))}}"><strong>{{$job->vitri}}</strong></a>

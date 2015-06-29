@@ -17,7 +17,10 @@ class JobController extends Controller
 			$q->with('province');
 		}))
 		->where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->first();
-		
+		$luotxem = Job::find($job_id);
+		$tangluotxem = $luotxem->luotxem;
+		$luotxem->luotxem = $tangluotxem + 1;
+		$luotxem->save();
 		return View::make('jobseekers.job', compact('slug','job'));
 
 	}

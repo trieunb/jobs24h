@@ -51,7 +51,7 @@
 		                        </button>
 		                    </div>
 		                    <div class="col-sm-6 col-sm-pull-6 push-top-md">
-		                    	<a href="#"><strong class="text-white">Ngành nghề hấp dẫn <i class="glyphicon glyphicon-arrow-right"></i></strong></a>
+		                    	<a href="{{URL::route('jobseekers.get-list-category')}}"><strong class="text-white">Ngành nghề hấp dẫn <i class="glyphicon glyphicon-arrow-right"></i></strong></a>
 		                	</div>
 		                </div>
 					{{Form::close()}}
