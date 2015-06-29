@@ -181,6 +181,7 @@ class JobController extends \Controller {
 			$video = $data['video']; unset($data['video']);
 			$data['ntd_id'] = Auth::id();
 			$data['status'] = 1;
+			$data['slug'] = Str::slug(Input::get('vitri'));
 			$data['keyword_tags'] = json_encode($data['keyword_tags']);
 			$data['matin'] = Job::orderBy('matin', 'desc')->first()->matin + 1;
 			if(@$data['show_auto_reply'] && is_numeric($data['letter_auto']))

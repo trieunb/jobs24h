@@ -27,3 +27,4 @@ Route::get('/' .$locale, function() use($locale)
 	}
 	die();
 });
+
