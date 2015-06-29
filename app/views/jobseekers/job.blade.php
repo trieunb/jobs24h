@@ -121,7 +121,7 @@
 	                	<div class="jcarousel">
 							<ul>
 							@foreach(json_decode($job->ntd->company->company_images) as $img)
-								<li>{{HTML::image('/uploads/companies/images/'.$img.'')}}</li>
+								<li>{{HTML::image('/uploads/companies/logos/'.$img.'')}}</li>
 							@endforeach
 							</ul>
 						</div>

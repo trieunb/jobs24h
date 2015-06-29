@@ -29,7 +29,7 @@ class JobSeeker extends Controller
 		}))
 		->with(array('province'=>function($q) {
 			$q->with('province');
-		}))->take(45)->get();
+		}))->where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->take(45)->get();
 
 
 		$news = TrainingPost::where('training_cat_id', 9)->take(8)->get();

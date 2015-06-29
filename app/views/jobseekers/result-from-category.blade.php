@@ -37,7 +37,7 @@
 					@foreach($jobs as $job)
 						<li>
 							<div class="col-sm-2">
-								<a href="#">{{HTML::image('/uploads/companies/images/'.$job->ntd->company->logo.'')}}</a>
+								<a href="#">{{HTML::image('/uploads/companies/logos/'.$job->ntd->company->logo.'')}}</a>
 								
 							</div>
 							<div class="col-sm-5">

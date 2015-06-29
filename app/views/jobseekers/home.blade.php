@@ -127,9 +127,9 @@
 						<h2>Nhà tuyển dụng hàng đầu</h2>
 					</div>
 					<ul>
-						@foreach($emp_hot as $key => $val)
+						@foreach($emp_hot as $val)
 							@if(@$val->company->logo != null)
-								<li class="col-sm-2"><img src="{{URL::to("uploads/companies/images/".$val->company->logo."")}}"></li>
+								<li class="col-sm-2"><img src="{{URL::to("uploads/companies/logos/".$val->company->logo."")}}"></li>
 							@else
 								<li class="col-sm-2">{{ HTML::image('assets/images/default_logo.png') }}</li>
 							@endif
@@ -210,4 +210,13 @@
 				</section>
 				</div>
 		</div>
+@stop
+@setions('scripts')
+@parent
+<script type="text/javascript">
+	$(function() {
+		$('body').addClass('home');
+	});
+
+</script>
 @stop
