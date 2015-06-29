@@ -128,17 +128,16 @@
 					</div>
 					<ul>
 						@foreach($emp_hot as $key => $val)
-							@if($key < 18)
-								@if($val->company->logo != null)
+							@if($val->company->logo != null)
 								<li class="col-sm-2"><img src="/uploads/companies/images/{{$val->company->logo}}"></li>
-								@else
+							@else
 								<li class="col-sm-2">{{ HTML::image('assets/images/default_logo.png') }}</li>
-								@endif
 							@endif
 						@endforeach
 					</ul>
 				</section>
 				@endif
+				@if(count($news))
 				<section class="news clearfix">
 					<div class="header-page">
 						<h2>Tin tức mới nhất</h2>
@@ -146,78 +145,42 @@
 					<div class="jcarousel-wrapper" id="news">
 	                	<div class="jcarousel">
 							<ul>
+								@foreach($news as $new)
 								<li>
 									<div class="thumbs">
-										{{ HTML::image('assets/images/demo.png') }}
+										<img src="/uploads/news/{{$new->thumbnail}}">
 									</div>
 									<div class="meta">
-										<span class="date">03.FEB.2015</span>
+										<span class="date">{{date('d M, Y', strtotime($new->updated_at))}}</span>
 									</div>
 									<article>
-										<h3><a href="#">4 điều bạn học được từ nghề Sales</a></h3>
-										<p>Mọi ngành nghề, mọi công việc đều dạy cho chúng ta những điều khác nhau. Người làm kế toán rất nhạy bén với những con số. Người làm marketing có</p>
-										<a href="#" class="read-more">Chi tiết</a>
-									</article>
-								</li>
-								<li>
-									<div class="thumbs">
-										{{ HTML::image('assets/images/demo.png') }}
-									</div>
-									<div class="meta">
-										<span class="date">03.FEB.2015</span>
-									</div>
-									<article>
-										<h3><a href="#">4 điều bạn học được từ nghề Sales</a></h3>
-										<p>Mọi ngành nghề, mọi công việc đều dạy cho chúng ta những điều khác nhau. Người làm kế toán rất nhạy bén với những con số. Người làm marketing có</p>
-										<a href="#" class="read-more">Chi tiết</a>
-									</article>
-								</li>
-								<li>
-									<div class="thumbs">
-										{{ HTML::image('assets/images/demo.png') }}
-									</div>
-									<div class="meta">
-										<span class="date">03.FEB.2015</span>
-									</div>
-									<article>
-										<h3><a href="#">4 điều bạn học được từ nghề Sales</a></h3>
-										<p>Mọi ngành nghề, mọi công việc đều dạy cho chúng ta những điều khác nhau. Người làm kế toán rất nhạy bén với những con số. Người làm marketing có</p>
-										<a href="#" class="read-more">Chi tiết</a>
-									</article>
-								</li>
-								<li>
-									<div class="thumbs">
-										{{ HTML::image('assets/images/demo.png') }}
-									</div>
-									<div class="meta">
-										<span class="date">03.FEB.2015</span>
-									</div>
-									<article>
-										<h3><a href="#">4 điều bạn học được từ nghề Sales</a></h3>
-										<p>Mọi ngành nghề, mọi công việc đều dạy cho chúng ta những điều khác nhau. Người làm kế toán rất nhạy bén với những con số. Người làm marketing có</p>
-										<a href="#" class="read-more">Chi tiết</a>
-									</article>
-								</li>
-								<li>
-									<div class="thumbs">
-										{{ HTML::image('assets/images/demo.png') }}
-									</div>
-									<div class="meta">
-										<span class="date">03.FEB.2015</span>
-									</div>
-									<article>
-										<h3><a href="#">4 điều bạn học được từ nghề Sales</a></h3>
-										<p>Mọi ngành nghề, mọi công việc đều dạy cho chúng ta những điều khác nhau. Người làm kế toán rất nhạy bén với những con số. Người làm marketing có</p>
-										<a href="#" class="read-more">Chi tiết</a>
-									</article>
-								</li>
+										<h3><a href="#">{{$new->title}}</a></h3>
+										<?php
+										// strip tags to avoid breaking any html
+										$string = $new->content;
+										$string = strip_tags($string);
 
+										if (strlen($string) > 200) {
+
+										    // truncate string
+										    $stringCut = substr($string, 0, 200);
+
+										    // make sure it ends in a word so assassinate doesn't become ass...
+										    $string = substr($stringCut, 0, strrpos($stringCut, ' ')); 
+										}
+										echo "<p>$string</p>";
+										?>
+										<a href="#" class="read-more">Chi tiết</a>
+									</article>
+								</li>
+								@endforeach
 							</ul>
 						</div>
 						<a href="#" class="jcarousel-control-prev">&lsaquo;</a>
 	                	<a href="#" class="jcarousel-control-next">&rsaquo;</a>
 						</div>
 				</section>
+				@endif
 				<div class="padding bg-silver-dark push-bottom-30">
 				<section class="bottom container">
 					<div class="col-sm-4">

@@ -19,7 +19,7 @@ class JobSeeker extends Controller
 		})->reverse();
 		$emp_hot = NTD::with('job')->get()->sortBy(function($emp_hot) {
 		    return $emp_hot->job->count();
-		})->reverse();
+		})->reverse()->take(18);
 
 		$jobs = Job::with(array('ntd'=>function($q) {
 			$q->with('company');
@@ -31,7 +31,9 @@ class JobSeeker extends Controller
 			$q->with('province');
 		}))->take(45)->get();
 
-		return View::make('jobseekers.home', compact('jobs', 'categories_default', 'categories_alpha', 'categories_hot','emp_hot'));
+
+		$news = TrainingPost::where('training_cat_id', 9)->take(8)->get();
+		return View::make('jobseekers.home', compact('jobs', 'categories_default', 'categories_alpha', 'categories_hot','emp_hot', 'news'));
 	}
 
 	public function editBasicHome(){

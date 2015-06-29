@@ -418,7 +418,35 @@
 						</ul>
 					</li><!--end- cungunglaodong-->
 
+					<!--start training-->
+					<li class="{{ HTML::active(['news.index*','news.index*']) }}">
+						<a href="#" class="dropdown-toggle">
+							<i class="menu-icon fa fa-newspaper-o"></i>
+							<span class="menu-text"> Tin tức </span>
 
+							<b class="arrow fa fa-angle-down"></b>
+						</a>
+
+						<b class="arrow"></b>
+
+						<ul class="submenu">
+							<li class="{{ HTML::active(['news.index*']) }}">
+								<a href="{{ URL::route('news.index') }}">
+									<i class="menu-icon fa fa-bars"></i>
+									Quản lý
+								</a>
+								<b class="arrow"></b>
+							</li>
+							<li class="{{ HTML::active(['news.add*']) }}">
+								<a href="{{ URL::route('news.add') }}">
+									<i class="menu-icon fa fa-plus-square"></i>
+									Thêm mới
+								</a>
+								<b class="arrow"></b>
+							</li>
+						</ul>
+					</li>
+					<!--end- traning-->
 
 
 				</ul><!-- /.nav-list -->

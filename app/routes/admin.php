@@ -23,8 +23,17 @@ Route::group(array('prefix'=>'admin'), function() {
 		
 		Route::resource('resumes', 'ResumeController');
 
+		// ROUTE TIN TỨC
+		Route::controller('news', 'NewsController', array(
+			'getIndex' 	=> 	'news.index',
+			'getAdd'	=>	'news.add',
+			'postAdd'	=>	'news.post-add',
+			'getEdit'	=>	'news.edit',
+			'postEdit'	=>	'news.post-edit',
+			'getDelete'	=>	'news.delete',
+			'postDelete'	=>	'news.post-delete',
+		));
 
-		 
 
 		Route::controller('training','TrainController');
 		Route::controller('cungunglaodong','CungunglaodongController');
