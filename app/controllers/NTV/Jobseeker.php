@@ -32,7 +32,7 @@ class JobSeeker extends Controller
 		    return $categories_hot->mtcategory->count();
 		})->reverse();
 
-		$emp_hot = NTD::with('job')->with('ntd')->get()->sortBy(function($emp_hot) {
+		$emp_hot = NTD::with('job')->get()->sortBy(function($emp_hot) {
 		    return $emp_hot->job->count();
 		})->reverse()->take(18);
 
