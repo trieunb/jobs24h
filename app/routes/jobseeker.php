@@ -10,7 +10,7 @@ Route::group(array('prefix'=>$locale), function() {
 					$categories[] = json_decode($value->categories);
 					$provinces[] = json_decode($value->provinces);
 				}
-				$jobs = Job::where('is_display',1)->where('status',1)->with('province')->with('category');
+				$jobs = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->with('province')->with('category');
 
 				if(count($keyword) > 0){
 					foreach($keyword as $kw){
@@ -43,17 +43,21 @@ Route::group(array('prefix'=>$locale), function() {
 				}
 				$jobs_for_widget = $jobs->orderBy('updated_at', 'ASC')->take(3)->get();
 				if(count($jobs_for_widget) == 0){
-					$jobs_for_widget = Job::where('is_display',1)->where('status',1)->orderBy('updated_at', 'ASC')->take(3)->get();	
+					$jobs_for_widget = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->orderBy('updated_at', 'ASC')->take(3)->get();	
 				}
 			}else{
-				$jobs_for_widget = Job::where('is_display',1)->where('status',1)->orderBy('updated_at', 'ASC')->take(3)->get();
+				$jobs_for_widget = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->orderBy('updated_at', 'ASC')->take(3)->get();
 			}
 			
 		}else{
-			$jobs_for_widget = Job::where('is_display',1)->where('status',1)->orderBy('updated_at', 'ASC')->take(3)->get();
+			$jobs_for_widget = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->orderBy('updated_at', 'ASC')->take(3)->get();
 		}
 		// Widget Ngành nghề hấp dẫn
-		$widget_categories_hot = Category::where('parent_id', '!=', 0)->with('mtcategory')->get()->sortBy(function($widget_categories_hot) {
+		$widget_categories_hot = Category::whereHas('mtcategory', function($q) {
+			$q->whereHas('job', function ($q1) {
+				$q1->where('is_display', 1)->where('hannop', '>=' , date('Y-m-d'));
+			});
+		})->where('parent_id', '!=', 0)->with('mtcategory')->get()->sortBy(function($widget_categories_hot) {
 		    return $widget_categories_hot->mtcategory->count();
 		})->reverse();
 		// Widget tìm công việc theo cấp bậc

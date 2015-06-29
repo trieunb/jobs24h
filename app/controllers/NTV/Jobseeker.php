@@ -12,11 +12,27 @@ class JobSeeker extends Controller
 	}
 	public function home()
 	{
-		$categories_default = Category::where('parent_id', '!=', 0)->get();
-		$categories_alpha = Category::where('parent_id', '!=', 0)->orderBy('cat_name', 'ASC')->get();	
-		$categories_hot = Category::where('parent_id', '!=', 0)->with('mtcategory')->get()->sortBy(function($categories_hot) {
+		$categories_default = Category::where('parent_id', '!=', 0)
+		->whereHas('mtcategory', function($q) {
+			$q->whereHas('job', function ($q1) {
+				$q1->where('is_display', 1)->where('hannop', '>=' , date('Y-m-d'));
+			});
+		})
+		->get();
+		$categories_alpha = Category::where('parent_id', '!=', 0)->whereHas('mtcategory', function($q) {
+			$q->whereHas('job', function ($q1) {
+				$q1->where('is_display', 1)->where('hannop', '>=' , date('Y-m-d'));
+			});
+		})->orderBy('cat_name', 'ASC')->get();	
+
+		$categories_hot = Category::where('parent_id', '!=', 0)->whereHas('mtcategory', function($q) {
+			$q->whereHas('job', function ($q1) {
+				$q1->where('is_display', 1)->where('hannop', '>=' , date('Y-m-d'));
+			});
+		})->with('mtcategory')->get()->sortBy(function($categories_hot) {
 		    return $categories_hot->mtcategory->count();
 		})->reverse();
+
 		$emp_hot = NTD::with('job')->get()->sortBy(function($emp_hot) {
 		    return $emp_hot->job->count();
 		})->reverse()->take(18);
@@ -1015,7 +1031,11 @@ class JobSeeker extends Controller
 	
 	// Lấy danh sách ngành nghề
 	public function getListCategory(){
-		$list_parent = Category::where('parent_id', 0)->orderBy('parent_id', 'ASC')->get();
+		$list_parent = Category::whereHas('mtcategory', function($q) {
+			$q->whereHas('job', function ($q1) {
+				$q1->where('is_display', 1)->where('hannop', '>=' , date('Y-m-d'));
+			});
+		})->where('parent_id', 0)->orderBy('parent_id', 'ASC')->get();
 		foreach ($list_parent as $key => $value) {
 			$cate = Category::where('parent_id', $value->id)->get();
 			$list_category[$value->cat_name] = $cate;

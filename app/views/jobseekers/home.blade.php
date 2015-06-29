@@ -211,12 +211,11 @@
 				</div>
 		</div>
 @stop
-@setions('scripts')
+@section('scripts')
 @parent
 <script type="text/javascript">
 	$(function() {
 		$('body').addClass('home');
 	});
-
 </script>
 @stop
