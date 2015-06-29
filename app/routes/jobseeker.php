@@ -127,6 +127,8 @@ Route::group(array('prefix'=>$locale), function() {
 		Route::get('/register-job-alert', array('as'=>'jobseekers.register-job-alert', 'uses'=>'JobSeeker@regiterJobAlert'));
 		Route::get('/categories', array('as'=>'jobseekers.get-list-category', 'uses'=>'JobSeeker@getListCategory'));
 		Route::get('/provinces', array('as'=>'jobseekers.get-list-province', 'uses'=>'JobSeeker@getListProvince'));
+
+		Route::get('/news/{id}', array('as'=>'news.view', 'uses'=>'News@getIndex'));
 	});
 });
 
