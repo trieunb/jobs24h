@@ -1,7 +1,7 @@
 <?php
 
 class Category extends \Eloquent {
-	protected $fillable = [];
+	protected $fillable = ['cat_name', 'id', 'parent_id'];
 	protected $table = 'categories';
 
 	public static function getList()
