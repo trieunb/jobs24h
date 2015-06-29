@@ -96,11 +96,11 @@
 						</tr>
 						<tr>
 							<td>Đăng ngày</td>
-							<td>{{date('d-m-Y',strtotime($job->work->updated_at))}}</td>
+							<td>{{date('d-m-Y',strtotime($job->created_at))}}</td>
 						</tr>
 						<tr>
 							<td>Hạn nộp</td>
-							<td>{{date('d-m-Y',strtotime($job->work->hannop))}}</td>
+							<td>{{date('d-m-Y',strtotime($job->hannop))}}</td>
 						</tr>
 					</tbody>
 				</table>
