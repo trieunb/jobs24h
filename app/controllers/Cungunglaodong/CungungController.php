@@ -3,7 +3,8 @@
 	{
 		public function home()
 		{
-			return View::make('cungunglaodong.home');
+			$data=Partner::get();
+			return View::make('cungunglaodong.home')->with('data',$data);
 		}
 
 		public function detail($id)

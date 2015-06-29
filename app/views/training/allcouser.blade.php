@@ -1,5 +1,5 @@
 @extends('layouts.training')
-@section('title') Trang chủ Đào tạo - VnJobs @stop
+@section('title') Khóa học Đào tạo - VnJobs @stop
 @section('header')
 @include('includes.trainings.header-chitiet')
 

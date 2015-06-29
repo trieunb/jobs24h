@@ -1,5 +1,5 @@
 @extends('layouts.training')
-@section('title') Trang chủ Đào tạo - VnJobs @stop
+@section('title') Tin tức chi tiết @stop
 @section('header')
 
 @include('includes.trainings.header-chitiet')
@@ -43,7 +43,7 @@
                     fjs.parentNode.insertBefore(js, fjs);
                   }(document, 'script', 'facebook-jssdk'));
                   </script>
-                  <div class="fb-comments" data-href="http://developers.facebook.com/docs/plugins/comments/" data-numposts="5"></div>
+                  <div class="fb-comments" data-href="{{URL::route('trainings.detailpost',$post['id'])}}" data-numposts="5"></div>
               </div>
           </div>
 

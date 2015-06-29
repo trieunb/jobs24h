@@ -12,14 +12,14 @@
           
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav detail-hd">
-              <li class="">
+              <li>
                 <a href="#">Cung ứng lao động</a>
               </li>
                
-              <li class="">
+              <li>
                 <a href="#">Người tìm việc</a>
               </li>
-              <li class="">
+              <li>
                 <a href="#">Nhà tuyển dụng</a>
               </li>
               <li class="active1">

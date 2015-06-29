@@ -50,14 +50,15 @@
         </li>
         <li>
           <h2>ỨNG DỤNG DI ĐỘNG</h2>
-          <p>
-            <a href="https://play.google.com/store/search?q=pub:minhphuctelecom">
-              <img alt="Android app on Google Play"
-                   src="https://developer.android.com/images/brand/en_app_rgb_wo_45.png" />
-            </a>
+           <p>
+            <a href="">{{HTML::image('cungunglaodong/assets/images/app_ad.png')}}</a>
           </p>
-          <p><img src="https://www.northwestsavingsbank.com/images/App_Store_Badge_EN.png"></p>
-          <p><img src="img/windowstore.png"></p>
+          <p>
+            <a href="">{{HTML::image('cungunglaodong/assets/images/app_st.png')}}</a>
+          </p>
+          <p>
+            <a href="">{{HTML::image('cungunglaodong/assets/images/wd_st.png')}}</a>
+          </p>
            
 
         </li>

@@ -1,5 +1,5 @@
 @extends('layouts.training')
-@section('title') Trang chủ Đào tạo - VnJobs @stop
+@section('title') Khóa học chi tiết @stop
 @section('header')
 
 @include('includes.trainings.header-chitiet')
@@ -13,57 +13,51 @@
             <h2>Hãy đăng ký những khóa học hấp dẫn</h2>
             <h3>Công ty chúng tôi thường xuyên mở các khóa học hấp dẫn để các bạn đăng ký và tham gia nâng cao kỹ năng cũng như nghiệp vụ của mình.</h3>
             <div class="row">
-              <div class="col-md-4"></div>
-              <div class="col-md-2">
+               
+              <div class="col-md-12">
                 <button class="btn more1">Xem thêm</button>
-              </div>
-              <div class="col-md-2">
                 <button class="btn more2">Đăng ký</button>
               </div>
-              <div class="col-md-4"></div>
+              
+                
+              
+               
             </div>
       </div>
         </div>
 
 
 
-      <div class="menu-ctdt">
+      <div class="col-md-12 menu-ctdt">
 
 
-          <nav class="navbar navbar-default" role="navigation">
-             
-            
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul class="nav navbar-nav">
-                <li class="">
-                  <a href="#tq2">Tổng quan</a>
-                </li>
+                  <a class="btn btn-default sub-menu" href="#tq2">
+                    Tổng quan
+                  </a>
+                   <a class="btn btn-default sub-menu" href="#chiphi">
+                   
+                   Chi phí
+                  </a>
+                   
+                   {{HTML::image('training/assets/img/down.png')}}
+                  <a class="btn btn-default sub-menu" href="#giangvien">
+                   
+                   Giảng viên
+                   </a>
+                   <a class="btn btn-default sub-menu" href="#tq4_r">
+                  
+                     Đăng ký
+                   </a>
                  
-                <li class="">
-                  <a href="#chiphi">Chi phí</a>
-                </li>
-                <li class="img">
-                            {{HTML::image('training/assets/img/down.png')}}
-
-                </li>
-                <li class="">
-                  <a href="#giangvien">Giảng viên</a>
-                </li>
-                <li class="">
-                  <a href="#tq4_r">Đăng ký</a>
-                </li>
-                 
-              </ul>
-              </div>
-          
-        </nav>
+               
+               
       </div>
 
 
 
 
       <div id="thongtinchung">
-        <div class="col-md-6 pull-left">
+        <div class="col-md-6 pull-left tt-left">
 
       <div class="tq1">
 
@@ -78,8 +72,8 @@
              ?>
             <p align="left">{{$couser['title']}}
               <br>
-              {{str_limit($content, $limit = 1300, $end = '<a data-toggle="modal" data-target="#myModal">
-            Đọc tiêp
+              {{str_limit($content, $limit = 1000, $end = '<a data-toggle="modal" data-target="#myModal">
+            Đọc tiếp
           </a> ')}}
             </p>
 
@@ -108,8 +102,9 @@
           
 
           <div class="tq3">
-
+            <div class="tq3-image">
             <img src="{{$couser['gvthumbnail']}}">
+            </div>
             <div class="bt-tt">
               <p class="name">{{$couser['name']}}</p>
               <p align="justify">{{$couser['worked']}}</p>
@@ -127,7 +122,7 @@
          </div>
 
     </div>
-        <div class="col-md-6 pull-right">
+        <div class="col-md-6 pull-right tt-right">
 
         <div class="tq1-r">
           <h2 class="white">Thông tin chung</h2>
@@ -185,85 +180,86 @@
           <div class="tq4_r" id="tq4_r">
             <h3>Nếu bạn muốn đăng ký online, vui lòng đăng ký thông tin theo mẫu dưới :</h3>
          
-
-    {{ Form::open(['role' => 'form','class'=>'form form-horizontal','files'=>true]) }}
-    
-              @include('includes.notifications')
-
-    <div class="form-group">
-      <label for="inputTitle" class="col-sm-5 control-label">Số người đăng ký:</label>
-      <div class="col-sm-7">
-        {{ Form::select('songuoi',array(
-                                  '1'=>'1',
-                                  '2'=>'2',
-                                  '3'=>'3',
-                                  '4'=>'4'
-        ))}}
-      </div>
-    </div>
-
-
-    <div class="form-group">
-      <label for="inputTitle" class="col-sm-5 control-label">Quí danh:</label>
-      <div class="col-sm-7">
-        {{ Form::select('sex',array(
-                                  '1'=>'MR',
-                                  '2'=>'MS',
-        ))}}
-      </div>
-    </div>
+          <div id="thongbao"></div>
+                  
+          {{ Form::open(['role' => 'form','class'=>'form form-horizontal','files'=>true,'id'=>'dangky']) }}
+          
+                    
+                    
+          <div class="form-group">
+            <label for="inputTitle" class="col-sm-5 control-label">Số người đăng ký:</label>
+            <div class="col-sm-7">
+              {{ Form::select('songuoi',array(
+                                        '1'=>'1',
+                                        '2'=>'2',
+                                        '3'=>'3',
+                                        '4'=>'4'
+              ))}}
+            </div>
+          </div>
 
 
-    <div class="form-group">
-      <label for="inputFullname" class="col-sm-5 control-label"><abbr>*</abbr>Họ và tên:</label>
-      <div class="col-sm-7">
-        {{ Form::input('text', 'name', null, array('class'=>'form-control') ) }}
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="inputFullname" class="col-sm-5 control-label"><abbr>*</abbr>Nơi học tập và làm việc:</label>
-      <div class="col-sm-7">
-        {{ Form::input('text', 'address', null, array('class'=>'form-control') ) }}
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="inputFullname" class="col-sm-5 control-label"><abbr>*</abbr>Điện thoại:</label>
-      <div class="col-sm-7">
-        {{ Form::input('text', 'phone', null, array('class'=>'form-control') ) }}
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="inputFullname" class="col-sm-5 control-label"><abbr>*</abbr>Email:</label>
-      <div class="col-sm-7">
-        {{ Form::input('email', 'email', null, array('class'=>'form-control') ) }}
-      </div>
-    </div>
-    <div class="form-group">
-            <label for="input" class="col-sm-5 control-label"><abbr>*</abbr>Mã bảo vệ:</label>
-      <div class="col-sm-4">
-            {{ HTML::image(Captcha::img(), 'Captcha', ['class'=>'captcha', 'title'=>'Click để lấy chuỗi mới']) }}
- 
-      </div>
-      <div class="col-sm-3">
-        {{ Form::text('captcha') }}
-      </div>
-    </div>
-     
-     
-     
-    <div class="form-group">
-      <div class="col-sm-10 col-sm-offset-2">
-        {{ Form::button('Đăng Ký', array('type'=>'submit', 'class'=>'btn dkh')) }}
-      </div>
-    </div>
-    {{ Form::close() }}
+          <div class="form-group">
+            <label for="inputTitle" class="col-sm-5 control-label">Quí danh:</label>
+            <div class="col-sm-7">
+              {{ Form::select('sex',array(
+                                        '1'=>'MR',
+                                        '2'=>'MS',
+              ))}}
+            </div>
+          </div>
 
 
+          <div class="form-group">
+            <label for="inputFullname" class="col-sm-5 control-label"><abbr>*</abbr>Họ và tên:</label>
+            <div class="col-sm-7">
+              {{ Form::input('text', 'name', null, array('class'=>'form-control') ) }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputFullname" class="col-sm-5 control-label"><abbr>*</abbr>Nơi học tập và làm việc:</label>
+            <div class="col-sm-7">
+              {{ Form::input('text', 'address', null, array('class'=>'form-control') ) }}
+            </div>
+          </div>
 
-         </div>
-        </div>
-      </div>
+          <div class="form-group">
+            <label for="inputFullname" class="col-sm-5 control-label"><abbr>*</abbr>Điện thoại:</label>
+            <div class="col-sm-7">
+              {{ Form::input('text', 'phone', null, array('class'=>'form-control') ) }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputFullname" class="col-sm-5 control-label"><abbr>*</abbr>Email:</label>
+            <div class="col-sm-7">
+              {{ Form::input('email', 'email', null, array('class'=>'form-control') ) }}
+            </div>
+          </div>
+          <div class="form-group">
+                  <label for="input" class="col-sm-5 control-label"><abbr>*</abbr>Mã bảo vệ:</label>
+            <div class="col-sm-4">
+                  {{ HTML::image(Captcha::img(), 'Captcha', ['class'=>'captcha', 'title'=>'Click để lấy chuỗi mới']) }}
+       
+            </div>
+            <div class="col-sm-3">
+              {{ Form::text('captcha') }}
+            </div>
+          </div>
+           
+           
+           
+          <div class="form-group">
+            <div class="col-sm-10 col-sm-offset-2">
+              {{ Form::button('Đăng Ký', array('type'=>'submit', 'class'=>'btn dkh')) }}
+            </div>
+          </div>
+          {{ Form::close() }}
+
+
+
+               </div>
+              </div>
+            </div>
 
 
         
@@ -280,12 +276,14 @@
           <ul>
               @foreach($people[0] as $gv)
                     <li>
-                       <div class="image  wow bounceInLeft">{{HTML::image($gv['thumbnail'])}}</div>
-                       <div class="linkgv">
-                        <a href="{{$gv['facebook']}}"><i class="fa fa-facebook"></i></a>
-                        <a href="{{$gv['twitter']}}"><i class="fa fa-twitter"></i></a>
-                        <a href="{{$gv['linkedin']}}"><i class="fa fa-linkedin"></i></a>
-                        <a href="{{$gv['skype']}}"><i class="fa fa-skype"></i></a>
+                       <div class="image11">
+                        {{HTML::image($gv['thumbnail'])}}
+                         <div class="linkgv">
+                          <a href="{{$gv['facebook']}}"><i class="fa fa-facebook"></i></a>
+                          <a href="{{$gv['twitter']}}"><i class="fa fa-twitter"></i></a>
+                          <a href="{{$gv['linkedin']}}"><i class="fa fa-linkedin"></i></a>
+                          <a href="{{$gv['skype']}}"><i class="fa fa-skype"></i></a>
+                         </div>
                        </div>
                        <p>{{$gv['name']}}</p>
                     </li>
@@ -304,16 +302,46 @@
           });
         });
 
+
+
+
+        $( "#dangky" ).submit(function( event ) {
+          
+          var url = "{{URL::route('trainings.detailcouser',$couser['id'])}}"; // the script where you handle the form input.
+
+          $.ajax({
+             type: "POST",
+             url: url,
+             data: $("#dangky").serialize(), // serializes the form's elements.
+             success: function(data)
+             {
+                    // show response from the php script.
+                    $('#thongbao').empty();
+
+                    if (data.success ==false) {
+                      $("#thongbao").addClass('alert alert-danger')
+                      $.each( data.data, function( key, value ) {
+                         $("#thongbao").append(value + '<br>');
+                          
+                      });
+                    }
+
+                    else 
+                    {
+                      $("#thongbao").removeClass('alert alert-danger').addClass('alert alert-success');
+                      $("#thongbao").append(  " Đã gửi đăng ký, chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất");
+                    }
+
+             }
+            });
+
+          return false; // avoid to execute the actual submit of the form.
+
+
+        });
+
         </script>
 
-        <?php
-          if(Session::get('ok')=='ok')
-          {
-          echo'<script>'; 
-          echo'alert("Bạn đã đăng ký thành công, chúng tôi sẽ liên hệ với bạn sớm nhất")'; 
-          echo'</script>'; 
-          }
-          
-        ?>
+         
 
 @stop

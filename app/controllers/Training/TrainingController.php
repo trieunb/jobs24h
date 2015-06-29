@@ -48,7 +48,7 @@ class TrainingController extends Controller
 		{
 
 		$training=Training::take(4)
-			->select('title','time_day','fee','date_open','shift','date_study','time_hour')
+			->select('id','title','time_day','fee','date_open','shift','date_study','time_hour')
 			->get();
 		$doc1->view=$doc1->view+1;
 		$doc1->save();
@@ -83,9 +83,9 @@ class TrainingController extends Controller
 		{
 
 			$training=Training::take(4)
-			->select('title','time_day','fee','date_open','shift','date_study','time_hour')
+			->select('id','title','time_day','fee','date_open','shift','date_study','time_hour')
 			->get();
-			$post_diff=TrainingPost::where('id','<>',$id)
+			$post_diff=TrainingPost::where('id','<>',$id)->where('training_cat_id','=',1)
 								->take(5)
 								->get(); 
 			return View::make('training.detailpost')->with(array('post'=>$post,'post_diff'=>$post_diff,'training'=>$training));
@@ -107,7 +107,7 @@ class TrainingController extends Controller
 							->select('name','thumbnail','facebook','twitter','skype','linkedin')
 							->get();
 			$training=Training::take(4)
-			->select('title','time_day','fee','date_open','shift','date_study','time_hour')
+			->select('id','title','time_day','fee','date_open','shift','date_study','time_hour')
 			->get();
 		return View::make('training.detailcouser')->with(array('couser'=>$couser,'training'=>$training,'people'=>$people));
 
@@ -120,12 +120,21 @@ class TrainingController extends Controller
 	{
 		 
 		$validator = new \App\DTT\Forms\TrainingRegister;
+
 		if($validator->fails())
 		{
 			//return Redirect::back()->with('ok',$validator);
-			return Redirect::back()->withErrors($validator);
+
+			 
+			return Response::json(array(
+                    'success' => false,
+                    'data'   => $validator->getMessageBag()->toArray()
+                ));
+			//return Redirect::back()->withErrors($validator);
 		}
-		else{
+		else
+		{
+
 			$data=Input::all();
 			$inser_data=TrainingPeople::create(
 				array(
@@ -135,12 +144,15 @@ class TrainingController extends Controller
 					'address' 	=>	$data['address'],
 					'sex' 		=>  $data['sex'],
 					'feeling' 	=> 	$data['songuoi'],
-					'training_roll_id'=>2,
+					'training_roll_id'=>2,	// học viên đăng ký mới
 					'training_id'=>$id
 					)
 				);
-			return Redirect::back()->with('ok','ok');
-		 
+			return Response::json(array(
+                    'success' => true,
+                    
+                ));
+			
 		}
 
 	}
@@ -167,6 +179,16 @@ class TrainingController extends Controller
 							->get();
 		 					
 		return View::make('training.allcouser')->with('training',$training);
+	}
+
+	public function all_post()
+	{	
+		//tài lieeuhj mới
+		$post=TrainingPost::where('training_cat_id','=',1)
+								->orderBy('id','desc')
+								->get(); 
+		return View::make('training.allpost')->with(array('post'=>$post));
+
 	}
 	 
 

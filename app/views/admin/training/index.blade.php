@@ -38,7 +38,7 @@
 				<tr>
 				<td>
 					<label class="pos-rel">
-						<input type="checkbox" name="ck" class="ace" />
+						<input value="{{$value['id']}}" type="checkbox" name="ck[]" class="ace" />
 						<span class="lbl"></span>
 					</label>
 				</td>
@@ -88,6 +88,7 @@
 
 	</table>
 	<a href="{{URL::to('admin/training/add-couser')}}" class="btn">Đăng Khóa học mới</a>
+	<div class="btn" id="delete-check">Xóa tất cả mục đã chọn</div>
 
 	 
 @stop
@@ -101,5 +102,57 @@
 	{{ HTML::script('assets/js/jquery.dataTables.bootstrap.min.js') }}
 	 <script>$(document).ready(function() {
     $('#table').dataTable();
-	} );</script>
+	} );
+	 var active_class = 'success';
+		$('#table > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
+					var th_checked = this.checked;//checkbox inside "TH" table header
+					
+					$(this).closest('table').find('tbody > tr').each(function(){
+						var row = this;
+						if(th_checked) $(row).addClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', true);
+						else $(row).removeClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', false);
+					});
+				});
+
+		$('#table').on('click', 'td input[type=checkbox]' , function(){
+					var $row = $(this).closest('tr');
+					if(this.checked) $row.addClass(active_class);
+					else $row.removeClass(active_class);
+				});
+		$( "#delete-check" ).click(function() {
+	  			
+			  var url = "{{URL::to('admin/training/delete-all-couser')}}"; // the script where you handle the form input.
+			
+			
+	 		  
+	 		  var check = $('input[name="ck[]"]:checked').map(function(){
+	       		 return this.value;
+	    		}).toArray();
+
+	    		 $.ajax({
+	             type: "POST",
+	             url: url,
+	             data: {  check: check }, // serializes the form's elements.
+	             success: function(data)
+	             {
+	                    // show response from the php script.
+	                  // show response from the php script.
+	                    if (data.success==true) {
+	                     location.reload();
+	                 	 alert('Đã xóa OK');  }
+	                 	 else{
+	                 	 	alert('Không thể xóa');
+	                 	 	location.reload();
+	                 	 }
+	                 	 	
+
+
+	             }
+	            });
+
+	          return false; // avoid to execute the actual submit of the form.
+			
+			});
+	   
+	  </script>
 @stop

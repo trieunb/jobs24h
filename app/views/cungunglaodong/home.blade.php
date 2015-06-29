@@ -102,14 +102,11 @@
 					<div class="container">
 						<h2 class="title text-white">Đối tác</h2>
 						<ul>
-							<li class="col-sm-3">{{HTML::image('cungunglaodong/assets/images/mobifone.png')}}</li>
-							<li class="col-sm-3">{{HTML::image('cungunglaodong/assets/images/mobifone.png')}}</li>
-							<li class="col-sm-3">{{HTML::image('cungunglaodong/assets/images/mobifone.png')}}</li>
-							<li class="col-sm-3">{{HTML::image('cungunglaodong/assets/images/mobifone.png')}}</li>
-							<li class="col-sm-3">{{HTML::image('cungunglaodong/assets/images/mobifone.png')}}</li>
-							<li class="col-sm-3">{{HTML::image('cungunglaodong/assets/images/mobifone.png')}}</li>
-							<li class="col-sm-3">{{HTML::image('cungunglaodong/assets/images/mobifone.png')}}</li>
-							<li class="col-sm-3">{{HTML::image('cungunglaodong/assets/images/mobifone.png')}}</li>
+							@foreach($data as $value)
+							<li class="col-sm-3">
+								<a href="{{$value['link']}}" title="{{$value['name']}}">{{HTML::image($value['thumbnail'],$value['name'])}}</a>
+							</li>
+							@endforeach
 						</ul>
 					</div>
 				</div>

@@ -31,6 +31,6 @@ Schema::table('training_cat', function(Blueprint $table)
 			
 		});
 	}
-	}
+	
 
 }

@@ -225,6 +225,195 @@ class CungunglaodongController extends \BaseController
 
 	}
 
+	public function getPartner()
+	{
+		$data=Partner::get();
+		return View::make('admin.cungung.partner')->with('data',$data);
+
+	}
+
+	public function getAddPartner()
+	{
+		return View::make('admin.cungung.addpartner');
+
+	}
+
+	public function postAddPartner()
+	{
+		$data=Input::all();
+		$logo=Input::file('thumbnail');
+	 
+		if ($logo!=null) { // nếu chọn image thì upload lên
+	
+			$file1=array('logo'=>$logo);
+
+			$rules1 = array('logo' => 'image|mimes:jpeg,jpg,bmp,png,gif|max:1000');
+			$validator_image=Validator::make($file1,$rules1);
+			$output = ['name' => $logo->getClientOriginalName(),'tmp_name'=>$logo->getClientOriginalExtension(), 'size' => $logo->getClientSize()];
+			 
+			if ($validator_image->fails())
+			 	return Redirect::back()->withErrors('Bạn phải chọn ảnh và ảnh đó phải dưới 1mb');
+			else
+				{
+					$fileName = rand(11111,99999).'.'.$output['tmp_name'];
+					 $logo->move('uploads/cungunglaodong/', $fileName);
+					 $path_logo=URL::to('uploads/cungunglaodong/'.$fileName.'');
+				}
+		}
+
+		else 
+			$path_logo=URL::to('uploads/cungunglaodong/avatar.jpg'); //nếu không chọn imahe thì lấy mặc định
+
+
+
+		$insert_data=Partner::create(
+			array(
+				'name'		=>	$data['name'],
+				'link'		=> $data['link'],
+				'thumbnail'	=>	$path_logo,
+				
+				)
+			);
+		
+		if($insert_data)
+			return Redirect::back()->with('success','Đã lưu thành công');
+		else
+			return Redirect::back()->withInput->withErrors('Hiện giờ không thể lưu nội dung');
+	
+	}
+
+
+	public function getEditPartner($id)
+	{
+		if(isset($id))
+		{
+			$data=Partner::find($id);
+			return View::make('admin.cungung.editpartner')->with('data',$data);
+		}
+
+	}
+	public function postEditPartner($id)
+	{
+		if (isset($id)) {
+			$insert_data=Partner::find($id);
+			$data=Input::all();
+			$logo=Input::file('thumbnail');
+				if ($logo!=null) { // nếu chọn image thì upload lên
+		
+				$file1=array('logo'=>$logo);
+
+				$rules1 = array('logo' => 'image|mimes:jpeg,jpg,bmp,png,gif|max:1000');
+				$validator_image=Validator::make($file1,$rules1);
+				$output = ['name' => $logo->getClientOriginalName(),'tmp_name'=>$logo->getClientOriginalExtension(), 'size' => $logo->getClientSize()];
+				 
+				if ($validator_image->fails())
+				 	return Redirect::back()->withErrors('Bạn phải chọn ảnh và ảnh đó phải dưới 1mb');
+				else
+					{
+						$fileName = rand(11111,99999).'.'.$output['tmp_name'];
+
+						if ($insert_data['thumbnail']!=URL::to('uploads/training/avatar.jpg')) {
+							//xóa image cuxx
+							$path=str_replace(URL::to('/'), public_path(), $insert_data['thumbnail']);
+							 if(File::exists($path))
+								unlink($path);
+							 
+						}
+						 $logo->move('uploads/cungunglaodong/', $fileName);
+						 $path_logo=URL::to('uploads/cungunglaodong/'.$fileName.'');
+					}
+			}
+
+			else 
+				$path_logo=$insert_data['thumbnail']; //nếu không chọn imahe thì lấy mặc định
+
+			$insert_data->name=$data['name'];
+			$insert_data->thumbnail=$path_logo;
+			$insert_data->link=$data['link'];
+
+			if($insert_data->save())
+				return Redirect::back()->with('success','Đã thay đổi thành công');
+			else 
+				return Redirect::back()->withErrors('Không thể thay đổi vào lúc này');
+		}
+	}
+
+
+	public function getDeletePartner($id)
+	{
+		if (isset($id)) {
+			$delete_data=Partner::find($id);
+			if ($delete_data['thumbnail']!=URL::to('uploads/training/avatar.jpg')) {
+							//xóa image cuxx
+							$path=str_replace(URL::to('/'), public_path(), $delete_data['thumbnail']);
+							 if(File::exists($path))
+								unlink($path);
+							 
+			}
+			if ($delete_data->delete()) 
+				return Redirect::back()->with('success','Đã xóa thành công');
+			else 
+				return Redirect::back()->withErrors('Không thể xóa vào lúc này');
+				
+			
+
+		}
+	}
+
+	public function postDeleteAllPartner()  // xóa tất cả đối tác
+	{
+		$data=Input::get();
+		$table_string='Partner';
+		$delete=$this->delete_all($data,$table_string);
+		if ($delete) 
+			return Response::json(array( 'success' => true ));
+		else
+			return Response::json(array( 'success' => false ));
+	}
+
+
+	public function postDeleteAllServices() // xóa tất cả cate phần cung ứng
+	{
+		$data=Input::get();
+		$table_string='TrainingCat';
+		$delete=$this->delete_all($data,$table_string);
+		if ($delete) 
+			return Response::json(array( 'success' => true ));
+		else
+			return Response::json(array( 'success' => false ));
+	}
+
+
+
+	public function postDeleteAllPost() // xóa tất cả bài post phần cung ứng
+	{
+		$data=Input::get();
+		$table_string='TrainingPost';
+		$delete=$this->delete_all($data,$table_string);
+		if ($delete) 
+			return Response::json(array( 'success' => true ));
+		else
+			return Response::json(array( 'success' => false ));
+	}
+
+
+	private function delete_all($data,$table_string)
+	{
+		foreach ($data['check'] as  $value) {
+					$delete_data=$table_string::find($value);
+					$del=$delete_data->delete();
+
+					}
+				 
+				if ($del)
+					return true;
+					 
+			 	else
+			 		return false;
+				 
+			
+			
+	}
 
 }
 ?>

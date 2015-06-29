@@ -1,5 +1,5 @@
 @extends('layouts.training')
-@section('title') Trang chủ Đào tạo - VnJobs @stop
+@section('title') Tài liệu - Đào tạo - VnJobs @stop
 @section('header')
 @include('includes.trainings.header-chitiet')
 
@@ -66,7 +66,7 @@
 			 					<span>By {{$doc['author']}}</span>
 			 					<p><i class="glyphicon glyphicon-eye-open"></i> Lượt xem : {{$doc['view']}}</p>
 			 					<p><i class="glyphicon glyphicon-save"></i> Download : {{$doc['download']}}</p>
-			 					<div class="btn btn-default more-book">Xem thêm</div>
+			 					<a href="{{URL::route('trainings.detaildoc',array($doc['id']))}}"><div class="btn btn-default more-book">Xem thêm</div></a>
 			 				</li>
 			 				@endforeach
 			 				 

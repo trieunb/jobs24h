@@ -9,15 +9,16 @@
           <ul>
           @foreach($training as $val)
             <li>
-              <h3>{{$val['title']}}</h3>
+              <h3><a href="{{URL::route('trainings.detailcouser',$val['id'])}}">{{$val['title']}}</a></h3>
               <p>Ngày khai giảng :{{$val['date_open']}}</p>
               <p>Ca học : {{$val['shift']}}</p>
               <p>Giờ học : {{$val['time_hour']}} giờ</p>
               <p>Ngày học : {{$val['date_study']}}</p>
               <p>Thời lượng : {{$val['time_day']}} buổi</p>
               <p>Học phí : {{$val['fee']}}</p>
-              <button class="btn dowload"> Đăng ký </button>
-            </li>
+
+              <a href="{{URL::route('trainings.detailcouser',$val['id'])}}#tq4_r"><button class="btn dowload"> Đăng ký </button>
+            </a></li>
             @endforeach
              
           </ul>  

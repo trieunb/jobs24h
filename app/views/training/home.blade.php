@@ -18,14 +18,14 @@
 					
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav">
-							<li class="">
+							<li>
 								<a href="#">Cung ứng lao động</a>
 							</li>
 							 
-							<li class="">
+							<li>
 								<a href="#">Người tìm việc</a>
 							</li>
-							<li class="">
+							<li>
 								<a href="#">Nhà tuyển dụng</a>
 							</li>
 							<li class="active1">
@@ -44,14 +44,10 @@
 					<h2>Hãy đăng ký những khóa học hấp dẫn</h2>
 					<h3>Công ty chúng tôi thường xuyên mở các khóa học hấp dẫn để các bạn đăng ký và tham gia nâng cao kỹ năng cũng như nghiệp vụ của mình.</h3>
 					<div class="row">
-						<div class="col-md-4"></div>
-						<div class="col-md-2">
-							<button class="btn more1">See more</button>
-						</div>
-						<div class="col-md-2">
-							<button class="btn more2">See more</button>
-						</div>
-						<div class="col-md-4"></div>
+						<div class="col-md-12">
+			                <a href=""><button class="btn more1">Xem thêm</button></a>
+			                <a href=""><button class="btn more2">Đăng ký</button></a>
+			            </div>
 					</div>
 				</div>
 			</div>
@@ -70,7 +66,7 @@
 		 				<div class="main1_text wow bounceInRight" data-wow-duration="0.3s">
 		 					<h2>Nhóm chương trình đào tạo</h2>
 		 					<h3>Thăng tiến trong sự nghiệp luôn là khát vọng và mục tiêu lớn của hầu hết giới trẻ hiện nay. Để thực hiện được điều này các bạn cần hiểu rõ qui trình cơ bản trong nắm bắt công việc. </h3>
-		 					<button class="btn more3">Xem chi tiết</button>
+		 					<a href="{{URL::route('trainings.allcouser')}}"><button class="btn more3">Xem chi tiết</button></a>
 		 				</div>
 		 			</div>
 		 		</div>
@@ -158,7 +154,7 @@
 			 					<span>By {{$doc['author']}}</span>
 			 					<p><i class="glyphicon glyphicon-eye-open"></i> Lượt xem : {{$doc['view']}}</p>
 			 					<p><i class="glyphicon glyphicon-save"></i> Download : {{$doc['download']}}</p>
-			 					<div class="btn btn-default more-book">Xem thêm</div>
+			 					<a href="{{URL::route('trainings.detaildoc',array($doc['id']))}}"><div class="btn btn-default more-book">Xem thêm</div></a>
 			 				</li>
 			 				@endforeach
 			 				 
@@ -225,6 +221,10 @@
 					        @foreach($people[2] as $index=>$hvcu)
 					         @if ($index > 2 && $index < 5)
 					        	<li>
+
+
+
+
 					        		<div class="col-md-4 image-nx">
 					        		{{HTML::image($hvcu['thumbnail'])}}
 					        			 
@@ -264,13 +264,21 @@
 					<ul>
 							@foreach($people[0] as $gv)
 					        	<li>
-					        		 <div class="image  wow bounceInLeft">{{HTML::image($gv['thumbnail'])}}</div>
-					        		 <div class="linkgv">
-					        		 	<a href="{{$gv['facebook']}}"><i class="fa fa-facebook"></i></a>
-					        		 	<a href="{{$gv['twitter']}}"><i class="fa fa-twitter"></i></a>
-					        		 	<a href="{{$gv['linkedin']}}"><i class="fa fa-linkedin"></i></a>
-					        		 	<a href="{{$gv['skype']}}"><i class="fa fa-skype"></i></a>
+
+
+
+
+
+					        		 <div class="image11">
+					        		 	{{HTML::image($gv['thumbnail'])}}
+						        		 <div class="linkgv">
+						        		 	<a href="{{$gv['facebook']}}"><i class="fa fa-facebook"></i></a>
+						        		 	<a href="{{$gv['twitter']}}"><i class="fa fa-twitter"></i></a>
+						        		 	<a href="{{$gv['linkedin']}}"><i class="fa fa-linkedin"></i></a>
+						        		 	<a href="{{$gv['skype']}}"><i class="fa fa-skype"></i></a>
+						        		 </div>
 					        		 </div>
+					        		 
 					        		 <p>{{$gv['name']}}</p>
 					        	</li>
 					        @endforeach

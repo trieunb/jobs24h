@@ -403,6 +403,13 @@
 								</a>
 								<b class="arrow"></b>
 							</li>
+							<li class="{{ HTML::active(['admin/cungunglaodong/partner/*']) }}">
+								<a href="{{ URL::to('admin/cungunglaodong/partner') }}">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Quản lý đối tác 
+								</a>
+								<b class="arrow"></b>
+							</li>
 
 							 
 

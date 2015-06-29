@@ -16,8 +16,9 @@
     {{ HTML::style('training/assets/css/style.css') }}
     {{ HTML::style('training/assets/css/font-awesome.css') }}
     {{ HTML::style('training/assets/css/animate.css') }}
+    {{ HTML::style('training/assets/css/imghover.css') }}
 
-
+ 
   <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
   <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>

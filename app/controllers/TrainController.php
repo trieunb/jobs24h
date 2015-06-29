@@ -245,7 +245,9 @@ class TrainController extends \BaseController {
 	}
 
 
+	
 	//end table training_post
+
 
 
 	// Học viên giảng viên 
@@ -584,6 +586,9 @@ class TrainController extends \BaseController {
 	//end document
 
 
+
+
+
 	// upload ảnh dùng chung 
 
 	public function postUpload() // upload ảnh trong ckeditor
@@ -624,6 +629,72 @@ class TrainController extends \BaseController {
 
 	//end upload ảnh
 
+	public function postDeleteAllPost()
+	{
+		$data=Input::get();
+		$table_string='TrainingPost';
+		$delete=$this->delete_all($data,$table_string);
+		 
+		 if ($delete) 
+			return Response::json(array( 'success' => true ));
+		else
+			return Response::json(array( 'success' => false ));
+	}
+
+	public function postDeleteAllDoc()
+	{
+		$data=Input::get();
+		$table_string='TrainingDocument';
+		$delete=$this->delete_all($data,$table_string);
+		 if ($delete) 
+			return Response::json(array( 'success' => true ));
+		else
+			return Response::json(array( 'success' => false ));
+		 
+	}
+
+	public function postDeleteAllPeople()
+	{
+		$data=Input::get();
+		$table_string='TrainingPeople';
+		$delete=$this->delete_all($data,$table_string);
+		 if ($delete) 
+			return Response::json(array( 'success' => true ));
+		else
+			return Response::json(array( 'success' => false ));
+		 
+	}
+
+	// xoa khoa hoc
+	public function postDeleteAllCouser()
+	{
+		$data=Input::get();
+		$table_string='Training';
+		$delete=$this->delete_all($data,$table_string);
+		if ($delete) 
+			return Response::json(array( 'success' => true ));
+		else
+			return Response::json(array( 'success' => false ));
+		 
+	}
+
+
+	private function delete_all($data,$string)
+	{
+		foreach ($data['check'] as  $value) {
+
+					$delete_data=$string::find($value);
+					$del=$delete_data->delete();
+
+					}
+				 
+				if ($del)
+					return true;
+			 	else
+			 		return false;
+			
+			
+	}
 
 
 }
