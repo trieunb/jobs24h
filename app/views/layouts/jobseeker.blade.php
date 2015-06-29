@@ -57,10 +57,10 @@
 			<nav id="navigation" class="bg-blue">
 				<ul class="main-menu container">
 					<li><a href="{{ URL::route('jobseekers.home') }}">Trang chủ</a></li>
-					<li><a href="#">Cung ứng lao động</a></li>
+					<li><a href="{{ URL::route('cungunglaodong.home') }}">Cung ứng lao động</a></li>
 					<li><a href="{{ URL::route('jobseekers.home') }}">Người tìm việc</a></li>
 					<li><a href="{{ URL::route('employers.launching') }}">Nhà tuyển dụng</a></li>
-					<li><a href="#">Đào tạo</a></li>
+					<li><a href="{{ URL::route('trainings.home') }}">Đào tạo</a></li>
 					<li><ul class="nav navbar-nav navbar-right">
 						<form class="navbar-form navbar-right relative" role="search">
 							<div class="form-group">
