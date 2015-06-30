@@ -68,7 +68,7 @@
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Cảm nhận:</label>
 			<div class="col-sm-6">
-				{{ Form::input('text', 'feeling', $value['feeling'], array('class'=>'form-control') ) }}
+				{{ Form::textarea('feeling', $value['feeling'], array('class'=>'form-control') ) }}
 			</div>
 		</div>
 
