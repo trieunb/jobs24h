@@ -28,13 +28,9 @@ class TrainingController extends Controller
 
 		$people[1]=TrainingPeople::where('training_people.training_roll_id','=',4) //học viên tiêu biểu
 									->take(8)
-									->join('training as tr','tr.id','=','training_people.training_id')
-									->select('training_people.name','training_people.thumbnail','tr.title as couser')
 									->get();	
 		$people[2]=TrainingPeople::where('training_people.training_roll_id','=',3) //học viên cũ
 									->take(6)
-									->join('training as tr','tr.id','=','training_people.training_id')
-									->select('training_people.name','training_people.thumbnail','training_people.feeling','tr.title as couser')
 									->get();												
 		return View::make('training.home')->with(array('training'=>$training,'document'=>$document,'people'=>$people)); 
 	}
@@ -98,9 +94,49 @@ class TrainingController extends Controller
 
 	public function detail_couser($id)
 	{
-		$couser=Training::join('training_people as tp','tp.id','=','training.teacher_id')
-			->select(array('training.*','tp.name as name','tp.thumbnail as gvthumbnail','tp.worked as worked','tp.yourself as yourself'))
-			->find($id);
+		 
+		 
+		 $couser1=Training::find($id);
+
+		 $couser=$couser1->trainingpeoples;
+		 
+		  
+		 
+		 foreach ($couser as  $value) {
+
+		 	$data['name']= $value->trainingpeople->name;
+		 	$data['worked']=$value->trainingpeople->worked;
+		 	$data['yourself']=$value->trainingpeople->yourself;
+		 	$data['thumbnail']=$value->trainingpeople->thumbnail;
+		 	$data['content']= $value->training->content;
+		 	$data['title']= $value->training->title;
+		 	$data['date_open']= $value->training->date_open;
+		 	$data['shift']= $value->training->shift;
+		 	$data['time_hour']= $value->training->time_hour;
+		 	$data['date_study']= $value->training->date_study;
+		 	$data['time_day']= $value->training->time_day;
+		 	$data['fee']= $value->training->fee;
+		 	$data['discount']= $value->training->discount;
+		 	$data['id']= $value->training->id;
+		 	 
+
+		 }
+		   	 
+		 //var_dump($couser);
+		  
+		/*$couser=Training::join('people_training as pt','pt.training_id','=','training.id')
+						->join('people_training', function($join)
+				        {
+				            $join->on('training.id', '=', 'people_training.training_id')
+				                 ->where('training_people.training_roll_id', '=', 1);
+
+				        })->find($id);
+
+		 
+				        //->select(array('training.*','training_people.name as name','training_people.thumbnail as gvthumbnail','training_people.worked as worked','training_people.yourself as yourself'))
+				*/		 
+		 
+
  		if (count((array)$couser)) {
  			$people[0] =TrainingPeople::where('training_roll_id','=',1) // giảng viên
 							->take(4)
@@ -109,7 +145,7 @@ class TrainingController extends Controller
 			$training=Training::take(4)
 			->select('id','title','time_day','fee','date_open','shift','date_study','time_hour')
 			->get();
-		return View::make('training.detailcouser')->with(array('couser'=>$couser,'training'=>$training,'people'=>$people));
+		return View::make('training.detailcouser')->with(array('couser'=>$data,'training'=>$training,'people'=>$people));
 
 		}
 

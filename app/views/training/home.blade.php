@@ -228,11 +228,11 @@
 					        		<div class="col-md-4 image-nx">
 					        		{{HTML::image($hvcu['thumbnail'])}}
 					        			 
-					        			<p>{{$hvcu['couser']}}</p>
+					        			<p>{{$hvcu['worked']}}</p>
 					        		</div>
 					        		<div class="col-md-8 text-nx">
 					        			<h2>{{$hvcu['name']}}</h2>
-					        			<h2>{{$hvcu['couser']}}</h2>
+					        			<h2>{{$hvcu['worked']}}</h2>
 					        			<p data-toggle="tooltip" data-placement="top" title="{{$hvcu['feeling']}}">{{str_limit($hvcu['feeling'], $limit = 100, $end = '...')}}
 					        			</p>
 					        		</div>

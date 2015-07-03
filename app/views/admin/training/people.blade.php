@@ -40,8 +40,12 @@
 						<span class="lbl"></span>
 					</label>
 				</td>
-				<td>{{$value['name']}}</td>				
-				<td>{{$value['sex']}}</td>
+				<td>{{$value['name']}}</td>	
+				@if($value['sex']==1)			
+				<td>Nam</td>
+				@else
+				<td>Nữ</td>
+				@endif
 				<td>{{$value['address']}}</td>
 				<td>{{$value['phone']}}</td>
 				<td>{{$value['email']}}</td>

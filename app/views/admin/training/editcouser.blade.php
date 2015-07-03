@@ -12,24 +12,24 @@
 
 	 {{ Form::open(['role' => 'form','class'=>'form form-horizontal']) }}
 		@include('includes.notifications')
-		@foreach($data as $value)
+		 
 		<div class="form-group">
 			<label for="inputTitle" class="col-sm-2 control-label">Tiêu đề:</label>
 			<div class="col-sm-6">
-				{{ Form::input('text', 'title', $value['title'], array('class'=>'form-control', 'required') ) }}
+				{{ Form::input('text', 'title', $data['title'], array('class'=>'form-control', 'required') ) }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="inputTitle" class="col-sm-2 control-label">Thời lượng:</label>
 			<div class="col-sm-1">
-				{{ Form::input('text', 'time_day', $value['time_day'], array('class'=>'form-control', 'required') ) }}
+				{{ Form::input('text', 'time_day', $data['time_day'], array('class'=>'form-control', 'required') ) }}
 			</div>
 			<label for="inputTitle" class="control-label">Buổi</label>
 		</div>
 		<div class="form-group">
 			<label for="inputFullname" class="col-sm-2 control-label">Học phí:</label>
 			<div class="col-sm-6">
-				{{ Form::input('text', 'fee', $value['fee'], array('class'=>'form-control') ) }}
+				{{ Form::input('text', 'fee', $data['fee'], array('class'=>'form-control') ) }}
 			</div>
 		</div>
 		<div class="form-group">
@@ -41,7 +41,7 @@
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Ca:</label>
 			<div class="col-sm-2">
-				{{ Form::input('text', 'shift',$value['shift'], array('class'=>'form-control') ) }}
+				{{ Form::input('text', 'shift',$data['shift'], array('class'=>'form-control') ) }}
 			</div>
 		</div>
 		
@@ -54,7 +54,7 @@
 		<div class="form-group">
 			<label for="inputTitle" class="col-sm-2 control-label">Giờ học:</label>
 			<div class="col-sm-1">
-				{{ Form::input('text', 'time_hour', $value['time_hour'], array('class'=>'form-control', 'required') ) }}
+				{{ Form::input('text', 'time_hour', $data['time_hour'], array('class'=>'form-control', 'required') ) }}
 			</div>
 			<label for="inputTitle" class="control-label">Giờ</label>
 		</div>
@@ -63,7 +63,7 @@
 			<label for="input" class="col-sm-2 control-label">Nội dung:</label>
 			<div class="col-sm-6">
 				<textarea name="editor1" id="editor1" rows="10" cols="80">
-                {{$value['content']}}
+                {{$data['content']}}
             	</textarea>
             <script>
                 // Replace the <textarea id="editor1"> with a CKEditor
@@ -81,17 +81,23 @@
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Giảm giá:</label>
 			<div class="col-sm-6">
-				{{ Form::input('text', 'discount', $value['discount'], array('class'=>'form-control') ) }}
+				{{ Form::input('text', 'discount', $data['discount'], array('class'=>'form-control') ) }}
 			</div>
 		</div>
 		 
 		<div class="form-group">
-			<label for="input" class="col-sm-2 control-label">Tên giáo viên:</label>
-			<div class="col-sm-2">
-				{{ Form::select('teacher_id',$teacher)}}
+			<label for="input" class="col-sm-2 control-label">Chọn giảng viên:</label>
+			
+			<div class="col-sm-6">
+
+				 
+			 {{ Form::select('teacher[]', $teacher, null, ['id' => 'teacher', 'multiple' => 'multiple']) }}
+			
 			</div>
+			
 		</div>
-		@endforeach
+
+  
 		<div class="form-group">
 			<div class="col-sm-10 col-sm-offset-2">
 				{{ Form::button('Lưu thay đổi', array('type'=>'submit', 'class'=>'btn btn-primary')) }}

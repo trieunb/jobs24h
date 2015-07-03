@@ -103,7 +103,8 @@
 
           <div class="tq3">
             <div class="tq3-image">
-            <img src="{{$couser['gvthumbnail']}}">
+                        {{HTML::image($couser['thumbnail'])}}
+             
             </div>
             <div class="bt-tt">
               <p class="name">{{$couser['name']}}</p>

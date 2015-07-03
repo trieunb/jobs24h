@@ -28,7 +28,6 @@
 				<th>Giờ học</th>
 				<th>Nội dung</th>
 				<th>Giảm giá</th>
-				<th>Giảng viên</th>
 				<th>#</th>
 			</tr>
 		</thead>
@@ -76,7 +75,7 @@
 					</div>				
 				</td>
 				<td>{{$value['discount']}}</td>
-				<td>{{$value['name_teacher']}}</td>
+				 
 				<td>
 					<a class="btn btn-xs btn-info" title="sửa"  href="{{URL::to('admin/training/edit-couser/'.$value['id'].'')}}"><i class="ace-icon fa fa-pencil bigger-120"></i></a>
 					<div style="padding:10px"></div>
