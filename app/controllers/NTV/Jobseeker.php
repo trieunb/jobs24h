@@ -176,16 +176,18 @@ class JobSeeker extends Controller
 		}))->with(array('education'=>function($ed) {
 			$ed->with('edu');
 		}))->where('id', $id_cv)->first();
-
+		
 		$user = NTVSentry::find($my_resume->ntv_id);
 		//var_dump($my_resume->education); die();
-		return View::make('jobseekers.resume')->with('user', $user)->with('id_cv', $id_cv)->with('my_resume', $my_resume);
+		$camnang_ntv = TrainingPost::where('training_cat_id', 10)->where('training_cat_id', 9)->with('trainingCat')->take(6)->get();
+		return View::make('jobseekers.resume')->with('user', $user)->with('id_cv', $id_cv)->with('my_resume', $my_resume)->with('camnang_ntv',$camnang_ntv);
 	}
 
 	// Edit CV
 	public function editCvHome($id_cv){
 		$my_resume = Resume::where('id', $id_cv)->first();
-		return View::make('jobseekers.edit-cv')->with('user', $GLOBALS['user'])->with('id_cv', $id_cv)->with('my_resume', $my_resume);
+		$camnang_ntv = TrainingPost::where('training_cat_id', 10)->where('training_cat_id', 9)->with('trainingCat')->take(6)->get();
+		return View::make('jobseekers.edit-cv')->with('user', $GLOBALS['user'])->with('id_cv', $id_cv)->with('my_resume', $my_resume)->with('camnang_ntv',$camnang_ntv);
 	}
 	public function saveInfo($action = false, $id_cv){
 		if($action == 'basic'){
@@ -1041,7 +1043,7 @@ class JobSeeker extends Controller
 				$list_category[$value->cat_name] = $cate;
 			}
 		}else{
-			$list_parent = null;
+			$list_category = null;
 		}
 		return View::make('jobseekers.list-category', compact('list_category'));
 	}

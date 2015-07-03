@@ -10,12 +10,13 @@ class NewsController extends \BaseController {
 	 */
 	public function getIndex()
 	{
-		$list_news = TrainingPost::all();
+		$list_news = TrainingPost::whereIn('id', array(9,10,11))->get();
 		return View::make('admin.news.manager', compact('list_news'));
 	}
 
 	public function getAdd(){
-		return View::make('admin.news.add');
+		$categories = TrainingCat::whereIn('id', array(9,10,11))->lists('name', 'id');
+		return View::make('admin.news.add', compact('categories'));
 	}
 
 	public function postAdd(){
@@ -64,7 +65,8 @@ class NewsController extends \BaseController {
 	public function getEdit($id){
 		$params = Input::all();
 		$news = TrainingPost::find($id);
-		return View::make('admin.news.edit', compact('news'));
+		$categories = TrainingCat::whereIn('id', array(9,10,11))->lists('name', 'id');
+		return View::make('admin.news.edit', compact('news', 'categories'));
 	}
 
 	public function postEdit(){

@@ -62,14 +62,14 @@
 					<li><a href="{{ URL::route('employers.launching') }}">Nhà tuyển dụng</a></li>
 					<li><a href="{{ URL::route('trainings.home') }}">Đào tạo</a></li>
 					<li><ul class="nav navbar-nav navbar-right">
-						<form class="navbar-form navbar-right relative" role="search">
+						{{Form::open(array('route'=>array('jobseekers.search-job'), 'class'=>'navbar-form navbar-right relative', 'method'=>'GET', 'role'=> 'search'))}}
 							<div class="form-group">
-								<input type="text" class="form-control simple-search" placeholder="Tìm việc làm...">
+								{{Form::input('text','keyword', null, array('class'=>'form-control simple-search', 'placeholder'=>'Tìm việc làm...'))}}
 							</div>
 							<button type="submit" class="btn btn-search">
 								{{ HTML::image('assets/images/btn_search.png') }}
 							</button>
-						</form>
+						{{Form::close()}}
 					</ul></li>
 				</ul>
 			</nav>

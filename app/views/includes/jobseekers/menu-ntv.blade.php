@@ -10,7 +10,7 @@
 				$count_applied_job = Application::where('ntv_id',$GLOBALS['user']->id)->count();
 				$count_my_resume = Resume::where('ntv_id', $GLOBALS['user']->id)->count();
 				$count_repond = VResponse::where('ntv_id',$GLOBALS['user']->id)->where('user_submit','!=', $GLOBALS['user']->id)->count();
-				$count_view_resume = ViewResume::where('ntv_id',$GLOBALS['user']->id)->count();
+				//$count_view_resume = ViewResume::where('ntv_id',$GLOBALS['user']->id)->count();
 				$my_resume = $applied_job = $my_job = $repond = $view = 0;
 
 		   		if(isset($count_my_resume)){
@@ -25,9 +25,9 @@
 		   		if(isset($count_repond)){
 		   			$repond = $count_repond;
 		   		}
-		   		if(isset($count_view_resume)){
-		   			$view = $count_view_resume;
-		   		}
+		   		//if(isset($count_view_resume)){
+		   		//	$view = $count_view_resume;
+		   		//}
 	   		}
 	   		
 	   		?>
@@ -38,7 +38,7 @@
 	      	<li><a href="{{URL::route('jobseekers.my-job')}}">{{ HTML::image('assets/images/icons/jobs.png') }} Việc làm phù hợp với bạn<span class="badge">{{$my_job}}</span></a></li>
 	      	<li><a href="{{URL::route('jobseekers.saved-job')}}">{{ HTML::image('assets/images/icons/save.png') }} Việc làm đã lưu<span class="badge">{{$my_job}}</span></a></li>
 	      	<li><a href="{{URL::route('jobseekers.applied-job')}}">{{ HTML::image('assets/images/icons/job_submitted.png') }} Việc làm đã nộp<span class="badge">{{$applied_job}}</span></a></li>
-	      	<li><a href="{{URL::route('jobseekers.employer-view-resume')}}">{{ HTML::image('assets/images/icons/view_profile.png') }} Nhà tuyển dụng xem hồ sơ<span class="badge">{{$view}}</span></a></li>
+	      	<li><a href="{{URL::route('jobseekers.employer-view-resume')}}">{{ HTML::image('assets/images/icons/view_profile.png') }} Nhà tuyển dụng xem hồ sơ<!--<span class="badge">{{$view}}</span>--></a></li>
 	      	<li><a href="{{URL::route('jobseekers.respond-from-employment')}}">{{ HTML::image('assets/images/icons/repond.png') }} Phản hồi của nhà tuyển dụng<span class="badge">{{$repond}}</span></a></li>
 	      	<!--<li><a href="ntv-hanchecty.php">{{ HTML::image('assets/images/icons/limit.png') }} Hạn chê công ty xem hồ sơ<span class="badge">2</span></a></li>-->
 	      	<li><a href="{{URL::route('jobseekers.messages')}}">{{ HTML::image('assets/images/icons/interview_letter.png') }} Thư mời phỏng vấn</a></li>

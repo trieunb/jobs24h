@@ -59,7 +59,9 @@
 								</div>
 								<label for="" class="col-sm-3 control-label">Quốc tịch:</label>
 								<div class="col-sm-3">
-									{{$user->country->country_name}}		
+									@if($user->country != null)
+										{{$user->country->country_name}}
+									@endif		
 								</div>
 							</div>
 							<div class="clearfix"></div>
@@ -87,7 +89,7 @@
 				</div><!-- rows -->
 				</div><!-- boxed -->
 				
-				@if($my_resume->namkinhnghiem != null)
+				@if($my_resume->namkinhnghiem != null || $my_resume->namkinhnghiem != 0)
 				<div class="boxed">
 				<div class="rows">
 					<div class="title-page">
@@ -106,7 +108,9 @@
 			            <div class="form-group">
 			            	<label class="col-sm-3 control-label">Bằng cấp cao nhất:</label>
 			            	<div class="col-sm-3">
+			            		@if(count($my_resume->bangcap))
 			            		{{$my_resume->bangcap->name}}
+			            		@endif
 			            	</div>
 			            </div>
 			            <div class="clearfix"></div>
@@ -143,7 +147,9 @@
 			            	</div>
 			            	<label class="col-sm-3 control-label">Cấp bậc hiện tại:</label>
 			            	<div class="col-sm-3">
+			            		@if(count($my_resume->level))
 			            		{{$my_resume->level->name}}
+			            		@endif
 			            	</div>
 			            </div>
 			            <div class="clearfix"></div>
@@ -154,7 +160,9 @@
 			            	</div>
 			            	<label class="col-sm-3 control-label">Cấp bậc mong muốn:</label>
 			            	<div class="col-sm-3">
+			            	@if(count($my_resume->capbac))
 			            		{{$my_resume->capbac->name}}
+			            		@endif
 			            	</div>
 			            </div>
 			            <div class="clearfix"></div>
@@ -185,7 +193,7 @@
 				</div><!-- rows -->
 				</div><!-- boxed -->
 				@endif
-				@if($my_resume->dinhhuongnn != null)
+				@if($my_resume->dinhhuongnn != '')
 				<div class="boxed">
 				<div class="rows">
 					<div class="title-page">
@@ -198,7 +206,10 @@
 				</div><!-- rows -->
 				</div><!-- boxed -->
 				@endif
-				@if($my_resume->experience[0]->position != null)
+				@if(count($my_resume->experience))
+				@foreach($my_resume->experience as $exp)
+				@endforeach
+				@if($exp->position != null)
 				<div class="boxed">
 					<div class="rows">
 						<div class="title-page">
@@ -209,7 +220,7 @@
 							<div class="form-group">
 								<label for="" class="col-sm-2 control-label">Chức danh:</label>
 								<div class="col-sm-10">
-										{{$exp->position}}
+									{{$exp->position}}
 								</div>
 							</div>
 							<div class="clearfix"></div>
@@ -234,21 +245,27 @@
 							<div class="form-group">
 				            	<label class="col-sm-2 control-label">Lĩnh vực:</label>
 				            	<div class="col-sm-4">
+				            		@if(count($exp->fieldofwork))
 				            		{{$exp->fieldofwork->name}}
+				            		@endif
 				            	</div>
 				            </div>
 				            <div class="clearfix"></div>
 				            <div class="form-group">
 				            	<label class="col-sm-2 control-label">Chuyên ngành:</label>
 				            	<div class="col-sm-4">
+				            		@if(count($exp->chuyennganh))
 				            		{{$exp->chuyennganh->name}}
+				            		@endif
 				            	</div>
 				            </div>
 				            <div class="clearfix"></div>
 				            <div class="form-group">
 				            	<label class="col-sm-2 control-label">Cấp bậc:</label>
 				            	<div class="col-sm-4">
+				            		@if(count($exp->capbac))
 				            		{{$exp->capbac->name}}
+				            		@endif
 				            	</div>
 				            </div>
 				            <div class="clearfix"></div>
@@ -269,7 +286,11 @@
 					</div><!-- rows -->
 				</div><!-- boxed -->
 				@endif
-				@if($my_resume->education[0]->specialized != null)
+				@endif
+				@if(count($my_resume->education))
+				@foreach($my_resume->education as $education)
+				@endforeach
+				@if($education->specialized != null )
 				<div class="boxed">
 					<div class="rows">
 						<div class="title-page">
@@ -279,7 +300,6 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Chuyên ngành:</label>
 				            	<div class="col-sm-9">
-				            		<?php ?>
 				            		{{$education->specialized}}
 				            	</div>
 							</div>
@@ -291,7 +311,9 @@
 				            	</div>
 				            	<label class="col-sm-2 control-label">Bằng cấp:</label>
 				            	<div class="col-sm-3">
+				            		@if(count($education->edu))
 				            		{{$education->edu->name}}
+				            		@endif
 				            	</div>
 							</div>
 							<div class="clearfix"></div>
@@ -309,11 +331,15 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Lĩnh vực nghiên cứu:</label>
 				            	<div class="col-sm-4">
+				            		@if(count($education->linhvuc))
 				            		{{$education->linhvuc->name}}
+				            		@endif
 				            	</div>
 				            	<label class="col-sm-2 control-label">Điểm:</label>
 				            	<div class="col-sm-3">
+				            		@if(count($education->diem))
 				            		{{$education->diem->name}}
+				            		@endif
 				            	</div>
 							</div>
 							<div class="clearfix"></div>
@@ -327,8 +353,9 @@
 					</div><!-- rows -->
 				</div><!-- boxed -->
 				@endif
+				@endif
 				<?php $skills = json_decode($my_resume->kynang);?>
-				@if(count($skills) > 0)
+				@if(count($skills))
 				<div class="boxed">
 					<div class="rows">
 						<div class="title-page">
@@ -360,75 +387,34 @@
 				@endif
 	</section>
 	<aside id="sidebar" class="col-sm-3 pull-right">
-				
+		@if(count($camnang_ntv))
 				<div class="widget row">
 					<h3>Cẩm nang nghề nghiệp</h3>
 					<ul>
+						@foreach($camnang_ntv as $post)	
 						<li>
-							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
+							<div class="col-sm-3">{{$post->thumbnail}}</div>
 							<div class="col-sm-9">
-								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
-								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
+								<a href="#" class="text-blue">{{$post->title}}</a>
+								<?php
+									// strip tags to avoid breaking any html
+									$string = $post->content;
+									$string = strip_tags($string);
+
+									if (strlen($string) > 50) {
+									    // truncate string
+									    $stringCut = substr($string, 0, 50);
+									    // make sure it ends in a word so assassinate doesn't become ass...
+									    $string = substr($stringCut, 0, strrpos($stringCut, ' ')); 
+									}
+									echo "<p>$string</p>";
+								?>
 							</div>
 						</li>
-						<li>
-							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
-								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
-							</div>
-						</li>
-						<li>
-							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
-								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
-							</div>
-						</li>
-						<li>
-							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
-								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
-							</div>
-						</li>
-						<li>
-							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
-								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
-							</div>
-						</li>
-						<li>
-							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
-								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
-							</div>
-						</li>
-						<li>
-							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
-								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
-							</div>
-						</li>
-						<li>
-							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
-								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
-							</div>
-						</li>
-						<li>
-							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
-								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
-							</div>
-						</li>
+						@endforeach
 					</ul>
 				</div>
-		</aside>
+		@endif			
+	</aside>
 	</section>
 @stop

@@ -130,8 +130,6 @@
 						@foreach($emp_hot as $val)
 							@if(@$val->company->logo != null)
 								<li class="col-sm-2"><img src="{{URL::to("uploads/companies/logos/".$val->company->logo."")}}"></li>
-							@else
-								<li class="col-sm-2">{{ HTML::image('assets/images/default_logo.png') }}</li>
 							@endif
 						@endforeach
 					</ul>
@@ -149,9 +147,10 @@
 								<li>
 									<div class="thumbs">
 										@if($new->thumbnail != null)
-										<img src="{{URL::to("uploads/news/".$new->thumbnail."")}}">
+										<a href="{{URL::route('news.view', array($new->id))}}"><img src="{{URL::to("uploads/news/".$new->thumbnail."")}}"></a>
 										@else
-										<img src="/images/photo_default.png">
+										
+										<a href="{{URL::route('news.view', array($new->id))}}"><img src="{{URL::to("assets/images/photo_default.png")}}"></a>
 										@endif
 									</div>
 									<div class="meta">

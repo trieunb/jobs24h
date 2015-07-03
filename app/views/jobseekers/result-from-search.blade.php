@@ -31,8 +31,11 @@
 					@foreach($jobs as $job)
 						<li>
 							<div class="col-sm-2">
-								<a href="#">{{HTML::image('/uploads/companies/logos/'.$job->ntd->company->logo.'')}}</a>
-								
+								@if($job->ntd->company->logo != '')
+								<a href="{{URL::route('jobseekers.job', array($job->slug, $job->id))}}">{{HTML::image('/uploads/companies/logos/'.$job->ntd->company->logo.'')}}</a>
+								@else
+								<a href="{{URL::route('jobseekers.job', array($job->slug, $job->id))}}" style="font-weight:bold; text-transform: capitalize;">{{$job->ntd->company->company_name}}</a>
+								@endif
 							</div>
 							<div class="col-sm-5">
 								<div class="job-title">

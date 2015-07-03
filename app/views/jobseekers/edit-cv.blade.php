@@ -836,74 +836,34 @@
 	                </div>
 	                <div class="col-sm-2 box-label danger"><strong>10%</strong></div>
 	            </div> 
+	            @if(count($camnang_ntv))
 				<div class="widget row">
 					<h3>Cẩm nang nghề nghiệp</h3>
 					<ul>
+						@foreach($camnang_ntv as $post)	
 						<li>
-							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
+							<div class="col-sm-3">{{$post->thumbnail}}</div>
 							<div class="col-sm-9">
-								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
-								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
+								<a href="#" class="text-blue">{{$post->title}}</a>
+								<?php
+									// strip tags to avoid breaking any html
+									$string = $post->content;
+									$string = strip_tags($string);
+
+									if (strlen($string) > 50) {
+									    // truncate string
+									    $stringCut = substr($string, 0, 50);
+									    // make sure it ends in a word so assassinate doesn't become ass...
+									    $string = substr($stringCut, 0, strrpos($stringCut, ' ')); 
+									}
+									echo "<p>$string</p>";
+								?>
 							</div>
 						</li>
-						<li>
-							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
-								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
-							</div>
-						</li>
-						<li>
-							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
-								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
-							</div>
-						</li>
-						<li>
-							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
-								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
-							</div>
-						</li>
-						<li>
-							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
-								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
-							</div>
-						</li>
-						<li>
-							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
-								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
-							</div>
-						</li>
-						<li>
-							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
-								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
-							</div>
-						</li>
-						<li>
-							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
-								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
-							</div>
-						</li>
-						<li>
-							<div class="col-sm-3">{{HTML::image('assets/images/example.png')}}</div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue">Làm sếp khó hay dễ?</a>
-								<p>Bạn đang mong chờ môt "cú hích", một sự thay đổi</p>
-							</div>
-						</li>
+						@endforeach
 					</ul>
 				</div>
+				@endif
 		</aside>
 	</section>
 

@@ -33,7 +33,7 @@
 								@if($user->avatar != null)
 									{{HTML::image('uploads/jobseekers/avatar/'.$user->avatar.'')}}
 								@else
-									{{HTML::image('images/avatar.jpg')}}
+									{{HTML::image('assets/images/avatar.jpg')}}
 								@endif
 							</div>
 						</div>

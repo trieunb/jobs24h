@@ -60,7 +60,7 @@
 					<tbody>
 						<tr>
 							<td>Cấp bậc</td>
-							<td>{{$job->chucvu}}</td>
+							<td>{{$job->level->name}}</td>
 						</tr>
 						<tr>
 							<td>Mức lương</td>
@@ -100,7 +100,11 @@
 						</tr>
 						<tr>
 							<td>Hạn nộp</td>
+							@if($job->hannop != null)
 							<td>{{date('d-m-Y',strtotime($job->hannop))}}</td>
+							@else
+							<td></td>
+							@endif
 						</tr>
 					</tbody>
 				</table>

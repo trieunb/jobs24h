@@ -11,4 +11,8 @@ class WorkLocation extends \Eloquent {
 	{
 		return $this->belongsTo('Resume', 'rs_id');
 	}
+	public function job()
+	{
+		return $this->belongsTo('Job', 'job_id');
+	}
 }

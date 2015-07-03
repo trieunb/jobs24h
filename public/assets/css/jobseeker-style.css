@@ -133,7 +133,7 @@ section {margin-bottom: 50px;}
 body.modal-open {padding: 0 !important; overflow: visible !important;}
 .modal-dialog {margin: 150px auto 30px !important;}
 .modal-content {border-radius: 0px !important;}
-.boxed-content-wrapper {padding: 138px 0 0 0; margin: 0;}
+.boxed-content-wrapper {padding: 120px 0 0 0; margin: 0;}
 .main-content{padding: 0 !important; margin: 30px auto;}
 #content, #sidebar { float: left;}
 #content {padding-left: 0 !important; width: 700px;}
@@ -393,7 +393,8 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
 
 
 /*   HEADER  */
-#header {padding-top: 15px; width: 100%; z-index: 9999; background: #ffffff; position: fixed;}
+#header {width: 100%; z-index: 9999; background: #ffffff; position: fixed; top: 0;}
+#header .container {padding: 10px 0;}
 .site-title,.header-right,.header-right .ntv-menu {display: inline-block; float: left;}
 .header-right .list-link span{display: inline-block; margin-right: 10px;}
 .header-right .list-link span.employer-site {margin-right: 0;}
@@ -405,7 +406,7 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
 
 
 /* NAVIGATION */
-#navigation {margin-top: 15px;}
+#navigation .container{padding: 0px;}
 #navigation ul li{float: left;}
 #navigation ul li a {display: block; color: #fff; padding: 0 39px; text-transform: capitalize;  line-height: 45px;  border-right: 1px solid #38D0FF;}
 #navigation ul li:last-child a {border-right: none;}
@@ -439,7 +440,7 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
 .categories-list [class^="col-"] {border-bottom: 1px dotted #ccc; width: 30%; margin: 0 15px 0px;background: url(../images/arrow_square_orange.png) no-repeat left 20px;padding: 0;}
 .top-job {margin-top: 20px;}
 .top-job [class^="col-"] li:last-child{border: none;}
-.top-job li {margin: 0 5px;background: url(../images/arrow_square_orange.png) no-repeat 15px 16px;padding: 0; float: left; width: 30%;}
+.top-job li {margin: 0 5px;background: url(../images/arrow_square_orange.png) no-repeat 15px 16px;padding: 0; display: inline-block; vertical-align: top; width: 30%;}
 .top-job li:nth-child(3n+2){background-color: #f3f3f3;}
 .top-job li:nth-child(2){border-radius: 10px 10px 0 0;}
 .top-job li:nth-last-child(2){border-radius:0 0  10px 10px ;}

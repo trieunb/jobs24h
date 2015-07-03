@@ -54,7 +54,7 @@
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Chuyên mục:</label>
 			<div class="col-sm-3">
-				{{ Form::select('cate', TrainingCat::lists('name', 'id'), $news->training_cat_id)}}
+				{{ Form::select('cate', $categories, $news->training_cat_id)}}
 			</div>
 		</div>
 		 

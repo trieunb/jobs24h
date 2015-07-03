@@ -52,6 +52,8 @@ Route::group(array('prefix'=>$locale), function() {
 		}else{
 			$jobs_for_widget = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->orderBy('updated_at', 'ASC')->take(3)->get();
 		}
+
+
 		// Widget Ngành nghề hấp dẫn
 		$widget_categories_hot = Category::whereHas('mtcategory', function($q) {
 			$q->whereHas('job', function ($q1) {
@@ -60,16 +62,29 @@ Route::group(array('prefix'=>$locale), function() {
 		})->where('parent_id', '!=', 0)->with('mtcategory')->get()->sortBy(function($widget_categories_hot) {
 		    return $widget_categories_hot->mtcategory->count();
 		})->reverse();
+
+
 		// Widget tìm công việc theo cấp bậc
 		$all_level = Level::all();
+
+
 		// Widget Địa điểm hấp dẫn
-		$widget_province_hot = Province::with('mtprovince')->get()->sortBy(function($widget_province_hot) {
+		$widget_province_hot = Province::whereHas('mtprovince', function($q) {
+			$q->whereHas('job', function ($q1) {
+				$q1->where('is_display', 1)->where('hannop', '>=' , date('Y-m-d'));
+			});
+		})->with('mtprovince')->get()->sortBy(function($widget_province_hot) {
 		    return $widget_province_hot->mtprovince->count();
 		})->reverse();
+
+
 		View::share('jobs_for_widget', $jobs_for_widget);
 		View::share('widget_categories_hot', $widget_categories_hot);
 		View::share('widget_province_hot', $widget_province_hot);
 		View::share('all_level', $all_level);
+
+
+
 		Route::get('/', array('as'=>'jobseekers.home', 'uses'=>'JobSeeker@home'));
 		Route::get('/login', array('as'=>'jobseekers.login', 'uses'=>'JobSeekerAuth@login') );
 		Route::post('/login', 'JobSeekerAuth@doLogin' );

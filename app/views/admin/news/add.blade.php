@@ -50,7 +50,7 @@
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Chuyên mục:</label>
 			<div class="col-sm-2">
-				{{ Form::select('cate', TrainingCat::lists('name', 'id'))}}
+				{{ Form::select('cate', $categories)}}
 			</div>
 		</div>
 		 
