@@ -32,7 +32,7 @@
 									<tr>
 										<td>
 											@if($mr->file_name == '')
-												<a href="{{URL::route('jobseekers.save-cv', array($mr->id))}}" class="text-blue"><strong><em>{{date('d-m-Y',strtotime($mr->created_at))}}</em>_{{$user->first_name}} {{$user->last_name}}</strong><br></a>
+												<a href="{{URL::route('jobseekers.save-cv', array($mr->id))}}" class="text-blue"><strong>@if($mr->tieude_cv != '') <em>{{$mr->tieude_cv}}</em> @else <em>{{date('d-m-Y',strtotime($mr->created_at))}}</em>_{{$user->first_name}} {{$user->last_name}} @endif </strong><br></a>
 											@else
 												<a href='{{ URL::route("jobseekers.action-cv", array("download",$mr->id)) }}' class="text-blue"><strong><em>{{date('d-m-Y',strtotime($mr->created_at))}}</em>_{{$user->first_name}} {{$user->last_name}}</strong><br></a>
 											@endif
@@ -63,7 +63,7 @@
 											<div class="modal-dialog modal-sm">
 												<div class="modal-content">
 													<div class="modal-body">
-														<p>Khi bị xóa, hồ sơ không thể phục hồi lại được. Bạn có thực sự muốn xóa hồ sơ "@if(count($my_resume)>0){{$mr->created_at}} {{$mr->first_name}} {{$mr->last_name}}@endif"?</p>
+														<p>Khi bị xóa, hồ sơ không thể phục hồi lại được. Bạn có thực sự muốn xóa hồ sơ "@if(count($my_resume))@if($mr->tieude_cv != '') <em>{{$mr->tieude_cv}}</em> @else <em>{{date('d-m-Y',strtotime($mr->created_at))}}</em>_{{$user->first_name}} {{$user->last_name}} @endif @endif"?</p>
 													</div>
 													<div class="modal-footer">
 														{{Form::button('Hủy', array('class'=>'btn btn-default', 'data-dismiss'=>'modal'))}}

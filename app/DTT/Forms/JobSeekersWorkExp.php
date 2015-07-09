@@ -8,7 +8,6 @@ class JobSeekersWorkExp extends FormValidator {
 		"field"=>"required",
 		"specialized"=>"required",
 		"level"=>"required",
-		"salary"=>"numeric",
 		);
 	protected $messages = array(
 		'required'	=>	'Thông tin này bắt buộc',

@@ -84,8 +84,7 @@
 								<a href="{{URL::route('jobseekers.get-list-province')}}" class="btn btn-sm bg-orange pull-right">Xem thêm</a>
 							</ul>
 						</li>
-						<li><i class="fa-li fa fa-square"></i><a href="" class="new">Việc Làm Toàn Cầu</a></li>
-						<li><i class="fa-li fa fa-square"></i><a href="">Download Ứng Dụng VNJobs</a></li>
+						
 					</ul>
 				</div>
 			</div><!-- boxed-search -->

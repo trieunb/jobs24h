@@ -15,6 +15,10 @@ class Job extends \Eloquent {
 	{
 		return $this->belongsTo('Level', 'chucvu');
 	}
+	public function education()
+	{
+		return $this->belongsTo('Education', 'bangcap');
+	}
 	public function ntd()
 	{
 		return $this->belongsTo('NTD', 'ntd_id');

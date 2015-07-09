@@ -150,14 +150,15 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
     // PLUGIN SELECT 2
     $("#locationMainSearch, #categoryMainSearch, #WishPlaceWork, #Fields,#Specialized").select2({
         maximumSelectionLength: 3,
+        language: "vi",
     });
     $("#jobLevelMainSearch,#ForeignLanguages,#CurrentLevel,#WishLevel,#FieldOfStudy,#Scope,#LatestLevel,#Diploma,#HighestDegree,#District,#Cities,#Nationality, #jobObjMainSearch,#jobExpMainSearch,#DateOfBirth,#MonthOfBirth,#YearOfBirth,#Gender,#Country,#MaritalStatus,#Category,#Province,#Level,#AverageGrade,#choose_cv,.up_time").select2({
-        minimumResultsForSearch: Infinity
+        minimumResultsForSearch: Infinity,
+
     });
 
     $("#From_date,#To_date,#DOB,#Study_to,#Study_from").datetimepicker({
         pickTime: false,
-        locale: 'ru'
     });
 
 
@@ -402,7 +403,33 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
         $(this).children('ul').removeClass('hidden-xs');
     });
 
-   
+    // FLOAT FIXED HEADER
+    function fixDiv() {
+        var $header = $('#header');
+        if ($(window).scrollTop() > 200){
+            $('#header').css({
+                top: "-150px"
+            });
+        }
+        else{
+            $('#header').css({
+                top: "0"
+            });
+        }
+    }
+    $(window).scroll(fixDiv);
+    fixDiv();
+    
+    // FLOAT FIXED 
+    $(function() {        
+        $(".add-modules").floatingFixed({ padding: 5 });
+    });
+
+    $("#specific-salary-input, .salary").blur(function(){
+        $(this).formatCurrency({digitGroupSymbol:','});
+    });
+
+
 })(jQuery);
 
 

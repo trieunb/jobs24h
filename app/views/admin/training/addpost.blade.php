@@ -59,7 +59,7 @@
 
 			</div>
 			<div class="col-sm-3">
-				<img style="width:50%" id="blah" src="{{URL::to('uploads/training/avatar.jpg')}}" alt="your image" />
+				<img style="width:50%" id="blah" src="{{URL::to('uploads/training/logo.png')}}" alt="your image" />
 
 			</div>
 			 

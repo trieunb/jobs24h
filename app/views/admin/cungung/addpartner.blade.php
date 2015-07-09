@@ -37,7 +37,7 @@
 			</div>
 
 			<div class="col-sm-3">
-				<img style="width:50%" id="blah" src="{{URL::to('cungunglaodong/assets/images/avatar.jpg')}}" alt="logo" />
+				<img style="width:50%" id="blah" src="{{URL::to('cungunglaodong/assets/images/logo.png')}}" alt="logo" />
 
 			</div>
 

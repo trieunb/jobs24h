@@ -9,7 +9,7 @@
 			{{Form::open(array('action'=>array('JobSeeker@delMyJob'), 'method'=>'POST', 'id'=>'DelSavedJob'))}}
 			<div class="rows">
 				<div class="title-page">
-					<h2>Việc làm của tôi</h2>
+					<h2>Việc làm phù hợp</h2>
 				</div>
 					<p><strong>Lưu ý</strong>: Bạn không xem được việc làm đã hết thời hạn đăng tuyển hoặc tạm ngưng nhận hồ sơ.
             		</p>
@@ -35,38 +35,29 @@
 								<tbody>
 									@if(isset($my_job_list) && count($my_job_list))
 									@foreach($my_job_list as $mjl)
+									
 									<tr>
 										<td>{{Form::checkbox('check[]', $mjl->id, null, array('class'=>'checkbox'))}}</td>
 										<td>
-											<strong><em>{{ HTML::linkRoute('jobseekers.job', $mjl->jobs->vitri, array($mjl->jobs->slug, "$mjl->job_id"), array('class' => 'text-blue'))}}</em></strong>
+											<strong><em>{{ HTML::linkRoute('jobseekers.job', $mjl->vitri, array($mjl->slug, "$mjl->job_id"), array('class' => 'text-blue'))}}</em></strong>
 											<small><div class="legend text-orange">
-												@if(strtotime($mjl->jobs->hannop) < strtotime(date('Y-m-d', time())))
+												@if(strtotime($mjl->hannop) < strtotime(date('Y-m-d', time())))
 													Hết hạn
 												@endif
 											</div></small>
 											<button type="button" class="btn bg-gray-light btn-sm add-note" data-toggle="popover" data-placement="bottom" data-content='<div class="form-horizontal" id="note"><div class="form-group"><textarea rows="3" name="note" class="form-control note" placeholder="Ghi chú">{{$mjl->note}}</textarea></div><div class="form-group"><input type="hidden" name="id" class="form-control id" value="{{$mjl->id}}"><button type="button" class="btn btn-sm save-note bg-orange pull-right">Lưu</button></div></div>'>Thêm ghi chú</button>
 										</td>
-										<td>{{$mjl->jobs->ntd->company->company_name}}</td>
+										<td>{{$mjl->ntd->company->company_name}}</td>
 										<td>{{$mjl->save_date}}</td>
 										<td>{{$mjl->respond}}</td>
 										<td>
-											@if(count($applied_job))
-											@foreach($applied_job as $val)
-												@if($val->job_id == $mjl->job_id)
-												Đã ứng tuyển<br>({{date('d-m-Y',strtotime($val->apply_date))}})
-												@else
-												{{ HTML::linkRoute('jobseekers.job', 'Ứng tuyển', array($mjl->jobs->slug, "$mjl->job_id"), array('class' => 'btn btn-sm bg-orange btn-apply'))}}
-												@endif
-											@endforeach
-											@else
-												{{ HTML::linkRoute('jobseekers.job', 'Ứng tuyển', array($mjl->jobs->slug, "$mjl->job_id"), array('class' => 'btn btn-sm bg-orange btn-apply'))}}
-												@endif
+											
 										</td>
 									</tr>
 									@endforeach
 									@else
 										<tr>
-											<td colspan="6" class="text-align-center">Chưa có việc làm nào</td>
+											<td colspan="6" class="text-align-center">Hiện không có việc làm nào phù hợp với bạn. Cập nhật hồ sơ để có thể tìm kiếm việc làm phù hợp nhất. </td>
 										</tr>
 									@endif
 								</tbody>

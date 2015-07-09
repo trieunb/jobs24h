@@ -88,6 +88,7 @@ Route::group(array('prefix'=>$locale), function() {
 		Route::get('/', array('as'=>'jobseekers.home', 'uses'=>'JobSeeker@home'));
 		Route::get('/login', array('as'=>'jobseekers.login', 'uses'=>'JobSeekerAuth@login') );
 		Route::post('/login', 'JobSeekerAuth@doLogin' );
+		Route::post('/login-ajax', 'JobSeekerAuth@loginAjax' );
 		Route::get('/logout', array('as'=>'jobseekers.logout', 'uses'=>'JobSeekerAuth@logout') );
 		Route::get('/register', array('as'=>'jobseekers.register', 'uses'=>'JobSeekerAuth@register') );
 		Route::post('/register', 'JobSeekerAuth@doRegister' );
@@ -126,14 +127,12 @@ Route::group(array('prefix'=>$locale), function() {
 			Route::get('/my-resume-by-upload/{action}/{id_cv}', array('as'=>'jobseekers.action-cv','uses'=>'JobSeeker@actionCV'));
 			Route::post('/my-resume-by-upload/{id_cv}', array('as'=>'jobseekers.update-upload-cv','uses'=>'JobSeeker@updateUploadCV'));
 			Route::get('/notification-jobs', array('as'=>'jobseekers.notification-jobs','uses'=>'JobSeeker@notificationJobs'));
-			Route::post('/notification-jobs/', array('as'=>'jobseekers.post-notification-jobs','uses'=>'JobSeeker@creatNotificationJobs'));
 			Route::get('/employer-view-resume', array('as'=>'jobseekers.employer-view-resume','uses'=>'JobSeeker@employerViewResume'));
 			Route::get('/message', array('as'=>'jobseekers.messages','uses'=>'JobSeeker@messages'));
 			Route::controller('notification-jobs', 'JobSeeker', array(
 				'postUpdate' => 'jobseekers.post-update-notification-jobs',
 				'postDelete' => 'jobseekers.post-del-notification-jobs',
 			));
-			
 		});
 		Route::get('/view/{slug}/{id}', array( 'as' =>	'jobseekers.job', 'uses' =>	'JobController@getIndex'));
 		Route::post('/view/{slug}/{id}/{action}', array( 'as' =>'jobseekers.post-view-job', 'uses' =>'JobController@postIndex'));
@@ -141,13 +140,19 @@ Route::group(array('prefix'=>$locale), function() {
 		Route::get('/resume/{id_cv}', array('as'=>'jobseekers.view-resume', 'uses'=>'JobSeeker@viewResume'));
 		Route::get('/category', array('as'=>'jobseekers.get-category', 'uses' =>'JobController@getCategory'));
 		Route::get('q', array('as'=>'jobseekers.search-job','uses'=>'JobController@searchJob'));
-		Route::get('/applying-job/{job_id}', array('as'=>'jobseekers.applying-job','uses'=>'JobSeeker@applyingJob'));
-		Route::post('/applying-job/{job_id}', array('as'=>'jobseekers.applying-job','uses'=>'JobSeeker@doApplyingJob'));
+		Route::get('/applying-job/{action}/{job_id}', array('as'=>'jobseekers.applying-job','uses'=>'JobSeeker@applyingJob'));
+		Route::post('/applying-job/{action}/{job_id}', array('as'=>'jobseekers.applying-job','uses'=>'JobSeeker@doApplyingJob'));
 		Route::get('/register-job-alert', array('as'=>'jobseekers.register-job-alert', 'uses'=>'JobSeeker@regiterJobAlert'));
 		Route::get('/categories', array('as'=>'jobseekers.get-list-category', 'uses'=>'JobSeeker@getListCategory'));
 		Route::get('/provinces', array('as'=>'jobseekers.get-list-province', 'uses'=>'JobSeeker@getListProvince'));
+		Route::post('/notification-jobs/', array('as'=>'jobseekers.post-notification-jobs','uses'=>'JobSeeker@creatNotificationJobs'));
 
 		Route::get('/news/{id}', array('as'=>'news.view', 'uses'=>'News@getIndex'));
+		// To use it, in app/routes.php
+		//Route::controller('oauth', 'Cartalyst\SentrySocial\Controllers\OAuthController');
+
+		// To extend it, make a class which extends Cartalyst\SentrySocial\Controllers\OAuthController
+		//Route::controller('oauth', 'MyOAuthController');
 	});
 });
 

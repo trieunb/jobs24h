@@ -17,7 +17,45 @@
 						<h1>{{$job->vitri}}</h1>	
 						<h2>{{$job->ntd->company->company_name}}</h2>
 						@if($job->is_apply == 1)
-						<a href="{{URL::route('jobseekers.applying-job', array($job->id))}}" class="btn btn-lg bg-orange">Nộp đơn</a>
+						@if(Sentry::check())
+						<a href="{{URL::route('jobseekers.applying-job', array('login',$job->id))}}" class="btn btn-lg bg-orange">Nộp đơn</a>
+						@else
+						<a class="btn btn-lg bg-orange" data-toggle="modal" href='#login-modal'>Nộp đơn</a>
+						<div class="modal fade" id="login-modal">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+										<h3 class="modal-title text-orange">Nộp hồ sơ ứng tuyển:</h3>
+									</div>
+									<div class="modal-body">
+										<strong>Thành viên đăng nhập</strong> (Nếu bạn đã có hồ sơ tại <a href="{{URL::route('jobseekers.home')}}"><strong>Vnjobs.vn</strong></a>)
+										<div class="notifications"></div>
+									    {{ Form::open( array('class'=>'form form-horizontal', 'id'=>'LoginAjax') ) }}
+									    	<div class="form-group">
+									    		<div class="col-sm-5">
+										    	{{Form::input('email','email',null, array('class'=>'form-control', 'id'=>'email'))}}
+										    	</div>
+									    	</div>
+									    	<div class="form-group">
+									    		<div class="col-sm-5">
+									    			{{Form::input('password','password',null, array('class'=>'form-control', 'id'=>'password'))}}
+									    		</div>
+									    	</div>
+									    	<div class="form-group push-bottom">
+										   	{{Form::submit('Đăng nhập và Ứng tuyển', array('class'=>'btn btn-lg bg-orange'))}}
+										   	</div>
+									    {{ Form::close() }}
+									</div>
+									<div class="modal-footer">
+										<strong>Nộp đơn ứng tuyển nhanh không cần đăng ký tài khoản</strong>
+										<p>Bạn có thể nộp đơn ứng tuyển không cần đăng nhập hoặc chưa là thành viên của <a href="{{URL::route('jobseekers.home')}}" class="h3"><strong>Vnjobs.vn</strong></a></p>
+										<a href="{{URL::route('jobseekers.applying-job', array('not-login',$job->id))}}" class="btn btn-lg bg-blue">Ứng tuyển ngay</a>
+									</div>
+								</div><!-- /.modal-content -->
+							</div><!-- /.modal-dialog -->
+						</div><!-- /.modal -->
+						@endif
 						@else
 						<button type="button" class="btn btn-lg bg-orange" disabled="disabled">Công việc đã đóng</button>
 						@endif
@@ -27,87 +65,107 @@
 						<i class="fa fa-bookmark"></i>
 						<a href="{{URL::route('jobseekers.save-job', array($job->id))}}">Lưu việc làm này</a>
 						<i class="fa fa-envelope"></i>
-						<a href="{{URL::route('jobseekers.notification-jobs', array('jobid'=>$job->id))}}">Gởi email việc làm tương tự</a>
+						<a href="{{URL::route('jobseekers.notification-jobs', array('jobid'=>$job->id))}}">Gửi email việc làm tương tự</a>
 						<i class="fa fa-share"></i>
 						<strong><a class="share-to-friends" role="button" data-toggle="popover" data-placement="bottom" title="Giới Thiệu Việc Làm Đến Bạn Bè" data-content='<form role="form" class="form-horizontal" id="ShareToFriends"><div class="form-group"><input type="text" class="form-control first_name_friend" name="first_name_friend" placeholder="Họ"></div><div class="form-group"><input type="text" class="form-control last_name_friend" name="last_name_friend"  placeholder="Tên"></div><div class="form-group"><input type="email" class="form-control email_name_friend" name="email_name_friend" placeholder="Email"></div><div class="form-group"><button type="submit" class="btn btn-sm bg-orange pull-right">Giới thiệu</button></div></form>'>Giới thiệu bạn bè</a></strong>
 						<i class="fa fa-comment"></i>
 						@if(Sentry::check())
-						<a class="feedback-to-emp" role="button" data-toggle="popover" data-placement="bottom" title="Gởi phản hồi đến Nhà tuyển dụng" data-content='<form role="form" class="form-horizontal" id="FeedbackToEmp"><div class="form-group"><input type="text" class="form-control title" name="title"  placeholder="Nhập tiêu đề"></div><div class="form-group"><textarea rows="3" name="feedback" class="form-control feedback" placeholder="Nhập nội dung phản hồi"></textarea></div><div class="form-group"><button type="submit" class="btn btn-sm bg-orange pull-right">Phản hồi</button></div></form>'>Gởi phản hồi</a>
+						<a class="feedback-to-emp" role="button" data-toggle="popover" data-placement="bottom" title="Gởi phản hồi đến Nhà tuyển dụng" data-content='<form role="form" class="form-horizontal" id="FeedbackToEmp"><div class="form-group"><input type="text" class="form-control title" name="title"  placeholder="Nhập tiêu đề"></div><div class="form-group"><textarea rows="3" name="feedback" class="form-control feedback" placeholder="Nhập nội dung phản hồi"></textarea></div><div class="form-group"><button type="submit" class="btn btn-sm bg-orange pull-right">Phản hồi</button></div></form>'>Gửi phản hồi</a>
 						@else
-						<a class="feedback-to-emp" role="button" data-toggle="popover" data-placement="bottom" title="Gởi phản hồi đến Nhà tuyển dụng" data-content='Login để phản hồi'>Gởi phản hồi</a>
+						<a class="feedback-to-emp" role="button" data-toggle="popover" data-placement="bottom" title="Gởi phản hồi đến Nhà tuyển dụng" data-content='Login để phản hồi'>Gửi phản hồi</a>
 						@endif
 					</div>
+					<h2>Thông Tin Ví Trị Tuyển Dụng</h2>
+					<table class="table table-striped table-hover table-bordered">
+						<tbody>
+							<tr>
+								<td><strong>Chức vụ</strong></td>
+								<td>{{$job->level->name}}</td>
+								<td><strong>Số năm kinh nghiệm</strong></td>
+								<td>{{$job->namkinhnghiem}}</td>
+							</tr>
+							<tr>
+								<td><strong>Ngành nghề</strong></td>
+								<td>
+									@foreach($job->category as $key=>$val)
+										{{$job->category[$key]->category->cat_name}}<br>
+									@endforeach
+								</td>
+								<td><strong>Yêu cầu bằng cấp</strong></td>
+								<td>{{$job->education->name}}</td>
+							</tr>
+							<tr>
+								<td><strong>Hình thức làm việc</strong></td>
+								<td>{{$job->work->name}}</td>
+								<td><strong>Yêu cầu giới tính</strong></td>
+								<td>
+								@if($job->gioitinh == 0)
+									Không yêu cầu
+								@elseif($job->gioitinh == 1)
+									Nữ
+								@else
+									Nam
+								@endif
+								</td>
+							</tr>
+							<tr>
+								<td><strong>Địa điểm</strong></td>
+								<td>
+									@foreach($job->province as $key=>$val)
+										{{$job->province[$key]->province->province_name}}<br>
+									@endforeach
+								</td>
+								<td><strong>Yêu cầu độ tuổi</strong></td>
+								<td>{{$job->dotuoi_min}} - {{$job->dotuoi_max}}</td>
+							</tr>
+							<tr>
+								<td><strong>Mức lương</strong></td>
+								<td>@if($job->mucluong_min != 0 && $job->mucluong_min != 0)
+										${{$job->mucluong_min}} - ${{$job->mucluong_max}}
+									@elseif($job->mucluong_max == 0 && $job->mucluong_min != 0)
+										${{$job->mucluong_min}}
+									@elseif($job->mucluong_min == 0 && $job->mucluong_max != 0)
+										${{$job->mucluong_max}}
+									@else 
+										Thỏa thuận
+									@endif</td>
+								<td><strong>Số lượng cần tuyển</strong></td>
+								<td>{{$job->sltuyen}}</td>
+							</tr>
+						</tbody>
+					</table>
 					<h2>Mô Tả Công Việc</h2>
 					<div class="job-description">
-						{{$job->mota}}
+						{{nl2br($job->mota)}}
 					</div>
 					<h2>Yêu cầu công việc</h2>
 					<div class="job-requirement">
-						{{$job->yeucaukhac}}
+						{{nl2br($job->yeucaukhac)}}
 					</div>
 					<h2>Quyền lợi</h2>
 					<div class="job-requirement">
-						{{$job->quyenloi}}
+						{{nl2br($job->quyenloi)}}
 					</div>
-				</div>
-			</div>
-			<div class="boxed">
-				<div class="rows">
-				<div class="title-page">
-					<h2>Thông tin vị trí tuyển dụng</h2> 
-				</div>
-				<table class="table table-striped table-hover table-bordered">
-					<tbody>
-						<tr>
-							<td>Cấp bậc</td>
-							<td>{{$job->level->name}}</td>
-						</tr>
-						<tr>
-							<td>Mức lương</td>
-							<td>@if($job->mucluong_min != 0 && $job->mucluong_min != 0)
-									${{$job->mucluong_min}} - ${{$job->mucluong_max}}
-								@elseif($job->mucluong_max == 0 && $job->mucluong_min != 0)
-									${{$job->mucluong_min}}
-								@elseif($job->mucluong_min == 0 && $job->mucluong_max != 0)
-									${{$job->mucluong_max}}
-								@else 
-									Thỏa thuận
-								@endif</td>
-						</tr>
-						<tr>
-							<td>Ngành nghề</td>
-							<td>
-								@foreach($job->category as $key=>$val)
-									{{$job->category[$key]->category->cat_name}}<br>
-								@endforeach
-							</td>
-						</tr>
-						<tr>
-							<td>Địa điểm</td>
-							<td>
-								@foreach($job->province as $key=>$val)
-									{{$job->province[$key]->province->province_name}}<br>
-								@endforeach
-							</td>
-						</tr>
-						<tr>
-							<td>Loại hình</td>
-							<td>{{$job->work->name}}</td>
-						</tr>
-						<tr>
-							<td>Đăng ngày</td>
-							<td>{{date('d-m-Y',strtotime($job->created_at))}}</td>
-						</tr>
-						<tr>
-							<td>Hạn nộp</td>
-							@if($job->hannop != null)
-							<td>{{date('d-m-Y',strtotime($job->hannop))}}</td>
-							@else
-							<td></td>
-							@endif
-						</tr>
-					</tbody>
-				</table>
+					<h2>Hồ Sơ Bao Gồm</h2>
+					<div class="job-requirement">
+						{{$job->hosogom}}
+					</div>
+					<h2>Hạn Nộp Hồ Sơ</h2>
+					<div class="job-requirement">
+						{{date('d-m-Y', strtotime($job->hannop))}}
+					</div>
+					<h2>Hình Thức Nộp Hồ Sơ</h2>
+					<div class="job-requirement">
+						@if($job->hinhthucnop == 0)
+						Tất cả các hình thức
+						@elseif($job->hinhthucnop == 1)
+						Nhấn nút Nộp Đơn
+						@elseif($job->hinhthucnop == 2)
+						Qua Email
+						@else
+						Trực tiếp
+						@endif
+					</div>
 				</div>
 			</div>
 			<div class="boxed">
@@ -216,6 +274,35 @@
 					           	}
 							}
 						})
+					});
+
+					$('#LoginAjax').submit(function(event) {
+						event.preventDefault();
+						var url = '{{URL::action("JobSeekerAuth@loginAjax")}}';
+						var result= '{{URL::route("jobseekers.applying-job", array("login", $job->id))}}';
+						$.ajax({
+							url: url,
+							type: 'POST',
+							dataType: 'json',
+							data: {
+								email: $('#email').val(),
+								password: $('#password').val()
+							},
+							success : function(json){
+								if(! json.has)
+					            {	
+					            	var j = $.parseJSON(json.message);
+						            $.each(j, function(index, val) {
+						            	$('.notifications').html('');
+						            	$('.notifications').append('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+val+'</div>');      		
+						           		});
+					            }else{
+					            	$('.notifications').html('');
+					           		$('.notifications').append('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+json.message+'</div>');
+					           		window.location.replace(result);
+					           	}
+							}
+						});
 					});
 				</script>
 			@stop

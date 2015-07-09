@@ -61,7 +61,7 @@
 									@endforeach
 									@else
 										<tr>
-											<td colspan="6" class="text-align-center">Bạn chưa nộp đơn cho bất kỳ công việc nào</td>
+											<td colspan="6" class="text-align-center">Bạn chưa chưa ứng tuyển vào vị trí nào</td>
 										</tr>
 									@endif
 								</tbody>

@@ -43,7 +43,7 @@
 									@if($user->avatar != null)
 									<img src="{{URL::to("uploads/jobseekers/avatar/".$user->avatar."")}}" class="avatar">
 									@else
-									{{ HTML::image('assets/images/avatar.jpg', null, array("class"=>"avatar")) }}
+									{{ HTML::image('assets/images/logo.png', null, array("class"=>"avatar")) }}
 									@endif
 									<strong><em>Chào, {{$user->first_name}} {{$user->last_name}}</em></strong>
 								</a>
@@ -149,7 +149,11 @@
 		{{ HTML::script('assets/plugins/jcarousel/js/jquery.jcarousel.min.js') }}
 		{{ HTML::script('assets/js/moment.js') }}
 		{{ HTML::script('assets/js/bootstrap-datetimepicker.min.js') }}
+		{{ HTML::script('assets/js/jquery.floatingFixed.js') }}
+		{{ HTML::script('assets/js/jquery.formatcurrency.js') }}
 		{{ HTML::script('assets/js/main.js') }}
+
+		
 		@yield('scripts')
 	</body>
 </html>

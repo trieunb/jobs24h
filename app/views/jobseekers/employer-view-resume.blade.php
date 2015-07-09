@@ -35,7 +35,7 @@
 									@endforeach
 									@else
 										<tr>
-										<td colspan="5" class="text-align-center">Nhà tuyển dụng chưa xem hồ sơ của bạn.</td>
+										<td colspan="5" class="text-align-center">Không có lượt xem hồ sơ nào từ Nhà tuyển dụng</td>
 										</tr>
 									@endif
 								</tbody>

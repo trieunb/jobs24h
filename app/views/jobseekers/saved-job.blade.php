@@ -52,6 +52,7 @@
 										<td>{{$mjl->save_date}}</td>
 										<td>{{$mjl->respond}}</td>
 										<td>
+											@if(count($applied_job))
 											@foreach($applied_job as $val)
 												@if($val->job_id == $mjl->job_id)
 												Đã ứng tuyển<br>({{date('d-m-Y',strtotime($val->apply_date))}})
@@ -59,12 +60,13 @@
 												{{ HTML::linkRoute('jobseekers.job', 'Ứng tuyển', array($mjl->jobs->slug, "$mjl->job_id"), array('class' => 'btn btn-sm bg-orange btn-apply'))}}
 												@endif
 											@endforeach
+											@endif
 										</td>
 									</tr>
 									@endforeach
 									@else
 										<tr>
-											<td colspan="6" class="text-align-center">Chưa có việc làm nào</td>
+											<td colspan="6" class="text-align-center">Không có việc làm nào đã lưu, hãy bắt đầu <a class="text-blue decoration" href="{{URL::route('jobseekers.search-job')}}">tìm kiếm</a> ngay bây giờ để tìm được công việc phù hợp.</td>
 										</tr>
 									@endif
 								</tbody>

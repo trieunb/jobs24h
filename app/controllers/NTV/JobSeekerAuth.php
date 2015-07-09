@@ -7,13 +7,29 @@
 class JobSeekerAuth extends Controller
 {
 	
+	/*public function loginFacebook(){
+		$service = SentrySocial::make('facebook', 'http://localhost/vnjobs/public/vi/jobseekers');
+		if ($code = Input::get('code'))
+		{
+		    if ($user = SentrySocial::authenticate($service, $code))
+		    {
+		        var_dump($user);
+
+		        // Additionally, the user will be logged in, so this
+		        // is the same:
+		        // var_dump(Sentry::getUser());
+
+		        // Continue with your application's workflow, the user is logged in!
+		    }
+		}
+	}*/
+
 	public function login()
 	{
 		return View::make('jobseekers.login');
 	}
 	public function doLogin()
 	{
-		
 		$params = Input::only('email', 'password');
 		$validator = new App\DTT\Forms\JobSeekersLogin;
 		if($validator->fails())
@@ -34,28 +50,28 @@ class JobSeekerAuth extends Controller
 			}
 			catch (Cartalyst\Sentry\Users\LoginRequiredException $e)
 			{
-			    return Redirect::back()->withErrors('Login field is required.');
+			    return Redirect::back()->withErrors('Vui lòng nhập Email.');
 			}
 			catch (Cartalyst\Sentry\Users\PasswordRequiredException $e)
 			{
-			    return Redirect::back()->withErrors('Password field is required.');
+			    return Redirect::back()->withErrors('Vui lòng nhập mật khẩu.');
 			}
 			catch (Cartalyst\Sentry\Users\WrongPasswordException $e)
 			{
-			    return Redirect::back()->withErrors('Wrong password, try again.');
+			    return Redirect::back()->withErrors('Sai mật khẩu, vui lòng thử lại.');
 			}
 			catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
 			{
-			    return Redirect::back()->withErrors( 'User was not found.');
+			    return Redirect::back()->withErrors( 'Không tìm thấy người dùng.');
 			}
 			catch (Cartalyst\Sentry\Users\UserNotActivatedException $e)
 			{
-			    return Redirect::back()->withErrors( 'User is not activated.');
+			    return Redirect::back()->withErrors( 'Người dùng chưa được kích hoạt.');
 			}
 			// The following is only required if the throttling is enabled
 			catch (Cartalyst\Sentry\Throttling\UserSuspendedException $e)
 			{
-			    return Redirect::back()->withErrors( 'User is suspended.');
+			    return Redirect::back()->withErrors( 'Người dùng đã bị khóa.');
 			}
 			catch (Cartalyst\Sentry\Throttling\UserBannedException $e)
 			{
@@ -63,6 +79,73 @@ class JobSeekerAuth extends Controller
 			}
 		}
 	}
+
+	public function loginAjax()
+	{
+		$params = Input::all();
+		$respond['has'] = false;
+		if(Request::ajax()){
+			$validator = new App\DTT\Forms\JobSeekersLogin;
+			if($validator->fails())
+			{
+				$respond['message'] = $validator->getMessageBag()->toJson();
+				return Response::json($respond);
+			} else {
+				try
+				{
+				     // Login credentials
+				    $credentials = array(
+				        'email'    => $params['email'],
+				        'password' => $params['password']
+				    );
+
+				    // Authenticate the user
+				    $user = Sentry::authenticate($credentials, true);	  	
+				    $respond['has'] = true;
+					$respond['message'] = 'Đăng nhập thành công.';
+					return Response::json($respond);
+				}
+				catch (Cartalyst\Sentry\Users\LoginRequiredException $e)
+				{
+				    $respond['message'] = json_encode(array('' => 'Vui lòng nhập Email.'));
+					return Response::json($respond);
+				}
+				catch (Cartalyst\Sentry\Users\PasswordRequiredException $e)
+				{
+				    $respond['message'] = json_encode(array('' => 'Vui lòng nhập mật khẩu.'));
+					return Response::json($respond);
+				}
+				catch (Cartalyst\Sentry\Users\WrongPasswordException $e)
+				{
+				    $respond['message'] = json_encode(array('' => 'Sai mật khẩu, vui lòng thử lại.'));
+					return Response::json($respond);
+				}
+				catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+				{
+				    $respond['message'] = json_encode(array('' => 'Không tìm thấy người dùng.'));
+					return Response::json($respond);
+				}
+				catch (Cartalyst\Sentry\Users\UserNotActivatedException $e)
+				{
+				    $respond['message'] = json_encode(array('' => 'Người dùng chưa được kích hoạt.'));
+					return Response::json($respond);
+				}
+				// The following is only required if the throttling is enabled
+				catch (Cartalyst\Sentry\Throttling\UserSuspendedException $e)
+				{
+				    $respond['message'] = json_encode(array('' => 'Người dùng đã bị khóa.'));
+					return Response::json($respond);
+				}
+				catch (Cartalyst\Sentry\Throttling\UserBannedException $e)
+				{
+				    $respond['message'] = json_encode(array('' => 'User is banned.'));
+					return Response::json($respond);
+				}
+			}
+		}
+	}
+
+
 	public function register()
 	{
 		return View::make('jobseekers.register');

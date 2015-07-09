@@ -78,6 +78,11 @@
 											</div>
 											<div class="modal-body row">
 												<div class="form-group">
+													<div class="col-sm-9">
+														{{Form::input('hidden','error',null, array('class'=>'form-control error'))}}
+													</div>
+												</div>
+												<div class="form-group">
 													<label class="col-sm-3 control-label">Gửi các việc làm</label>
 													<div class="col-sm-9">
 														{{Form::input('text','keyword',$ja->keyword, array('class'=>'form-control up_keyword'))}}
@@ -186,6 +191,11 @@
 					</div>
 					<div class="modal-body row">
 						<div class="form-group">
+													<div class="col-sm-9">
+														{{Form::input('hidden','error',null, array('class'=>'form-control error'))}}
+													</div>
+												</div>
+						<div class="form-group">
 							<label class="col-sm-3 control-label">Gửi các việc làm</label>
 							<div class="col-sm-9">
 								{{Form::input('text','keyword',$vitri, array('class'=>'form-control keyword'))}}
@@ -258,12 +268,23 @@
 					email: email,
 				},
 				success : function(json){
-					if(!json.has)
-	            	{
-	            		$('.error').text(json.message);
-					}else{
-						window.location.replace(result);
-					}
+					if(! json.has)
+		            {	
+		            	console.log(json.message);
+		            	$('#JobAlertForm').find(".has-error").removeClass('has-error');
+			            $('#JobAlertForm').find(".error-message").remove();
+		            	var j = $.parseJSON(json.message);
+		            	$.each(j, function(index, val) {
+			            	$('.'+index).parent().closest('div[class^="col-sm"]').addClass('has-error');
+			            	if($('.'+index).parent().closest('div[class^="col-sm"]').find(".error-message").length < 1){
+			           			$('.'+index).parent().closest('div[class^="col-sm"]').append('<span class="error-message">'+val+'</span>')
+			            	}
+		           		});
+		            }else{
+		           		$('#JobAlertForm').find(".has-error").removeClass('has-error');
+		           		$('#JobAlertForm').find(".error-message").remove();
+						$('#modal-id').modal('hide');
+		           	}
 				}
 			})
 		});
@@ -303,12 +324,23 @@
 					time: $('#modal-update-'+id+' .up_time').val(),
 				},
 				success : function(json){
-					if(!json.has)
-	            	{
-	            		$('.error').text(json.message);
-					}else{
-						window.location.replace(result);
-					}
+					if(! json.has)
+		            {	
+		            	$('#UpdateJobAlert').find(".has-error").removeClass('has-error');
+			            $('#UpdateJobAlert').find(".error-message").remove();
+		            	var j = $.parseJSON(json.message);
+		            	$.each(j, function(index, val) {
+			            	$('.up_'+index).parent().closest('div[class^="col-sm"]').addClass('has-error');
+			            	if($('.up_'+index).parent().closest('div[class^="col-sm"]').find(".error-message").length < 1){
+			           			$('.up_'+index).parent().closest('div[class^="col-sm"]').append('<span class="error-message">'+val+'</span>')
+			            	}
+			           		$('.loading-icon').hide();           		
+		           		});
+		            }else{
+		           		$('#UpdateJobAlert').find(".has-error").removeClass('has-error');
+		           		$('#UpdateJobAlert').find(".error-message").remove();
+						$('#UpdateJobAlert .modal').modal('hide');
+		           	}
 				}
 			})
 		});

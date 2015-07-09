@@ -10,7 +10,7 @@
 				<div class="title-page">
 					<h2>Thông tin cơ bản</h2> 
 				</div>
-				<div class="box">
+				<div class="box edit-basic">
 					@include('includes.notifications')
 					{{ Form::open( array('route'=>array('edit-basic-info', 'basic-info',$user->id), 'class'=>'form-horizontal', 'method'=>'POST', 'files'=>'true') ) }}
 						<div class="col-sm-3">
@@ -18,7 +18,7 @@
 								@if($user->avatar !=null)
 									{{ HTML::image('uploads/jobseekers/avatar/'.$user->avatar.'') }}
 								@else
-									{{ HTML::image('assets/images/avatar.jpg') }}
+									{{ HTML::image('assets/images/logo.png') }}
 								@endif
 							</div>
 							<div class="fileUpload btn bg-orange col-sm-5">
@@ -26,13 +26,14 @@
 								{{ Form::file('cv_upload',array('class'=>'upload', 'id' =>'uploadBtn', 'accept'=>'image/*')) }}
 							</div>
 							<div class="col-sm-7">
-								{{Form::input('text', 'file_name', null, array('class'=>'form-control', 'id'=>'uploadFile', 'disable', 'placeholder'=>'không có tệp nào được chọn'))}}
+								{{Form::input('text', 'file_name', null, array('class'=>'form-control', 'id'=>'uploadFile', 'disabled', 'placeholder'=>'không có tệp nào được chọn'))}}
 							</div>
+							<small class="legend">Chú ý: Ảnh tải lên không vượt quá 2MB</small>
 						</div>
 						<div class="col-sm-9">
 							<h3 class="text-orange">* Thông tin cá nhân</h3>
 							<div class="form-group">
-								<label for="" class="col-sm-3 control-label">Họ và tên</label>
+								<label for="" class="col-sm-3 control-label">Họ và tên <abbr>*</abbr></label>
 								<div class="col-sm-2">
 									{{ Form::select('gender', array('0'=>'Ông', '1'=>'Bà'), $user->gender, array('class'=>'form-control', 'id' => 'Gender') ) }}
 								</div>
@@ -44,13 +45,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="" class="col-sm-3 control-label">Nghề nghiệp</label>
-								<div class="col-sm-6">
-									{{Form::input('text', 'vocational', $user->nghenghiep,array('class'=>'form-control', 'placeholder'=>'Digital Marketing Manager at Minh Phuc (MP Telecom)'))}}
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="" class="col-sm-3 control-label">Ngày sinh</label>
+								<label for="" class="col-sm-3 control-label">Ngày sinh<abbr>*</abbr></label>
 								<div class="col-sm-6">
 								<div class="input-group date" id="DOB">
 					                {{Form::input('text','date_of_birth', date('m-d-Y',strtotime($user->date_of_birth)), array('class'=>'date_of_birth form-control','placeholder'=>'DD-MM-YYYY','data-date-format'=>'DD-MM-YYYY'))}}
@@ -59,6 +54,18 @@
 					                </span>
 					            </div>
 					            </div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-sm-3 control-label">Điện thoại<abbr>*</abbr></label>
+								<div class="col-sm-6">
+									{{Form::input('text', 'phone_number', $user->phone_number,array('class'=>'form-control'))}}
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-sm-3 control-label">Nghề nghiệp</label>
+								<div class="col-sm-6">
+									{{Form::input('text', 'vocational', $user->nghenghiep,array('class'=>'form-control', 'placeholder'=>'Digital Marketing Manager at Minh Phuc (MP Telecom)'))}}
+								</div>
 							</div>
 							<div class="form-group">
 								<label for="" class="col-sm-3 control-label">Quốc tịch</label>

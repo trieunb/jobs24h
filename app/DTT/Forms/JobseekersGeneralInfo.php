@@ -10,6 +10,7 @@ class JobseekersGeneralInfo extends FormValidator {
 		"info_category" 		=>"required",
 		"foreign_languages_1"	=>"required",
 		"level_languages_1" 	=>"required",
+		"tieude" 				=>"required",
 		);
 	protected $messages = array(
 		'required'	=>	'Thông tin này bắt buộc',

@@ -13,14 +13,14 @@
 							@if($user->avatar !=null)
 								{{ HTML::image('uploads/jobseekers/avatar/'.$user->avatar.'') }}
 							@else
-								{{ HTML::image('assets/images/avatar.jpg') }}
+								{{ HTML::image('assets/images/logo.png') }}
 							@endif
 						@endif
 						</div>
 					</div>
 					<div class="col-sm-9">
 						<div class="profile">
-							<h2>{{$user->first_name}} {{$user->last_name}}</h2>
+							<h2>@if(count($my_resume))@if($my_resume->tieude_cv != '') <em>{{$my_resume->tieude_cv}}</em> @else <em>{{date('d-m-Y',strtotime($my_resume->created_at))}}</em>_{{$user->first_name}} {{$user->last_name}} @endif @endif</h2>
 							<p>Điện thoại: <span class="text-blue">{{$user->phone_number}}</span></p>
 							<p>Email: <span class="text-blue">{{$user->email}}</span></p>
 							<p>Hồ Sơ: <a href="{{URL::route('jobseekers.view-resume', array($my_resume->id))}}" class="text-blue" target="_blank">{{URL::route('jobseekers.view-resume', array($my_resume->id))}}</a></p>
@@ -180,6 +180,7 @@
 				 				@endforeach
 			            	</div>
 			            </div>
+			            <div class="clearfix"></div>
 			            <div class="form-group">
 			                <label class="col-sm-3 control-label">Mức lương mong muốn:</label>
 							<div class="col-sm-4">

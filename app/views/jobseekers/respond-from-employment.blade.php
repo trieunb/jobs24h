@@ -42,7 +42,7 @@
 									@endforeach
 									@else
 									<tr>
-										<td colspan="5" class="text-align-center">Bạn chưa có phản hồi nào từ nhà tuyển dụng.</td>
+										<td colspan="5" class="text-align-center">Không có phản hồi nào từ Nhà tuyển dụng</td>
 									</tr>
 									@endif
 								</tbody>

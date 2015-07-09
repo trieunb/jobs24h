@@ -31,7 +31,7 @@
 			</div>
 
 			<div class="col-sm-3">
-				<img style="width:50%" id="blah" src="{{URL::to('cungunglaodong/assets/images/avatar.jpg')}}" alt="banner" />
+				<img style="width:50%" id="blah" src="{{URL::to('cungunglaodong/assets/images/logo.png')}}" alt="banner" />
 
 			</div>
 

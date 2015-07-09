@@ -116,7 +116,7 @@
 								  <!-- Wrapper for slides -->
 								  <div class="carousel-inner" role="listbox">
 								    <div class="item active">
-								    {{HTML::image('cungunglaodong/assets/images/avatar.jpg')}}	
+								    {{HTML::image('cungunglaodong/assets/images/logo.png')}}	
 								      
 								      <div class="carousel-caption">
 										<blockquote class="container">
@@ -127,7 +127,7 @@
 								      </div>
 								    </div>
 								    <div class="item">
-								      {{HTML::image('cungunglaodong/assets/images/avatar.jpg')}}	
+								      {{HTML::image('cungunglaodong/assets/images/logo.png')}}	
 								      <div class="carousel-caption">
 								      	<blockquote class="container">
 											<h2 class="italic">Tối rất ấn tượng với đội ngũ giảng viên của MP Telecom rất trẻ trung nhưng lại giàu kinh nghiệm và phương pháp truyền đạt tốt.</h2>

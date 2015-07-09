@@ -128,7 +128,7 @@ return array(
 		'DaveJamesMiller\Breadcrumbs\ServiceProvider',
 		'Mews\Captcha\CaptchaServiceProvider',
 		'Maatwebsite\Excel\ExcelServiceProvider',
-
+		//'Cartalyst\SentrySocial\SentrySocialServiceProvider',
 	),
 
 	/*
@@ -205,7 +205,7 @@ return array(
 		'Form'		=>	'App\DTT\Services\Form',
 		'Captcha' => 'Mews\Captcha\Facades\Captcha',
 		'Excel' => 'Maatwebsite\Excel\Facades\Excel',
-		
+		//'SentrySocial' => 'Cartalyst\SentrySocial\Facades\Laravel\SentrySocial',
 	),
 
 	/**

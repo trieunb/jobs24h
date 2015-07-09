@@ -13,7 +13,7 @@
 			<p>Nhà tuyển dụng này muốn nhận được hồ sơ của bạn bằng ngôn ngữ tiếng Anh</p>
 			<div class="box">
 				<div class="tag">Nộp đơn</div>
-				{{ Form::open( array('route'=>array('jobseekers.applying-job', $job->id), 'class'=>'form form-horizontal', 'method'=>'POST', 'files'=>true) ) }}
+				{{ Form::open( array('route'=>array('jobseekers.applying-job', 'login', $job->id), 'class'=>'form form-horizontal', 'method'=>'POST', 'files'=>true) ) }}
 					@if ($loi = Session::get('loi'))
 						<div class="alert alert-danger">
 							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -33,7 +33,7 @@
 								@if($user->avatar != null)
 									{{HTML::image('uploads/jobseekers/avatar/'.$user->avatar.'')}}
 								@else
-									{{HTML::image('assets/images/avatar.jpg')}}
+									{{HTML::image('assets/images/logo.png')}}
 								@endif
 							</div>
 						</div>

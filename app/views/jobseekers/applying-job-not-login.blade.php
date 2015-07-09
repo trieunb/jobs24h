@@ -11,8 +11,8 @@
 				<h2>Công việc ứng tuyển</h2>
 			</div>
 			<div class="box">
-				<div class="tag">Apply Job</div>
-				{{ Form::open( array('route'=>array('jobseekers.applying-job', $job->id), 'class'=>'form form-horizontal', 'method'=>'POST', 'files'=>true) ) }}
+				<div class="tag">Nộp đơn</div>
+				{{ Form::open( array('route'=>array('jobseekers.applying-job', 'not-login', $job->id), 'class'=>'form form-horizontal', 'method'=>'POST', 'files'=>true) ) }}
 					@if ($loi = Session::get('loi'))
 						<div class="alert alert-danger">
 							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -27,25 +27,25 @@
 						</div>
 					@endif
 					<div class="form-group">
-						<label class="control-label col-sm-2">Fullname</label>
+						<label class="control-label col-sm-2">Họ và tên</label>
 						<div class="col-sm-2">
 							{{Form::select('prefix_title',array('Ông'=>'Ông', 'Bà' => 'Bà'),null, array('class'=>'form-control', 'id'=>'Gender'))}}
 						</div>
 						<div class="col-sm-3">
-							{{Form::input('text','first_name', null, array('class'=>'form-control', 'placeholder'=>'First Name'))}}
+							{{Form::input('text','first_name', null, array('class'=>'form-control', 'placeholder'=>'Họ'))}}
 							<span class="error-message">{{$errors->first('first_name')}}</span>
 						</div>
 						<div class="col-sm-3">
-							{{Form::input('text','last_name', null, array('class'=>'form-control', 'placeholder'=>'Last Name'))}}
+							{{Form::input('text','last_name', null, array('class'=>'form-control', 'placeholder'=>'Tên'))}}
 							<span class="error-message">{{$errors->first('last_name')}}</span>
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="control-label col-sm-2">Headline</label>
+						<label class="control-label col-sm-2">Tiêu đề</label>
 						<div class="col-sm-5">
 							{{Form::input('text','headline', null, array('class'=>'form-control'))}}
 							<span class="error-message">{{$errors->first('headline')}}</span>
-							<small class="legend">Senior manager at a multinational corporation</small>
+							<small class="legend">Giám đốc cấp cao tại một tập đoàn đa quốc gia</small>
 						</div>
 					</div>
 					<div class="form-group">
@@ -56,14 +56,14 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="control-label col-sm-2">Contact phone</label>
+						<label class="control-label col-sm-2">Điện thoại</label>
 						<div class="col-sm-5">
 							{{Form::input('text','contact_phone', null, array('class'=>'form-control'))}}
 							<span class="error-message">{{$errors->first('contact_phone')}}</span>
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="control-label col-sm-2">Live in</label>
+						<label class="control-label col-sm-2">Nơi sống</label>
 						<div class="col-sm-3">
 							{{Form::input('text','address', null, array('class'=>'form-control'))}}
 							<span class="error-message">{{$errors->first('address')}}</span>
@@ -73,7 +73,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="control-label col-sm-2">Cover letter</label>
+						<label class="control-label col-sm-2">Thư xin việc</label>
 						<div class="col-sm-5">
 							{{Form::textarea('cover_letter', null, array('class'=>'form-control headline', 'rows'=> '5'))}}
 							<span class="error-message">{{$errors->first('cover_letter')}}</span>
@@ -90,7 +90,7 @@
 								{{Form::input('text', 'file_name', null, array('class'=>'form-control', 'id'=>'uploadFile', 'disable', 'placeholder'=>'không có tệp nào được chọn'))}}
 							</div>
 							<div class="clearfix"></div>
-							<span class="small">Formats: MS Word, PDF, Image, Rar, Zip (2MB maximum)</span>
+							<span class="small">Định dạng: MS Word, PDF (Tối đa 2MB)</span>
 							<span class="error-message">{{$errors->first('file_name')}}</span>
 						</div>
 					</div>

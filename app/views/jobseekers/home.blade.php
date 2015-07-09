@@ -63,7 +63,7 @@
 					<div class="panel">
 						<div class="col-sm-7 panel-left">
 							<span><strong>Bạn đang xem danh sách ngành nghề sắp xếp theo:</strong></span>
-							<a class="btn bg-orange upc sort-name">Ngành Hot</a>
+							<a class="btn bg-orange upc sort-name">Nhóm ngành</a>
 						</div>
 						<div class="col-sm-5 panel-right pull-right">
 							<div class="sort-by-categories bg-blue">

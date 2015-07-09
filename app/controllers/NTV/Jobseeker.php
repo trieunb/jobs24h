@@ -67,19 +67,20 @@ class JobSeeker extends Controller
 		       'gender' => 'required',
 		       'first_name' => 'required',
 		       'last_name' => 'required',
-		       'vocational' => 'required',
+		       'phone_number' => 'required',
 		       'date_of_birth' => 'required',
-		       'country_id' => 'required',
-		       'marital_status' => 'required',
+		       'cv_upload' => 'mimes:png,jpeg|max:2000',
 		    );
 		    $messages = array(
 				'gender.required'	=>	'Vui lòng chọn giới tính của bạn',
 				'first_name.required'	=>	'Vui lòng điền Họ của bạn',
 				'last_name.required'	=>	'Vui lòng điền Tên của bạn',
-				'vocational.required'	=>	'Vui lòng điền thông tin nghề nghiệp của bạn',
+				'tel.required'	=>	'Vui lòng điền số điện thoại của bạn',
 				'date_of_birth.required'	=>	'Vui lòng chọn ngày sinh của bạn',
 				'country_id.required'	=>	'Vui lòng chọn quốc tịch của bạn',
 				'marital_status.required'	=>	'Vui lòng tình trạng hôn nhân của bạn',
+				'max' => 'Hình ảnh không được vượt quá 2MB',
+				'mimes' => 'Vui lòng tải file đúng định dạng'
 			);
 			$validator = Validator::make($params, $rules, $messages);
 			if($validator->fails()){			
@@ -135,7 +136,7 @@ class JobSeeker extends Controller
 				'password_confirmation.required'	=>	'Vui lòng nhập xác nhận mật khẩu mới',
 				'confirmed'	=>	'Mật khẩu không khớp',
 				'min'	=>	'Mật khẩu tối thiểu .min ký tự',
-				'max'	=>	'Mật khẩu tối đa .min ký tự',
+				'max'	=>	'Mật khẩu tối đa .max ký tự',
 			);
 			$validator = Validator::make($params, $rules, $messages);
 			if($validator->fails()){			
@@ -343,8 +344,10 @@ class JobSeeker extends Controller
 				}
 				
 				if($params['specific_salary'] == '') $params['specific_salary'] = 0;
+				else{$params['specific_salary'] = str_replace(',', '', $params['specific_salary']);}
 				$rs = Resume::where('id',$id_cv)->where('ntv_id',$GLOBALS['user']->id)->update(array(
 					'namkinhnghiem' 		=> $params['info_years_of_exp'],
+					'tieude_cv' 			=> $params['tieude'],
 					'bangcapcaonhat' 		=> $params['info_highest_degree'],
 					'capbachientai' 		=> $params['info_current_level'],
 					'vitrimongmuon' 		=> ''.$params['info_wish_position'].'',
@@ -400,6 +403,7 @@ class JobSeeker extends Controller
 		$params = Input::all();
 		$respond['has'] = false;
 		if(Request::ajax()){
+			$params['salary'] = str_replace(',', '', $params['salary']);
 			$validator = new App\DTT\Forms\JobSeekersWorkExp;
 			if($validator->fails())
 			{
@@ -597,6 +601,55 @@ class JobSeeker extends Controller
 	}
 
 	public function myJob(){
+
+		/*
+		$suggested_jobs = Subscribe::where('ntv_id', $GLOBALS['user']->id)->get();
+		if(count($suggested_jobs)){
+			foreach ($suggested_jobs as $key => $value) {
+				$keyword[] = $value->keyword;
+				$categories[] = json_decode($value->categories);
+				$provinces[] = json_decode($value->provinces);
+			}
+			$jobs = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->with('province')->with('category');
+				if(count($keyword)){
+				foreach($keyword as $kw){
+					$jobs->where('vitri', 'LIKE', "%".$kw."%");
+				}	
+			}
+			if(count($provinces))
+			{
+				foreach($provinces as $province){
+					$jobs->whereHas('province', function($query) use($province) {
+						$query->whereIn('province_id', $province);
+					});
+				}
+			}else {
+					$jobs->with(array('province'	=>	function($query) {
+						$query->with('province');
+					}));
+			}
+			if(count($categories) )
+			{
+				foreach($categories as $cate){
+					$jobs->whereHas('category', function($query) use($cate)  {
+						$query->whereIn('cat_id', $cate);
+					});
+				}
+			}else {
+				$jobs->with(array('category'=>function($query) {
+					$query->with('category');
+				}));
+			}
+			$my_job_list = $jobs->orderBy('updated_at', 'ASC')->get();
+			if(count($my_job_list) == 0){
+				$my_job_list = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->orderBy('updated_at', 'ASC')->paginate(10);	
+			}
+		}else{
+			$my_job_list = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->orderBy('updated_at', 'ASC')->paginate(10);
+		}
+
+		return View::make('jobseekers.my-job',compact('my_job_list'));
+		*/
 		$applied_job = Application::where('ntv_id',$GLOBALS['user']->id)->get();
 		$my_job_list = MyJob::where('ntv_id',$GLOBALS['user']->id)->paginate(10);
 		return View::make('jobseekers.my-job',compact('my_job_list', 'applied_job'));
@@ -617,8 +670,15 @@ class JobSeeker extends Controller
 	}
 	public function savedJob(){
 		$applied_job = Application::where('ntv_id',$GLOBALS['user']->id)->get();
-
-		$my_job_list = MyJob::Where('ntv_id',$GLOBALS['user']->id)->paginate(10);
+		if(count($applied_job)){
+			foreach ($applied_job as $key => $value) {
+				$applied_id = array($value->job_id);
+			}
+			$my_job_list = MyJob::whereNotIn('job_id', $applied_id)->where('ntv_id',$GLOBALS['user']->id)->paginate(10);
+		}else{
+			$my_job_list = MyJob::where('ntv_id',$GLOBALS['user']->id)->paginate(10);
+		}
+		
 		return View::make('jobseekers.saved-job',compact('my_job_list','applied_job'));	
 	}
 
@@ -627,14 +687,18 @@ class JobSeeker extends Controller
 		if(isset($params['check'])){
 			
 			$job = MyJob::whereIn('id', $params['check'])->where('ntv_id',$GLOBALS['user']->id)->get();
-			foreach ($job as $key => $value) {
-				$job_id = $value->job_id;	
-				$app = Application::where('job_id', $job_id)->where('ntv_id',$GLOBALS['user']->id)->get();
-				foreach ($app as $val) {
-					$applied_id = array($val->job_id);
+				foreach ($job as $key => $value) {
+					$job_id = $value->job_id;	
+					$app = Application::where('job_id', $job_id)->where('ntv_id',$GLOBALS['user']->id)->get();
+					if(count($app)){
+						foreach ($app as $val) {
+							$applied_id = array($val->job_id);
+						}
+						$job = MyJob::whereNotIn('job_id', $applied_id)->where('ntv_id',$GLOBALS['user']->id)->delete();
+					}else{
+						$job = MyJob::where('ntv_id',$GLOBALS['user']->id)->delete();
+					}
 				}
-			}
-			$job = MyJob::whereNotIn('job_id', $applied_id)->where('ntv_id',$GLOBALS['user']->id)->delete();
 			$applied_job = Application::where('ntv_id',$GLOBALS['user']->id)->get();
 			$my_job_list = MyJob::Where('ntv_id',$GLOBALS['user']->id)->paginate(10);
 			if($job){
@@ -693,10 +757,10 @@ class JobSeeker extends Controller
 	}
 
 
-	public function applyingJob($job_id){
+	public function applyingJob($action, $job_id){
 		$job = Job::find($job_id);
 		if($job != null){
-			if ($GLOBALS['user'] != null) {
+			if ($action == 'login') {
 				$resumes = Resume::where('ntv_id', $GLOBALS['user']->id)->where('is_visible',1)->where('is_public',1)->get();
 
 				return View::make('jobseekers.applying-job')->with('user', $GLOBALS['user'])->with('job', $job)->with('resumes',$resumes);	
@@ -707,7 +771,7 @@ class JobSeeker extends Controller
 			return View::make('jobseekers.home');
 		}
 	}
-	public function doApplyingJob($job_id){
+	public function doApplyingJob($action, $job_id){
 		$params = Input::all();
 			$is_file = false;
 			if(isset($params['is_file'])){
@@ -762,7 +826,7 @@ class JobSeeker extends Controller
 							$extension = $params['cv_upload']->getClientOriginalExtension();
 							$name = Str::random(11) . '.' . $extension;
 							$params['cv_upload']->move(Config::get('app.upload_path') . 'jobseekers/cv/', $name);
-							$create = Resume::create(array('file_name' => $name));
+							$create = Resume::create(array('file_name' => $name, 'ntv_id' => $GLOBALS['user']));
 							if($create){
 								$cv = $create->id;
 							}
@@ -921,11 +985,17 @@ class JobSeeker extends Controller
 		$respond['has'] = false;
 		if(Request::ajax()){
 			$rules = array(
-		       'salary' => 'numeric ',
-		       'email'  => 'required|email'
+		       'salary' 	=> 'numeric ',
+		       'categories' => 'required',
+		       'province' 	=> 'required',
+		       'level'		=> 'required',
+		       'email'  	=> 'required|email'
 		    );
 			$messages = array(
-				'email.required'	=>	'Vui lòng nhập Email của bạn',
+				'categories.required'	=>	'Vui lòng chọn ngành nghề',
+				'level.required'	=>	'Vui lòng chọn cấp bậc mong muốn',
+				'province.required'	=>	'Vui lòng chọn địa điểm',
+				'email.required'	=>	'Vui lòng nhập email của bạn',
 				'email' 	=>  'Email không đúng định dạng',
 			);
 			$validator = Validator::make($params, $rules, $messages);
@@ -933,20 +1003,42 @@ class JobSeeker extends Controller
 		       	$respond['message'] = $validator->getMessageBag()->toJson();
 				return Response::json($respond);
 			}else{
-				$jobs_alert = Subscribe::where('ntv_id', $GLOBALS['user']->id)->count();
-				if($jobs_alert < 5){
-					if($params['keyword'] == '' && $params['categories'] == '' && $params['level'] == 0 && $params['province'] == ''){
-						$respond['message'] = json_encode(array('Lỗi'=>'Vui lòng điền đầy đủ các điều kiện'));
-						return Response::json($respond);
+				if($GLOBALS['user'] != null){
+					$jobs_alert = Subscribe::where('ntv_id', $GLOBALS['user']->id)->count();
+					if($jobs_alert < 5){
+							if($params['categories'] != ''){
+								$cat = json_encode($params['categories']);
+							}else{$cat = null;}
+							if($params['province'] != ''){
+								$province = json_encode($params['province']);
+							}else{$province = null;}
+							$create = Subscribe::create(array(
+								'ntv_id' 	=> $GLOBALS['user']->id,
+								'keyword' 	=> ''.$params['keyword'].'',
+								'times' 	=> $params['time'],
+								'categories'=> ''.$cat.'',
+								'provinces' => ''.$province.'',
+								'level'		=> ''.$params['level'].'',
+								'salary'	=> $params['salary'],
+								'email'		=> ''.$params['email'].'',
+							));
+							if($create){
+								$respond['has'] = true;
+								$respond['message'] = 'Tạo thông báo việc làm thành công.';
+								return Response::json($respond);
+							}
 					}else{
-						if($params['categories'] != ''){
-							$cat = json_encode($params['categories']);
-						}else{$cat = null;}
-						if($params['province'] != ''){
+						$respond['message'] = json_encode(array('error'=>'Bạn đã tạo tối đa 5 thông báo việc làm.'));
+						return Response::json($respond);
+					}
+				}else{
+					if($params['categories'] != ''){
+						$cat = json_encode($params['categories']);
+					}else{$cat = null;}
+					if($params['province'] != ''){
 							$province = json_encode($params['province']);
-						}else{$province = null;}
+					}else{$province = null;}
 						$create = Subscribe::create(array(
-							'ntv_id' 	=> $GLOBALS['user']->id,
 							'keyword' 	=> ''.$params['keyword'].'',
 							'times' 	=> $params['time'],
 							'categories'=> ''.$cat.'',
@@ -955,15 +1047,11 @@ class JobSeeker extends Controller
 							'salary'	=> $params['salary'],
 							'email'		=> ''.$params['email'].'',
 						));
-						if($create){
-							$respond['has'] = true;
-							$respond['message'] = 'Tạo thông báo việc làm thành công.';
-							return Response::json($respond);
-						}
-					}
-				}else{
-					$respond['message'] = json_encode(array('Lỗi'=>'Bạn đã tạo tối đa 5 thông báo việc làm.'));
-					return Response::json($respond);
+					if($create){
+						$respond['has'] = true;
+						$respond['message'] = 'Tạo thông báo việc làm thành công.';
+						return Response::json($respond);
+					}				
 				}
 			}
 		}
@@ -974,19 +1062,23 @@ class JobSeeker extends Controller
 		$respond['has'] = false;
 		if(Request::ajax()){
 			$rules = array(
-		       'salary' => 'numeric ',
+		       'salary' 	=> 'numeric ',
+		       'categories' => 'required',
+		       'province' 	=> 'required',
+		       'level'		=> 'required',
 		    );
-			$validator = Validator::make($params, $rules);
+			$messages = array(
+				'categories.required'	=>	'Vui lòng chọn ngành nghề',
+				'level.required'	=>	'Vui lòng chọn cấp bậc mong muốn',
+				'province.required'	=>	'Vui lòng chọn địa điểm',
+			);
+			$validator = Validator::make($params, $rules, $messages);
 			if($validator->fails()){			
-		       	$respond['message'] = 'Vui lòng nhập mức lương là số';
+		       	$respond['message'] = $validator->getMessageBag()->toJson();
 				return Response::json($respond);
 			}else{
 				$jobs_alert = Subscribe::where('ntv_id', $GLOBALS['user']->id)->where('id', $params['id']);
-				if($params['keyword'] == '' && $params['categories'] == '' && $params['level'] == 'all' && $params['province'] == '' && $params['salary'] == ''){
-					$respond['message'] = 'Vui lòng điền đầy đủ các điều kiện';
-					return Response::json($respond);
-				}else{
-					$update = $jobs_alert->update(array(
+				$update = $jobs_alert->update(array(
 						'ntv_id' 	=> $GLOBALS['user']->id,
 						'keyword' 	=> ''.$params['keyword'].'',
 						'times' 	=> $params['time'],
@@ -1000,7 +1092,6 @@ class JobSeeker extends Controller
 						$respond['message'] = 'Tạo thành công';
 						return Response::json($respond);
 					}
-				}
 			}
 		}
 	}
