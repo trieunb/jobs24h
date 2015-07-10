@@ -1,11 +1,15 @@
 @extends('layouts.jobseeker')
-@section('title') Kết quả việc làm - VnJobs @stop
+@section('title') Kết quả việc làm @stop
 @section('content')
 	@include('includes.jobseekers.search')
 	<section class="main-content container">
 		@include('includes.jobseekers.breadcrumb')
 		<section id="content" class="col-sm-9">
 		<div class="boxed">
+				<?php 
+						$arr_province = array();
+						$arr_cate = array();
+				?>
 				<div class="search-by-categories clearfix">
 					<div class="header-page">
 						<h2>Tìm việc làm theo Ngành Nghề</h2>
@@ -59,10 +63,12 @@
 								</div>
 							</div>
 							<div class="col-sm-2">
+								@if($job->province != null)
 								@foreach($job->province as $pv)
 									{{ $pv->province->province_name }}<br>
 									<?php $arr_province[] = $pv->province->id; ?>
 								@endforeach
+								@endif
 							</div>
 							<div class="col-sm-3 pull-right">
 								<div class="salary text-orange">

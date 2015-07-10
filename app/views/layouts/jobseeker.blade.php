@@ -144,6 +144,7 @@
 		<div class="loading-icon"></div>
 		<!-- jQuery -->
 		{{ HTML::script('assets/js/jquery.1.11.1.min.js') }}
+		{{ HTML::script('assets/js/jquery-ui.min.js') }}
 		{{ HTML::script('assets/js/bootstrap.min.js') }}
 		{{ HTML::script('assets/plugins/select/js/select2.full.min.js') }}
 		{{ HTML::script('assets/plugins/jcarousel/js/jquery.jcarousel.min.js') }}

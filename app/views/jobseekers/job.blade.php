@@ -1,8 +1,8 @@
 @extends('layouts.jobseeker')
 @if($job != null)
-	@section('title') {{$job->vitri}} - VnJobs @stop
+	@section('title') {{$job->vitri}} @stop
 @else
-	@section('title') Không tìm thấy việc làm - VnJobs @stop
+	@section('title') Không tìm thấy việc làm @stop
 @endif
 @section('content')
 	<div class="container">
@@ -14,6 +14,7 @@
 			<div class="boxed">
 				<div class="details">
 					<div class="top">
+						<input type="hidden" name="ntd_id" class="ntd_id" value="{{$job->ntd->id}}">
 						<h1>{{$job->vitri}}</h1>	
 						<h2>{{$job->ntd->company->company_name}}</h2>
 						@if($job->is_apply == 1)
@@ -116,7 +117,17 @@
 									@endforeach
 								</td>
 								<td><strong>Yêu cầu độ tuổi</strong></td>
-								<td>{{$job->dotuoi_min}} - {{$job->dotuoi_max}}</td>
+								<td>
+									@if($job->dotuoi_min != '' && $job->dotuoi_max != '')
+										{{$job->dotuoi_min}} - {{$job->dotuoi_max}}
+									@elseif($job->dotuoi_min != '' && $job->dotuoi_max == '')
+										Trên {{$job->dotuoi_min}}
+									@elseif($job->dotuoi_max != '' && $job->dotuoi_min == '')
+										Dưới {{$job->dotuoi_max}}
+									@else
+										Không yêu cầu
+									@endif
+								</td>
 							</tr>
 							<tr>
 								<td><strong>Mức lương</strong></td>
@@ -175,9 +186,9 @@
 				</div>
 				<div class="company-info">
 					<h3 class="text-orange">{{$job->ntd->company->company_name}}</h3>
-					<span><i class="fa fa-map-marker"></i>&nbsp;&nbsp;{{$job->ntd->company->company_address}}.</span>
-					<span><i class="fa fa-envelope"></i>&nbsp;&nbsp;Contact person: {{$job->nguoilienhe}}.</span>
-					<span><i class="fa fa-user"></i>&nbsp;&nbsp;Company size: {{$job->ntd->company->total_staff}}.</span>
+					<span><i class="fa fa-map-marker"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{$job->ntd->company->company_address}}</span>
+					<span><i class="fa fa-envelope"></i>&nbsp;&nbsp;&nbsp;Liên hệ: {{$job->nguoilienhe}}</span>
+					<span><i class="fa fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;Quy mô: {{Config::get('custom_quymo.quymo')[$job->ntd->company->total_staff]}}</span>
 					@if(count(json_decode($job->ntd->company->company_images)))
 					<div class="jcarousel-wrapper" id="company-info">
 	                	<div class="jcarousel">
@@ -247,6 +258,7 @@
 							data: {
 								title : $('.title').val(),
 								feedback: $('.feedback').val(),
+								ntd_id: $('.ntd_id').val(),
 							},
 							success : function(json){
 								if(! json.has)

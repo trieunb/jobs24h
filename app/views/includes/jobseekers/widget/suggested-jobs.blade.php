@@ -34,7 +34,7 @@
 							<div class="col-sm-2">
 								@foreach($job->province as $pv)
 									{{ $pv->province->province_name }}<br>
-									<?php $arr_province[] = $pv->province->id; ?>
+									<?php $arr_pv[] = $pv->province->id; ?>
 								@endforeach
 							</div>
 							<div class="col-sm-3 pull-right">
@@ -51,7 +51,7 @@
 								</div>
 								<div class="share">
 									<a href="{{URL::route('jobseekers.save-job', array($job->id))}}" title="Lưu việc làm này">{{HTML::image('assets/images/icons/floppy-copy.png')}}</a>
-									<a href="{{URL::route('jobseekers.search-job', array('keyword'=>$job->vitri, 'province'=> $arr_province))}}" title="Tìm kiếm việc làm tương tự">{{HTML::image('assets/images/icons/search-job.png')}}</a>
+									<a href="{{URL::route('jobseekers.search-job', array('keyword'=>$job->vitri, 'province'=> $arr_pv))}}" title="Tìm kiếm việc làm tương tự">{{HTML::image('assets/images/icons/search-job.png')}}</a>
 									
 								</div>
 								<a class="share-to-friends" role="button" data-toggle="popover" data-placement="bottom" title="Giới Thiệu Việc Làm Đến Bạn Bè" data-content='<div class="alert alert-success hidden-xs"></div><form role="form" class="form-horizontal" id="ShareToFriends"><div class="form-group"><input type="text" class="form-control first_name_friend" name="first_name_friend" placeholder="Họ"></div><div class="form-group"><input type="text" class="form-control last_name_friend" name="last_name_friend"  placeholder="Tên"></div><div class="form-group"><input type="email" class="form-control email_name_friend" name="email_name_friend" placeholder="Email"></div><div class="form-group"><button type="submit" class="btn btn-sm bg-orange pull-right">Giới thiệu</button></div><input type="hidden" value="{{$job->id}}" class="job_id" /><input type="hidden" value="{{$job->slug}}" class="job_slug" /></form>'><i class="glyphicon glyphicon-share-alt"></i> Giới thiệu bạn bè</a>

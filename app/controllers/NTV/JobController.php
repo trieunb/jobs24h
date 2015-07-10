@@ -210,6 +210,7 @@ class JobController extends Controller
 			}else{
 				$create = VResponse::create(array(
 					'ntv_id' 		=> $GLOBALS['user']->id,
+					'ntd_id' 		=> $params['ntd_id'],
 					'user_submit' 	=> $GLOBALS['user']->id,
 					'content' 		=> ''.$params['feedback'].'',
 					'submited_date' => date('Y-m-d H:i:s', time()),

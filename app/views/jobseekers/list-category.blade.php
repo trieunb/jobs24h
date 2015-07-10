@@ -1,5 +1,5 @@
 @extends('layouts.jobseeker')
-@section('title') Ngành nghề hấp dẫn - VnJobs @stop
+@section('title') Ngành nghề hấp dẫn @stop
 @section('content')
 	@include('includes.jobseekers.search')
 	<section class="main-content container">

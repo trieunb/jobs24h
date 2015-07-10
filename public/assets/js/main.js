@@ -425,9 +425,11 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
         $(".add-modules").floatingFixed({ padding: 5 });
     });
 
-    $("#specific-salary-input, .salary").blur(function(){
+
+    $(document).on('blur', '#specific-salary-input, .salary', function(event) {
         $(this).formatCurrency({digitGroupSymbol:','});
     });
+
 
 
 })(jQuery);

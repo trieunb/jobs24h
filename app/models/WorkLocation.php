@@ -5,7 +5,7 @@ class WorkLocation extends \Eloquent {
 	protected $table = 'mt_work_locations';
 	public function province()
 	{
-		return $this->hasOne('Province', 'id', 'province_id');
+		return $this->belongsTo('Province', 'province_id');
 	}
 	public function resume()
 	{

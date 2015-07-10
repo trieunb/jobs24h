@@ -191,7 +191,7 @@ footer.bg-dark,footer.bg-dark:hover {background: #494949;}
 .align-left{float: left;}
 .italic {font-style: italic;}
 a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decoration: underline;}
-.btn-lg.bg-orange,.btn-lg.bg-dark,.btn-lg.bg-blue, .btn-lg.bg-gray-light, .btn-lg.btn-warning {  padding: 6px 30px;  font-size: 20px;  border-radius: 5px !important;}
+.btn-lg.bg-orange,.btn-lg.bg-dark,.btn-lg.bg-blue, .btn-lg.bg-gray-light, .btn-lg.btn-warning {  padding: 3px 25px; font-size: 20px;  border-radius: 5px !important;}
 .navbar-right .pagination li a{color: #999; font-weight: 600; padding:5px 15px}
 .navbar-right .pagination li a:hover {background: transparent; color: orange;}
 .navbar-right.pagination-sm>li:first-child>a,.navbar-right.pagination-sm>li:first-child>span {
@@ -380,7 +380,7 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
 }
 
 /* BREADCRUMD */
-.breadcrumb {border-bottom:1px solid #EAE0E0; border-radius: 0px !important; padding: 20px 0 0; background: transparent !important;}
+.breadcrumb {border-bottom:1px solid #EAE0E0; border-radius: 0px !important; padding: 20px 0 0; background: transparent !important; margin: 10px 0 0;}
 .breadcrumb ul li {float: left; display: block; padding-bottom: 10px;border-bottom: 1px solid orange;margin-bottom: -1px;}
 .breadcrumb ul li a {color: #999;margin-right: 8px;}
 .breadcrumb ul li i {margin-right: 5px; font-size: 11px; color: #999;}
@@ -403,6 +403,7 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
 #header {width: 100%; z-index: 9999; background: #ffffff; position: fixed; top: 0;}
 #header .container {padding: 10px 0;}
 .site-title,.header-right,.header-right .ntv-menu {display: inline-block; float: left;}
+.header-right .navbar-right {margin: 0;}
 .header-right .list-link span{display: inline-block; margin-right: 10px;}
 .header-right .list-link span.employer-site {margin-right: 0;}
 .header-right .list-link span.employer-site a{text-transform: uppercase; color: #FF0000; font-weight: 600;}
@@ -698,3 +699,6 @@ img.avatar {width: 35px; height: 35px; border-radius: 50%; vertical-align: middl
 #modal-alert {text-align: center;}
 #modal-alert .modal-header{padding: 5px; background: #ECECEC;}
 #modal-alert .btn {background: #ECECEC; padding: 3px 10px;}
+.items.block {border-top: 1px solid #eee; padding-top: 10px;}
+#saveWorkExp .select2-container {width: 100% !important;}
+.resume-submited .form-group {  margin-bottom: 5px;float: left;width: 100%;border-top: 1px solid #eee;padding-top: 10px;}

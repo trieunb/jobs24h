@@ -1,11 +1,11 @@
 @extends('layouts.jobseeker')
-@section('title') Hồ sơ - VnJobs @stop
+@section('title') Hồ sơ @stop
 @section('content')
 	<div class="container">
 		@include('includes.jobseekers.breadcrumb')
 	</div>
 	<section class="main-content container single-post">
-		<section id="content" class="col-sm-9">
+		<section id="content" class="col-sm-9 resume-submited">
 				<div class="box">
 					<div class="col-sm-3">
 						<div class="avatar">
@@ -89,7 +89,7 @@
 				</div><!-- rows -->
 				</div><!-- boxed -->
 				
-				@if($my_resume->namkinhnghiem != null || $my_resume->namkinhnghiem != 0)
+				@if($my_resume->bangcapcaonhat != null)
 				<div class="boxed">
 				<div class="rows">
 					<div class="title-page">
@@ -170,7 +170,7 @@
 				            <label class="col-sm-3 control-label">Nơi làm việc:</label>
 				            	<div class="col-sm-3">
 				 				@foreach($my_resume->location as $value)
-				 					{{$value->province->province_name}}<br>
+				 					{{$value->province['province_name']}}<br>
 				 				@endforeach
 			            		</div>
 			            	<label class="col-sm-3 control-label">Ngành nghề:</label>
@@ -200,7 +200,6 @@
 					<div class="title-page">
 						<h2>Định hướng nghề nghiệp</h2>
 					</div>
-					<label>Giới Thiệu Bản Thân Và Miêu Tả Mục Tiêu Nghề Nghiệp Của Bạn:</label>
 					<div class="col-sm-12 row">
 						{{$my_resume->dinhhuongnn}}
 					</div>
@@ -235,12 +234,14 @@
 							<div class="form-group">
 								<label for="" class="col-sm-2 control-label">Từ tháng:</label>
 								<div class="col-sm-3">
-									{{$exp->from_date}}
+									{{$exp->from_date}} @if($exp->to_date == null)- Hiện tại @endif
 								</div>
+								@if($exp->to_date != null)
 								<label for="" class="col-sm-2 control-label">Đến tháng:</label>
 								<div class="col-sm-3">
 									{{$exp->to_date}}
 								</div>
+								@endif
 							</div>
 							<div class="clearfix"></div>
 							<div class="form-group">
@@ -270,15 +271,17 @@
 				            	</div>
 				            </div>
 				            <div class="clearfix"></div>
+				            @if($exp->salary != '')
 				            <div class="form-group">
 				            	<label class="col-sm-2 control-label">Mức lương</label>
 				            	<div class="col-sm-4">
-				            		{{$exp->salary}}
+				            		{{number_format($exp->salary)}}$
 				            	</div>
 				            </div>
+				            @endif
 				            <div class="clearfix"></div>
 				            <div class="form-group">
-				            	<label class="col-sm-2 control-label">Mô tả</label>
+				            	<label class="col-sm-2 control-label">Mô tả:</label>
 				            	<div class="col-sm-10">
 									{{$exp->job_detail}}
 								</div>
@@ -319,11 +322,11 @@
 							</div>
 							<div class="clearfix"></div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">Từ tháng</label>
+								<label class="col-sm-3 control-label">Từ tháng:</label>
 				            	<div class="col-sm-4">
 				            		{{$education->study_from}}
 				            	</div>
-				            	<label class="col-sm-2 control-label">Đến tháng</label>
+				            	<label class="col-sm-2 control-label">Đến tháng:</label>
 				            	<div class="col-sm-3">
 				            		{{$education->study_to}}
 				            	</div>
@@ -365,7 +368,6 @@
 						
 						<div class="col-sm-8"><h3 class="text-gray-light">Kỹ năng</h3></div>
 						<div class="col-sm-4"><h3 class="text-gray-light">Mức độ thành thạo</h3></div>
-						<div class="box">
 							@for ($i=0; $i < count($skills) ; $i++)
 								<div class='form-group'>
 									<div class='col-sm-8'>
@@ -382,7 +384,6 @@
 									</div>
 								</div>
 							@endfor
-						</div>
 					</div><!-- rows -->
 				</div><!-- boxed -->
 				@endif

@@ -1,5 +1,5 @@
 @extends('layouts.jobseeker')
-@section('title') Chỉnh sửa thông tin hồ sơ - VnJobs @stop
+@section('title') Chỉnh sửa thông tin hồ sơ @stop
 @section('content')
 
 	<div class="container">
@@ -357,12 +357,19 @@
 					<div class="rows">
 						<div class="title-page">
 							<h2>Kinh nghiệm làm việc</h2>
-							<a class="add-new-work-exp pull-right italic text-blue hidden"><i class="fa fa-plus"></i> Bổ sung</a>
+							<a class="add-new-work-exp pull-right italic text-blue"><i class="fa fa-plus"></i> Bổ sung</a>
 						</div>
 							<?php $n = 1;?>
 							@foreach($my_resume->experience as $exp)
 							<div class="items block" id="saveWorkExp_{{$n}}">
-							{{Form::open(array('class'=>'form-horizontal', 'id'=>'saveWorkExp'))}}
+								<div class="view-edit">
+									<h2>{{$exp->position}}</h2>
+									<a class="edit-exp pull-right italic text-blue"><i class="fa fa-edit"></i> Chỉnh sửa</a>
+									<h4>{{$exp->company_name}}</h4>
+									<p><i>{{$exp->job_detail}}</i></p>	
+								</div>
+
+							{{Form::open(array('class'=>'form-horizontal hidden', 'id'=>'saveWorkExp'))}}
 							<div class="form-group">
 								<label for="" class="col-sm-2 control-label">Chức danh<abbr>*</abbr></label>
 								<div class="col-sm-10">
@@ -432,7 +439,8 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<div class="col-sm-offset-3 col-sm-7">
+								<div class="col-sm-offset-2 col-sm-10">
+									{{Form::button('Hủy', array('class'=>'btn btn-lg bg-gray-light hidden-form-exp', 'data' => $exp->id))}}
 									{{Form::button('Xóa', array('class'=>'btn btn-lg bg-gray-light delete-exp', 'data' => $exp->id))}}
 									{{Form::submit('Lưu', array('class'=>'btn btn-lg bg-orange'))}}
 									<span>(<span class="text-red">*</span>) Thông tin bắt buộc</span>
@@ -453,7 +461,7 @@
 					<div class="rows">
 						<div class="title-page">
 							<h2>Kinh nghiệm làm việc</h2>
-							<a class="add-new-work-exp pull-right italic text-blue"><i class="fa fa-plus"></i> Bổ sung</a>
+							<a class="add-new-work-exp pull-right italic text-blue hidden"><i class="fa fa-plus"></i> Bổ sung</a>
 						</div>
 							<?php $n = 1;?>
 							<div class="items block" id="saveWorkExp_{{$n}}">
@@ -550,7 +558,13 @@
 						<?php $n = 1;?>
 						@foreach($my_resume->education as $education)
 						<div class="items block" id="saveEducation_{{$n}}">
-						{{Form::open(array('class'=>'form-horizontal','id'=>'saveEducation'))}}
+							<div class="view-edit">
+								<h2>{{$education->specialized}}</h2>
+								<a class="edit-edu pull-right italic text-blue"><i class="fa fa-edit"></i> Chỉnh sửa</a>
+								<h4>{{$education->school}}</h4>
+								<p><i>{{$education->edu->name}}</i></p>
+							</div>
+							{{Form::open(array('class'=>'form-horizontal hidden','id'=>'saveEducation'))}}
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Chuyên ngành<abbr>*</abbr></label>
 				            	<div class="col-sm-9">
@@ -605,7 +619,8 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<div class="col-sm-offset-3 col-sm-7">
+								<div class="col-sm-offset-3 col-sm-9">
+									{{Form::button('Hủy', array('class'=>'btn btn-lg bg-gray-light hidden-form-edu', 'data' => $education->id))}}
 									{{Form::button('Xóa', array('class'=>'btn btn-lg bg-gray-light delete-education', 'data' => $education->id))}}
 									{{Form::submit('Lưu', array('class'=>'btn btn-lg bg-orange'))}}
 									<span>(<span class="text-red">*</span>) Thông tin bắt buộc</span>
@@ -953,6 +968,8 @@
 		$('.loading-icon').show();
         var url = '{{ URL::route("jobseekers.save-cv", array("work-exp", $id_cv )) }}';
         var parent_name = $(this).closest('div[id^="saveWorkExp"]').attr('id');
+        var salary = $('#'+parent_name).find('.salary').val();
+        salary = salary.replace(/[,]/g, "");
 		$.ajax({
 			url: url,
 			type: 'POST',
@@ -967,7 +984,7 @@
 				field: $('#'+parent_name).find('.field').val(),
 				specialized: $('#'+parent_name).find('.specialized').val(),
 				level: $('#'+parent_name).find('.level').val(),
-				salary: $('#'+parent_name).find('.salary').val()
+				salary: salary
 			},
 			success : function(json) {
 				if(! json.has)
@@ -991,13 +1008,14 @@
 					$('#'+parent_name+' .specialized').closest('div[class^="col-sm"]').append('<span class="alert-message alert-ok"><i class="fa fa-check"></i></span>');
 					$('#'+parent_name+' .level').closest('div[class^="col-sm"]').append('<span class="alert-message alert-ok"><i class="fa fa-check"></i></span>');
 					$('#'+parent_name+' .salary').closest('div[class^="col-sm"]').append('<span class="alert-message alert-ok"><i class="fa fa-check"></i></span>');
-					$('#modal-alert .modal-body').html('<p>Cập nhật <b>Kinh Nghiệm Làm Việc</b> thành công</p><button type="button" class="btn btn-default" data-dismiss="modal">OK</button>');
+					$('#modal-alert .modal-body').html('<p>Cập nhật <b>Kinh Nghiệm Làm Việc</b> thành công</p><button type="button" class="btn btn-default reload-page" data-dismiss="modal">OK</button>');
 					$('#modal-alert').modal('show');
-					$('#box-exp .add-new-work-exp').removeClass('hidden');
-					$('#'+parent_name+' .col-sm-offset-3.col-sm-7').addClass('hidden');
-					$('#'+parent_name).css({
-						'border-bottom':'1px solid #ddd',
-						'margin-bottom': '15px'
+					$('#'+parent_name+' #saveWorkExp').addClass('hidden');
+					$('#'+parent_name).append('<div class="view-edit"><h2>'+$("#"+parent_name+" .position").val()+'</h2><a class="edit-exp pull-right italic text-blue"><i class="fa fa-edit"></i> Chỉnh sửa</a><h4>'+$("#"+parent_name+" .company_name").val()+'</h4><p><i>'+$("#"+parent_name+" .job_detail").val()+'</i></p></div>');
+					$('#box-exp .add-new-work-exp, .edit-exp').removeClass('hidden');
+					$(document).on('click', '.reload-page', function(event) {
+						event.preventDefault();
+						location.reload();
 					});
 	           	}
 	           	$('.loading-icon').hide();
@@ -1046,6 +1064,16 @@
 					$('#'+parent_name+' .achievement').closest('div[class^="col-sm"]').append('<span class="alert-message alert-ok"><i class="fa fa-check"></i></span>');
 					$('#'+parent_name+' .specialized').closest('div[class^="col-sm"]').append('<span class="alert-message alert-ok"><i class="fa fa-check"></i></span>');
 					$('#'+parent_name+' .average_grade_id').closest('div[class^="col-sm"]').append('<span class="alert-message alert-ok"><i class="fa fa-check"></i></span>');
+
+					$('#modal-alert .modal-body').html('<p>Cập nhật <b>Học vấn bằng cấp</b> thành công</p><button type="button" class="btn btn-default reload-page" data-dismiss="modal">OK</button>');
+					$('#modal-alert').modal('show');
+					$('#'+parent_name+' #saveEducation').addClass('hidden');
+					$('#'+parent_name).append('<div class="view-edit"><h2>'+$("#"+parent_name+" .specialized").val()+'</h2><a class="edit-edu pull-right italic text-blue"><i class="fa fa-edit"></i> Chỉnh sửa</a><h4>'+$("#"+parent_name+" .school").val()+'</h4><p><i>'+$("#"+parent_name+" .level option:selected").text()+'</i></p></div>');
+					$('#box-exp .add-new-edu, .edit-edu').removeClass('hidden');
+					$(document).on('click', '.reload-page', function(event) {
+						event.preventDefault();
+						location.reload();
+					});
 	           	}
 	           	$('.loading-icon').hide();
 	        }
@@ -1083,6 +1111,8 @@
 		$('.loading-icon').show();
 		var a = $('.select2-selection__choice').html();
         url = '{{ URL::route("jobseekers.save-cv", array("general", $id_cv )) }}';
+        var salary = $('#saveGeneralInfo .specific_salary').val();
+        salary = salary.replace(/[,]/g, "");
 		$.ajax({
 			url: url,
 			type: 'POST',
@@ -1095,7 +1125,7 @@
 				info_wish_position: 	$('#saveGeneralInfo .info_wish_position').val(),
 				info_wish_level: 		$('#saveGeneralInfo .info_wish_level').val(),
 				info_wish_place: 		$('#saveGeneralInfo .info_wish_place').val(),
-				specific_salary: 		$('#saveGeneralInfo .specific_salary').val(),
+				specific_salary: 		salary,
 				info_latest_company: 	$('#saveGeneralInfo .info_latest_company').val(),
 				info_latest_job: 		$('#saveGeneralInfo .info_latest_job').val(),
 				info_category: 			$('#saveGeneralInfo .info_category').val(),
@@ -1141,6 +1171,7 @@
 					$('#saveGeneralInfo .fr-lang.block .level_languages_3').closest('div[class^="col-sm"]').append('<span class="alert-message alert-ok"><i class="fa fa-check"></i></span>');
 					$('#modal-alert .modal-body').html('<p>Cập nhật <b>Thông Tin Chung</b> thành công</p><button type="button" class="btn btn-default" data-dismiss="modal">OK</button>');
 					$('#modal-alert').modal('show');
+					$('.publish_resume').removeAttr('disabled');
 	           	}
 	           	$('.loading-icon').hide();
 	        }
@@ -1174,14 +1205,21 @@
 		event.preventDefault();
 		var data = $(this).attr('data-rs');
 		var url = '{{URL::route("jobseekers.my-resume")}}';
-		$.ajax({
-	        type: "GET",
-	        url: url, //Relative or absolute path to response.php file
-	        data: {danghoso: data },
-	        success : function(data){
-	        	$('.trangthai').html('<p><h3>Hồ sơ đang chờ phê duyệt</h3></p>')
-	    	}
-	    });  
+		if($('#saveGeneralInfo .info_highest_degree').val() != '' && $('#saveGeneralInfo .info_current_level').val() != '' && $('#saveGeneralInfo .info_wish_position').val() != '' && $('#saveGeneralInfo .info_wish_level').val() != '' && $('#saveGeneralInfo .info_category').val() != '' && $('#saveGeneralInfo .info_wish_place_work').val() != '' && $('#saveGeneralInfo .fr-lang.block .foreign_languages_1').val() != '' && $('.date_of_birth').val() != '' && $('.province_id').val() != '' && $('.phone_number').val() != ''){
+			$.ajax({
+		        type: "GET",
+		        url: url, //Relative or absolute path to response.php file
+		        data: {danghoso: data },
+		        success : function(data){
+		        	$('.trangthai').html('<p><h3>Hồ sơ đang chờ phê duyệt</h3></p>');
+		        	window.location.replace('{{URL::route('jobseekers.view-resume', array($my_resume->id))}}');
+		    	}
+		    });  
+		}else{
+			$('#modal-alert .modal-body').html('<p>Vui lòng cập nhật đầy đủ thông tin</p><button type="button" class="btn btn-default reload-page" data-dismiss="modal">OK</button>');
+			$('#modal-alert').modal('show');
+		}
+		
 	});
 	
 	//scroll to div in edit cv
@@ -1220,9 +1258,15 @@
 		     	goToByScroll('saveWorkExp_'+n); 
 	 		}
 	 	});
+		$(this).addClass('hidden');
+	 	$('.edit-exp').addClass('hidden');
 	});
 	 $('.add-new-edu').click(function(event) {
         event.preventDefault();
+        $(this).addClass('hidden');
+        $('.view-edit').removeClass('hidden');
+	 	$('#saveEducation').addClass('hidden');
+	 	$('.edit-edu').addClass('hidden');
         var linhvuc = $('.linhvuc_list').html();
         var diem = $('.average_list').html();
         var capbac = $('.capbac_list').html();
@@ -1286,6 +1330,7 @@
 
 	$(document).on('click', '.cancel-exp', function(event) {
 		event.preventDefault();
+		$('.edit-exp, .add-new-work-exp').removeClass('hidden');
 		var count = $('#box-exp .items.block').length;
 		if(count == 1){
 			$('#box-exp').slideUp('fast');
@@ -1312,6 +1357,7 @@
 
 	$(document).on('click', '.cancel-education', function(event) {
 		event.preventDefault();
+		$('.edit-edu, .add-new-edu').removeClass('hidden');
 		var count = $('#box-education .items.block').length;
 		if(count == 1){
 			$('#box-education').slideUp('fast');
@@ -1334,15 +1380,39 @@
 	$(document).on('change', '.is_current_job', function(event) {
 		event.preventDefault();
 		if (this.checked) {
-			$('#From_date .from_date').val('');
-			$('#From_date .from_date').attr('disabled', 'disabled');
 			$('#To_date .to_date').val('');
 			$('#To_date .to_date').attr('disabled', 'disabled');
 		}else{
-			$('#From_date .from_date').removeAttr('disabled');
 			$('#To_date .to_date').removeAttr('disabled');
 		}
 	});
-
+	$(document).on('click', '.edit-exp', function(event) {
+		event.preventDefault();
+		$('.edit-exp').addClass('hidden');
+		var parent_name = $(this).closest('div[id^="saveWorkExp"]').attr('id');
+		$('#'+parent_name+' .view-edit').addClass('hidden');
+		$('#'+parent_name+' #saveWorkExp').removeClass('hidden');
+	});
+	$('.hidden-form-exp').click(function(event) {
+		event.preventDefault();
+		$('.edit-exp').removeClass('hidden');
+		var parent_name = $(this).closest('div[id^="saveEducation"]').attr('id');
+		$('#'+parent_name+' .view-edit').removeClass('hidden');
+		$('#'+parent_name+' #saveEducation').addClass('hidden');
+	});
+	$(document).on('click', '.edit-edu', function(event) {
+		event.preventDefault();
+		$('.edit-edu').addClass('hidden');
+		var parent_name = $(this).closest('div[id^="saveEducation"]').attr('id');
+		$('#'+parent_name+' .view-edit').addClass('hidden');
+		$('#'+parent_name+' #saveEducation').removeClass('hidden');
+	});
+	$('.hidden-form-edu').click(function(event) {
+		event.preventDefault();
+		$('.edit-edu').removeClass('hidden');
+		var parent_name = $(this).closest('div[id^="saveEducation"]').attr('id');
+		$('#'+parent_name+' .view-edit').removeClass('hidden');
+		$('#'+parent_name+' #saveEducation').addClass('hidden');
+	});
 	</script>
 @stop

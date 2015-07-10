@@ -403,6 +403,7 @@ class JobSeeker extends Controller
 		$params = Input::all();
 		$respond['has'] = false;
 		if(Request::ajax()){
+
 			$params['salary'] = str_replace(',', '', $params['salary']);
 			$validator = new App\DTT\Forms\JobSeekersWorkExp;
 			if($validator->fails())
@@ -411,6 +412,7 @@ class JobSeeker extends Controller
 				return Response::json($respond);
 			} else {
 				if(isset($params['id_exp'])){
+					Log::info('not ok');
 					$update = Experience::where('id', $params['id_exp'])->update(array(
 						'position' => ''.$params['position'].'', 
 			    		'company_name' => ''.$params['company_name'].'', 
@@ -429,6 +431,7 @@ class JobSeeker extends Controller
 						$respond['message']='Hiện tại bạn không thể chỉnh sửa mục này';
 					}
 				}else{
+					Log::info('ok');
 					$create = Experience::create(array(
 			    		'rs_id' => $id_cv, 
 			    		'position' => ''.$params['position'].'', 
@@ -576,8 +579,8 @@ class JobSeeker extends Controller
 		if($chk < 4){
 			$rs = Resume::create(array('ntv_id'=>$GLOBALS['user']->id ));
 			$id_cv = $rs->id;
-			$education = MTEducation::create(array('rs_id' => $id_cv));
-			$work_exp = Experience::create(array('rs_id'=>$id_cv));
+			//$education = MTEducation::create(array('rs_id' => $id_cv));
+			//$work_exp = Experience::create(array('rs_id'=>$id_cv));
 			$lang = CVLanguage::insert(array(
 				array('rs_id' => $id_cv,'count_lang' => 1),
 				array('rs_id' => $id_cv,'count_lang' => 2),
@@ -826,7 +829,7 @@ class JobSeeker extends Controller
 							$extension = $params['cv_upload']->getClientOriginalExtension();
 							$name = Str::random(11) . '.' . $extension;
 							$params['cv_upload']->move(Config::get('app.upload_path') . 'jobseekers/cv/', $name);
-							$create = Resume::create(array('file_name' => $name, 'ntv_id' => $GLOBALS['user']));
+							$create = Resume::create(array('file_name' => $name, 'ntv_id' => $GLOBALS['ẽ']));
 							if($create){
 								$cv = $create->id;
 							}
