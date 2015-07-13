@@ -35,7 +35,7 @@
 				<li class="{{ HTML::active(['employers.report.candidates'], 'selected') }}"><a href="{{ URL::route('employers.report.candidates') }}">Báo cáo dịch vụ hồ sơ</a></li>
 				<li class="{{ HTML::active(['employers.report.alert'], 'selected') }}"><a href="{{ URL::route('employers.report.alert') }}">Thông báo</a></li>
 				<li class="{{ HTML::active(['employers.report.respond'], 'selected') }}"><a href="{{ URL::route('employers.report.respond') }}">Phản hồi của UV</a></li>
-				<li class="{{ HTML::active(['employers.report.test'], 'selected') }}"><a href="{{ URL::route('employers.report.test') }}">Bài kiểm tra</a></li>
+				<!-- <li class="{{ HTML::active(['employers.report.test'], 'selected') }}"><a href="{{ URL::route('employers.report.test') }}">Bài kiểm tra</a></li> -->
 				</div>
 			</ul>
 		</li>

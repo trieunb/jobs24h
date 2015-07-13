@@ -3,12 +3,17 @@
 	<ul class="menu-images-icons">
 		<li>Việc làm đang đăng: <span class="text-orange">{{ $active_job }}</span> vị trí</li>
 		<li>Việc làm chưa sử dụng <span class="text-orange">0</span> vị trí.</li>
-		<li>Dịch vụ tìm hồ sơ <span class="text-orange">{{ (($newest->remain && $newest->ended_date>date('Y-m-d'))?$newest->remain:0) }}</span> CV.</li>
+		@if($newest)
+		<li>Dịch vụ tìm hồ sơ <span class="text-orange">{{ (($newest->remain && date('Y-m-d', strtotime($newest->ended_date) ))?$newest->remain:0) }}</span> CV.</li>
+		@endif
 	</ul>
-	@if($newest->ended_date>date('Y-m-d'))
-	<span class="text-orage">{{ (($newest->remain && $newest->ended_date>date('Y-m-d'))?$newest->remain:0) }}</span> CV
+	@if($newest)
+	@if(date('Y-m-d', strtotime($newest->ended_date) ))
+
+	<span class="text-orage">{{ (($newest->remain && date('Y-m-d', strtotime($newest->ended_date) ))?$newest->remain:0) }}</span> CV
 		, <span class="text-orage">{{ (($newest->created_date)?ceil((strtotime($newest->ended_date) - time())/86400):0) }}</span> ngày
 		( Từ {{ $newest->created_date }} đến {{ $newest->ended_date }} )
+	@endif
 	@endif
 </div>
 <div class="widget row management-order">

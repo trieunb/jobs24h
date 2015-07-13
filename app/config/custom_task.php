@@ -17,6 +17,8 @@ return [
         'resume_job' => 'Đăng lại tuyển dụng',
         'pause_rs' => 'Tạm ngưng nhận hồ sơ',
         'resume_rs' => 'Mở nhận hồ sơ',
+        'renew_job' => 'Gia hạn công việc',
+        'export_job' => 'Xuất toàn bộ công việc',
         
     ]
 ];

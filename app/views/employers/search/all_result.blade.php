@@ -53,12 +53,14 @@
 										@if($resume->mucluong == 0)
 										Thương lượng
 										@else 
-										${{ $resume->mucluong }}
+										{{ number_format($resume->mucluong, 0, ',', '.') }} VND
 										@endif
 									</td>
 									<td>
 										@foreach($resume->location as $v)
-										{{ $v->province->province_name }}<br>
+										@if($v->province_id > 0)
+											{{ $v->province->province_name }}<br>
+										@endif
 										@endforeach
 									</td>
 									<td>

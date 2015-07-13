@@ -37,13 +37,14 @@ class AuthController extends \BaseController {
 			if($ntd->save())
 			{
 				$company = new Company;
+				$company->ntd_id = $ntd->id;
 				$company->company_name = Input::get('company_name');
 				$company->total_staff = Input::get('quymo');
 				$company->full_description = Input::get('soluoc');
 				$company->company_address = Input::get('company_address');
 				$company->contact_name = Input::get('contact_name');
 				$company->save();
-				return Redirect::back()->with('success', 'Tạo tài khoản thành công. Vui lòng đăng nhập.');
+				return Redirect::back()->with('success', 'Tạo tài khoản thành công. <a href="'.\URL::route("employers.login").'">Bấm vào đây để đăng nhập</a>.');
 			}
 		}
 	}

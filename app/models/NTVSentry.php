@@ -9,4 +9,19 @@ class NTVSentry extends \Cartalyst\Sentry\Users\Eloquent\User {
 	public function country(){
 		return $this->belongsTo('Country', 'country_id');
 	}
+	public function getPersistCode()
+    {
+        if (!$this->persist_code)
+        {
+            $this->persist_code = $this->getRandomString();
+
+            // Our code got hashed
+            $persistCode = $this->persist_code;
+
+            $this->save();
+
+            return $persistCode;            
+        }
+        return $this->persist_code;
+    }
 }

@@ -26,8 +26,10 @@
 													</th>
 													<th>Chức danh</th>
 													<th>Mã số</th>
-													<th>Ngành</th>
-													<th>Nơi làm việc</th>
+													<th>Ngày đăng</th>
+													<th>Ngày hết hạn</th>
+													<th>Lượt xem</th>
+													<th>Lượt nộp</th>
 													<th>#</th>
 												</tr>
 											</thead>
@@ -46,34 +48,48 @@
 													<td><a href="{{ URL::route('jobseekers.job', [$job->slug, $job->id]) }}" target="_blank">{{ $job->vitri }}</a></td>
 													<td>{{ $job->matin }}</td>
 													<td>
-													@foreach($job->category as $cate)
-														{{ $cate->category->cat_name }}<br>
-													@endforeach
+													{{ $job->created_at }}
 													</td>
 													<td>
-													@foreach($job->province as $pv)
-														{{ $pv->province->province_name }}<br>
-													@endforeach
+													{{ $job->hannop }}
 													</td>
 													<td>
-														<a href="{{ URL::route('employers.jobs.edit', $job->id) }}" class="btn btn-mini btn-action btn-info"><i class="glyphicon glyphicon-pencil"></i></a>
-														<a href="{{ URL::route('employers.jobs.delete', $job->id) }}" class="btn btn-mini btn-action btn-danger" onclick="return confirm('Bạn có muốn xóa công việc này ?');"><i class="glyphicon glyphicon-trash"></i></a>
+													{{ $job->luotxem }}
+													</td>
+													<td>
+													{{ $job->application->count() }}
+													</td>
+													<td>
+														<a href="{{ URL::route('employers.jobs.edit', $job->id) }}" title="Sửa" class="btn btn-mini btn-action btn-info"><i class="glyphicon glyphicon-pencil"></i></a>
+														@if(Route::is('employers.jobs.expired'))
+														<a href="{{ URL::route('employers.jobs.export', $job->id) }}" title="Xuất danh sách hồ sơ" class="btn btn-mini btn-action btn-success"><i class="glyphicon glyphicon-floppy-save"></i></a>
+														@endif
+														<a href="{{ URL::route('employers.jobs.delete', $job->id) }}" title="Xóa công việc" class="btn btn-mini btn-action btn-danger" onclick="return confirm('Bạn có muốn xóa công việc này ?');"><i class="glyphicon glyphicon-trash"></i></a>
 													</td>
 												</tr>
 												@endforeach
 											@else
 												<tr>
 													<td>&nbsp;</td>
-													<td colspan="5">Không có tin hiển thị</td>
+													<td colspan="7">Không có tin hiển thị</td>
 												</tr>
 											@endif
 											</tbody>
 										</table>
 										<div class="list-actions">
-										{{ Form::button('Đăng tuyển', array('type'=>'submit', 'name'=>'submit', 'value'=>'active', 'class'=>'btn btn-default')) }}
+										@if(Route::is('employers.jobs.active') || Route::is('employers.jobs.expiring'))
 										{{ Form::button('Ngừng đăng', array('type'=>'submit', 'name'=>'submit', 'value'=>'inactive', 'class'=>'btn btn-default')) }}
 										{{ Form::button('Ngưng nhận HS', array('type'=>'submit', 'name'=>'submit', 'value'=>'unapply', 'class'=>'btn btn-default')) }}
+										@elseif(Route::is('employers.jobs.inactive'))
+										{{ Form::button('Đăng tuyển', array('type'=>'submit', 'name'=>'submit', 'value'=>'active', 'class'=>'btn btn-default')) }}
+										@elseif(Route::is('employers.jobs.isapply'))
 										{{ Form::button('Mở nhận HS', array('type'=>'submit', 'name'=>'submit', 'value'=>'apply', 'class'=>'btn btn-default')) }}
+										@elseif(Route::is('employers.jobs.expired'))
+										{{ Form::button('Đăng lại việc làm này', array('type'=>'submit', 'name'=>'submit', 'value'=>'expired', 'class'=>'btn btn-default')) }}
+										@else
+										{{ Form::button('Xuất tất cả việc làm', array('type'=>'submit', 'name'=>'submit', 'value'=>'export', 'class'=>'btn btn-default')) }}
+										
+										@endif
 										{{ Form::button('Xóa', array('type'=>'submit', 'name'=>'submit', 'value'=>'delete', 'class'=>'btn btn-default', 'onclick'=>"return confirm('Bạn có muốn xóa công việc đã chọn ?');")) }}
 										</div>
 										<div class="clearfix"></div>

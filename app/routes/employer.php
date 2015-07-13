@@ -21,6 +21,7 @@ Route::group(array('prefix'=>$locale), function() {
 				'getDelete'		=>	'employers.jobs.delete',
 				'getSearch'		=>	'employers.jobs.search',
 				'postAjax'		=>'employers.jobs.ajax',
+				'getExport'		=>'employers.jobs.export',
 			));
 			Route::controller('candidates', 'CandidateController', array(
 				'getIndex'		=>	'employers.candidates.index',

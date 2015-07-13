@@ -17,7 +17,7 @@
 
 		</li>
 		<li class="{{ HTML::active(['employers.candidates.folder', 'employers.candidates.folderManager']) }}">
-			<a href="{{ URL::route('employers.candidates.folder', 'all') }}"><i class="fa fa-plus-square-o fa-2x"></i><span class="text-orange">Hồ sơ đã chọn</span></a>
+			<a href="{{ URL::route('employers.candidates.folder', 'all') }}"><i class="fa fa-plus-square-o fa-2x"></i><span class="text-orange">Hồ sơ đã lưu</span></a>
   			<ul>
   				@if(count($folders))
 					@foreach($folders as $value)

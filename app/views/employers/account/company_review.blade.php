@@ -8,7 +8,7 @@
 			</div>
 			<div class="row push-padding-20 company-info">
 				<div class="col-sm-2">
-					@if(file_exists(Config::get('app.upload_path') . 'companies/logos/'.$company->logo))
+					@if(file_exists(Config::get('app.upload_path') . 'companies/logos/'.$company->logo) && $company->logo != NULL)
 					{{ HTML::image('uploads/companies/logos/'.$company->logo) }}
 					@endif
 				</div>
@@ -87,7 +87,7 @@
 				<div class="col-sm-6 row">
 					<div class="row blocked snapshot">
 						<div class="header-blocked">
-							<h2>Công ty snapshot</h2>
+							<h2>THÔNG TIN CƠ BẢN</h2>
 						</div>
 						<div class="push-padding-20">
 							<ul class="arrow-square-orange">

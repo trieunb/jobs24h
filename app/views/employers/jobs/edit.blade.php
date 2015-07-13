@@ -85,13 +85,21 @@
 												<div class="col-sm-6">
 													<div class="row">
 														<div class="col-sm-4">
-															{{ Form::text('mucluong_min', $job->mucluong_min, array('class'=>'form-control') ) }} 
+															{{ Form::text('mucluong_min', $job->mucluong_min, array('class'=>'form-control', 'id'=>'mucluong_min') ) }} 
 														</div>
 														<div class="col-xs-2 middle-align">đến</div>
 														<div class="col-sm-4">
-															{{ Form::text('mucluong_max', $job->mucluong_max, array('class'=>'form-control') ) }}
+															{{ Form::text('mucluong_max', $job->mucluong_max, array('class'=>'form-control', 'id'=>'mucluong_max') ) }}
 														</div>
-														<div class="col-xs-2 middle-align">USD</div>
+														<div class="col-xs-2 middle-align">VND</div>
+													</div>
+												</div>
+												<div class="col-xs-2">
+													<div class="checkbox">
+														<label>
+															{{ Form::checkbox('thuongluong', 1, ($job->mucluong_max==0)?1:0, ['id'=>'thuongluong']) }}
+															Thương lượng
+														</label>
 													</div>
 												</div>
 												
@@ -207,15 +215,16 @@
 												<label for="nguoilienhe" class="col-sm-2 control-label">Tên người liên hệ:</label>
 												<div class="col-sm-10">
 													{{ Form::text('nguoilienhe', $job->nguoilienhe, array('class'=>'form-control') ) }}
+													<div class="checkbox">
+														<input type="checkbox" id="ttct" name="is_display" value="">
+														<label for="ttct">
+															<span></span>
+															Hiển thị trong thông tin công ty
+														</label>
+													</div>
 												</div>
 												<div class="clearfix"></div>
-												<div class="checkbox">
-													<input type="checkbox" id="ttct" name="is_display" value="">
-													<label for="ttct">
-														<span></span>
-														Hiển thị trong thông tin công ty
-													</label>
-												</div>
+												
 											</div>
 											<div class="form-group">
 												<label for="dclienhe" class="col-sm-2 control-label">Địa chỉ liên hệ:</label>
@@ -243,13 +252,13 @@
 											<div class="form-group">
 												<label for="input" class="col-sm-2 control-label">Trạng thái tin:</label>
 												<div class="col-sm-4">
-													{{ Form::select('status', array(1=>'Chờ đăng', 2=>'Đăng ngay'), $job->status, array('class'=>'form-control') ) }}
+													{{ Form::select('is_display', array(0=>'Chờ đăng', 1=>'Đăng ngay'), $job->is_display, array('class'=>'form-control') ) }}
 												</div>
 											</div>
 										</div>
 									</div>		
 									<div class="center">
-									{{ Form::button('Tiếp tục', array('type'=>'submit', 'class'=>'btn btn-lg bg-orange')) }}
+									{{ Form::button('Lưu lại', array('type'=>'submit', 'class'=>'btn btn-lg bg-orange')) }}
 									<a href="{{ URL::route('employers.jobs.index') }}" class="btn btn-lg bg-orange">Hủy</a>
 								</div>
 							</div> <!-- primary -->
@@ -320,7 +329,24 @@
 		$('#select-auto').change(function(event) {
 			fillToTextbox();
 		});
-		
+
+		$('#thuongluong').click(function(event) {
+			if($(this).is(':checked'))
+			{
+				$('#mucluong_min').val(0);
+				$('#mucluong_max').val(0);
+				$('#mucluong_min').attr('readonly', 'readonly');
+				$('#mucluong_max').attr('readonly', 'readonly');
+			} else {
+				$('#mucluong_min').removeAttr('readonly');
+				$('#mucluong_max').removeAttr('readonly');
+			}
+		});
+		if($('#thuongluong').is(':checked')) {
+			$('#thuongluong').trigger('click');
+			$('#thuongluong').trigger('click');
+		}
+
 		var show_auto_reply = '{{ $job->letter_auto_id }}';
 		if(show_auto_reply != 0) {
 			$('#show-auto-reply').trigger('click');

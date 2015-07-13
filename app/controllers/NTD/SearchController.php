@@ -239,26 +239,27 @@ class SearchController extends \Controller {
 			if(@$resume->ntv->id) {
 				if($resume->file_name)
 				{
-					$file = str_replace(['.doc', '.docx'], '.pdf', $resume->file_name);
+					$file = str_replace(['.doc', '.docx', '.jpg'], '.pdf', $resume->file_name);
 					$dir = Config::get('app.upload_path') . 'jobseekers/cv/' . $file;
 					if(File::isFile($dir)) $pdf = true;
 					else $pdf = false;
-					return View::make('employers.search.upload', compact('resume', 'pdf'));
+					return View::make('employers.search.resume_info_upload', compact('resume', 'pdf'));
 				} else {
 					return View::make('employers.search.resume_info', compact('resume'));
 				}
 			} else {
-				$file = str_replace(['.doc', '.docx'], '.pdf', $resume->file_name);
+				$file = str_replace(['.doc', '.docx', '.jpg'], '.pdf', $resume->file_name);
 				$dir = Config::get('app.upload_path') . 'jobseekers/cv/' . $file;
 				if(File::isFile($dir)) $pdf = true;
 				else $pdf = false;
+				
 				return View::make('employers.search.resume_info_nologin', compact('resume', 'pdf'));
 			}
 		}
 	}
 	public function getResumeIframe()
 	{
-		$file = str_replace(['.doc', '.docx'], '.pdf', Input::get('file'));
+		$file = str_replace(['.doc', '.docx', '.jpg'], '.pdf', Input::get('file'));
 		$file = explode('jobseekers/cv/', $file);
 		$file = $file[1];
 		$ext = explode('.', $file);
@@ -267,7 +268,8 @@ class SearchController extends \Controller {
 		$dir = Config::get('app.upload_path') . 'jobseekers/cv/' . $fname . '.pdf';
 		if(! File::isFile($dir))
 		{
-            return '<button type="button" class="btn btn-default">button</button>';
+			return View::make('employers.search.iframe', compact('file'));
+            return '<a href="{{ URL::route(\'employers.search.print_cv\', $resume->id) }}" class="btn btn-lg bg-orange">Tải CV</a>';
         } else {
         	return View::make('employers.search.iframe', compact('file'));
         }
@@ -356,6 +358,14 @@ class SearchController extends \Controller {
 				'submited_date' => date('Y-m-d H:i:s'),
 				'user_submit' => Auth::id(),
 				]);
+			if($rs) return Response::json(['has'=>true]);
+			return Response::json(['has'=>false]);
+		}
+		if(Input::get('action') == 'saveStatusFolder')
+		{
+			$rs = RSFolder::where('id', Input::get('apid'))
+			->where('ntd_id', Auth::id())
+			->update(['status'=>Input::get('status', 1)]);
 			if($rs) return Response::json(['has'=>true]);
 			return Response::json(['has'=>false]);
 		}

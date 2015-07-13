@@ -6,7 +6,7 @@ class OrderController extends \Controller {
 	{
 		$company = Company::where('ntd_id', Auth::id())->first();
 		View::share('company', $company);
-		$jobs = Job::where('ntd_id', Auth::id())->where('is_display', 1)->where('expired_date', '>=', date('Y-m-d'))->count();
+		$jobs = Job::where('ntd_id', Auth::id())->where('is_display', 1)->where('hannop', '>=', date('Y-m-d'))->count();
 		View::share('active_job', $jobs);
 		$newest = Order::where('ntd_id', Auth::id())->first();
 		View::share('newest', $newest);

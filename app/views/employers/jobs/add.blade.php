@@ -84,23 +84,30 @@
 												<div class="col-sm-6">
 													<div class="row">
 														<div class="col-sm-4">
-															{{ Form::text('mucluong_min', null, array('class'=>'form-control') ) }} 
+															{{ Form::text('mucluong_min', null, array('class'=>'form-control', 'id'=>'mucluong_min') ) }} 
 														</div>
 														<div class="col-xs-2 middle-align">đến</div>
 														<div class="col-sm-4">
-															{{ Form::text('mucluong_max', null, array('class'=>'form-control') ) }}
+															{{ Form::text('mucluong_max', null, array('class'=>'form-control', 'id'=>'mucluong_max') ) }}
 														</div>
-														<div class="col-xs-2 middle-align">USD</div>
+														<div class="col-xs-2 middle-align">VND</div>
 													</div>
 												</div>
-												
+												<div class="col-xs-2">
+													<div class="checkbox">
+														<label>
+															{{ Form::checkbox('thuongluong', 1, '', ['id'=>'thuongluong']) }}
+															Thương lượng
+														</label>
+													</div>
+												</div>
 											</div>
 											<div class="form-group">
 												<label for="mota" class="col-sm-2 control-label">Mô tả công việc:</label>
 												<div class="col-sm-10">
 													{{ Form::textarea('mota', null, array('class'=>'form-control', 'rows'=>5,'required') ) }}
-													<span class="italic text-gray-light">(Bạn có thể nhập thêm 14.500 ký tự)</span>
-													<span class="pull-right"><a class="text-blue decoration">Xem mẫu mô tả công việc</a></span>
+													<!-- <span class="italic text-gray-light">(Bạn có thể nhập thêm 14.500 ký tự)</span> -->
+													<!--<span class="pull-right"><a class="text-blue decoration">Xem mẫu mô tả công việc</a></span>-->
 												</div>
 												
 											</div>
@@ -108,8 +115,8 @@
 												<label for="input" class="col-sm-2 control-label">Quyền lợi:</label>
 												<div class="col-sm-10">
 													{{ Form::textarea('quyenloi', null, array('class'=>'form-control', 'rows'=>5) ) }}
-													<span class="italic text-gray-light">(Bạn có thể nhập thêm 14.500 ký tự)</span>
-													<span class="pull-right"><a class="text-blue decoration">Xem mẫu Quyền lợi</a></span>
+													<!-- <span class="italic text-gray-light">(Bạn có thể nhập thêm 14.500 ký tự)</span> -->
+													<!--<span class="pull-right"><a class="text-blue decoration">Xem mẫu Quyền lợi</a></span>-->
 												</div>
 												
 											</div>
@@ -162,7 +169,7 @@
 												<div class="col-sm-10">
 													<div class="checkbox">
 														<label>
-															<input type="checkbox" name="show_auto_reply" value="1" id="show-auto-reply">
+															{{ Form::checkbox('show_auto_reply', 1, 0, ['id'=>'show-auto-reply']) }}
 															Thiết lập thư trả lời tự động khi có ứng viên nộp đơn ứng tuyển
 														</label>
 													</div>
@@ -172,19 +179,19 @@
 												<div class="form-group">
 													<label for="input" class="col-sm-2 control-label">Chọn thư:</label>
 													<div class="col-sm-10">
-														{{ Form::select('letter_auto', ['none'=>'Vui lòng chọn'] + RespondAuto::where('ntd_id', Auth::id())->lists('subject', 'id'), null, ['id'=>'select-auto'] ) }}
+														{{ Form::select('letter_auto', ['none'=>'Thêm mới'] + RespondAuto::where('ntd_id', Auth::id())->lists('subject', 'id'), null, ['id'=>'select-auto'] ) }}
 													</div>
 												</div>
 												<div class="form-group">
 													<label for="inputSubject" class="col-sm-2 control-label">Tiêu đề:</label>
 													<div class="col-sm-10">
-														<input type="text" name="subject" id="inputSubject" class="form-control" value="" disabled="disabled">
+														{{ Form::text('subject', null, ['id'=>'inputSubject']) }}
 													</div>
 												</div>
 												<div class="form-group">
-													<label for="inputSubject" class="col-sm-2 control-label">Nội dung thư:</label>
+													<label for="inputContent" class="col-sm-2 control-label">Nội dung thư:</label>
 													<div class="col-sm-10">
-														<textarea name="content" id="inputContent" class="form-control" rows="10" disabled="disabled"></textarea>
+														{{ Form::textarea('content', null, ['rows'=>10, 'id'=>'inputContent']) }}
 													</div>
 												</div>
 											</div>
@@ -235,7 +242,7 @@
 												<div class="form-group">
 													<label for="input" class="col-sm-2 control-label">Trạng thái tin:</label>
 													<div class="col-sm-4">
-														{{ Form::select('status', array(1=>'Chờ đăng', 2=>'Đăng ngay'), 1, array('class'=>'form-control') ) }}
+														{{ Form::select('is_display', array(0=>'Chờ đăng', 1=>'Đăng ngay'), 1, array('class'=>'form-control') ) }}
 													</div>
 												</div>
 										</div>
@@ -289,8 +296,8 @@
 										</div>
 										</div>
 								<div class="center">
-									{{ Form::button('Tiếp tục', array('type'=>'submit', 'class'=>'btn btn-lg bg-orange')) }}
-									<button type="button" class="btn btn-lg bg-orange">Hủy</button>
+									{{ Form::button('Đăng tuyển', array('type'=>'submit', 'class'=>'btn btn-lg bg-orange')) }}
+									<a href="{{ URL::route('employers.jobs.index') }}" class="btn btn-lg bg-orange">Hủy</a>
 								</div>
 							</div> <!-- primary -->
 							{{ Form::close() }}
@@ -307,6 +314,9 @@
 		.middle-align {
 			vertical-align: middle;
 			padding-top: 6px;
+		}
+		#show-auto-reply {
+			margin-left: -20px !important;
 		}
 	</style>
 @stop
@@ -360,14 +370,35 @@
 			}
 		}
 		$('#select-auto').change(function(event) {
-			fillToTextbox();
+			fillToTextbox(); 
 		});
-		
+		$('#thuongluong').click(function(event) {
+			if($(this).is(':checked'))
+			{
+				$('#mucluong_min').val(0);
+				$('#mucluong_max').val(0);
+				$('#mucluong_min').attr('readonly', 'readonly');
+				$('#mucluong_max').attr('readonly', 'readonly');
+			} else {
+				$('#mucluong_min').removeAttr('readonly');
+				$('#mucluong_max').removeAttr('readonly');
+			}
+		});
 		var show_auto_reply = '{{ Input::get('show_auto_reply') }}';
+		
 		if(show_auto_reply != 0) {
 			$('#show-auto-reply').trigger('click');
 			$('#select-auto').val(show_auto_reply);
 			fillToTextbox();
+		}
+		if($('#show-auto-reply').is(':checked'))
+		{
+			$('#show-auto-reply').trigger('click');
+			$('#show-auto-reply').trigger('click');
+		}
+		if($('#thuongluong').is(':checked')) {
+			$('#thuongluong').trigger('click');
+			$('#thuongluong').trigger('click');
 		}
 	</script>
 @stop

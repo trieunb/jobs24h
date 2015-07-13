@@ -1,5 +1,5 @@
 @extends('layouts.employer')
-@section('title') Danh sách hồ sơ đã chọn @stop
+@section('title') Danh sách hồ sơ đã lưu @stop
 @section('content')
 <section class="boxed-content-wrapper clearfix">
 		<div class="container">
@@ -21,15 +21,19 @@
 						<label>Chú ý: Hồ sơ sẽ bị xóa khỏi trang Quản Lý Tuyển Dụng sau 13 tháng
 					</label>
 					</div>
+					<form action="" name="form11" method="POST" role="form">
+					<div class="clearfix"></div>
+					@include('includes.notifications')
 					<table class="table table-bordered table-blue-bordered white">
 						<thead>
 							<tr>
 								<th>
 									<div class="checkbox">
-									 	<label>
-									 		<input type="checkbox" value="">
-									 	</label>
-									 </div> 
+										<input type="checkbox" id="selectall" value="">
+										<label>
+											<span></span>
+										</label>
+									</div> 
 								</th>
 								<th>Tên hồ sơ</th>
 								<th>&nbsp;</th>
@@ -42,8 +46,9 @@
 								@if($ap->ntv_id > 0)
 								<td>
 									<div class="checkbox">
+										<input type="checkbox" name="valid[]" class="check" value="{{ $ap->cv_id }}">
 										<label>
-											<input type="checkbox" value="">
+											<span></span>
 										</label>
 									</div>
 								</td>
@@ -85,8 +90,9 @@
 								@else
 								<td>
 									<div class="checkbox">
+										<input type="checkbox" name="valid[]" class="check" value="{{ $ap->cv_id }}">
 										<label>
-											<input type="checkbox" value="">
+											<span></span>
 										</label>
 									</div>
 								</td>
@@ -125,12 +131,15 @@
 							
 						</tbody>
 					</table>
-					<a type="button" class="btn btn-lg bg-orange">Đánh giá hồ sơ</a>
-					<a type="button" class="btn btn-lg bg-orange bg-green">Xóa hồ sơ</a>
-					<a type="button" class="btn btn-lg bg-orange bg-green">Lưu thư mục</a>
+					<button type="button" id="btn-danhgiaall" class="btn btn-lg bg-orange">Đánh giá hồ sơ</button>
+					<button type="button" id="btn-xoaall" class="btn btn-lg bg-orange bg-green">Xóa hồ sơ</button>
+					<button type="button" id="btn-luuall" class="btn btn-lg bg-orange bg-green">Lưu thư mục</button>
+					<input type="hidden" name="act" id="act" value="">
+					<input type="hidden" name="val" id="val" value="">
 					<div id="pagination" class="pull-right">
 						{{ $apply->links() }}
 					</div>
+					</form>
 				</div>		
 			</section>
 
@@ -246,6 +255,82 @@
 							<div class="col-sm-10 col-sm-offset-2">
 								<button type="submit" class="btn btn-lg bg-orange">Gửi</button>
 								<a href="{{ URL::route('employers.account.create_letter') }}" target="_blank" class="btn btn-lg bg-orange bg-green">Thêm mới thư</a>
+							</div>
+						</div>
+				</form>
+			</div>
+			
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="modalSaveStatusAll">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">CẬP NHẬT TRẠNG THÁI</h4>
+			</div>
+			<div class="modal-body">
+				<form action="" method="POST" onsubmit="saveStatus(); return false;" class="form-horizontal" role="form">
+					<h4>Cập nhật trạng thái cho hồ sơ đã chọn: </h4>
+					<div id="result_s"></div>
+					<div class="form-group">
+						<label for="inputStatus" class="col-sm-2 control-label">Trạng thái:</label>
+						<div class="col-sm-4">
+							{{ Form::select('status', Config::get('custom_apply.apply_status'), null, ['id'=>'inputStatus1'] ) }}
+						</div>
+					</div>
+						<div class="form-group">
+							<div class="col-sm-10 col-sm-offset-2">
+								<button type="button" class="saveAll btn btn-lg bg-orange">Lưu thay đổi</button>
+							</div>
+						</div>
+				</form>
+			</div>
+			
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="modalSaveFolderAll">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">THÊM HỒ SƠ ĐÃ CHỌN VÀO THƯ MỤC</h4>
+			</div>
+			<div class="modal-body">
+				<form action="" method="POST" class="form-horizontal" role="form" name="form1" onsubmit="saveFolder();return false;">
+					<div id="result"></div>
+					<div class="form-group">
+						<label for="input" class="col-sm-4 control-label">
+							<div class="radio">
+								<label class="float-left">
+									<input type="radio" name="where_cv" id="inputAdd1" value="1" checked="checked">
+									Thêm vào thư mục
+								</label>
+							</div>
+						</label>
+						<div class="col-sm-8">
+							{{ Form::select('cv_folder', EFolder::where('ntd_id', Auth::id())->orderBy('id', 'desc')->lists('folder_name', 'id'), null, ['id'=>'cv_folder1'] ) }}
+							
+						</div>
+					</div>
+					<!-- <div class="form-group">
+						<label for="input" class="col-sm-4 control-label">
+							<div class="radio">
+								<label class="float-left">
+									<input type="radio" name="where_cv" id="inputCreate1" value="2">
+									Tạo thư mục mới
+								</label>
+							</div>
+						</label>
+						<div class="col-sm-8">
+							<input type="text" name="folder_name" required="required" id="inputFolder_name1" disabled="disabled" class="form-control">
+						</div>
+					</div> -->
+						<div class="form-group">
+							<div class="col-sm-8 col-sm-offset-4">
+								<button type="button" class="saveAll btn btn-lg bg-orange">Lưu</button>
 							</div>
 						</div>
 				</form>
@@ -424,5 +509,40 @@
 		});
 
 	}//
+	$('#selectall').click(function(event) {  //on click 
+	        if(this.checked) { // check select status
+	            $('.check').each(function() { //loop through each checkbox
+	                this.checked = true;  //select all checkboxes with class "checkbox1"               
+	            });
+	        }else{
+	            $('.check').each(function() { //loop through each checkbox
+	                this.checked = false; //deselect all checkboxes with class "checkbox1"                       
+	            });         
+	        }
+	    });
+	$('#btn-danhgiaall').click(function(event) {
+		$('#act').val('danhgiaall');
+		$('#modalSaveStatusAll').modal();
+	});
+	$('#btn-xoaall').click(function(event) {
+		$('#act').val('xoaall');
+		if(confirm('Bạn có muốn xóa các hồ sơ đã chọn ?'))
+		{
+			$('form[name=form11]').submit();
+		}
+	});
+	$('#btn-luuall').click(function(event) {
+		$('#act').val('luu');
+		$('#modalSaveFolderAll').modal();
+	});
+	$('.saveAll').click(function(event) {
+		if($('#act').val() == 'danhgiaall')
+		{
+			$('#val').val($('#inputStatus1').val());
+		} else {
+			$('#val').val($('#cv_folder1').val());
+		}
+		$('form[name=form11]').submit();
+	});
 	</script>
 @stop

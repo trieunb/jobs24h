@@ -22,12 +22,15 @@
 						Việc làm chưa sử dụng <span class="text-orange">0</span> vị trí.
 					</div>
 				</li>
+				@if($newest)
 				<li>
 					<div class="push-padding-10-lr">
 						Dịch vụ tìm hồ sơ <span class="text-orange">{{ (($newest->remain && $newest->ended_date>date('Y-m-d'))?$newest->remain:0) }}</span> CV.
 					</div>
 				</li>
+				@endif
 			</ul>
+			@if($newest)
 			@if($newest->ended_date>date('Y-m-d'))
 			<div class="push-padding-10-lr clearfix">
 				<span class="text-orage">{{ (($newest->remain)?$newest->remain:0) }}</span> CV, <span class="text-orage">{{ (($newest->created_date)?ceil((strtotime($newest->ended_date) - time())/86400):0) }}</span> ngày
@@ -35,6 +38,7 @@
 					( Từ {{ $newest->created_date }} đến {{ $newest->ended_date }} )
 				@endif
 			</div>
+			@endif
 			@endif
 		</li>
 	</ul>	
