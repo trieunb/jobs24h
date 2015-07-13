@@ -48,7 +48,9 @@
 												Tỉnh/Thành phố
 											</div>
 											<div class="col-xs-7">
+												@if($resume->application->first()->province_id > 0)
 												{{ $resume->application->first()->province->province_name }}
+												@endif
 											</div>
 										</div>
 										<div class="row td-info">

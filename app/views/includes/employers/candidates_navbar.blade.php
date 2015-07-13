@@ -34,8 +34,8 @@
 		<li class="{{ HTML::active(['employers.candidates.blocked']) }}">
 			<a href="{{ URL::route('employers.candidates.blocked') }}"><i class="fa fa-plus-square-o fa-2x"></i><span class="text-orange">Danh sách từ chối</span></a>
 		</li>
-		<li>
-			<a href="#"><i class="fa fa-plus-square-o fa-2x"></i><span class="text-orange">Số HS đã xem/HS được xem(12/100)</span></a>
+		<li class="{{ HTML::active(['employers.candidates.viewed']) }}">
+			<a href="{{ URL::route('employers.candidates.viewed') }}"><i class="fa fa-plus-square-o fa-2x"></i><span class="text-orange">Số HS đã xem/HS được xem</span></a>
 		</li>
 	</ul>
 </div>

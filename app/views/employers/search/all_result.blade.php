@@ -8,7 +8,7 @@
 								<span>Tìm thấy {{ $result->getTotal() }} hồ sơ theo yêu cầu tìm kiếm.</span>
 							</div>
 							<div class="info-text">
-								<span>Ngành nghề <strong>@if($input['category'] == 'all') Bất Kỳ @else {{ $cats[$input['category']] }} @endif</strong> 
+								<span>Ngành nghề <strong>@if(@$input['category'] == 'all') Bất Kỳ @else {{ @$cats[$input['category']] }} @endif</strong> 
 								| Địa điểm: <strong>@if($input['location'] == 'all') Bất Kỳ @else {{ $locas[$input['location']] }} @endif</strong></span>
 							</div>
 						</div>

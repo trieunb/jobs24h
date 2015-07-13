@@ -355,6 +355,7 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
 .sales ul.package-list {
   list-style: none;
   text-align: left;
+    padding-left: 20px;
 }
 .sales ul.package-list li {
   padding: 12px 0 12px 30px;

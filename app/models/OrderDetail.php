@@ -7,4 +7,8 @@ class OrderDetail extends \Eloquent {
 	{
 		return $this->belongsTo('Order', 'order_id');
 	}
+	public function resume()
+	{
+		return $this->belongsTo('Resume', 'rs_id');
+	}
 }

@@ -221,4 +221,9 @@ class CandidateController extends \Controller {
 	{
 		
 	}
+	public function getViewed()
+	{
+		$detail = \OrderDetail::where('ntd_id', Auth::id())->orderBy('id', 'desc')->paginate(10);
+		return View::make('employers.candidates.viewed', compact('detail'));
+	}
 }

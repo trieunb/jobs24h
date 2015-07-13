@@ -28,7 +28,7 @@
 				
 							@endif
 						</td>
-						<td>{{ Str::limit($v->content, 100) }}</td>
+						<td>{{ $v->content }}</td>
 						<td>{{ $v->title }}</td>
 						<td>{{ $v->submited_date }}</td>
 					</tr>

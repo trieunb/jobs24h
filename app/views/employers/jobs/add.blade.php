@@ -252,7 +252,7 @@
 											<h2 class="text-blue">{{ HTML::image('assets/ntd/images/photo.png') }} Hình ảnh và Video</h2>
 										</div>
 										<div class="form-group">
-											<span class="col-sm-3 col-sm-offset-1"><strong>Video Clip:</strong><br><small class="legend">(Không bắt buộc)</small></span>
+											<span class="col-sm-3 col-sm-offset-1"><strong>Link video Youtube:</strong><br><small class="legend">(Không bắt buộc)</small></span>
 										</div>
 
 										<div class="form-group">

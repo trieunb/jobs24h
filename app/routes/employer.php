@@ -33,6 +33,7 @@ Route::group(array('prefix'=>$locale), function() {
 				'getFolderDelete'=>	'employers.candidates.deleteFolder',
 				'getDeleted'	=>	'employers.candidates.deleted',
 				'getBlocked'	=>	'employers.candidates.blocked',
+				'getViewed'	=>	'employers.candidates.viewed',
 
 				'getReport'		=>	'employers.candidates.report',
 				
