@@ -39,7 +39,7 @@
     						?>
 			 				<li class='wow bounceInUp'>
 			 					<div class="date-book">{{$date}}</div>
-			 					{{HTML::image($doc['thumbnail'])}}
+			 					{{HTML::image('uploads/training/'.$doc['thumbnail'])}}
 			 					 
 			 					<h2>{{$doc['title']}}</h2>
 			 					<span>By {{$doc['author']}}</span>

@@ -19,17 +19,17 @@
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav">
 							<li>
-								<a href="#">Cung ứng lao động</a>
+								<a href="{{ URL::route('cungunglaodong.home') }}">Cung ứng lao động</a>
 							</li>
 							 
 							<li>
-								<a href="#">Người tìm việc</a>
+								<a href="{{ URL::route('jobseekers.home') }}">Người tìm việc</a>
 							</li>
 							<li>
-								<a href="#">Nhà tuyển dụng</a>
+								<a href="{{ URL::route('employers.launching') }}">Nhà tuyển dụng</a>
 							</li>
 							<li class="active1">
-								<a href="#">Đào tạo</a>
+								<a href="{{ URL::route('trainings.home') }}">Đào tạo</a>
 							</li>
 							 
 						</ul>
@@ -127,7 +127,7 @@
     						?>
 			 				<li class='wow bounceInUp'>
 			 					<div class="date-book">{{$date}}</div>
-			 					{{HTML::image($doc['thumbnail'])}}
+			 					{{HTML::image('uploads/training/'.$doc['thumbnail'])}}
 			 					 
 			 					<h2>{{$doc['title']}}</h2>
 			 					<span>By {{$doc['author']}}</span>
@@ -148,7 +148,7 @@
     						?>
 			 				<li class='wow bounceInDown'>
 			 					<div class="date-book">{{$date}}</div>
-			 					{{HTML::image($doc['thumbnail'])}}
+			 					{{HTML::image('uploads/training/'.$doc['thumbnail'])}}
 			 					 
 			 					<h2>{{$doc['title']}}</h2>
 			 					<span>By {{$doc['author']}}</span>
@@ -195,7 +195,7 @@
 					        	 @if ($index < 3 )
 					        	<li>
 					        		<div class="col-md-4 image-nx">
-					        		{{HTML::image($hvcu['thumbnail'])}}
+					        		{{HTML::image('uploads/training/'.$hvcu['thumbnail'])}}
 					        			 
 					        			<p>{{$hvcu['couser']}}</p>
 					        		</div>
@@ -226,7 +226,7 @@
 
 
 					        		<div class="col-md-4 image-nx">
-					        		{{HTML::image($hvcu['thumbnail'])}}
+					        		{{HTML::image('uploads/training/'.$hvcu['thumbnail'])}}
 					        			 
 					        			<p>{{$hvcu['worked']}}</p>
 					        		</div>
@@ -270,7 +270,7 @@
 
 
 					        		 <div class="image11">
-					        		 	{{HTML::image($gv['thumbnail'])}}
+					        		 	{{HTML::image('uploads/training/'.$gv['thumbnail'])}}
 						        		 <div class="linkgv">
 						        		 	<a href="{{$gv['facebook']}}"><i class="fa fa-facebook"></i></a>
 						        		 	<a href="{{$gv['twitter']}}"><i class="fa fa-twitter"></i></a>
@@ -297,7 +297,7 @@
 					<ul>
 								@foreach($people[1] as $hvtb)
 					        	<li>
-					        		{{HTML::image($hvtb['thumbnail'])}}
+					        		{{HTML::image('uploads/training/'.$hvtb['thumbnail'])}}
  					        		 <p>{{$hvtb['name']}}</p>
 					        	</li>
 					        	@endforeach
