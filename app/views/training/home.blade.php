@@ -7,7 +7,6 @@
 			<a href="{{URL::to('/')}}">
 			{{HTML::image('training/assets/img/logo.png')}}
 			 
-
 			</a>
 			</div>
 			<div class="col-md-9 column menu">
