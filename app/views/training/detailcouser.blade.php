@@ -103,7 +103,7 @@
 
           <div class="tq3">
             <div class="tq3-image">
-                        {{HTML::image('uploads/training/'.$couser['thumbnail'])}}
+                        {{HTML::image(URL::to('uploads/training/'.$couser['thumbnail'].''))}}
              
             </div>
             <div class="bt-tt">
@@ -278,7 +278,7 @@
               @foreach($people[0] as $gv)
                     <li>
                        <div class="image11">
-                        {{HTML::image('uploads/training/'.$gv['thumbnail'])}}
+                        {{HTML::image(URL::to('uploads/training/'.$gv['thumbnail'].''))}}
                          <div class="linkgv">
                           <a href="{{$gv['facebook']}}"><i class="fa fa-facebook"></i></a>
                           <a href="{{$gv['twitter']}}"><i class="fa fa-twitter"></i></a>

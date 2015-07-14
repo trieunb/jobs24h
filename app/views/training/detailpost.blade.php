@@ -26,7 +26,7 @@
               <div class="clearfix"></div>
               @if(!empty($post['thumbnail']))
 
-              <img style="width:100%" src="{{$post['thumbnail']}}">
+              <img style="width:100%" src="{{URL::to('uploads/training/'.$post['thumbnail'].'')}}">
               @endif
               <h3>{{$post['subtitle']}}</h3>
 
@@ -62,7 +62,7 @@
               {{$image[0]}}
                
               @else
-              <img src="{{$val['thumbnail']}}">
+              {{HTML::image(URL::to('uploads/training/'.$val['thumbnail'].''))}}
               @endif
               </div>
               <h2><a href="{{URL::route('trainings.detailpost',array($val['id']))}}">{{$val['title']}}</a></h2>

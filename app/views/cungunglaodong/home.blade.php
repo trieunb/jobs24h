@@ -75,25 +75,31 @@
 								<br />Đồng thời với việc phát triển đội ngũ nhân sự, VnJobs.vn cũng đã thành công trong việc xây dựng kho dữ liệu ứng viên đa dạng ngành nghề nhằm giúp khách hàng tiếp cận đúng và hiệu quả với ứng viên mà họ đang tìm kiếm. Với 7 dịch vụ: Dịch vụ quản lý nhân sự, dịch vụ tuyển dụng, dịch vụ Đào tạo nhân sự, dịch vụ lương và chế độ, dịch vụ Head Hunting.
 							</p>
 							<ul class="push-top">
-								<li><span>
+								<li>
+								<a href="{{URL::route('cungunglaodong.detail','9')}}"><span>
 								{{HTML::image('cungunglaodong/assets/images/icon_photo.png')}}
 								 
-								</span> Quản lý nhân sự</li>
-								<li><span>
+								</span> Quản lý nhân sự</a></li>
+								<li>
+								<a href="{{URL::route('cungunglaodong.detail','3')}}"><span>
 								{{HTML::image('cungunglaodong/assets/images/icon_paint.png')}}
-								 </span> Đào tạo nhân sự</li>
-								<li><span>
+								 </span> Đào tạo nhân sự</a></li>
+								<li>
+								<a href="{{URL::route('cungunglaodong.detail','8')}}"><span>
 								{{HTML::image('cungunglaodong/assets/images/icon_gift.png')}}
-								 </span> Lương và chế độ</li>
-								<li><span>
+								 </span> Lương và chế độ</a></li>
+								<li>
+								<a href="{{URL::route('cungunglaodong.detail','6')}}"><span>
 								{{HTML::image('cungunglaodong/assets/images/icon_cart.png')}}
-								</span> Tuyển dụng</li>
-								<li><span>
+								</span> Tuyển dụng</a></li>
+								<li>
+								<a href="{{URL::route('cungunglaodong.detail','7')}}"><span>
 								{{HTML::image('cungunglaodong/assets/images/icon_user.png')}}
-								 </span> Giải pháp lao động</li>
-								<li><span>
+								 </span> Giải pháp lao động</a></li>
+								<li>
+								<a href="{{URL::route('cungunglaodong.detail','5')}}"><span>
 								{{HTML::image('cungunglaodong/assets/images/icon_human.png')}}
-								 </span> Thuê ngoài nhân sự</li>
+								 </span> Thuê ngoài nhân sự</a></li>
 							</ul>
 						</div>
 					</div>
@@ -104,7 +110,7 @@
 						<ul>
 							@foreach($data as $value)
 							<li class="col-sm-3">
-								<a href="{{$value['link']}}" title="{{$value['name']}}">{{HTML::image($value['thumbnail'],$value['name'])}}</a>
+								<a href="{{$value['link']}}" title="{{$value['name']}}">{{HTML::image(URL::to('uploads/cungunglaodong/'.$value['thumbnail'].''),$value['name'])}}</a>
 							</li>
 							@endforeach
 						</ul>

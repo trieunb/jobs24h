@@ -24,7 +24,7 @@
 		 					 @if($tr['thumbnail']==null)
 		 					 {{$image[0]}}
 		 					 @else
-		 					 {{HTML::image('uploads/training/'.$tr['thumbnail'])}}
+		 					 {{HTML::image(URL::to('uploads/training/'.$tr['thumbnail'].''))}}
 		 					 @endif
 		 					
 		 					<h2><a href="{{URL::route('trainings.detailcouser',array($tr['id']))}}">{{$tr['title']}}</a></h2>
