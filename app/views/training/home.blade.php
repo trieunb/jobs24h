@@ -80,9 +80,14 @@
 		 				@foreach($training as $tr)
 		 				<li class="wow bounceInLeft" data-wow-duration="0.3s">
 		 					<?php preg_match('/<img[^>]+>/i',$tr['content'], $image); 
+		 					preg_match('/< *img[^>]*src *= *["\']?([^"\']*)/i', $tr['content'], $matches);
+
 		 					 ?>
 		 					 @if($tr['thumbnail']==null)
-		 					 {{$image[0]}}
+		 					 	@if($matches[1])
+								<img src="{{ $matches[1] }}" style="width: 188px; height: 210px">
+		 					 	@endif
+		 					 
 		 					 @else
 		 					 {{HTML::image(URL::to('uploads/training'.$tr['thumbnail'].''))}}
 		 					 @endif
