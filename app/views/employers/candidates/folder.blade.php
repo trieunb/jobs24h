@@ -111,6 +111,7 @@
 								<td>
 									Ngày tạo: {{ date('Y-m-d', strtotime($ap->resume->created_at)) }}<br>
 									Cập nhật: {{ $ap->resume->getUpdateAt() }}<br>
+									Trạng thái: <span id="a_{{ $ap->id }}">{{ Config::get('custom_apply.apply_status')[$ap->status] }}</span>
 
 								</td>
 								<td>

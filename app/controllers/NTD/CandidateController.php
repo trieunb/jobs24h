@@ -8,6 +8,8 @@ class CandidateController extends \Controller {
 		View::share('job_name', $job_name);
 		$folders = EFolder::where('ntd_id', Auth::id())->with('application')->orderBy('id', 'desc')->get();
 		View::share('folders', $folders);
+		$viewed = \OrderDetail::where('ntd_id', Auth::id())->count();
+		View::share('viewed', $viewed);
 	}
 	public function getIndex()
 	{
