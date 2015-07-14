@@ -57,7 +57,8 @@
 					</div>
 				</td>
 				<td>{{$value['author']}}</td>
-				<td>{{HTML::image($value['thumbnail'],null,array('style' => 'width:100px'))}}</td>
+				
+				<td>{{HTML::image('uploads/training/'.$value['thumbnail'],null,array('style' => 'width:100px'))}}</td>
 				<td>{{$value['view']}}</td>
 				<td>{{$value['download']}}</td>
 				<td>{{$value['store']}}</td>

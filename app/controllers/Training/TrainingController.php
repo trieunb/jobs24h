@@ -67,7 +67,7 @@ class TrainingController extends Controller
 		$doc1->download=$doc1->download+1;
 		$doc1->save();
 		 
-		$path=str_replace(URL::to('/'), public_path(), $doc1['store']);
+		$path=''.public_path().'/uploads/training/document/'.$doc1['store'].'';
 			if(File::exists($path))
 				return Response::download($path);
 	}

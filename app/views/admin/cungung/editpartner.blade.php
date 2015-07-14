@@ -37,7 +37,7 @@
 			</div>
 
 			<div class="col-sm-3">
-				<img style="width:50%" id="blah" src="{{$data['thumbnail']}}" alt="logo" />
+				<img style="width:50%" id="blah" src="{{URL::to('uploads/cungunglaodong/'.$data['thumbnail'].'')}}" alt="logo" />
 
 			</div>
 
