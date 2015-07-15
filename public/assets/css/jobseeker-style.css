@@ -431,7 +431,7 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
 .bg-search {background-image: url(../images/bg_search.jpg); min-height: 380px;  background-repeat: no-repeat;background-position: center center;display: block;position: relative;/* float: left; */ margin: 0 !important;}
 .shadow {background-image: url(../images/shadow.png); min-height: 9px;  background-repeat: no-repeat;background-position: center center;}
 .search-form {background: url(../images/bg_search_form.png) no-repeat;  padding: 25px 15px; margin: 0px auto 20px;}
-.bg-search .search-form { margin-top: 149px; margin-bottom: 0;}
+.bg-search .search-form { margin-top: 200px; margin-bottom: 0;}
 .search-form .select2-container, .select2-container .select2-selection--multiple, .search-form .form-control, .select2-container--default .select2-selection--single {width: 100% !important; border-color: #ffffff !important; border-radius: 0 !important; min-height: 32px !important;font-size: 12px !important; text-overflow: ellipsis;}
 .select2-container--default .select2-selection--multiple .select2-selection__choice {text-overflow: ellipsis;  overflow: hidden;margin-right: 2px !important; background: #F0F0F0 !important; border: 1px solid #E7E7E7  !important;}
 .search-form .select2-container--default .select2-selection--multiple .select2-selection__choice {max-width:70px;}
