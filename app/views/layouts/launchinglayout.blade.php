@@ -71,12 +71,12 @@
 								</div>
 								<div class="clearfix"></div>
 								<ul class="socials">
-									<li><a href="#">{{ HTML::image('assets/ntd/images/social-rss.png') }}</a></li>
-									<li><a href="#">{{ HTML::image('assets/ntd/images/social-facebook.png') }}</a></li>
-									<li><a href="#">{{ HTML::image('assets/ntd/images/social-twitter.png') }}</a></li>
-									<li><a href="#">{{ HTML::image('assets/ntd/images/social-dribbble.png') }}</a></li>
-									<li><a href="#">{{ HTML::image('assets/ntd/images/social-pinterest.png') }}</a></li>
-									<li><a href="#">{{ HTML::image('assets/ntd/images/social-linkedin.png') }}</a></li>
+									<li><a href="https://plus.google.com/u/0/+VnjobsvnVieclamhot/posts" target="_blank">{{ HTML::image('assets/ntd/images/social-rss.png') }}</a></li>
+									<li><a href="https://www.facebook.com/vnjobs.vn" target="_blank">{{ HTML::image('assets/ntd/images/social-facebook.png') }}</a></li>
+									<li><a href="#" target="_blank">{{ HTML::image('assets/ntd/images/social-twitter.png') }}</a></li>
+									<li><a href="#" target="_blank">{{ HTML::image('assets/ntd/images/social-dribbble.png') }}</a></li>
+									<li><a href="#" target="_blank">{{ HTML::image('assets/ntd/images/social-pinterest.png') }}</a></li>
+									<li><a href="#" target="_blank">{{ HTML::image('assets/ntd/images/social-linkedin.png') }}</a></li>
 								</ul>
 							</div>
 						</div>

@@ -228,11 +228,14 @@ class JobController extends \Controller {
 			$ntd_diadiem = $data['ntd_diadiem']; unset($data['ntd_diadiem']);
 			$video = $data['video']; unset($data['video']);
 			$data['ntd_id'] = Auth::id();
-			//$data['status'] = 1;
+			$data['status'] = 1;
 			//$data['is_display'] = (Input::get('status')==2)?1:0;
 			$data['slug'] = Str::slug(Input::get('vitri'));
 			$data['keyword_tags'] = json_encode($data['keyword_tags']);
-			$data['matin'] = Job::orderBy('matin', 'desc')->first()->matin + 1;
+			$matin = Job::orderBy('matin', 'desc')->first();
+			if($matin) $matin = $matin->matin;
+			else $matin = 100000;
+			$data['matin'] = $matin + 1;
 			if(@$data['show_auto_reply'] && is_numeric($data['letter_auto']))
 			{
 				$data['letter_auto_id'] = $data['letter_auto'];

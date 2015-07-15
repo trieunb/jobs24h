@@ -72,7 +72,7 @@
 						<div class="form-group">
 							<label for="inputFolderName" class="col-sm-2 control-label">Tên thư mục:</label>
 							<div class="col-sm-10">
-								<input type="text" name="folderName" id="inputFolderName" class="form-control" value="" required="required" maxlength="20">
+								<input type="text" name="folderName" id="inputFolderName" class="form-control" value="" required="required" maxlength="40">
 							</div>
 						</div>
 						<div class="form-group">
@@ -101,7 +101,7 @@
 							<input type="hidden" name="folder_id" id="inputFolder_id" class="form-control" value="">
 							<label for="inputEditFolderName" class="col-sm-2 control-label">Tên mới:</label>
 							<div class="col-sm-10">
-								<input type="text" name="folderName" id="inputEditFolderName" class="form-control" value="" required="required" maxlength="20">
+								<input type="text" name="folderName" id="inputEditFolderName" class="form-control" value="" required="required" maxlength="40">
 							</div>
 						</div>
 						<div class="form-group">

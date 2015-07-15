@@ -3,19 +3,22 @@
   
     <div class="top-footer">
       <div class="container">
-      <div class="col-md-6"><i class="glyphicon glyphicon-circle-arrow-right"></i> Hổ trợ ứng viên: (84.4) 3577-1608 
+      <div class="col-md-6"><i class="glyphicon glyphicon-circle-arrow-right"></i> Hỗ trợ ứng viên: (84.4) 3577-1608 
       &nbsp;&nbsp;        <i class="glyphicon glyphicon-earphone"></i>   Hotline : 1900 585853  </div>
       <div class="col-md-6">
         <div class="col-md-6" style="text-align:right;">Kết nối với Vnjob.vn
         </div>
         <div class="col-md-6 icon">
-        {{HTML::image('training/assets/img/rss.png')}}
-        {{HTML::image('training/assets/img/facebook.png')}}
-        {{HTML::image('training/assets/img/twitter.png')}}
-        {{HTML::image('training/assets/img/dribble.png')}}
-        {{HTML::image('training/assets/img/pinterest.png')}}
-        {{HTML::image('training/assets/img/ico-linkkedin.png')}}      
-           
+        <a href="#">{{HTML::image('training/assets/img/rss.png')}}</a>
+        <a href="https://www.facebook.com/vnjobs.vn" target="_blank">{{HTML::image('training/assets/img/facebook.png')}}</a>
+        <a href="#">{{HTML::image('training/assets/img/twitter.png')}}</a>
+        <a href="#">{{HTML::image('training/assets/img/dribble.png')}}</a>
+        <a href="#">{{HTML::image('training/assets/img/pinterest.png')}}</a>
+        <a href="#">{{HTML::image('training/assets/img/ico-linkkedin.png')}}</a>
+           <!-- https://www.facebook.com/vnjobs.vn
+https://plus.google.com/u/0/+VnjobsvnVieclamhot/posts
+http://vieclamhot.tumblr.com/
+https://www.youtube.com/channel/UCDIqPT9Nmet6zy67RtUJNiA -->
         </div>
         </div>
       </div>

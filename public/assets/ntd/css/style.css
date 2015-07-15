@@ -494,9 +494,9 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
 .menu-tab ul li a {display: block; padding: 5px 20px; border-radius: 10px; border-radius: 5px; /* margin-right: 10px; */ text-transform: capitalize;}
 .menu-tab ul>li:hover>ul {display: block; z-index: 10;}
 .menu-tab ul>li.active>ul {display: block;}
-.menu-tab ul li ul {background: #333; display: none; position: absolute; top: 46px; left: 0; width: 100%;}
-.menu-tab ul li ul li a {color: #00b9f2 !important; padding: 5px 12px;}
-.menu-tab ul li ul li.selected a, .menu-tab ul li ul li a:hover {background: #565656; color: #00b9f2;}
+.menu-tab ul li ul {background: #f7941d; display: none; position: absolute; top: 46px; left: 0; width: 100%;}
+.menu-tab ul li ul li a {color: #FFF !important; padding: 5px 12px;}
+.menu-tab ul li ul li.selected a, .menu-tab ul li ul li a:hover {background: #f8b461; color: #00b9f2;}
 .menu-tab ul li ul li {background: none !important; margin-right: 5px;}
 
 

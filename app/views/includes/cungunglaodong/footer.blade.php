@@ -10,11 +10,15 @@
 						<div class="social">
 							<span>Kết nối với vnjobs.vn</span>
 							<a href="#" class="rss" target="_blank" title="Rss"></a>
-							<a href="#" class="facebook" target="_blank" title="Facebook"></a>
+							<a href="https://www.facebook.com/vnjobs.vn" class="facebook" target="_blank" title="Facebook"></a>
 	                        <a href="#" class="twitter" target="_blank" title="Twitter"></a>
 	                        <a href="#" class="linkedin" target="_blank" title="Linkedin"></a>
 	                        <a href="#" class="pinterest" target="_blank" title="Pinterest"></a>
 	                        <a href="#" class="dribble" target="_blank" title="Dribble"></a>
+	                        <!-- https://www.facebook.com/vnjobs.vn
+https://plus.google.com/u/0/+VnjobsvnVieclamhot/posts
+http://vieclamhot.tumblr.com/
+https://www.youtube.com/channel/UCDIqPT9Nmet6zy67RtUJNiA -->
 						</div>
 					</div>
 				</div>
