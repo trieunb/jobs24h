@@ -2,11 +2,11 @@
 <div class="widget row">
 	<h3>Thông tin tài khoản</h3>
 	<ul class="menu-images-icons">
-		<li>
+		<!-- <li>
 			<a href="{{ URL::route('employers.account.usermanager') }}">
 				{{ HTML::image('assets/ntd/images/icon-user.png') }} Quản lý User
 			</a>
-		</li>
+		</li> -->
 		<li>
 			<a href="{{ URL::route('employers.account.index') }}">
 				{{ HTML::image('assets/ntd/images/icon-company.png') }} Thông tin công ty

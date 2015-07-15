@@ -54,14 +54,14 @@
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Quá trình làm việc:</label>
 			<div class="col-sm-6">
-				{{ Form::textarea('worked',$value['worked'], array('class'=>'form-control','placeholder'=>'Quá trình làm việc của giảng viên, chỉ dành cho giảng viên') ) }}
+				{{ Form::textarea('worked',$value['worked'], array('class'=>'form-control','placeholder'=>'Quá trình làm việc đối với giảng viên, Khóa học đã trải qua đối với sinh viên cũ') ) }}
 			</div>
 		</div>
 
 		 <div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Giới thiệu bản thân:</label>
 			<div class="col-sm-6">
-				{{ Form::textarea('yourself',$value['yourself'], array('class'=>'form-control','placeholder'=>'Giới thiệu sơ qua về bản thân') ) }}
+				{{ Form::textarea('yourself',$value['yourself'], array('class'=>'form-control','placeholder'=>'Giới thiệu đôi nét về bản thân . Ví dụ : học vấn, kinh nghiệm') ) }}
 			</div>
 		</div>
 
@@ -111,7 +111,7 @@
 			</div>
 
 			<div class="col-sm-3">
-				<img style="width:50%" id="blah" src="{{$value['thumbnail']}}" alt="avatar" />
+				<img style="width:50%" id="blah" src="{{URL::to('uploads/training/'.$value['thumbnail'].'')}}" alt="avatar" />
 
 			</div>
 

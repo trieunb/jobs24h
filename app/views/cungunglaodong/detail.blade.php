@@ -13,9 +13,10 @@
 			<h2>{{$services['name']}}</h2>
 		</div>
 
+	 	@if($services['banner'])
+		{{HTML::image('uploads/cungunglaodong/'.$services['banner'].'')}}
+		@endif
 		 
-		 
-		{{HTML::image($services['banner'])}}
 		 
 		
 		

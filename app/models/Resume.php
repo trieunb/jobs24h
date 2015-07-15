@@ -48,6 +48,10 @@ class Resume extends \Eloquent {
 	{
 		return $this->beLongsTo('WorkType', 'hinhthuclamviec');
 	}
+	public function mucluong()
+	{
+		return number_format($this->mucluong, 0, ',', '.');
+	}
 	public function kynang()
 	{
 		$kynang = json_decode($this->kynang);

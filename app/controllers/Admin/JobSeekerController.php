@@ -149,7 +149,7 @@ class JobSeekerController extends \BaseController {
 			unset($inputs['_method']);
 			unset($inputs['_token']);
 			if($inputs['password'] == '') unset($inputs['password']);
-			$user = NTV::find($id);
+			$user = Sentry::findUserById($id);
 			
 			if($user)
 			{

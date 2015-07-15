@@ -28,7 +28,7 @@
 				
 							@endif
 						</td>
-						<td>{{ Str::limit($v->content, 100) }}</td>
+						<td>{{ $v->content }}</td>
 						<td>{{ $v->title }}</td>
 						<td>{{ $v->submited_date }}</td>
 					</tr>
@@ -42,7 +42,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="boxed">
+		<!-- <div class="boxed">
 			<div class="heading-image">
 				<h2 class="text-orange">Email mẫu</h2>
 			</div>	
@@ -66,7 +66,7 @@
 				</tbody>
 			</table>
 			<button type="button" class="btn btn-lg bg-orange">Tạo email mẫu mới</button>
-		</div>
+		</div> -->
 	</section>
 @stop
 

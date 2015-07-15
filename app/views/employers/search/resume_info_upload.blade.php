@@ -48,7 +48,9 @@
 												Tỉnh/Thành phố
 											</div>
 											<div class="col-xs-7">
-												{{ $resume->application->first()->province->province_name }}
+												@if($resume->application->first()->ntv->province_id)
+												{{ $resume->application->first()->ntv->province->province_name }}
+												@endif
 											</div>
 										</div>
 										<div class="row td-info">
@@ -106,13 +108,26 @@
 							</div> <!-- end .row top -->
 						</div>
 					</div> <!-- end .row info -->
+					<div class="row resume-content">
+						<div class="heading-title">
+							<span>Thông tin nghề nghiệp</span>
+						</div>
+						<div class="col-xs-12">
+							@if($pdf)
+							<iframe  frameborder="0" scrolling="no" src="{{ URL::route('employers.search.resume_viewer') }}?file={{ URL::to('/').'/uploads/jobseekers/cv/'.$resume->file_name }}" height="800" width="100%"></iframe>
+							@else 
+							<a href="{{ URL::route('employers.search.print_cv', $resume->id) }}" class="btn btn-lg bg-orange">Tải CV</a>
+							@endif
+						</div>
+					</div>
+					
 					
 					<div class="row box-footer">
 						<div class="col-xs-12 info-action">
 							<div class="pull-right">
 								<ul>
-									<li><a href="#">{{ HTML::image('assets/ntd/images/icon-save-cv.png') }} Lưu thư mục</a></li>
-									<li><a href="#">{{ HTML::image('assets/ntd/images/icon-view-cv.png') }} Xem hồ sơ tương tự</a></li>
+									<li><a href="#modalSaveFolder" data-toggle="modal" data-target="#modalSaveFolder">{{ HTML::image('assets/ntd/images/icon-save-cv.png') }} Lưu thư mục</a></li>
+									<li><a href="{{ URL::to($locale.'/employers/search/basic?' . implode('&', ['keyword=', 'category=all', 'level='.$resume->capbachientai, 'location=all'])) }}" target="_blank">{{ HTML::image('assets/ntd/images/icon-view-cv.png') }} Xem hồ sơ tương tự</a></li>
 									<li><a href="#">{{ HTML::image('assets/ntd/images/icon-send-cv.png') }} Gửi hồ sơ</a></li>
 								</ul>
 							</div>

@@ -138,7 +138,9 @@
 							<div class="info-right">
 								@if(count($resume->cvlanguage))
 								@foreach($resume->cvlanguage as $lang)
+									@if($lang->lang_id > 0)
 									{{ $lang->lang->lang_name }} - {{ $lang->lvlang->name }}<br>
+									@endif
 								@endforeach
 								@endif
 							</div>
@@ -149,14 +151,16 @@
 						</div>
 						<div class="list-info">
 							<div class="info-left">Mức lương mong muốn</div>
-							<div class="info-right">{{ $resume->mucluong }} USD</div>
+							<div class="info-right">{{ $resume->mucluong() }} VND</div>
 						</div>
 						<div class="list-info">
 							<div class="info-left">Ngành nghề mong muốn</div>
 							<div class="info-right">
 								@if(count($resume->cvcategory))
 								@foreach($resume->cvcategory as $cat)
+									@if($cat->cat_id > 0)
 									{{ $cat->category->cat_name }}<br>
+									@endif
 								@endforeach
 								@endif
 							</div>
@@ -166,14 +170,16 @@
 							<div class="info-right">
 								@if(count($resume->location))
 								@foreach($resume->location as $loc)
+									@if($loc->province_id > 0)
 									{{ $loc->province->province_name }}<br>
+									@endif
 								@endforeach
 								@endif
 							</div>
 						</div>
 						<div class="list-info">
 							<div class="info-left">Hình thức</div>
-							<div class="info-right">{{ $resume->worktype->name }}</div>
+							<div class="info-right">{{ @$resume->worktype->name }}</div>
 						</div>
 						
 					</div> <!-- end.info-content -->

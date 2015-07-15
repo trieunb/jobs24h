@@ -25,7 +25,7 @@
 		 					 @if($tr['thumbnail']==null)
 		 					 {{$image[0]}}
 		 					 @else
-		 					 {{HTML::image($tr['thumbnail'])}}
+		 					  {{HTML::image(URL::to('uploads/training/'.$tr['thumbnail'].''))}}
 		 					 @endif
 		 					
 		 					<?php $create=explode(" ", $tr['created_at']);

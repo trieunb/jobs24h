@@ -206,7 +206,7 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
 .heading-border-blue {padding: 10px 20px 10px 10px; border-left: 5px solid #1ac6ff; margin-bottom: 20px;}
 .heading-border-blue h3 {margin: 0; font-size: 18px; font-weight: 500;}
 .boxed .heading-image {margin-bottom: 0;}
-.boxed .heading-image h2 {/*font-family: Tahoma;*/ font-size: 20px;}
+.boxed .heading-image h2 {/*font-family: Tahoma;*/ font-size: 20px;font-weight: bold;}
 .heading-item { background: #1AC6FF; line-height: 44px; margin:0; text-transform: uppercase; color: #fff;}
 .heading-item .first {background: url(../images/bg-item.png) no-repeat left center;}
 .service-price .heading-border-blue h4{margin: 0; font-family: "Gotham-Thin";letter-spacing: -1px;}
@@ -270,7 +270,7 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
 .widget.ads img {border: 5px solid #D8D4D4;}
 .fileUpload {position: relative;overflow: hidden;}
 .fileUpload input.upload {position: absolute;top: 0;right: 0;margin: 0;   padding: 0;font-size: 20px;cursor: pointer;opacity: 0;filter: alpha(opacity=0);}
-.uploadFile {  background: transparent !important;  border: none;  padding: 0;  font-style: italic;}
+.uploadFile {  background: transparent !important;  border: none;  padding: 0;  font-style: italic;width: 100%;}
 .management-order .arrow-square-orange li:first-child:before{padding: 0; background: none;}
 .management-order h4 {color: #999; text-transform: uppercase; font-family: "Gotham-Thin"; font-size: 11px;}
 .support {background: #f5f5f5; padding: 10px;}
@@ -355,6 +355,7 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
 .sales ul.package-list {
   list-style: none;
   text-align: left;
+    padding-left: 20px;
 }
 .sales ul.package-list li {
   padding: 12px 0 12px 30px;
@@ -661,6 +662,9 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
   font-weight: bold;
   color: #FFF;
 }
+.login-form .heading-title span, .register-form .heading-title span {
+  color: #000;
+}
 .bg-green {
   background: #1AC6FF;
 }
@@ -750,5 +754,13 @@ div.info-right {
   float:left;
 }
 .checkbox input[type=checkbox] {
+  /*margin-left: 0;*/
+}
+table .checkbox input[type=checkbox] {
   margin-left: 0;
+}
+.widget.row.menu-management-resume ul li ul {
+  max-height: 300px;
+  overflow-y: auto;
+  width: 95%;
 }

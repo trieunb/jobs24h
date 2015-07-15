@@ -116,7 +116,7 @@
 									<div class="col-xs-3">
 										{{ Form::text('luong_to') }}
 									</div>
-									<div class="col-xs-2 align-center">(USD/tháng)</div>
+									<div class="col-xs-2 align-center">(VND/tháng)</div>
 								</div>
 							</div>
 							<div class="form-group">

@@ -7,7 +7,6 @@
 			<a href="{{URL::to('/')}}">
 			{{HTML::image('training/assets/img/logo.png')}}
 			 
-
 			</a>
 			</div>
 			<div class="col-md-9 column menu">
@@ -19,17 +18,17 @@
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav">
 							<li>
-								<a href="#">Cung ứng lao động</a>
+								<a href="{{URL::route('cungunglaodong.home')}}">Cung ứng lao động</a>
 							</li>
 							 
 							<li>
-								<a href="#">Người tìm việc</a>
+								<a href="{{URL::route('jobseekers.home')}}">Người tìm việc</a>
 							</li>
 							<li>
-								<a href="#">Nhà tuyển dụng</a>
+								<a href="{{URL::route('employers.launching')}}">Nhà tuyển dụng</a>
 							</li>
 							<li class="active1">
-								<a href="#">Đào tạo</a>
+								<a href="{{URL::route('trainings.home')}}">Đào tạo</a>
 							</li>
 							 
 						</ul>
@@ -81,11 +80,16 @@
 		 				@foreach($training as $tr)
 		 				<li class="wow bounceInLeft" data-wow-duration="0.3s">
 		 					<?php preg_match('/<img[^>]+>/i',$tr['content'], $image); 
+		 					preg_match('/< *img[^>]*src *= *["\']?([^"\']*)/i', $tr['content'], $matches);
+
 		 					 ?>
 		 					 @if($tr['thumbnail']==null)
-		 					 {{$image[0]}}
+		 					 	@if($matches[1])
+								<img src="{{ $matches[1] }}" style="width: 188px; height: 210px">
+		 					 	@endif
+		 					 
 		 					 @else
-		 					 {{HTML::image($tr['thumbnail'])}}
+		 					 {{HTML::image(URL::to('uploads/training'.$tr['thumbnail'].''))}}
 		 					 @endif
 		 					
 		 					<h2><a href="{{URL::route('trainings.detailcouser',array($tr['id']))}}">{{$tr['title']}}</a></h2>
@@ -127,7 +131,7 @@
     						?>
 			 				<li class='wow bounceInUp'>
 			 					<div class="date-book">{{$date}}</div>
-			 					{{HTML::image($doc['thumbnail'])}}
+			 					{{HTML::image(URL::to('uploads/training/'.$doc['thumbnail'].''))}}
 			 					 
 			 					<h2>{{$doc['title']}}</h2>
 			 					<span>By {{$doc['author']}}</span>
@@ -148,7 +152,7 @@
     						?>
 			 				<li class='wow bounceInDown'>
 			 					<div class="date-book">{{$date}}</div>
-			 					{{HTML::image($doc['thumbnail'])}}
+			 					{{HTML::image(URL::to('uploads/training/'.$doc['thumbnail'].''))}}
 			 					 
 			 					<h2>{{$doc['title']}}</h2>
 			 					<span>By {{$doc['author']}}</span>
@@ -195,9 +199,9 @@
 					        	 @if ($index < 3 )
 					        	<li>
 					        		<div class="col-md-4 image-nx">
-					        		{{HTML::image($hvcu['thumbnail'])}}
+					        		{{HTML::image(URL::to('uploads/training/'.$hvcu['thumbnail'].''))}}
 					        			 
-					        			<p>{{$hvcu['couser']}}</p>
+					        			<p>{{$hvcu['worked']}}</p>
 					        		</div>
 					        		<div class="col-md-8 text-nx">
 					        			<h2>{{$hvcu['name']}}</h2>
@@ -226,13 +230,13 @@
 
 
 					        		<div class="col-md-4 image-nx">
-					        		{{HTML::image($hvcu['thumbnail'])}}
+					        		{{HTML::image(URL::to('uploads/training/'.$hvcu['thumbnail'].''))}}
 					        			 
 					        			<p>{{$hvcu['worked']}}</p>
 					        		</div>
 					        		<div class="col-md-8 text-nx">
 					        			<h2>{{$hvcu['name']}}</h2>
-					        			<h2>{{$hvcu['worked']}}</h2>
+					        			<h2>{{$hvcu['couser']}}</h2>
 					        			<p data-toggle="tooltip" data-placement="top" title="{{$hvcu['feeling']}}">{{str_limit($hvcu['feeling'], $limit = 100, $end = '...')}}
 					        			</p>
 					        		</div>
@@ -270,7 +274,7 @@
 
 
 					        		 <div class="image11">
-					        		 	{{HTML::image($gv['thumbnail'])}}
+					        		 	{{HTML::image(URL::to('uploads/training/'.$gv['thumbnail'].''))}}
 						        		 <div class="linkgv">
 						        		 	<a href="{{$gv['facebook']}}"><i class="fa fa-facebook"></i></a>
 						        		 	<a href="{{$gv['twitter']}}"><i class="fa fa-twitter"></i></a>
@@ -297,7 +301,8 @@
 					<ul>
 								@foreach($people[1] as $hvtb)
 					        	<li>
-					        		{{HTML::image($hvtb['thumbnail'])}}
+					        		{{HTML::image(URL::to('uploads/training/'.$hvtb['thumbnail'].''))}}
+					        	 
  					        		 <p>{{$hvtb['name']}}</p>
 					        	</li>
 					        	@endforeach

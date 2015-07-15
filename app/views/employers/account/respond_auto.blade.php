@@ -90,7 +90,7 @@
 @section('style')
 	<style type="text/css">
 	.checkbox input[type=checkbox] {
-		margin-left: -20px;
+		margin-left: -20px !important;
 	}
 	</style>
 @stop

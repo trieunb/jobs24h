@@ -48,7 +48,9 @@
 												Tỉnh/Thành phố
 											</div>
 											<div class="col-xs-7">
+												@if($resume->application->first()->province_id > 0)
 												{{ $resume->application->first()->province->province_name }}
+												@endif
 											</div>
 										</div>
 										<div class="row td-info">
@@ -114,7 +116,7 @@
 							@if($pdf)
 							<iframe  frameborder="0" scrolling="no" src="{{ URL::route('employers.search.resume_viewer') }}?file={{ URL::to('/').'/uploads/jobseekers/cv/'.$resume->file_name }}" height="800" width="100%"></iframe>
 							@else 
-							<a type="button" class="btn btn-lg bg-orange">Tải CV</a>
+							<a href="{{ URL::route('employers.search.print_cv', $resume->id) }}" class="btn btn-lg bg-orange">Tải CV</a>
 							@endif
 						</div>
 					</div>

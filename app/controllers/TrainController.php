@@ -206,12 +206,12 @@ class TrainController extends \BaseController {
 			 	return Redirect::back()->withErrors('Bạn phải chọn ảnh và ảnh đó phải dưới 1mb');
 			else
 				{
-					$path=str_replace(URL::to('/'), public_path(), $insert_data['thumbnail']);// xóa ảnh trước khi thêm
+					$path=public_path().'uploads/training'.$insert_data['thumbnail'];// xóa ảnh trước khi thêm
 				 	if(File::exists($path))
 						unlink($path);
 					$fileName = rand(11111,99999).'.'.$output['tmp_name'];
 					 $logo->move('uploads/training/', $fileName);
-					 $path_logo=URL::to('uploads/training/'.$fileName.'');
+					 $path_logo=$fileName;
 				}
 		}
 		else 
@@ -274,12 +274,12 @@ class TrainController extends \BaseController {
 				{
 					$fileName = rand(11111,99999).'.'.$output['tmp_name'];
 					 $logo->move('uploads/training/', $fileName);
-					 $path_logo=URL::to('uploads/training/'.$fileName.'');
+					 $path_logo=$fileName;
 				}
 		}
 
 		else 
-			$path_logo=URL::to('uploads/training/avatar.jpg'); //nếu không chọn imahe thì lấy mặc định
+			$path_logo='avatar.jpg'; //nếu không chọn imahe thì lấy mặc định
 
 
 
@@ -330,9 +330,7 @@ class TrainController extends \BaseController {
 
 
 		$data=TrainingPeople::where('training_people.id','=',$id)
-		->join('training_roll as tr','tr.id','=','training_people.training_roll_id')
-		->join('training as t','t.id','=','training_people.training_id')
-		->select('training_people.*','tr.name as roll','tr.id as roll_id','t.title as name_datao','t.id as id_daotao')
+		//->select('training_people.*','tr.name as roll','tr.id as roll_id','t.title as name_datao','t.id as id_daotao')
 		->get();
 		$people=TrainingRoll::lists('name','id');
 		 
@@ -361,12 +359,12 @@ class TrainController extends \BaseController {
 			 	return Redirect::back()->withErrors('Bạn phải chọn ảnh và ảnh đó phải dưới 1mb');
 			else
 				{
-					$path=str_replace(URL::to('/'), public_path(), $insert_data['thumbnail']);// xóa ảnh trước khi thêm
+					$path=public_path().'/'.$insert_data['thumbnail'];// xóa ảnh trước khi thêm
 				 	if(File::exists($path))
 						unlink($path);
 					$fileName = rand(11111,99999).'.'.$output['tmp_name'];
 					 $logo->move('uploads/training/', $fileName);
-					 $path_logo=URL::to('uploads/training/'.$fileName.'');
+					 $path_logo=$fileName;
 				}
 		}
 		else 
@@ -405,9 +403,9 @@ class TrainController extends \BaseController {
 
 			$del=TrainingTrainingPeople::where('training_people_id','=',$delete_data->id);
 			//kiểm tra có ảnh đại diện hay hok, nếu có thì xóa
-			if ($delete_data['thumbnail']!=URL::to('uploads/training/avatar.jpg')) {
+			if ($delete_data['thumbnail']!='avatar.jpg') {
 				
-				$path=str_replace(URL::to('/'), public_path(), $delete_data['thumbnail']);
+				$path=public_path().'/'.$delete_data['thumbnail'];
 				 if(File::exists($path))
 					unlink($path);
 				 
@@ -452,12 +450,12 @@ class TrainController extends \BaseController {
 				{
 					$fileName = rand(11111,99999).'.'.$output['tmp_name'];
 					 $logo->move('uploads/training/', $fileName);
-					 $path_logo=URL::to('uploads/training/'.$fileName.'');
+					 $path_logo=$fileName;
 				}
 		}
 
 		else 
-			$path_logo=URL::to('uploads/training/avatar.jpg'); //nếu không chọn imahe thì lấy mặc định
+			$path_logo='avatar.jpg'; //nếu không chọn imahe thì lấy mặc định
 
 		$insert_data=TrainingPeople::create(
 			array(
@@ -509,6 +507,7 @@ class TrainController extends \BaseController {
 			return Redirect::back()->withErrors('Chưa có file của tài liệu');
 		}
 
+		 
 
 		if ($logo!=null) { // nếu chọn image thì upload lên
 	
@@ -522,20 +521,20 @@ class TrainController extends \BaseController {
 			 	return Redirect::back()->withErrors('Bạn phải chọn ảnh và ảnh đó phải dưới 1mb');
 			else
 				{
-					$fileName = 'document_'.rand(11111,99999).'.'.$output['tmp_name'].'';
+					$fileName = time().rand(11111,99999).'.'.$output['tmp_name'].'';
 					 $logo->move('uploads/training/', $fileName);
-					 $path_logo=URL::to('uploads/training/'.$fileName.'');
+					 $path_logo=$fileName;
 				}
 		}
 
 		else 
-			$path_logo=URL::to('uploads/training/72618.png'); //nếu không chọn imahe thì lấy mặc định
+			$path_logo='avatar.jpg'; //nếu không chọn imahe thì lấy mặc định
 
 		//upload tài liệu
 		
 		$name_document='document_'.rand(11111,99999).'.'.$document->getClientOriginalExtension().'';
 		$document->move('uploads/training/document/', $name_document);
-		$path_document=URL::to('uploads/training/document/'.$name_document.'');
+		$path_document=$name_document;
 
 
 
@@ -559,11 +558,14 @@ class TrainController extends \BaseController {
 
 	public function getDeleteDocument($id)
 	{
+			
 		if (isset($id)) {
 			$delete_data=TrainingDocument::find($id);
-			$path=str_replace(URL::to('/'), public_path(), $delete_data['store']);
+			$path=public_path().'/uploads/training/document/'.$delete_data['store'];
+ 
 			if(File::exists($path))
 			File::delete($path);
+
 
 			if($delete_data->delete())
 				return Redirect::back()->with('success','Đã xóa tài liệu');
@@ -604,12 +606,12 @@ class TrainController extends \BaseController {
 				 	return Redirect::back()->withErrors('Bạn phải chọn ảnh và ảnh đó phải dưới 1mb');
 				else
 					{
-						$path=str_replace(URL::to('/'), public_path(), $insert_data['thumbnail']);// xóa ảnh trước khi thêm
+						$path=public_path().'/'.$insert_data['thumbnail'];// xóa ảnh trước khi thêm
 					 	if(File::exists($path))
 							unlink($path);
 						$fileName = rand(11111,99999).'.'.$output['tmp_name'];
 						 $logo->move('uploads/training/', $fileName);
-						 $path_logo=URL::to('uploads/training/'.$fileName.'');
+						 $path_logo=$fileName;
 					}
 			}
 			else 
@@ -623,7 +625,7 @@ class TrainController extends \BaseController {
 
 				$name_document='document_'.rand(11111,99999).'.'.$file_document->getClientOriginalExtension().'';
 				$file_document->move('uploads/training/document/', $name_document);
-				$path_document=URL::to('uploads/training/document/'.$name_document.'');
+				$path_document=$name_document;
 			}
 			else
 				$path_document=$insert_data['store'];

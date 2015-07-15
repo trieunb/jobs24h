@@ -42,7 +42,7 @@ ul.nav-menu li a {
 	padding-right: 30px;
 }
 ul.nav-menu li.active a {
-	color: #00B0EA;
+	/*color: #00B0EA;*/
 	padding-left: 10px;
 	background: url('../images/li-active.png') no-repeat center left;
 }

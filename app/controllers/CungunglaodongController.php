@@ -33,12 +33,12 @@ class CungunglaodongController extends \BaseController
 			 	return Redirect::back()->withErrors('Bạn phải chọn ảnh và ảnh đó phải dưới 1mb');
 			else
 				{
-					$path=str_replace(URL::to('/'), public_path(), $insert_data['banner']);// xóa ảnh trước khi thêm
+					$path=public_path().'/uploads/cungunglaodong'.$insert_data['banner'];// xóa ảnh trước khi thêm
 				 	if(File::exists($path))
 						unlink($path);
-					$fileName = rand(11111,99999).'.'.$output['tmp_name'];
+					$fileName = time().rand(11111,99999).'.'.$output['tmp_name'];
 					 $logo->move('uploads/cungunglaodong/', $fileName);
-					 $path_logo=URL::to('uploads/cungunglaodong/'.$fileName.'');
+					 $path_logo=$fileName;
 				}
 		}
 		else 
@@ -63,9 +63,9 @@ class CungunglaodongController extends \BaseController
 			$delete_data=TrainingCat::find($id);
 
 			//kiểm tra có ảnh đại diện hay hok, nếu có thì xóa
-			if ($delete_data['banner']!=URL::to('uploads/training/avatar.jpg')) {
+			if ($delete_data['banner']!='avatar.jpg') {
 				
-				$path=str_replace(URL::to('/'), public_path(), $delete_data['banner']);
+				$path=public_path().'uploads/cungunglaodong'.$delete_data['banner'];
 				 if(File::exists($path))
 					unlink($path);
 				 
@@ -104,12 +104,12 @@ class CungunglaodongController extends \BaseController
 				{
 					$fileName = rand(11111,99999).'.'.$output['tmp_name'];
 					 $logo->move('uploads/cungunglaodong/', $fileName);
-					 $path_logo=URL::to('uploads/cungunglaodong/'.$fileName.'');
+					 $path_logo=$fileName;
 				}
 		}
 
 		else 
-			$path_logo=URL::to('uploads/cungunglaodong/avatar.jpg'); //nếu không chọn imahe thì lấy mặc định
+			$path_logo='avatar.jpg'; //nếu không chọn imahe thì lấy mặc định
 
 
 
@@ -168,7 +168,7 @@ class CungunglaodongController extends \BaseController
 			$delete_data=TrainingPost::find($id);
 
 			//kiểm tra có ảnh đại diện hay hok, nếu có thì xóa
-			if ($delete_data['thumbnail']!=URL::to('uploads/training/avatar.jpg')) {
+			if ($delete_data['thumbnail']!='avatar.jpg') {
 				
 				$path=str_replace(URL::to('/'), public_path(), $delete_data['thumbnail']);
 				 if(File::exists($path))
@@ -257,12 +257,12 @@ class CungunglaodongController extends \BaseController
 				{
 					$fileName = rand(11111,99999).'.'.$output['tmp_name'];
 					 $logo->move('uploads/cungunglaodong/', $fileName);
-					 $path_logo=URL::to('uploads/cungunglaodong/'.$fileName.'');
+					 $path_logo=$fileName;
 				}
 		}
 
 		else 
-			$path_logo=URL::to('uploads/cungunglaodong/avatar.jpg'); //nếu không chọn imahe thì lấy mặc định
+			$path_logo='avatar.jpg'; //nếu không chọn imahe thì lấy mặc định
 
 
 
@@ -320,7 +320,7 @@ class CungunglaodongController extends \BaseController
 							 
 						}
 						 $logo->move('uploads/cungunglaodong/', $fileName);
-						 $path_logo=URL::to('uploads/cungunglaodong/'.$fileName.'');
+						 $path_logo=$fileName;
 					}
 			}
 

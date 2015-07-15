@@ -26,7 +26,7 @@
 											<li><a href="#">SẢN PHẨM & DỊCH VỤ</a></li>
 											<li><a href="#">LIÊN HỆ NGAY</a></li>
 											<li><a href="#">GIỚI THIỆU</a></li>
-											<li class="active"><a href="{{ URL::route('jobseekers.home') }}">NGƯỜI TÌM VIỆC</a></li>
+											<li class="active"><a href="{{ URL::route('jobseekers.home') }}">CHO NGƯỜI TÌM VIỆC</a></li>
 										</ul>
 									</div>
 								</div>

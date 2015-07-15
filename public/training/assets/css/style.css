@@ -356,6 +356,7 @@ header#header_chitiet {
   padding: 10px 0px 13px 0px !important;
 }.content-chitiet p {
   padding: 10px;
+  text-align: justify;
 }.img_book img {
   padding-top: 13px;
 }button.btn.dowload {

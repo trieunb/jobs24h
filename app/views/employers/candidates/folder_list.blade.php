@@ -16,7 +16,7 @@
 						<h2 class="text-orange">Cập nhật thư mục - hồ sơ ứng tuyển</h2>
 					</div>
 					<div class="filter">
-						<p>Chú ý: quý khách chỉ xóa được các thư mục không chứa hồ sơ</p>
+						<p>Chú ý: Quý khách chỉ xóa được các thư mục không chứa hồ sơ</p>
 					</div>
 					<div class="clearfix"></div>
 					@include('includes.notifications')
@@ -36,10 +36,10 @@
 								<tr>
 									<td>{{ $folder->created_at }}</td>
 									<td id="fn_{{ $folder->id }}">{{ $folder->folder_name }}</td>
-									<td>{{ $folder->application->count() }}</td>
+									<td>{{ $folder->rsfolder->count() }}</td>
 									<td>
 										<button type="button" id="f_{{ $folder->id }}" class="btn btn-info btn-xs btn-edit"><i class="fa fa-edit"></i> Sửa</button>
-										@if($folder->application->count() == 0)
+										@if($folder->rsfolder->count() == 0)
 										<a href="{{ URL::route('employers.candidates.deleteFolder', $folder->id) }}" class="btn btn-xs btn-danger" onclick="return confirm('Bạn có muốn xóa folder này ?')"><i class="fa fa-trash"></i> Xóa</button>
 										@endif
 									</td>

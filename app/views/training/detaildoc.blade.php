@@ -19,7 +19,7 @@
 
               <div class="clearfix"></div>
               <div class="col-md-4 img_book">
-              	{{HTML::image($doc['thumbnail'],$doc['title'])}}
+              	{{HTML::image(URL::to('uploads/training/'.$doc['thumbnail'].''),$doc['title'])}}
               </div>
               <div class="col-md-8"><p align="justify">{{$doc['content']}}</p>
               <a href="{{URL::route('trainings.dowloaddoc',array($doc['id']))}}" style="color:white">
@@ -40,7 +40,7 @@
     		?>
             <li>
               <div class="date-book">{{$date}}</div>
-              {{HTML::image($val['thumbnail'],$val['title'])}}
+              {{HTML::image(URL::to('uploads/training/'.$val['thumbnail'].''),$val['title'])}}
               <h2>{{$val['title']}}</h2>
               <span>By {{$val['author']}}</span>
               <p><i class="glyphicon glyphicon-eye-open"></i> Lượt xem : {{$val['view']}} &nbsp;&nbsp;&nbsp;<i class="glyphicon glyphicon-save"></i> Download : {{$val['download']}}</p>

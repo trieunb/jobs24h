@@ -46,9 +46,9 @@
 				<div class="col-sm-3">
 					<h3>Ứng dụng di động</h3>
 					<ul>
-						<li><a href="#"><img src="assets/images/app_ad.png"></a></li>
-						<li><a href="#"><img src="assets/images/app_st.png"></a></li>
-						<li><a href="#"><img src="assets/images/wd_st.png"></a></li>
+						<li><a href="#">{{ HTML::image('cungunglaodong/assets/images/app_ad.png') }}</a></li>
+						<li><a href="#">{{ HTML::image('cungunglaodong/assets/images/app_st.png') }}</a></li>
+						<li><a href="#">{{ HTML::image('cungunglaodong/assets/images/wd_st.png') }}</a></li>
 					</ul>
 				</div>
 				<div class="col-sm-3">

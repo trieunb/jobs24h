@@ -5,6 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>@yield('title', isset($title) ?: 'Nhà tuyển dụng' ) - VnJobs</title>
 		{{ HTML::style('assets/ntd/css/bootstrap343.min.css') }}
+		{{ HTML::style('assets/font-awesome/4.3.0/css/font-awesome.min.css') }}
 		{{ HTML::style('assets/ntd/css/style.css') }}
 		@yield('style')
 	</head>
@@ -26,7 +27,7 @@
 											<li><a href="{{ URL::route('employers.orders.add') }}">SẢN PHẨM & DỊCH VỤ</a></li>
 											<li><a href="{{ URL::route('employers.orders.add') }}">LIÊN HỆ NGAY</a></li>
 											<li><a href="#">GIỚI THIỆU</a></li>
-											<li class="active"><a target="_blank" href="{{ URL::route('jobseekers.home') }}">NGƯỜI TÌM VIỆC</a></li>
+											<li class="active"><a target="_blank" href="{{ URL::route('jobseekers.home') }}">CHO NGƯỜI TÌM VIỆC</a></li>
 										</ul>
 									</div>
 								</div>

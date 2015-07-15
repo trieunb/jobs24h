@@ -12,11 +12,11 @@ class JobController extends \Controller {
 		$job_count['active'] = $job_count['expiring'] = $job_count['inactive'] = $job_count['isapply'] = $job_count['expired'] = $job_count['all'] = 0;
 		foreach ($jobs as $job) {
 			$job_count['all'] += 1;
-			if($job->is_display == 1 & $job->expired_date >= date('Y-m-d')) $job_count['active'] += 1;
-			if($job->is_display == 0 & $job->expired_date >= date('Y-m-d')) $job_count['inactive'] += 1;
+			if($job->is_display == 1 & $job->hannop >= date('Y-m-d')) $job_count['active'] += 1;
+			if($job->is_display == 0 & $job->hannop >= date('Y-m-d')) $job_count['inactive'] += 1;
 			if($job->is_display == 1 & $job->is_apply == 0) $job_count['isapply'] += 1;
-			if($job->expired_date < date('Y-m-d')) $job_count['expired'] += 1;
-			if($job->is_display == 1 && $job->expired_date >= date('Y-m-d') && $job->expired_date <= date('Y-m-d', strtotime("+7 days"))) $job_count['expired'] += 1;
+			if($job->hannop < date('Y-m-d')) $job_count['expired'] += 1;
+			if($job->is_display == 1 && $job->hannop >= date('Y-m-d') && $job->hannop <= date('Y-m-d', strtotime("+7 days"))) $job_count['expiring'] += 1;
 
 		}
 		View::share('job_count', $job_count);
@@ -47,7 +47,7 @@ class JobController extends \Controller {
 				$query->with('province');
 		}))
 		->where('is_display', 1)
-		->where('expired_date', '>=', date('Y-m-d'))
+		->where('hannop', '>=', date('Y-m-d'))
 		->paginate(5);
 		return View::make('employers.jobs.index', compact('jobs', 'title'));
 	}
@@ -63,7 +63,7 @@ class JobController extends \Controller {
 				$query->with('province');
 		}))
 		->where('is_display', 0)
-		->where('expired_date', '>=', date('Y-m-d'))
+		->where('hannop', '>=', date('Y-m-d'))
 		->paginate(5);
 		return View::make('employers.jobs.index', compact('jobs', 'title'));
 	}
@@ -94,14 +94,16 @@ class JobController extends \Controller {
 		->with(array('province'	=>	function($query) {
 				$query->with('province');
 		}))
-		->where('expired_date', '<', date('Y-m-d'))
+		->where('hannop', '<', date('Y-m-d'))
 		->paginate(5);
 		return View::make('employers.jobs.index', compact('jobs', 'title'));
 	}
 	public function postAction()
 	{
+		$job = array();
 		extract(Input::all());
-		if(isset($submit) && isset($job) && isset($submit))
+
+		if(isset($submit))
 		{
 			$check = Job::whereIn('id', $job)->where('ntd_id', Auth::id())->count();
 			if($check != count($job)) return Redirect::back()->withErrors('Công việc không tìm thấy !');
@@ -130,6 +132,51 @@ class JobController extends \Controller {
 				\TaskLog::create(['ntd_id'=>Auth::id(), 'action_type'=>'resume_rs','target'=>'Mở nhận hồ sơ tại tin tuyển dụng: '.implode(",",$job)]);
 				$message = 'Mở nhận hồ sơ thành công';
 			}
+			if($submit == 'expired')
+			{
+				$check = Job::whereIn('id', $job)->update(array(
+						'is_apply'	=>	1,
+						'hannop'	=>	\DB::raw('hannop + INTERVAL 30 DAY')
+					));
+				\TaskLog::create(['ntd_id'=>Auth::id(), 'action_type'=>'renew_job','target'=>'Đăng lại công việc thành công: '.implode(",",$job)]);
+				$message = 'Đăng lại công việc thành công.';
+			}
+			if($submit == 'export')
+			{
+				$jobs = Job::where('ntd_id', Auth::id())->get();
+				\TaskLog::create(['ntd_id'=>Auth::id(), 'action_type'=>'export_job','target'=>'Xuất danh sách công việc: '.implode(",",$job)]);
+				$message = '';
+				$result = array();
+				if(count($jobs))
+				{
+					$user = Auth::getUser();
+					$result[] = ["Người xuất:", $user->full_name];
+					$result[] = ["Ngày Xuất Báo Cáo:", date('Y-m-d H:i:s')];
+					$result[] = ["Email đăng nhập:", $user->email];
+					$result[] = ["Tên Thư Mục:", "Tất cả việc làm"];
+					$result[] = [" "];
+					$result[] = ["STT", "Mã Số", "Chức danh", "Ngày đăng", "Ngày hết hạn", "Lượt xem", "Lượt nộp"];
+					$stt = 1;
+					foreach ($jobs as $key => $value) {
+						$result[] = [
+							$stt,
+							$value->matin,
+							$value->vitri,
+							$value->created_at,
+							$value->hannop,
+							$value->luotxem,
+							$value->application->count()
+						];
+						$stt += 1;
+					}
+					\Excel::create('Danh sach viec lam da dang', function($excel) use($result) {
+						$excel->sheet('Jobs', function($sheet) use($result) {
+					        $sheet->fromArray($result);
+					    });
+					})->download('xlsx');
+				}
+			}
+
 			if($submit == 'delete')
 			{
 				$check = Job::destroy($jobs);
@@ -157,8 +204,8 @@ class JobController extends \Controller {
 				$query->with('province');
 		}))
 		->where('is_display', 1)
-		->where('expired_date', '>=', date('Y-m-d'))
-		->where('expired_date', '<=', date('Y-m-d', strtotime("+7 days")))
+		->where('hannop', '>=', date('Y-m-d'))
+		->where('hannop', '<=', date('Y-m-d', strtotime("+7 days")))
 		->paginate(5);
 		return View::make('employers.jobs.index', compact('jobs', 'title'));
 	}
@@ -176,21 +223,40 @@ class JobController extends \Controller {
 		} else {
 			$data = Input::all();
 			unset($data['_token']);
+			unset($data['thuongluong']);
 			$ntd_nganhnghe = $data['ntd_nganhnghe']; unset($data['ntd_nganhnghe']);
 			$ntd_diadiem = $data['ntd_diadiem']; unset($data['ntd_diadiem']);
 			$video = $data['video']; unset($data['video']);
 			$data['ntd_id'] = Auth::id();
-			$data['status'] = 1;
+			//$data['status'] = 1;
+			//$data['is_display'] = (Input::get('status')==2)?1:0;
 			$data['slug'] = Str::slug(Input::get('vitri'));
 			$data['keyword_tags'] = json_encode($data['keyword_tags']);
 			$data['matin'] = Job::orderBy('matin', 'desc')->first()->matin + 1;
 			if(@$data['show_auto_reply'] && is_numeric($data['letter_auto']))
 			{
 				$data['letter_auto_id'] = $data['letter_auto'];
-			} else if($data['letter_auto'] == 'none')
+			} else if($data['letter_auto'] == 'none' && @$data['show_auto_reply'])
 			{
+				//them thu
+				if($data['subject'] && $data['content'])
+				{
+					$letter = RespondAuto::create([
+						'ntd_id'	=>	Auth::id(),
+						'created_date'	=>	date('Y-m-d'),
+						'subject'	=>	$data['subject'],
+						'content'	=>	$data['content'],
+						'type'	=>	1,
+						]);
+					$data['letter_auto_id'] = $letter->id;
+				} else {
+					$data['letter_auto_id'] = 0;
+				}
+			} else {
 				$data['letter_auto_id'] = 0;
 			}
+			unset($data['subject']);
+			unset($data['content']);
 			unset($data['show_auto_reply']);
 			unset($data['letter_auto']);
 			
@@ -269,10 +335,12 @@ class JobController extends \Controller {
 		} else {
 			$data = Input::all();
 			unset($data['_token']);
+			unset($data['thuongluong']);
 			$ntd_nganhnghe = $data['ntd_nganhnghe']; unset($data['ntd_nganhnghe']);
 			$ntd_diadiem = $data['ntd_diadiem']; unset($data['ntd_diadiem']);
 			$data['ntd_id'] = Auth::id();
-			$data['status'] = 1;
+			//$data['status'] = 1;
+			//$data['is_display'] = (Input::get('status')==2)?1:0;
 			$data['keyword_tags'] = json_encode($data['keyword_tags']);
 			if(@$data['show_auto_reply'] && is_numeric($data['letter_auto']))
 			{
@@ -399,5 +467,54 @@ class JobController extends \Controller {
 				return Response::json(['has'=>true, 'subject'=>$letter->subject, 'content'=>$letter->content]);
 			}
 		}
+	}
+	public function getExport($jobId = false)
+	{
+		if(is_numeric($jobId))
+		{
+				$app = \Application::whereHas('job', function($q) {$q->where('ntd_id', Auth::id()); })->where('job_id', $jobId)->get();
+				$job = Job::find($jobId);
+				if(count($app))
+				{
+					$user = Auth::getUser();
+					$result[] = ["Ngày Xuất Báo Cáo:", date('Y-m-d H:i:s')];
+					$result[] = ["Email đăng nhập:", $user->email];
+					$result[] = ["Mã tuyển dụng:", $job->matin];
+					$result[] = ["Vị trí:", $job->vitri];
+					$result[] = ["Hết hạn:", $job->hannop];
+					$nn = array();
+					foreach ($job->category as $key => $value) {
+						$nn[] = $value->category->cat_name;
+					}
+					$result[] = ["Ngành nghề:", implode(',', $nn)];
+					$result[] = [""];
+					$result[] = ["STT", "Ứng viên", "Ngày sinh", "Giới tính", "Email", "Điện thoại", "Ngày nộp"];
+					$stt = 1;
+					foreach ($app as $key => $value) {
+						if($value->ntv_id > 0) {
+							if($value->ntv->gender==1) $gt = 'Nam';
+							elseif($value->ntv->gender==2) $gt = 'Nữ';
+							else $gt = 'Không tiết lộ';
+						}
+						$result[] = [
+							$stt,
+							($value->ntv_id>0)?$value->ntv->first_name.' '.$value->ntv->last_name:$value->first_name.' '.$value->last_name,
+							($value->ntv_id>0)?$value->ntv->date_of_birth:'',
+							($value->ntv_id>0)?$gt:'',
+							($value->ntv_id>0)?$value->ntv->email:$value->email,
+							($value->ntv_id>0)?$value->ntv->phone_number:$value->contact_phone,
+							$value->apply_date
+						];
+						$stt += 1;
+					}
+					\Excel::create('DS ho so da apply', function($excel) use($result) {
+						$excel->sheet('Resumes', function($sheet) use($result) {
+					        $sheet->fromArray($result);
+					    });
+					})->download('xlsx');
+				}
+			return 1;
+		}
+		return Redirect::route('employers.jobs.index');
 	}
 }

@@ -184,6 +184,7 @@
 						<div class="form-group">
 							<div class="col-sm-offset-3 col-sm-7">
 								<button type="submit" class="btn btn-lg bg-orange">Cập nhật</button>
+								<a href="{{ URL::route('employers.account.companyreview') }}" class="btn btn-lg bg-orange">Xem lại</a>
 								
 							</div>
 						</div>

@@ -62,7 +62,7 @@
 					  </div>
 					</div>
 				</td>
-				<td>{{HTML::image($value['thumbnail'],$value['title'],array('style'=>'width:100px'))}}</td>
+				<td>{{HTML::image('uploads/training/'.$value['thumbnail'],$value['title'],array('style'=>'width:100px'))}}</td>
 				<td>{{$value['name_cat']}}</td>
 				  
 				<td>

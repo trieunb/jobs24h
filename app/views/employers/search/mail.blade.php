@@ -1,7 +1,7 @@
 <table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
 	<tbody>
         <tr>
-        	<td style="font-size:11px;font-family:Arial,Tahoma;color:#ffffff;line-height:16px;padding:5px 0" bgcolor="#ff5b00" align="center">Để email luôn được vào inbox, bạn vui lòng thêm <a rel="nofollow" href="mailto:mpvnjobsvn@gmail.com" style="text-decoration:underline;color:#ffffff" target="_blank">mpvnjobsvn@gmail.com</a> vào danh bạ hoặc đánh dấu email<br> này "Không phải thư quảng cáo / spam"</td>
+        	<td style="font-size:11px;font-family:Arial,Tahoma;color:#ffffff;line-height:16px;padding:5px 0" bgcolor="#ff5b00" align="center">Để email luôn được vào inbox, bạn vui lòng thêm <a rel="nofollow" href="mailto:{{ Config::get('mail.from')['address'] }}" style="text-decoration:underline;color:#ffffff" target="_blank">{{ Config::get('mail.from')['address'] }}</a> vào danh bạ hoặc đánh dấu email<br> này "Không phải thư quảng cáo / spam"</td>
         </tr>
 
 		<tr>

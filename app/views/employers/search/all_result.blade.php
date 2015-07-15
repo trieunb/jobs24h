@@ -8,7 +8,7 @@
 								<span>Tìm thấy {{ $result->getTotal() }} hồ sơ theo yêu cầu tìm kiếm.</span>
 							</div>
 							<div class="info-text">
-								<span>Ngành nghề <strong>@if($input['category'] == 'all') Bất Kỳ @else {{ $cats[$input['category']] }} @endif</strong> 
+								<span>Ngành nghề <strong>@if(@$input['category'] == 'all') Bất Kỳ @else {{ @$cats[$input['category']] }} @endif</strong> 
 								| Địa điểm: <strong>@if($input['location'] == 'all') Bất Kỳ @else {{ $locas[$input['location']] }} @endif</strong></span>
 							</div>
 						</div>
@@ -53,12 +53,14 @@
 										@if($resume->mucluong == 0)
 										Thương lượng
 										@else 
-										${{ $resume->mucluong }}
+										{{ number_format($resume->mucluong, 0, ',', '.') }} VND
 										@endif
 									</td>
 									<td>
 										@foreach($resume->location as $v)
-										{{ $v->province->province_name }}<br>
+										@if($v->province_id > 0)
+											{{ $v->province->province_name }}<br>
+										@endif
 										@endforeach
 									</td>
 									<td>
