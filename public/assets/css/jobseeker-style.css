@@ -428,7 +428,7 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
 .boxed-search {background: #fff;}
 .boxed-search .navbar-nav>li>a {padding: 10px 15px;}
 .boxed-search .navbar-nav>li>a:hover {background: transparent;}
-.bg-search {background-image: url(../images/bg_search.png); min-height: 380px;  background-repeat: no-repeat;background-position: center center;display: block;position: relative;/* float: left; */ margin: 0 !important;}
+.bg-search {background-image: url(../images/bg_search.jpg); min-height: 380px;  background-repeat: no-repeat;background-position: center center;display: block;position: relative;/* float: left; */ margin: 0 !important;}
 .shadow {background-image: url(../images/shadow.png); min-height: 9px;  background-repeat: no-repeat;background-position: center center;}
 .search-form {background: url(../images/bg_search_form.png) no-repeat;  padding: 25px 15px; margin: 0px auto 20px;}
 .bg-search .search-form { margin-top: 149px; margin-bottom: 0;}
@@ -488,10 +488,15 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
   margin-right: 0px;
   display: inline-block;
   border-radius: 50%;
+  height: 214px;
 -webkit-transition: border-color 1s; /* Safari */
     transition: border-color 1s;}
 .top-employer li:hover {border-color: #DFEFFF; }
-.top-employer li img {max-height: 80px; width: auto; display: block; margin: 0 auto;}
+.top-employer li img {max-height: 80px; width: auto; display: block; margin: 0 auto;  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  position: relative;}
 .top-companies {margin: 0;background: #E7E7E7;margin: 0 0px -50px 0px;padding: 0 30px;}
 .top-companies li {text-align: center; text-transform: uppercase; color: #333;padding: 20px 0; border: none !important;/* border-right: 1px solid #DDD !important; */ font-weight: 600; font-size: 10px; margin: 0px 0 20px;/* background: #f7f8f9; */position: relative;cursor: pointer;}
 .top-companies li.active{background: #fff; }
@@ -632,7 +637,8 @@ img.avatar {width: 35px; height: 35px; border-radius: 50%; vertical-align: middl
 .box-label.danger {background: url(../images/label-danger.png) no-repeat;}
 
 .upload-profile-from-com .row {padding: 30px; font-size: 22px; margin-bottom: 20px; border-radius: 20px;}
-.upload-profile-from-com .btn {border: 1px solid #fff; padding: 10px 40px;}
+.upload-profile-from-com .btn {border: 1px solid #fff; padding: 6px 20px;}
+.upload-profile-from-com h3 {background-color: #00B9F2;padding: 7px;color: #fff;}
 #company-info img {border-radius: 50%; padding: 15px;}
 .customer-review .item {padding: 5px; /* border: 10px solid #fff; */}
 .customer-review .carousel-caption {  width: 100% !important;  left: -30px !important;  margin-bottom: -20px !important;padding: 0 !important; position: relative !important;  bottom: 50px;}
@@ -702,3 +708,6 @@ img.avatar {width: 35px; height: 35px; border-radius: 50%; vertical-align: middl
 .items.block {border-top: 1px solid #eee; padding-top: 10px;}
 #saveWorkExp .select2-container {width: 100% !important;}
 .resume-submited .form-group {  margin-bottom: 5px;float: left;width: 100%;border-top: 1px solid #eee;padding-top: 10px;}
+.details.company .top {margin-bottom: 20px; float: left; padding: 0; border: none;   border-bottom: 1px solid #eee;
+  padding: 0 0 5px 0; width: 100%;}
+.details.company .top h1 {margin-bottom: 10px;}

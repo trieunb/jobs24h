@@ -39,7 +39,7 @@
 									<tr>
 										<td>{{Form::checkbox('check[]', $mjl->id, null, array('class'=>'checkbox'))}}</td>
 										<td>
-											<strong><em>{{ HTML::linkRoute('jobseekers.job', $mjl->vitri, array($mjl->slug, "$mjl->job_id"), array('class' => 'text-blue'))}}</em></strong>
+											<strong><em>{{ HTML::linkRoute('jobseekers.job', $mjl->jobs->vitri, array($mjl->jobs->slug, "$mjl->job_id"), array('class' => 'text-blue'))}}</em></strong>
 											<small><div class="legend text-orange">
 												@if(strtotime($mjl->hannop) < strtotime(date('Y-m-d', time())))
 													Hết hạn
@@ -47,7 +47,7 @@
 											</div></small>
 											<button type="button" class="btn bg-gray-light btn-sm add-note" data-toggle="popover" data-placement="bottom" data-content='<div class="form-horizontal" id="note"><div class="form-group"><textarea rows="3" name="note" class="form-control note" placeholder="Ghi chú">{{$mjl->note}}</textarea></div><div class="form-group"><input type="hidden" name="id" class="form-control id" value="{{$mjl->id}}"><button type="button" class="btn btn-sm save-note bg-orange pull-right">Lưu</button></div></div>'>Thêm ghi chú</button>
 										</td>
-										<td>{{$mjl->ntd->company->company_name}}</td>
+										<td>{{$mjl->jobs->ntd->company->company_name}}</td>
 										<td>{{$mjl->save_date}}</td>
 										<td>{{$mjl->respond}}</td>
 										<td>

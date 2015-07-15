@@ -20,8 +20,7 @@
 						
 						{{Form::select('province[]', Province::lists('province_name', 'id'),$province, array('class'=>'form-control chosen-select hidden-xs', 'id'=>'locationMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả địa điểm','multiple'))}}
 						
-						{{Form::select('categories[]', Category::lists('cat_name', 'id'),$categories, array('class'=>'form-control chosen-select hidden-xs', 'id'=>'categoryMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả ngành nghề','multiple'))}}
-						
+						{{Form::select('categories[]', Category::getList(),$categories, array('class'=>'form-control chosen-select hidden-xs', 'id'=>'categoryMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả ngành nghề','multiple'))}}
 						{{Form::input('hidden', 'salary', $salary)}}
 						
 						{{Form::input('hidden', 'level', $level)}}

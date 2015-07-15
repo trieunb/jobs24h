@@ -91,7 +91,7 @@
 												<div class="form-group">
 													<label class="col-sm-3 control-label">Trong ngành nghề</label>
 													<div class="col-sm-9">
-														{{Form::select('categories[]', Category::lists('cat_name', 'id'),$categories, array('class'=>'form-control chosen-select up_categories', 'id'=>'categoryMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả ngành nghề','multiple'))}}
+														{{Form::select('categories[]', Category::getList(),$categories, array('class'=>'form-control chosen-select up_categories', 'id'=>'categoryMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả ngành nghề','multiple'))}}
 													</div>
 												</div>
 												<div class="form-group">
@@ -204,7 +204,7 @@
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Trong ngành nghề</label>
 							<div class="col-sm-9">
-								{{Form::select('categories[]', Category::lists('cat_name', 'id'),$categories, array('class'=>'form-control chosen-select categories', 'id'=>'categoryMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả ngành nghề','multiple'))}}
+								{{Form::select('categories[]', Category::getList(),$categories, array('class'=>'form-control chosen-select categories', 'id'=>'categoryMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả ngành nghề','multiple'))}}
 							</div>
 						</div>
 						<div class="form-group">

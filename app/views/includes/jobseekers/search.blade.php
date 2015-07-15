@@ -30,10 +30,10 @@
 		                    </div>
 		                    <div class="clearfix"></div>
 		                    <div class="col-sm-4">
-		                   		{{Form::select('categories[]', Category::lists('cat_name', 'id'),$categories, array('class'=>'form-control chosen-select', 'id'=>'categoryMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả ngành nghề','multiple'))}}
+		                   		{{Form::select('categories[]', Category::getList(),null, array('class'=>'form-control chosen-select categories', 'id'=>'categoryMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả ngành nghề','multiple'))}}
 		                    </div>
 		                    <div class="col-sm-4">
-		                    	{{Form::input('number','salary', $salary, array('class'=>'form-control search-all','step'=>'10' ,'placeholder'=>'Mức lương tối thiểu hàng tháng (USD)'))}}
+		                    	{{Form::input('number','salary', $salary, array('class'=>'form-control search-all','step'=>'10' ,'placeholder'=>'Mức lương tối thiểu hàng tháng (VND)'))}}
 		                    </div>
 		                    <div class="col-sm-4">
 		                    	{{Form::select('level', array('all'=>'Tất cả cấp bậc')+Level::lists('name', 'id'),$level, array('class'=>'form-control chosen-select', 'id'=>'jobLevelMainSearch','data-placeholder'=>'Tất cả cấp bậc'))}}

@@ -7,22 +7,238 @@
 class JobSeekerAuth extends Controller
 {
 	
-	/*public function loginFacebook(){
-		$service = SentrySocial::make('facebook', 'http://localhost/vnjobs/public/vi/jobseekers');
-		if ($code = Input::get('code'))
-		{
-		    if ($user = SentrySocial::authenticate($service, $code))
-		    {
-		        var_dump($user);
+	public function loginWithFacebook() {
 
-		        // Additionally, the user will be logged in, so this
-		        // is the same:
-		        // var_dump(Sentry::getUser());
+	    // get data from input
+	    $code = Input::get( 'code' );
 
-		        // Continue with your application's workflow, the user is logged in!
-		    }
-		}
-	}*/
+	    // get fb service
+	    $fb = OAuth::consumer( 'Facebook' );
+
+	    // check if code is valid
+
+	    // if code is provided get user data and sign in
+	    if ( !empty( $code ) ) {
+
+	        // This was a callback request from facebook, get the token
+	        $token = $fb->requestAccessToken( $code );
+
+	        // Send a request with it
+	        $result = json_decode( $fb->request( '/me' ), true );
+	        $chk = NTVSentry::where('email', $result['email'])->get();
+	        if(count($chk)){
+	        	if($chk[0]->facebook_ID != null ){
+	        		$user = NTVSentry::where('email', $result['email'])->where('facebook_ID', $result['id'])->first();
+		        	if($user != null){
+		        		// Log the user in
+	    				Sentry::login($user, false);
+		        		return Redirect::route('jobseekers.home')->with('user', $user);
+		        	}
+	        	}else{
+	        		$user = Sentry::findUserById($chk[0]->id);
+	        		$user->facebook_ID = $result['id'];
+	        		// Update the user
+				    if ($user->save())
+				    {
+				        return Redirect::route('jobseekers.login')->withErrors('Người dùng đã tồn tại. Vui lòng đăng nhập');
+				    }
+	        	}
+	        	
+	        }else{
+	        	$user = Sentry::register(array(
+	        		'facebook_ID'	=> $result['id'],
+					'first_name'	=> $result['first_name'],
+					'last_name' 	=> $result['last_name'],
+				    'email'     	=> $result['email'],
+				    'password'		=> 'mptelecom!@#',
+				    'activated' 	=> true,
+				));
+
+		        $credentials = array(
+			        'email'    => $result['email'],
+			        'password' => 'mptelecom!@#',
+			    );
+			     // Authenticate the user
+				$user = Sentry::authenticate($credentials, true);				    
+				return Redirect::route('jobseekers.home')->with('user', $user);
+	        }
+			
+
+	    }
+	    // if not ask for permission first
+	    else {
+	        // get fb authorization
+	        $url = $fb->getAuthorizationUri();
+
+	        // return to facebook login url
+			return Redirect::to( (string)$url );
+
+	    }
+
+	}
+
+
+	public function loginWithGoogle() {
+
+	    // get data from input
+	    $code = Input::get( 'code' );
+
+	    // get google service
+	    $googleService = OAuth::consumer( 'Google' );
+
+	    // check if code is valid
+
+	    // if code is provided get user data and sign in
+	    if ( !empty( $code ) ) {
+
+	        // This was a callback request from google, get the token
+	        $token = $googleService->requestAccessToken( $code );
+
+	        // Send a request with it
+	        $result = json_decode( $googleService->request( 'https://www.googleapis.com/oauth2/v1/userinfo' ), true );
+	        $chk = NTVSentry::where('email', $result['email'])->get();
+	        if(count($chk)){
+	        	if($chk[0]->facebook_ID != null ){
+	        		$user = NTVSentry::where('email', $result['email'])->where('gplus_ID', $result['id'])->first();
+		        	if($user != null){
+		        		// Log the user in
+	    				Sentry::login($user, false);
+		        		return Redirect::route('jobseekers.home')->with('user', $user);
+		        	}
+	        	}else{
+	        		$user = Sentry::findUserById($chk[0]->id);
+	        		$user->facebook_ID = $result['id'];
+	        		// Update the user
+				    if ($user->save())
+				    {
+				        return Redirect::route('jobseekers.login')->withErrors('Người dùng đã tồn tại. Vui lòng đăng nhập');
+				    }
+	        	}
+	        	
+	        }else{
+	        	$gender = 1;
+	        	if($result['gender'] == 'male') $gender = 0;
+	        	$user = Sentry::register(array(
+	        		'gplus_ID' 	=> $result['id'],
+					'first_name'=> $result['given_name'],
+					'last_name' => $result['family_name'],
+				    'email'     => $result['email'],
+				    'gender'    => $gender,
+				    'password'	=> 'mptelecom!@#',
+				    'activated' => true,
+				));
+
+		        $credentials = array(
+			        'email'    => $result['email'],
+			        'password' => 'mptelecom!@#',
+			    );			    
+			    $user = Sentry::authenticate($credentials, true);				    
+				return Redirect::route('jobseekers.home')->with('user', $user);
+	        }
+
+	    }
+	    // if not ask for permission first
+	    else {
+	        // get googleService authorization
+	        $url = $googleService->getAuthorizationUri();
+
+	        // return to google login url
+	        return Redirect::to( (string)$url );
+	    }
+
+	}
+
+
+	public function loginWithLinkedin() {
+
+        // get data from input
+        $code = Input::get( 'code' );
+
+        $linkedinService = OAuth::consumer( 'Linkedin' );
+
+
+        if ( !empty( $code ) ) {
+
+            // This was a callback request from linkedin, get the token
+            $token = $linkedinService->requestAccessToken( $code );
+            // Send a request with it. Please note that XML is the default format.
+            //$result = json_decode($linkedinService->request('/people/~?format=json'), true);
+            $result = json_decode($linkedinService->request('/people/~:(id,first-name,last-name,headline,member-url-resources,picture-url,location,public-profile-url,email-address)?format=json'), true);
+            $chk = NTVSentry::where('email', $result['emailAddress'])->get();
+	         if(count($chk)){
+	        	if($chk[0]->facebook_ID != null ){
+	        		$user = NTVSentry::where('email', $result['emailAddress'])->where('linkedin_ID', $result['id'])->first();
+		        	if($user != null){
+		        		// Log the user in
+	    				Sentry::login($user, false);
+		        		return Redirect::route('jobseekers.home')->with('user', $user);
+		        	}
+	        	}else{
+	        		$user = Sentry::findUserById($chk[0]->id);
+	        		$user->facebook_ID = $result['id'];
+	        		// Update the user
+				    if ($user->save())
+				    {
+				        return Redirect::route('jobseekers.login')->withErrors('Người dùng đã tồn tại. Vui lòng đăng nhập');
+				    }
+	        	}
+	        	
+	        }else{
+	        	$user = Sentry::register(array(
+	        		'linkedin_ID'	=> $result['id'],
+					'first_name'	=> $result['firstName'],
+					'last_name' 	=> $result['lastName'],
+				    'email'     	=> $result['emailAddress'],
+				    'password'		=> 'mptelecom!@#',
+				    'activated' 	=> true,
+				));
+
+		        $credentials = array(
+			        'email'    => $result['emailAddress'],
+			        'password' => 'mptelecom!@#',
+			    );
+			    // Authenticate the user
+				$user = Sentry::authenticate($credentials, true);	  	
+				return Redirect::route('jobseekers.home')->with('user', $user);			    
+	        }
+        }// if not ask for permission first
+        else {
+            // get linkedinService authorization
+            $url = $linkedinService->getAuthorizationUri(array('state'=>'DCEEFWF45453sdffef424'));
+
+            // return to linkedin login url
+            return Redirect::to( (string)$url );
+        }
+
+
+    }
+
+	public function loginWithYahoo() {
+	   	// get data from input
+	    $token = Input::get( 'oauth_token' );
+	    $verify = Input::get( 'oauth_verifier' );
+	    // get yahoo service
+	    $yh = OAuth::consumer( 'Yahoo' );
+
+	    // if code is provided get user data and sign in
+	    if ( !empty( $token ) && !empty( $verify ) ) {
+	                // This was a callback request from yahoo, get the token
+	                $token = $yh->requestAccessToken( $token, $verify );
+	                $xid = array($token->getExtraParams());
+	                $result = json_decode( $yh->request( 'https://social.yahooapis.com/v1/user/'.$xid[0]['xoauth_yahoo_guid'].'/profile?format=json' ), true ); 
+	                var_dump($result); die();
+	                dd($result);                                
+	    }
+	    // if not ask for permission first
+	    else {
+	        // get request token
+	        $reqToken = $yh->requestRequestToken();
+	        // get Authorization Uri sending the request token
+	        $url = $yh->getAuthorizationUri(array('oauth_token' => $reqToken->getRequestToken()));
+	        // return to yahoo login url
+	        return Redirect::to( (string)$url );
+	    }
+	}
 
 	public function login()
 	{
@@ -50,32 +266,32 @@ class JobSeekerAuth extends Controller
 			}
 			catch (Cartalyst\Sentry\Users\LoginRequiredException $e)
 			{
-			    return Redirect::back()->withErrors('Vui lòng nhập Email.');
+			    return Redirect::back()->withInput()->withErrors('Vui lòng nhập Email.');
 			}
 			catch (Cartalyst\Sentry\Users\PasswordRequiredException $e)
 			{
-			    return Redirect::back()->withErrors('Vui lòng nhập mật khẩu.');
+			    return Redirect::back()->withInput()->withErrors('Vui lòng nhập mật khẩu.');
 			}
 			catch (Cartalyst\Sentry\Users\WrongPasswordException $e)
 			{
-			    return Redirect::back()->withErrors('Sai mật khẩu, vui lòng thử lại.');
+			    return Redirect::back()->withInput()->withErrors('Sai mật khẩu, vui lòng thử lại.');
 			}
 			catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
 			{
-			    return Redirect::back()->withErrors( 'Không tìm thấy người dùng.');
+			    return Redirect::back()->withInput()->withErrors( 'Không tìm thấy người dùng.');
 			}
 			catch (Cartalyst\Sentry\Users\UserNotActivatedException $e)
 			{
-			    return Redirect::back()->withErrors( 'Người dùng chưa được kích hoạt.');
+			    return Redirect::back()->withInput()->withErrors( 'Người dùng chưa được kích hoạt.');
 			}
 			// The following is only required if the throttling is enabled
 			catch (Cartalyst\Sentry\Throttling\UserSuspendedException $e)
 			{
-			    return Redirect::back()->withErrors( 'Người dùng đã bị khóa.');
+			    return Redirect::back()->withInput()->withErrors( 'Người dùng đã bị khóa.');
 			}
 			catch (Cartalyst\Sentry\Throttling\UserBannedException $e)
 			{
-			    return Redirect::back()->withErrors( 'User is banned.');
+			    return Redirect::back()->withInput()->withErrors( 'User is banned.');
 			}
 		}
 	}

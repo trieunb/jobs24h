@@ -17,7 +17,7 @@
 		"maatwebsite/excel": "1.*",
 		"phpoffice/phpword": "dev-master",
 		"dompdf/dompdf": "0.6.1",
-		"cartalyst/sentry-social": "2.1.*"
+		"artdarek/oauth-4-laravel": "dev-master"
 	},
 	"repositories": [
 	    {
