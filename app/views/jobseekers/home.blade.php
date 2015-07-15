@@ -128,7 +128,7 @@
 					</div>
 					<ul>
 						@foreach($emp_hot as $val)
-							@if(@$val->company->logo != null)
+							@if(@$val->company->logo != null && count($val->job) > 0)
 								<li class="col-sm-2"><img src="{{URL::to("uploads/companies/logos/".$val->company->logo."")}}"></li>
 							@endif
 						@endforeach

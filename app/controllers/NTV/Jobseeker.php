@@ -75,7 +75,7 @@ class JobSeeker extends Controller
 				'gender.required'	=>	'Vui lòng chọn giới tính của bạn',
 				'first_name.required'	=>	'Vui lòng điền Họ của bạn',
 				'last_name.required'	=>	'Vui lòng điền Tên của bạn',
-				'tel.required'	=>	'Vui lòng điền số điện thoại của bạn',
+				'phone_number.required'	=>	'Vui lòng điền số điện thoại của bạn',
 				'date_of_birth.required'	=>	'Vui lòng chọn ngày sinh của bạn',
 				'country_id.required'	=>	'Vui lòng chọn quốc tịch của bạn',
 				'marital_status.required'	=>	'Vui lòng tình trạng hôn nhân của bạn',
@@ -209,6 +209,15 @@ class JobSeeker extends Controller
 			return $this->delEducationHistory($id_cv);
 		}if($action == 'del-dhnn'){
 			return $this->delDinhHuongNN($id_cv);
+		}if($action == 'get_district'){
+			return $this->getDistrict();
+		}
+	}
+	public function getDistrict(){
+		$params = Input::all();
+		if(Request::ajax()){
+			$districts = Districts::where('province_id', $params['province_id'])->lists('district_name','id');
+			return Response::json($districts);
 		}
 	}
 
@@ -764,7 +773,7 @@ class JobSeeker extends Controller
 		$job = Job::find($job_id);
 		if($job != null){
 			if ($action == 'login') {
-				$resumes = Resume::where('ntv_id', $GLOBALS['user']->id)->where('is_visible',1)->where('is_public',1)->get();
+				$resumes = Resume::where('ntv_id', $GLOBALS['user']->id)->where('is_visible',0)->where('is_public',1)->where('trangthai',1)->get();
 
 				return View::make('jobseekers.applying-job')->with('user', $GLOBALS['user'])->with('job', $job)->with('resumes',$resumes);	
 			}else{
@@ -829,7 +838,7 @@ class JobSeeker extends Controller
 							$extension = $params['cv_upload']->getClientOriginalExtension();
 							$name = Str::random(11) . '.' . $extension;
 							$params['cv_upload']->move(Config::get('app.upload_path') . 'jobseekers/cv/', $name);
-							$create = Resume::create(array('file_name' => $name, 'ntv_id' => $GLOBALS['ẽ']));
+							$create = Resume::create(array('file_name' => $name, 'ntv_id' => $GLOBALS['user']));
 							if($create){
 								$cv = $create->id;
 							}
@@ -940,32 +949,117 @@ class JobSeeker extends Controller
 	}
 	public function createResumeByUpload(){
 		$params= Input::all();
-		$rules = array(
-		    'cv_upload' => 'mimes:png,jpeg,doc,docx,xsl,xslx,pdf|max:2000',
-		);	
-		$messages = array(
-			'required'	=>	'Thông này tin bắt buộc',
-			'mimes' 	=>  'Vui lòng tải file đúng định dạng',
-			'max'		=>  'File vượt quá dung lượng cho phép'
-		);
-		$validator = Validator::make($params, $rules, $messages);
-		if($validator->fails()){			
-	       	return Redirect::back()->withInput()->withErrors($validator);
-		}else{
-			if($params['cv_upload'] != null){
-				$extension = $params['cv_upload']->getClientOriginalExtension();
-				$name = Str::random(11) . '.' . $extension;
-				$params['cv_upload']->move(Config::get('app.upload_path') . 'jobseekers/cv/', $name);
-				$create = Resume::create(array('file_name' => $name, 'ntv_id' => $GLOBALS['user']->id));
-				if($create){
-					return Redirect::back()->with('success','Tải hồ sơ thành công');
-				}
-				else{
-					return Redirect::back()->withErrors('Tải hồ sơ không thành công');
+		
+		$user = $GLOBALS['user'];
+			if(!isset($params['specific_salary'])) $params['specific_salary'] = 0;
+			else{$params['specific_salary'] = str_replace(',', '', $params['specific_salary']);}
+			var_dump($params['email']); die();
+			$rules = array(
+				'tieude' 			=> 'required',
+				'first_name' 		=> 'required',
+				'last_name' 		=> 'required',
+				'email' 			=> 'required',
+				'date_of_birth' 	=> 'required',
+				'gender' 			=> 'required|numeric',
+				'phone_number'	 	=> 'required|numeric',
+				'info_highest_degree' => 'required',
+				'info_wish_level' 	=> 'required',
+				'specific_salary' 	=> 'required|numeric',
+				"info_wish_place_work"	=>"required",
+				"info_category" 	=>"required",
+			    'upload' 			=> 'mimes:doc,docx,pdf|max:2000|required',
+			);	
+			$messages = array(
+				'required'	=>	'(*) Là bắt buộc, vui lòng nhập đầy đủ nội dung giúp Nhà tuyển dụng biết thêm thông tin về bạn',
+				'mimes' 	=>  'Vui lòng tải file đúng định dạng',
+				'max'		=>  'File vượt quá dung lượng cho phép',
+				'numeric'	=> 	'Vui lòng nhập số'
+			);
+			$validator = Validator::make($params, $rules, $messages);
+			if($validator->fails()){			
+		       	return Redirect::back()->withInput()->withErrors($validator);
+			}else{
+				if($params['upload'] != null){
+					$extension = $params['upload']->getClientOriginalExtension();
+					$name = Str::random(11) . '.' . $extension;
+					$params['upload']->move(Config::get('app.upload_path') . 'jobseekers/cv/', $name);
+					$create = Resume::create(array('file_name' => $name, 'ntv_id' => $GLOBALS['user']->id));
+					$id_cv = $create->id;
+					// Categories
+					$chk_cat = CVCategory::where('rs_id',$id_cv)->get();
+					if(count($params['info_category']) < 2){
+						$params['info_category'][1] = 0;	
+					}
+					if(count($params['info_category']) < 3){
+						$params['info_category'][2] = 0;
+					}
+					if(count($chk_cat) == 0){
+						$ct = CVCategory::insert(array(
+							array('rs_id' => $id_cv,'cat_id' => $params['info_category'][0], 'count_cate' => 1),
+							array('rs_id' => $id_cv,'cat_id' => $params['info_category'][1], 'count_cate' => 2),
+							array('rs_id' => $id_cv,'cat_id' => $params['info_category'][2], 'count_cate' => 3),
+						));
+					}else{
+						for ($i=0; $i < count($chk_cat) ; $i++) { 
+							$update_ct = CVCategory::where('rs_id',$id_cv)->where('count_cate', $i+1)->update(array(
+								'cat_id' => $params['info_category'][$i]
+							));
+						}
+					}
+
+
+					// Work Locations
+					$chk_wl = WorkLocation::where('rs_id',$id_cv)->get();
+					if(count($params['info_wish_place_work']) < 2){
+						$params['info_wish_place_work'][1] = 0;	
+					}
+					if(count($params['info_wish_place_work']) < 3){
+						$params['info_wish_place_work'][2] = 0;
+					}
+					if(count($chk_wl) == 0){
+						$wl = WorkLocation::insert(array(
+							array('rs_id' => $id_cv,'province_id' => $params['info_wish_place_work'][0], 'count_work_location' => 1),
+							array('rs_id' => $id_cv,'province_id' => $params['info_wish_place_work'][1], 'count_work_location' => 2),
+							array('rs_id' => $id_cv,'province_id' => $params['info_wish_place_work'][2], 'count_work_location' => 3),
+						));
+					}else{
+						for ($j=0; $j < count($chk_wl) ; $j++) { 
+							$update_wl = WorkLocation::where('rs_id',$id_cv)->where('count_work_location', $j+1)->update(array(
+								'province_id' => $params['info_wish_place_work'][$j]
+							));
+						}
+					}
+					
+					
+					$rs = Resume::where('id',$id_cv)->where('ntv_id',$GLOBALS['user']->id)->update(array(
+						'tieude_cv' 			=> $params['tieude'],
+						'bangcapcaonhat' 		=> $params['info_highest_degree'],
+						'capbachientai' 		=> $params['info_current_level'],
+						'capbacmongmuon' 		=> $params['info_wish_level'],
+						'mucluong' 				=> $params['specific_salary'],
+					));
+					
+
+					// thông tin cơ bản
+					$user->date_of_birth 	= date('Y-m-d',strtotime($params['date_of_birth']));
+					$user->gender 			= $params['gender'];
+					$user->marital_status 	= $params['marital_status'];
+					$user->nationality_id 	= $params['nationality_id'];
+					$user->address 			= $params['address'];
+					$user->country_id 		= $params['country_id'];
+					$user->province_id 		= $params['province_id'];
+					$user->phone_number 	= $params['phone_number'];
+
+					if ($user->save())
+				  	{
+					    return Redirect::back()->withInput()->with('success', 'Tải lên hồ sơ thành công.');
+					}
+					else
+					{
+						return Redirect::back()->withInput()->withErrors('Hiện tại bạn không thể chỉnh sửa mục này');
+					}
 				}
 			}
-			
-		}
 	}
 
 
@@ -1147,5 +1241,9 @@ class JobSeeker extends Controller
 		return View::make('jobseekers.list-province');
 	}
 
-
+	// Lấy chi tiết công ty
+	public function getInfoCompany($id){
+		$company = Company::find($id);
+		return View::make('jobseekers.company', compact('company'));
+	}
 }

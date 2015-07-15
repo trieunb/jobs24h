@@ -89,7 +89,6 @@
 					                    	{{HTML::image('assets/images/calendar.png')}}
 					                    </span>
 					                </div>
-					                
 								</div>
 								<label for="" class="col-sm-3 control-label">Giới tính<abbr>*</abbr></label>
 								<div class="col-sm-3">
@@ -143,7 +142,11 @@
 							<div class="form-group">
 								<label for="" class="col-sm-3 control-label">Quận/Huyện</label>
 								<div class="col-sm-3">
-									{{ Form::select('district_id', Country::lists('country_name', 'id'),$user->district_id, array('class'=>'district_id form-control', 'id' => 'District') ) }}
+								@if($user->district_id != '')
+									{{ Form::select('district_id', array(''=>'Vui lòng chọn')+ Districts::lists('district_name', 'id'),$user->district_id, array('class'=>'district_id form-control', 'id' => 'District') ) }}
+								@else
+									{{ Form::select('district_id', [] ,null, array('class'=>'district_id form-control', 'id' => 'District') ) }}
+								@endif
 								</div>
 								<label for="" class="col-sm-3 control-label">Điện thoại
 								<abbr>*</abbr></label>
@@ -197,12 +200,12 @@
 			                <label class="col-sm-3 control-label">Số năm kinh nghiệm<abbr>*</abbr></label>
 			                <div class="col-sm-3">
 			                	<?php if ($my_resume->namkinhnghiem == 0){$namkinhnghiem = null;}else{$namkinhnghiem= $my_resume->namkinhnghiem;}?>
-			                	{{Form::input('text', 'info_years_of_exp', $namkinhnghiem, array('class'=>'info_years_of_exp form-control', 'maxlength'=>'2', 'placeholder'=>'Ví dụ 2', 'disabled'))}} 
+			                	{{Form::input('text', 'info_years_of_exp', $namkinhnghiem, array('class'=>'info_years_of_exp form-control', 'maxlength'=>'2', 'placeholder'=>'Ví dụ 2'))}} 
 			                </div>
 			                <div class="col-sm-6">
 			                    <div class="checkbox">
 			                    	<label>
-			                    		{{Form::checkbox('info_years_of_exp', 0, 'checked', array('class'=>'default_years_of_exp'))}}
+			                    		{{Form::checkbox('info_years_of_exp', 0, null, array('class'=>'default_years_of_exp'))}}
 			                    		  Tôi mới tốt nghiệp/chưa có kinh nghiệm làm việc
 			                    	</label>
 			                    </div>
@@ -296,7 +299,7 @@
 			            		</div>
 			            	<label class="col-sm-3 control-label">Ngành nghề<abbr>*</abbr></label>
 			            	<div class="col-sm-3">
-			            		{{Form::select('info_category', Category::lists('cat_name', 'id'), $categories, array('class'=>'info_category form-control chosen-select', 'id' => 'categoryMainSearch', 'multiple'=>'true','data-placeholder'=>'VD: Kế toán') )}}
+			            		{{Form::select('info_category', Category::getList(),$categories, array('class'=>'info_category form-control chosen-select categories', 'id'=>'categoryMainSearch', 'multiple'=>'true','data-placeholder'=>'VD: Kế toán','multiple'))}}
 			            	</div>
 			            </div>
 			            <div class="form-group">
@@ -310,7 +313,7 @@
 				                		?>
 				                    	{{Form::radio('specific_salary_radio', $mucluong, '$mucluong', array('id'=>'specific-salary'))}}
 				                        {{Form::input('text','specific_salary', $mucluong, array('class'=>'specific_salary form-control edit-control text-blue','id'=>'specific-salary-input', 'placeholder'=>'Ví dụ: 8.000.000', 'disabled'))}}
-				                    	<span>USD / tháng</span>
+				                    	<span>VND / tháng</span>
 				                    </div>
 								</div>
 				                <div class="radio col-sm-2">
@@ -1413,6 +1416,32 @@
 		var parent_name = $(this).closest('div[id^="saveEducation"]').attr('id');
 		$('#'+parent_name+' .view-edit').removeClass('hidden');
 		$('#'+parent_name+' #saveEducation').addClass('hidden');
+	});
+
+
+	$(document).on('change', '#Cities', function(event) {
+		event.preventDefault();
+		var id = $(this).val();
+		url = '{{ URL::route("jobseekers.save-cv", array("get_district", $id_cv )) }}';
+		var html = '';
+		$.ajax({
+			url: url,
+			type: 'POST',
+			dataType: 'json',
+			data: {province_id: id},
+			success : function(json){
+				$('#District').removeAttr('disabled', 'disabled');
+	            $.each(json, function(index, val) {
+	            	html += '<option value="'+index+'">'+val+'</option>';
+	           	});
+	           	$('#District').html(html);
+	           	if(json == ''){
+	           		$('#District').text('');
+	           		$('#District').change();
+	           		$('#District').attr('disabled', 'disabled');
+	           	}
+			}
+		})
 	});
 	</script>
 @stop

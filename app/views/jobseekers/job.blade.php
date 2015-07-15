@@ -16,7 +16,7 @@
 					<div class="top">
 						<input type="hidden" name="ntd_id" class="ntd_id" value="{{$job->ntd->id}}">
 						<h1>{{$job->vitri}}</h1>	
-						<h2>{{$job->ntd->company->company_name}}</h2>
+						<h2><a href="{{URL::route('company.view', $job->ntd->company->id)}}">{{$job->ntd->company->company_name}}</a></h2>
 						@if($job->is_apply == 1)
 						@if(Sentry::check())
 						<a href="{{URL::route('jobseekers.applying-job', array('login',$job->id))}}" class="btn btn-lg bg-orange">Nộp đơn</a>

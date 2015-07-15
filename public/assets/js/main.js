@@ -423,6 +423,10 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
     // FLOAT FIXED 
     $(function() {        
         $(".add-modules").floatingFixed({ padding: 5 });
+        if($( "#Country option:selected" ).text() != 'Việt Nam'){
+            $('#Cities').attr('disabled', 'disabled');
+            $('#District').attr('disabled', 'disabled');
+        }
     });
 
 
@@ -430,8 +434,25 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
         $(this).formatCurrency({digitGroupSymbol:','});
     });
 
+    $('#Country').change(function(event) {
+        $( "#Country option:selected" ).each(function() {
+            if($(this).text() != 'Việt Nam'){
+                $('#Cities').attr('disabled', 'disabled');
+                $('#District').attr('disabled', 'disabled');
+                $('#Cities option:selected').removeAttr('selected');
+                $('#Cities option[value="65"]').attr('selected','selected').trigger( "change" );
+            }else{
+                $('#Cities').removeAttr('disabled', 'disabled');
+                $('#District').removeAttr('disabled', 'disabled');
+            }
+        });
+    });
 
-
+    $('.featured-items .header-page a').click(function(event) {
+        event.preventDefault();
+        $('.featured-items .header-page a').removeClass('active');
+        $(this).addClass('active');
+    });
 })(jQuery);
 
 

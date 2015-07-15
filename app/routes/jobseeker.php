@@ -148,11 +148,12 @@ Route::group(array('prefix'=>$locale), function() {
 		Route::post('/notification-jobs/', array('as'=>'jobseekers.post-notification-jobs','uses'=>'JobSeeker@creatNotificationJobs'));
 
 		Route::get('/news/{id}', array('as'=>'news.view', 'uses'=>'News@getIndex'));
-		// To use it, in app/routes.php
-		//Route::controller('oauth', 'Cartalyst\SentrySocial\Controllers\OAuthController');
-
-		// To extend it, make a class which extends Cartalyst\SentrySocial\Controllers\OAuthController
-		//Route::controller('oauth', 'MyOAuthController');
+		Route::get('/company/{id}', array('as'=>'company.view', 'uses'=>'JobSeeker@getInfoCompany'));
+		//Sign in FB
+		Route::get('/auth/facebook', array('as' => 'auth_fb','uses' => 'JobSeekerAuth@loginWithFacebook'));
+		Route::get('/auth/google', array('as' => 'auth_google','uses' => 'JobSeekerAuth@loginWithGoogle'));
+		Route::get('/auth/linkedin', array('as' => 'auth_in','uses' => 'JobSeekerAuth@loginWithLinkedin'));
+		Route::get('/auth/yahoo', array('as' => 'auth_yahoo','uses' => 'JobSeekerAuth@loginWithYahoo'));
 	});
 });
 

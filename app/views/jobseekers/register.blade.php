@@ -54,7 +54,7 @@
 				<div class="faq clearfix">
 				<p>{{ HTML::image('assets/images/faq.png') }} Bạn đã có tài khoản? <a href="{{URL::route('jobseekers.login')}}" class="text-blue decoration">Đăng nhập tại đây</a></p>
 				<span>Hoặc đăng nhập bằng: 
-						<a href="#"><span class="fa-stack fa-lg">
+						<a href="{{URL::route('auth_fb')}}"><span class="fa-stack fa-lg">
 	                		<i class="fa fa-circle fa-stack-2x text-face"></i>
 	                    	<i class="fa fa-facebook fa-stack-1x text-white"></i>
 	                    </span></a>
@@ -62,7 +62,7 @@
 	                		<i class="fa fa-circle fa-stack-2x text-google-plus"></i>
 	                    	<i class="fa fa-google-plus fa-stack-1x text-white"></i>
 	                    </span></a>
-	                    <a href="#"><span class="fa-stack fa-lg">
+	                    <a href="{{URL::route('auth_in')}}"><span class="fa-stack fa-lg">
 	                		<i class="fa fa-circle fa-stack-2x text-linkedin"></i>
 	                    	<i class="fa fa-linkedin fa-stack-1x text-white"></i>
 	                    </span></a>
