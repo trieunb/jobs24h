@@ -53,7 +53,7 @@
 			<div class="newest-sale">
 				<div class="full-page">
 					<h4 class="sale-title">
-						(<span class="text-required">*</span>) Chương trình giảm giá đặc biệt này kéo dài tới ngày 30 Tháng 4 và chỉ áp dụng cho đơn hàng trực tuyến. (Không áp dụng với các chương trình khuyến mãi khác).
+						(<span class="text-required">*</span>) Chương trình giảm giá đặc biệt kéo dài trong 30 ngày và áp dụng cho tất cả các đơn hàng.
 					</h4>
 				</div>
 			</div>

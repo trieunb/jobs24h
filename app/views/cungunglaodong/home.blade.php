@@ -110,7 +110,7 @@
 						<ul>
 							@foreach($data as $value)
 							<li class="col-sm-3">
-								<a href="{{$value['link']}}" title="{{$value['name']}}">{{HTML::image(URL::to('uploads/cungunglaodong/'.$value['thumbnail'].''),$value['name'])}}</a>
+								<a href="{{$value['link']}}" target="_blank" title="{{$value['name']}}">{{HTML::image(URL::to('uploads/cungunglaodong/'.$value['thumbnail'].''),$value['name'])}}</a>
 							</li>
 							@endforeach
 						</ul>
