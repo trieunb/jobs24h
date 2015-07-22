@@ -6,6 +6,26 @@
 
 @stop
 @section('content')
+<div class="fixed-menu display-none">
+  <nav class="navbar navbar-fixed-top" role="navigation">
+    
+    <!-- Collect the nav links, forms, and other content for toggling -->
+      <ul class="nav navbar-nav">
+        <li><a href="#tq2">Tổng quan</a></li>
+        <li><a href="#chiphi">Chi phí</a></li>
+        <li><a href="#giangvien">Giảng viên</a></li>
+        <li><a href="#tq4_r">Đăng ký</a></li>
+        
+      </ul>
+    
+  </nav>
+</div>
+<!-- <ul>
+          <li><a href="#tq2">Tổng quan</a></li>
+          <li><a href="#chiphi">Chi phí</a></li>
+          <li><a href="#giangvien">Giảng viên</a></li>
+          <li><a href="#tq4_r">Đăng ký</a></li>
+        </ul> -->
 <div class="container"> 
 <div class="banner-ct">
           
@@ -16,7 +36,7 @@
                
               <div class="col-md-12">
                 <button class="btn more1">Xem thêm</button>
-                <button class="btn more2">Đăng ký</button>
+                <button onclick="window.location.href='#tq4_r';" class="btn more2">Đăng ký</button>
               </div>
               
                 
@@ -279,12 +299,7 @@
                     <li>
                        <div class="image11">
                         {{HTML::image(URL::to('uploads/training/'.$gv['thumbnail'].''))}}
-                         <div class="linkgv">
-                          <a href="{{$gv['facebook']}}"><i class="fa fa-facebook"></i></a>
-                          <a href="{{$gv['twitter']}}"><i class="fa fa-twitter"></i></a>
-                          <a href="{{$gv['linkedin']}}"><i class="fa fa-linkedin"></i></a>
-                          <a href="{{$gv['skype']}}"><i class="fa fa-skype"></i></a>
-                         </div>
+                         
                        </div>
                        <p>{{$gv['name']}}</p>
                     </li>
@@ -345,4 +360,37 @@
 
          
 
+@stop
+
+@section('style')
+  <style type="text/css">
+    .display-none {
+      display: none;
+    }
+  </style>
+@stop
+
+@section('script')
+  <script type="text/javascript">
+    var lastScrollTop = 0;
+    $(window).scroll(function(event){
+       var st = $(this).scrollTop();
+       if (st > lastScrollTop){
+          checkScroll();
+       } else {
+          checkScroll();
+       }
+       lastScrollTop = st;
+    });
+    var checkScroll = function()
+    {
+      if($(document).scrollTop() >= 700)
+      {
+        $('.fixed-menu').removeClass('display-none');
+      } else {
+        $('.fixed-menu').addClass('display-none');
+      }
+    }
+    checkScroll();  
+  </script>
 @stop

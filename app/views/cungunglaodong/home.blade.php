@@ -122,23 +122,24 @@
 								  <!-- Wrapper for slides -->
 								  <div class="carousel-inner" role="listbox">
 								    <div class="item active">
-								    {{HTML::image('cungunglaodong/assets/images/logo.png')}}	
+								    {{HTML::image('cungunglaodong/assets/images/vinaphone.png')}}	
 								      
 								      <div class="carousel-caption">
 										<blockquote class="container">
-											<h2 class="italic">Tối rất ấn tượng với đội ngũ giảng viên của MP Telecom rất trẻ trung nhưng lại giàu kinh nghiệm và phương pháp truyền đạt tốt.</h2>
-											<span class="text-elegant">Ms.Hồng Liên</span>
-											<span>Trưởng phòng Dịch vụ khách hàng của Trung tâm thẻ, Ngân Hàng Agribank</span>
+											<h2 class="italic">Từ tháng 4 năm 2008, Công ty Minh Phúc đã cung cấp dịch vụ Chăm sóc Khách khách hàng qua điện thoại cho Công ty VinaPhone trên toàn quốc. Chúng tôi hoàn toàn tin tưởng và hài lòng với chất lượng dịch vụ mà công ty đã mang lại cho khách hàng của VinaPhone. Trong quá trình vận hành Tổng đài, đơn vị đã có những tư vấn và hỗ trợ kịp thời cho chúng tôi</h2>
+											<span class="text-elegant">Ms. Phùng Quế Giang</span>
+											<span>Chuyên viên phòng Kinh doanh Trung tâm Vinaphone 1 – Công ty Dịch vụ viễn thông và mạng điện thoại di động VinaPhone</span>
 										</blockquote>							      	
 								      </div>
 								    </div>
 								    <div class="item">
-								      {{HTML::image('cungunglaodong/assets/images/logo.png')}}	
+								      {{HTML::image('cungunglaodong/assets/images/mobifone.jpg')}}	
 								      <div class="carousel-caption">
 								      	<blockquote class="container">
-											<h2 class="italic">Tối rất ấn tượng với đội ngũ giảng viên của MP Telecom rất trẻ trung nhưng lại giàu kinh nghiệm và phương pháp truyền đạt tốt.</h2>
-											<span class="text-elegant">Ms.Hồng Liên</span>
-											<span>Trưởng phòng Dịch vụ khách hàng của Trung tâm thẻ, Ngân Hàng Agribank</span>
+											<h2 class="italic">Việc sử dụng BPO của doanh nghiệp là nhằm tối ưu hóa nguồn lực của doanh nghiệp, hơn nữa, ngày càng đáp ứng tốt hơn những kỳ vọng của khách hàng, và tiết kiệm chi phí tối đa nhất cho đơn vị.
+ Một trong những đối tác hợp tác với chúng tôi trong lĩnh vực này đó là Công ty Minh Phúc. Minh Phúc đã đáp ứng được tốt nhiệm vụ này</h2>
+											<span class="text-elegant">Ông Trần Trọng Thịnh</span>
+											<span>Trưởng phòng CSKH – VMS MobiFone</span>
 										</blockquote>		
 								      </div>
 								    </div>

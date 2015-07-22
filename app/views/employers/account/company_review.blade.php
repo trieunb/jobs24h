@@ -13,8 +13,8 @@
 					@endif
 				</div>
 				<div class="col-sm-10">
-					<h1 class="gotham">{{ $company->loaihinhhoatdong }}</h1>
-					<h2>{{ $company->company_name }}</h2>
+					<h1 class="gotham">{{ $company->company_name }}</h1>
+					<h3>{{ $company->company_address }}</h3>
 				</div>
 			</div>
 			<div class="update-info">
@@ -92,12 +92,12 @@
 						<div class="push-padding-20">
 							<ul class="arrow-square-orange">
 								<li class="col-sm-6">
-									<strong>Số đăng ký</strong>
-									<span>{{ $company->sodangky }}</span>
+									<strong>Loại hình công ty</strong>
+									<span>{{ $company->work_type }}</span>
 								</li>
 								<li class="col-sm-6">
-									<strong>Ngành nghề</strong>
-									<span>{{ isset($company->category->cat_name)?$company->category->cat_name:'' }}</span>
+									<strong>Lĩnh vực hoạt động</strong>
+									<span>{{ isset($company->work_field)?nl2br($company->work_field):'' }}</span>
 								</li>
 								<li class="col-sm-6">
 									<strong>Quy mô công ty</strong>
@@ -108,8 +108,8 @@
 									<span>{{ $company->giolamviec }}</span>
 								</li>
 								<li class="col-sm-6">
-									<strong>Ngôn ngữ</strong>
-									<span>{{ $company->ngonngu }}</span>
+									<strong>Website</strong>
+									<span>{{ ($company->website)?'<a href="'.$company->website.'" target="_blank">'.$company->website.'</a>':'' }}</span>
 								</li>
 								
 							</ul>
@@ -136,7 +136,7 @@
 						<div class="header-blocked">
 							<h2>Địa chỉ</h2>
 						</div>
-						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3833.716813365803!2d108.22286759999999!3d16.08017850000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3142183b9e1d0f0b%3A0xef084c023587ccde!2zNiBUcuG6p24gUGjDuiwgSOG6o2kgQ2jDonUsIMSQw6AgTuG6tW5nLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2sus!4v1432712461755" width="100%" height="100%" frameborder="0" style="border:0"></iframe>
+						<iframe src="https://www.google.com/maps/embed/v1/place?q={{ urlencode($company->company_address) }}&key=AIzaSyCUtfb7Ysq-9-scOpRoLnmq4zBU4eOe5e0" width="100%" height="100%" frameborder="0" style="border:0"></iframe>
 						<span class="push-padding-10"><i class="fa fa-map-marker fa-1x"></i>  {{ $company->company_address }}</span>
 					</div>
 				</div>
@@ -147,6 +147,11 @@
 
 @section('style')
 	{{ HTML::style('assets/css/datepicker.min.css') }}
+	<style type="text/css">
+	.main-content .push-padding-20 article {
+		text-align: justify;
+	}
+	</style>
 @stop
 
 @section('script')

@@ -130,7 +130,7 @@
     						$date= date("d-m-Y", strtotime($create[0]));
     						?>
 			 				<li class='wow bounceInUp'>
-			 					<div class="date-book">{{$date}}</div>
+			 					<!-- <div class="date-book">{{$date}}</div> -->
 			 					{{HTML::image(URL::to('uploads/training/'.$doc['thumbnail'].''))}}
 			 					 
 			 					<h2>{{$doc['title']}}</h2>
@@ -275,12 +275,7 @@
 
 					        		 <div class="image11">
 					        		 	{{HTML::image(URL::to('uploads/training/'.$gv['thumbnail'].''))}}
-						        		 <div class="linkgv">
-						        		 	<a href="{{$gv['facebook']}}"><i class="fa fa-facebook"></i></a>
-						        		 	<a href="{{$gv['twitter']}}"><i class="fa fa-twitter"></i></a>
-						        		 	<a href="{{$gv['linkedin']}}"><i class="fa fa-linkedin"></i></a>
-						        		 	<a href="{{$gv['skype']}}"><i class="fa fa-skype"></i></a>
-						        		 </div>
+						        		 
 					        		 </div>
 					        		 
 					        		 <p>{{$gv['name']}}</p>

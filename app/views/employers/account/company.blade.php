@@ -27,7 +27,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="input" class="col-sm-3 control-label">Loại hình hoạt động:</label>
+							<label for="input" class="col-sm-3 control-label">Loại hình công ty:</label>
 							<div class="col-sm-9">
 								<?php $loaihinh = [
 									'Trách nhiệm hữu hạn' => 'Trách nhiệm hữu hạn',

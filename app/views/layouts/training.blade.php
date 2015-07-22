@@ -28,7 +28,7 @@
    {{ HTML::script('training/assets/js/bootstrap.min.js') }}
    {{ HTML::script('training/assets/js/scripts.js') }}
    {{ HTML::script('training/assets/js/wow.min.js') }}
-   
+   @yield('script')
   
 @yield('style')
 	 
