@@ -360,3 +360,6 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
   width: 237px;
   height: 124px;
 }
+.about-us.bg-silver .col-sm-8 p {
+  text-align: justify;
+}

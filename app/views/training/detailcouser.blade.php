@@ -87,7 +87,7 @@
       <div class="tq2" id="tq2">
             <h2>Tổng quan</h2>
             <?php 
-              preg_match('/<img[^>]+>/i',$couser['content'], $image);
+              @preg_match('/<img[^>]+>/i',@$couser['content'], $image);
               $content = preg_replace("/<img[^>]+\>/i", "", $couser['content']); 
              ?>
             <p align="left">{{$couser['title']}}
@@ -182,7 +182,7 @@
       </div>
     </div>
       <div class="tq2-r">
-            {{$image[0]}}
+            {{@$image[0]}}
              
             <div class="bt-tt">
               <h2 class="white" id="chiphi">Chi Phí</h2>

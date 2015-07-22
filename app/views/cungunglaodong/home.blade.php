@@ -49,19 +49,33 @@
 								    {{HTML::image('cungunglaodong/assets/images/banner_recuitment.png')}}
 								       
 								      <div class="carousel-caption">
-								      	<span class="date">December 4, 2014</span>
+								      	<!-- <span class="date">December 4, 2014</span> -->
 								      	 {{HTML::image('cungunglaodong/assets/images/before_quote.png')}}
 								      	 
-								        <p>Chào mừng Khách hàng đến với dịch vụ cung ứng lao động Với kinh nghiệm hoàn thành tuyển dụng đội ngũ quản lý và nhân viên cho các đối tác chiến lược bao gồm các công ty như viettel, vinaphone, bidv...</p>
+								        <p>Chào mừng khách hàng đến với dịch vụ Cung ứng lao động của chúng tôi với uy tín 13 năm kinh nghiệm</p>
 								      </div>
 								    </div>
 								    <div class="item">
 								    	{{HTML::image('cungunglaodong/assets/images/banner_recuitment.png')}}
 								       
 								      <div class="carousel-caption">
-								      	<span class="date">December 4, 2014</span>
+								      	<!-- <span class="date">December 4, 2014</span> -->
 								      	{{HTML::image('cungunglaodong/assets/images/before_quote.png')}}
-								        <p>Chào mừng Khách hàng đến với dịch vụ cung ứng lao động Với kinh nghiệm hoàn thành tuyển dụng đội ngũ quản lý và nhân viên cho các đối tác chiến lược bao gồm các công ty như viettel, vinaphone, bidv...</p>
+								        <p>Dịch vụ Cung ứng lao động của chúng tôi bao gồm Thuê ngoài nhân sự, Dịch vụ tuyển dụng, Dịch vụ Head Hunting, dịch vụ Đào tạo,..</p>
+								      </div>
+								    </div>
+								    <div class="item">
+								    	{{HTML::image('cungunglaodong/assets/images/banner_recuitment.png')}}
+								       
+								      <div class="carousel-caption">
+								      	<!-- <span class="date">December 4, 2014</span> -->
+								      	{{HTML::image('cungunglaodong/assets/images/before_quote.png')}}
+								        <p>Sử dụng dịch vụ của chúng tôi Quý khách sẽ được:<br>
+								        - Hoàn thành đơn hàng đúng thời hạn<br>
+										- Bảo mật thông tin tuyệt đối<br>
+										- "Bảo hành" ứng viên dài hạn<br>
+										- Chi phí hợp lý, nhiều ưu đãi<br>
+								        </p>
 								      </div>
 								    </div>
 								  </div>
