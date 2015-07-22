@@ -1,7 +1,7 @@
 <nav class="menu-tab">
 	<div class="container">
 	<ul>
-		<li><a href="{{ URL::route('employers.launching') }}">Trang chủ</a>
+		<li><a href="{{ URL::route('employers.jobs.index') }}">Trang chủ</a>
 			<ul>
 				<li><a href="">&nbsp;</a></li>
 			</ul>

@@ -8,7 +8,7 @@ class SearchController extends \Controller {
 		if(Input::get('category'))
 		{
 			$history = array();
-			$resumes = \Resume::orderBy('id', 'desc')->where('is_public', 1)->where('is_visible', 0);
+			$resumes = \Resume::orderBy('id', 'desc')->where('is_public', 1)->where('is_visible', 0)->where('trangthai', 1);
 			if(Input::get('keyword'))
 			{
 				if(Input::get('full_keyword')) $resumes->where('tieude_cv', Input::get('keyword'));
@@ -54,7 +54,7 @@ class SearchController extends \Controller {
 	{
 		if(Input::get('category'))
 		{
-			$resume = Resume::orderBy('id', 'desc')->where('is_public', 1)->where('is_visible', 0);
+			$resume = Resume::orderBy('id', 'desc')->where('is_public', 1)->where('is_visible', 0)->where('trangthai', 1);
 			if (Input::get('keyword')) {
 				if(Input::get('full_keyword')) $resume->where('tieude_cv', Input::get('keyword'));
 				else $resume->where('tieude_cv', 'LIKE', "%".Input::get('keyword')."%");
@@ -134,6 +134,7 @@ class SearchController extends \Controller {
 		if(is_numeric($id))
 		{
 			$result = Resume::orderBy('id', 'desc')
+			->where('is_public', 1)->where('is_visible', 0)->where('trangthai', 1)
 			->whereHas('cvcategory', function($q) use($id) {
 				$q->where('cat_id', $id);
 			})->paginate(10);
@@ -145,11 +146,12 @@ class SearchController extends \Controller {
 			->with([
 				'mtcategory'	=>	function($q) {
 					$q->where('rs_id', '>', 0)->whereHas('resume', function($q1) {
-						$q1->where('is_public', 1)->where('is_visible', 0);
+						$q1->where('is_public', 1)->where('is_visible', 0)->where('trangthai', 1);
 					});
 				}])
 			->get();
-			return View::make('employers.search.category', compact('category'));
+			$allCategory = \Category::getList();
+			return View::make('employers.search.category', compact('category', 'allCategory'));
 		}
 		
 	}

@@ -70,6 +70,7 @@ Route::group(array('prefix'=>$locale), function() {
 				'getRespond'			=>	'employers.report.respond',
 				'getTest'				=>	'employers.report.test',
 				'getExport'				=>	'employers.report.export',
+				'postSendRespond'		=>	'employers.report.sendrespond',
 				
 			));
 			Route::controller('orders', 'OrderController', array(

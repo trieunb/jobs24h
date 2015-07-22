@@ -369,7 +369,7 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
   background: url('../images/package-li-2.png') no-repeat center left;
   color: #16cc53;
 }
-.sales button.btn {
+.sales a.btn {
   border-radius: 25px !important;
   text-transform: uppercase;
   color: #FFF;
@@ -377,14 +377,15 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
   font-size: 18px;
   margin-top: 20px;
   border: none;
+  text-decoration: none;
 }
-.sales button.btn:hover {
+.sales a.btn:hover {
   background: #74B5E2;
 }
-.sales button.btn-buynow {
+.sales a.btn-buynow {
   background: #1fa3ff;
 }
-.sales button.btn-trial {
+.sales a.btn-trial {
   background: #16cc53;
 }
 .sales a {
@@ -763,4 +764,15 @@ table .checkbox input[type=checkbox] {
   max-height: 300px;
   overflow-y: auto;
   width: 95%;
+}
+span.cat-parent {
+  color: #f7941d;
+  font-weight: bold;
+  font-size: 15px;
+}
+ul.sub-cat {
+  padding-left: 15px;
+}
+ul.sub-cat li {
+  list-style: square;
 }

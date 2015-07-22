@@ -31,4 +31,14 @@ class Category extends \Eloquent {
 	public function mtcategory(){
 		return $this->hasMany('CVCategory', 'cat_id');
 	}
+	public static function subcatCount($subid, $category)
+	{
+		foreach ($category as $key => $value) {
+			if($value->id == $subid)
+			{
+				return $value->mtcategory->count();
+			}
+		}
+		return 0;
+	}
 }

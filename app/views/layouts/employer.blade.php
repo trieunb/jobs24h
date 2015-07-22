@@ -16,7 +16,7 @@
 					<header>
 						<div class="container">
 							<div class="col-xs-4">
-								<a href="{{ URL::route('employers.launching') }}">
+								<a href="{{ URL::route('employers.jobs.index') }}">
 									{{ HTML::image('assets/ntd/images/logo.png') }}
 								</a>
 							</div>
