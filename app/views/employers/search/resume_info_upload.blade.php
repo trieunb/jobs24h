@@ -32,7 +32,7 @@
 												Ứng viên
 											</div>
 											<div class="col-xs-7">
-												{{ $resume->application->first()->first_name }} {{ $resume->application->first()->last_name }}
+												{{ $resume->ntv->first_name }} {{ $resume->ntv->last_name }}
 											</div>
 										</div>
 										<div class="row td-info">
@@ -40,7 +40,7 @@
 												Địa chỉ
 											</div>
 											<div class="col-xs-7">
-												{{ $resume->application->first()->address }}
+												{{ $resume->ntv->address }}
 											</div>
 										</div>
 										<div class="row td-info">
@@ -48,8 +48,8 @@
 												Tỉnh/Thành phố
 											</div>
 											<div class="col-xs-7">
-												@if($resume->application->first()->ntv->province_id)
-												{{ $resume->application->first()->ntv->province->province_name }}
+												@if($resume->ntv->province_id)
+												{{ $resume->ntv->province->province_name }}
 												@endif
 											</div>
 										</div>
