@@ -20,7 +20,14 @@
 					</div>
 					<div class="col-sm-9">
 						<div class="profile">
-							<h2>@if(count($my_resume))@if($my_resume->tieude_cv != '') <em>{{$my_resume->tieude_cv}}</em> @else <em>{{date('d-m-Y',strtotime($my_resume->created_at))}}</em>_{{$user->first_name}} {{$user->last_name}} @endif @endif</h2>
+							<h2>@if(count($my_resume))@if($my_resume->tieude_cv != '') <em>{{$my_resume->tieude_cv}}</em> @else <em>{{date('d-m-Y',strtotime($my_resume->created_at))}}</em>_{{$user->first_name}} {{$user->last_name}} @endif @endif 
+							@if($my_resume->file_name == '')
+							<a class="pull-right" href="{{URL::route('jobseekers.save-cv', array($my_resume->id))}}"><i class="fa fa-edit"></i></a> 
+							@else
+							<a class="pull-right" href="{{ URL::route("jobseekers.action-cv", array("download",$my_resume->id)) }}"><i class="fa fa-download"></i></a>
+							<a class="pull-right" href="{{URL::route('jobseekers.get-update-upload-cv', array($my_resume->id))}}"><i class="fa fa-edit"></i>&nbsp;&nbsp;</a>
+							@endif
+							</h2>
 							<p>Điện thoại: <span class="text-blue">{{$user->phone_number}}</span></p>
 							<p>Email: <span class="text-blue">{{$user->email}}</span></p>
 							<p>Hồ Sơ: <a href="{{URL::route('jobseekers.view-resume', array($my_resume->id))}}" class="text-blue" target="_blank">{{URL::route('jobseekers.view-resume', array($my_resume->id))}}</a></p>
@@ -96,14 +103,15 @@
 						<h2>Thông tin chung</h2> 
 						<!--<a href="#" class=" pull-right"><i class="fa fa-edit"></i> Chỉnh sửa</a>-->
 					</div>
-						
+						@if($my_resume->file_name == '')
 						<div class="form-group">
 			                <label class="col-sm-3 control-label">Số năm kinh nghiệm:</label>
 			                <div class="col-sm-3">
-			                	<?php if ($my_resume->namkinhnghiem == 0){$namkinhnghiem = 'Thỏa thuận';}else{$namkinhnghiem= $my_resume->namkinhnghiem;}?>
+			                	<?php if ($my_resume->namkinhnghiem == 0){$namkinhnghiem = '0';}else{$namkinhnghiem= $my_resume->namkinhnghiem;}?>
 			                	{{$namkinhnghiem}}
 			                </div>
 			            </div>
+			            @endif
 			            <div class="clearfix"></div>
 			            <div class="form-group">
 			            	<label class="col-sm-3 control-label">Bằng cấp cao nhất:</label>
@@ -114,6 +122,7 @@
 			            	</div>
 			            </div>
 			            <div class="clearfix"></div>
+			            @if($my_resume->file_name == '')
 			            <div class="form-group">
 			            	<label class="col-sm-3 control-label">Ngoại ngữ:</label>
 				            <div class="col-sm-3 ">
@@ -140,11 +149,14 @@
 			            	</div>
 			            </div>
 			            <div class="clearfix"></div>
+			            @endif
 			            <div class="form-group">
+			            	@if($my_resume->file_name == '')
 			            	<label class="col-sm-3 control-label">Công việc gần đây nhất:</label>
 			            	<div class="col-sm-3">
 			            		{{$my_resume->cvganday}}
 			            	</div>
+			            	@endif
 			            	<label class="col-sm-3 control-label">Cấp bậc hiện tại:</label>
 			            	<div class="col-sm-3">
 			            		@if(count($my_resume->level))
@@ -154,10 +166,12 @@
 			            </div>
 			            <div class="clearfix"></div>
 			            <div class="form-group">
+			            	@if($my_resume->file_name == '')
 			            	<label class="col-sm-3 control-label">Vị trí mong muốn:</label>
 			            	<div class="col-sm-3">
 			            		{{$my_resume->vitrimongmuon}}
 			            	</div>
+			            	@endif
 			            	<label class="col-sm-3 control-label">Cấp bậc mong muốn:</label>
 			            	<div class="col-sm-3">
 			            	@if(count($my_resume->capbac))
@@ -187,7 +201,7 @@
 								@if($my_resume->mucluong == 0)
 									Thỏa thuận
 								@else
-									{{$my_resume->mucluong}}
+									{{number_format($my_resume->mucluong)}}
 								@endif
 								</div>
 						</div>

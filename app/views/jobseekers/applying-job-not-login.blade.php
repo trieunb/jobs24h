@@ -27,7 +27,7 @@
 						</div>
 					@endif
 					<div class="form-group">
-						<label class="control-label col-sm-2">Họ và tên</label>
+						<label class="control-label col-sm-2">Họ và tên<abbr>*</abbr></label>
 						<div class="col-sm-2">
 							{{Form::select('prefix_title',array('Ông'=>'Ông', 'Bà' => 'Bà'),null, array('class'=>'form-control', 'id'=>'Gender'))}}
 						</div>
@@ -41,22 +41,22 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="control-label col-sm-2">Tiêu đề</label>
+						<label class="control-label col-sm-2">Tiêu đề<abbr>*</abbr></label>
 						<div class="col-sm-5">
 							{{Form::input('text','headline', null, array('class'=>'form-control'))}}
 							<span class="error-message">{{$errors->first('headline')}}</span>
-							<small class="legend">Giám đốc cấp cao tại một tập đoàn đa quốc gia</small>
+							<small class="legend">Ví dụ: Chuyên viên nhân sự</small>
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="control-label col-sm-2">Email</label>
+						<label class="control-label col-sm-2">Email<abbr>*</abbr></label>
 						<div class="col-sm-5">
 							{{Form::input('text','email', null, array('class'=>'form-control'))}}
 							<span class="error-message">{{$errors->first('email')}}</span>
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="control-label col-sm-2">Điện thoại</label>
+						<label class="control-label col-sm-2">Điện thoại<abbr>*</abbr></label>
 						<div class="col-sm-5">
 							{{Form::input('text','contact_phone', null, array('class'=>'form-control'))}}
 							<span class="error-message">{{$errors->first('contact_phone')}}</span>
@@ -64,16 +64,13 @@
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2">Nơi sống</label>
-						<div class="col-sm-3">
+						<div class="col-sm-5">
 							{{Form::input('text','address', null, array('class'=>'form-control'))}}
 							<span class="error-message">{{$errors->first('address')}}</span>
 						</div>
-						<div class="col-sm-2">
-							{{Form::select('province_id',Province::lists('province_name', 'id'),null, array('class'=>'form-control', 'id'=>'Cities'))}}
-						</div>
 					</div>
 					<div class="form-group">
-						<label class="control-label col-sm-2">Thư xin việc</label>
+						<label class="control-label col-sm-2">Thư xin việc<abbr>*</abbr></label>
 						<div class="col-sm-5">
 							{{Form::textarea('cover_letter', null, array('class'=>'form-control headline', 'rows'=> '5'))}}
 							<span class="error-message">{{$errors->first('cover_letter')}}</span>

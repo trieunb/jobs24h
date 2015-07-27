@@ -21,14 +21,14 @@ return array(
          * Facebook
          */
         'Facebook' => array(
-            'client_id'     => '741792749264119',
-            'client_secret' => '0d02714a5dd1b25504f1bba6a7a9a8f3',
-            'scope'         => array('email','read_friendlists'),
+            'client_id'     => '1536226246625315',
+            'client_secret' => 'cd9a1324b48addacfa25f99105ae3ba7',
+            'scope'         => array('email','read_friendlists','user_online_presence'),
         ),      
 
         'Google' => array(
-            'client_id'     => 'Your Google client ID',
-            'client_secret' => 'Your Google Client Secret',
+            'client_id'     => '457159988616-c8crhbit47pmvhj4aas8gsgu3vfp851r.apps.googleusercontent.com',
+            'client_secret' => 'hUy0EytXXp2WC5MTUZgfYl3F',
             'scope'         => array('userinfo_email', 'userinfo_profile'),
         ), 
 

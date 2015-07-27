@@ -5,7 +5,6 @@ class JobSeekersEducation extends FormValidator {
 		"specialized"=>"required",
 		"school"=>"required",
 		"level"=>"required",
-		"field_of_study"=>"required",
 		"average_grade_id"=>"required",
 		);
 	protected $messages = array(

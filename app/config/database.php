@@ -54,10 +54,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'vnjobs.vn',
+			'host'      => 'localhost',
 			'database'  => 'vnjobs',
 			'username'  => 'root',
-			'password'  => 'mp@123',
+			'password'  => '',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

@@ -226,11 +226,11 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">GỬI THÔNG BÁO TỚI ỨNG VIÊN</h4>
+				<h4 class="modal-title">GỬI THÔNG BÁO ĐẾN ỨNG VIÊN</h4>
 			</div>
 			<div class="modal-body">
 				<form action="" onsubmit="sendLetter(); return false;" method="POST" class="form-horizontal" role="form">
-					<h4>Gửi thông báo tới ứng viên</h4>
+					<h4>Gửi thông báo đến ứng viên</h4>
 					<div id="result_l"></div>
 					<div class="form-group">
 						<label for="inputLetter" class="col-sm-2 control-label">Chọn thư:</label>

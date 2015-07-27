@@ -55,7 +55,11 @@
 									$list_cv = array();
 									foreach ($resumes as $key=> $value) {
 										$key = $value->id;
-										$val = date('d-m-Y H:i',strtotime($value->updated_at))."_".$user->first_name."_".$user->last_name;
+										if($value->tieude_cv == ''){
+											$val = date('d-m-Y H:i',strtotime($value->updated_at))."_".$user->first_name."_".$user->last_name;
+										}else{
+											$val = $value->tieude_cv;
+										}
 										$list_cv[$key] = $val;
 									}	
 								}
@@ -68,14 +72,14 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-sm-3 control-label">Cover letter<abbr title="Trường này là bắt buộc">*</abbr></label>
+						<label class="col-sm-3 control-label">Thư xin việc<abbr title="Trường này là bắt buộc">*</abbr></label>
 						<div class="col-sm-5">
 							{{Form::textarea('headline', null, array('class'=>'form-control headline', 'rows'=> '5'))}}
 							<span class="error-message">{{$errors->first('headline')}}</span>
 							<div class="checkbox col-sm-9 text-gray-light">
 								<label>
 									{{Form::checkbox('save_cover', null)}}
-									Save this cover letter for my later application
+									Lưu thư xin việc này.
 								</label>
 							</div>
 							<a href="#" class="text-blue small pull-right">Xem ví dụ</a>
@@ -108,7 +112,7 @@
 					<div class="col-sm-offset-3 col-sm-8">
 						{{Form::button('Hủy bỏ', array('class'=>'btn btn-lg bg-dark'))}}
 						{{Form::submit('Nộp đơn', array('class'=>'btn btn-lg bg-dark'))}}
-						<p><h3><abbr>*</abbr> Required field</h3></p>
+						<p><h3><abbr>*</abbr> Thông tin bắt buộc</h3></p>
 					</div>
 					<?php 
 						if($user->gender == 0){

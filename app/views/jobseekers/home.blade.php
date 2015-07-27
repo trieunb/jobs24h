@@ -7,10 +7,25 @@
 				<div class="jcarousel-wrapper">
                 	<div class="jcarousel">
 						<ul>
-							@foreach(range(1, 8) as $index)
-								<li><div class="company">{{ HTML::image('assets/images/brand04.png') }}<span>Delighting You Always</span></div></li>
-							@endforeach
-							
+							<li><a href="http://vn.toto.com/" target="_blank"><div class="company">{{ HTML::image('assets/images/hoptac/logo_1.png') }}</div></a></li>
+							<li><a href="http://www.baoviet.com.vn/" target="_blank"><div class="company">{{ HTML::image('assets/images/hoptac/logo_2.png') }}</div></a></li>
+							<li><a href="http://sharp.vn/vn/" target="_blank"><div class="company">{{ HTML::image('assets/images/hoptac/logo_3.png') }}</div></a></li>
+							<li><a href="https://www.pjico.com.vn/" target="_blank"><div class="company">{{ HTML::image('assets/images/hoptac/logo_4.png') }}</div></a></li>
+							<li><a href="http://www.prudential.com.vn/" target="_blank"><div class="company">{{ HTML::image('assets/images/hoptac/logo_5.png') }}</div></a></li>
+							<li><a href="http://vna-insurance.com/" target="_blank"><div class="company">{{ HTML::image('assets/images/hoptac/logo_6.png') }}</div></a></li>
+							<li><a href="http://www.jetstar.com/" target="_blank"><div class="company">{{ HTML::image('assets/images/hoptac/logo_7.png') }}</div></a></li>
+							<li><a href="http://www.mailinh.vn/" target="_blank"><div class="company">{{ HTML::image('assets/images/hoptac/logo_8.png') }}</div></a></li>
+							<li><a href="https://topica.edu.vn/" target="_blank"><div class="company">{{ HTML::image('assets/images/hoptac/logo_9.png') }}</div></a></li>
+							<li><a href="http://doji.vn/" target="_blank"><div class="company">{{ HTML::image('assets/images/hoptac/logo_10.png') }}</div></a></li>
+							<li><a href="http://viettel.com.vn/" target="_blank"><div class="company">{{ HTML::image('assets/images/hoptac/logo_11.png') }}</div></a></li>
+							<li><a href="http://www.mobifone.vn/" target="_blank"><div class="company">{{ HTML::image('assets/images/hoptac/logo_12.png') }}</div></a></li>
+							<li><a href="http://www.vinaphone.com.vn/" target="_blank"><div class="company">{{ HTML::image('assets/images/hoptac/logo_13.png') }}</div></a></li>
+							<li><a href="http://www.cmc.com.vn/" target="_blank"><div class="company">{{ HTML::image('assets/images/hoptac/logo_14.png') }}</div></a></li>
+							<li><a href="http://truyenhinhanvien.vn/" target="_blank"><div class="company">{{ HTML::image('assets/images/hoptac/logo_16.png') }}</div></a></li>
+							<li><a href="http://www.vtvcab.vn/" target="_blank"><div class="company">{{ HTML::image('assets/images/hoptac/logo_17.png') }}</div></a></li>
+							<li><a href="http://www.bidv.com.vn/" target="_blank"><div class="company">{{ HTML::image('assets/images/hoptac/logo_18.png') }}</div></a></li>
+							<li><a href="http://www.vpbank.com.vn/" target="_blank"><div class="company">{{ HTML::image('assets/images/hoptac/logo_19.png') }}</div></a></li>
+							<li><a href="http://www.allianz-global-assistance.com/corporate/" target="_blank"><div class="company">{{ HTML::image('assets/images/hoptac/logo_20.png') }}</div></a></li>
 						</ul>
 					</div>
 					<span class="ctr left"><a href="#" class="jcarousel-control-prev">&lsaquo;</a></span>
@@ -21,15 +36,15 @@
 				<section class="featured-items">
 					<div class="padding bg-silver-dark">
 					<div class="header-page">
-						<a href="#" class="text-blue active">Việc làm nổi bật</a>
+						<a href="#" class="text-blue active" id="featured_jobs">Việc làm nổi bật</a>
 						<span>|</span>
-						<a href="#" class="text-blue">Việc làm mới nhất</a>
+						<a href="#" class="text-blue" id="new_jobs">Việc làm mới nhất</a>
 					</div>
 					</div>
 					<div class="clearfix"></div>
 					<div class="top-job container">
-						<ul class="arrow-square-orange">
-						@foreach($jobs as $key => $job)
+						<ul class="arrow-square-orange featured_jobs">
+						@foreach($featured_jobs as $key => $job)
 							@if($key < 30)
 							<li>
 								<div class="desc-job">
@@ -40,7 +55,30 @@
 								</div>
 							</li>
 							@else
-							<li class="hidden-xs">
+							<li class="hidden">
+								<div class="desc-job">
+									<a href="{{URL::route('jobseekers.job', array($job->slug, $job->id))}}">
+										<strong>{{$job->vitri}}</strong>
+										<span>{{$job->ntd->company->company_name}}</span>
+									</a>
+								</div>
+							</li>
+							@endif
+						@endforeach
+						</ul>
+						<ul class="arrow-square-orange new_jobs hidden">
+						@foreach($new_jobs as $key => $job)
+							@if($key < 30)
+							<li>
+								<div class="desc-job">
+									<a href="{{URL::route('jobseekers.job', array($job->slug, $job->id))}}">
+										<strong>{{$job->vitri}}</strong>
+										<span>{{$job->ntd->company->company_name}}</span>
+									</a>
+								</div>
+							</li>
+							@else
+							<li class="hidden">
 								<div class="desc-job">
 									<a href="{{URL::route('jobseekers.job', array($job->slug, $job->id))}}">
 										<strong>{{$job->vitri}}</strong>
@@ -52,7 +90,7 @@
 						@endforeach
 						</ul>
 						<div class="clearfix"></div>
-						<a class="load-more-ajax"></a>
+						<a class="load-more-ajax">{{ HTML::image('assets/images/load_more.png') }}</a>
 					</div>
 				</section>
 				<div class="padding bg-silver-dark">
@@ -126,13 +164,32 @@
 					<div class="header-page">
 						<h2>Nhà tuyển dụng hàng đầu</h2>
 					</div>
-					<ul>
-						@foreach($emp_hot as $val)
-							@if(@$val->company->logo != null && count($val->job) > 0)
-								<li class="col-sm-2"><img src="{{URL::to("uploads/companies/logos/".$val->company->logo."")}}"></li>
-							@endif
-						@endforeach
-					</ul>
+					<div class="jcarousel-wrapper" id="top-employer">
+	                	<div class="jcarousel">
+							<ul>
+								@foreach($emp_hot as $val)
+									@if(@$val->company->logo != null && count($val->job) > 0)
+										<li class="col-sm-2"><img src="{{URL::to("uploads/companies/logos/".$val->company->logo."")}}"></li>
+									@endif
+								@endforeach
+								<li>{{ HTML::image('assets/images/hoptac/logo_12.png') }}</li>
+								<li>{{ HTML::image('assets/images/hoptac/logo_13.png') }}</li>
+								<li>{{ HTML::image('assets/images/hoptac/logo_14.png') }}</li>
+								<li>{{ HTML::image('assets/images/hoptac/logo_17.png') }}</li>
+								<li>{{ HTML::image('assets/images/hoptac/logo_18.png') }}</li>
+								<li>{{ HTML::image('assets/images/hoptac/logo_19.png') }}</li>
+								<li>{{ HTML::image('assets/images/hoptac/logo_12.png') }}</li>
+								<li>{{ HTML::image('assets/images/hoptac/logo_13.png') }}</li>
+								<li>{{ HTML::image('assets/images/hoptac/logo_14.png') }}</li>
+								<li>{{ HTML::image('assets/images/hoptac/logo_16.png') }}</li>
+								<li>{{ HTML::image('assets/images/hoptac/logo_17.png') }}</li>
+								<li>{{ HTML::image('assets/images/hoptac/logo_18.png') }}</li>
+								<li>{{ HTML::image('assets/images/hoptac/logo_19.png') }}</li>
+							</ul>
+						</div>
+						<a href="#" class="jcarousel-control-prev">&lsaquo;</a>
+	                	<a href="#" class="jcarousel-control-next">&rsaquo;</a>
+					</div>
 				</section>
 				@endif
 				@if(count($news))
@@ -209,7 +266,6 @@
 				</section>
 				</div>
 		</div>
-@stop
 @section('scripts')
 @parent
 <script type="text/javascript">
@@ -217,4 +273,5 @@
 		$('body').addClass('home');
 	});
 </script>
+@stop
 @stop

@@ -1,5 +1,12 @@
 @extends('layouts.jobseeker')
 @section('title') Tin tức @stop
+@section('title_fb'){{$new->title}}@stop
+@section('desc_fb'){{strip_tags($new->content)}}@stop
+@if($new->thumbnail != '')
+	@section('img_fb'){{URL::to("uploads/news/".$new->thumbnail."")}}@stop
+@else
+	@section('img_fb'){{URL::asset('assets/images/vnjobs_social.jpg')}}@stop
+@endif
 @section('content')
 	<div class="container">
 		@include('includes.jobseekers.breadcrumb')
@@ -11,9 +18,24 @@
 				<div class="details">
 					<div class="top">
 						<h1>{{$new->title}}</h1>	
-						<p>Đăng ngày: {{date('d/m/Y', strtotime($new->updated_at))}}</p>
 					</div>
-					{{$new->content}}
+					<div class="meta-jobs">
+						<div class="single-post-meta">
+							Đăng ngày: {{date('d-m-Y', strtotime($new->updated_at))}}
+						</div> 
+						<div class="pull-right">
+							<div style="margin: 5px 10px 0px 0; float:left;">
+								<div class="fb-like" data-href="{{URL::route('news.view', array($new->id))}}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true">
+								</div>
+							</div>
+							<div style="margin: 5px 10px 0px 0; float:left;">
+								<script src="https://apis.google.com/js/plusone.js"></script><g:plus action="share" annotation="bubble"></g:plus>
+							</div>
+						</div>
+					</div>
+					<div class="entry">
+						{{nl2br($new->content)}}
+					</div>
 				</div>
 			</div>
 			@else

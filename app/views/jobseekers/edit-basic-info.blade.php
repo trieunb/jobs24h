@@ -48,7 +48,7 @@
 								<label for="" class="col-sm-3 control-label">Ngày sinh<abbr>*</abbr></label>
 								<div class="col-sm-6">
 								<div class="input-group date" id="DOB">
-					                {{Form::input('text','date_of_birth', date('m-d-Y',strtotime($user->date_of_birth)), array('class'=>'date_of_birth form-control','placeholder'=>'DD-MM-YYYY','data-date-format'=>'DD-MM-YYYY'))}}
+					                {{Form::input('text','date_of_birth', date('d-m-Y',strtotime($user->date_of_birth)), array('class'=>'date_of_birth form-control','placeholder'=>'DD-MM-YYYY','data-date-format'=>'DD-MM-YYYY'))}}
 					            	<span class="input-group-addon have-img">
 					                   	{{HTML::image('assets/images/calendar.png')}}
 					                </span>

@@ -32,6 +32,7 @@ class JobController extends Controller
 		$level = Input::get('level');
 		$work_type = Input::get('type');
 		$id_emp = Input::get('id');
+		$vieclamcaocap = Input::get('vieclamcaocap');
 		$jobs = Job::where('is_display',1)->where('hannop', '>=', date('Y-m-d', time()))->where('status',1)->with('province')->with('category');
 		if(is_numeric($id_emp) && $id_emp != null){
 			$jobs->where('ntd_id',$id_emp);
@@ -72,7 +73,10 @@ class JobController extends Controller
 		{
 			$jobs->where('hinhthuc', $work_type);
 		}
-
+		if(isset($vieclamcaocap) && $vieclamcaocap = true){
+			$jobs->where('chucvu', '>=', 4);
+		}
+		$count_jobs = $jobs->count();
 		if(Input::get('perpage') == null){
 			$per_page = 20;	
 		}else{
@@ -81,22 +85,28 @@ class JobController extends Controller
 		
 		$jobs = $jobs->paginate($per_page);
 
-		return View::make('jobseekers.result-from-search', compact('jobs', 'per_page', 'keyword', 'province','categories','salary','level'));
+		return View::make('jobseekers.result-from-search', compact('count_jobs','jobs', 'per_page', 'keyword', 'province','categories','salary','level'));
 	}
 
 	public function getCategory(){
-		$categories = Category::whereHas('mtcategory', function($q) {
-			$q->whereHas('job', function ($q1) {
-				$q1->where('is_display', 1)->where('hannop', '>=' , date('Y-m-d'));
-			});
-		})->get();
+		$list_parent = Category::where('parent_id', 0)->get();
+
+		if(count($list_parent)){
+			foreach ($list_parent as $key => $value) {
+				$cate = Category::where('parent_id', $value->id)->get();
+				$list_category[] = array('parent'=>$value->cat_name, 'child'=>$cate);
+			}
+		}else{
+			$list_category = null;
+		}
 	
 		if(Input::get('id') != null){
-			$id = Input::get('id');
+			$cate_id = Input::get('id');
 			$jobs = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->with('category');
-			$jobs->whereHas('category', function($query) use($id)  {
-				$query->where('cat_id', $id);
+			$jobs->whereHas('category', function($query) use($cate_id)  {
+				$query->where('cat_id', $cate_id);
 			});
+			$count_jobs = $jobs->count();
 			if(Input::get('perpage') == null){
 				$per_page = 20;	
 			}else{
@@ -104,9 +114,10 @@ class JobController extends Controller
 			}
 			$jobs = $jobs->paginate($per_page);
 		}else{
-			$jobs = $per_page = $id= null;
+			$jobs = $per_page = $cate_id= null;
 		}
-		return View::make('jobseekers.result-from-category', compact('jobs','per_page','id', 'categories')); 
+
+		return View::make('jobseekers.result-from-category', compact('jobs','per_page','cate_id', 'list_category', 'count_jobs')); 
 	}
 	
 

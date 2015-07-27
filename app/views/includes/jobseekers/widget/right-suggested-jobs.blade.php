@@ -1,4 +1,4 @@
-<div class="widget row">
+<div class="widget row suggested-jobs">
 	<h3>Việc làm phù hợp</h3>
 	<ul>
 		@foreach($jobs_for_widget as $job)
@@ -13,9 +13,9 @@
 			<div class="col-sm-9">
 				<a href="{{URL::route('jobseekers.job', array($job->slug, $job->id))}}"><strong>{{$job->vitri}}</strong></a>
 				<div>{{$job->ntd->company->company_name}}, <span class="text-orange">@if($job->mucluong_max != 0)
-											Tới ${{$job->mucluong_max}}
+											Tới {{number_format($job->mucluong_max)}}đ
 										@elseif($job->mucluong_max == 0 && $job->mucluong_min != 0)
-											${{$job->mucluong_min}}
+											{{number_format($job->mucluong_min)}}đ
 										@else 
 											Thỏa thuận
 										@endif</span></div>

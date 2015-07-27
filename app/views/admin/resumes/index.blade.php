@@ -136,25 +136,32 @@
 						</label>
 					</td>
 					<td>{{ $resume->id }}</td>
-					<td><a href="{{ URL::route('admin.jobseekers.edit', $resume->ntv->id) }}">{{ $resume->ntv->email }}</a></td>
-					<td>{{ $resume->ntv->first_name }} {{ $resume->ntv->last_name }}</td>
+					<td><a href="{{ URL::route('admin.jobseekers.edit', $resume->ntv['id']) }}">{{ $resume->ntv['email'] }}</a></td>
+					<td>{{ $resume->ntv['first_name'] }} {{ $resume->ntv['last_name'] }}</td>
 					<td>
-						@if($resume->is_default == 1)
-							<span class="label label-success">HS Chính</span>
+						@if($resume->trangthai == 1)
+							<span class="label label-success">Đã duyệt</span>
+						@elseif($resume->trangthai == 2)
+							<span class="label label-warning">Đang chờ duyệt</span>
 						@else
-							<span class="label label-info">HS Phụ</span>
+							<span class="label label-info">Chưa hoàn thiện</span>
 						@endif
 					</td>
-					<td>{{ $resume->ntv->date_of_birth }}</td>
+					<td>{{ $resume->ntv['date_of_birth'] }}</td>
 					<td>
 						@foreach ($resume->location as $location)
-							{{ $location->province->province_name }}<br>
+							@if($location->province['province_name'] != '')
+							{{$location->province['province_name']}}<br>
+							@endif
 						@endforeach
 					</td>
 					<td>
 						@foreach ($resume->cvcategory as $cat)
-							{{ $cat->category->cat_name }}<br>
+							@if($cat->category['cat_name'] != '')
+							{{ $cat->category['cat_name'] }}<br>
+							@endif
 						@endforeach
+
 					</td>
 					
 					<td>

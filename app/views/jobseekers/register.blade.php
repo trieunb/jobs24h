@@ -10,35 +10,42 @@
 				  <!-- Wrapper for slides -->
 				  <div class="customer-review carousel-inner" role="listbox">
 				    <div class="item active">
-				      {{ HTML::image('assets/images/customer.png') }}
+				      {{ HTML::image('assets/images/doanhnhan/SteveJobs.jpg') }}
 				      <div class="carousel-caption">
-				        <span class="caption"><h3>LINH NGUYEN</h3> Founder & CEO at Dale Carnegie Vietnam</span>
+				        <span class="caption"><h3>Steve Jobs</h3> Cựu CEO của Apple</span>
 				      </div>
-				      <span class="opinion">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				      consequat.</span>
+				      <span class="opinion">“Hãy cứ khát khao, hãy cứ dại khờ”</span>
 				    </div>
 				    <div class="item">
-				      {{ HTML::image('assets/images/customer.png') }}
+				      {{ HTML::image('assets/images/doanhnhan/BillGates.jpg') }}
 				      <div class="carousel-caption">
-				        <span class="caption"><h3>LINH NGUYEN</h3> Founder & CEO at Dale Carnegie Vietnam</span>
+				        <span class="caption"><h3>Bill Gates</h3> Chủ tịch tập đoàn Microsoft</span>
 				      </div>
-				      <span class="opinion">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				      consequat.</span>
+				      <span class="opinion">“Nếu bạn sinh ra trong nghèo khó, đó không phải lỗi của bạn.
+						<br>Nhưng nếu bạn chết trong nghèo khó, thì đó là lỗi của bạn”</span>
 				    </div>
 				    <div class="item">
-				      {{ HTML::image('assets/images/customer.png') }}
+				      {{ HTML::image('assets/images/doanhnhan/JackMa.jpg') }}
 				      <div class="carousel-caption">
-				        <span class="caption"><h3>LINH NGUYEN</h3> Founder & CEO at Dale Carnegie Vietnam</span>
+				        <span class="caption"><h3>Jack Ma</h3> Chủ tịch hãng TMĐT Alibaba</span>
 				      </div>
-				      <span class="opinion">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				      consequat.</span>
+				      <span class="opinion">“Nếu bạn không bắt tay vào thực hiện, chẳng có gì là có thể cả”.</span>
 				    </div>
+				    <div class="item">
+				      {{ HTML::image('assets/images/doanhnhan/WarrenBuffett.jpg') }}
+				      <div class="carousel-caption">
+				        <span class="caption"><h3>Warren Buffett</h3> Giám đốc điều hành Berkshire Hathaway</span>
+				      </div>
+				      <span class="opinion">“Quy tắc số 1: không bao giờ để mất tiền. Quy tắc số 2: Đừng bao giờ quên quy tắc số 1”</span>
+				    </div>
+				    <div class="item">
+				      {{ HTML::image('assets/images/doanhnhan/OprahWinfrey.jpg') }}
+				      <div class="carousel-caption">
+				        <span class="caption"><h3>Oprah Winfrey</h3> CEO của Oprah Winfrey Network</span>
+				      </div>
+				      <span class="opinion">“Bạn sẽ trở thành những gì mà bạn tin vào. Vị trí của bạn ngày hôm nay trong cuộc đời xuất phát từ tất cả những gì mà bạn đặt niềm tin”</span>
+				    </div>
+
 				  </div>
 
 				  <!-- Controls -->

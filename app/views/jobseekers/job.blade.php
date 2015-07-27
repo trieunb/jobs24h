@@ -1,9 +1,13 @@
 @extends('layouts.jobseeker')
 @if($job != null)
-	@section('title') {{$job->vitri}} @stop
+	@section('title_fb'){{$job->vitri}}@stop
+	@section('desc_fb'){{$job->mota}}@stop
+	@section('title'){{$job->vitri}}@stop
 @else
-	@section('title') Không tìm thấy việc làm @stop
+	@section('title')Không tìm thấy việc làm@stop
+	@section('title_fb')Không tìm thấy việc làm@stop
 @endif
+@section('img_fb'){{URL::asset('assets/images/vnjobs_social.jpg')}}@stop
 @section('content')
 	<div class="container">
 		@include('includes.jobseekers.breadcrumb')
@@ -16,12 +20,27 @@
 					<div class="top">
 						<input type="hidden" name="ntd_id" class="ntd_id" value="{{$job->ntd->id}}">
 						<h1>{{$job->vitri}}</h1>	
+					</div>
+					<div class="meta-jobs">
+						<div class="single-post-meta">
+							Cập nhật: {{date('d-m-Y', strtotime($job->updated_at))}}&nbsp;&nbsp;|&nbsp;&nbsp;Lượt xem: {{$job->luotxem}}
+						</div> 
+						<div class="pull-right"><div style="margin: 5px 10px 0px 0; float:left;"><div class="fb-like" data-href="{{URL::route('jobseekers.job', array($job->slug, $job->id))}}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div></div>
+						<div style="margin: 5px 10px 0px 0; float:left;">
+						<script src="https://apis.google.com/js/plusone.js"></script><g:plus action="share" annotation="bubble"></g:plus></div></div>
+					</div>
+					<div class="clearfix"></div>
+					<div class="actions-jobs">
+						<div class="col-sm-9">
 						<h2><a href="{{URL::route('company.view', $job->ntd->company->id)}}">{{$job->ntd->company->company_name}}</a></h2>
+						<h3>{{$job->ntd->company->company_address}}</h3>
+						</div>
+						<div class="col-sm-3">
 						@if($job->is_apply == 1)
 						@if(Sentry::check())
-						<a href="{{URL::route('jobseekers.applying-job', array('login',$job->id))}}" class="btn btn-lg bg-orange">Nộp đơn</a>
+						<a href="{{URL::route('jobseekers.applying-job', array('login',$job->id))}}" class="pull-right btn btn-lg bg-orange">Nộp đơn</a>
 						@else
-						<a class="btn btn-lg bg-orange" data-toggle="modal" href='#login-modal'>Nộp đơn</a>
+						<a class="pull-right  btn btn-lg bg-orange" data-toggle="modal" href='#login-modal'>Nộp đơn</a>
 						<div class="modal fade" id="login-modal">
 							<div class="modal-dialog">
 								<div class="modal-content">
@@ -58,8 +77,9 @@
 						</div><!-- /.modal -->
 						@endif
 						@else
-						<button type="button" class="btn btn-lg bg-orange" disabled="disabled">Công việc đã đóng</button>
+						<button type="button" class="pull-right  btn btn-lg bg-orange" disabled="disabled">Công việc đã đóng</button>
 						@endif
+						</div>
 					</div>
 					<div class="alert alert-success hidden-xs"></div>
 					<div class="clearfix link-list">
@@ -71,9 +91,9 @@
 						<strong><a class="share-to-friends" role="button" data-toggle="popover" data-placement="bottom" title="Giới Thiệu Việc Làm Đến Bạn Bè" data-content='<form role="form" class="form-horizontal" id="ShareToFriends"><div class="form-group"><input type="text" class="form-control first_name_friend" name="first_name_friend" placeholder="Họ"></div><div class="form-group"><input type="text" class="form-control last_name_friend" name="last_name_friend"  placeholder="Tên"></div><div class="form-group"><input type="email" class="form-control email_name_friend" name="email_name_friend" placeholder="Email"></div><div class="form-group"><button type="submit" class="btn btn-sm bg-orange pull-right">Giới thiệu</button></div></form>'>Giới thiệu bạn bè</a></strong>
 						<i class="fa fa-comment"></i>
 						@if(Sentry::check())
-						<a class="feedback-to-emp" role="button" data-toggle="popover" data-placement="bottom" title="Gởi phản hồi đến Nhà tuyển dụng" data-content='<form role="form" class="form-horizontal" id="FeedbackToEmp"><div class="form-group"><input type="text" class="form-control title" name="title"  placeholder="Nhập tiêu đề"></div><div class="form-group"><textarea rows="3" name="feedback" class="form-control feedback" placeholder="Nhập nội dung phản hồi"></textarea></div><div class="form-group"><button type="submit" class="btn btn-sm bg-orange pull-right">Phản hồi</button></div></form>'>Gửi phản hồi</a>
+						<a class="feedback-to-emp" role="button" data-toggle="popover" data-placement="bottom"  title="Gửi tin nhắn đến Nhà tuyển dụng" data-content='<form role="form" class="form-horizontal" id="FeedbackToEmp"><div class="form-group"><input type="text" class="form-control title" name="title"  placeholder="Nhập tiêu đề"></div><div class="form-group"><textarea rows="3" name="feedback" class="form-control feedback" placeholder="Nhập nội dung phản hồi"></textarea></div><div class="form-group"><button type="submit" class="btn btn-sm bg-orange pull-right">Phản hồi</button></div></form>'>Gửi tin nhắn đến Nhà tuyển dụng</a>
 						@else
-						<a class="feedback-to-emp" role="button" data-toggle="popover" data-placement="bottom" title="Gởi phản hồi đến Nhà tuyển dụng" data-content='Login để phản hồi'>Gửi phản hồi</a>
+						<a class="feedback-to-emp" role="button" data-toggle="popover" data-placement="bottom" title="Gửi tin nhắn đến Nhà tuyển dụng" data-content='Login để phản hồi'>Gửi tin nhắn đến Nhà tuyển dụng</a>
 						@endif
 					</div>
 					<h2>Thông Tin Ví Trị Tuyển Dụng</h2>
@@ -81,7 +101,7 @@
 						<tbody>
 							<tr>
 								<td><strong>Chức vụ</strong></td>
-								<td>{{$job->level->name}}</td>
+								<td><a href="{{URL::route('jobseekers.search-job', array('level'=>$job->level->id))}}">{{$job->level->name}}</a></td>
 								<td><strong>Số năm kinh nghiệm</strong></td>
 								<td>{{$job->namkinhnghiem}}</td>
 							</tr>
@@ -89,7 +109,7 @@
 								<td><strong>Ngành nghề</strong></td>
 								<td>
 									@foreach($job->category as $key=>$val)
-										{{$job->category[$key]->category->cat_name}}<br>
+										<a href="{{URL::route('jobseekers.get-category', array('id'=>$job->category[$key]->category->id))}}">{{$job->category[$key]->category->cat_name}}</a><br>
 									@endforeach
 								</td>
 								<td><strong>Yêu cầu bằng cấp</strong></td>
@@ -97,7 +117,7 @@
 							</tr>
 							<tr>
 								<td><strong>Hình thức làm việc</strong></td>
-								<td>{{$job->work->name}}</td>
+								<td><a href="{{URL::route('jobseekers.search-job', array('type'=>$job->work->id))}}">{{$job->work->name}}</a></td>
 								<td><strong>Yêu cầu giới tính</strong></td>
 								<td>
 								@if($job->gioitinh == 0)
@@ -113,7 +133,7 @@
 								<td><strong>Địa điểm</strong></td>
 								<td>
 									@foreach($job->province as $key=>$val)
-										{{$job->province[$key]->province->province_name}}<br>
+										<a href="{{URL::route('jobseekers.search-job', array('province[]'=>$job->province[$key]->province->id))}}">{{$job->province[$key]->province->province_name}}</a><br>
 									@endforeach
 								</td>
 								<td><strong>Yêu cầu độ tuổi</strong></td>
@@ -132,11 +152,11 @@
 							<tr>
 								<td><strong>Mức lương</strong></td>
 								<td>@if($job->mucluong_min != 0 && $job->mucluong_min != 0)
-										${{$job->mucluong_min}} - ${{$job->mucluong_max}}
+										{{number_format($job->mucluong_min)}} - {{number_format($job->mucluong_max)}}đ
 									@elseif($job->mucluong_max == 0 && $job->mucluong_min != 0)
-										${{$job->mucluong_min}}
+										{{number_format($job->mucluong_min)}}đ
 									@elseif($job->mucluong_min == 0 && $job->mucluong_max != 0)
-										${{$job->mucluong_max}}
+										{{number_format($job->mucluong_max)}}đ
 									@else 
 										Thỏa thuận
 									@endif</td>
@@ -149,17 +169,17 @@
 					<div class="job-description">
 						{{nl2br($job->mota)}}
 					</div>
-					<h2>Yêu cầu công việc</h2>
+					<h2>Yêu Cầu Công Việc</h2>
 					<div class="job-requirement">
 						{{nl2br($job->yeucaukhac)}}
 					</div>
-					<h2>Quyền lợi</h2>
+					<h2>Quyền Lợi</h2>
 					<div class="job-requirement">
 						{{nl2br($job->quyenloi)}}
 					</div>
 					<h2>Hồ Sơ Bao Gồm</h2>
 					<div class="job-requirement">
-						{{$job->hosogom}}
+						{{nl2br($job->hosogom)}}
 					</div>
 					<h2>Hạn Nộp Hồ Sơ</h2>
 					<div class="job-requirement">
@@ -185,7 +205,7 @@
 					<h2>Thông tin công ty</h2> 
 				</div>
 				<div class="company-info">
-					<h3 class="text-orange">{{$job->ntd->company->company_name}}</h3>
+					<h3><a class="text-orange" href="{{URL::route('company.view', $job->ntd->company->id)}}">{{$job->ntd->company->company_name}}</a></h3>
 					<span><i class="fa fa-map-marker"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{$job->ntd->company->company_address}}</span>
 					<span><i class="fa fa-envelope"></i>&nbsp;&nbsp;&nbsp;Liên hệ: {{$job->nguoilienhe}}</span>
 					<span><i class="fa fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;Quy mô: {{Config::get('custom_quymo.quymo')[$job->ntd->company->total_staff]}}</span>
@@ -202,7 +222,7 @@
 	                	<a href="#" class="jcarousel-control-next">&rsaquo;</a>
 					</div>
 					@endif
-					<p>{{$job->ntd->company->full_description}}</p>
+					<p>{{nl2br($job->ntd->company->full_description)}}</p>
 				</div>
 				<a href="{{URL::route('jobseekers.search-job', array('id'=>$job->ntd_id))}}" class="pull-right text-blue"><i class="fa fa-arrow-circle-right"></i> Việc làm khác từ công ty này</a>
 				</div>
@@ -337,6 +357,7 @@
 					</ul>
 				</div>
 			</div>
+			<!--
 			<div class="social pull-right">
 							<span>Chia sẻ: </span>
 							<a href="#" class="rss" target="_blank" title="Rss"></a>
@@ -345,7 +366,7 @@
 	                        <a href="#" class="linkedin" target="_blank" title="Linkedin"></a>
 	                        <a href="#" class="pinterest" target="_blank" title="Pinterest"></a>
 	                        <a href="#" class="dribble" target="_blank" title="Dribble"></a>
-						</div>
+			</div>-->
 		</section>
 		<aside id="sidebar" class="col-sm-3 pull-right">
 				@include('includes.jobseekers.widget.right-suggested-jobs')

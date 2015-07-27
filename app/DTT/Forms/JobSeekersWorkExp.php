@@ -5,8 +5,6 @@ class JobSeekersWorkExp extends FormValidator {
 		"position"=>"required",
 		"company_name"=>"required",
 		"job_detail"=>"required",
-		"field"=>"required",
-		"specialized"=>"required",
 		"level"=>"required",
 		"from_date" => "required",
 		"salary"=> "numeric",

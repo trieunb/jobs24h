@@ -33,7 +33,7 @@
 		                   		{{Form::select('categories[]', Category::getList(),null, array('class'=>'form-control chosen-select categories', 'id'=>'categoryMainSearch', 'multiple'=>'true','data-placeholder'=>'Tất cả ngành nghề','multiple'))}}
 		                    </div>
 		                    <div class="col-sm-4">
-		                    	{{Form::input('number','salary', $salary, array('class'=>'form-control search-all','step'=>'10' ,'placeholder'=>'Mức lương tối thiểu hàng tháng (VND)'))}}
+		                    	{{Form::input('number','salary', $salary, array('class'=>'form-control search-all','step'=>'1000000' ,'placeholder'=>'Mức lương tối thiểu hàng tháng (VND)', 'min'=>'1000000'))}}
 		                    </div>
 		                    <div class="col-sm-4">
 		                    	{{Form::select('level', array('all'=>'Tất cả cấp bậc')+Level::lists('name', 'id'),$level, array('class'=>'form-control chosen-select', 'id'=>'jobLevelMainSearch','data-placeholder'=>'Tất cả cấp bậc'))}}
@@ -42,7 +42,7 @@
 						<div class="col-sm-9">
                             <div class="col-xs-7 col-sm-3 col-sm-push-6 push-top-xs">
                             	<div class="relative">
-                       				<button class="btn-search btn btn-default" type="button"><strong>Việc Làm Cao Cấp</strong></button><strong class="text-red small absolute-right"><em>Mới</em></strong>
+                       				<a href="{{URL::route('jobseekers.search-job', array('vieclamcaocap'=>'true'))}}" class="btn-search btn btn-default" type="button"><strong>Việc Làm Cao Cấp</strong></a><strong class="text-red small absolute-right"><em>Mới</em></strong>
                        			</div>
                    			</div>
 		                    <div class="col-sm-3 col-sm-push-6 push-top-xs">

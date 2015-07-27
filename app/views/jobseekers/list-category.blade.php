@@ -9,13 +9,42 @@
 					<h2>Việc làm theo ngành nghề</h2>
 				</div>
 				@if(count($list_category))
+					<div class="col-sm-4">
 					@foreach ($list_category as $key => $cate)
-						<div class="col-sm-4">
-						<h3 class="text-blue">{{$key}}</h3>
-						@foreach ($cate as $id => $child)
-							<p class="text-orange"><i class="fa fa-square"></i><a href="{{URL::route('jobseekers.get-category', array('id'=>$child->id))}}">{{$child->cat_name}} <span class="text-orange">({{$child->mtcategory->count()}})</span></a></p>@endforeach	
+						@if($key < 4)
+						<div class="groupJob">
+						<h3 class="text-blue">{{$cate['parent']}}</h3>
+						@foreach ($cate['child'] as $id => $child)
+							<p class="text-orange"><i class="fa fa-square"></i><a href="{{URL::route('jobseekers.get-category', array('id'=>$child->id))}}">{{$child->cat_name}} <span class="text-orange">({{$child->mtcategory->count()}})</span></a></p>
+						@endforeach	
 						</div>
+						@endif
 					@endforeach
+					</div>
+					<div class="col-sm-4">
+					@foreach ($list_category as $key => $cate)
+						@if($key > 4 && $key < 10)
+						<div class="groupJob">
+						<h3 class="text-blue">{{$cate['parent']}}</h3>
+						@foreach ($cate['child'] as $id => $child)
+							<p class="text-orange"><i class="fa fa-square"></i><a href="{{URL::route('jobseekers.get-category', array('id'=>$child->id))}}">{{$child->cat_name}} <span class="text-orange">({{$child->mtcategory->count()}})</span></a></p>
+						@endforeach	
+						</div>
+						@endif
+					@endforeach
+					</div>
+					<div class="col-sm-4">
+					@foreach ($list_category as $key => $cate)
+						@if($key > 10 && $key < 15)
+						<div class="groupJob">
+						<h3 class="text-blue">{{$cate['parent']}}</h3>
+						@foreach ($cate['child'] as $id => $child)
+							<p class="text-orange"><i class="fa fa-square"></i><a href="{{URL::route('jobseekers.get-category', array('id'=>$child->id))}}">{{$child->cat_name}} <span class="text-orange">({{$child->mtcategory->count()}})</span></a></p>
+						@endforeach	
+						</div>
+						@endif
+					@endforeach
+					</div>
 				@endif
 			</div>
 		</section>

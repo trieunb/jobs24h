@@ -10,7 +10,7 @@
 						$arr_cate = array();
 				?>
 				<div class="filter">
-					<span>Tìm thấy <span class="text-orange">{{count($jobs)}}</span> việc làm cho bạn</span>
+					<span>Tìm thấy <span class="text-orange">{{$count_jobs}}</span> việc làm cho bạn</span>
 					<span class="display-job-per-page pull-right">
 					
 					{{Form::open(array('route'=>array('jobseekers.search-job'),'method'=>'GET', 'id'=>'getPerPage' ))}}
@@ -67,9 +67,9 @@
 								<div class="salary text-orange">
 									<strong>
 										@if($job->mucluong_max != 0)
-											Tới ${{$job->mucluong_max}}
+											Tới {{number_format($job->mucluong_max)}}đ
 										@elseif($job->mucluong_max == 0 && $job->mucluong_min != 0)
-											${{$job->mucluong_min}}
+											{{number_format($job->mucluong_min)}}đ
 										@else 
 											Thỏa thuận
 										@endif
@@ -87,7 +87,7 @@
 					</ul>
 				</div>
 				<div class="text-center pagination-lg">
-               		{{$jobs->links()}}
+               		{{ $jobs->appends(Input::except('page'))->links(); }}
             	</div>
 			</div>
 		</section>

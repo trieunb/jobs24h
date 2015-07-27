@@ -77,7 +77,6 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
             .jcarouselPagination();
     });
 
-
     $(function() {
         var jcarousel = $('#company-info .jcarousel');
         var number_img = $('#company-info .jcarousel li').length;
@@ -145,7 +144,28 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
 
         
     });
+    $(function() {
+        var jcarousel = $('#top-employer .jcarousel');
 
+        jcarousel
+            .on('jcarousel:reload jcarousel:create', function () {
+                var carousel = $(this),
+                    width = carousel.innerWidth();
+
+                if (width >= 600) {
+                    width = width / 6;
+                } else if (width >= 350) {
+                    width = width / 3;
+                }
+
+                carousel.jcarousel('items').css('width', Math.ceil(width) + 'px');
+            })
+            .jcarousel({
+                wrap: 'circular'
+            });
+
+        
+    });
 
     // PLUGIN SELECT 2
     $("#locationMainSearch, #categoryMainSearch, #WishPlaceWork, #Fields,#Specialized").select2({
@@ -366,13 +386,35 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
     }); 
 
     // show more jobs top jobs on homepage
-    $('.top-job .load-more-ajax').click(function(event) {
+    $(document).on('click', '.top-job .load-more-ajax', function(event) {    
         event.preventDefault();
+        $('.loading-icon').show();
         $('.top-job li').each(function(index, el) {
-            $(this).removeClass('hidden-xs');
+            if($(this).hasClass('hidden')){
+                $(this).addClass('block');
+            }
+            $(this).removeClass('hidden', 1000);
+            $('.loading-icon').hide();
+        });
+        $(this).removeClass('load-more-ajax').addClass('collapse-jobs');
+        $(this).children('img').css({
+            transform: 'rotateZ(180deg)'
         });
     });
 
+    $(document).on('click', '.top-job .collapse-jobs', function(event) {
+        event.preventDefault();
+        $('.top-job li').each(function(index, el) {
+            if($(this).hasClass('block')){
+                $(this).addClass('hidden' , 1000);
+            }
+            $(this).removeClass('block');
+        });
+        $(this).removeClass('collapse-jobs').addClass('load-more-ajax');
+        $(this).children('img').css({
+            transform: 'rotateZ(0deg)'
+        });
+    });
 
     //scroll to div in edit cv
     function goToByScroll(id){
@@ -404,7 +446,7 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
     });
 
     // FLOAT FIXED HEADER
-    function fixDiv() {
+    /*function fixDiv() {
         var $header = $('#header');
         if ($(window).scrollTop() > 200){
             $('#header').css({
@@ -418,8 +460,20 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
         }
     }
     $(window).scroll(fixDiv);
-    fixDiv();
-    
+    fixDiv();*/
+
+
+
+    // BACK TO TOP
+    if ( ($(window).height() + 900) < $(document).height() ) {
+        $('#top-link-block').removeClass('hidden').affix({
+        // how far to scroll down before link "slides" into view
+        offset: {top:900}
+        });
+    }
+
+
+
     // FLOAT FIXED 
     $(function() {        
         $(".add-modules").floatingFixed({ padding: 5 });
@@ -452,6 +506,21 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
         event.preventDefault();
         $('.featured-items .header-page a').removeClass('active');
         $(this).addClass('active');
+        $('.top-job ul').addClass('hidden');
+        $('.top-job ul.'+$(this).attr('id')).removeClass('hidden');
+    });
+    $('body').on('click', function (e) {
+        $('[data-toggle="popover"]').each(function () {
+            //the 'is' for buttons that trigger popups
+            //the 'has' for icons within a button that triggers a popup
+            if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                $(this).popover('hide');
+            }
+        });
+    });
+
+    $(document).on('click', '#popup .close', function(event) {
+        $('#fadein, #popup').fadeOut();
     });
 })(jQuery);
 

@@ -125,7 +125,8 @@ Route::group(array('prefix'=>$locale), function() {
 			Route::get('/respond-from-employment', array('as'=>'jobseekers.respond-from-employment','uses'=>'JobSeeker@repondFromEmployment'));
 			Route::post('/respond-from-employment', array('as'=>'jobseekers.del-respond-from-employment','uses'=>'JobSeeker@delRepondFromEmployment'));
 			Route::get('/my-resume-by-upload/{action}/{id_cv}', array('as'=>'jobseekers.action-cv','uses'=>'JobSeeker@actionCV'));
-			Route::post('/my-resume-by-upload/{id_cv}', array('as'=>'jobseekers.update-upload-cv','uses'=>'JobSeeker@updateUploadCV'));
+			Route::get('/my-resume-by-upload/{id_cv}', array('as'=>'jobseekers.get-update-upload-cv','uses'=>'JobSeeker@indexUpdateUploadCV'));
+			Route::post('/my-resume-by-upload/{id_cv}', array('as'=>'jobseekers.post-update-upload-cv','uses'=>'JobSeeker@updateUploadCV'));
 			Route::get('/notification-jobs', array('as'=>'jobseekers.notification-jobs','uses'=>'JobSeeker@notificationJobs'));
 			Route::get('/employer-view-resume', array('as'=>'jobseekers.employer-view-resume','uses'=>'JobSeeker@employerViewResume'));
 			Route::get('/message', array('as'=>'jobseekers.messages','uses'=>'JobSeeker@messages'));

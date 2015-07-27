@@ -35,14 +35,8 @@
 					</div>
 					<div class="clearfix"></div>
 						<div class="complete-profile col-sm-8">
-							<!--<div class="col-sm-5">
-								<div class="progress-radial progress-25">
-			  						<div class="overlay">25%</div>
-								</div>
-								<span class="text-orange">Hồ sơ chưa hoàn tất</span>
-							</div>-->
 							<div class="col-sm-7 ">
-								{{Form::checkbox('is_visible', 1, 'checked')}}
+								{{Form::checkbox('is_publish', 1, 'checked', array('class'=>'is_publish'))}}
 								Cho phép tìm kiếm hồ sơ này
 							</div>
 						</div>
@@ -136,16 +130,18 @@
 								</div>
 								<label for="" class="col-sm-3 control-label">Tỉnh/Thành phố<abbr>*</abbr></label>
 								<div class="col-sm-3">
-										{{ Form::select('province_id', Province::lists('province_name', 'id'),$user->province_id, array('class'=>'province_id form-control', 'id' => 'Cities') ) }}
+										{{ Form::select('province_id', array(''=>'Vui lòng chọn')+Province::lists('province_name', 'id'),$user->province_id, array('class'=>'province_id form-control', 'id' => 'Cities') ) }}
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="" class="col-sm-3 control-label">Quận/Huyện</label>
 								<div class="col-sm-3">
 								@if($user->district_id != '')
-									{{ Form::select('district_id', array(''=>'Vui lòng chọn')+ Districts::lists('district_name', 'id'),$user->district_id, array('class'=>'district_id form-control', 'id' => 'District') ) }}
+									{{ Form::select('district_id', array(''=>'Vui lòng chọn')+ $districts ,$user->district_id, array('class'=>'district_id form-control', 'id' => 'District') ) }}
+								@elseif($districts != null)
+									{{ Form::select('district_id', $districts , null, array('class'=>'district_id form-control', 'id' => 'District') ) }}
 								@else
-									{{ Form::select('district_id', [] ,null, array('class'=>'district_id form-control', 'id' => 'District') ) }}
+									{{ Form::select('district_id',[], null, array('class'=>'district_id form-control', 'id' => 'District', 'disabled') ) }}									
 								@endif
 								</div>
 								<label for="" class="col-sm-3 control-label">Điện thoại
@@ -414,11 +410,11 @@
 								</div>
 							</div>
 							<div class="form-group">
-				            	<label class="col-sm-2 control-label">Lĩnh vực<abbr>*</abbr></label>
+				            	<label class="col-sm-2 control-label">Lĩnh vực</label>
 				            	<div class="col-sm-4">
 				            		{{ Form::select('field',array(''=>'- Vui lòng chọn -')+FieldsInWorkExp::lists('name', 'id'),$exp->field, array('class'=>'field form-control', 'id' => 'Fields') ) }}
 				            	</div>
-				            	<label class="col-sm-2 control-label">Chuyên ngành<abbr>*</abbr></label>
+				            	<label class="col-sm-2 control-label">Chuyên ngành</label>
 				            	<div class="col-sm-4">
 				            		{{ Form::select('specialized', array(''=>'- Vui lòng chọn -')+Specialized::lists('name', 'id'),$exp->specialized, array('class'=>'specialized form-control', 'id' => 'Specialized') ) }}
 				            	</div>
@@ -510,11 +506,11 @@
 								</div>
 							</div>
 							<div class="form-group">
-				            	<label class="col-sm-2 control-label">Lĩnh vực<abbr>*</abbr></label>
+				            	<label class="col-sm-2 control-label">Lĩnh vực</label>
 				            	<div class="col-sm-4">
 				            		{{ Form::select('field',array(''=>'- Vui lòng chọn -')+FieldsInWorkExp::lists('name', 'id'),null, array('class'=>'field form-control', 'id' => 'Fields') ) }}
 				            	</div>
-				            	<label class="col-sm-2 control-label">Chuyên ngành<abbr>*</abbr></label>
+				            	<label class="col-sm-2 control-label">Chuyên ngành</label>
 				            	<div class="col-sm-4">
 				            		{{ Form::select('specialized', array(''=>'- Vui lòng chọn -')+Specialized::lists('name', 'id'),null, array('class'=>'specialized form-control', 'id' => 'Specialized') ) }}
 				            	</div>
@@ -605,11 +601,11 @@
 				            	</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">Lĩnh vực nghiên cứu<abbr>*</abbr></label>
+								<label class="col-sm-3 control-label">Lĩnh vực nghiên cứu</label>
 				            	<div class="col-sm-4">
 				            		{{ Form::select('field_of_study', array(''=>'- Vui lòng chọn -')+FieldsInWorkExp::lists('name', 'id'),$education->field_of_study, array('class'=>'field_of_study form-control', 'id' => 'FieldOfStudy') ) }}
 				            	</div>
-				            	<label class="col-sm-2 control-label">Điểm<abbr>*</abbr></label>
+				            	<label class="col-sm-2 control-label">Xếp loại<abbr>*</abbr></label>
 				            	<div class="col-sm-3">
 				            		{{ Form::select('average_grade_id', array(''=>'- Vui lòng chọn -')+AverageGrade::lists('name', 'id'),$education->average_grade_id, array('class'=>'average_grade_id form-control', 'id' => 'AverageGrade') ) }}
 				            	</div>
@@ -645,7 +641,7 @@
 					<div class="rows">
 						<div class="title-page">
 							<h2>Học vấn và Bằng Cấp</h2>
-							<a class="add-new-edu pull-right italic text-blue"><i class="fa fa-plus"></i> Bổ sung</a>
+							<a class="add-new-edu pull-right italic text-blue hidden"><i class="fa fa-plus"></i> Bổ sung</a>
 						</div>
 						<?php $n = 1;?>
 						<div class="items block" id="saveEducation_{{$n}}">
@@ -687,11 +683,11 @@
 				            	</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">Lĩnh vực nghiên cứu<abbr>*</abbr></label>
+								<label class="col-sm-3 control-label">Lĩnh vực nghiên cứu</label>
 				            	<div class="col-sm-4">
 				            		{{ Form::select('field_of_study', array(''=>'- Vui lòng chọn -')+FieldsInWorkExp::lists('name', 'id'),null, array('class'=>'field_of_study form-control', 'id' => 'FieldOfStudy') ) }}
 				            	</div>
-				            	<label class="col-sm-2 control-label">Điểm<abbr>*</abbr></label>
+				            	<label class="col-sm-2 control-label">Xếp loại<abbr>*</abbr></label>
 				            	<div class="col-sm-3">
 				            		{{ Form::select('average_grade_id', array(''=>'- Vui lòng chọn -')+AverageGrade::lists('name', 'id'),null, array('class'=>'average_grade_id form-control', 'id' => 'AverageGrade') ) }}
 				            	</div>
@@ -1128,6 +1124,7 @@
 				info_wish_position: 	$('#saveGeneralInfo .info_wish_position').val(),
 				info_wish_level: 		$('#saveGeneralInfo .info_wish_level').val(),
 				info_wish_place: 		$('#saveGeneralInfo .info_wish_place').val(),
+				is_publish: 			$('.is_publish').val(),
 				specific_salary: 		salary,
 				info_latest_company: 	$('#saveGeneralInfo .info_latest_company').val(),
 				info_latest_job: 		$('#saveGeneralInfo .info_latest_job').val(),
@@ -1244,7 +1241,7 @@
 	 		type: 'GET',
 	 		data: '',	
 	 		success : function(data){
-	 			$('#box-exp .rows').append('<div class="items block" id="saveWorkExp_'+n+'"><form class="form-horizontal" id="saveWorkExp"><div class="form-group"><label for="" class="col-sm-2 control-label">Chức danh<abbr>*</abbr></label><div class="col-sm-10"><input class="position form-control" name="position" type="text"></div></div><div class="form-group"><label for="" class="col-sm-2 control-label">Công ty<abbr>*</abbr></label><div class="col-sm-10"><input class="company_name form-control" name="company_name" type="text"></div></div><div class="form-group"><label for="" class="col-sm-2 control-label">Từ tháng<abbr>*</abbr></label><div class="col-sm-3"><div class="input-group date" id="From_date"><input class="from_date form-control" placeholder="Ví dụ: 09/2008" data-date-format="MM-YYYY" name="from_date" type="text"><span class="input-group-addon have-img"><img src="/assets/images/calendar.png"></span></div></div><label for="" class="col-sm-2 control-label">Đến tháng<abbr>*</abbr></label><div class="col-sm-3"><div class="input-group date" id="To_date"><input class="to_date form-control" placeholder="Ví dụ: 04/2012" data-date-format="MM-YYYY" name="to_date" type="text"><span class="input-group-addon have-img"><img src="/assets/images/calendar.png"></span></div></div><div class="col-sm-2"><div class="checkbox"><label><input name="is-current-job" type="checkbox" class="is_current_job">Công việc hiện tại</label></div></div></div><div class="form-group"><label class="col-sm-2 control-label">Lĩnh vực<abbr>*</abbr></label><div class="col-sm-4"><select name="field" id="field_'+n+'" class="field form-control" required="required">'+linhvuc+'</select></div><label class="col-sm-2 control-label">Chuyên ngành<abbr>*</abbr></label><div class="col-sm-4"><select name="specialized" id="specialized_'+n+'" class="specialized form-control" required="required">'+chuyennganh+'</select></div></div><div class="form-group"><label class="col-sm-2 control-label">Cấp bậc<abbr>*</abbr></label><div class="col-sm-4"><select name="level" id="level_'+n+'" class="level form-control" required="required">'+capbac+'</select></div><label class="col-sm-2 control-label">Mức lương</label><div class="col-sm-4"><input class="salary form-control" name="salary" type="text"></div></div><div class="form-group"><label class="col-sm-2 control-label">Mô tả<abbr>*</abbr></label><div class="col-sm-10"><textarea class="job_detail form-control" rows="5" name="job_detail" cols="50"></textarea><em class="text-gray-light"><span class="countdown">5000</span> ký tự có thể nhập thêm</em></div></div><div class="form-group"><div class="col-sm-offset-3 col-sm-7"><button class="btn btn-lg bg-gray-light cancel-exp" type="button">Hủy</button><input style="margin:0 3px;" class="btn btn-lg bg-orange" type="submit" value="Lưu"><span>(<span class="text-red">*</span>) Thông tin bắt buộc</span></div></div></form></div>');
+	 			$('#box-exp .rows').append('<div class="items block" id="saveWorkExp_'+n+'"><form class="form-horizontal" id="saveWorkExp"><div class="form-group"><label for="" class="col-sm-2 control-label">Chức danh<abbr>*</abbr></label><div class="col-sm-10"><input class="position form-control" name="position" type="text"></div></div><div class="form-group"><label for="" class="col-sm-2 control-label">Công ty<abbr>*</abbr></label><div class="col-sm-10"><input class="company_name form-control" name="company_name" type="text"></div></div><div class="form-group"><label for="" class="col-sm-2 control-label">Từ tháng<abbr>*</abbr></label><div class="col-sm-3"><div class="input-group date" id="From_date"><input class="from_date form-control" placeholder="Ví dụ: 09/2008" data-date-format="MM-YYYY" name="from_date" type="text"><span class="input-group-addon have-img"><img src="/assets/images/calendar.png"></span></div></div><label for="" class="col-sm-2 control-label">Đến tháng<abbr>*</abbr></label><div class="col-sm-3"><div class="input-group date" id="To_date"><input class="to_date form-control" placeholder="Ví dụ: 04/2012" data-date-format="MM-YYYY" name="to_date" type="text"><span class="input-group-addon have-img"><img src="/assets/images/calendar.png"></span></div></div><div class="col-sm-2"><div class="checkbox"><label><input name="is-current-job" type="checkbox" class="is_current_job">Công việc hiện tại</label></div></div></div><div class="form-group"><label class="col-sm-2 control-label">Lĩnh vực</label><div class="col-sm-4"><select name="field" id="field_'+n+'" class="field form-control" required="required">'+linhvuc+'</select></div><label class="col-sm-2 control-label">Chuyên ngành</label><div class="col-sm-4"><select name="specialized" id="specialized_'+n+'" class="specialized form-control" required="required">'+chuyennganh+'</select></div></div><div class="form-group"><label class="col-sm-2 control-label">Cấp bậc<abbr>*</abbr></label><div class="col-sm-4"><select name="level" id="level_'+n+'" class="level form-control" required="required">'+capbac+'</select></div><label class="col-sm-2 control-label">Mức lương</label><div class="col-sm-4"><input class="salary form-control" name="salary" type="text"></div></div><div class="form-group"><label class="col-sm-2 control-label">Mô tả<abbr>*</abbr></label><div class="col-sm-10"><textarea class="job_detail form-control" rows="5" name="job_detail" cols="50"></textarea><em class="text-gray-light"><span class="countdown">5000</span> ký tự có thể nhập thêm</em></div></div><div class="form-group"><div class="col-sm-offset-3 col-sm-7"><button class="btn btn-lg bg-gray-light cancel-exp" type="button">Hủy</button><input style="margin:0 3px;" class="btn btn-lg bg-orange" type="submit" value="Lưu"><span>(<span class="text-red">*</span>) Thông tin bắt buộc</span></div></div></form></div>');
 	 			$('#field_'+n).select2({
         			minimumResultsForSearch: Infinity
     			});
@@ -1280,7 +1277,7 @@
 	 		type: 'GET',
 	 		data: '',	
 	 		success : function(data){
-	 			$('#box-education .rows').append('<div class="items block" id="saveEducation_'+n+'"><form class="form-horizontal" id="saveEducation"><div class="form-group"><label class="col-sm-3 control-label">Chuyên ngành<abbr>*</abbr></label><div class="col-sm-9"><input class="specialized form-control" placeholder="Ví dụ: Kinh doanh quốc tế" name="specialized" type="text"></div></div><div class="form-group"><label class="col-sm-3 control-label">Trường<abbr>*</abbr></label><div class="col-sm-4"><input class="school form-control" placeholder="Ví dụ: Đại học Kinh Tế Tp.Hồ Chí Minh" name="school" type="text"></div><label class="col-sm-2 control-label">Bằng cấp<abbr>*</abbr></label><div class="col-sm-3"><select class="level form-control" id="level_'+n+'" name="level">'+capbac+'</select></div></div><div class="form-group"><label class="col-sm-3 control-label">Từ tháng</label><div class="col-sm-4"><div class="input-group date" id="Study_from"><input class="study_from form-control" placeholder="Ví dụ: 09/2008" data-date-format="MM-YYYY" name="study_from" type="text"><span class="input-group-addon have-img"><img src="/assets/images/calendar.png"></span></div></div><label class="col-sm-2 control-label">Đến tháng</label><div class="col-sm-3"><div class="input-group date" id="Study_to"><input class="study_to form-control" placeholder="Ví dụ: 04/2012" data-date-format="MM-YYYY" name="study_to" type="text"><span class="input-group-addon have-img"><img src="/assets/images/calendar.png"></span></div></div></div><div class="form-group"><label class="col-sm-3 control-label">Lĩnh vực nghiên cứu<abbr>*</abbr></label><div class="col-sm-4"><select class="field_of_study form-control" id="field_'+n+'" name="field_of_study">'+linhvuc+'</select></div><label class="col-sm-2 control-label">Điểm<abbr>*</abbr></label><div class="col-sm-3"><select class="average_grade_id form-control" id="average_'+n+'" name="average_grade_id">'+diem+'</select></div></div><div class="form-group"><label class="col-sm-3 control-label">Thành tựu</label><div class="col-sm-9"><textarea class="achievement form-control" rows="5" name="achievement" cols="50"></textarea><em class="text-gray-light"><span class="countdown">5000</span> ký tự có thể nhập thêm</em></div></div><div class="form-group"><div class="col-sm-offset-3 col-sm-7"><button class="btn btn-lg bg-gray-light cancel-education" type="button">Hủy</button><input class="btn btn-lg bg-orange" style="margin:0 3px;" type="submit" value="Lưu"><span>(<span class="text-red">*</span>) Thông tin bắt buộc</span></div></div></form></div>');
+	 			$('#box-education .rows').append('<div class="items block" id="saveEducation_'+n+'"><form class="form-horizontal" id="saveEducation"><div class="form-group"><label class="col-sm-3 control-label">Chuyên ngành<abbr>*</abbr></label><div class="col-sm-9"><input class="specialized form-control" placeholder="Ví dụ: Kinh doanh quốc tế" name="specialized" type="text"></div></div><div class="form-group"><label class="col-sm-3 control-label">Trường<abbr>*</abbr></label><div class="col-sm-4"><input class="school form-control" placeholder="Ví dụ: Đại học Kinh Tế Tp.Hồ Chí Minh" name="school" type="text"></div><label class="col-sm-2 control-label">Bằng cấp<abbr>*</abbr></label><div class="col-sm-3"><select class="level form-control" id="level_'+n+'" name="level">'+capbac+'</select></div></div><div class="form-group"><label class="col-sm-3 control-label">Từ tháng</label><div class="col-sm-4"><div class="input-group date" id="Study_from"><input class="study_from form-control" placeholder="Ví dụ: 09/2008" data-date-format="MM-YYYY" name="study_from" type="text"><span class="input-group-addon have-img"><img src="/assets/images/calendar.png"></span></div></div><label class="col-sm-2 control-label">Đến tháng</label><div class="col-sm-3"><div class="input-group date" id="Study_to"><input class="study_to form-control" placeholder="Ví dụ: 04/2012" data-date-format="MM-YYYY" name="study_to" type="text"><span class="input-group-addon have-img"><img src="/assets/images/calendar.png"></span></div></div></div><div class="form-group"><label class="col-sm-3 control-label">Lĩnh vực nghiên cứu</label><div class="col-sm-4"><select class="field_of_study form-control" id="field_'+n+'" name="field_of_study">'+linhvuc+'</select></div><label class="col-sm-2 control-label">Xếp loại<abbr>*</abbr></label><div class="col-sm-3"><select class="average_grade_id form-control" id="average_'+n+'" name="average_grade_id">'+diem+'</select></div></div><div class="form-group"><label class="col-sm-3 control-label">Thành tựu</label><div class="col-sm-9"><textarea class="achievement form-control" rows="5" name="achievement" cols="50"></textarea><em class="text-gray-light"><span class="countdown">5000</span> ký tự có thể nhập thêm</em></div></div><div class="form-group"><div class="col-sm-offset-3 col-sm-7"><button class="btn btn-lg bg-gray-light cancel-education" type="button">Hủy</button><input class="btn btn-lg bg-orange" style="margin:0 3px;" type="submit" value="Lưu"><span>(<span class="text-red">*</span>) Thông tin bắt buộc</span></div></div></form></div>');
 	 			$('#field_'+n).select2({
         			minimumResultsForSearch: Infinity
     			});

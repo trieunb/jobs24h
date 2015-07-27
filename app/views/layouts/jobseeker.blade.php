@@ -5,6 +5,14 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>@yield('title', isset($title) ?: Lang::get('jobseekers.home.title') ) - {{ Lang::get('jobseekers.home.slogan') }}</title>
+		<meta name="Robots" content="INDEX, FOLLOW">
+		<meta property="og:title" content="@yield('title_fb', isset($title_fb))"/>
+		<meta property="og:image" content="@yield('img_fb', isset($img_fb))"/>
+		<meta property="og:description" content="@yield('desc_fb', isset($desc_fb))"/>
+		<meta property="og:url" content="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>"/>
+		<meta property="og:site_name" content="Vnjobs - Việc làm không giới hạn"/>
+		<meta property="article:publisher" content="https://www.facebook.com/vnjobs.vn"/>
+		<meta property="fb:app_id" content="1536226246625315"/>
 
 		<!-- Bootstrap CSS -->
 		{{ HTML::style('assets/css/bootstrap.min.css') }}
@@ -13,6 +21,13 @@
 		{{ HTML::style('assets/plugins/jcarousel/css/jcarousel.responsive.css') }}
 		{{ HTML::style('assets/css/bootstrap-datetimepicker.min.css') }}
 		{{ HTML::style('//fonts.googleapis.com/css?family=Calligraffitti') }}
+		<script>(function(d, s, id) {
+	      var js, fjs = d.getElementsByTagName(s)[0];
+	      if (d.getElementById(id)) return;
+	      js = d.createElement(s); js.id = id;
+	      js.src = "//connect.facebook.net/vn_VN/sdk.js#xfbml=1&version=v2.4&appId=1627071780874094";
+	      fjs.parentNode.insertBefore(js, fjs);
+	    }(document, 'script', 'facebook-jssdk'));</script>
 	</head>
 	<body>
 		<header id="header">
@@ -34,6 +49,9 @@
 						<span class="employer-site"><a href="{{ URL::route('employers.launching') }}"><i class="fa fa-caret-right"></i> Nhà tuyển dụng</a></span>
 					</div>
 					<ul class="menu pull-right">
+						<div class="fb_plus">Kết bạn với Vnjobs.vn trên <div class="fb-like" data-href="https://www.facebook.com/vnjobs.vn" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div></div>
+						<div class="google_plus"><script src="https://apis.google.com/js/plusone.js"></script>
+<g:plus action="share" annotation="bubble"></g:plus><script src="https://apis.google.com/js/platform.js" async defer></script><g:follow href="https://plus.google.com/u/0/+VnjobsvnVieclamhot/auto" rel="author"></g:follow></div>
 						<?php $user = Sentry::getUser();?>
 						@if(Sentry::check())
 								<nav class="ntv-menu navbar-right">
@@ -57,9 +75,9 @@
 			<nav id="navigation" class="bg-blue">
 				<ul class="main-menu container">
 					<li><a href="{{ URL::route('jobseekers.home') }}">Trang chủ</a></li>
-					<li><a href="{{ URL::route('cungunglaodong.home') }}">Cung ứng lao động</a></li>
 					<li><a href="{{ URL::route('jobseekers.home') }}">Người tìm việc</a></li>
 					<li><a href="{{ URL::route('employers.launching') }}">Nhà tuyển dụng</a></li>
+					<li><a href="{{ URL::route('cungunglaodong.home') }}">Cung ứng lao động</a></li>
 					<li><a href="{{ URL::route('trainings.home') }}">Đào tạo</a></li>
 					<li><ul class="nav navbar-nav navbar-right">
 						{{Form::open(array('route'=>array('jobseekers.search-job'), 'class'=>'navbar-form navbar-right relative', 'method'=>'GET', 'role'=> 'search'))}}
@@ -89,7 +107,7 @@
 						<div class="social">
 							<span>Kết nối với vnjobs.vn</span>
 							<a href="#" class="rss" target="_blank" title="Rss"></a>
-							<a href="#" class="facebook" target="_blank" title="Facebook"></a>
+							<a href="https://www.facebook.com/vnjobs.vn" class="facebook" target="_blank" title="Facebook"></a>
 	                        <a href="#" class="twitter" target="_blank" title="Twitter"></a>
 	                        <a href="#" class="linkedin" target="_blank" title="Linkedin"></a>
 	                        <a href="#" class="pinterest" target="_blank" title="Pinterest"></a>
@@ -142,6 +160,20 @@
 			<p class="copy-right">Copyright 2015 Công ty TNHH Minh Phúc - MPTelecom</p>
 		</footer>
 		<div class="loading-icon"></div>
+		<span id="top-link-block" class="hidden">
+		    <a href="#top" class="well well-sm"  onclick="$('html,body').animate({scrollTop:0},'slow');return false;">
+		        <i class="glyphicon glyphicon-chevron-up"></i>
+		    </a>
+		</span><!-- /top-link-block -->
+		<?php
+		$cookie_name = "popup";
+		$cookie_value = "popup_content";
+		setcookie($cookie_name, $cookie_value, 0);
+		if(!isset($_COOKIE[$cookie_name])) {
+		?>
+		<div id="fadein"></div>
+		<div id="popup"><div class="content"><a href="{{URL::route('employers.register')}}">{{ HTML::image('assets/images/pop_up.png') }}</a><a href="#" class="close"><i class="fa fa-times"></i>   Đóng</a></div></div>
+		<?php }?>
 		<!-- jQuery -->
 		{{ HTML::script('assets/js/jquery.1.11.1.min.js') }}
 		{{ HTML::script('assets/js/jquery-ui.min.js') }}
@@ -153,8 +185,6 @@
 		{{ HTML::script('assets/js/jquery.floatingFixed.js') }}
 		{{ HTML::script('assets/js/jquery.formatcurrency.js') }}
 		{{ HTML::script('assets/js/main.js') }}
-
-		
 		@yield('scripts')
 	</body>
 </html>

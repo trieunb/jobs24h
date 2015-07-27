@@ -34,7 +34,7 @@
 											@if($mr->file_name == '')
 												<a href="{{URL::route('jobseekers.save-cv', array($mr->id))}}" class="text-blue"><strong>@if($mr->tieude_cv != '') <em>{{$mr->tieude_cv}}</em> @else <em>{{date('d-m-Y',strtotime($mr->created_at))}}</em>_{{$user->first_name}} {{$user->last_name}} @endif </strong><br></a>
 											@else
-												<a href='{{ URL::route("jobseekers.action-cv", array("download",$mr->id)) }}' class="text-blue"><strong><em>{{date('d-m-Y',strtotime($mr->created_at))}}</em>_{{$user->first_name}} {{$user->last_name}}</strong><br></a>
+												<a href="{{URL::route('jobseekers.get-update-upload-cv', array($mr->id))}}" class="text-blue"><strong>@if($mr->tieude_cv != '') <em>{{$mr->tieude_cv}}</em> @else <em>{{date('d-m-Y',strtotime($mr->created_at))}}</em>_{{$user->first_name}} {{$user->last_name}} @endif </strong><br></a>
 											@endif
 											@if($mr->trangthai == 0 )
 												<small class="legend text-orange">Chưa hoàn thiện</small> 
@@ -45,17 +45,21 @@
 											@endif
 										</td>
 										<td>
-											{{Form::radio('is_publish', $mr->id, $mr->is_public, array('id'=>'is_publish'))}}
+											@if($mr->is_public == 1)
+											{{Form::radio('is_publish', $mr->id, $mr->id, array('id'=>'is_publish'))}}
+											@else
+											{{Form::radio('is_publish', $mr->id, null, array('id'=>'is_publish'))}}
+											@endif
 										</td>
 										<td>{{$mr->updated_at}}</td>
 										<td>0</td>
 										<td>
-											@if($mr->file_name == '')
+											
 											<a href="{{URL::route('jobseekers.view-resume', array($mr->id))}}"><i class="glyphicon glyphicon-eye-open"></i> Xem</a> 
+											@if($mr->file_name == '')
 											<a href="{{URL::route('jobseekers.save-cv', array($mr->id))}}"><i class="glyphicon glyphicon-refresh"></i> Cập nhật</a> 
 											@else
-											<a href='{{ URL::route("jobseekers.action-cv", array("download",$mr->id)) }}'><i class="glyphicon glyphicon-eye-open"></i> Xem</a> 
-											<a href="{{URL::route('jobseekers.get-my-resume-by-upload')}}"><i class="glyphicon glyphicon-refresh"></i> Cập nhật</a> 
+											<a href="{{URL::route('jobseekers.get-update-upload-cv', array($mr->id))}}"><i class="glyphicon glyphicon-refresh"></i> Cập nhật</a> 
 											@endif
 											<a id="del_resume" data-rs="{{$mr->id}}"><i class="glyphicon glyphicon-trash"></i> Xóa</a>
 										</td>
