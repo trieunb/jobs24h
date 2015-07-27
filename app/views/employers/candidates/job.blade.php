@@ -88,6 +88,7 @@
 									
 								</td>
 								@else
+								@if(@$ap->resume->updated_at)
 								<td>
 									<div class="checkbox">
 										<input type="checkbox" name="valid[]" class="check" value="{{ $ap->cv_id }}">
@@ -107,7 +108,7 @@
 								</td>
 								<td>
 									Ngày nộp: {{ $ap->apply_date }}<br>
-									Cập nhật: {{ $ap->resume->getUpdateAt() }}<br>
+									Cập nhật: {{ (@$ap->resume->updated_at)?$ap->resume->getUpdateAt():"" }}<br>
 									Trạng thái: <span id="a_{{ $ap->id }}">{{ Config::get('custom_apply.apply_status')[$ap->status] }}</span>
 
 								</td>
@@ -125,6 +126,7 @@
 									  </ul>
 									</div>
 								</td>
+								@endif
 								@endif
 							</tr>
 							@endforeach

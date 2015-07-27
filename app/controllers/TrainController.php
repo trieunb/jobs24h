@@ -33,6 +33,19 @@ class TrainController extends \BaseController {
 
 		$training=Training::find($id);
 		 $couser=$training->trainingpeoples;
+		 
+		 	$data['id']= $training->id;
+		 	$data['content']= $training->content;
+		 	$data['title']= $training->title;
+		 	$data['date_open']= $training->date_open;
+		 	$data['shift']= $training->shift;
+		 	$data['time_hour']= $training->time_hour;
+		 	$data['date_study']= $training->date_study;
+		 	$data['time_day']= $training->time_day;
+		 	$data['fee']= $training->fee;
+		 	$data['discount']= $training->discount;
+		 	$data['name']= "";
+		 	$data['tch'] = $training->trainingpeoples->lists('training_people_id');
 
 		 foreach ($couser as  $value) {
 

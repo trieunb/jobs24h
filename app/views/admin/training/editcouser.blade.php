@@ -61,7 +61,7 @@
 		 
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Nội dung:</label>
-			<div class="col-sm-6">
+			<div class="col-sm-10">
 				<textarea name="editor1" id="editor1" rows="10" cols="80">
                 {{$data['content']}}
             	</textarea>
@@ -91,7 +91,7 @@
 			<div class="col-sm-6">
 
 				 
-			 {{ Form::select('teacher[]', $teacher, null, ['id' => 'teacher', 'multiple' => 'multiple']) }}
+			 {{ Form::select('teacher[]', $teacher, $data['tch'], ['id' => 'teacher', 'multiple' => 'multiple']) }}
 			
 			</div>
 			
