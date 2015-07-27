@@ -433,7 +433,11 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
 .bg-search {background-image: url(../images/bg_search.jpg); min-height: 380px;  background-repeat: no-repeat;background-position: center center;display: block;position: relative;/* float: left; */ margin: 0 !important;}
 .shadow {background-image: url(../images/shadow.png); min-height: 0px;  background-repeat: no-repeat;background-position: center center;}
 .search-form {background: url(../images/bg_search_form.png) no-repeat;  padding: 25px 15px; margin: 0px auto 20px;}
+<<<<<<< HEAD
 .bg-search .search-form { margin-top: 195px; margin-bottom: 0;}
+=======
+.bg-search .search-form { margin-top: 200px; margin-bottom: 0;}
+>>>>>>> 7f97258b25207038d76220da5eda8a8f356caec2
 .search-form .select2-container, .select2-container .select2-selection--multiple, .search-form .form-control, .select2-container--default .select2-selection--single {width: 100% !important; border-color: #ffffff !important; border-radius: 0 !important; min-height: 32px !important;font-size: 12px !important; text-overflow: ellipsis;}
 .search-form .select2-container .select2-selection--multiple {max-height: 32px}
 .search-form .select2-container .select2-search--inline .select2-search__field {margin-top: 5px;}

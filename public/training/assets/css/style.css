@@ -510,7 +510,7 @@ div#thongtinchung .text ul li {
 }.bt-tt h2 {
   color: white !important;
 }.bt-tt {
-  background-color: rgb(236, 93, 96);
+  background-color: #EC5D60;
   padding: 44px;
 }h2.white {
   color: white !important;
@@ -847,4 +847,24 @@ button.btn.more3:hover
 }div#thongbao {
   height: 89px;
   padding: 7px;
+}
+.fixed-menu .navbar {
+  z-index: 1000;
+  top: 0;
+  background: #EC5D60;
+}
+.fixed-menu .navbar .navbar-collapse {
+  text-align: center;
+}
+.fixed-menu .nav>li>a:hover {
+  background: none;
+  color: #FFF;
+}
+.fixed-menu ul.nav.navbar-nav {
+    width: 500px;
+  margin: 0 auto;
+  float: none;
+}
+.fixed-menu .nav>li>a {
+  color: #FFF;
 }

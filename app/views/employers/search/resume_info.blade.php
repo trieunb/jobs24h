@@ -151,7 +151,7 @@
 						</div>
 						<div class="list-info">
 							<div class="info-left">Mức lương mong muốn</div>
-							<div class="info-right">{{ $resume->mucluong() }} VND</div>
+							<div class="info-right">@if(@$resume->mucluong){{ $resume->mucluong() }} VND @else Thương lượng @endif</div>
 						</div>
 						<div class="list-info">
 							<div class="info-left">Ngành nghề mong muốn</div>
@@ -219,7 +219,7 @@
 								- Lĩnh vực: {{ $exp->fieldofwork->name }}<br>
 								- Chuyên ngành: {{ $exp->chuyennganh->name }}<br>
 								- Cấp bậc: {{ $exp->capbac->name }}<br>
-								@if($exp->salary != '')- Lương: {{ $exp->salary }}<br>@endif
+								@if($exp->salary != '')- Lương: {{ $exp->salary() }}<br>@endif
 							</div>
 						</div>
 						@endforeach

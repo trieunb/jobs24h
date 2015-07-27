@@ -88,5 +88,21 @@ class ReportController extends \Controller {
 		    });
 		})->download('xlsx');
 	}
+	public function postSendRespond()
+	{
+		if(Input::get('subject') && Input::get('content') && Input::get('ntv_id'))
+		{
+			$res = VResponse::create([
+				'ntv_id'	=>	Input::get('ntv_id'),
+				'ntd_id'	=>	Auth::id(),
+				'title'		=>	Input::get('subject'),
+				'content'	=>	Input::get('content'),
+				'submited_date'=>date('Y-m-d H:i:s'),
+				'user_submit'=>	Auth::id(),
+				]);
+			if($res) return json_encode(['has'=>true]);
+			return json_encode(['has'=>false]);
+		}
+	}
 	
 }

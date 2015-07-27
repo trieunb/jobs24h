@@ -28,7 +28,7 @@
 								<li>Tối ưu cho máy vi tính, máy tính bảng và điện thoại di động</li>
 							</ul>
 							<div class="clearfix"></div>
-							<button type="button" class="btn btn-buynow btn-default">Mua ngay</button>
+							<a href="{{ URL::route('employers.job.add') }}" class="btn btn-buynow btn-default">Mua ngay</a>
 						</div>
 
 						<div class="col-xs-6 center">
@@ -41,9 +41,9 @@
 								<li>Tìm ứng viên hiệu quả và nhanh chóng</li>
 							</ul>
 							<div class="clearfix"></div>
-							<button type="button" class="btn btn-trial btn-default">Tìm kiếm thử</button>
+							<a href="{{ URL::route('employers.search.basic') }}" class="btn btn-trial btn-default">Tìm kiếm thử</a>
 							<span class="buynow">
-								Hoặc <a href="#">Mua ngay</a>
+								Hoặc <a href="{{ URL::route('employers.job.add') }}">Mua ngay</a>
 							</span>
 						</div>
 					</div> <!-- row -->
@@ -53,7 +53,7 @@
 			<div class="newest-sale">
 				<div class="full-page">
 					<h4 class="sale-title">
-						(<span class="text-required">*</span>) Chương trình giảm giá đặc biệt này kéo dài tới ngày 30 Tháng 4 và chỉ áp dụng cho đơn hàng trực tuyến. (Không áp dụng với các chương trình khuyến mãi khác).
+						(<span class="text-required">*</span>) Chương trình giảm giá đặc biệt kéo dài trong 30 ngày và áp dụng cho tất cả các đơn hàng.
 					</h4>
 				</div>
 			</div>

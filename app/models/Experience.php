@@ -12,4 +12,8 @@ class Experience extends \Eloquent {
 	public function capbac(){
 		return $this->beLongsTo('Level', 'level');
 	}
+	public function salary()
+	{
+		return number_format($this->salary, 0, ',', '.');
+	}
 }

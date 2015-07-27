@@ -100,8 +100,21 @@ class TrainingController extends Controller
 
 		 $couser=$couser1->trainingpeoples;
 		 
-		  
-		 
+		  $data = array();
+		 	$data['name']= '';
+		 	$data['worked']='';
+		 	$data['yourself']='';
+		 	$data['thumbnail']='';
+		 	$data['content']= '';
+		 	$data['title']= '';
+		 	$data['date_open']= '';
+		 	$data['shift']= '';
+		 	$data['time_hour']= '';
+		 	$data['date_study']= '';
+		 	$data['time_day']= '';
+		 	$data['fee']= '';
+		 	$data['discount']= '';
+		 	$data['id']= '';
 		 foreach ($couser as  $value) {
 
 		 	$data['name']= $value->trainingpeople->name;

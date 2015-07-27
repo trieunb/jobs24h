@@ -41,7 +41,7 @@
 							
 							<div class="col-xs-4">
 								<div class="form-group">
-									<?php $cats = Category::where('parent_id', 1)->lists('cat_name', 'id'); ?>
+									<?php $cats = Category::where('parent_id', '<>', 0)->lists('cat_name', 'id'); ?>
 									{{ Form::select('category', ['all'=>'Bất kỳ'] + $cats, $input['category'],['id'=>'category'] ) }}
 									
 								</div>

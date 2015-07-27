@@ -257,7 +257,7 @@
 
 										<div class="form-group">
 											<div class="col-sm-offset-1 col-sm-6">
-												{{ Form::text('video', null, array('class'=>'form-control')) }}
+												{{ Form::text('video', Company::where('ntd_id', Auth::id())->first()->video_link, array('class'=>'form-control')) }}
 											</div>
 										</div>
 										<div class="form-group">
