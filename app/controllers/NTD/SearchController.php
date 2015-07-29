@@ -267,13 +267,14 @@ class SearchController extends \Controller {
 		$ext = explode('.', $file);
 		$fname = $ext[0];
 		$ext = $ext[1];
-		$dir = Config::get('app.upload_path') . 'jobseekers/cv/' . $fname . '.pdf';
-		if(! File::isFile($dir))
+		$dir1 = Config::get('app.upload_path') . 'jobseekers/cv/' . $fname . '.pdf';
+		$dir = 'uploads/jobseekers/cv/' . $fname . '.pdf';
+		if(! File::isFile($dir1))
 		{
-			return View::make('employers.search.iframe', compact('file'));
+			return View::make('employers.search.iframe', compact('file', 'dir'));
             return '<a href="{{ URL::route(\'employers.search.print_cv\', $resume->id) }}" class="btn btn-lg bg-orange">Tải CV</a>';
         } else {
-        	return View::make('employers.search.iframe', compact('file'));
+        	return View::make('employers.search.iframe', compact('file', 'dir'));
         }
 		
 		

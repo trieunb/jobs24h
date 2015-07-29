@@ -84,7 +84,7 @@
 
 		 					 ?>
 		 					 @if($tr['thumbnail']==null)
-		 					 	@if($matches[1])
+		 					 	@if(@$matches[1])
 								<img src="{{ $matches[1] }}" style="width: 188px; height: 210px">
 		 					 	@endif
 		 					 
