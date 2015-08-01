@@ -17,7 +17,8 @@
 		"maatwebsite/excel": "1.*",
 		"phpoffice/phpword": "dev-master",
 		"dompdf/dompdf": "0.6.1",
-		"artdarek/oauth-4-laravel": "dev-master"
+		"artdarek/oauth-4-laravel": "dev-master",
+		"intervention/image": "2.3.1"
 	},
 	"repositories": [
 	    {

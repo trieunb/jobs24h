@@ -128,8 +128,9 @@ return array(
 		'DaveJamesMiller\Breadcrumbs\ServiceProvider',
 		'Mews\Captcha\CaptchaServiceProvider',
 		'Maatwebsite\Excel\ExcelServiceProvider',
-		'Artdarek\OAuth\OAuthServiceProvider'
+		'Artdarek\OAuth\OAuthServiceProvider',
 		//'Cartalyst\SentrySocial\SentrySocialServiceProvider',
+		'Intervention\Image\ImageServiceProvider',
 	),
 
 	/*
@@ -208,6 +209,7 @@ return array(
 		'Excel' => 'Maatwebsite\Excel\Facades\Excel',
 		'OAuth' => 'Artdarek\OAuth\Facade\OAuth',
 		//'SentrySocial' => 'Cartalyst\SentrySocial\Facades\Laravel\SentrySocial',
+		'Image' => 'Intervention\Image\Facades\Image'
 	),
 
 	/**

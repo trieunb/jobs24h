@@ -14,7 +14,11 @@ class HiringPost extends \Eloquent {
 	}
 	public function image($image = '', $options = array())
 	{
-		return HTML::image('uploads/hiring/' . $image, null, $options);
+		if(!stristr($image, 'http:'))
+		{
+			return HTML::image('uploads/hiring/' . $image, null, $options);
+		}
+		return HTML::image($image, null, $options);
 	}
 	public function image_url($image = '')
 	{

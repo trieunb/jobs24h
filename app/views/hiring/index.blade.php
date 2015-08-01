@@ -16,7 +16,7 @@
 					          
 					           <div class="carousel-caption ">
 					            <h4><a href="{{ URL::route('hiring.detail', [$post->post_slug,$post->id]) }}">{{ $post->title }}</a></h4>
-					            <p>{{ Str::limit($post->content, 150) }}</p>
+					            <p>{{ Str::limit(strip_tags($post->content), 150) }}</p>
 					          </div>
 					        </div><!-- End Item -->
 					       	@endforeach
@@ -61,7 +61,7 @@
 					    		<div class="post-right">
 					    			<h3 class="post-title"><a href="{{ URL::route('hiring.detail', [$post->post_slug,$post->id]) }}">{{ $post->title }}</a></h3>
 					    			<p class="post-content">
-					    				{{ Str::limit($post->content, 100) }}
+					    				{{ Str::limit(strip_tags($post->content), 100) }}
 					    			</p>
 					    			<div class="post-meta">
 					    				<ul>
@@ -95,7 +95,7 @@
 										<a href="{{ URL::route('hiring.detail', [$post->post_slug,$post->id]) }}">{{ $post->title }}</a>
 									</h4>
 									<div class="sidebar-postcontent">
-										<span>{{ Str::limit($post->content, 50) }}</span>
+										<span>{{ Str::limit(strip_tags($post->content), 50) }}</span>
 									</div>
 								</div><!-- end sidebar-post -->
 								@endforeach
@@ -119,7 +119,7 @@
 							
 							<h3 class="e-slide-title"><a href="{{ URL::route('hiring.detail', [$post->post_slug,$post->id]) }}">{{ $post->title }}</a></h3>
 							<p>
-								{{ Str::limit($post->content) }}
+								{{ Str::limit(strip_tags($post->content)) }}
 							</p>
 							<div class="post-meta">
 			    				<ul>
@@ -147,7 +147,7 @@
 									@endif
 									<h4 class="e-post-title"><a href="{{ URL::route('hiring.detail', [$post->post_slug,$post->id]) }}" title="{{ $post->title }}">{{ Str::limit($post->title, 30) }}</a></h4>
 									<p>
-										{{ Str::limit($post->content, 50) }}
+										{{ Str::limit(strip_tags($post->content), 50) }}
 									</p>
 								</div>
 								@endif
@@ -177,7 +177,7 @@
 										<div class="col-xs-7 news-postinfo">
 											<h3 class="news-title"><a href="{{ URL::route('hiring.detail', [$post->post_slug,$post->id]) }}">{{ $post->title }}</a></h3>
 											<p>
-												{{ Str::limit($post->content) }}
+												{{ Str::limit(strip_tags($post->content)) }}
 											</p>
 											<div class="post-meta">
 							    				<ul>

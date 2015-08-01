@@ -38,7 +38,10 @@ Route::group(array('prefix'=>'admin'), function() {
 		Route::controller('training','TrainController');
 		Route::controller('cungunglaodong','CungunglaodongController');
 
-		 
+		Route::get('hiring/datatables', array('as'=>'admin.hiring.datatables', 'uses'=>'HiringController@datatables'));
+		Route::post('hiring/ajax', array('as'=>'admin.hiring.ajax', 'uses'=>'HiringController@ajax'));
+		Route::match(['POST', 'GET'], 'hiring/upload', array('as'=>'admin.hiring.upload', 'uses'=>'HiringController@upload'));
+		Route::resource('hiring', 'HiringController');
 		
 		Route::get('logout', array('as'=>'admin.logout', 'uses'=>'AuthController@logout'));
 

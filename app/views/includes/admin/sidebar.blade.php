@@ -40,108 +40,6 @@
 						<b class="arrow"></b>
 					</li>
 
-					<li class="">
-						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-desktop"></i>
-							<span class="menu-text">
-								Quản lý chung
-							</span>
-
-							<b class="arrow fa fa-angle-down"></b>
-						</a>
-
-						<b class="arrow"></b>
-
-						<ul class="submenu">
-							<li class="">
-								<a href="#" class="dropdown-toggle">
-									<i class="menu-icon fa fa-caret-right"></i>
-										Cài đặt 01
-									<b class="arrow fa fa-angle-down"></b>
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="#">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Cài đặt 02
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="#">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Cài đặt 03
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="#">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Cài đặt 04
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-							<li class="">
-								<a href="#" class="dropdown-toggle">
-									<i class="menu-icon fa fa-caret-right"></i>
-										Menu Cấp 3
-									<b class="arrow fa fa-angle-down"></b>
-								</a>
-
-								<b class="arrow"></b>
-
-								<ul class="submenu">
-									<li class="">
-										<a href="#">
-											<i class="menu-icon fa fa-leaf green"></i>
-											Item
-										</a>
-
-										<b class="arrow"></b>
-									</li>
-
-									<li class="">
-										<a href="#" class="dropdown-toggle">
-											<i class="menu-icon fa fa-pencil orange"></i>
-												Menu cấp 4
-											<b class="arrow fa fa-angle-down"></b>
-										</a>
-
-										<b class="arrow"></b>
-
-										<ul class="submenu">
-											<li class="">
-												<a href="#">
-													<i class="menu-icon fa fa-plus purple"></i>
-													Add Product
-												</a>
-
-												<b class="arrow"></b>
-											</li>
-
-											<li class="">
-												<a href="#">
-													<i class="menu-icon fa fa-eye pink"></i>
-													View Products
-												</a>
-
-												<b class="arrow"></b>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</li>
-
 					<li class="{{ HTML::active(['admin.users.*']) }}">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-list"></i>
@@ -289,7 +187,7 @@
 					</li> <!-- end ntd -->
 
 					<!--start training-->
-					<li class="{{ HTML::active(['admin/training/*','admin/training/*']) }}">
+					<li class="{{ HTML::active(['admin/training','admin/training/*']) }}">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-pencil-square-o"></i>
 							<span class="menu-text"> Đào tạo </span>
@@ -439,6 +337,36 @@
 							</li>
 							<li class="{{ HTML::active(['news.add*']) }}">
 								<a href="{{ URL::route('news.add') }}">
+									<i class="menu-icon fa fa-plus-square"></i>
+									Thêm mới
+								</a>
+								<b class="arrow"></b>
+							</li>
+						</ul>
+					</li>
+					<!--end- traning-->
+
+					<!--start training-->
+					<li class="{{ HTML::active(['admin.hiring.*']) }}">
+						<a href="#" class="dropdown-toggle">
+							<i class="menu-icon fa fa-newspaper-o"></i>
+							<span class="menu-text"> Cẩm nang việc làm </span>
+
+							<b class="arrow fa fa-angle-down"></b>
+						</a>
+
+						<b class="arrow"></b>
+
+						<ul class="submenu">
+							<li class="{{ HTML::active(['admin.hiring.index']) }}">
+								<a href="{{ URL::route('admin.hiring.index') }}">
+									<i class="menu-icon fa fa-bars"></i>
+									Quản lý
+								</a>
+								<b class="arrow"></b>
+							</li>
+							<li class="{{ HTML::active(['admin.hiring.create']) }}">
+								<a href="{{ URL::route('admin.hiring.create') }}">
 									<i class="menu-icon fa fa-plus-square"></i>
 									Thêm mới
 								</a>
