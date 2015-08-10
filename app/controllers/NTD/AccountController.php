@@ -12,12 +12,12 @@ class AccountController extends \Controller {
 	{
 		return Redirect::route('employers.account.company');
 	}
-	public function getCompany()
+	public function getThongTinCongTy()
 	{
 		$com = Company::where('ntd_id', Auth::id())->first();
 		return View::make('employers.account.company', compact('com'));
 	}
-	public function postCompany()
+	public function postThongTinCongTy()
 	{
 		$params = Input::all();
 		$validator = new \App\DTT\Forms\EmployerUpdateCompany;
@@ -51,18 +51,18 @@ class AccountController extends \Controller {
 			return Redirect::route('employers.account.companyreview');
 		}
 	}
-	public function getCompanyReview()
+	public function getXemThongTinCongTy()
 	{
 		$company = NTD::find(Auth::id() )->company;
 		$jobs = Job::where('ntd_id', Auth::id())->orderBy('id', 'desc')->paginate(3);
 		return View::make('employers.account.company_review', compact('company', 'jobs'));
 	}
-	public function getChangePass()
+	public function getDoiMatKhau()
 	{
 		$user = Auth::getUser();
 		return View::make('employers.account.change_pass', compact('user'));
 	}
-	public function postChangePass()
+	public function postDoiMatKhau()
 	{
 		$validator = new \App\DTT\Forms\EmployerChangePass;
 		if($validator->fails())
@@ -82,12 +82,12 @@ class AccountController extends \Controller {
 			}
 		}
 	}
-	public function getChangeEmail()
+	public function getDoiEmail()
 	{
 		$user = Auth::getUser();
 		return View::make('employers.account.change_email', compact('user'));
 	}
-	public function postChangeEmail()
+	public function postDoiEmail()
 	{
 		$rules = [
 			'email'	=>	'required|confirmed|email|unique:employers,email,'.Auth::id(),
@@ -115,16 +115,16 @@ class AccountController extends \Controller {
 			}
 		}
 	}
-	public function getTaskLogs()
+	public function getQuanLyTacVu()
 	{
 		$task = \TaskLog::where('ntd_id', Auth::id())->orderBy('id', 'desc')->paginate(20);
 		return View::make('employers.account.task_logs', compact('task'));
 	}
-	public function getUserInformation()
+	public function getThongTinTaiKhoan()
 	{
 		return View::make('employers.account.user_information');
 	}
-	public function postUserInformation()
+	public function postThongTinTaiKhoan()
 	{
 
 		$user = Auth::getUser();
@@ -132,18 +132,18 @@ class AccountController extends \Controller {
 		return Redirect::back()->withErrors('Có lỗi khi cập nhật.');
 
 	}
-	public function getJobseekerRespond()
+	public function getThuPhanHoiUngVien()
 	{
 		$letters = \RespondLetter::where('ntd_id', Auth::id())->orderBy('id', 'desc')->paginate(10);
 		return View::make('employers.account.respond', compact('letters'));
 	}
-	public function getEditLetter($id)
+	public function getChinhSuaThu($id)
 	{
 		$letter = RespondLetter::where('ntd_id', Auth::id())->where('id', $id)->first();
 		if( ! $letter) return Response::make('Không tìm thấy thư', 404);
 		return View::make('employers.account.respond_edit', compact('letter'));
 	}
-	public function postEditLetter($id)
+	public function postChinhSuaThu($id)
 	{
 		$letter = RespondLetter::where('ntd_id', Auth::id())->where('id', $id)->first();
 		if( ! $letter) return Response::make('Không tìm thấy thư', 404);
@@ -157,18 +157,18 @@ class AccountController extends \Controller {
 			else return Redirect::back()->withInput()->withErrors('Có lỗi khi lưu.');
 		}
 	}
-	public function getCopyLetter($id)
+	public function getSaoChepThu($id)
 	{
 		$letter = RespondLetter::where('ntd_id', Auth::id())->where('id', $id)->first();
 		if( ! $letter) return Redirect::back()->withErrors('Không tìm thấy thư');
 		$this->createLetter(['subject'=>$letter->subject, 'content'=>$letter->content, 'type'=>$letter->type]);
 		return Redirect::back()->withSuccess('Sao chép thư thành công.');
 	}
-	public function getCreateLetter()
+	public function getTaoThuMoi()
 	{
 		return View::make('employers.account.respond_create');
 	}
-	public function postCreateLetter()
+	public function postTaoThuMoi()
 	{
 		$validator = new \App\DTT\Forms\EmployerAddLetter;
 		if($validator->fails())
@@ -181,7 +181,7 @@ class AccountController extends \Controller {
 			else return Redirect::back()->withInput()->withErrors('Có lỗi khi thêm mới thư.');
 		}
 	}
-	public function postDeleteLetter()
+	public function postXoaThu()
 	{
 		$letters = Input::get('cbletter');
 		if(count($letters))
@@ -212,18 +212,18 @@ class AccountController extends \Controller {
 		$letter = RespondAuto::create($params);
 		return $letter;
 	}
-	public function getAutoReply()
+	public function getThuTraLoiTuDong()
 	{
 		$letters = RespondAuto::where('ntd_id', Auth::id())->orderBy('id', 'desc')->paginate(10);
 		return View::make('employers.account.respond_auto', compact('letters'));
 	}
-	public function getEditLetterAuto($id)
+	public function getChinhSuaThuTuDong($id)
 	{
 		$letter = RespondAuto::where('ntd_id', Auth::id())->where('id', $id)->first();
 		if( ! $letter) return Response::make('Không tìm thấy thư', 404);
 		return View::make('employers.account.respond_edit_auto', compact('letter'));
 	}
-	public function postEditLetterAuto($id)
+	public function postChinhSuaThuTuDong($id)
 	{
 		$letter = RespondAuto::where('ntd_id', Auth::id())->where('id', $id)->first();
 		if( ! $letter) return Response::make('Không tìm thấy thư', 404);
@@ -237,14 +237,14 @@ class AccountController extends \Controller {
 			else return Redirect::back()->withInput()->withErrors('Có lỗi khi lưu.');
 		}
 	}
-	public function getCopyLetterAuto($id)
+	public function getSaoChepThuTuDong($id)
 	{
 		$letter = RespondAuto::where('ntd_id', Auth::id())->where('id', $id)->first();
 		if( ! $letter) return Redirect::back()->withErrors('Không tìm thấy thư');
 		$this->createLetterAuto(['subject'=>$letter->subject, 'content'=>$letter->content, 'type'=>$letter->type]);
 		return Redirect::back()->withSuccess('Sao chép thư thành công.');
 	}
-	public function getCreateLetterAuto()
+	public function getTaoThuTuDong()
 	{
 		return View::make('employers.account.respond_create_auto');
 	}
@@ -261,7 +261,7 @@ class AccountController extends \Controller {
 			else return Redirect::back()->withInput()->withErrors('Có lỗi khi thêm mới thư.');
 		}
 	}
-	public function postDeleteLetterAuto()
+	public function postXoaThuTuDong()
 	{
 		$letters = Input::get('cbletter');
 		if(count($letters))

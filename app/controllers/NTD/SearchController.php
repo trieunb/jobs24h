@@ -3,7 +3,7 @@ namespace NTD;
 use Config, File, View, Redirect, NTD, Auth, Job, Validator, Hash, Input, DB, Resume, RSFolder, EFolder, Response, Category, Mail,Application;
 use VResponse, RespondLetter;
 class SearchController extends \Controller {
-	public function getBasic()
+	public function getCoBan()
 	{
 		if(Input::get('category'))
 		{
@@ -50,7 +50,7 @@ class SearchController extends \Controller {
 			return View::make('employers.search.basic');
 		}
 	}
-	public function getAdvance()
+	public function getNangCao()
 	{
 		if(Input::get('category'))
 		{
@@ -129,7 +129,7 @@ class SearchController extends \Controller {
 	{
 		return "$id chưa có layout";
 	}
-	public function getCategory($id = false)
+	public function getTheoNganhNghe($id = false)
 	{
 		if(is_numeric($id))
 		{
@@ -227,7 +227,7 @@ class SearchController extends \Controller {
 		$location = \Province::lists('province_name', 'id');
 		return View::make('employers.search.table_result', compact('result', 'category', 'level', 'location'));
 	}
-	public function getResumeInfo($id)
+	public function getXemHoSo($id)
 	{
 		$resume = Resume::where('id', $id)->with('cvcategory')->with('location')->first();
 		if(!$resume)
@@ -279,7 +279,7 @@ class SearchController extends \Controller {
 		
 		
 	}
-	public function getPrintCv($cvId = false)
+	public function getInHoSo($cvId = false)
 	{
 		if($cvId)
 		{

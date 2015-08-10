@@ -9,7 +9,7 @@ class ReportController extends \Controller {
 		$jobs = Job::where('ntd_id', Auth::id())->where('is_display', 1)->where('hannop', '>=', date('Y-m-d'))->count();
 		View::share('active_job', $jobs);
 	}
-	public function getCandidate($type = false)
+	public function getBaoCaoDichVuHoSo($type = false)
 	{
 		if($type == 1) {
 			$btitle = 'Danh sách gói hồ sơ đang sử dụng';
@@ -24,7 +24,7 @@ class ReportController extends \Controller {
 		
 		return View::make('employers.report.candidate', compact('orders', 'btitle'));
 	}
-	public function getViewCandidate($id = false)
+	public function getXemDichVu($id = false)
 	{
 		$detail = OrderDetail::select(DB::raw('YEAR(viewed_date) year, MONTH(viewed_date) month, DAY(viewed_date) day, COUNT(*) post_count'))
 		->whereHas('order', function($q) {
@@ -43,11 +43,11 @@ class ReportController extends \Controller {
 		if(!$detail) return 'Không có dữ liệu';
 		return View::make('employers.report.view', compact('detail', 'order'));
 	}
-	public function getAlert()
+	public function getThongBao()
 	{
 		return View::make('employers.report.alert');
 	}
-	public function getRespond()
+	public function getPhanHoiCuaUngVien()
 	{
 		$responds = VResponse::where('ntd_id', Auth::id())->with('ntv')->orderBy('id', 'desc')->paginate(10);
 		return View::make('employers.candidates.respond', compact('responds'));
@@ -56,7 +56,7 @@ class ReportController extends \Controller {
 	{
 		return View::make('employers.candidates.test');
 	}
-	public function getExport($id = false)
+	public function getXuatDuLieu($id = false)
 	{
 		$detail = OrderDetail::select(DB::raw('YEAR(viewed_date) year, MONTH(viewed_date) month, DAY(viewed_date) day, COUNT(*) post_count'))
 		->whereHas('order', function($q) {
@@ -88,7 +88,7 @@ class ReportController extends \Controller {
 		    });
 		})->download('xlsx');
 	}
-	public function postSendRespond()
+	public function postGuiPhanHoi()
 	{
 		if(Input::get('subject') && Input::get('content') && Input::get('ntv_id'))
 		{

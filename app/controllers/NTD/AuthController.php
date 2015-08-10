@@ -3,11 +3,11 @@ namespace NTD;
 use View, Input, Redirect, Hash, Company, Auth, NTD;
 class AuthController extends \BaseController {
 
-	public function getLogin()
+	public function getDangNhap()
 	{
 		return View::make('employers.login');
 	}
-	public function postLogin()
+	public function postDangNhap()
 	{
 		$candicates = array(
 			'email'		=>	Input::get('email'),
@@ -20,11 +20,11 @@ class AuthController extends \BaseController {
 			return Redirect::back()->withInput()->withErrors('Thông tin đăng nhập không chính xác !');
 		}
 	}
-	public function getRegister()
+	public function getDangKy()
 	{
 		return View::make('employers.register');
 	}
-	public function postRegister()
+	public function postDangKy()
 	{
 		$validator = new \App\DTT\Forms\EmployerRegister;
 		if($validator->fails())

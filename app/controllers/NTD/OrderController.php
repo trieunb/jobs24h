@@ -11,7 +11,7 @@ class OrderController extends \Controller {
 		$newest = Order::where('ntd_id', Auth::id())->first();
 		View::share('newest', $newest);
 	}
-	public function getShow($type = false)
+	public function getDanhSachDonHang($type = false)
 	{
 		if($type == 1)
 		{
@@ -23,11 +23,11 @@ class OrderController extends \Controller {
 		}
 		return View::make('employers.orders.index', compact('orders'));
 	}
-	public function getAdd()
+	public function getMuaDichVu()
 	{
 		return View::make('employers.orders.add');
 	}
-	public function getContact($service_id, $package_id)
+	public function getLienHeMua($service_id, $package_id)
 	{
 		$config = Config::get('custom_service.services');
 		$services = array();

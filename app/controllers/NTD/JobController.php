@@ -35,7 +35,7 @@ class JobController extends \Controller {
 		->paginate(5);
 		return View::make('employers.jobs.index', compact('jobs', 'title'));
 	}
-	public function getActive()
+	public function getDangHienThi()
 	{
 		$title = 'Việc làm đang hiển thị';
 		$jobs = Job::where('ntd_id', Auth::id())
@@ -51,7 +51,7 @@ class JobController extends \Controller {
 		->paginate(5);
 		return View::make('employers.jobs.index', compact('jobs', 'title'));
 	}
-	public function getInActive()
+	public function getDanhSachCho()
 	{
 		$title = 'Việc làm chờ đăng';
 		$jobs = Job::where('ntd_id', Auth::id())
@@ -67,7 +67,7 @@ class JobController extends \Controller {
 		->paginate(5);
 		return View::make('employers.jobs.index', compact('jobs', 'title'));
 	}
-	public function getIsApply()
+	public function getNgungNhanHs()
 	{
 		$title = 'Ngưng nhận hồ sơ';
 		$jobs = Job::where('ntd_id', Auth::id())
@@ -83,7 +83,7 @@ class JobController extends \Controller {
 		->paginate(5);
 		return View::make('employers.jobs.index', compact('jobs', 'title'));
 	}
-	public function getExpired()
+	public function getHetHan()
 	{
 		$title = 'Việc làm hết hạn';
 		$jobs = Job::where('ntd_id', Auth::id())
@@ -192,7 +192,7 @@ class JobController extends \Controller {
 	{
 		return Redirect::route('employers.jobs.index');
 	}
-	public function getExpiring()
+	public function getSapHetHan()
 	{
 		$title = 'Việc làm sắp hết hạn';
 		$jobs = Job::where('ntd_id', Auth::id())
@@ -210,11 +210,11 @@ class JobController extends \Controller {
 		return View::make('employers.jobs.index', compact('jobs', 'title'));
 	}
 
-	public function getAdd()
+	public function getDangTuyenDung()
 	{
 		return View::make('employers.jobs.add');
 	}
-	public function postAdd()
+	public function postDangTuyenDung()
 	{
 		$validator = new EmployerAddJob;
 		if($validator->fails())
@@ -319,7 +319,7 @@ class JobController extends \Controller {
 
 		}
 	}
-	public function getEdit($id)
+	public function getSuaTinDang($id)
 	{
 		$job = Job::where('id', $id)->where('ntd_id', Auth::id())->first();
 		if( ! $job)
@@ -329,7 +329,7 @@ class JobController extends \Controller {
 		$job->keyword_tags = json_decode($job->keyword_tags, true);
 		return View::make('employers.jobs.edit', compact('job'));
 	}
-	public function postEdit($id)
+	public function postSuaTinDang($id)
 	{
 		$validator = new EmployerAddJob;
 		if($validator->fails())
@@ -383,7 +383,7 @@ class JobController extends \Controller {
 		}
 		return Redirect::back()->with('success', 'Xóa việc làm thành công.');
 	}
-	public function getSearch()
+	public function getTimKiem()
 	{
 		if(Input::get('keyword') || Input::get('noilamviec') || Input::get('ngaydang1') || Input::get('ngaydang2')
 			 || Input::get('ngayhethan1') || Input::get('ngayhethan1'))

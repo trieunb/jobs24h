@@ -13,14 +13,13 @@
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav detail-hd">
               <li>
-                <a href="{{ URL::route('cungunglaodong.home') }}">Cung ứng lao động</a>
-              </li>
-               
-              <li>
                 <a href="{{ URL::route('jobseekers.home') }}">Người tìm việc</a>
               </li>
               <li>
                 <a href="{{ URL::route('employers.home') }}">Nhà tuyển dụng</a>
+              </li>
+              <li>
+                <a href="{{ URL::route('cungunglaodong.home') }}">Cung ứng lao động</a>
               </li>
               <li class="active1">
                 <a href="{{ URL::route('trainings.home') }}">Đào tạo</a>

@@ -9,7 +9,12 @@ class AdminController extends \BaseController {
 	 */
 	public function index()
 	{
-		return View::make('admin.dashboard');
+		$ntdLogin = NTD::whereRaw("DATE_FORMAT(last_login, '%Y-%m-%d') = '".date('Y-m-d')."'")->count();
+		$ntvLogin = NTV::whereRaw("DATE_FORMAT(last_login, '%Y-%m-%d') = '".date('Y-m-d')."'")->count();
+		$jobApproval = Job::where('status', 2)->count();
+		$cvApproval = Resume::where('trangthai', 2)->count();
+
+		return View::make('admin.dashboard', compact('ntdLogin', 'ntvLogin', 'jobApproval', 'cvApproval'));
 	}
 
 

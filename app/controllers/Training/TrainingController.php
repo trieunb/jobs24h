@@ -49,7 +49,7 @@ class TrainingController extends Controller
 		$doc1->view=$doc1->view+1;
 		$doc1->save();
 		$doc_diff=TrainingDocument::where('id','<>',$id)
-								->take(5)
+								->take(2)
 								->select('id','title','view','download','author','thumbnail','created_at')
 								->get(); 
 		

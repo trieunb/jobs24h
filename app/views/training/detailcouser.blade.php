@@ -6,6 +6,9 @@
 
 @stop
 @section('content')
+<style type="text/css">
+  .hover-pointer:hover {cursor: pointer;}
+</style>
 <div class="fixed-menu display-none">
   <nav class="navbar navbar-fixed-top" role="navigation">
     
@@ -92,7 +95,7 @@
              ?>
             <p align="left">{{$couser['title']}}
               <br>
-              {{str_limit($content, $limit = 1000, $end = '<a data-toggle="modal" data-target="#myModal">
+              {{str_limit($content, $limit = 1000, $end = '<a class="hover-pointer" data-toggle="modal" data-target="#myModal">
             Đọc tiếp
           </a> ')}}
             </p>

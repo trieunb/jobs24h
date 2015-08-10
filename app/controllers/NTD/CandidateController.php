@@ -15,7 +15,7 @@ class CandidateController extends \Controller {
 	{
 		return Redirect::route('employers.candidates.job', 'all');
 	}
-	public function getJob($id = false)
+	public function getCongViec($id = false)
 	{
 		$apply = Application::orderBy('id', 'desc')
 		->where('left_status', 0)
@@ -32,7 +32,7 @@ class CandidateController extends \Controller {
 		$apply = $apply->paginate(10);
 		return View::make('employers.candidates.job', compact('apply'))->with('job_id', $id);
 	}
-	public function getFolder($id = false)
+	public function getThuMuc($id = false)
 	{
 		if($id)
 		{
@@ -151,12 +151,12 @@ class CandidateController extends \Controller {
 			return Redirect::back()->with('success', 'Xóa thành công');
 		}
 	}
-	public function getFolderManager()
+	public function getQuanLyThuMuc()
 	{
 		$fds = EFolder::orderBy('created_at', 'desc')->where('ntd_id', Auth::id())->with('application')->paginate(10);
 		return View::make('employers.candidates.folder_list', compact('fds'));
 	}
-	public function postFolderCreate()
+	public function postTaoThuMuc()
 	{
 		if(Input::get('folderName'))
 		{
@@ -167,7 +167,7 @@ class CandidateController extends \Controller {
 		}
 		return Redirect::back()->with('success', 'Tạo folder thành công !');
 	}
-	public function postFolderUpdate()
+	public function postSuaThuMuc()
 	{
 		$folder = EFolder::where('ntd_id', Auth::id())
 				->where('id', Input::get('folder_id'))
@@ -176,7 +176,7 @@ class CandidateController extends \Controller {
 		$folder->save();
 		return Response::json(['success'=>true]);
 	}
-	public function getFolderDelete($id = false)
+	public function getXoaThuMuc($id = false)
 	{
 		if($id)
 		{
@@ -192,7 +192,7 @@ class CandidateController extends \Controller {
 		}
 		return Redirect::back()->with('success', 'Xóa folder thành công !');
 	}
-	public function getDeleted()
+	public function getHoSoDaXoa()
 	{
 		$apply = Application::orderBy('id', 'desc')
 		->where('nav_id', 3)
@@ -203,7 +203,7 @@ class CandidateController extends \Controller {
 		$jobs = $apply->paginate(10);
 		return View::make('employers.candidates.deleted', compact('jobs'));
 	}
-	public function getBlocked()
+	public function getDanhSachTuChoi()
 	{
 		$apply = Application::orderBy('id', 'desc')
 		->where('nav_id', 4)
@@ -223,7 +223,7 @@ class CandidateController extends \Controller {
 	{
 		
 	}
-	public function getViewed()
+	public function getDanhSachHoSoDaXem()
 	{
 		$detail = \OrderDetail::where('ntd_id', Auth::id())->orderBy('id', 'desc')->paginate(10);
 		return View::make('employers.candidates.viewed', compact('detail'));

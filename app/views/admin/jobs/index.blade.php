@@ -1,9 +1,9 @@
 @extends('layouts.admin')
-@section('title')Employers Manager @stop
+@section('title')Jobs Manager @stop
 @section('content')
 	@include('includes.notifications')
 	<div class="clearfix"></div>
-	<table class="table table-hover table-bordered table-striped" id="employers">
+	<table class="table table-hover table-bordered table-striped" id="jobs">
 		<thead>
 			<tr>
 				<th class="center">
@@ -13,11 +13,13 @@
 					</label>
 				</th>
 				<th>ID</th>
-				<th>Email</th>
-				<th>Họ tên</th>
-				<th>Ngày đăng ký</th>
+				<th>NTD</th>
+				<th>Mã tin</th>
+				<th>Vị trí</th>
+				<th>Hiển thị</th>
+				<th>Hạn nộp</th>
 				<th>Trạng thái</th>
-				<th>Tổng số tin đăng</th>
+				<th>Lượt xem</th>
 				<th>#</th>
 			</tr>
 		</thead>
@@ -35,21 +37,21 @@
 	{{ HTML::script('assets/js/jquery.dataTables.min.js') }}
 	{{ HTML::script('assets/js/jquery.dataTables.bootstrap.min.js') }}
 	<script type="text/javascript">
-		$('#employers').dataTable( {
+		$('#jobs').dataTable( {
 				"bProcessing": true,
 				"bServerSide": true,
-				"sAjaxSource": "{{ URL::route('employers.datatables') }}",
+				"sAjaxSource": "{{ URL::route('jobs.datatables', ["id"=>Input::get('id')]) }}",
 				bAutoWidth: false,
 					"aoColumns": [
 					  { "bSortable": false, "sClass": "center" },
-					  null, null,null, null, null, null,
+					  null, null,null, null, null, null,null,null,
 					  { "bSortable": false }
 					],
 					"aaSorting": [[ 1, "desc" ]],
 			});
 
 		var active_class = 'success';
-		$('#employers > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
+		$('#jobs > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
 					var th_checked = this.checked;//checkbox inside "TH" table header
 					
 					$(this).closest('table').find('tbody > tr').each(function(){
@@ -59,7 +61,7 @@
 					});
 				});
 
-		$('#employers').on('click', 'td input[type=checkbox]' , function(){
+		$('#jobs').on('click', 'td input[type=checkbox]' , function(){
 					var $row = $(this).closest('tr');
 					if(this.checked) $row.addClass(active_class);
 					else $row.removeClass(active_class);

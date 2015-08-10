@@ -43,6 +43,8 @@ header#header {
 }.title {
   text-align: center;
   margin-top: 18%;
+  background-color: rgba(82, 63, 63, 0.6);
+  padding: 30px;
 }.title h2 {
   text-transform: uppercase;
   font-size: 37px;
@@ -511,12 +513,12 @@ div#thongtinchung .text ul li {
   color: white !important;
 }.bt-tt {
   background-color: #EC5D60;
-  padding: 44px;
+  padding: 0;
 }h2.white {
   color: white !important;
 }.bt-tt p {
   text-align: left;
-  padding: 8px 10px 10px 53px;
+  padding: 8px 10px 10px 30px;
   color: white;
 }.ttgiamgia {
   text-align: left;
@@ -524,7 +526,7 @@ div#thongtinchung .text ul li {
   color: white;
   padding: 14px;
   /* margin-left: 52px; */
-  margin: 0px 54px 11px 53px;
+  margin: 0px 54px 11px 30px;
   width: 79%;
 }div#tongquan .tq1 p {
   text-align: justify;
@@ -793,7 +795,7 @@ button.btn.more3:hover
   height: 720px;
 }
 .tq3 {
-  height: 700px;
+  height: 500px;
   background-color: rgb(236, 93, 96);
 }
 .tq4 {
@@ -807,7 +809,7 @@ button.btn.more3:hover
   margin-left: -15px;
 }
 .tq3-r {
-  height: 700px;
+  height: 500px;
 }
 .tq4-r {
   height: 536px;

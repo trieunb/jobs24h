@@ -1,109 +1,113 @@
 <?php 
 Route::group(array('prefix'=>$locale), function() {
-	Route::group(array('prefix'=>'employers', 'namespace'=>'NTD'), function() {
+	Route::group(array('prefix'=>'nha-tuyen-dung', 'namespace'=>'NTD'), function() {
 		Route::get('/', array('as'=>'employers.launching', 'uses'=>'HomeController@launching'));
 		Route::group(array('before'=>'ntd.auth'), function() {
 			Route::get('/dashboard', array('as'=>'employers.home', 'uses'=>'HomeController@home'));
 			Route::controller('account', 'AccountController', array(
 
 			));
-			Route::controller('jobs', 'JobController', array(
+			Route::controller('viec-lam', 'JobController', array(
 				'getIndex'		=>	'employers.jobs.index',
-				'getAdd'		=>	'employers.job.add',
-				'getActive'	=>	'employers.jobs.active',
-				'getExpiring'	=>	'employers.jobs.expiring',
-				'getInActive'	=>	'employers.jobs.inactive',
-				'getIsApply'	=>	'employers.jobs.isapply',
-				'getExpired'	=>	'employers.jobs.expired',
+				'getDangTuyenDung'		=>	'employers.job.add',
+				'getDangHienThi'	=>	'employers.jobs.active',
+				'getSapHetHan'	=>	'employers.jobs.expiring',
+				'getDanhSachCho'	=>	'employers.jobs.inactive',
+				'getNgungNhanHs'	=>	'employers.jobs.isapply',
+				'getHetHan'	=>	'employers.jobs.expired',
 				'postAction'	=>	'employers.jobs.action',
-				'getEdit'		=>	'employers.jobs.edit',
-				'postEdit'		=>	'employers.jobs.update',
+				'getSuaTinDang'		=>	'employers.jobs.edit',
+				'postSuaTinDang'		=>	'employers.jobs.update',
 				'getDelete'		=>	'employers.jobs.delete',
-				'getSearch'		=>	'employers.jobs.search',
+				'getTimKiem'		=>	'employers.jobs.search',
 				'postAjax'		=>'employers.jobs.ajax',
 				'getExport'		=>'employers.jobs.export',
 			));
-			Route::controller('candidates', 'CandidateController', array(
+			Route::controller('quan-ly-ung-vien', 'CandidateController', array(
 				'getIndex'		=>	'employers.candidates.index',
-				'getJob'		=>	'employers.candidates.job',
-				'getFolder'		=>	'employers.candidates.folder',
-				'getFolderManager'=>	'employers.candidates.folderManager',
-				'postFolderCreate'=>	'employers.candidates.createFolder',
-				'postFolderUpdate'=>	'employers.candidates.updateFolder',
-				'getFolderDelete'=>	'employers.candidates.deleteFolder',
-				'getDeleted'	=>	'employers.candidates.deleted',
-				'getBlocked'	=>	'employers.candidates.blocked',
-				'getViewed'	=>	'employers.candidates.viewed',
+				'getCongViec'		=>	'employers.candidates.job',
+				'getThuMuc'		=>	'employers.candidates.folder',
+				'getQuanLyThuMuc'=>	'employers.candidates.folderManager',
+				'postTaoThuMuc'=>	'employers.candidates.createFolder',
+				'postSuaThuMuc'=>	'employers.candidates.updateFolder',
+				'getXoaThuMuc'=>	'employers.candidates.deleteFolder',
+				'getHoSoDaXoa'	=>	'employers.candidates.deleted',
+				'getDanhSachTuChoi'	=>	'employers.candidates.blocked',
+				'getDanhSachHoSoDaXem'	=>	'employers.candidates.viewed',
 
 				'getReport'		=>	'employers.candidates.report',
 				
 				'getTest'		=>	'employers.candidates.test',
 			));
 
-			Route::controller('account', 'AccountController', array(
+			Route::controller('tai-khoan', 'AccountController', array(
 				'getIndex'			=>	'employers.account.index',
-				'getCompany'		=>	'employers.account.company',
-				'getCompanyReview'	=>	'employers.account.companyreview',
-				'getChangePass'		=>	'employers.account.changepass',
-				'getChangeEmail'	=>	'employers.account.changeemail',
-				'getTaskLogs'		=>	'employers.account.tasklog',
-				'getJobseekerRespond'=>	'employers.account.respond',
-				'getAutoReply'		=>	'employers.account.auto',
+				'getThongTinCongTy'		=>	'employers.account.company',
+				'getXemThongTinCongTy'	=>	'employers.account.companyreview',
+				'getDoiMatKhau'		=>	'employers.account.changepass',
+				'getDoiEmail'	=>	'employers.account.changeemail',
+				'getQuanLyTacVu'		=>	'employers.account.tasklog',
+				'getThuPhanHoiUngVien'=>	'employers.account.respond',
+				'getThuTraLoiTuDong'		=>	'employers.account.auto',
 				'getLogout'			=>	'employers.account.logout',
 				'getUserManager'	=>	'employers.account.usermanager',
-				'getUserInformation'=>	'employers.account.userinformation',
-				'getEditLetter'		=>	'employers.account.edit_letter',
-				'getCopyLetter'		=>	'employers.account.copy_letter',
-				'getCreateLetter'	=>	'employers.account.create_letter',
-				'postDeleteLetter'	=>	'employers.account.delete_letter',
-				'getEditLetterAuto'	=>	'employers.account.edit_letter_auto',
-				'getCopyLetterAuto'	=>	'employers.account.copy_letter_auto',
-				'getCreateLetterAuto'=>	'employers.account.create_letter_auto',
-				'postDeleteLetterAuto'=>'employers.account.delete_letter_auto',
+				'getThongTinTaiKhoan'=>	'employers.account.userinformation',
+				'getChinhSuaThu'		=>	'employers.account.edit_letter',
+				'getSaoChepThu'		=>	'employers.account.copy_letter',
+				'getTaoThuMoi'	=>	'employers.account.create_letter',
+				'postXoaThu'	=>	'employers.account.delete_letter',
+				'getChinhSuaThuTuDong'	=>	'employers.account.edit_letter_auto',
+				'getSaoChepThuTuDong'	=>	'employers.account.copy_letter_auto',
+				'getTaoThuTuDong'=>	'employers.account.create_letter_auto',
+				'postXoaThuTuDong'=>'employers.account.delete_letter_auto',
 				
 			));
 
-			Route::controller('report', 'ReportController', array(
-				'getCandidate'			=>	'employers.report.candidates',
-				'getViewCandidate'		=>	'employers.report.viewcandidate',
-				'getAlert'				=>	'employers.report.alert',
-				'getRespond'			=>	'employers.report.respond',
+			Route::controller('bao-cao', 'ReportController', array(
+				'getBaoCaoDichVuHoSo'			=>	'employers.report.candidates',
+				'getXemDichVu'		=>	'employers.report.viewcandidate',
+				'getThongBao'				=>	'employers.report.alert',
+				'getPhanHoiCuaUngVien'			=>	'employers.report.respond',
 				'getTest'				=>	'employers.report.test',
-				'getExport'				=>	'employers.report.export',
-				'postSendRespond'		=>	'employers.report.sendrespond',
+				'getXuatDuLieu'				=>	'employers.report.export',
+				'postGuiPhanHoi'		=>	'employers.report.sendrespond',
 				
 			));
-			Route::controller('orders', 'OrderController', array(
-				'getShow'			=>	'employers.orders.index',
-				'getAdd'			=>	'employers.orders.add',
+			Route::controller('don-hang', 'OrderController', array(
+				'getDanhSachDonHang'			=>	'employers.orders.index',
+				'getMuaDichVu'			=>	'employers.orders.add',
 				'getDetail'			=>	'employers.orders.detail',
-				'getContact'			=>	'employers.orders.contact',
+				'getLienHeMua'			=>	'employers.orders.contact',
 				
 			));
-			Route::controller('search', 'SearchController', array(
-				'getAdvance'			=>	'employers.search.advance',
-				'getBasic'				=>	'employers.search.basic',
-				'getCategory'			=>	'employers.search.category',
+			Route::controller('tim-kiem', 'SearchController', array(
+				'getNangCao'			=>	'employers.search.advance',
+				'getCoBan'				=>	'employers.search.basic',
+				'getTheoNganhNghe'			=>	'employers.search.category',
 				'getCat'				=>	'employers.search.viewcat',
 				'postCalendar'			=>	'employers.search.calendar',
 				'postCalendarView'		=>	'employers.search.calendarview',
 				'getHistory'			=>	'employers.search.history',
 				'getHistoryInfo'		=>	'employers.search.historyinfo',
-				'getResumeInfo'			=>	'employers.search.resumeinfo',
+				'getXemHoSo'			=>	'employers.search.resumeinfo',
 				'postAjax'				=>	'employers.search.ajax',
 				'getResumeIframe'		=>	'employers.search.resume_viewer',
-				'getPrintCv'			=>	'employers.search.print_cv',
+				'getInHoSo'			=>	'employers.search.print_cv',
 				
 			));
 		});
 
 		Route::group(array('before'=>'ntd.guest'), function() {
+
 			Route::controller('/', 'AuthController', array(
-				'getLogin'		=>	'employers.login',
-				'getRegister'	=>	'employers.register'
+				'getDangNhap'		=>	'employers.login',
+				'getDangKy'	=>	'employers.register'
 			));
 		});
 	});
 });
-
+Event::listen('auth.login', function($user) {
+	$user->last_login = date('Y-m-d H:i:s');
+	$user->save();
+});
  
