@@ -1,84 +1,63 @@
-<footer id="footer">
-    
-  
-    <div class="top-footer">
-      <div class="container">
-      <div class="col-md-6"><i class="glyphicon glyphicon-circle-arrow-right"></i> Hỗ trợ ứng viên: (84.4) 3577-1608 
-      &nbsp;&nbsp;        <i class="glyphicon glyphicon-earphone"></i>   Hotline : 1900 585853  </div>
-      <div class="col-md-6">
-        <div class="col-md-6" style="text-align:right;">Kết nối với Vnjob.vn
-        </div>
-        <div class="col-md-6 icon">
-        <a href="#">{{HTML::image('training/assets/img/rss.png')}}</a>
-        <a href="https://www.facebook.com/vnjobs.vn" target="_blank">{{HTML::image('training/assets/img/facebook.png')}}</a>
-        <a href="#">{{HTML::image('training/assets/img/twitter.png')}}</a>
-        <a href="#">{{HTML::image('training/assets/img/dribble.png')}}</a>
-        <a href="#">{{HTML::image('training/assets/img/pinterest.png')}}</a>
-        <a href="#">{{HTML::image('training/assets/img/ico-linkkedin.png')}}</a>
-           <!-- https://www.facebook.com/vnjobs.vn
-https://plus.google.com/u/0/+VnjobsvnVieclamhot/posts
-http://vieclamhot.tumblr.com/
-https://www.youtube.com/channel/UCDIqPT9Nmet6zy67RtUJNiA -->
-        </div>
+<footer class="bg-dark">
+      <div class="bg-black">
+        <div class="support-social container">
+          <div class="col-sm-6">
+            <span class="support"><i class="fa fa-arrow-circle-o-right fa-2x"></i> Hỗ trợ ứng viên: (84.4) 3577-1608</span>
+            <span class="hotline"><i class="fa fa-phone"></i> Hotline 1900 5858 53</span>
+          </div>
+          <div class="col-sm-6 pull-right">
+            <div class="social">
+              <span>Kết nối với vnjobs.vn</span>
+              <a href="#" class="rss" target="_blank" title="Rss"></a>
+              <a href="https://www.facebook.com/vnjobs.vn" class="facebook" target="_blank" title="Facebook"></a>
+                          <a href="#" class="twitter" target="_blank" title="Twitter"></a>
+                          <a href="#" class="linkedin" target="_blank" title="Linkedin"></a>
+                          <a href="#" class="pinterest" target="_blank" title="Pinterest"></a>
+                          <a href="#" class="dribble" target="_blank" title="Dribble"></a>
+            </div>
+          </div>
         </div>
       </div>
-
-    </div>
-
-
-    <div class="bottom-footer">
-    <div class="container">
-      <ul>
-        <li>
-          <h2>Chức năng</h2>
-          <p><i class="fa fa-chevron-circle-right"></i> Tài khoản</p>
-          <p><i class="fa fa-chevron-circle-right"></i> Tạo/Đăng hồ sơ</p>
-          <p><i class="fa fa-chevron-circle-right"></i> Tạo thông báo việc làm</p>
-          <p><i class="fa fa-chevron-circle-right"></i> Việc làm phù hợp với bạn</p>
-          <p><i class="fa fa-chevron-circle-right"></i> Phản hồi từ nhà tuyển dụng</p>
-          <p><i class="fa fa-chevron-circle-right"></i> Talent Community</p>
-
-        </li>
-
-        <li>
-          <h2>Website đối tác</h2>
-           
-          <p><a href="#"><i class="fa fa-chevron-circle-right"></i> Vieclam.tuoitre.vn</a></p>
-          <p><a href="#"><i class="fa fa-chevron-circle-right"></i> Vieclam.tuoitre.vn</a></p>
-          <p><a href="#"><i class="fa fa-chevron-circle-right"></i> Vieclam.tuoitre.vn</a></p>
-          <p><a href="#"><i class="fa fa-chevron-circle-right"></i> Vieclam.tuoitre.vn</a></p>
-          <p><a href="#"><i class="fa fa-chevron-circle-right"></i> Vieclam.tuoitre.vn</a></p>
-          <p><a href="#"><i class="fa fa-chevron-circle-right"></i> Vieclam.tuoitre.vn</a></p>
-
-        </li>
-        <li>
-          <h2>ỨNG DỤNG DI ĐỘNG</h2>
-           <p>
-            <a href="">{{HTML::image('cungunglaodong/assets/images/app_ad.png')}}</a>
-          </p>
-          <p>
-            <a href="">{{HTML::image('cungunglaodong/assets/images/app_st.png')}}</a>
-          </p>
-          <p>
-            <a href="">{{HTML::image('cungunglaodong/assets/images/wd_st.png')}}</a>
-          </p>
-           
-
-        </li>
-        <li>
-          <h2>Liên hệ</h2>
-          <p><i class="fa fa-map-marker"></i>&nbsp; Địa chỉ : Tầng 10, tòa nhà HH3, Phường Mỹ Đình I, Quận Nam Từ Liêm, Thành phố Hà Nội</p>
-          <p><i class="glyphicon glyphicon-envelope"></i>&nbsp; Email : Info@vnjobs.vn</p>
-          <p><i class="glyphicon glyphicon-earphone"></i>&nbsp; Điện thoại : 04-3577-1608</p>
-          <p><i class="glyphicon glyphicon-earphone"></i>&nbsp; Hotline : 1900 5858 53</p>
-           
-
-        </li>
-
-      </ul>
+      <div class="clearfix"></div>
+      <div class="footer container">
+        <div class="col-sm-3">
+          <h3>Chức năng</h3>
+          <ul class="arrow-right-dark">
+            <li><a href="{{URL::route('jobseekers.edit-basic-info')}}">Tài Khoản</a></li>
+            <li><a href="{{URL::route('jobseekers.my-resume')}}">Tạo/Đăng Hồ Sơ</a></li>
+            <li><a href="{{URL::route('jobseekers.notification-jobs')}}">Tạo Thông Báo Việc Làm</a></li>
+            <li><a href="{{URL::route('jobseekers.my-job')}}">Việc Làm Phù Hợp Với Bạn</a></li>
+            <li><a href="{{URL::route('jobseekers.respond-from-employment')}}">Phản Hồi Từ Nhà Tuyển Dụng</a></li>
+            <li><a href="#">Talent Community</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-3">
+          <h3>Liên kết hữu ích</h3>
+          <ul class="arrow-right-dark">
+            <li><a href="http://vieclam.tuoitre.vn/" target="_blank">Vieclam.Tuoitre.Vn</a></li>
+            <li><a href="#" target="_blank">Affiliate Program</a></li>
+            <li><a href="#" target="_blank">Vieclam.Tuoitre.Vn</a></li>
+            <li><a href="#" target="_blank">Affiliate Program</a></li>
+            <li><a href="http://vieclam.tuoitre.vn/" target="_blank">Vieclam.Tuoitre.Vn</a></li>
+            <li><a href="#" target="_blank">Affiliate Program</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-3">
+          <h3>Ứng dụng di động</h3>
+          <ul>
+            <li><a href="#">{{ HTML::image('assets/images/app_ad.png') }}</a></li>
+            <li><a href="#">{{ HTML::image('assets/images/app_st.png') }}</a></li>
+            <li><a href="#">{{ HTML::image('assets/images/wd_st.png') }}</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-3">
+          <h3>Liên Hệ</h3>
+          <p><i class="fa fa-map-marker"></i>&nbsp; Địa chỉ: Tầng 10, Tòa nhà SUDICO, Mỹ Đình 1, Mễ Trì, Nam Từ Liên, Hà Nội</p>
+          <p><i class="fa fa-envelope"></i>&nbsp; Email: <a href="mailto:info@vnjobs.vn">info@vnjobs.vn</a></p>
+          <p><i class="fa fa-phone"></i>&nbsp; Điện thoại: 04-3577-1608</p>
+          <p><i class="fa fa-phone"></i>&nbsp; Hotline: 1900 5858 53</p>
+        </div>
       </div>
-      <div class="copy-right">Copyright 2015 Công ty TNHH Minh Phúc (MPTelecon)</div>
-    </div>
- 
-     
-  </footer>
+      <div class="clearfix"></div>
+      <p class="copy-right">Copyright 2015 Công ty TNHH Minh Phúc - MPTelecom</p>
+    </footer>

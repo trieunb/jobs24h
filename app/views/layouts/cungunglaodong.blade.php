@@ -10,6 +10,7 @@
 		 
 		{{ HTML::style('cungunglaodong/assets/css/bootstrap.min.css') }}
    		{{ HTML::style('cungunglaodong/assets/css/style.css') }}
+   		{{ HTML::style('cungunglaodong/assets/css/media.css') }}
     	{{ HTML::style('cungunglaodong/assets/css/font-awesome.min.css') }}
     	 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

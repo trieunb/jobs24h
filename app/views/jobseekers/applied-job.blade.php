@@ -21,7 +21,7 @@
 							<p class="clearfix">
 								{{Form::submit('Xóa', array('class'=>'btn-delete btn bg-orange btn-lg'))}}
 							</p>
-					<table class="table table-striped table-hover table-bordered">
+					<table class="table table-striped table-hover table-bordered rs-table">
 								<thead>
 									<tr>
 										<th>{{Form::checkbox('', null,null, array('id'=>'selectall'))}}</th>
@@ -44,7 +44,7 @@
 											<td>
 												<strong><em>{{ HTML::linkRoute('jobseekers.job', $mjl->jobs->vitri, array($mjl->jobs->slug, "$mjl->job_id"), array('class' => 'text-blue'))}}</em></strong>
 												<small><div class="legend text-orange">
-													@if(strtotime($mjl->jobs->hannop) < strtotime(date('Y-m-d', time())))
+													@if(strtotime($mjl->jobs->hannop) < strtotime(date('Y-m-d')))
 														Hết hạn
 													@endif
 												</div></small>

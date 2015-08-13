@@ -1,6 +1,6 @@
 <?php 
 Route::group(array('prefix'=>$locale), function() {
-	Route::group(array('prefix'=>'jobseekers'), function() {
+	Route::group(array('prefix'=>'nguoi-tim-viec'), function() {
 		// Widget VIệc làm phù hơp
 		if($GLOBALS['user'] != null){
 			$suggested_jobs = Subscribe::where('ntv_id', $GLOBALS['user']->id)->get();
@@ -86,70 +86,70 @@ Route::group(array('prefix'=>$locale), function() {
 
 
 		Route::get('/', array('as'=>'jobseekers.home', 'uses'=>'JobSeeker@home'));
-		Route::get('/login', array('as'=>'jobseekers.login', 'uses'=>'JobSeekerAuth@login') );
-		Route::post('/login', 'JobSeekerAuth@doLogin' );
+		Route::get('/dang-nhap', array('as'=>'jobseekers.login', 'uses'=>'JobSeekerAuth@login') );
+		Route::post('/dang-nhap', 'JobSeekerAuth@doLogin' );
 		Route::post('/login-ajax', 'JobSeekerAuth@loginAjax' );
-		Route::get('/logout', array('as'=>'jobseekers.logout', 'uses'=>'JobSeekerAuth@logout') );
-		Route::get('/register', array('as'=>'jobseekers.register', 'uses'=>'JobSeekerAuth@register') );
-		Route::post('/register', 'JobSeekerAuth@doRegister' );
-		Route::get('/account-active',array('as'=>'account-active', function() {
+		Route::get('/dang-xuat', array('as'=>'jobseekers.logout', 'uses'=>'JobSeekerAuth@logout') );
+		Route::get('/dang-ky', array('as'=>'jobseekers.register', 'uses'=>'JobSeekerAuth@register') );
+		Route::post('/dang-ky', 'JobSeekerAuth@doRegister' );
+		Route::get('/kich-hoat-tai-khoan',array('as'=>'account-active', function() {
 			return View::make('jobseekers.account-active');
 		}));
-		Route::get('/forgot-password',array('as'=>'forgot-password', function() {
+		Route::get('/quen-mat-khau',array('as'=>'forgot-password', function() {
 			return View::make('jobseekers.forgot-password');
 		}));
-		Route::get('/account-active/{email}/{code}',array('as'=>'jobseekers.account-active', 'uses'=>'JobSeekerAuth@checkActive'));
-		Route::post('/forgot-password','JobSeekerAuth@doResetPass');
-		Route::get('/forgot-password/reset-password/{email}/{code}',array('as'=>'jobseekers.reset-password', 'uses'=>'JobSeekerAuth@ChangePass'));
-		Route::post('/forgot-password/reset-password/{email}/{code}',array('as'=>'jobseekers.reset-password', 'uses'=>'JobSeekerAuth@doChangePass'));
+		Route::get('/kich-hoat-tai-khoan/{email}/{code}',array('as'=>'jobseekers.account-active', 'uses'=>'JobSeekerAuth@checkActive'));
+		Route::post('/quen-mat-khau','JobSeekerAuth@doResetPass');
+		Route::get('/quen-mat-khau/khoi-phuc-mat-khau/{email}/{code}',array('as'=>'jobseekers.reset-password', 'uses'=>'JobSeekerAuth@ChangePass'));
+		Route::post('/quen-mat-khau/khoi-phuc-mat-khau/{email}/{code}',array('as'=>'jobseekers.reset-password', 'uses'=>'JobSeekerAuth@doChangePass'));
 		Route::group(array('before'=>'sentry.ntv'), function() {
-			Route::get('/edit-cv', array('as'=>'jobseekers.edit-cv', 'uses'=>'JobSeeker@myResume') );
-			Route::post('/edit-cv/{action}/{id_cv}', array('as'=>'jobseekers.save-cv', 'uses'=>'JobSeeker@saveInfo'));
-			Route::get('/edit-cv/{id_cv}', array('as'=>'jobseekers.edit-cv', 'uses'=>'JobSeeker@editCvHome'));
-			Route::get('/my-resume', array('as'=>'jobseekers.my-resume', 'uses'=>'JobSeeker@myResume'));
-			Route::post('/my-resume', array('as'=>'jobseekers.create-my-resume', 'uses'=>'JobSeeker@createResume'));
-			Route::get('/my-resume-by-upload', array('as'=>'jobseekers.get-my-resume-by-upload', 'uses'=>'JobSeeker@myResumeByUpload'));
-			Route::post('/my-resume-by-upload', array('as'=>'jobseekers.post-my-resume-by-upload', 'uses'=>'JobSeeker@createResumeByUpload'));
-			Route::get('/edit-career-objectives', 'JobSeeker@returnLogin');
-			Route::get('/edit-basic-info', array('as'=>'jobseekers.edit-basic-info', 'uses'=>'JobSeeker@editBasicHome') );
-			Route::post('/edit-basic-info/{action}', array('as'=>'edit-basic-info', 'uses'=>'JobSeeker@editBasic'));
-			Route::get('/edit-career-objectives/{id}', array('as'=>'jobseekers.edit-career-objectives', 'uses'=>'JobSeeker@editCareerObjectivesHome') );
-			Route::post('/edit-career-objectives/{id}', array('as'=>'edit-career-objectives', 'uses'=>'JobSeeker@editCareerObjectives'));
-			Route::get('/my-job/{job_id}', array('as'=>'jobseekers.save-job','uses'=>'JobSeeker@saveJob'));
-			Route::get('/my-job', array('as'=>'jobseekers.my-job','uses'=>'JobSeeker@myJob'));
-			Route::post('/my-job', array('as'=>'jobseekers.post-del-my-job','uses'=>'JobSeeker@delMyJob'));
+			Route::get('/chinh-sua-ho-so', array('as'=>'jobseekers.edit-cv', 'uses'=>'JobSeeker@myResume') );
+			Route::post('/chinh-sua-ho-so/{action}/{id_cv}', array('as'=>'jobseekers.save-cv', 'uses'=>'JobSeeker@saveInfo'));
+			Route::get('/chinh-sua-ho-so/{id_cv}', array('as'=>'jobseekers.edit-cv', 'uses'=>'JobSeeker@editCvHome'));
+			Route::get('/ho-so-cua-toi', array('as'=>'jobseekers.my-resume', 'uses'=>'JobSeeker@myResume'));
+			Route::post('/ho-so-cua-toi', array('as'=>'jobseekers.create-my-resume', 'uses'=>'JobSeeker@createResume'));
+			Route::get('/ho-so-tai-len', array('as'=>'jobseekers.get-my-resume-by-upload', 'uses'=>'JobSeeker@myResumeByUpload'));
+			Route::post('/ho-so-tai-len', array('as'=>'jobseekers.post-my-resume-by-upload', 'uses'=>'JobSeeker@createResumeByUpload'));
+			Route::get('/muc-tieu-nghe-nghiep', 'JobSeeker@returnLogin');
+			Route::get('/thong-tin-co-ban', array('as'=>'jobseekers.edit-basic-info', 'uses'=>'JobSeeker@editBasicHome') );
+			Route::post('/thong-tin-co-ban/{action}', array('as'=>'edit-basic-info', 'uses'=>'JobSeeker@editBasic'));
+			Route::get('/muc-tieu-nghe-nghiep/{id}', array('as'=>'jobseekers.edit-career-objectives', 'uses'=>'JobSeeker@editCareerObjectivesHome') );
+			Route::post('/muc-tieu-nghe-nghiep/{id}', array('as'=>'edit-career-objectives', 'uses'=>'JobSeeker@editCareerObjectives'));
+			Route::get('/viec-lam-cua-toi/{job_id}', array('as'=>'jobseekers.save-job','uses'=>'JobSeeker@saveJob'));
+			Route::get('/viec-lam-cua-toi', array('as'=>'jobseekers.my-job','uses'=>'JobSeeker@myJob'));
+			Route::post('/viec-lam-cua-toi', array('as'=>'jobseekers.post-del-my-job','uses'=>'JobSeeker@delMyJob'));
 			Route::post('/save-note', array('as'=>'jobseekers.save-note','uses'=>'JobSeeker@saveNote'));
-			Route::get('/saved-job', array('as'=>'jobseekers.saved-job','uses'=>'JobSeeker@savedJob'));
-			Route::get('/applied-job', array('as'=>'jobseekers.applied-job','uses'=>'JobSeeker@appliedJob'));
-			Route::post('/applied-job', array('as'=>'jobseekers.del-applied-job','uses'=>'JobSeeker@delAppliedJob'));
-			Route::get('/respond-from-employment', array('as'=>'jobseekers.respond-from-employment','uses'=>'JobSeeker@repondFromEmployment'));
-			Route::post('/respond-from-employment', array('as'=>'jobseekers.del-respond-from-employment','uses'=>'JobSeeker@delRepondFromEmployment'));
-			Route::get('/my-resume-by-upload/{action}/{id_cv}', array('as'=>'jobseekers.action-cv','uses'=>'JobSeeker@actionCV'));
-			Route::get('/my-resume-by-upload/{id_cv}', array('as'=>'jobseekers.get-update-upload-cv','uses'=>'JobSeeker@indexUpdateUploadCV'));
-			Route::post('/my-resume-by-upload/{id_cv}', array('as'=>'jobseekers.post-update-upload-cv','uses'=>'JobSeeker@updateUploadCV'));
-			Route::get('/notification-jobs', array('as'=>'jobseekers.notification-jobs','uses'=>'JobSeeker@notificationJobs'));
-			Route::get('/employer-view-resume', array('as'=>'jobseekers.employer-view-resume','uses'=>'JobSeeker@employerViewResume'));
-			Route::get('/message', array('as'=>'jobseekers.messages','uses'=>'JobSeeker@messages'));
+			Route::get('/viec-lam-da-luu', array('as'=>'jobseekers.saved-job','uses'=>'JobSeeker@savedJob'));
+			Route::get('/viec-lam-da-nop', array('as'=>'jobseekers.applied-job','uses'=>'JobSeeker@appliedJob'));
+			Route::post('/viec-lam-da-nop', array('as'=>'jobseekers.del-applied-job','uses'=>'JobSeeker@delAppliedJob'));
+			Route::get('/phan-hoi-tu-nha-tuyen-dung', array('as'=>'jobseekers.respond-from-employment','uses'=>'JobSeeker@repondFromEmployment'));
+			Route::post('/phan-hoi-tu-nha-tuyen-dung', array('as'=>'jobseekers.del-respond-from-employment','uses'=>'JobSeeker@delRepondFromEmployment'));
+			Route::get('/ho-so-tai-len-cua-toi/{action}/{id_cv}', array('as'=>'jobseekers.action-cv','uses'=>'JobSeeker@actionCV'));
+			Route::get('/ho-so-tai-len-cua-toi/{id_cv}', array('as'=>'jobseekers.get-update-upload-cv','uses'=>'JobSeeker@indexUpdateUploadCV'));
+			Route::post('/ho-so-tai-len-cua-toi/{id_cv}', array('as'=>'jobseekers.post-update-upload-cv','uses'=>'JobSeeker@updateUploadCV'));
+			Route::get('/thong-bao-viec-lam', array('as'=>'jobseekers.notification-jobs','uses'=>'JobSeeker@notificationJobs'));
+			Route::get('/nha-tuyen-dung-xem-ho-so', array('as'=>'jobseekers.employer-view-resume','uses'=>'JobSeeker@employerViewResume'));
+			Route::get('/tin-nhan', array('as'=>'jobseekers.messages','uses'=>'JobSeeker@messages'));
 			Route::controller('notification-jobs', 'JobSeeker', array(
 				'postUpdate' => 'jobseekers.post-update-notification-jobs',
 				'postDelete' => 'jobseekers.post-del-notification-jobs',
 			));
 		});
-		Route::get('/view/{slug}/{id}', array( 'as' =>	'jobseekers.job', 'uses' =>	'JobController@getIndex'));
-		Route::post('/view/{slug}/{id}/{action}', array( 'as' =>'jobseekers.post-view-job', 'uses' =>'JobController@postIndex'));
+		Route::get('/viec-lam/{slug}/{id}', array( 'as' =>	'jobseekers.job', 'uses' =>	'JobController@getIndex'));
+		Route::post('/viec-lam/{slug}/{id}/{action}', array( 'as' =>'jobseekers.post-view-job', 'uses' =>'JobController@postIndex'));
 
-		Route::get('/resume/{id_cv}', array('as'=>'jobseekers.view-resume', 'uses'=>'JobSeeker@viewResume'));
-		Route::get('/category', array('as'=>'jobseekers.get-category', 'uses' =>'JobController@getCategory'));
+		Route::get('/ho-so/{id_cv}', array('as'=>'jobseekers.view-resume', 'uses'=>'JobSeeker@viewResume'));
+		Route::get('/nganh-nghe', array('as'=>'jobseekers.get-category', 'uses' =>'JobController@getCategory'));
 		Route::get('q', array('as'=>'jobseekers.search-job','uses'=>'JobController@searchJob'));
-		Route::get('/applying-job/{action}/{job_id}', array('as'=>'jobseekers.applying-job','uses'=>'JobSeeker@applyingJob'));
-		Route::post('/applying-job/{action}/{job_id}', array('as'=>'jobseekers.applying-job','uses'=>'JobSeeker@doApplyingJob'));
-		Route::get('/register-job-alert', array('as'=>'jobseekers.register-job-alert', 'uses'=>'JobSeeker@regiterJobAlert'));
-		Route::get('/categories', array('as'=>'jobseekers.get-list-category', 'uses'=>'JobSeeker@getListCategory'));
-		Route::get('/provinces', array('as'=>'jobseekers.get-list-province', 'uses'=>'JobSeeker@getListProvince'));
-		Route::post('/notification-jobs/', array('as'=>'jobseekers.post-notification-jobs','uses'=>'JobSeeker@creatNotificationJobs'));
+		Route::get('/ung-tuyen/{action}/{job_id}', array('as'=>'jobseekers.applying-job','uses'=>'JobSeeker@applyingJob'));
+		Route::post('/ung-tuyen/{action}/{job_id}', array('as'=>'jobseekers.applying-job','uses'=>'JobSeeker@doApplyingJob'));
+		Route::get('/dang-ky-thong-bao-viec-lam', array('as'=>'jobseekers.register-job-alert', 'uses'=>'JobSeeker@regiterJobAlert'));
+		Route::get('/danh-sach-nganh-nghe', array('as'=>'jobseekers.get-list-category', 'uses'=>'JobSeeker@getListCategory'));
+		Route::get('/danh-sach-dia-diem', array('as'=>'jobseekers.get-list-province', 'uses'=>'JobSeeker@getListProvince'));
+		Route::post('/thong-bao-viec-lam/', array('as'=>'jobseekers.post-notification-jobs','uses'=>'JobSeeker@creatNotificationJobs'));
 
-		Route::get('/news/{id}', array('as'=>'news.view', 'uses'=>'News@getIndex'));
-		Route::get('/company/{id}', array('as'=>'company.view', 'uses'=>'JobSeeker@getInfoCompany'));
+		Route::get('/tin-tuc/{id}', array('as'=>'news.view', 'uses'=>'News@getIndex'));
+		Route::get('/cong-ty/{id}', array('as'=>'company.view', 'uses'=>'JobSeeker@getInfoCompany'));
 		//Sign in FB
 		Route::get('/auth/facebook', array('as' => 'auth_fb','uses' => 'JobSeekerAuth@loginWithFacebook'));
 		Route::get('/auth/google', array('as' => 'auth_google','uses' => 'JobSeekerAuth@loginWithGoogle'));

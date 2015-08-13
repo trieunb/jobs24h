@@ -868,6 +868,13 @@ class JobSeeker extends Controller
 	        	return Redirect::back()->withInput()->withErrors($validator);
 			}else{
 				if($GLOBALS['user']  != null){
+					$my_jobs = MyJob::where('ntv_id',$GLOBALS['user']->id)->get();
+					if(count($my_jobs) == 0){
+						$date = date('Y-m-d', time());
+						$my_job = MyJob::firstOrCreate(array('ntv_id' => $GLOBALS['user']->id, 'job_id' => $job_id));
+						$my_job->save_date = $date;
+						$my_job->save();
+					}
 					$check = Application::where('job_id', $job_id)->where('ntv_id', $GLOBALS['user']->id)->count();
 				}else {$check = 0;}
 				if($check == 0){

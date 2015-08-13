@@ -5,11 +5,8 @@
       {{HTML::image('training/assets/img/logo.png')}}</a>
       </div>
       <div class="col-md-9 column menu">
-
-
-        <nav class="navbar navbar-default" role="navigation">
-           
-          
+        <span class="show-menu"><i class="fa fa-list"></i> MENU</span>
+        <nav class="navbar navbar-default navigation" role="navigation">
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav detail-hd">
               <li>
@@ -24,7 +21,6 @@
               <li class="active1">
                 <a href="{{ URL::route('trainings.home') }}">Đào tạo</a>
               </li>
-               
             </ul>
             </div>
           

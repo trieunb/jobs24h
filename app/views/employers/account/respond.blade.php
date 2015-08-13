@@ -19,7 +19,7 @@
 					<div class="clearfix"></div>
 					@include('includes.notifications')
 					{{ Form::open(['route'=>'employers.account.delete_letter']) }}
-					<table class="table table-bordered table-blue-bordered white">
+					<table class="table table-bordered table-blue-bordered white rs-table">
 						<thead>
 							<tr>
 								<th>

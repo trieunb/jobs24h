@@ -417,14 +417,14 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
 
 /* NAVIGATION */
 #navigation .container{padding: 0px;}
+.main-menu {margin-bottom: 0;}
 #navigation ul li{float: left;}
 #navigation ul li a {display: block; color: #fff; padding: 0 39px; text-transform: capitalize;  line-height: 45px;  border-right: 1px solid #38D0FF;}
 #navigation ul li:last-child a {border-right: none;}
 #navigation ul li:first-child a {padding-left: 0;}
 #navigation .simple-search {height: 30px; width: 250px; font-size: 11px; padding: 5px 40px 5px 5px;}
 #navigation .btn-search {position: absolute; right: 18px; top: 4px; padding: 0; height: 20px; border: none;}
-
-
+.show-menu{display: block;padding: 10px;font-size: 17px;font-weight: bold; display: none;background-color: #00b9f2;}
 
 /* BOX SEARCH */
 .boxed-search {background: #fff;}
@@ -433,11 +433,7 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
 .bg-search {background-image: url(../images/bg_search.jpg); min-height: 380px;  background-repeat: no-repeat;background-position: center center;display: block;position: relative;/* float: left; */ margin: 0 !important;}
 .shadow {background-image: url(../images/shadow.png); min-height: 0px;  background-repeat: no-repeat;background-position: center center;}
 .search-form {background: url(../images/bg_search_form.png) no-repeat;  padding: 25px 15px; margin: 0px auto 20px;}
-<<<<<<< HEAD
 .bg-search .search-form { margin-top: 195px; margin-bottom: 0;}
-=======
-.bg-search .search-form { margin-top: 200px; margin-bottom: 0;}
->>>>>>> 7f97258b25207038d76220da5eda8a8f356caec2
 .search-form .select2-container, .select2-container .select2-selection--multiple, .search-form .form-control, .select2-container--default .select2-selection--single {width: 100% !important; border-color: #ffffff !important; border-radius: 0 !important; min-height: 32px !important;font-size: 12px !important; text-overflow: ellipsis;}
 .search-form .select2-container .select2-selection--multiple {max-height: 32px}
 .search-form .select2-container .select2-search--inline .select2-search__field {margin-top: 5px;}
@@ -575,7 +571,7 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
 
 
 /* SIDEBAR */
-#sidebar {padding: 0; width: 300px;}
+#sidebar {padding: 0; width: 300px; margin-bottom: 20px;}
 .widget {padding: 10px; /* border-bottom: 1px solid #eaeaea; */border: 1px #ddd solid;    box-shadow: 0px 1px 1px #ddd;    background: #fff;border-bottom: none; clear: both;}
 .widget h3 {  border-left: 2px solid orange; margin: 0 -10px 15px;display: block;padding: 10px 10px 10px;}
 .widget ul[class^="arrow-"] li {padding: 10px 0px 10px 15px;}
@@ -642,7 +638,7 @@ img.avatar {width: 35px; height: 35px; border-radius: 50%; vertical-align: middl
 
 .card-item { margin-bottom: 15px;  /* border: 1px #ddd solid; */  /* box-shadow: 0px 1px 1px #d5d5d5; */padding: 0;cursor: pointer;}
 .card-button {width: 15px; font-size: 9px;height: 55px;line-height: 55px;display: block;text-align: center;}
-.box-sm {padding: 10px 0px;}
+.box-sm {padding: 10px 0px; display: inline-block;}
 .box-sm h4 {margin: 0; line-height: 31px;}
 .box-label {float: right;margin-right: 5px;width: 35px;height: 43px;color: #fff;line-height: 35px;
   padding-left: 9px;top: -9px;}

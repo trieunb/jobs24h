@@ -13,7 +13,7 @@
 				<div class="box bg-white">
 									{{ Form::open(array('method'=>'POST', 'route'=>'employers.jobs.action')) }}
 										@include('includes.notifications')
-										<table class="table table-striped table-bordered">
+										<table class="table table-striped table-bordered rs-table">
 											<thead>
 												<tr class="center">
 													<th>

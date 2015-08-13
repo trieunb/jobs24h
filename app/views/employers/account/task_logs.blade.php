@@ -16,7 +16,7 @@
 						<label>Các thao tác của <span class="text-orange">{{ Auth::getUser()->full_name }}</span>
 					</label>
 					</div>
-					<table class="table table-bordered table-blue-bordered white">
+					<table class="table table-bordered table-blue-bordered white rs-table">
 						<thead>
 							<tr>
 								<th>Ngày</th>

@@ -1,7 +1,7 @@
 @extends('layouts.launchinglayout')
 @section('title') Đăng nhập @stop
 @section('content')
-	<div class="col-xs-12 main-content login-form">
+	<div class="col-sm-12 main-content login-form">
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<div class="heading-title">
@@ -9,7 +9,7 @@
 									</div>
 								</div>
 								<div class="panel-body">
-								   <div class="col-xs-7 col-xs-offset-5 form-input">
+								   <div class="col-sm-7 col-sm-offset-5 form-input">
 								   		{{ Form::open(array('method'=>'POST', 'route'=>'employers.login')) }}
 								   			
 								   			<h3 class="form-legend">Tìm kiếm và tuyển dụng nhân tài 

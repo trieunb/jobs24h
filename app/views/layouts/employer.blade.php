@@ -3,10 +3,12 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>@yield('title', isset($title) ?: 'Nhà tuyển dụng' ) - VnJobs</title>
 		{{ HTML::style('assets/ntd/css/bootstrap343.min.css') }}
 		{{ HTML::style('assets/font-awesome/4.3.0/css/font-awesome.min.css') }}
 		{{ HTML::style('assets/ntd/css/style.css') }}
+		{{ HTML::style('assets/ntd/css/media.css') }}
 		@yield('style')
 	</head>
 	<body>
@@ -15,14 +17,14 @@
 				<div class="page">
 					<header>
 						<div class="container">
-							<div class="col-xs-4">
+							<div class="col-sm-4">
 								<a href="{{ URL::route('employers.jobs.index') }}">
 									{{ HTML::image('assets/ntd/images/logo.png') }}
 								</a>
 							</div>
-							<div class="col-xs-8">
+							<div class="col-sm-8">
 								<div class="row">
-									<div class="col-xs-12">
+									<div class="col-sm-12">
 										<ul class="pull-right nav-menu">
 											<li><a href="{{ URL::route('employers.orders.add') }}">SẢN PHẨM & DỊCH VỤ</a></li>
 											<li><a href="{{ URL::route('employers.orders.add') }}">LIÊN HỆ NGAY</a></li>
@@ -32,7 +34,7 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-xs-12">
+									<div class="col-sm-12">
 										<ul class="pull-right language">
 											<li><a href="#" onclick="alert('Developing ...'); return false;">Tiếng Việt</a></li>
 											<li><a href="#" onclick="alert('Developing ...'); return false;">English</a></li>
@@ -54,7 +56,7 @@
 				<div id="above">
 					<div class="footer-page">
 						<div class="container">
-							<div class="col-xs-12">
+							<div class="col-sm-12">
 								<ul class="pull-right bottom-navigation">
 									<li><a href="#">Giới Thiệu</a></li>
 									<li><a href="#">Bảo Mật Thông Tin</a></li>
@@ -65,7 +67,7 @@
 								</ul>
 							</div>
 							<div class="clearfix"></div>
-							<div class="col-xs-12">
+							<div class="col-sm-12">
 								<div class="text-center">
 									<span>Kết nối với vnjobs.vn:</span>
 								</div>
@@ -99,6 +101,6 @@ https://www.youtube.com/channel/UCDIqPT9Nmet6zy67RtUJNiA -->
 	</body>
 	{{ HTML::script('assets/js/jquery.1.11.1.min.js') }}
 	{{ HTML::script('assets/ntd/js/bootstrap.min.js') }}
-	
+	{{ HTML::script('assets/ntd/js/main.js') }}
 	@yield('script')
 </html>

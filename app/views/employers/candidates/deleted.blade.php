@@ -14,7 +14,7 @@
 					<div class="heading-image">
 						<h2 class="text-orange">Hồ sơ đã xóa</h2>
 					</div>
-										<table class="table table-striped table-bordered">
+										<table class="table table-striped table-bordered rs-table">
 											<thead>
 												<tr class="center">
 													<th>

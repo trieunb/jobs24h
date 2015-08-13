@@ -15,7 +15,7 @@
 						<div class="pull-right">&nbsp;
 							{{ $result->links() }}
 						</div>
-						<table class="table table-blue-bordered table-bordered table-result">
+						<table class="table table-blue-bordered table-bordered table-result rs-table">
 							<thead>
 								<tr>
 									<th class="col-sm-4">Ứng viên</th>

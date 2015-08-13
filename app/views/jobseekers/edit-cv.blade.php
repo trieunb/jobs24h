@@ -773,7 +773,7 @@
 	                    	<i class="fa fa-user fa-stack-1x text-white"></i>
 	                    </span>
 	                </div>
-	                <div class="col-sm-7 col-xs-9 box-sm">
+	                <div class="col-sm-7 box-sm">
 						<h4>Hồ Sơ/Mục Tiêu Nghề Nghiệp</h4>
 	                </div>
 	                <div class="col-sm-2 box-label warning"><strong>10%</strong></div>
@@ -790,7 +790,7 @@
 	                    	<i class="fa fa-bank fa-stack-1x text-white"></i>
 	                    </span>
 	                </div>
-	                <div class="col-sm-7 col-xs-9 box-sm">
+	                <div class="col-sm-7 box-sm">
 						<h4>Kinh Nghiệm Làm Việc</h4>
 	                </div>
 	                <div class="col-sm-2 box-label primary"><strong>10%</strong></div>
@@ -807,7 +807,7 @@
 	                    	<i class="fa fa-graduation-cap fa-stack-1x text-white"></i>
 	                    </span>
 	                </div>
-	                <div class="col-sm-7 col-xs-9 box-sm">
+	                <div class="col-sm-7 box-sm">
 						<h4>Học Vấn Và Bằng Cấp</h4>
 	                </div>
 	                <div class="col-sm-2 box-label success"><strong>10%</strong></div>
@@ -824,7 +824,7 @@
 	                    	<i class="fa fa-info fa-stack-1x text-white"></i>
 	                    </span>
 	                </div>
-	                <div class="col-sm-7 col-xs-9 box-sm">
+	                <div class="col-sm-7 box-sm">
 						<h4>Kỹ Năng</h4>
 	                </div>
 	                <div class="col-sm-2 box-label danger"><strong>10%</strong></div>

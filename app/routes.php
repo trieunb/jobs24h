@@ -13,7 +13,7 @@
 
 Route::get('/', function() use($locale)
 {
-	return Redirect::to('/'.$locale.'/jobseekers');
+	return Redirect::to('/'.$locale.'/nguoi-tim-viec');
 });
 Route::get('/' .$locale, function() use($locale)
 {
@@ -23,7 +23,7 @@ Route::get('/' .$locale, function() use($locale)
 		$refererUrl = preg_replace("/\/(en|vi)\//", "/$locale/", $refererUrl);
 		return Redirect::to($refererUrl);
 	} else {
-		return Redirect::to('/'.$locale.'/jobseekers');
+		return Redirect::to('/'.$locale.'/nguoi-tim-viec');
 	}
 	die();
 });

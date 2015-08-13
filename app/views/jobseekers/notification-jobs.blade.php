@@ -14,7 +14,7 @@
 				<p class="clearfix">
 					<button type="button" class="btn bg-orange btn-lg create-job-alert">Tạo mới</button>
 				</p>
-					<table class="table table-striped table-hover table-bordered">
+					<table class="table table-striped table-hover table-bordered rs-table">
 								<thead>
 									<tr>
 										<th class="col-sm-5">Từ khóa</th>

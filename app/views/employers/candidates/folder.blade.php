@@ -26,7 +26,7 @@
 					<form action="" name="form11" method="POST" role="form">
 					<div class="clearfix"></div>
 					@include('includes.notifications')
-					<table class="table table-bordered table-blue-bordered white">
+					<table class="table table-bordered table-blue-bordered white rs-table">
 						<thead>
 							<tr>
 								<th>

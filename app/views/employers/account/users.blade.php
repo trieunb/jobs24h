@@ -13,7 +13,7 @@
 						<h2 class="text-blue">{{ HTML::image('assets/ntd/images/icon-header-user.png') }} Quản lý người dùng</h2>
 					</div>
 					
-					<table class="table table-bordered table-blue-bordered white">
+					<table class="table table-bordered table-blue-bordered white rs-table">
 						<thead>
 							<tr>
 								<th>Ngày</th>

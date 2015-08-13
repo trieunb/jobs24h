@@ -10,9 +10,9 @@
 			</a>
 			</div>
 			<div class="col-md-9 column menu">
+				<span class="show-menu"><i class="fa fa-list"></i> MENU</span>
 
-
-				<nav class="navbar navbar-default" role="navigation">
+				<nav class="navbar navbar-default navigation" role="navigation">
 					 
 					
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

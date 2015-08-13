@@ -22,7 +22,7 @@
 						<div class="col-xs-6"></div>
 					</div>
 					{{ Form::open(['route'=>'employers.account.delete_letter_auto']) }}
-					<table class="table table-bordered table-blue-bordered white">
+					<table class="table table-bordered table-blue-bordered white rs-table">
 						<thead>
 							<tr>
 								<th>

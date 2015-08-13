@@ -18,6 +18,7 @@
 		{{ HTML::style('assets/css/bootstrap.min.css') }}
 		{{ HTML::style('assets/font-awesome/4.2.0/css/font-awesome.min.css') }}
 		{{ HTML::style('assets/css/jobseeker-style.css') }}
+		{{ HTML::style('assets/css/media.css') }}
 		{{ HTML::style('assets/plugins/jcarousel/css/jcarousel.responsive.css') }}
 		{{ HTML::style('assets/css/bootstrap-datetimepicker.min.css') }}
 		{{ HTML::style('//fonts.googleapis.com/css?family=Calligraffitti') }}
@@ -73,6 +74,7 @@
 				</div>
 			</div>
 			<nav id="navigation" class="bg-blue">
+				<span class="show-menu"><i class="fa fa-list"></i> MENU</span>
 				<ul class="main-menu container">
 					<li><a href="{{ URL::route('jobseekers.home') }}">Trang chủ</a></li>
 					<li><a href="{{ URL::route('jobseekers.home') }}">Người tìm việc</a></li>
@@ -130,7 +132,7 @@
 					</ul>
 				</div>
 				<div class="col-sm-3">
-					<h3>Website đối tác</h3>
+					<h3>Liên kết hữu ích</h3>
 					<ul class="arrow-right-dark">
 						<li><a href="http://vieclam.tuoitre.vn/" target="_blank">Vieclam.Tuoitre.Vn</a></li>
 						<li><a href="#" target="_blank">Affiliate Program</a></li>

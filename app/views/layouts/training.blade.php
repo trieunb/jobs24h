@@ -14,6 +14,7 @@
 	
     {{ HTML::style('training/assets/css/bootstrap.min.css') }}
     {{ HTML::style('training/assets/css/style.css') }}
+    {{ HTML::style('training/assets/css/media.css') }}
     {{ HTML::style('training/assets/css/font-awesome.css') }}
     {{ HTML::style('training/assets/css/animate.css') }}
 
@@ -27,6 +28,7 @@
    {{ HTML::script('training/assets/js/jquery.min.js') }}
    {{ HTML::script('training/assets/js/bootstrap.min.js') }}
    {{ HTML::script('training/assets/js/scripts.js') }}
+   {{ HTML::script('training/assets/js/main.js') }}
    {{ HTML::script('training/assets/js/wow.min.js') }}
    @yield('script')
   

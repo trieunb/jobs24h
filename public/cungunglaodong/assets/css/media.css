@@ -1,0 +1,62 @@
+@media only screen and (min-width: 0) and (max-width: 1200px) {
+    #content {width: 640px;}
+    .partners ul li {width: 24.4%;}
+}
+
+/* ==========================================================================
+ *                  All devices
+   ========================================================================== */
+@media only screen and (min-width: 0) and (max-width: 1000px) {
+   #content,#sidebar {width: auto; float: none !important;}
+   .about-us .col-sm-8 {margin: 30px 0 0;}
+   .about-us .col-sm-8 ul li {width: 100%;}
+   .partners {height: auto; padding: 20px 0;}
+   .partners ul li {margin: 0 5px 10px 0;width: 47%;text-align: center;display: inline-block;}
+   .partners img {width: 140px;height: auto;}
+   .carousel-control.left img {left: 5px}
+   .carousel-control.right img {right: 5px}
+   .customer-review .carousel-inner>.item {padding: 0 20px;}
+   #carousel-custom .carousel-caption h2 {font-size: 12px;}
+   .support-social .support, .support-social .hotline{margin: 0; display: block;}
+   .support-social .support i, .support-social .hotline i {font-size: 12px;}
+   .support-social, .social, .header-right .list-link, .header-right .menu {text-align: center;}
+   .support-social .col-sm-6, .login-form .pull-right {float: none !important;}
+   .menu.container {padding: 0; margin: 0;}
+   .social a {margin: 0;}
+   .show-menu {display: block; float: left; width: 100%; margin: 10px 0 0;}
+    .logo {width: 100%; float: left; text-align: center;}
+    #navigation .main-menu li {width: 100%; border-bottom: 1px solid #CCCCCC;}
+    .main-menu {float: left; background: #D9D9D9; display: none; width: 100%;}
+    #navigation ul li a{padding: 10px; font-size: 12px; color: #333;}
+    .header-page h2{font-size: 25px;}
+    .header-post {width: 100%; font-size: 11px;}
+    .support .carousel-caption h3 {font-size: 14px;}
+}
+
+/*------------------------------------------------------------------------------*/
+/*                    Width : 768 = ipad portrait
+/*------------------------------------------------------------------------------*/
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1023px) {
+    .mom_visibility_tablet {
+        display: block;
+    }
+
+}
+
+
+/*------------------------------------------------------------------------------*/
+/* Width : 480,Width : 568 = iphone 5 landscape,Width : 667 = iphone 6 landscape
+/*------------------------------------------------------------------------------*/
+@media only screen and (min-width: 0) and (max-width: 670px) {
+   
+} 
+/* end 480px devices */
+/*------------------------------------------------------------------------------*/
+/*                    width : 320 = portrait mobiles
+/*------------------------------------------------------------------------------*/
+
+@media only screen and (min-width: 0) and (max-width: 460px) {
+    
+}

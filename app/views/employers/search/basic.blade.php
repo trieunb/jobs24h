@@ -14,11 +14,11 @@
 					@if(!isset($input)) <?php $input = ['category'=>'all', 'level'=>'all', 'location'=>'all', 'keyword'=>'']  ?> @endif
 					<form action="{{ URL::route('employers.search.basic') }}" method="GET" class="form" role="form" id="search-fo">
 						<div class="form-group">
-							<label for="inputS" class="col-xs-12 control-label">Từ khóa:</label>
+							<label for="inputS" class="col-sm-12 control-label">Từ khóa:</label>
 							<div class="col-sm-7">
 								{{ Form::text('keyword', $input['keyword'], ['id'=>'keyword']) }}
 							</div>
-							<div class="col-xs-5">
+							<div class="col-sm-5">
 								<div class="checkbox">
 									<label>
 										<input type="checkbox" name="full_keyword" value="1">
@@ -27,44 +27,36 @@
 								</div>
 							</div>
 						</div>
-						<div class="form-group">
-							<div class="col-xs-4">
-								<label for="input" class="control-label">Ngành nghề:</label>
-							</div>
-							<div class="col-xs-3">
-								<label for="input" class="control-label">Cấp bậc:</label>
-							</div>
-							<div class="col-xs-3">
-								<label for="input" class="control-label">Địa điểm:</label>
-							</div>
-							<div class="col-xs-2"></div>
 							
-							<div class="col-xs-4">
-								<div class="form-group">
+							<div class="col-sm-4 form-group">
+								<label for="input" class="control-label">Ngành nghề:</label>
+								<div class="">
 									<?php $cats = Category::where('parent_id', '<>', 0)->lists('cat_name', 'id'); ?>
 									{{ Form::select('category', ['all'=>'Bất kỳ'] + $cats, $input['category'],['id'=>'category'] ) }}
-									
 								</div>
 							</div>
-							<div class="col-xs-3">
-								<div class="form-group">
+							<div class="col-sm-3 form-group">
+								<label for="input" class="control-label">Cấp bậc:</label>
+								<div class="">
 									<?php $levs = Level::lists('name', 'id'); ?>
 									{{ Form::select('level', ['all'=>'Bất kỳ'] + $levs, $input['level'],['id'=>'level'] ) }}
 								</div>
 							</div>
-							<div class="col-xs-3">
-								<div class="form-group">
+							<div class="col-sm-3 form-group">
+								<label for="input" class="control-label">Địa điểm:</label>
+								<div class="">
 									<?php $locas = Province::lists('province_name', 'id'); ?>
 									{{ Form::select('location', ['all'=>'Bất kỳ'] + $locas, $input['location'],['id'=>'location'] ) }}
 								</div>
 							</div>
-							<div class="col-xs-2">
-								<button type="submit" name="submit" class="btn btn btn-lg bg-orange btn-search">Tìm Kiếm</button>
-								
+							<div class="col-sm-2 form-group">
+								<label for="input" class="control-label">&nbsp;</label>
+								<div class="">
+									<button type="submit" name="submit" class="btn btn btn-lg bg-orange btn-search">Tìm Kiếm</button>
+								</div>	
 							</div>
-						</div>
 					</form>
-					<div class="col-xs-7 col-xs-offset-5 advance-search">
+					<div class="col-sm-7 col-sm-offset-5 advance-search">
 							<a href="#">Tạo thông báo hồ sơ</a>
 							<a href="{{ URL::route('employers.search.advance') }}">Mở rộng tiêu chí tìm kiếm</a>
 						</div>

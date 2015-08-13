@@ -16,7 +16,7 @@
 						$group3 = [8,9,10,11,14];
 						
 						?>
-						<div class="col-xs-4">
+						<div class="col-sm-4">
 							<?php $stt = 0; ?>
 							@foreach(@$allCategory as $k=>$cat)
 								<?php if(!in_array($stt, $group1)) { $stt += 1; continue; } ?>
@@ -31,7 +31,7 @@
 								<?php $stt += 1; ?>
 							@endforeach
 						</div>	
-						<div class="col-xs-4">
+						<div class="col-sm-4">
 							<?php $stt = 0; ?>
 							@foreach(@$allCategory as $k=>$cat)
 								<?php if(!in_array($stt, $group2)) { $stt += 1; continue; } ?>
@@ -46,7 +46,7 @@
 								<?php $stt += 1; ?>
 							@endforeach
 						</div>	
-						<div class="col-xs-4">
+						<div class="col-sm-4">
 							<?php $stt = 0; ?>
 							@foreach(@$allCategory as $k=>$cat)
 								<?php if(!in_array($stt, $group3)) { $stt += 1; continue; } ?>

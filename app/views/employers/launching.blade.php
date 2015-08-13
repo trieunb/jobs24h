@@ -1,7 +1,7 @@
 @extends('layouts.launchinglayout')
 @section('title') Trang chủ Nhà tuyển dụng - VnJobs @stop
 @section('content')
-<div class="col-xs-12 main-content">
+<div class="col-sm-12 main-content">
 							<div class="jumbotron">
 								<h2 class="text-center">Giúp <span class="heading-text">doanh nghiệp</span> của bạn vươn xa</h2>
 								<center>
@@ -18,7 +18,7 @@
 			<div class="sales">
 				<div class="full-page">
 					<div class="row">
-						<div class="col-xs-6 center">
+						<div class="col-sm-6 center">
 							<h3 class="sales-title">Đăng Tuyển</h3>
 							<div class="center divider clearfix"></div>
 							<h4 class="sales-info">TRANG WEB TUYỂN DỤNG HÀNG ĐẦU VIỆT NAM</h4>
@@ -31,7 +31,7 @@
 							<a href="{{ URL::route('employers.job.add') }}" class="btn btn-buynow btn-default">Mua ngay</a>
 						</div>
 
-						<div class="col-xs-6 center">
+						<div class="col-sm-6 center">
 							<h3 class="sales-title">Tìm hồ sơ</h3>
 							<div class="center divider-green clearfix"></div>
 							<h4 class="sales-info">Tìm ứng viên tốt nhất trong thời gian nhanh nhất</h4>
@@ -60,16 +60,16 @@
 			<div class="super-divider2"></div>
 			<div class="focus-boxes">
 				<div class="container">
-					<div class="col-xs-4">
+					<div class="col-sm-4">
 						{{ HTML::image('assets/ntd/images/developer.jpg', 'employers', array('class'=>'img-circle box-image') ) }}
 						<h4 class="box-title">Trang tuyển dụng<br>chuyên nghiệp</h4>
 					</div>
-					<div class="col-xs-4">
+					<div class="col-sm-4">
 						{{ HTML::image('assets/ntd/images/developer.jpg', 'employers', array('class'=>'img-circle box-image') ) }}
 						<div class="note-text">1.600</div>
 						<h4 class="box-title">lượt xem<br>mỗi đăng tuyển</h4>
 					</div>
-					<div class="col-xs-4">
+					<div class="col-sm-4">
 						{{ HTML::image('assets/ntd/images/developer.jpg', 'employers', array('class'=>'img-circle box-image') ) }}
 						<div class="note-text">2.500.000</div>
 						<h4 class="box-title">Ứng viên tiềm năng</h4>
@@ -79,7 +79,7 @@
 			<div class="customer-respond">
 				<div class="container">
 					<div class="row">
-						<div class="col-xs-12 center">
+						<div class="col-sm-12 center">
 							<h2 class="respond-title">
 								Khách hàng đánh giá
 							</h2>
@@ -89,21 +89,21 @@
 							<div class="clearfix"></div>
 							<div class="mini-divider"></div>
 							<div class="boxes">
-								<div class="col-xs-4">
+								<div class="col-sm-4">
 									{{ HTML::image('assets/ntd/images/box01.png' ) }}
 									<div class="box-info">
 										"Sự quan tâm tận tình<br>của VNjobs thật sự khác biệt"
 									</div>
 									<small class="pull-right">Gabriel Gavasso, ThoughtWorks</small>
 								</div>
-								<div class="col-xs-4">
+								<div class="col-sm-4">
 									{{ HTML::image('assets/ntd/images/box02.png' ) }}
 									<div class="box-info">
 										"Chúng tôi đã tuyển<br>được những chuyên gia giỏi nhất"
 									</div>
 									<small class="pull-right">Thu Hue, Transimex Sai Gon </small>
 								</div>
-								<div class="col-xs-4">
+								<div class="col-sm-4">
 									{{ HTML::image('assets/ntd/images/box03.png' ) }}
 									<div class="box-info">
 										"VNjobs tư vấn rất chu đáo,<br>nhiệt tình và đáng tin cậy"
@@ -119,7 +119,7 @@
 			<div class="more-info">
 				<div class="container">
 					<div class="row">
-						<div class="col-xs-12 center">
+						<div class="col-sm-12 center">
 							<h2 class="info-title">Chúng tôi cam kết</h2>
 							<div class="short-description">
 								Đảm bảo hài lòng, hoặc miễn phí đăng lại tin tuyển dụng
@@ -138,7 +138,7 @@
 			<div class="wrapper">
 				<div class="head-main">
 					<div class="page">
-						<div class="col-xs-12">
+						<div class="col-sm-12">
 
 						</div>
 

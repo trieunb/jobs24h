@@ -21,7 +21,7 @@
 					<p class="clearfix">
 						{{Form::submit('Xóa', array('class'=>'btn-delete btn bg-orange btn-lg'))}}
 					</p>
-					<table class="table table-striped table-hover table-bordered">
+					<table class="table table-striped table-hover table-bordered rs-table">
 								<thead>
 									<tr>
 										<th>{{Form::checkbox('', null,null, array('id'=>'selectall'))}}</th>

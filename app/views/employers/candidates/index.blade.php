@@ -19,7 +19,7 @@
 						<label>Chú ý: Hồ sơ sẽ bị xóa khỏi trang Quản Lý Tuyển Dụng sau 13 tháng
 					</label>
 					</div>
-					<table class="table table-bordered table-blue-bordered white">
+					<table class="table table-bordered table-blue-bordered white rs-table">
 						<thead>
 							<tr>
 								<th>Tên ứng viên</th>

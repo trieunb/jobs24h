@@ -1,0 +1,116 @@
+@media only screen and (min-width: 0) and (max-width: 1200px) {
+   #navigation ul li a {padding: 0 35px;}
+   #sidebar{width: 25%;}
+}
+
+/* ==========================================================================
+ *                  All devices
+   ========================================================================== */
+@media only screen and (min-width: 0) and (max-width: 1000px) {
+  .show-menu {display: block;}
+  .container {padding: 0;}
+  .box {padding: 10px !important};
+  .menu-tab {margin: 0 0 20px;}
+  .menu-tab .container {margin: 0 auto; padding: 0;}
+  .main-menu {display: none;}
+  .menu-tab ul, .menu-tab ul li ul {position: relative; margin: 0;}
+  .menu-tab ul>li:hover>ul, .menu-tab ul li ul {display: none; top: 0;}
+  .menu-tab ul>li.active>ul {display: block;}
+  .menu-tab ul li.active ul li a {background: #f7941d !important; padding: 5px 12px 5px 30px;}
+  .menu-tab ul li.active a, .menu-tab ul li a:hover, .menu-tab ul li.active ul li.selected a{background: #f8b461 !important; border-radius: 0px;}
+  .menu-tab ul li, .main-menu ul li {width: 100%; margin: 0; border-bottom: 1px solid #EBEBEB; padding:0 !important;}
+  .menu-tab ul li ul li {border-bottom: 1px solid #FFA538;}
+  .main-content .jumbotron h2.text-center {display: none;}
+    .main-content .jumbotron  .btn-vnjob {display: inline-block; margin: 0; padding: 5px 10px;}
+    .sales {height: auto; background: #E7EBF2;}
+    .sales .col-sm-6 {padding: 20px 0;}
+    .sales .col-sm-6:nth-child(2) {background: #fff;}
+    .sales .full-page {padding: 0;}
+    .super-divider2 {height: 4px;}
+    .more-info .full-description {padding: 10px;}
+    .newest-sale, .focus-boxes {padding: 10px; text-align: center;}
+    .login-form .panel .panel-body .form-input {padding: 0 !important;}
+    .login-form h3.form-legend {line-height: 27px !important; margin: 0 0 10px !important; text-align: left !important;}
+}
+
+/*------------------------------------------------------------------------------*/
+/*                    Width : 768 = ipad portrait
+/*------------------------------------------------------------------------------*/
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1023px) {
+    .mom_visibility_tablet {
+        display: block;
+    }    
+    .menu-tab {background: transparent;}
+    .menu-tab .container {background: #fff;}
+    #sidebar, #content, #content-alone, .panel-sm {float: none !important; width: auto !important;} 
+    footer .footer-page {text-align: center;}
+    footer #above ul.bottom-navigation li a {padding: 0 3px 0 0;font-size: 12px;}
+    .main-content .panel .panel-heading {background: #fff;}
+    .header-image{    background: #f3f3f3;width: 100%;float: right;height: auto;margin-bottom: 0px;text-align: center;line-height: 1;font-size: 22px;text-transform: uppercase;font-family: "Gotham-Thin";padding-left: 0px;padding: 10px;}
+    #modal-history .modal-dialog, #modal-history #modal-content {width: auto;}
+    #modal-history .float-left {float: none;}
+    ul.nav-menu li a {padding-right: 15px;}
+    header {padding: 10px 0;}
+    .main-content .jumbotron h2.text-center {display: block;}
+    .sales ul.package-list {min-height: 160px;}
+    .super-divider2 {height: 11px;}
+
+}
+/*------------------------------------------------------------------------------*/
+/* Width : 480,Width : 568 = iphone 5 landscape,Width : 667 = iphone 6 landscape
+/*------------------------------------------------------------------------------*/
+@media only screen and (min-width: 0) and (max-width: 670px) {
+    body {background: #DFDFDF;}
+    .rs-table th, .rs-table td {display: block !important;width: 100%;}
+    .rs-table td {border: none !important; padding: 0 8px !important; text-align: left !important;}
+    .rs-table tbody tr{border-top: 1px solid #EBE9E9 !important;}
+    .rs-table tbody tr:first-child {border: none !important;}
+    .rs-table td:first-child {padding-top: 8px !important;}
+    .rs-table td:last-child {padding-bottom: 8px !important;}
+    #sidebar, #content, #content-alone, .panel-sm {float: none !important; width: auto !important;} 
+    footer .footer-page {text-align: center;}
+    footer #above ul.bottom-navigation li a {padding: 0 3px 0 0;font-size: 12px;}
+    .main-content .panel .panel-heading {background: #fff;}
+    .header-image{    background: #f3f3f3;width: 100%;float: right;height: auto;margin-bottom: 0px;text-align: center;line-height: 1;font-size: 22px;text-transform: uppercase;font-family: "Gotham-Thin";padding-left: 0px;padding: 10px;} 
+    #modal-history .modal-dialog, #modal-history #modal-content {width: auto;}
+    #modal-history .float-left {float: none;}
+    header {padding: 10px 0; background: #047DEE; text-align: center;}
+    header ul.nav-menu li {display: inline-block;padding-right: 5px;margin-right: 5px;font-size: 11px;}
+    header ul.nav-menu li:last-child {display: block;}
+    header ul.nav-menu li a, ul.language, ul.language li:last-child a {padding: 0; text-align: center;}
+    ul.nav-menu, ul.language {float: none !important;}
+    .login-form .panel .panel-body, .forgot-password-form .panel .panel-body {background: #eff3f6 !important;}
+    .customer-respond .col-sm-4 {margin-bottom: 15px;}
+    .customer-respond .col-sm-4, .customer-respond small.pull-right {float: left; width: 100%; text-align: center;}
+} 
+/* end 480px devices */
+/*------------------------------------------------------------------------------*/
+/*                    width : 320 = portrait mobiles
+/*------------------------------------------------------------------------------*/
+
+@media only screen and (min-width: 0) and (max-width: 460px) {
+    body {background: #DFDFDF;}
+    .rs-table th, .rs-table td {display: block !important;width: 100%;}
+    .rs-table td {border: none !important; padding: 0 8px !important; text-align: left !important;}
+    .rs-table tbody tr{border-top: 1px solid #EBE9E9 !important;}
+    .rs-table tbody tr:first-child {border: none !important;}
+    .rs-table td:first-child {padding-top: 8px !important;}
+    .rs-table td:last-child {padding-bottom: 8px !important;}
+    #sidebar, #content, #content-alone, .panel-sm {float: none !important; width: auto !important;} 
+    footer .footer-page {text-align: center;}
+    footer #above ul.bottom-navigation li a {padding: 0 3px 0 0;font-size: 12px;}
+    .main-content .panel .panel-heading {background: #fff;}
+    .header-image{    background: #f3f3f3;width: 100%;float: right;height: auto;margin-bottom: 0px;text-align: center;line-height: 1;font-size: 22px;text-transform: uppercase;font-family: "Gotham-Thin";padding-left: 0px;padding: 10px;}
+    #modal-history .modal-dialog, #modal-history #modal-content {width: auto;}
+    #modal-history .float-left {float: none !important;}
+    header {padding: 10px 0; background: #047DEE; text-align: center;}
+    header ul.nav-menu li {display: inline-block;padding-right: 5px;margin-right: 5px;font-size: 11px;}
+    header ul.nav-menu li:last-child {display: block;}
+    header ul.nav-menu li a, ul.language, ul.language li:last-child a {padding: 0; text-align: center;}
+    ul.nav-menu, ul.language {float: none !important;}
+    .login-form .panel .panel-body, .forgot-password-form .panel .panel-body {background: #eff3f6 !important;}
+    .customer-respond .col-sm-4 {margin-bottom: 15px;}
+    .customer-respond .col-sm-4, .customer-respond small.pull-right {float: left; width: 100%; text-align: center;}
+}

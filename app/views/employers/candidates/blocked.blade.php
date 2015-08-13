@@ -17,7 +17,7 @@
 					<div class="filter">
 						<label>Quý khách có thể xóa ứng viên khỏi danh sách từ chôi</label>
 					</div>
-										<table class="table table-striped table-bordered">
+										<table class="table table-striped table-bordered rs-table">
 											<thead>
 												<tr class="center">
 													<th>

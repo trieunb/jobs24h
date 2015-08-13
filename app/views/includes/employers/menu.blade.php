@@ -1,6 +1,7 @@
 <nav class="menu-tab">
 	<div class="container">
-	<ul>
+	<span class="show-menu"><i class="fa fa-list"></i> MENU</span>
+	<ul class="main-menu">
 		<li><a href="{{ URL::route('employers.jobs.index') }}">Trang chủ</a>
 			<ul>
 				<li><a href="">&nbsp;</a></li>

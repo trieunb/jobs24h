@@ -1,5 +1,5 @@
 
-						<table class="table table-blue-bordered table-bordered">
+						<table class="table table-blue-bordered table-bordered rs-table">
 							<thead>
 								<tr>
 									<th>Tìm</th>

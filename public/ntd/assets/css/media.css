@@ -1,0 +1,131 @@
+@media only screen and (min-width: 0) and (max-width: 1200px) {
+   #navigation ul li a {padding: 0 35px;}
+   #sidebar{width: 25%;}
+}
+
+/* ==========================================================================
+ *                  All devices
+   ========================================================================== */
+@media only screen and (min-width: 0) and (max-width: 1000px) {
+    section {margin-bottom: 15px;}
+   #header {z-index: 1;}
+   .modal-dialog {margin: 15px auto;}
+   .site-title {margin: 15px auto;text-align: center;display: block;float: none;}
+   .title-page {margin: -20px -9px 25px;}
+   .header-box {margin: -20px -10px 15px;}
+   .header-right .list-link span {display: inline-block;margin: 0 7px;}
+   .push-bottom-md, .push-bottom {margin-bottom: 13px;}
+   #content, #sidebar{padding: 0; float: none !important; width: auto; clear: both;}
+   .boxed {padding: 10px;}
+   .widget,ul.main-menu.container,.main-content {margin: 0;}
+   .filter {margin-bottom: 0; border: none;}
+   .search-form {background: #39CEFC;}
+   .header-page {margin-bottom: 10px;}
+   #header{position: relative;}
+   #navigation ul li {width: 100%; text-align: center; border-bottom: 1px solid #20C6F9;}
+   #navigation ul li a {padding: 0; line-height: 30px;}
+   #navigation ul li:last-child, .fb_plus, .google_plus,.search-by-categories .panel-left,.breadcrumb,#top-link-block {display: none;}
+   .boxed-content-wrapper {padding: 0}
+   .bg-search {min-height: auto; float: none;display: block;}
+   .featured-items .header-page a {    border-bottom: 1px solid orange;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    display: inline-block;}
+   
+   .bg-search .search-form {margin-top: 0;}
+   .padding.bg-silver-dark, .padding.bg-silver-light {padding: 10px;}
+   .categories-list li {width:100%;}
+   .sort-by-categories li a {padding: 5px 15px;}
+  
+   .news li, .bottom .col-sm-4 {border: none !important; padding: 0;}
+   #searchresult {text-align: left;}
+   #searchresult [class^="col-"] {float: none !important;}
+   #searchresult .job-info {margin:0;}
+   #specific-salary-0 {position: relative; margin: 0 !important;}
+   #searchresult li {padding: 10px 0;}
+   #searchresult li img, .view-company .top img {max-width: 120px;}
+   .meta-jobs .pull-right{float: left !important;}
+   .details .table td {width: 50%;display: inline-block;border: none;border-top: 1px solid #ddd;}
+  .show-menu {display: block;}
+  .main-menu {display: none;}
+}
+
+/*------------------------------------------------------------------------------*/
+/*                    Width : 768 = ipad portrait
+/*------------------------------------------------------------------------------*/
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1023px) {
+    .mom_visibility_tablet {
+        display: block;
+    }
+    .container {margin: 0 auto;}
+    .footer {margin: 30px auto;}
+    .categories-list li {width: 50%;}
+    .top-employer li {height: 125px !important;}
+    .news li, .bottom .col-sm-4{padding: 0 10px !important;}
+    #searchresult [class^="col-"] {text-align: center; float: left !important;}
+    .search-form .col-sm-9 {width: 100%;}
+    .header-right {float: none !important; display: block;}
+    .header-right .list-link {text-align: center;}
+    .header-right .ntv-menu {float: right;}
+    .list-link {display: inline-block;float: left;line-height: 35px;}
+    .header-right .menu {margin: 0;width: auto;text-align: right;display: inline-block;}
+
+}
+@media only screen and (min-width: 0px) and (max-width: 1000px) {
+
+}
+
+/*------------------------------------------------------------------------------*/
+/* Width : 480,Width : 568 = iphone 5 landscape,Width : 667 = iphone 6 landscape
+/*------------------------------------------------------------------------------*/
+@media only screen and (min-width: 0) and (max-width: 670px) {
+   .top-employer li {height: 154px !important;}
+   .featured-items .header-page {font-size: 18px;}
+   .header-right {float: none !important; text-align: center; display: block;}
+   .menu.pull-right {padding: 0 20px;}
+   .categories-list li {width: 50%;}
+    .rs-table th, .rs-table td {display: block !important;width: 100%;}
+   .rs-table td {border: none !important; padding: 0 8px !important;}
+   .rs-table tbody tr{border-top: 1px solid #EBE9E9 !important;}
+   .rs-table tbody tr:first-child {border: none !important;}
+   .rs-table td:first-child {padding-top: 8px !important;}
+   .rs-table td:last-child {padding-bottom: 8px !important;}
+   .add-modules {position: relative !important; top: 0 !important;}
+   .gallery-photo ul li {width: 49%; display: inline-block;}
+   .top-job li {width: auto; display: block; border-radius: 0 !important;}
+   .desc-job {padding: 10px 10px 10px 25px; border-radius: 0 !important; margin: 0;}
+   .support-social .support, .support-social .hotline{margin: 0; display: block;}
+   .support-social .support i, .support-social .hotline i {font-size: 12px;}
+   .support-social, .social, .header-right .list-link, .header-right .menu {text-align: center;}
+   .support-social .col-sm-6, .login-form .pull-right {float: none !important;}
+   .social a {margin: 0;}
+} 
+/* end 480px devices */
+/*------------------------------------------------------------------------------*/
+/*                    width : 320 = portrait mobiles
+/*------------------------------------------------------------------------------*/
+
+@media only screen and (min-width: 0) and (max-width: 460px) {
+   body {background: #DFDFDF;}
+  .rs-table th, .rs-table td {display: block !important;width: 100%;}
+  .rs-table td {border: none !important; padding: 0 8px !important;}
+  .rs-table tbody tr{border-top: 1px solid #EBE9E9 !important;}
+  .rs-table tbody tr:first-child {border: none !important;}
+  .rs-table td:first-child {padding-top: 8px !important;}
+  .rs-table td:last-child {padding-bottom: 8px !important;}
+  #sidebar, #content, #content.right {float: none !important; width: auto !important;} 
+  .header-image{    background: #FFFFFF;
+    width: 100%;
+    float: right;
+    height: auto;
+    margin-bottom: 0px;
+    text-align: center;
+    line-height: auto;
+    font-size: 22px;
+    text-transform: uppercase;
+    font-family: "Gotham-Thin";
+    padding-left: 0px;
+    padding: 10px;}
+}

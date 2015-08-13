@@ -499,7 +499,7 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
 .menu-tab ul li ul li a {color: #FFF !important; padding: 5px 12px;}
 .menu-tab ul li ul li.selected a, .menu-tab ul li ul li a:hover {background: #f8b461; color: #00b9f2;}
 .menu-tab ul li ul li {background: none !important; margin-right: 5px;}
-
+.menu-tab ul li ul li{margin: 0; padding: 10px 0;}
 
 /******* PHONGDATGL CSS ******/
 .menu-management-resume ul li ul li.selected a {
@@ -776,3 +776,4 @@ ul.sub-cat {
 ul.sub-cat li {
   list-style: square;
 }
+.show-menu{display: block;padding: 10px;font-size: 17px;font-weight: bold; display: none;background-color: #f7941d; color: #fff;}

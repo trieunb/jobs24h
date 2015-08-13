@@ -6,7 +6,7 @@
 			<div class="heading-image">
 				<h2 class="text-orange">Phản hồi của ứng viên</h2>
 			</div>			
-			<table class="table table-bordered table-blue-bordered white">
+			<table class="table table-bordered table-blue-bordered white rs-table">
 				<thead>
 					<tr>
 						<th>Tên ứng viên</th>

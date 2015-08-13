@@ -14,7 +14,7 @@
 					<div class="heading-image">
 						<h2 class="text-orange">Danh sách hồ sơ đã xem</h2>
 					</div>
-					<table class="table table-bordered table-blue-bordered white">
+					<table class="table table-bordered table-blue-bordered white rs-table">
 						<thead>
 							<tr>
 								<th>

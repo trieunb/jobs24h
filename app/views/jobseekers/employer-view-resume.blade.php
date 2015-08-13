@@ -12,7 +12,7 @@
 					<h2>Nhà Tuyển Dụng Xem Hồ Sơ</h2>
 				</div>
 				<form action="" method="POST" role="form" class="form-horizontal">
-					<table class="table table-striped table-hover table-bordered">
+					<table class="table table-striped table-hover table-bordered rs-table">
 								<thead>
 									<tr>
 										<th class="col-sm-4">Công ty</th>

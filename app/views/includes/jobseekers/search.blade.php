@@ -40,7 +40,7 @@
 		                    </div>
 						</div>
 						<div class="col-sm-9">
-                            <div class="col-xs-7 col-sm-3 col-sm-push-6 push-top-xs">
+                            <div class="col-sm-7 col-sm-3 col-sm-push-6 push-top-xs">
                             	<div class="relative">
                        				<a href="{{URL::route('jobseekers.search-job', array('vieclamcaocap'=>'true'))}}" class="btn-search btn btn-default" type="button"><strong>Việc Làm Cao Cấp</strong></a><strong class="text-red small absolute-right"><em>Mới</em></strong>
                        			</div>

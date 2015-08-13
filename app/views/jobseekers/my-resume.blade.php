@@ -16,7 +16,7 @@
 								<p><button type="submit" class="btn btn-lg bg-orange">Tạo Hồ Sơ</button></p>
 							{{Form::close()}}
 						@endif
-							<table class="table table-striped table-hover table-bordered">
+							<table class="table table-striped table-hover table-bordered rs-table">
 								<thead>
 									<tr>
 										<th>Tiêu đề</th>

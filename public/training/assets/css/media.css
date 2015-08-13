@@ -1,0 +1,99 @@
+@media only screen and (min-width: 0) and (max-width: 1200px) {
+  
+}
+
+/* ==========================================================================
+ *                  All devices
+   ========================================================================== */
+@media only screen and (min-width: 0) and (max-width: 1000px) {
+   .container {padding-right: 0; padding-left: 0;}
+    #header {padding: 15px 0; height: auto !important;}
+    .logo {margin: 0; text-align: center;}
+    .menu {padding: 0;}
+    .show-menu, .navigation .collapse {display: block; background-color: rgba(255, 255, 255, 0.22)}
+    .navigation .collapse {padding: 0;}
+    .navigation {display: none;}
+    .navigation .nav {margin: 0;}
+    header#header_chitiet .nav {margin: 0;}
+    .navigation li {margin: 0 !important;border-bottom: 1px solid rgba(198, 198, 198, 0.35);}
+    .navigation li a {padding: 10px !important; color: #fff !important;}
+    li.active1 {outline: none; min-width: auto; text-align: left;}
+    .main1,.main2,.main3,.main4,.main5,.main6 {padding: 15px 10px;}
+    .main1_text {padding: 0;}
+    .title {text-align: center;margin-top: 20px;}
+    .title h2 {text-transform: uppercase;font-size: 18px;color: white;padding: 0;}
+    .title h3 {width: auto;margin: 0px auto;padding-bottom: 16px;color: white;font-size: 12px;}
+    button.btn.more1, button.btn.more2 {width: auto;}
+    .main1_image {padding: 0px 0 10px;}
+    .main1_text h2 {font-size: 18px;margin: 0; padding: 0;}
+    .main1_text h3 {padding: 10px 0 0;}
+    #main-content h2 {font-size: 18px;padding: 0;color: rgb(130, 130, 130);margin: 0;padding: 0 !important;font-size: 12px !important;
+    background-color: transparent;}
+    #main-content h3 {font-size: 13px;color: rgb(110, 110, 110);padding: 10px 0 0;}
+    .main2 ul li {width: 100%;padding: 0 0px 10px;height: auto;}
+    .main2 ul li img {width: auto !important; display: block; margin: 0 auto !important;}
+    .main2 ul li h3 {font-size: 15px !important;padding: 0 !important;margin: 0;}
+    div#myTabs {width: auto;}
+    a#home-tab {float: none; margin: 0;}
+    .btn.tl1, .btn.tl2 {height: auto;width: auto; padding: 10px; font-size: 14px; margin: 0; border: none;}
+    div[role^="presentation"] {display: inline-block;}
+    .main3 ul li {float: none;width: auto;height: auto; margin: 0 0 10px;}
+    .nx ul li, .main5 ul li, .main6 ul li {width: auto; float: none;}
+    .support-social .support, .support-social .hotline{margin: 0; display: block;}
+   .support-social .support i, .support-social .hotline i {font-size: 12px;}
+   .support-social, .social, .header-right .list-link, .header-right .menu {text-align: center;}
+   .support-social .col-sm-6, .login-form .pull-right {float: none !important;}
+   .social a {margin: 0;}
+   .banner-ct {background: #333; padding: 10px; height: auto;}
+   .menu-ctdt {margin: 10px auto 0;}
+   .menu-ctdt img {display: none;}
+   .btn.btn-default.sub-menu {margin: 0 0 10px; width: auto; font-size: 12px; padding: 10px;}
+   .tq2, .tq1-r, .tq2-r, .tq3-r, .tq4_r, div#thongbao {height: auto; margin: 0; border-radius: 0 !important; float: none;}
+   .tq1, .tq3, .tq3-image, .tq4 {height: auto; border-radius: 0 !important;}
+   .tq4 {padding: 15px;}
+   p.cdk {text-align: left; padding-bottom: 5px;}
+   p.ttht {padding: 5px 0;}
+   .col-md-6.pull-right.tt-right {margin: 0;}
+   .bt-tt, .bt-tt p {padding: 0; text-align: center;}
+   p.cdk, p.ttht {font-size: 20px;}
+   .dk1 ul li h2 {width: 31%; border: none; padding: 0;}
+   .dk1 ul li p {padding: 0; background: transparent; color:#fff;}
+   .ttgiamgia {padding: 15px; width: auto; margin: 0; text-align: center;}
+   .tq4_r .form-group {margin: 0 0 10px;}
+   .main_ul {width: 100%;}
+   .main_ul ul li {float: none; font-size: 12px; line-height: normal;}
+   .col-md-6.pull-left.tt-left {margin: 0;}
+   .tq2 {line-height: normal;}
+   .navbar-fixed-top, .left, .right {display: none;}
+   .main_ul ul li {width: 100%; padding: 10px;}
+   .tq4_r {padding: 10px;}
+}
+
+/*------------------------------------------------------------------------------*/
+/*                    Width : 768 = ipad portrait
+/*------------------------------------------------------------------------------*/
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1023px) {
+    .mom_visibility_tablet {
+        display: block;
+    }
+    
+
+}
+
+
+/*------------------------------------------------------------------------------*/
+/* Width : 480,Width : 568 = iphone 5 landscape,Width : 667 = iphone 6 landscape
+/*------------------------------------------------------------------------------*/
+@media only screen and (min-width: 0) and (max-width: 670px) {
+   
+} 
+/* end 480px devices */
+/*------------------------------------------------------------------------------*/
+/*                    width : 320 = portrait mobiles
+/*------------------------------------------------------------------------------*/
+
+@media only screen and (min-width: 0) and (max-width: 460px) {
+
+}

@@ -31,10 +31,12 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
                 var carousel = $(this),
                     width = carousel.innerWidth();
 
-                if (width >= 600) {
-                    width = width / 5;
-                } else if (width >= 350) {
+                if (width < 1024 && width >= 600) {
                     width = width / 3;
+                } else if (width <= 480) {
+                    width = width / 1;
+                }else{
+                    width = width / 5;
                 }
 
                 carousel.jcarousel('items').css('width', Math.ceil(width) + 'px');
@@ -85,12 +87,13 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
                 var carousel = $(this),
                     width = carousel.innerWidth();
 
-                if (width >= 600) {
+                if (width < 1024 && width >= 600) {
                     width = width / number_img;
-                } else if (width >= 350) {
-                    width = width / 2;
+                } else if (width <= 480) {
+                    width = width / 1;
+                }else{
+                    width = width / 5;
                 }
-
                 carousel.jcarousel('items').css('width', Math.ceil(width) + 'px');
             })
             .jcarousel({
@@ -107,10 +110,12 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
                 var carousel = $(this),
                     width = carousel.innerWidth();
 
-                if (width >= 650) {
+                if (width < 1024 && width >= 600) {
+                    width = width / 3;
+                } else if (width <= 480) {
                     width = width / 1;
-                } else if (width >= 350) {
-                    width = width / 1;
+                }else{
+                    width = width / 5;
                 }
 
                 carousel.jcarousel('items').css('width', Math.ceil(width) + 'px');
@@ -130,10 +135,13 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
                 var carousel = $(this),
                     width = carousel.innerWidth();
 
-                if (width >= 600) {
-                    width = width / 4;
-                } else if (width >= 350) {
+
+                if (width < 1024 && width >= 600) {
                     width = width / 2;
+                } else if (width <= 480) {
+                    width = width / 1;
+                }else{
+                    width = width / 4;
                 }
 
                 carousel.jcarousel('items').css('width', Math.ceil(width) + 'px');
@@ -152,10 +160,12 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
                 var carousel = $(this),
                     width = carousel.innerWidth();
 
-                if (width >= 600) {
-                    width = width / 6;
-                } else if (width >= 350) {
+                if (width < 1024 && width >= 600) {
                     width = width / 3;
+                } else if (width <= 480) {
+                    width = width / 1;
+                }else{
+                    width = width / 6;
                 }
 
                 carousel.jcarousel('items').css('width', Math.ceil(width) + 'px');
@@ -476,11 +486,14 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
 
     // FLOAT FIXED 
     $(function() {        
-        $(".add-modules").floatingFixed({ padding: 5 });
+        $(".add-modules").floatingFixed({ padding: 150 });
         if($( "#Country option:selected" ).text() != 'Việt Nam'){
             $('#Cities').attr('disabled', 'disabled');
             $('#District').attr('disabled', 'disabled');
         }
+
+        var height_emp = $('.top-employer .jcarousel li').outerWidth();
+        $('.top-employer .jcarousel li').css('height', height_emp);
     });
 
 
@@ -522,6 +535,20 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
     $(document).on('click', '#popup .close', function(event) {
         $('#fadein, #popup').fadeOut();
     });
+
+
+    var open = false;
+    $('.show-menu').click(function() {
+        open = !open;
+
+        if(open) {
+            $('.main-menu').slideDown();
+        } else {
+            $('.main-menu').slideUp();
+        }
+    });
+
+
 })(jQuery);
 
 

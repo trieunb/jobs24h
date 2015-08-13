@@ -130,7 +130,7 @@ return array(
 		'Maatwebsite\Excel\ExcelServiceProvider',
 		'Artdarek\OAuth\OAuthServiceProvider',
 		//'Cartalyst\SentrySocial\SentrySocialServiceProvider',
-		'Intervention\Image\ImageServiceProvider',
+		//'Intervention\Image\ImageServiceProvider',
 	),
 
 	/*

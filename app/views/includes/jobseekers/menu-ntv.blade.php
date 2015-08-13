@@ -7,14 +7,24 @@
 	   		<?php 
 	   		if(Sentry::check()){
 	   			$count_my_jobs = MyJob::where('ntv_id',$GLOBALS['user']->id)->count();
+	   			$applied_job = Application::where('ntv_id',$GLOBALS['user']->id)->get();
+				if(count($applied_job)){
+					foreach ($applied_job as $key => $value) {
+						$applied_id = array($value->job_id);
+					}
+					$count_saved_job = MyJob::whereNotIn('job_id', $applied_id)->where('ntv_id',$GLOBALS['user']->id)->count();
+				}
 				$count_applied_job = Application::where('ntv_id',$GLOBALS['user']->id)->count();
 				$count_my_resume = Resume::where('ntv_id', $GLOBALS['user']->id)->count();
 				$count_repond = VResponse::where('ntv_id',$GLOBALS['user']->id)->where('user_submit','!=', $GLOBALS['user']->id)->count();
 				//$count_view_resume = ViewResume::where('ntv_id',$GLOBALS['user']->id)->count();
-				$my_resume = $applied_job = $my_job = $repond = $view = 0;
+				$my_resume = $applied_job = $my_job = $repond = $view = $saved_job = 0;
 
 		   		if(isset($count_my_resume)){
 		   			$my_resume = $count_my_resume;
+		   		}
+		   		if(isset($count_saved_job)){
+		   			$saved_job = $count_saved_job;
 		   		}
 		   		if(isset($count_applied_job)){
 		   			$applied_job = $count_applied_job;
@@ -36,7 +46,7 @@
 	      	<li><a href="{{URL::route('jobseekers.my-resume')}}">{{ HTML::image('assets/images/icons/profile.png') }} Hồ sơ và thư tự giới thiệu<span class="badge">{{$my_resume}}</span></a></li>
 	      	<li><a href="{{URL::route('jobseekers.get-my-resume-by-upload')}}">{{ HTML::image('assets/images/icons/computer.png') }} Hồ sơ tải từ máy tính</a></li>
 	      	<li><a href="{{URL::route('jobseekers.my-job')}}">{{ HTML::image('assets/images/icons/jobs.png') }} Việc làm phù hợp với bạn<span class="badge">{{$my_job}}</span></a></li>
-	      	<li><a href="{{URL::route('jobseekers.saved-job')}}">{{ HTML::image('assets/images/icons/save.png') }} Việc làm đã lưu<span class="badge">{{$my_job}}</span></a></li>
+	      	<li><a href="{{URL::route('jobseekers.saved-job')}}">{{ HTML::image('assets/images/icons/save.png') }} Việc làm đã lưu<span class="badge">{{$saved_job}}</span></a></li>
 	      	<li><a href="{{URL::route('jobseekers.applied-job')}}">{{ HTML::image('assets/images/icons/job_submitted.png') }} Việc làm đã nộp<span class="badge">{{$applied_job}}</span></a></li>
 	      	<li><a href="{{URL::route('jobseekers.employer-view-resume')}}">{{ HTML::image('assets/images/icons/view_profile.png') }} Nhà tuyển dụng xem hồ sơ<!--<span class="badge">{{$view}}</span>--></a></li>
 	      	<li><a href="{{URL::route('jobseekers.respond-from-employment')}}">{{ HTML::image('assets/images/icons/repond.png') }} Phản hồi của nhà tuyển dụng<span class="badge">{{$repond}}</span></a></li>
