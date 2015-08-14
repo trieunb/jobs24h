@@ -1,9 +1,17 @@
 @extends('layouts.admin')
 @section('title')Cung ứng dịch vụ @stop
-@section('page-header') Nội dung của các dịch vụ @stop
+@section('page-header') 
+	Có tổng cộng {{$total_all_service_sub}} trong tổng số {{$total_all_service}} mục
+ @stop
 @section('content')
 @include('includes.notifications')
 	<div class="clearfix"></div>
+	 
+
+	 
+
+
+
 	<table class="table table-hover table-bordered table-striped dataTable" id="table">
 		<thead>
 			<tr>
@@ -60,10 +68,10 @@
 					  </div>
 					</div>
 				</td>
- 				  <td>{{$value['name']}}</td>
+ 				  <td><a target="_blank" href="{{URL::action('CungungController@detail',$value['s_id'])}}">{{$value['name']}}</a></td>
 				<td>
 					<a class="btn btn-xs btn-info" title="sửa" href="{{URL::to('admin/cungunglaodong/edit-post-services/'.$value['id'].'')}}"><i class="ace-icon fa fa-pencil bigger-120"></i></a>
-					<div style="padding:10px"></div>
+					 
 					 <a class="btn btn-xs btn-danger" title="Xóa" href="{{URL::to('admin/training/delete-post-services/'.$value['id'].'')}}"><i class="ace-icon fa fa-trash-o bigger-120"></i></a>
 				</td>
 				</tr>

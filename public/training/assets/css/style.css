@@ -162,7 +162,7 @@ header#header {
   background-color: #f5f5f5;
   padding-bottom: 28px;
 }a#profile-tab {
-  background-color: rgb(114, 114, 114);
+  /* background-color: rgb(114, 114, 114); */
   color: white;
 }.btn.tl2 {
   width: 45%;
@@ -214,7 +214,7 @@ header#header {
 }.more-book {
   padding: 10px;
   border: 1px solid;
-  width: 50%;
+  /* width: 50%; */
   text-align: center;
   border-radius: 28px;
   margin-top: 22px;
@@ -250,7 +250,12 @@ header#header {
   background-color: rgb(204, 84, 84);
   width: 20px;
   height: 20px;
-} a#home-tab {
+} .tl2 {
+    background-color: #675F5F;
+    color: white;
+}a#home-tab:hover
+{color:white;}
+a#home-tab {
   float: left;
   /* margin: 0px auto; */
 }
@@ -739,16 +744,18 @@ button.btn.more3:hover
   color: white;
   /* width: 100%; */
   background-color: rgb(68, 75, 79);
-  padding: 9px;
+  padding: 5px;
+  height: 30px;
 }.dk1 ul li {
   /* float: left; */
-  margin: 5px;
+  /* margin: 5px; */
   width: 100%;
   display: inline-flex;
   text-align: left;
   list-style: none;
   /* font-size: 15px; */
   padding: 0px;
+  height: 45px;
 }.col-md-3.dk {
   margin-top: 20%;
   margin-left: -21px;
@@ -767,7 +774,7 @@ button.btn.more3:hover
   padding: 18px;
   line-height: 35px;
 }.tq3-image {
-  height: 400px;
+  height: 350px;
   overflow: hidden;
 }.tq3-image img {
   width: 100%;
@@ -782,6 +789,7 @@ button.btn.more3:hover
   color: rgb(236, 93, 96);
   font-size: 30px;
     padding-bottom: 36px;
+  margin-top: 32%;
 }.tq4 {
   text-align: justify;
   background-color: #dddddd;
@@ -798,7 +806,7 @@ button.btn.more3:hover
   min-height: 645px;
 }.dk1 ul li h2 {
   color: white !important;
-  font-size: 19px !important;
+  font-size: 16px !important;
   width: 36%;
   background-color: rgb(68, 75, 79);
   padding: 7px !important;
@@ -813,6 +821,7 @@ button.btn.more3:hover
 }
 .tq2 {
   height: 720px;
+  padding: 68px;
 }
 .tq3 {
   height: 500px;
@@ -830,6 +839,7 @@ button.btn.more3:hover
 }
 .tq3-r {
   height: 500px;
+  padding: 67px;
 }
 .tq4-r {
   height: 536px;

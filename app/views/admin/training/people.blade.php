@@ -1,6 +1,19 @@
 @extends('layouts.admin')
 @section('title')Danh sách @stop
-@section('page-header') Danh sách học viên và giáo viên @stop
+@section('page-header')
+
+@if(Request::segment(4)==1)
+ Có tổng cộng {{$total_gv}} giảng viên
+ @elseif(Request::segment(4)==2)
+ 	Có {{$total_hv_new}} học viên đăng ký mới
+ @elseif(Request::segment(4)==3)
+ 	Có tổng cộng {{$total_hv_old}} học viên cũ
+ @else
+ 	Có tổng cộng {{$total_hv_tieubieu}} học viên tiêu biểu
+ @endif
+
+
+  @stop
 @section('content')
 @include('includes.notifications')
 	<div class="clearfix"></div>
@@ -25,8 +38,9 @@
 				@endif
 				<th>Thông tin khác</th>
 				<th>Avatar</th>
-				<th>Là</th>
+				@if(Request::segment(4)=='2') 	
 				<th>Chương trình đào tạo</th>
+				@endif
 				<th>#</th>
 			</tr>
 		</thead>
@@ -107,15 +121,15 @@
 				</td>
 				<td>
 				@if($value['thumbnail']!=null)
-				<a href="{{URL::to('uploads/training/'.$value['thumbnail'].'')}}" target="blank">{{HTML::image('uploads/training/'.$value['thumbnail'],null,array('style' => 'width:100px'))}}</a>
+				<a href="{{URL::to('uploads/training/'.$value['thumbnail'].'')}}" target="_blank">{{HTML::image('uploads/training/'.$value['thumbnail'],null,array('style' => 'width:100px'))}}</a>
 				@else 
 				Không có Avatar
 				@endif
 				</td>
-				<td>{{$value['roll']}}</td>
+				@if(Request::segment(4)=='2') 	 	
 				<td>{{$value['name_datao']}}</td>
-
-				 
+				@endif
+				 	
 				 
 				<td>
 					<a class="btn btn-xs btn-info" title="sửa"  href="{{URL::to('admin/training/edit-people/'.$value['id'].'')}}"><i class="ace-icon fa fa-pencil bigger-120"></i></a>

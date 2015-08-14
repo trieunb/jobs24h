@@ -1,6 +1,10 @@
 @extends('layouts.admin')
 @section('title') Chỉnh sửa thông tin @stop
-@section('page-header') Chỉnh sửa thông tin học viên và giáo viên @stop
+@section('page-header')
+	@if($data['training_roll_id']=='3')
+	 Chỉnh sửa thông tin học viên cũ
+	 @endif
+ @stop
 @section('style')
 
  
@@ -14,11 +18,11 @@
 
 	 {{ Form::open(['role' => 'form','class'=>'form form-horizontal','files'=>true]) }}
 		@include('includes.notifications')
-		@foreach($data as $value)
+		 
 		<div class="form-group">
 			<label for="inputTitle" class="col-sm-2 control-label">Họ và tên:</label>
 			<div class="col-sm-6">
-				{{ Form::input('text', 'name', $value['name'], array('class'=>'form-control', 'required') ) }}
+				{{ Form::input('text', 'name', $data['name'], array('class'=>'form-control', 'required') ) }}
 			</div>
 		</div>
 		<div class="form-group">
@@ -27,7 +31,7 @@
 				{{ Form::select('sex',[
 					'1'=>'Nam',
 					'2'=>'Nữ'
-				], $value['sex']
+				], $data['sex']
 					 ) }}
 			</div>
 			 
@@ -35,53 +39,60 @@
 		<div class="form-group">
 			<label for="inputFullname" class="col-sm-2 control-label">Địa chỉ:</label>
 			<div class="col-sm-6">
-				{{ Form::input('text', 'address', $value['address'], array('class'=>'form-control','required') ) }}
+				{{ Form::input('text', 'address', $data['address'], array('class'=>'form-control','required') ) }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Điện thoại:</label>
 			<div class="col-sm-6">
-				{{ Form::input('text', 'phone', $value['phone'], array('class'=>'form-control','required') ) }}
+				{{ Form::input('text', 'phone', $data['phone'], array('class'=>'form-control','required') ) }}
 			</div>
 		</div>
 
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Email :</label>
 			<div class="col-sm-6">
-				{{ Form::input('email', 'email',$value['email'], array('class'=>'form-control','required') ) }}
+				{{ Form::input('email', 'email',$data['email'], array('class'=>'form-control','required') ) }}
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="input" class="col-sm-2 control-label">Quá trình làm việc:</label>
+			<label for="input" class="col-sm-2 control-label">
+			@if($data['training_roll_id']=='3')
+			Quá trình học tập :
+			@else
+			Quá trình làm việc :
+			@endif
+			</label>
 			<div class="col-sm-6">
-				{{ Form::textarea('worked',$value['worked'], array('class'=>'form-control','placeholder'=>'Quá trình làm việc đối với giảng viên, Khóa học đã trải qua đối với sinh viên cũ') ) }}
+				{{ Form::textarea('worked',$data['worked'], array('class'=>'form-control','placeholder'=>'Quá trình làm việc đối với giảng viên, Khóa học đã trải qua đối với sinh viên cũ') ) }}
 			</div>
 		</div>
 
 		 <div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Giới thiệu bản thân:</label>
 			<div class="col-sm-6">
-				{{ Form::textarea('yourself',$value['yourself'], array('class'=>'form-control','placeholder'=>'Giới thiệu đôi nét về bản thân . Ví dụ : học vấn, kinh nghiệm') ) }}
+				{{ Form::textarea('yourself',$data['yourself'], array('class'=>'form-control','placeholder'=>'Giới thiệu đôi nét về bản thân . Ví dụ : học vấn, kinh nghiệm') ) }}
 			</div>
 		</div>
 
+		@if($data['training_roll_id']=='3')
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Cảm nhận:</label>
 			<div class="col-sm-6">
-				{{ Form::textarea('feeling', $value['feeling'], array('class'=>'form-control') ) }}
+				{{ Form::textarea('feeling', $data['feeling'], array('class'=>'form-control') ) }}
 			</div>
 		</div>
-
+		@endif
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Facebook:</label>
 			<div class="col-sm-6">
-				{{ Form::input('text', 'facebook',$value['facebook'], array('class'=>'form-control') ) }}
+				{{ Form::input('text', 'facebook',$data['facebook'], array('class'=>'form-control') ) }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="inputTitle" class="col-sm-2 control-label">Twitter:</label>
 			<div class="col-sm-6">
-				{{ Form::input('text', 'twitter', $value['twitter'], array('class'=>'form-control', '') ) }}
+				{{ Form::input('text', 'twitter', $data['twitter'], array('class'=>'form-control', '') ) }}
 			</div>
 			 
 		</div>
@@ -91,14 +102,14 @@
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Skype:</label>
 			<div class="col-sm-6">
-				{{ Form::input('text', 'skype', $value['skype'], array('class'=>'form-control') ) }}
+				{{ Form::input('text', 'skype', $data['skype'], array('class'=>'form-control') ) }}
 			</div>
 		</div>
 		 
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Linkedin:</label>
 			<div class="col-sm-6">
-				 {{ Form::input('text', 'linkedin', $value['linkedin'], array('class'=>'form-control') ) }}
+				 {{ Form::input('text', 'linkedin', $data['linkedin'], array('class'=>'form-control') ) }}
 
 			</div>
 		</div>
@@ -111,7 +122,7 @@
 			</div>
 
 			<div class="col-sm-3">
-				<img style="width:50%" id="blah" src="{{URL::to('uploads/training/'.$value['thumbnail'].'')}}" alt="avatar" />
+				<img style="width:50%" id="blah" src="{{URL::to('uploads/training/'.$data['thumbnail'].'')}}" alt="avatar" />
 
 			</div>
 
@@ -122,15 +133,14 @@
 		<div class="form-group">
 			<label for="inputTitle" class="col-sm-2 control-label">Đối tượng:</label>
 			<div class="col-sm-2">
-				{{ Form::select('training_roll_id',$people, $value['roll_id']
-					 ) }}
+				{{ Form::select('training_roll_id',$people, $data['roll_id']) }}
 			</div>
 			 
 		</div>
 
 		 
 
-		@endforeach
+		 
 		<div class="form-group">
 			<div class="col-sm-10 col-sm-offset-2">
 				{{ Form::button('Lưu thay đổi', array('type'=>'submit', 'class'=>'btn btn-primary')) }}

@@ -115,8 +115,8 @@
 						});
 					</script>
 		 			<div id="myTabs" role="tablist">
-				      <div role="presentation" class="active"><a href="#home" class="btn tl1" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">Tài liệu mới</a></div>
-				      <div role="presentation"><a class="btn tl2" href="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile">Tài liệu tải nhiều</a></div>
+				      <div role="presentation" class="active" id="active-doc"><a href="#home" class="btn tl1" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">Tài liệu mới</a></div>
+				      <div role="presentation" id="no-doc"><a class="btn tl2" href="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile">Tài liệu tải nhiều</a></div>
 		
 				    </div>
 				    <div class="clearfix"></div>
@@ -136,9 +136,14 @@
 			 					 
 			 					<h2>{{$doc['title']}}</h2>
 			 					<span>By {{$doc['author']}}</span>
-			 					<p><i class="glyphicon glyphicon-eye-open"></i> Lượt xem : {{$doc['view']}}</p>
-			 					<p><i class="glyphicon glyphicon-save"></i> Download : {{$doc['download']}}</p>
-			 					<a href="{{URL::route('trainings.detaildoc',array($doc['id']))}}"><button class="btn btn-default more-book">Xem thêm</button></a>
+			 					<div class="clearfix"></div>
+			 					<div class="col-md-6">
+				 					<p><i class="glyphicon glyphicon-eye-open"></i> Lượt xem : {{$doc['view']}}</p>
+				 					<p><i class="glyphicon glyphicon-save"></i> Download : {{$doc['download']}}</p>
+			 					</div>
+			 					<div class="col-md-6">
+			 						<a href="{{URL::route('trainings.detaildoc',array($doc['id']))}}"><button class="btn btn-default more-book">Xem thêm</button></a>
+			 					</div>
 			 				</li>
 			 				@endforeach
 			 				 
@@ -157,9 +162,14 @@
 			 					 
 			 					<h2>{{$doc['title']}}</h2>
 			 					<span>By {{$doc['author']}}</span>
-			 					<p><i class="glyphicon glyphicon-eye-open"></i> Lượt xem : {{$doc['view']}}</p>
-			 					<p><i class="glyphicon glyphicon-save"></i> Download : {{$doc['download']}}</p>
-			 					<a href="{{URL::route('trainings.detaildoc',array($doc['id']))}}"><div class="btn btn-default more-book">Xem thêm</div></a>
+			 					<div class="clearfix"></div>
+			 					<div class="col-md-6">
+				 					<p><i class="glyphicon glyphicon-eye-open"></i> Lượt xem : {{$doc['view']}}</p>
+				 					<p><i class="glyphicon glyphicon-save"></i> Download : {{$doc['download']}}</p>
+			 					</div>
+			 					<div class="col-md-6">
+			 						<a href="{{URL::route('trainings.detaildoc',array($doc['id']))}}"><div class="btn btn-default more-book">Xem thêm</div></a>
+			 					</div>
 			 				</li>
 			 				@endforeach
 			 				 
@@ -315,6 +325,21 @@
 			</script>
 			<script>
 			 new WOW().init();
+
+
+			 $(document).ready(function($) {
+
+			 	$('#profile-tab').click(function(event) {
+			 		 $('#profile-tab').removeClass("btn tl2").addClass("btn tl1");
+			 		 $('#home-tab').removeClass("btn tl1").addClass("btn tl2");
+			 	});
+			 	$('#home-tab').click(function(event) {
+			 		 $('#profile-tab').removeClass("btn tl1").addClass("btn tl2");
+			 		 $('#home-tab').removeClass("btn tl2").addClass("btn tl1");
+			 	});
+
+
+			 });
 			</script>
 
 @stop

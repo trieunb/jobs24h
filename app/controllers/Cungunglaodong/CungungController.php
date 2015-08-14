@@ -1,6 +1,14 @@
 <?php 
 	class CungungController extends Controller
 	{
+
+		public function __construct()
+		{
+			$all_dichvu=TrainingCat::whereAbout(2)->get();
+			 
+			View::share('all_dichvu',$all_dichvu);
+
+		}
 		public function home()
 		{
 			$data=Partner::get();
@@ -9,7 +17,7 @@
 
 		public function detail($id)
 		{
-			$services=TrainingCat::where('id','=',$id)->first(); 
+			$services=TrainingCat::whereId($id)->first(); 
 			$data=TrainingPost::where('training_cat_id','=',$id)
 			->select('title','content')
 			->get()

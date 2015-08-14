@@ -43,9 +43,14 @@
 			 					 
 			 					<h2>{{$doc['title']}}</h2>
 			 					<span>By {{$doc['author']}}</span>
-			 					<p><i class="glyphicon glyphicon-eye-open"></i> Lượt xem : {{$doc['view']}}</p>
-			 					<p><i class="glyphicon glyphicon-save"></i> Download : {{$doc['download']}}</p>
-			 					<a href="{{URL::route('trainings.detaildoc',array($doc['id']))}}"><button class="btn btn-default more-book">Xem thêm</button></a>
+			 					<div class="cleafix"></div>
+			 					<div class="col-md-6">
+				 					<p><i class="glyphicon glyphicon-eye-open"></i> Lượt xem : {{$doc['view']}}</p>
+				 					<p><i class="glyphicon glyphicon-save"></i> Download : {{$doc['download']}}</p>
+			 					</div>
+			 					<div class="col-md-6">
+			 						<a href="{{URL::route('trainings.detaildoc',array($doc['id']))}}"><button class="btn btn-default more-book">Xem thêm</button></a>
+			 					</div>
 			 				</li>
 			 				@endforeach
 			 				 
@@ -64,9 +69,14 @@
 			 					 
 			 					<h2>{{$doc['title']}}</h2>
 			 					<span>By {{$doc['author']}}</span>
-			 					<p><i class="glyphicon glyphicon-eye-open"></i> Lượt xem : {{$doc['view']}}</p>
-			 					<p><i class="glyphicon glyphicon-save"></i> Download : {{$doc['download']}}</p>
-			 					<a href="{{URL::route('trainings.detaildoc',array($doc['id']))}}"><div class="btn btn-default more-book">Xem thêm</div></a>
+			 					<div class="clearfix"></div>
+			 					<div class="col-md-6">
+				 					<p><i class="glyphicon glyphicon-eye-open"></i> Lượt xem : {{$doc['view']}}</p>
+				 					<p><i class="glyphicon glyphicon-save"></i> Download : {{$doc['download']}}</p>
+			 					</div>
+			 					<div class="col-md-6">
+			 						<a href="{{URL::route('trainings.detaildoc',array($doc['id']))}}"><div class="btn btn-default more-book">Xem thêm</div></a>
+			 					</div>
 			 				</li>
 			 				@endforeach
 			 				 
@@ -97,6 +107,19 @@
 			</script>
 			<script>
 			 new WOW().init();
+			  $(document).ready(function($) {
+
+			 	$('#profile-tab').click(function(event) {
+			 		 $('#profile-tab').removeClass("btn tl2").addClass("btn tl1");
+			 		 $('#home-tab').removeClass("btn tl1").addClass("btn tl2");
+			 	});
+			 	$('#home-tab').click(function(event) {
+			 		 $('#profile-tab').removeClass("btn tl1").addClass("btn tl2");
+			 		 $('#home-tab').removeClass("btn tl2").addClass("btn tl1");
+			 	});
+
+
+			 });
 			</script>
 
 @stop

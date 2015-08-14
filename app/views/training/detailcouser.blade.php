@@ -95,9 +95,10 @@
              ?>
             <p align="left">{{$couser['title']}}
               <br>
-              {{str_limit($content, $limit = 1000, $end = '<a class="hover-pointer" data-toggle="modal" data-target="#myModal">
+              {{Str::words($content, $limit = 100, $end = '<a class="hover-pointer" data-toggle="modal" data-target="#myModal">... Đọc tiếp</a> ')}}
+             <!--  {{str_limit($content, $limit = 1000, $end = '<a class="hover-pointer" data-toggle="modal" data-target="#myModal">
             Đọc tiếp
-          </a> ')}}
+          </a> ')}} -->
             </p>
 
             

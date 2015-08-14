@@ -1,9 +1,23 @@
 @extends('layouts.admin')
 @section('title')Danh sách dịch vụ @stop
-@section('page-header') Các đối tác trong Cung ứng dịch vụ @stop
+@section('page-header') Các đối tác trong Cung ứng Lao động @stop
 @section('content')
 @include('includes.notifications')
 	<div class="clearfix"></div>
+	<div class="infobox infobox-green">
+		<div class="infobox-icon">
+			<i class="ace-icon fa fa-user"></i>
+		</div>
+
+		<div class="infobox-data">
+			<span class="infobox-data-number">Có {{ $total_all_parner }}</span>
+			<div class="infobox-content">đối tác</div>
+		</div>
+
+		<!-- <div class="stat stat-success">8%</div> -->
+	</div>
+
+	
 	<table class="table table-hover table-bordered table-striped dataTable" id="table">
 		<thead>
 			<tr>
@@ -34,7 +48,7 @@
 				<td>{{$value['name']}}</td>
 				 <td>{{$value['link']}}</td>
 				 
-				<td><a href="{{$value['banner']}}"  target="blank">{{HTML::image(URL::to('uploads/cungunglaodong/'.$value['thumbnail'].''),$value['title'],array('style'=>'width:100px'))}}</a></td>
+				<td><a href="{{$value['banner']}}"  target="_blank">{{HTML::image(URL::to('uploads/cungunglaodong/'.$value['thumbnail'].''),$value['title'],array('style'=>'width:100px'))}}</a></td>
 				 
 				  
 				<td>

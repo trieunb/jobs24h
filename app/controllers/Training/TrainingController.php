@@ -35,6 +35,8 @@ class TrainingController extends Controller
 		return View::make('training.home')->with(array('training'=>$training,'document'=>$document,'people'=>$people)); 
 	}
 
+ 
+
 
 	public function detail_doc($id)
 	{

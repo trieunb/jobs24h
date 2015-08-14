@@ -9,23 +9,43 @@ class TrainController extends \BaseController {
 	 * @return Response
 	 */
 
+	public function __construct()
+	{
+		$total_khoahoc=Training::count();
+		View::share('total_khoahoc', $total_khoahoc);
+		$total_doc=TrainingDocument::count();
+		View::share('total_doc', $total_doc);
+		$total_gv=TrainingPeople::whereTrainingRollId(1)->count();
+		View::share('total_gv', $total_gv);
+		$total_hv_new=TrainingPeople::whereTrainingRollId(2)->count();
+		View::share('total_hv_new', $total_hv_new);
+		$total_hv_tieubieu=TrainingPeople::whereTrainingRollId(4)->count();
+		View::share('total_hv_tieubieu', $total_hv_tieubieu);
+		$total_hv_old=TrainingPeople::whereTrainingRollId(3)->count();
+		View::share('total_hv_old', $total_hv_old);
+		$total_hv=$total_hv_new + $total_hv_old+ $total_hv_tieubieu;
+		View::share('total_hv', $total_hv);
+		$total_news=TrainingPost::whereTrainingCatId(1)->count();
+		View::share('total_news', $total_news);
 
+	}
 	// bảng training
 	public function getIndex()
 	{
-
-		$data=Training::get();
-		/*
-		$data=Training::join('training_people', function($join)
-				        {
-				            $join->on('training.id', '=', 'training_people.training_id')
-				                 ->where('training_people.training_roll_id', '=', 1);
-				        })
-				        ->get();
-		//$giangvien=TrainingPeople::where('training_roll_id','=',1)->lists('name','id');
-		*/
-		 return View::make('admin.training.index')->with('data',$data);
+		
+		return View::make('admin.training.index');
+		 
+		 
+		//thống kê chổ ni nghe
 	}
+
+	public function getAllCouser()
+	{
+		 
+		$data=Training::select('id','title')->get();
+		 return View::make('admin.training.allcouser')->with('data',$data);
+	}
+
 
 	public function getEditCouser($id) // chỉnh sửa các khóa học
 	{
@@ -344,7 +364,7 @@ class TrainController extends \BaseController {
 
 		$data=TrainingPeople::where('training_people.id','=',$id)
 		//->select('training_people.*','tr.name as roll','tr.id as roll_id','t.title as name_datao','t.id as id_daotao')
-		->get();
+		->first();
 		$people=TrainingRoll::lists('name','id');
 		 
 		return View::make('admin.training.editpeople')->with(array('data'=>$data,'people'=>$people));
@@ -501,8 +521,11 @@ class TrainController extends \BaseController {
 	// document
 	public function getDocument()
 	{
+
+		$total_view=TrainingDocument::sum('view');
+		$total_down=TrainingDocument::sum('download');
 		$data=TrainingDocument::get();
-		return View::make('admin.training.document')->with('data',$data);
+		return View::make('admin.training.document',compact('data','total_view','total_down'));
 	}
 
 	public function getAddDocument()

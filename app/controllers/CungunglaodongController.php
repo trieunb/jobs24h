@@ -2,9 +2,26 @@
 class CungunglaodongController extends \BaseController
 {
 
+	public function __construct()
+	{
+		$total_all_service=TrainingCat::where('id','<>',1)->whereAbout(2)->count();
+		View::share('total_all_service',$total_all_service);
+
+		$total_all_parner=Partner::count();
+		View::share('total_all_parner',$total_all_parner);
+
+		$total_all_service_sub=TrainingPost::where('training_cat_id','<>',1)
+							->where('training_cat_id','<>',10)
+							->where('training_cat_id','<>',11)
+							->where('training_cat_id','<>',12)
+							->join('training_cat as trc','trc.id','=','training_post.training_cat_id')->count();
+
+		View::share('total_all_service_sub',$total_all_service_sub);
+	}
 	public function getIndex()
 	{
-		 $data=TrainingCat::where('id','<>',1)->get();
+
+		 $data=TrainingCat::where('id','<>',1)->whereAbout(2)->get();
 		return View::make('admin.cungung.allservices')->with('data',$data);
 	}
 
@@ -132,8 +149,11 @@ class CungunglaodongController extends \BaseController
 	public function getPostServices()
 	{
 		$data=TrainingPost::where('training_cat_id','<>',1)
+							->where('training_cat_id','<>',10)
+							->where('training_cat_id','<>',11)
+							->where('training_cat_id','<>',12)
 							->join('training_cat as trc','trc.id','=','training_post.training_cat_id')
-							->select(array('training_post.id','training_post.title','training_post.content','trc.name as name'))
+							->select(array('training_post.id','training_post.title','training_post.content','trc.name as name','trc.id as s_id'))
 							->get();
 		return View::make('admin.cungung.postservices')->with('data',$data);
 	}

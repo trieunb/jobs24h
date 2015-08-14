@@ -19,6 +19,7 @@
 
 		 				@foreach($training as $tr)
 		 				<li class="wow bounceInLeft" data-wow-duration="0.3s">
+		 					<div class="img1">	
 		 					<?php preg_match('/<img[^>]+>/i',$tr['content'], $image); 
 		 					 ?>
 		 					 @if($tr['thumbnail']==null)
@@ -26,7 +27,7 @@
 		 					 @else
 		 					 {{HTML::image(URL::to('uploads/training/'.$tr['thumbnail'].''))}}
 		 					 @endif
-		 					
+		 					</div>
 		 					<h2><a href="{{URL::route('trainings.detailcouser',array($tr['id']))}}">{{$tr['title']}}</a></h2>
 		 					<h3>Thời lượng : {{$tr['time_day']}} buổi <br> Học phí {{$tr['fee']}}</h3>
 
@@ -61,5 +62,11 @@
 			<script>
 			 new WOW().init();
 			</script>
+			<style type="text/css">
+			.img1 {
+				    height: 200px;
+				    overflow: hidden;
+					}
+</style>
 
 @stop

@@ -199,13 +199,22 @@
 
 						<ul class="submenu">
 							<li class="{{ HTML::active(['admin/training']) }}">
-								<a href="{{ URL::to('admin/training/') }}">
+								<a href="{{ URL::to('admin/training') }}">
 									<i class="menu-icon fa fa-caret-right"></i>
-									Chương trình đào tạo
+									Thống kê chi tiết
 								</a>
 								<b class="arrow"></b>
 							</li>
-							<li class="{{ HTML::active(['admin/training/post/*']) }}">
+
+
+							<li class="{{ HTML::active(['admin/training/all-couser']) }}">
+								<a href="{{ URL::to('admin/training/all-couser') }}">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Khóa học
+								</a>
+								<b class="arrow"></b>
+							</li>
+							<li class="{{ HTML::active(['admin/training/post']) }}">
 								<a href="{{ URL::to('admin/training/post') }}">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Tin tức 
@@ -213,7 +222,7 @@
 								<b class="arrow"></b>
 							</li>
 
-							<li class="{{ HTML::active(['admin/training/document/*']) }}">
+							<li class="{{ HTML::active(['admin/training/document']) }}">
 								<a href="{{ URL::to('admin/training/document') }}">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Tài liệu
@@ -232,7 +241,7 @@
 								<b class="arrow"></b>
 
 								<ul class="submenu">
-									<li class="{{ HTML::active(['admin/training/people/*']) }}">
+									<li class="{{ HTML::active(['admin/training/people/1']) }}">
 										<a href="{{ URL::to('admin/training/people/1') }}">
 											<i class="menu-icon fa fa-plus purple"></i>
 											Giảng viên
@@ -241,7 +250,7 @@
 										<b class="arrow"></b>
 									</li>
 
-									<li class="{{ HTML::active(['admin/training/people/*']) }}">
+									<li class="{{ HTML::active(['admin/training/people/3']) }}">
 										<a href="{{ URL::to('admin/training/people/3') }}">
 											<i class="menu-icon fa fa-eye pink"></i>
 											Học viên Cũ
@@ -250,7 +259,7 @@
 										<b class="arrow"></b>
 									</li>
 
-									<li class="{{ HTML::active(['admin/training/people/*']) }}">
+									<li class="{{ HTML::active(['admin/training/people/2']) }}">
 										<a href="{{ URL::to('admin/training/people/2') }}">
 											<i class="menu-icon fa fa-eye pink"></i>
 											Học viên vừa đăng ký
@@ -259,7 +268,7 @@
 										<b class="arrow"></b>
 									</li>
 
-									<li class="{{ HTML::active(['admin/training/people/*']) }}">
+									<li class="{{ HTML::active(['admin/training/people/4']) }}">
 										<a href="{{ URL::to('admin/training/people/4') }}">
 											<i class="menu-icon fa fa-eye pink"></i>
 											Học viên Tiêu biểu
@@ -276,7 +285,7 @@
 					<!--end- traning-->
 
 					<!--Cung ung lao dong-->
-					<li class="{{ HTML::active(['admin/cungunglaodong/*','admin/cungunglaodong/*']) }}">
+					<li class="{{ HTML::active(['admin/cungunglaodong','admin/cungunglaodong/*']) }}">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-pencil-square-o"></i>
 							<span class="menu-text"> Cung ứng lao động </span>
@@ -287,21 +296,21 @@
 						<b class="arrow"></b>
 
 						<ul class="submenu">
-							<li class="{{ HTML::active(['admin/cungunglaodong/']) }}">
+							<li class="{{ HTML::active(['admin/cungunglaodong']) }}">
 								<a href="{{ URL::to('admin/cungunglaodong/') }}">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Tất cả dịch vụ
 								</a>
 								<b class="arrow"></b>
 							</li>
-							<li class="{{ HTML::active(['admin/cungunglaodong/post-services/*']) }}">
+							<li class="{{ HTML::active(['admin/cungunglaodong/post-services']) }}">
 								<a href="{{ URL::to('admin/cungunglaodong/post-services') }}">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Bài đăng của các dịch vụ 
 								</a>
 								<b class="arrow"></b>
 							</li>
-							<li class="{{ HTML::active(['admin/cungunglaodong/partner/*']) }}">
+							<li class="{{ HTML::active(['admin/cungunglaodong/partner']) }}">
 								<a href="{{ URL::to('admin/cungunglaodong/partner') }}">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Quản lý đối tác 

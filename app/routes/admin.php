@@ -37,6 +37,7 @@ Route::group(array('prefix'=>'admin'), function() {
 
 
 		Route::controller('training','TrainController');
+		Route::controller('thongke','ThongkeTrainingController');
 		Route::controller('cungunglaodong','CungunglaodongController');
 
 		Route::get('hiring/datatables', array('as'=>'admin.hiring.datatables', 'uses'=>'HiringController@datatables'));

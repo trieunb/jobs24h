@@ -4,6 +4,20 @@
 @section('content')
 @include('includes.notifications')
 	<div class="clearfix"></div>
+	<div class="infobox infobox-green">
+		<div class="infobox-icon">
+			<i class="ace-icon fa fa-user"></i>
+		</div>
+
+		<div class="infobox-data">
+			
+			<div class="infobox-content">Tổng số tin tức</div>
+			<span class="infobox-data-number">{{ $total_news }}</span>
+		</div>
+
+		<!-- <div class="stat stat-success">8%</div> -->
+	</div>
+
 	<table class="table table-hover table-bordered table-striped dataTable" id="table">
 		<thead>
 			<tr>
@@ -15,11 +29,6 @@
 				</th>
 				<th>ID</th>
 				<th>Tiêu đề</th>
-				<th>Nội dung giới thiệu</th>
-				<th>Nội dung chính</th>
-				<th>Ảnh đại diện</th>
-				<th>Thuộc Thể loại</th>
-				 
 				<th>#</th>
 			</tr>
 		</thead>
@@ -34,36 +43,8 @@
 					</label>
 				</td>
 				<td>{{$value['id']}}</td>				
-				<td>{{$value['title']}}</td>
-				<td>{{$value['subtitle']}}</td>
-				<td>
-					<a data-toggle="modal" data-target="#myModal{{$value['id']}}">
-  					Xem nội dung
-					</a>
-					<style>
-						.modal-body img {
- 						 width: 100% !important;
-}					</style>	
-					<div class="modal fade" id="myModal{{$value['id']}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-					  <div class="modal-dialog" role="document">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					        <h4 class="modal-title" id="myModalLabel">Nội dung</h4>
-					      </div>
-					      <div class="modal-body">
-					        {{$value['content']}}
-					      </div>
-					      <div class="modal-footer">
-					        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					        
-					      </div>
-					    </div>
-					  </div>
-					</div>
-				</td>
-				<td>{{HTML::image('uploads/training/'.$value['thumbnail'],$value['title'],array('style'=>'width:100px'))}}</td>
-				<td>{{$value['name_cat']}}</td>
+				<td><a target="_blank" href="{{URL::action('TrainingController@detail_post',$value['id'])}}">{{$value['title']}}</a></td>
+				 
 				  
 				<td>
 					<a class="btn btn-xs btn-info" title="sửa" href="{{URL::to('admin/training/edit-post/'.$value['id'].'')}}"><i class="ace-icon fa fa-pencil bigger-120"></i></a>

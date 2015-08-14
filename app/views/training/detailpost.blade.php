@@ -16,7 +16,7 @@
 
           
           <div class="content-chitiet">
-            <h2>{{$post['title']}}</h2>
+            <h2 style="line-height: 35px;">{{$post['title']}}</h2>
              <?php $create=explode(" ", $post['created_at']);
                $date= date("d-m-Y", strtotime($create[0]));
               ?>

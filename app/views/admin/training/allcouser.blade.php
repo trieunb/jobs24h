@@ -1,8 +1,12 @@
 @extends('layouts.admin')
-@section('title')Danh sách dịch vụ @stop
-@section('page-header') Các dịch vụ trong cung ứng lao động @stop
+@section('title')Danh sách chương trình đào tạo @stop
+@section('page-header') Chương trình đào tạo @stop
 @section('content')
 @include('includes.notifications')
+	
+		 
+
+	
 	<div class="clearfix"></div>
 	<div class="infobox infobox-green">
 		<div class="infobox-icon">
@@ -10,12 +14,42 @@
 		</div>
 
 		<div class="infobox-data">
-			<span class="infobox-data-number">Có {{ $total_all_service }}</span>
-			<div class="infobox-content">dịch vụ</div>
+			
+			<div class="infobox-content">Tổng số khóa học</div>
+			<span class="infobox-data-number">{{ $total_khoahoc }}</span>
 		</div>
 
-		<!-- <div class="stat stat-success">8%</div> -->
+											<!-- <div class="stat stat-success">8%</div> -->
+	</div>	
+	<div class="infobox infobox-blue">
+		<div class="infobox-icon">
+			<i class="ace-icon fa fa-group"></i>
+		</div>
+
+		<div class="infobox-data">
+			
+			<div class="infobox-content">Đang khai giảng</div>
+			<span class="infobox-data-number"><?php 
+			$i=0;
+			
+			foreach ($data as $key => $value) {
+				if (strtotime($value['date_open'])>strtotime(date('Y-m-d'))) {
+					 $i=$i+1;
+				}
+
+			} 
+			echo $i;
+			?>
+
+			</span>
+		</div>
+
+		<!-- <div class="badge badge-success">
+			+32%
+			<i class="ace-icon fa fa-arrow-up"></i>
+		</div> -->
 	</div>
+
 
 	<table class="table table-hover table-bordered table-striped dataTable" id="table">
 		<thead>
@@ -28,7 +62,6 @@
 				</th>
 				<th>ID</th>
 				<th>Tiêu đề</th>
-				<th>banner</th>
 				<th>#</th>
 			</tr>
 		</thead>
@@ -38,31 +71,25 @@
 				<tr>
 				<td>
 					<label class="pos-rel">
-						<input value="{{$value['id']}}"type="checkbox" name="ck[]" class="ace" />
+						<input value="{{$value['id']}}" type="checkbox" name="ck[]" class="ace" />
 						<span class="lbl"></span>
 					</label>
 				</td>
 				<td>{{$value['id']}}</td>				
-				<td><a target="_blank" href="{{URL::action('CungungController@detail',$value['id'])}}">{{$value['name']}}</a></td>
-				 
-				 
-				<td><a href="{{URL::to('uploads/cungunglaodong/'.$value['banner'].'')}}"  target="_blank">{{HTML::image('uploads/cungunglaodong/'.$value['banner'].'',$value['title'],array('style'=>'width:100px'))}}</a></td>
-				 
-				  
+				<td><a target="_blank" href="{{URL::action('TrainingController@detail_couser',$value['id'])}}">{{$value['title']}}</a></td>
+		
 				<td>
-					<a class="btn btn-xs btn-info" title="sửa" href="{{URL::to('admin/cungunglaodong/edit-services/'.$value['id'].'')}}"><i class="ace-icon fa fa-pencil bigger-120"></i></a>
+					<a class="btn btn-xs btn-info" title="sửa"  href="{{URL::to('admin/training/edit-couser/'.$value['id'].'')}}"><i class="ace-icon fa fa-pencil bigger-120"></i></a>
 					 
-					 <a class="btn btn-xs btn-danger" title="Xóa" href="{{URL::to('admin/cungunglaodong/delete-services/'.$value['id'].'')}}"><i class="ace-icon fa fa-trash-o bigger-120"></i></a>
-					 
-					  <a class="btn btn-xs btn-default" title="Xem tất cả bài đăng của dịch vụ này" href="{{URL::to('admin/cungunglaodong/view-post-services/'.$value['id'].'')}}"><i style="color:white" class="menu-icon fa fa-eye pink"></i></a>
+					 <a class="btn btn-xs btn-danger" title="Xóa" href="{{URL::to('admin/training/delete/'.$value['id'].'')}}"><i class="ace-icon fa fa-trash-o bigger-120"></i></a>
 				</td>
 				</tr>
 				@endforeach	
-			
 		</tbody>
+
 	</table>
-	<a href="{{URL::to('admin/cungunglaodong/add-services')}}" class="btn">Thêm Dịch Vụ</a>
-		<div class="btn" id="delete-check">Xóa tất cả mục đã chọn</div>
+	<a href="{{URL::to('admin/training/add-couser')}}" class="btn">Đăng Khóa học mới</a>
+	<div class="btn" id="delete-check">Xóa tất cả mục đã chọn</div>
 
 	 
 @stop
@@ -93,10 +120,9 @@
 					if(this.checked) $row.addClass(active_class);
 					else $row.removeClass(active_class);
 				});
-
 		$( "#delete-check" ).click(function() {
 	  			
-			  var url = "{{URL::to('admin/cungunglaodong/delete-all-services')}}"; // the script where you handle the form input.
+			  var url = "{{URL::to('admin/training/delete-all-couser')}}"; // the script where you handle the form input.
 			
 			
 	 		  
@@ -114,9 +140,12 @@
 	                  // show response from the php script.
 	                    if (data.success==true) {
 	                     location.reload();
-	                 	 alert('Đã xóa OK')  }
-	                 	 else
-	                 	 	alert('Không thể xóa vào lúc này');
+	                 	 alert('Đã xóa OK');  }
+	                 	 else{
+	                 	 	alert('Không thể xóa');
+	                 	 	location.reload();
+	                 	 }
+	                 	 	
 
 
 	             }
@@ -125,5 +154,6 @@
 	          return false; // avoid to execute the actual submit of the form.
 			
 			});
-		</script>
+	   
+	  </script>
 @stop

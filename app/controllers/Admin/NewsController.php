@@ -2,6 +2,18 @@
 
 class NewsController extends \BaseController {
 
+
+
+	public function __construct()
+	{
+		$total_news_ntv=TrainingPost::whereTrainingCatId(10)->count();
+		View::share('total_news_ntv',$total_news_ntv);
+		$total_cn_ntv=TrainingPost::whereTrainingCatId(11)->count();
+		View::share('total_cn_ntv',$total_cn_ntv);
+		$total_cn_ntd=TrainingPost::whereTrainingCatId(12)->count();
+		View::share('total_cn_ntd',$total_cn_ntd);
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 * GET /news
@@ -10,7 +22,9 @@ class NewsController extends \BaseController {
 	 */
 	public function getIndex()
 	{
-		$list_news = TrainingPost::whereIn('id', array(10,11,12))->get();
+		// tin tức người tìm việc
+		 
+		$list_news = TrainingPost::whereIn('training_cat_id', array(10,11,12))->get();
 		return View::make('admin.news.manager', compact('list_news'));
 	}
 

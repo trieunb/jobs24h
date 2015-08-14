@@ -4,6 +4,52 @@
 @section('content')
 @include('includes.notifications')
 	<div class="clearfix"></div>
+	<div class="infobox infobox-pink">
+		<div class="infobox-icon">
+			<i class="ace-icon fa fa-eye"></i>
+		</div>
+
+		<div class="infobox-data">
+			
+			<div class="infobox-content">Tổng số tài liệu</div>
+			<span class="infobox-data-number">{{ $total_doc }}</span>
+		</div>
+		<!-- <div class="stat stat-important">4%</div> -->
+	</div>
+
+
+	<div class="infobox infobox-green">
+		<div class="infobox-icon">
+			<i class="ace-icon fa fa-user"></i>
+		</div>
+
+		<div class="infobox-data">
+			
+			<div class="infobox-content">Tổng số lượt view</div>
+			<span class="infobox-data-number">{{ $total_view }}</span>
+		</div>
+
+		<!-- <div class="stat stat-success">8%</div> -->
+	</div>
+
+	<div class="infobox infobox-blue">
+		<div class="infobox-icon">
+			<i class="ace-icon fa fa-group"></i>
+		</div>
+
+		<div class="infobox-data">
+			
+			<div class="infobox-content">Tổng số lượt tải tài liệu</div>
+			<span class="infobox-data-number">{{ $total_down }}</span>
+		</div>
+
+		<!-- <div class="badge badge-success">
+			+32%
+			<i class="ace-icon fa fa-arrow-up"></i>
+		</div> -->
+	</div>
+
+
 	<table class="table table-hover table-bordered table-striped dataTable" id="table">
 		<thead>
 			<tr>
@@ -14,12 +60,8 @@
 					</label>
 				</th>
 				<th>Tiêu đề</th>
-				<th>Nội dung giới thiệu</th>
-				<th>Tác giả</th>
-				<th>Ảnh đại diện</th>
 				<th>Lượt view</th>
 				<th>Lượt Download</th>
-				<th>Link tài liệu</th>
 				<th>#</th>
 			</tr>
 		</thead>
@@ -33,42 +75,12 @@
 						<span class="lbl"></span>
 					</label>
 				</td>
-				<td>{{$value['title']}}</td>				
-				<td>
-					<a data-toggle="modal" data-target="#myModal{{$value['id']}}">
-  					Xem nội dung
-					</a>	
-					<div class="modal fade" id="myModal{{$value['id']}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-					  <div class="modal-dialog" role="document">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					        <h4 class="modal-title" id="myModalLabel">Nội dung</h4>
-					      </div>
-					      <div class="modal-body">
-					        {{$value['content']}}
-					      </div>
-					      <div class="modal-footer">
-					        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					        
-					      </div>
-					    </div>
-					  </div>
-					</div>
-				</td>
-				<td>{{$value['author']}}</td>
-				
-				<td>{{HTML::image('uploads/training/'.$value['thumbnail'],null,array('style' => 'width:100px'))}}</td>
+				<td><a target="_blank" href="{{URL::action('TrainingController@detail_doc',$value['id'])}}">{{$value['title']}}</a></td>
 				<td>{{$value['view']}}</td>
 				<td>{{$value['download']}}</td>
-				<td>{{$value['store']}}</td>
-				 
-
-				 
-				 
 				<td>
 					<a class="btn btn-xs btn-info" title="sửa"  href="{{URL::to('admin/training/edit-document/'.$value['id'].'')}}"><i class="ace-icon fa fa-pencil bigger-120"></i></a>
-					<div style="padding:10px"></div>
+					 
 					 <a class="btn btn-xs btn-danger" title="Xóa" href="{{URL::to('admin/training/delete-document/'.$value['id'].'')}}"><i class="ace-icon fa fa-trash-o bigger-120"></i></a>
 				</td>
 				</tr>
