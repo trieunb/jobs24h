@@ -10,7 +10,7 @@
 	<div class="clearfix"></div>
 	<div class="infobox infobox-green">
 		<div class="infobox-icon">
-			<i class="ace-icon fa fa-user"></i>
+			<i class="ace-icon fa fa-bank"></i>
 		</div>
 
 		<div class="infobox-data">
@@ -23,7 +23,7 @@
 	</div>	
 	<div class="infobox infobox-blue">
 		<div class="infobox-icon">
-			<i class="ace-icon fa fa-group"></i>
+			<i class="ace-icon fa fa-credit-card"></i>
 		</div>
 
 		<div class="infobox-data">

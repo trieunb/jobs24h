@@ -13,7 +13,7 @@
 
           <div class="content-chitiet">
           
-            <h2>{{$doc['title']}}</h2>
+            <h2 style="line-height: 30px;">{{$doc['title']}}</h2>
             <p><i class="glyphicon glyphicon-eye-open"></i> Lượt xem : {{$doc['view']}}</p>
               <p><i class="glyphicon glyphicon-save"></i> Download : {{$doc['download']}}</p>
 

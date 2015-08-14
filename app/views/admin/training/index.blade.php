@@ -14,7 +14,8 @@
 									<div class="col-sm-12 infobox-container">
 										<div class="infobox infobox-green">
 											<div class="infobox-icon">
-												<i class="ace-icon fa fa-user"></i>
+												
+												<i class="ace-icon fa fa-bank"></i>
 											</div>
 
 											<div class="infobox-data">
@@ -29,7 +30,7 @@
 
 										<div class="infobox infobox-blue">
 											<div class="infobox-icon">
-												<i class="ace-icon fa fa-group"></i>
+												<i class="ace-icon fa fa-file-pdf-o"></i>
 											</div>
 
 											<div class="infobox-data">
@@ -47,7 +48,7 @@
 
 										<div class="infobox infobox-pink">
 											<div class="infobox-icon">
-												<i class="ace-icon fa fa-eye"></i>
+												<i class="ace-icon fa fa-users"></i>
 											</div>
 
 											<div class="infobox-data">
@@ -61,7 +62,7 @@
 
 										<div class="infobox infobox-red">
 											<div class="infobox-icon">
-												<i class="ace-icon fa fa-file"></i>
+												<i class="ace-icon fa fa-child"></i>
 											</div>
 
 											<div class="infobox-data">
@@ -73,7 +74,7 @@
 
 										<div class="infobox infobox-orange2">
 											<div class="infobox-icon">
-												<i class="ace-icon fa fa-envelope"></i>
+												<i class="ace-icon fa fa-calendar-o"></i>
 											</div>
 
 											<div class="infobox-data">

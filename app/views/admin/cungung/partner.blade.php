@@ -6,7 +6,7 @@
 	<div class="clearfix"></div>
 	<div class="infobox infobox-green">
 		<div class="infobox-icon">
-			<i class="ace-icon fa fa-user"></i>
+			<i class="ace-icon fa fa-star-o"></i>
 		</div>
 
 		<div class="infobox-data">

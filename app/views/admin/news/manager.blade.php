@@ -1,12 +1,13 @@
 @extends('layouts.admin')
 @section('title')Quản lý tin tức người tìm việc @stop
-@section('page-header') Quản lý tin tức người tìm việc, cẩm nang người tìm việc, cẩm nang nhà tuyển dụng @stop
+@section('page-header') Quản lý tin tức người tìm việc, cẩm nang người tìm việc, cẩm nang nhà tuyển dụng trong phần Người Tìm Việc
+@stop
 @section('content')
 @include('includes.notifications')
 	<div class="clearfix"></div>
 	<div class="infobox infobox-green">
 		<div class="infobox-icon">
-			<i class="ace-icon fa fa-user"></i>
+			<i class="ace-icon fa fa-newspaper-o"></i>
 		</div>
 
 		<div class="infobox-data">
@@ -19,7 +20,7 @@
 
 	<div class="infobox infobox-blue">
 		<div class="infobox-icon">
-			<i class="ace-icon fa fa-group"></i>
+			<i class="ace-icon fa fa-mortar-board"></i>
 		</div>
 
 		<div class="infobox-data">
@@ -35,7 +36,7 @@
 
 	<div class="infobox infobox-pink">
 		<div class="infobox-icon">
-			<i class="ace-icon fa fa-eye"></i>
+			<i class="ace-icon fa fa-mortar-board"></i>
 		</div>
 
 		<div class="infobox-data">
