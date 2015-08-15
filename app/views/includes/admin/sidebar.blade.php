@@ -140,6 +140,13 @@
 
 						<ul class="submenu">
 							<li class="">
+								<a href="{{ URL::route('employers.report') }}">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Thống kê
+								</a>
+								<b class="arrow"></b>
+							</li>
+							<li class="">
 								<a href="{{ URL::route('admin.employers.index') }}">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Danh sách

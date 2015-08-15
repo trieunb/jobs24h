@@ -10,11 +10,16 @@ class AdminController extends \BaseController {
 	public function index()
 	{
 		$ntdLogin = NTD::whereRaw("DATE_FORMAT(last_login, '%Y-%m-%d') = '".date('Y-m-d')."'")->count();
+		$totalNTD = NTD::count();
 		$ntvLogin = NTV::whereRaw("DATE_FORMAT(last_login, '%Y-%m-%d') = '".date('Y-m-d')."'")->count();
+		$totalNTV = NTV::count();
 		$jobApproval = Job::where('status', 2)->count();
 		$cvApproval = Resume::where('trangthai', 2)->count();
+		$totalPost = TrainingPost::whereIn('id', array(10,11,12))->count();
+		$totalTraining = Training::count();
+		$totalDoc = TrainingDocument::count();
 
-		return View::make('admin.dashboard', compact('ntdLogin', 'ntvLogin', 'jobApproval', 'cvApproval'));
+		return View::make('admin.dashboard', compact('ntdLogin', 'ntvLogin', 'jobApproval', 'cvApproval', 'totalNTD', 'totalNTV', 'totalPost', 'totalTraining', 'totalDoc'));
 	}
 
 

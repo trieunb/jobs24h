@@ -166,4 +166,9 @@ class EmployerController extends \BaseController {
 		return Redirect::back()->withSuccess('Xóa thành công NTD');
 	}
 
+	public function report()
+	{
+		return View::make('admin.employers.report');
+	}
+
 }

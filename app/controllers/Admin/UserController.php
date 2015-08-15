@@ -61,6 +61,9 @@ class UserController extends \BaseController {
 		{
 			return Redirect::back()->withInput()->withErrors($validator);
 		} else {
+			$params['permission'] = isset($params['permission'])?$params['permission']:array();
+			$params['permissions'] = json_encode($params['permission']);
+			unset($params['permission']);
 			$params['password'] = DTT\Sentry\Hashing\Sha256Hasher::hash($params['password']);
 			$user = AdminUser::create($params);
 			if($user)
@@ -113,7 +116,8 @@ class UserController extends \BaseController {
 	public function update($id)
 	{
 		//
-		$req = Input::only('username', 'email', 'password');
+		$req = Input::only('username', 'email', 'password', 'permission');
+		$json = json_encode($req['permission']);
 		$user = AdminAuth::findUserById($id);
 		if( ! $user)
 		{
@@ -131,6 +135,7 @@ class UserController extends \BaseController {
 			}
 			$user->username = $req['username'];
 			$user->email = $req['email'];
+			$user->permissions = $json;
 			if($req['password'] != NULL) $user->password = DTT\Sentry\Hashing\Sha256Hasher::hash($req['password']);
 			if($user->save())
 			{
