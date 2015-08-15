@@ -660,7 +660,7 @@ class TrainController extends \BaseController {
 							unlink($path);
 						$fileName = rand(11111,99999).'.'.$output['tmp_name'];
 						 $logo->move('uploads/training/', $fileName);
-						 $path_logo=$fileName;
+						 $path_logo=$fileName;  
 					}
 			}
 			else 
