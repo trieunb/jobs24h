@@ -542,7 +542,18 @@ class TrainController extends \BaseController {
 		if ($document==null) {
 			return Redirect::back()->withErrors('Chưa có file của tài liệu');
 		}
+		else{
 
+				$validator_doc=Validator::make(
+										    // Value for reqfile
+									    array('reqfile' => $document),
+									    // Validator rule for reqfile
+									    array('reqfile' => 'mimes:rar,pdf,doc,docx,zip')
+									);
+				if ($validator_doc->fails()) {
+					return Redirect::back()->withErrors('Chỉ hổ trợ pdf, doc, docx, rar, zip');
+				}
+			}
 		 
 
 		if ($logo!=null) { // nếu chọn image thì upload lên
@@ -629,6 +640,8 @@ class TrainController extends \BaseController {
 			$insert_data=TrainingDocument::find($id);
 
 
+
+
 			if($logo!=null) // xét thumnail
 			{
 
@@ -655,6 +668,18 @@ class TrainController extends \BaseController {
 
 			if($file_document!=null) // xét file
 			{
+
+				$validator_doc=Validator::make(
+										    // Value for reqfile
+									    array('reqfile' => $file_document),
+									    // Validator rule for reqfile
+									    array('reqfile' => 'mimes:rar,pdf,doc,docx,zip')
+									);
+				if ($validator_doc->fails()) {
+					return Redirect::back()->withErrors('Chỉ hổ trợ pdf, doc, docx, rar, zip');
+				}
+
+
 				$path=str_replace(URL::to('/'), public_path(), $insert_data['store']);// xóa ảnh trước khi thêm
 					if(File::exists($path))
 					unlink($path);
