@@ -24,6 +24,22 @@
 			
 		</div>
 		<div class="form-group">
+			<label for="inputFullname" class="col-sm-2 control-label">Chức năng:</label>
+			<div class="col-sm-6">
+			<?php
+			?>
+				@foreach(Config::get('custom_admin_group.permission') as $key=>$val )
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="permission[]" value="{{ $key }}">
+						{{ $val }}
+					</label>
+				</div>
+				@endforeach
+			</div>
+			
+		</div>
+		<div class="form-group">
 			<div class="col-sm-10 col-sm-offset-2">
 				<button type="submit" class="btn btn-primary">Thêm</button>
 			</div>

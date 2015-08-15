@@ -10,6 +10,7 @@ Route::group(array('prefix'=>'admin'), function() {
 		Route::get('jobseekers/datatables', array('as'=>'jobseekers.datatables', 'uses'=>'JobSeekerController@datatables'));
 		Route::resource('jobseekers', 'JobSeekerController');
 		
+		Route::get('employers/report', array('as'=>'employers.report', 'uses'=>'EmployerController@report'));
 		Route::get('employers/datatables', array('as'=>'employers.datatables', 'uses'=>'EmployerController@datatables'));
 		Route::resource('employers', 'EmployerController');
 
