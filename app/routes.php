@@ -28,3 +28,7 @@ Route::get('/' .$locale, function() use($locale)
 	die();
 });
 
+// App::missing(function($exception)
+// {
+//     return Response::view('missing', array(), 404);
+// });

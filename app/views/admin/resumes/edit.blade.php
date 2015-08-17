@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title')Add new Resume @stop
+@section('title')Edit Resume @stop
 @section('page-header')Chỉnh sửa hồ sơ @stop
 @section('content')
 	{{ Form::open(array('method'=>'PUT', 'action'=> array('admin.resumes.update', $resume->id), 'class'=>'form form-horizontal' ) ) }}

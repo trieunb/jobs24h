@@ -7,6 +7,7 @@ Route::group(array('prefix'=>'admin'), function() {
 		Route::get('profile', array('as'=>'admin.profile', 'uses'=>'AdminController@profile'));
 		Route::get('users/datatables', array('as'=>'users.datatables', 'uses'=>'UserController@datatables'));
 		Route::resource('users', 'UserController');
+
 		Route::get('jobseekers/datatables', array('as'=>'jobseekers.datatables', 'uses'=>'JobSeekerController@datatables'));
 		Route::resource('jobseekers', 'JobSeekerController');
 		
@@ -15,15 +16,33 @@ Route::group(array('prefix'=>'admin'), function() {
 		Route::resource('employers', 'EmployerController');
 
 		Route::get('jobs/datatables', array('as'=>'jobs.datatables', 'uses'=>'AJobController@datatables'));
-		Route::resource('jobs', 'AJobController');
 
 		
+		Route::resource('jobs', 'AJobController', [
+		    'only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']
+		]);
+		Route::controller('jobs', 'AJobController', array(
+			'getReport'	=>	'admin.jobs.report',
+			'getWaiting'	=>	'admin.jobs.waiting',
+			'getEditWaiting'	=>	'admin.jobs.editwaiting',
+			'getVipWaiting'	=>	'admin.jobs.vipwaiting',
+			'getVipExp'		=>	'admin.jobs.vipexp',
+			'postAjax'		=>	'admin.jobs.ajax',
+		));
+
 		Route::get('resumes/creates/{id}', array('as'=>'resumes.creates', 'uses'=>'ResumeController@creates'));
 		Route::get('resumes/{id}/download', array('as'=>'resumes.download', 'uses'=>'ResumeController@download'));
 		Route::get('resumes/datatables', array('as'=>'resumes.datatables', 'uses'=>'ResumeController@datatables'));
 		Route::post('resumes/search', array('as'=>'resumes.search', 'uses'=>'ResumeController@search'));
 		
-		Route::resource('resumes', 'ResumeController');
+		
+		Route::get('resumes/report', ['as'=>'admin.resumes.report', 'uses'=>'ResumeController@getReport']);
+		Route::get('resumes/not-active', ['as'=>'admin.resumes.notactive', 'uses'=>'ResumeController@getNotActive']);
+		Route::get('resumes/edit-active', ['as'=>'admin.resumes.editactive', 'uses'=>'ResumeController@getEditActive']);
+		Route::resource('resumes', 'ResumeController', [
+		    'only' => ['index', 'show', 'create', 'store', 'edit', 'update', 'destroy']
+		]);
+		
 
 		// ROUTE TIN TỨC
 		Route::controller('news', 'NewsController', array(

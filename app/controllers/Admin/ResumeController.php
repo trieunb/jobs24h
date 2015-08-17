@@ -325,4 +325,17 @@ class ResumeController extends \BaseController {
 		return Redirect::route('admin.resumes.index')->with('success', 'Xóa CV thành công');
 	}
 
+	public function getReport()
+	{
+		return View::make('admin.comming');
+	}
+	public function getNotActive()
+	{
+		return View::make('admin.comming');
+	}
+	public function getEditActive()
+	{
+		return View::make('admin.comming');
+	}
+
 }

@@ -204,5 +204,58 @@ class AJobController extends \BaseController {
 		$job = Job::where('id', $id)->delete();
 		return Redirect::back()->withSuccess('Xóa tin đăng thành công');
 	}
+	public function getReport()
+	{
+		$totalJobs = Job::count();
+		$totalWaiting = Job::where('status', 2)->where('vip_from', '0000-00-00')->count();
+		$totalVipWaiting = Job::where('status', 2)->where('vip_from', '<>', 0)->count();
+		$totalVipExpring = Job::whereRaw('vip_to >= CURDATE() - INTERVAL 7 DAY AND vip_to >= CURDATE()')->where('vip_from', '<>', '0000-00-00')->count();
+		$totalVipExp = Job::whereRaw('vip_to <= CURDATE()')->where('vip_to', '<>', '0000-00-00')->count();
+		return View::make('admin.jobs.report', compact('totalJobs', 'totalWaiting', 'totalVipWaiting', 'totalVipExpring', 'totalVipExp'));
+	}
+	public function getWaiting()
+	{
+		$jobs = Job::where('status', 2)->with(array('ntd' => function($q){$q->with('company');} ))->where('vip_from', '0000-00-00')->paginate(10);
+		return View::make('admin.jobs.waiting', compact('jobs'));
+	}
+	public function postWaiting()
+	{
+		if(Input::get('action') == 'accept')
+		{
+			if(count(Input::get('jobids')))
+			{
+				$check = Job::whereIn('id', Input::get('jobids'))->update(['status'=> 1]);
+			}
+		} else {
+			if(count(Input::get('jobids')))
+			{
+				$check = Job::whereIn('id', Input::get('jobids'))->update(['status'=> 3]);
+			}
+		}
+		return Redirect::back()->withSuccess('Thay đổi thành công');
+	}
+	public function getEditWaiting()
+	{
+
+	}
+	public function getVipWaiting()
+	{
+		$jobs = Job::where('status', 2)->where('vip_from', '<>', 0)->with(array('ntd' => function($q){$q->with('company');} ))->paginate(10);
+		return View::make('admin.jobs.vipwaiting', compact('jobs'));
+	}
+	public function getVipExp()
+	{
+		$jobs = Job::where('vip_from', '<>', 0)->with(array('ntd' => function($q){$q->with('company');} ))->whereRaw('vip_to >= CURDATE() - INTERVAL 7 DAY AND vip_to >= CURDATE()')->paginate(10);
+		return View::make('admin.jobs.vipexp', compact('jobs'));
+	}
+	public function postAjax()
+	{
+		extract($_REQUEST);
+		if($action == 'accept_job')
+		{
+			$job = Job::where('id', $jobid)->update(['status'=>$status]);
+			return json_encode(['has'=>true]);
+		}
+	}
 
 }

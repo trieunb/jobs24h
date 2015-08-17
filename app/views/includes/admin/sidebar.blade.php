@@ -82,6 +82,7 @@
 						<b class="arrow"></b>
 
 						<ul class="submenu">
+							
 							<li class="">
 								<a href="{{ URL::route('admin.jobseekers.index') }}">
 									<i class="menu-icon fa fa-caret-right"></i>
@@ -107,6 +108,27 @@
 								<b class="arrow"></b>
 
 								<ul class="submenu">
+									<li class="">
+										<a href="{{ URL::route('admin.resumes.report') }}">
+											<i class="menu-icon fa fa-caret-right"></i>
+											Thống kê
+										</a>
+										<b class="arrow"></b>
+									</li>
+									<li class="">
+										<a href="{{ URL::route('admin.resumes.notactive') }}">
+											<i class="menu-icon fa fa-caret-right"></i>
+											HS mới chưa duyệt
+										</a>
+										<b class="arrow"></b>
+									</li>
+									<li class="">
+										<a href="{{ URL::route('admin.resumes.editactive') }}">
+											<i class="menu-icon fa fa-caret-right"></i>
+											HS sửa chưa duyệt
+										</a>
+										<b class="arrow"></b>
+									</li>
 									<li class="">
 										<a href="{{ URL::route('admin.resumes.index') }}">
 											<i class="menu-icon fa fa-plus purple"></i>
@@ -171,6 +193,38 @@
 								<b class="arrow"></b>
 
 								<ul class="submenu">
+									<li class="">
+										<a href="{{ URL::route('admin.jobs.report') }}">
+											<i class="menu-icon fa fa-bar-chart purple"></i>
+											Thống Kê
+										</a>
+
+										<b class="arrow"></b>
+									</li>
+									<li class="">
+										<a href="{{ URL::route('admin.jobs.waiting') }}">
+											<i class="menu-icon fa fa-clock-o purple"></i>
+											Tin mới chưa được duyệt
+										</a>
+
+										<b class="arrow"></b>
+									</li>
+									<li class="">
+										<a href="{{ URL::route('admin.jobs.vipwaiting') }}">
+											<i class="menu-icon fa fa-check-square-o purple"></i>
+											Tin VIP chưa duyệt
+										</a>
+
+										<b class="arrow"></b>
+									</li>
+									<li class="">
+										<a href="{{ URL::route('admin.jobs.vipexp') }}">
+											<i class="menu-icon fa fa-bell-o purple"></i>
+											Tin VIP trả phí sắp hết hạn
+										</a>
+
+										<b class="arrow"></b>
+									</li>
 									<li class="">
 										<a href="{{ URL::route('admin.jobs.index') }}">
 											<i class="menu-icon fa fa-plus purple"></i>
