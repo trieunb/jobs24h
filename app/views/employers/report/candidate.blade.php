@@ -12,7 +12,7 @@
 						<h2 class="text-blue">{{ HTML::image('assets/ntd/images/list.png') }} {{ $btitle }}</h2>
 					</div>
 					<div class="filter">
-						<span>Hiển thi <span class="text-orange">{{ $orders->getFrom() }}</span> - <span class="text-orange">{{ $orders->getTo() }}</span> của <span class="text-orange">{{ $orders->getTotal() }}</span> đơn hàng.</span>
+						<span>Hiển thị <span class="text-orange">{{ $orders->getFrom() }}</span> - <span class="text-orange">{{ $orders->getTo() }}</span> của <span class="text-orange">{{ $orders->getTotal() }}</span> đơn hàng.</span>
 					</div>
 					<table class="table table-blue-bordered table-bordered rs-table">
 						<thead>

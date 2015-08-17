@@ -5,12 +5,16 @@ class ReportController extends \Controller {
 	public function __construct()
 	{
 		$newest = Order::where('ntd_id', Auth::id())->first();
+
 		View::share('newest', $newest);
+		$company=\Company::whereNtdId(Auth::id())->first();
+		View::share('company',$company);
 		$jobs = Job::where('ntd_id', Auth::id())->where('is_display', 1)->where('hannop', '>=', date('Y-m-d'))->count();
 		View::share('active_job', $jobs);
 	}
 	public function getBaoCaoDichVuHoSo($type = false)
 	{
+
 		if($type == 1) {
 			$btitle = 'Danh sách gói hồ sơ đang sử dụng';
 			$orders = Order::where('ntd_id', Auth::id())->where('ended_date', '>=', DB::raw('NOW()'))->orderBy('id', 'desc')->paginate(10);

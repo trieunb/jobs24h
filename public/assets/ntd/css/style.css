@@ -486,8 +486,8 @@ abbr.question {border: 1px solid orange; color: orange; padding: 0px 5px;display
   padding: 40px;
 }
 
-.menu-tab{background: #fff;  position: relative; margin: 0px 0 90px; width: 100%; /* padding: 15px; */}
-.menu-tab ul li {float: left;padding: 10px 0;margin-right: 45px;}
+.menu-tab{background: #fff;  position: relative; margin: 0px 0 90px; width: 100%; /* padding: 15px; */font-weight: bold;}
+.menu-tab ul li {float: left;padding: 10px 0;margin-right: 39px;}
 .menu-tab ul li ul li {padding: 8px 0;}
 .menu-tab ul li.active a, .menu-tab ul li a:hover{background: #00b9f2; color: #fff; }
 .menu-tab ul li.active li a {background: transparent;}

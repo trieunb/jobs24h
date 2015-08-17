@@ -15,4 +15,5 @@ class RSFolder extends \Eloquent {
 	{
 		return $this->belongsTo('Resume', 'cv_id');
 	}
+	 
 }

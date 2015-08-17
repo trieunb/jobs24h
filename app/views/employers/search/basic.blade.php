@@ -57,7 +57,7 @@
 							</div>
 					</form>
 					<div class="col-sm-7 col-sm-offset-5 advance-search">
-							<a href="#">Tạo thông báo hồ sơ</a>
+							<!-- <a href="#">Tạo thông báo hồ sơ</a> -->
 							<a href="{{ URL::route('employers.search.advance') }}">Mở rộng tiêu chí tìm kiếm</a>
 						</div>
 					@include('employers.search.all_result')

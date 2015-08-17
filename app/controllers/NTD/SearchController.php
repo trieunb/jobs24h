@@ -229,7 +229,13 @@ class SearchController extends \Controller {
 	}
 	public function getXemHoSo($id)
 	{
+		 
+		 
 		$resume = Resume::where('id', $id)->with('cvcategory')->with('location')->first();
+		 
+		$employer = Auth::id();
+		$history=\SearchHistory::whereNtdId($employer)->orderBy('created_at','desc')->first();
+		 
 		if(!$resume)
 		{
 			return Redirect::route('employers.search.basic');
@@ -245,9 +251,9 @@ class SearchController extends \Controller {
 					$dir = Config::get('app.upload_path') . 'jobseekers/cv/' . $file;
 					if(File::isFile($dir)) $pdf = true;
 					else $pdf = false;
-					return View::make('employers.search.resume_info_upload', compact('resume', 'pdf'));
+					return View::make('employers.search.resume_info_upload', compact('resume', 'pdf','history'));
 				} else {
-					return View::make('employers.search.resume_info', compact('resume'));
+					return View::make('employers.search.resume_info', compact('resume','history'));
 				}
 			} else {
 				$file = str_replace(['.doc', '.docx', '.jpg'], '.pdf', $resume->file_name);
@@ -255,7 +261,7 @@ class SearchController extends \Controller {
 				if(File::isFile($dir)) $pdf = true;
 				else $pdf = false;
 				
-				return View::make('employers.search.resume_info_nologin', compact('resume', 'pdf'));
+				return View::make('employers.search.resume_info_nologin', compact('resume', 'pdf','history'));
 			}
 		}
 	}
@@ -327,10 +333,20 @@ class SearchController extends \Controller {
 			$data['send_content'] = Input::get('send_content');
 			$data['cv_id'] = Input::get('cv_id');
 			$resume = Resume::where('id', Input::get('cv_id'))->first();
+			if($resume->file_name!=null)
+			{
+
+				$file=public_path().'/uploads/jobseekers/cv/'.$resume->file_name;
+				Mail::send('employers.search.mail_attact', array('send_email'=> Input::get('send_email'), 'send_content'=> Input::get('send_content'), 'ntd_email'=>Auth::getUser()->email, 'firstname'=>Input::get('send_email'), $resume->file_name), function($message){
+		        $message->to(Input::get('send_email'), Input::get('send_email'))->subject('[VNJOBS.VN] ' . Input::get("send_subject"))->attach($file);
+		    });
+			}
+
 			//return View::make('employers.search.mail', array('send_email'=> Input::get('send_email'), 'send_content'=> Input::get('send_content'), 'ntd_email'=>Auth::getUser()->email, 'firstname'=>Input::get('send_email'), 'resume'=> $resume));
+			else{
 			Mail::send('employers.search.mail', array('send_email'=> Input::get('send_email'), 'send_content'=> Input::get('send_content'), 'ntd_email'=>Auth::getUser()->email, 'firstname'=>Input::get('send_email'), 'resume'=> $resume), function($message){
 		        $message->to(Input::get('send_email'), Input::get('send_email'))->subject('[VNJOBS.VN] ' . Input::get("send_subject"));
-		    });
+		    });}
 			return Response::json(['has'=>true]);
 			return Response::json(['has'=>false]);
 		}

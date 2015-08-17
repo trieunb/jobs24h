@@ -38,6 +38,7 @@ Route::group(array('prefix'=>$locale), function() {
 				'getReport'		=>	'employers.candidates.report',
 				
 				'getTest'		=>	'employers.candidates.test',
+				'postXoaTatCaHoSoDaChon'=>'employers.candidates.deleteAll',
 			));
 
 			Route::controller('tai-khoan', 'AccountController', array(

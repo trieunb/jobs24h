@@ -248,7 +248,7 @@ class AccountController extends \Controller {
 	{
 		return View::make('employers.account.respond_create_auto');
 	}
-	public function postCreateLetterAuto()
+	public function postTaoThuTuDong()
 	{
 		$validator = new \App\DTT\Forms\EmployerAddLetter;
 		if($validator->fails())

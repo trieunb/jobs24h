@@ -110,7 +110,7 @@ class CandidateController extends \Controller {
 			return Redirect::back()->with('success', 'Xóa thành công');
 		}
 	}
-	public function postFolder()
+	public function postThuMuc($id = false)
 	{
 		if(Input::get('act') == 'luu') // luu thu muc
 		{
@@ -145,10 +145,18 @@ class CandidateController extends \Controller {
 		}
 		if(Input::get('act') == 'xoaall') // luu thu muc
 		{
-			$check = RSFolder::whereIn('id', Input::get('valid'))
-			->where('ntd_id', Auth::id())->lists('id');
-			RSFolder::destroy($check);
-			return Redirect::back()->with('success', 'Xóa thành công');
+
+			if (Input::get('valid')==null) {
+				return Redirect::back()->withInput()->withErrors('Chọn mục để xóa'); 
+			}
+			else
+			{
+				$check = RSFolder::whereIn('id', Input::get('valid'))
+				->where('ntd_id', Auth::id())->lists('id');
+
+				RSFolder::destroy($check);
+				return Redirect::back()->with('success', 'Xóa thành công');
+			}
 		}
 	}
 	public function getQuanLyThuMuc()
@@ -228,4 +236,8 @@ class CandidateController extends \Controller {
 		$detail = \OrderDetail::where('ntd_id', Auth::id())->orderBy('id', 'desc')->paginate(10);
 		return View::make('employers.candidates.viewed', compact('detail'));
 	}
+
+
+
+
 }

@@ -35,7 +35,7 @@
 				<li class="{{ HTML::active(['employers.candidates.*'], 'selected') }}"><a href="{{ URL::route('employers.candidates.job', 'all') }}">Quản lý ứng viên</a></li>
 				<li class="{{ HTML::active(['employers.report.candidates'], 'selected') }}"><a href="{{ URL::route('employers.report.candidates') }}">Báo cáo dịch vụ hồ sơ</a></li>
 				<li class="{{ HTML::active(['employers.report.alert'], 'selected') }}"><a href="{{ URL::route('employers.report.alert') }}">Thông báo</a></li>
-				<li class="{{ HTML::active(['employers.report.respond'], 'selected') }}"><a href="{{ URL::route('employers.report.respond') }}">Phản hồi của UV</a></li>
+				<li class="{{ HTML::active(['employers.report.respond'], 'selected') }}"><a href="{{ URL::route('employers.report.respond') }}">Phản hồi của ứng viên</a></li>
 				<!-- <li class="{{ HTML::active(['employers.report.test'], 'selected') }}"><a href="{{ URL::route('employers.report.test') }}">Bài kiểm tra</a></li> -->
 				</div>
 			</ul>
@@ -58,12 +58,13 @@
 		<li class="{{ HTML::active(['employers.hiring.*']) }}">
 			<a href="#">Tư vấn tuyển dụng</a>
 			<ul>
-				<div class="container">
+				<!-- <div class="container">
 				<li class="selected"><a href="#">Việc làm của tôi</a></li>
 				<li><a href="#">Resume xem</a></li>
 				<li><a href="#">Các ứng viên của tôi</a></li>
 				<li><a href="#">Tư vấn tuyển dụng</a></li>
-				</div>
+				</div> -->
+				<li><a href="">&nbsp;</a></li>
 			</ul>
 		</li>
 	</ul>

@@ -1,5 +1,5 @@
 <div class="widget row">
-	<h3>Công ty TNHH Minh Phúc <a href="{{ URL::route('employers.account.index') }}" class="text-blue decoration">Sửa</a></h3>
+	<h3>{{$company['company_name']}} <a href="{{ URL::route('employers.account.index') }}" class="text-blue decoration">Sửa</a></h3>
 	<ul class="menu-images-icons">
 		<li>Việc làm đang đăng: <span class="text-orange">{{ $active_job }}</span> vị trí</li>
 		<li>Việc làm chưa sử dụng <span class="text-orange">0</span> vị trí.</li>

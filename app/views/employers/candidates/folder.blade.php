@@ -1,6 +1,7 @@
 @extends('layouts.employer')
 @section('title') Danh sách hồ sơ đã lưu @stop
 @section('content')
+
 <section class="boxed-content-wrapper clearfix">
 		<div class="container">
 			<aside id="sidebar" class="col-sm-3">
@@ -15,7 +16,7 @@
 					<div class="heading-image">
 						<h2 class="text-orange">Danh sách hồ sơ đã lưu
 						@if($folder_id != 'all')
-							tại {{ EFolder::find($folder_id)->folder_name }}
+							tại <p style="    word-break: break-all;">{{ EFolder::find($folder_id)->folder_name }}</p>
 						@endif
 						</h2>
 					</div>
@@ -68,7 +69,7 @@
 										@endforeach
 									@endif
 									<br>
-									Thư mục: {{ HTML::link(URL::route('employers.candidates.folder', $ap->folder->id), $ap->folder->folder_name) }}
+									Thư mục: {{ HTML::link(URL::route('employers.candidates.folder', $ap->folder->id), $ap->folder->folder_name,array('style'=>'word-break: break-all;')) }}
 								</td>
 								<td>
 									Ngày tạo: {{ date('Y-m-d', strtotime($ap->resume->created_at)) }}<br>
