@@ -13,14 +13,14 @@
 				</div>
 					<p><strong>Lưu ý</strong>: Bạn không xem được việc làm đã hết thời hạn đăng tuyển hoặc tạm ngưng nhận hồ sơ.
             		</p>
-					<p>
+					<!-- <p>
 						<a id="a_selectall" class="text-blue decoration" >Chọn tất cả</a> | 
 						<a id="a_deselectall" class="text-orange decoration">Bỏ chọn tất cả</a>
 					</p>
 					<p><strong>Với việc làm đã chọn:</strong></p>
 					<p class="clearfix">
 						{{Form::submit('Xóa', array('class'=>'btn-delete btn bg-orange btn-lg'))}}
-					</p>
+					</p> -->
 					<table class="table table-striped table-hover table-bordered rs-table">
 								<thead>
 									<tr>
