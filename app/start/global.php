@@ -99,3 +99,5 @@ require app_path().'/routes/training.php';
 require app_path().'/routes/cungunglaodong.php';
 require app_path().'/routes/hiring.php';
 require app_path().'/routes/product.php';
+require app_path().'/routes/category.php';
+require app_path().'/routes/province.php';
