@@ -321,6 +321,7 @@
 		 	</div>
 		 	<style type="text/css">
 		 	.img1{height: 295px;overflow: hidden;}
+		 	.img1 img{height: auto !important}
 		 	</style>
 		 	<script>
 		 	$(function () {
