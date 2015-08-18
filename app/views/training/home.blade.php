@@ -302,13 +302,14 @@
 		 		<div class="clearfix"></div>
 		 		<div class="main6">
 		 			<h2>Học viên tiêu biểu</h2>
-		 			<h3>Một số hình ảnh của học viện và giảng viên được chúng tôi lưu trữ lại</h3>
+		 			<h3>Một số hình ảnh của học viên và giảng viên được chúng tôi lưu trữ lại</h3>
 
 					<ul>
 								@foreach($people[1] as $hvtb)
 					        	<li>
+					        		<div class="img1">
 					        		{{HTML::image(URL::to('uploads/training/'.$hvtb['thumbnail'].''))}}
-					        	 
+					        	 	</div>
  					        		 <p>{{$hvtb['name']}}</p>
 					        	</li>
 					        	@endforeach
@@ -318,6 +319,9 @@
 				</div>
 		 	</div>
 		 	</div>
+		 	<style type="text/css">
+		 	.img1{height: 295px;overflow: hidden;}
+		 	</style>
 		 	<script>
 		 	$(function () {
   			$('[data-toggle="tooltip"]').tooltip()
