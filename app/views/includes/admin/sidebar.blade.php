@@ -386,6 +386,64 @@
 						</ul>
 					</li><!--end- cungunglaodong-->
 
+					<!--Ngành nghề-->
+					<li class="{{ HTML::active(['admin/category','admin/category/*']) }}">
+						<a href="{{URL::to('admin/category')}}" class="dropdown-toggle">
+							<i class="menu-icon fa fa-list-alt"></i>
+							<span class="menu-text"> Ngành nghề </span>
+
+							<b class="arrow fa fa-angle-down"></b>
+						</a>
+
+						<b class="arrow"></b>
+
+						<ul class="submenu">
+							<li class="{{ HTML::active(['admin/category/']) }}">
+								<a href="{{ URL::to('admin/category/') }}">
+									<i class="menu-icon fa fa-list-ol purple"></i>
+									Danh sách
+								</a>
+								<b class="arrow"></b>
+							</li>
+							<li class="{{ HTML::active(['admin/category/add']) }}">
+								<a href="{{ URL::to('admin/category/add') }}">
+									<i class="menu-icon fa fa-plus purple"></i>
+									Thêm mới
+								</a>
+								<b class="arrow"></b>
+							</li>
+						</ul>
+					</li><!--end- category-->
+
+					<!--Địa điểm-->
+					<li class="{{ HTML::active(['admin/province','admin/province/*']) }}">
+						<a href="{{URL::to('admin/province')}}" class="dropdown-toggle">
+							<i class="menu-icon fa fa-map-marker"></i>
+							<span class="menu-text"> Địa điểm </span>
+
+							<b class="arrow fa fa-angle-down"></b>
+						</a>
+
+						<b class="arrow"></b>
+
+						<ul class="submenu">
+							<li class="{{ HTML::active(['admin/province/']) }}">
+								<a href="{{ URL::to('admin/province/') }}">
+									<i class="menu-icon fa fa-list-ol purple"></i>
+									Danh sách
+								</a>
+								<b class="arrow"></b>
+							</li>
+							<li class="{{ HTML::active(['admin/province/add']) }}">
+								<a href="{{ URL::to('admin/province/add') }}">
+									<i class="menu-icon fa fa-plus purple"></i>
+									Thêm mới
+								</a>
+								<b class="arrow"></b>
+							</li>
+						</ul>
+					</li><!--end- province-->
+					
 					<!--start training-->
 					<li class="{{ HTML::active(['news.index*','news.index*']) }}">
 						<a href="#" class="dropdown-toggle">
