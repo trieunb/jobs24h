@@ -37,7 +37,7 @@ https://www.youtube.com/channel/UCDIqPT9Nmet6zy67RtUJNiA -->
 					</ul>
 				</div>
 				<div class="col-sm-3">
-					<h3>Website đối tác</h3>
+					<h3>Liên kết hữu ích</h3>
 					<ul class="arrow-right-dark">
 						<li><a href="#">Vieclam.Tuoitre.Vn</a></li>
 						<li><a href="#">Affiliate Program</a></li>
