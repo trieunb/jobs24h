@@ -311,7 +311,7 @@ a.decoration,a.decoration:hover, .decoration a, .decoration a:hover {text-decora
 
 
 .partners h2 {margin: 20px 0 40px;}
-.partners {background: url(../images/bg_partners.png) no-repeat; height: 546px;}
+.partners {background: url(../images/bg_partners.png) no-repeat top center; height: 546px;}
 .partners ul li {margin: 0 5px 20px 0; width: 24.5%;}
 
 .customer-review {padding: 40px 0 0;}
