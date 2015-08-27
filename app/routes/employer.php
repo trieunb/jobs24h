@@ -102,7 +102,8 @@ Route::group(array('prefix'=>$locale), function() {
 
 			Route::controller('/', 'AuthController', array(
 				'getDangNhap'		=>	'employers.login',
-				'getDangKy'	=>	'employers.register'
+				'getDangKy'	=>	'employers.register',
+				'getKichHoat' =>'employers.active'
 			));
 		});
 	});
