@@ -92,6 +92,8 @@ Route::group(array('prefix'=>$locale), function() {
 		Route::get('/dang-xuat', array('as'=>'jobseekers.logout', 'uses'=>'JobSeekerAuth@logout') );
 		Route::get('/dang-ky', array('as'=>'jobseekers.register', 'uses'=>'JobSeekerAuth@register') );
 		Route::post('/dang-ky', 'JobSeekerAuth@doRegister' );
+		 
+		
 		Route::get('/kich-hoat-tai-khoan',array('as'=>'account-active', function() {
 			return View::make('jobseekers.account-active');
 		}));

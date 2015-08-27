@@ -2,8 +2,9 @@
 @section('title') Quản lý user @stop
 @section('content')
 	<section class="boxed-content-wrapper clearfix">
-	<div style="text-align:center;font-size:20px;color:white">
+	<div class="alert alert-danger">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 		Kích hoạt không thành công
-		</div>
+	</div>
 	</section>
 @stop
