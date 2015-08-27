@@ -1,6 +1,6 @@
 <?php
 namespace NTD;
-use View, Input, Redirect, Hash, Company, Auth, NTD,Mail;
+use View, Input, Redirect, Hash, Company, Auth, NTD, Mail;
 class AuthController extends \BaseController {
 
 	public function getDangNhap()
@@ -50,7 +50,7 @@ class AuthController extends \BaseController {
 				$company->save();
 
 
-				 $subject = "Kich hoat tai khoan VNJobs / Activate your VNJobs account";
+				/* $subject = "Kich hoat tai khoan VNJobs / Activate your VNJobs account";
 				$message = "<h3>Chào Quý khách</h3>
 				Tài khoản của Quý khách đã được đăng ký miễn phí tại website: VnJobs.vn ,
 				<br>Để hoàn tất quá trình đăng ký và truy cập vào tài khoản Nhà tuyển dụng tại VnJobs, vui lòng kích hoạt tài khoản tại đây.
@@ -104,10 +104,12 @@ class AuthController extends \BaseController {
 					return Redirect::back()->with('success', 'Chúc mừng bạn đã đăng ký thành công! <br>Vui lòng mở email và làm theo hướng dẫn để kích hoạt tài khoản của bạn.');
 				} else {
 					return Redirect::back()->with('success', 'Hiện tại bạn không thể đăng ký. Xin vui lòng thử lại sau.');
-				}
+				}*/
 
-
-
+				Mail::send('employers.mail.active', array('send_email'=> Input::get('email'),'code_active'=>$code_active, 'password'=>Input::get('password')), function($message){
+		        $message->to(Input::get('email'), Input::get('email'))->subject('Kich hoat tai khoan VNJobs / Activate your VNJobs account');
+		    	});
+				return Redirect::back()->with('success', 'Chúc mừng bạn đã đăng ký thành công! <br>Vui lòng mở email và làm theo hướng dẫn để kích hoạt tài khoản của bạn.');
 				/*Mail::send('employers.mail.active', array('password'=>Input::get('password'),'code_active'=>$code_active,'email'=> Input::get('email')), function($message){
 		        $message->to(Input::get('email'),Input::get('email'))->subject('[VNJOBS.VN] Kính Chào Quý khách');
 		    	});
