@@ -1,5 +1,6 @@
 <?php 
-
+ 
+ 
 /**
 * JobSeekerAuth
 */
@@ -386,8 +387,10 @@ class JobSeekerAuth extends Controller
 			    ));
 			    /*return Redirect::route('account-active')->with('success','Tài khoản này đã được kích hoạt.');*/
 			    
+
+
 			    $activationCode = $user->getActivationCode();
-				$subject = "Kich hoat tai khoan VNJobs / Activate your VNJobs account";
+				/*$subject = "Kich hoat tai khoan VNJobs / Activate your VNJobs account";
 				$message = "<h3 >Chào mừng bạn đến với VnJobs.vn</h3>Chào ".$params['last_name'].",
 				<br>Tài khoản của Quý khách đã được đăng ký miễn phí tại website: VnJobs.vn 
 				<br>Để hoàn thành việc đăng kí và truy cập vào tài khoản mới của bạn tại VNJobs.<br><a href='".URL::route('jobseekers.account-active',array($params['email'],$activationCode.''))."' style='font-family: Arial,sans-serif;font-size: 16px;font-weight: bold;color: #ffffff;text-decoration: none;display: inline-block;background:orange;padding:12px;margin:10px 0; border-radius:5px;'>Kích hoạt tài khoản của bạn ngay.</a>
@@ -407,18 +410,41 @@ class JobSeekerAuth extends Controller
 				<h3>Chúng tôi ở đây để giúp bạn Thăng Tiến</h3>
 				<br>Vui lòng truy cập VnJobs.Vn để có thể cập nhật những cv mới nhất, nếu bạn gặp bất cứ vấn đề gì tài khoản, hoặc  gặp khó khăn trong quá trình sử dụng, bạn có thể liên hệ với chúng tôi tại: contact@vnjobs.vn
 				<br><span style=\"font-weight: bold\">Pham Quan</span><br>Customer Care Manager<br>VnJobs.vn";
+*/				Mail::send('jobseekers.mail.active', array('send_email'=> $params['email'],'code_active'=>$activationCode, 'password'=>$params['password'],'last_name'=>$params['last_name']), function($message) {
+		        $message->to(Input::get('email'), Input::get('email'))->subject('Kich hoat tai khoan VNJobs / Activate your VNJobs account');
+		    	});
+				return Redirect::back()->with('success', 'Chúc mừng bạn đã đăng ký thành công! <br>Vui lòng mở email và làm theo hướng dẫn để kích hoạt tài khoản của bạn.');
+
+				 
+				
 
 			   	// setting the server, port and encryption
-				if(App\DTT\Services\SendMail::send($params['email'], $params['last_name'], $subject, $message ) )
+				/*if(App\DTT\Services\SendMail::send($params['email'], $params['last_name'], $subject, $message ) )
 				{
 					return Redirect::back()->with('success', 'Chúc mừng bạn đã đăng ký thành công! <br>Vui lòng mở email và làm theo hướng dẫn để kích hoạt tài khoản của bạn.');
 				} else {
 					return Redirect::back()->with('success', 'Hiện tại bạn không thể đăng ký. Xin vui lòng thử lại sau.');
-				}
+				}*/
 				
-			} catch (Exception $e) {
+			} /*catch (Exception $e) {
 				return Redirect::back()->withInput()->withErrors($e);
-			}
+			}*/
+			catch (Cartalyst\Sentry\Users\LoginRequiredException $e)
+				{
+					$e = "Hiện tại không thể đăng ký";
+				   return Redirect::back()->withInput()->withErrors($e);
+				}
+				catch (Cartalyst\Sentry\Users\PasswordRequiredException $e)
+				{
+					$e = "Mật khẩu là bắt buộc";
+				   return Redirect::back()->withInput()->withErrors($e);
+				}
+				catch (Cartalyst\Sentry\Users\UserExistsException $e)
+				{
+					$e = "Email này đã tồn tại";
+				    return Redirect::back()->withInput()->withErrors($e);
+				}
+
 		}
 	}
 	public function checkActive($email, $code)

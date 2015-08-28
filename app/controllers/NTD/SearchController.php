@@ -337,7 +337,7 @@ class SearchController extends \Controller {
 			{
 
 				$file=public_path().'/uploads/jobseekers/cv/'.$resume->file_name;
-				Mail::send('employers.search.mail_attact', array('send_email'=> Input::get('send_email'), 'send_content'=> Input::get('send_content'), 'ntd_email'=>Auth::getUser()->email, 'firstname'=>Input::get('send_email'), $resume->file_name), function($message){
+				Mail::send('employers.search.mail_attact', array('send_email'=> Input::get('send_email'), 'send_content'=> Input::get('send_content'), 'ntd_email'=>Auth::getUser()->email, 'firstname'=>Input::get('send_email'), $resume->file_name), function($message) use($file){
 		        $message->to(Input::get('send_email'), Input::get('send_email'))->subject('[VNJOBS.VN] ' . Input::get("send_subject"))->attach($file);
 		    });
 			}

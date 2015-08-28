@@ -1,3 +1,4 @@
+ 
 
 <div class="container" style="   border-left: 1px solid #EFF0F0;  border-right: 1px solid #EFF0F0;background: #EFF0F0;width:97%">
 	<div class="header" style="padding:20px;background: #EFF0F0;text-align:center;"><a href="vnjobs.vn" target="_blank">
@@ -5,11 +6,11 @@
 	</div>
 	<div class="content" style="border-top: 10px solid #FF4400;border-bottom: 10px solid #FF4400;padding:30px ; line-height: 18px;background: white;">
 
-	<h3>Chào Quý khách</h3>
+	<h3>Chào {{$last_name}}</h3>
 
 					Tài khoản của Quý khách đã được đăng ký miễn phí tại website: VnJobs.vn ,
 					<br>Để hoàn tất quá trình đăng ký và truy cập vào tài khoản Nhà tuyển dụng tại VnJobs, vui lòng kích hoạt tài khoản tại đây.
-					<br><a href='{{URL::route('employers.active',array($send_email,$code_active))}}' style='font-family: Arial,sans-serif;font-size: 16px;font-weight: bold;color: #ffffff;text-decoration: none;display: inline-block;background:#FF4400;padding:12px;margin:10px 0; border-radius:5px;'>Kích hoạt tài khoản của bạn ngay.</a><br>
+					<br><a href="{{URL::route('jobseekers.account-active',array($send_email,$code_active))}}" style='font-family: Arial,sans-serif;font-size: 16px;font-weight: bold;color: #ffffff;text-decoration: none;display: inline-block;background:#FF4400;padding:12px;margin:10px 0; border-radius:5px;'>Kích hoạt tài khoản của bạn ngay.</a><br>
 					<br>
 					 
 					 <div class="acount" style="background-color: #F6F6F6;">
@@ -30,16 +31,14 @@
 					 </div>
 					
 					<br>Vui lòng lưu lại email này để tham khảo lại sau này.<br>
-					<br>Chúng tôi luôn sẵn sàng hỗ trợ nếu quý khách gặp bất cứ vấn đề nào:<br>
-					<br>&nbsp;&nbsp;<span style="font-size: 1.17em;font-weight: bold;">+ Chat</span> với chúng tôi qua skype: cskh.vnjobs
-					<br>&nbsp;&nbsp;<span style="font-size: 1.17em;font-weight: bold;">+ Gọi đường dây nóng</span> 1900 58 58 53 
-					<br>
+					<br><h3>Chúng tôi ở đây để giúp bạn Thăng Tiến</h3><br>
+					<br>Vui lòng truy cập VnJobs.Vn để có thể cập nhật những cv mới nhất, nếu bạn gặp bất cứ vấn đề gì tài khoản, hoặc  gặp khó khăn trong quá trình sử dụng, bạn có thể liên hệ với chúng tôi tại: contact@vnjobs.vn<br>
 					<br><span style="font-weight: bold">Pham Quan</span><br>
 					Customer Care Manager<br>
 					VnJobs.vn<br><br>
 					
 	</div>
-	<div class="footer" style="width:100%;">
+	<!-- <div class="footer" style="width:100%;">
 		<table style="padding-bottom: 17px;width:100%; text-align:center">
 					<h3>Hà Nội</h3>
 					Tầng 10 Tòa nhà Sudico, Đường Mễ Trì, Phường Mỹ Đình 1, Quận Nam Từ Liêm, Hà Nội. <br>
@@ -60,8 +59,10 @@
 
 
 		</table>
-	</div>
+	</div> -->
 
 </div>
  
 	
+
+
