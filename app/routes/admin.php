@@ -67,6 +67,19 @@ Route::group(array('prefix'=>'admin'), function() {
 		
 		Route::get('logout', array('as'=>'admin.logout', 'uses'=>'AuthController@logout'));
 
+		 
+		Route::controller('order', 'OrdersController', array(
+			'getIndex'	=>	'admin.order.index',
+			'postSaveSearchService'=>'admin.order.saveSearchService',
+			 
+		));
+
+		Route::controller('product', 'ProductServiceController', array(
+			'getIndex'	=>	'admin.product.index',
+			'getEdit'	=>	'admin.product.edit',
+			 
+		));
+
 
 	});
 
@@ -74,4 +87,6 @@ Route::group(array('prefix'=>'admin'), function() {
 		Route::get('login', 'AuthController@login');
 		Route::post('login', 'AuthController@doLogin');
 	});
+
+
 });

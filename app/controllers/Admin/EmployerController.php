@@ -32,6 +32,7 @@ class EmployerController extends \BaseController {
 		->edit_column('ids', '
 			{{ Form::open(array("method"=>"delete", "route"=>array("admin.employers.destroy", $id) )) }}
 			<a class="btn btn-xs btn-info" href="{{URL::route("admin.employers.edit", array($id) )}}" title="Edit"><i class="ace-icon fa fa-pencil bigger-120"></i></a> 
+			<a class="btn btn-xs btn-info" href="{{URL::to("admin/order/index/$id")}}" title="Chỉnh sửa dịch vụ cho nhà tuyển dụng"><i class="ace-icon fa fa-cogs bigger-120"></i></a> 
 			<button class="btn btn-xs btn-danger" onclick="return confirm(\'Are you sure you want to delete ?\');" type="submit" title="Delete"><i class="ace-icon fa fa-trash-o bigger-120"></i></button>
 			{{ Form::close() }}
 			')

@@ -56,7 +56,7 @@ https://www.youtube.com/channel/UCDIqPT9Nmet6zy67RtUJNiA -->
 								<ul class="nav navbar-nav navbar-right">
 									
 									<li class="navigation">
-										<a href="{{ URL::route('jobseekers.home') }}">Trang chủ</a>
+										<a href="{{ URL::route('employers.launching') }}">Trang chủ</a>
 									</li>
 									<li class="navigation">
 										<a href="{{ URL::route('product.home') }}" class="active">Sản phẩm và dịch vụ</a>

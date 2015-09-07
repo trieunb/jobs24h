@@ -295,6 +295,31 @@
 										
 										</div>
 										</div>
+										<div class="boxed">
+											<div class="heading-image">
+												<h2 class="text-blue">{{ HTML::image('assets/ntd/images/thong-tin-ung-tuyen.png') }} Cài đặt các dịch vụ</h2>
+											</div>
+
+											<div class="form-group">
+												<label for="input" class="col-sm-12 control-label">Lựa chọn các hiệu ứng cho tin đăng:</label>
+												<div class="clearfix"></div>
+												@foreach($order as $value)
+												<div class="col-sm-2"></div>
+												<div class="col-sm-10">
+													<div class="checkbox">
+														<input type="checkbox" id="hieuung{{$value['id']}}" name="hieuung[]" value="{{$value['id']}}">
+														<label for="hieuung{{$value['id']}}">
+															<span></span>
+															{{$value['epackage_name']}}
+														</label>
+													</div>
+
+												</div>
+												@endforeach
+											</div>
+
+										</div>
+										
 								<div class="center">
 									{{ Form::button('Đăng tuyển', array('type'=>'submit', 'class'=>'btn btn-lg bg-orange')) }}
 									<a href="{{ URL::route('employers.jobs.index') }}" class="btn btn-lg bg-orange">Hủy</a>

@@ -231,9 +231,9 @@ class SearchController extends \Controller {
 	{
 		 
 		 
-		$resume = Resume::where('id', $id)->with('cvcategory')->with('location')->first();
-		 
+		$resume = Resume::where('id', $id)->with('cvcategory')->with('location')->with('bangcap')->first();
 		$employer = Auth::id();
+		$check_order=\Order::whereNtdId($employer)->first();
 		$history=\SearchHistory::whereNtdId($employer)->orderBy('created_at','desc')->first();
 		 
 		if(!$resume)
@@ -251,7 +251,7 @@ class SearchController extends \Controller {
 					$dir = Config::get('app.upload_path') . 'jobseekers/cv/' . $file;
 					if(File::isFile($dir)) $pdf = true;
 					else $pdf = false;
-					return View::make('employers.search.resume_info_upload', compact('resume', 'pdf','history'));
+					return View::make('employers.search.resume_info_upload', compact('resume', 'pdf','history','check_order'));
 				} else {
 					return View::make('employers.search.resume_info', compact('resume','history'));
 				}
@@ -267,37 +267,67 @@ class SearchController extends \Controller {
 	}
 	public function getResumeIframe()
 	{
-		$file = str_replace(['.doc', '.docx', '.jpg'], '.pdf', Input::get('file'));
-		$file = explode('jobseekers/cv/', $file);
-		$file = $file[1];
-		$ext = explode('.', $file);
-		$fname = $ext[0];
-		$ext = $ext[1];
-		$dir1 = Config::get('app.upload_path') . 'jobseekers/cv/' . $fname . '.pdf';
-		$dir = 'uploads/jobseekers/cv/' . $fname . '.pdf';
-		if(! File::isFile($dir1))
-		{
-			return View::make('employers.search.iframe', compact('file', 'dir'));
-            return '<a href="{{ URL::route(\'employers.search.print_cv\', $resume->id) }}" class="btn btn-lg bg-orange">Tải CV</a>';
-        } else {
-        	return View::make('employers.search.iframe', compact('file', 'dir'));
-        }
+
+		$order_inser=\Order::whereNtdId(Auth::id())->first();
+		$order_inser['remain']=$order_inser['remain']-1;
+		if($order_inser['remain']<=0)
+		$order_inser['remain']=0;
+		
+		$order_inser->save();
+		$ngayhomnay=strtotime(date('Y-m-d H:i:s'));
+
+		if ($order_inser['remain'] > -1 && strtotime($order_inser['ended_date']) > $ngayhomnay) {
+			# code...
+		
+			$file = str_replace(['.doc', '.docx', '.jpg'], '.pdf', Input::get('file'));
+			$file = explode('jobseekers/cv/', $file);
+			$file = $file[1];
+			$ext = explode('.', $file);
+			$fname = $ext[0];
+			$ext = $ext[1];
+			$dir1 = Config::get('app.upload_path') . 'jobseekers/cv/' . $fname . '.pdf';
+			$dir = 'uploads/jobseekers/cv/' . $fname . '.pdf';
+			if(! File::isFile($dir1))
+			{
+				return View::make('employers.search.iframe', compact('file', 'dir'));
+	            return '<a href="{{ URL::route(\'employers.search.print_cv\', $resume->id) }}" class="btn btn-lg bg-orange">Tải CV</a>';
+	        } else {
+	        	return View::make('employers.search.iframe', compact('file', 'dir'));
+	        }
+    	}
+    	else return Response::make('Không thể xem !', 404);
 		
 		
 	}
 	public function getInHoSo($cvId = false)
 	{
+		$ngayhomnay=strtotime(date('Y-m-d H:i:s'));
 		if($cvId)
 		{
 			$resume = Resume::where('id', $cvId)->first();
 			if( ! $resume->file_name)
 			{
-				return View::make('employers.search.print', compact('resume'));
+				$order_inser=\Order::whereNtdId(Auth::id())->first();
+				$order_inser['remain']=$order_inser['remain']-1;
+				if($order_inser['remain']<0)
+				$order_inser['remain']=0;
+				$order_inser->save();
+				if ($order_inser['remain']>-1 && strtotime($check_order['ended_date']) > $ngayhomnay)
+					return View::make('employers.search.print', compact('resume'));
+				else return Response::make('Không thể xem !', 404);
 			} else {
 				$path = Config::get('app.upload_path').'jobseekers/cv/' . $resume->file_name;
 				//return $path;
 				if (\File::isFile($path)) {
-					return Response::download($path, $resume->tieude_cv);
+					$order_inser=\Order::whereNtdId(Auth::id())->first();
+					$order_inser['remain']=$order_inser['remain']-1;
+					if($order_inser['remain']<0)
+					$order_inser['remain']=0;
+					
+					$order_inser->save();
+					if ($order_inser['remain']>-1 && strtotime($check_order['ended_date']) > $ngayhomnay)
+						return Response::download($path, $resume->tieude_cv);
+					else return Response::make('Không thể xem !', 404);
 				} else {
 					return Response::make('File not Found !', 404);
 				}

@@ -212,7 +212,8 @@ class JobController extends \Controller {
 
 	public function getDangTuyenDung()
 	{
-		return View::make('employers.jobs.add');
+		$order=\OrderPostRec::whereNtdId(Auth::id())->get();
+		return View::make('employers.jobs.add',compact('order'));
 	}
 	public function postDangTuyenDung()
 	{
@@ -222,6 +223,7 @@ class JobController extends \Controller {
 			return Redirect::back()->withInput()->withErrors($validator);
 		} else {
 			$data = Input::all();
+			unset($data['hieuung']);
 			unset($data['_token']);
 			unset($data['thuongluong']);
 			$ntd_nganhnghe = $data['ntd_nganhnghe']; unset($data['ntd_nganhnghe']);
@@ -270,10 +272,12 @@ class JobController extends \Controller {
 				$hinhanh[] = $data['hinhanh'.$i]; unset($data['hinhanh'.$i]);
 			}
 			$job = new Job;
+			 
 			foreach ($data as $key => $value) {
 				$job->$key = $value;
 			}
 			try {
+
 				$job->save();
 				$location = array();
 				foreach ($ntd_diadiem as $k=>$val) {
@@ -292,6 +296,7 @@ class JobController extends \Controller {
 					$category[$k]->cat_id = $val;
 				}
 				$save2 = $job->category()->saveMany($category);
+
 				if($save1 && $save2)
 				{
 					//upload file
@@ -309,6 +314,20 @@ class JobController extends \Controller {
 					$company->company_images = json_encode($filenames);
 					$company->save();
 
+					
+					if(Input::get('hieuung')){
+						foreach (Input::get('hieuung') as $key => $value) {
+						\JobHieuung::create(
+								array(
+									'job_id'=>$job->id,
+									'order_post_rec_id'=>$value,
+									));
+							  
+						}
+						 
+					}
+
+
 					return Redirect::route('employers.jobs.index')->with('success', 'Đăng tin thành công !');
 				} else {
 					return Redirect::back()->withInput()->withErrors('Lỗi');
@@ -322,15 +341,24 @@ class JobController extends \Controller {
 	public function getSuaTinDang($id)
 	{
 		$job = Job::where('id', $id)->where('ntd_id', Auth::id())->first();
+
+
+		$order=\OrderPostRec::whereNtdId(Auth::id())->get();
+
+		$order_check=\JobHieuung::whereJobId($id)->lists('order_post_rec_id');
+		 
+
 		if( ! $job)
 		{
 			return Redirect::back()->withErrors('Không tìm thấy việc làm.');
 		}
 		$job->keyword_tags = json_decode($job->keyword_tags, true);
-		return View::make('employers.jobs.edit', compact('job'));
+		return View::make('employers.jobs.edit', compact('job','order','order_check'));
 	}
 	public function postSuaTinDang($id)
 	{
+
+		 
 		$validator = new EmployerAddJob;
 		if($validator->fails())
 		{
@@ -338,6 +366,7 @@ class JobController extends \Controller {
 		} else {
 			$data = Input::all();
 			unset($data['_token']);
+			unset($data['hieuung']);
 			unset($data['thuongluong']);
 			$ntd_nganhnghe = $data['ntd_nganhnghe']; unset($data['ntd_nganhnghe']);
 			$ntd_diadiem = $data['ntd_diadiem']; unset($data['ntd_diadiem']);
@@ -365,6 +394,22 @@ class JobController extends \Controller {
 				$job->updateLocation($job->id, $ntd_diadiem);
 				$job->updateCategory($job->id, $ntd_nganhnghe);
 				$job->save();
+				if(Input::get('hieuung')){
+
+					$insert_hieuung	=\JobHieuung::whereJobId($job->id)->delete();
+					
+
+					foreach (Input::get('hieuung') as $key => $value) {
+					\JobHieuung::create(
+							array(
+								'job_id'=>$job->id,
+								'order_post_rec_id'=>$value,
+								));
+					}
+				}
+					 
+					
+
 
 				return Redirect::route('employers.jobs.index')->with('success', 'Đã lưu các thay đổi !');
 				

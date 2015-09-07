@@ -1,8 +1,7 @@
 @extends('layouts.employer')
 @section('title')Xem thông tin hồ sơ {{ $resume->tieude_cv }} @stop
 @section('content')
-
-	<section class="boxed-content-wrapper clearfix resume-info">
+ 	<section class="boxed-content-wrapper clearfix resume-info">
 		<div class="container">
 			
 			<section id="" class="right">
