@@ -192,7 +192,7 @@
 					</div>
 				</section>
 				@endif
-				@if(count($news))
+				@if(isset($news))
 				<section class="news clearfix">
 					<div class="header-page">
 						<h2>Tin tức mới nhất</h2>
@@ -203,21 +203,21 @@
 								@foreach($news as $new)
 								<li>
 									<div class="thumbs">
-										@if($new->thumbnail != null)
-										<a href="{{URL::route('news.view', array($new->id))}}"><img src="{{URL::to("uploads/news/".$new->thumbnail."")}}"></a>
+										@if($new['post']->post_name != null)
+										<a href="{{$new['post']->guid}}" target="_blank"><img src="{{$new['thumbnail']}}"></a>
 										@else
 										
-										<a href="{{URL::route('news.view', array($new->id))}}"><img src="{{URL::to("assets/images/photo_default.png")}}"></a>
+										<a href="{{$new['post']->guid}}"><img src="{{URL::to("assets/images/photo_default.png")}}"></a>
 										@endif
 									</div>
 									<div class="meta">
-										<span class="date">{{date('d M, Y', strtotime($new->updated_at))}}</span>
+										<span class="date">{{date('d M, Y', strtotime($new['post']->post_date))}}</span>
 									</div>
 									<article>
-										<h3><a href="{{URL::route('news.view', array($new->id))}}">{{$new->title}}</a></h3>
+										<h3><a href="{{$new['post']->guid}}" target="_blank">{{$new['post']->post_title}}</a></h3>
 										<?php
 										// strip tags to avoid breaking any html
-										$string = $new->content;
+										$string = $new['post']->post_content;
 										$string = strip_tags($string);
 
 										if (strlen($string) > 200) {
@@ -230,7 +230,7 @@
 										}
 										echo "<p>$string</p>";
 										?>
-										<a href="{{URL::route('news.view', array($new->id))}}" class="read-more">Chi tiết</a>
+									
 									</article>
 								</li>
 								@endforeach
@@ -244,20 +244,24 @@
 				<div class="padding bg-silver-dark push-bottom-30">
 				<section class="bottom container">
 					<div class="col-sm-4">
-						<h2 class="text-orange">Cẩm nang Người tìm việc</h2>
-						<ul class="arrow-square-blue">
-						@foreach($camnang_ntv as $val)
-							<li><a href="{{URL::route('news.view', array($val->id) )}}">{{$val->title}}</a></li>
-						@endforeach
-						</ul>
-					</div>
-					<div class="col-sm-4">
-						<h2 class="text-orange">Cẩm nang Nhà Tuyển Dụng</h2>
-						<ul class="arrow-square-blue">
-							@foreach($camnang_ntd as $val)
-								<li><a href="{{URL::route('news.view', array($val->id) )}}">{{$val->title}}</a></li>
+						<h2><a href="http://vnjobs.vn/cam-nang-viec-lam/cam-nang-nguoi-tim-viec/" class="text-orange">Cẩm nang Người tìm việc</a></h2>
+						@if(isset($camnang_ntv))
+							<ul class="arrow-square-blue">
+							@foreach($camnang_ntv as $val)
+								<li><a href="{{$val['post']->guid}}" target="_blank">{{$val['post']->post_title}}</a></li>
 							@endforeach
 						</ul>
+						@endif
+					</div>
+					<div class="col-sm-4">
+						<h2><a href="http://vnjobs.vn/cam-nang-viec-lam/cam-nang-nha-tuyen-dung/" class="text-orange">Cẩm nang Nhà Tuyển Dụng</a></h2>
+						@if(isset($camnang_ntd))
+						<ul class="arrow-square-blue">
+							@foreach($camnang_ntd as $val)
+								<li><a href="{{$val['post']->guid}}" target="_blank">{{$val['post']->post_title}}</a></li>
+							@endforeach
+						</ul>
+						@endif
 					</div>
 					<div class="col-sm-4 last">
 						<h2 class="text-orange">Nhận xét khách hàng</h2>

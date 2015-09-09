@@ -9,7 +9,8 @@ class HomeController extends \Controller {
 		$viewest = HiringPost::orderBy('views', 'desc')->limit(7)->get();
 		$ntd = HiringPost::where('cat_id', 2)->orWhereIn('sub_cat_id', [4])->orderBy('id', 'desc')->limit(5)->get();
 		$news = HiringPost::where('cat_id', 3)->with('admin')->orWhereIn('sub_cat_id', [7])->orderBy('id', 'desc')->limit(4)->get();
-		return View::make('hiring.index', compact('ntv', 'main', 'viewest', 'ntd', 'news'));
+		//return View::make('hiring.index', compact('ntv', 'main', 'viewest', 'ntd', 'news'));
+		return Redirect::to('http://vnjobs.vn/cam-nang-viec-lam');
 	}
 	public function getXemBaiViet($post_slug = false, $post_id = false)
 	{

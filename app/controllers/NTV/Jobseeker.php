@@ -65,10 +65,47 @@ class JobSeeker extends Controller
 		}))->where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->orderBy('updated_at', 'DESC')->take(45)->get();
 
 		// Tin tức
-		$news = TrainingPost::where('training_cat_id', 10)->with('trainingCat')->take(8)->get();
-		$camnang_ntv = TrainingPost::where('training_cat_id', 11)->with('trainingCat')->take(4)->get();
-		$camnang_ntd = TrainingPost::where('training_cat_id', 12)->with('trainingCat')->take(4)->get();
-		return View::make('jobseekers.home', compact('new_jobs','featured_jobs', 'categories_default', 'categories_alpha', 'categories_hot','emp_hot', 'news','camnang_ntv','camnang_ntd'));
+
+		$list_tintuc = WordpressNewsRelationships::where('term_taxonomy_id', 2)->lists('object_id');
+		$tintuc = WordpressNews::whereIn('ID', $list_tintuc)->where('post_type', 'post')->where('post_status', 'publish')->take(8)->get();
+		foreach ($tintuc as $key => $value) {
+			$thumbs = WordpressNewsMeta::where('post_id', $value->ID)->where('meta_key', '_thumbnail_id')->first();
+			if($thumbs != null){
+				$thumbs1 = WordpressNews::where('ID', $thumbs->meta_value)->first();
+				$thumbs1 = $thumbs1->guid;
+			}else{
+				$thumbs1 = null;
+			}
+			$news[] = array('post'=>$value, 'thumbnail'=>$thumbs1);
+		}
+
+		$list_tintuc = WordpressNewsRelationships::where('term_taxonomy_id', 3)->lists('object_id');
+		$tintuc = WordpressNews::whereIn('ID', $list_tintuc)->where('post_type', 'post')->where('post_status', 'publish')->take(8)->get();
+		foreach ($tintuc as $key => $value) {
+			$thumbs = WordpressNewsMeta::where('post_id', $value->ID)->where('meta_key', '_thumbnail_id')->first();
+			if($thumbs != null){
+				$thumbs1 = WordpressNews::where('ID', $thumbs->meta_value)->first();
+				$thumbs1 = $thumbs1->guid;
+			}else{
+				$thumbs1 = null;
+			}
+			$camnang_ntv[] = array('post'=>$value, 'thumbnail'=>$thumbs1);
+		}
+
+		$list_tintuc = WordpressNewsRelationships::where('term_taxonomy_id', 4)->lists('object_id');
+		$tintuc = WordpressNews::whereIn('ID', $list_tintuc)->where('post_type', 'post')->where('post_status', 'publish')->take(8)->get();
+		foreach ($tintuc as $key => $value) {
+			$thumbs = WordpressNewsMeta::where('post_id', $value->ID)->where('meta_key', '_thumbnail_id')->first();
+			if($thumbs != null){
+				$thumbs1 = WordpressNews::where('ID', $thumbs->meta_value)->first();
+				$thumbs1 = $thumbs1->guid;
+			}else{
+				$thumbs1 = null;
+			}
+			$camnang_ntd[] = array('post'=>$value, 'thumbnail'=>$thumbs1);
+		}
+	
+		return View::make('jobseekers.home', compact('news','new_jobs','featured_jobs', 'categories_default', 'categories_alpha', 'categories_hot','emp_hot', 'news','camnang_ntv','camnang_ntd'));
 	}
 
 	public function editBasicHome(){

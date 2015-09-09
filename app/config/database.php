@@ -73,6 +73,18 @@ return array(
 			'prefix'    => '',
 		),
 
+		# DB phần tin tức wordpress
+        'mysql2' => array(
+            'driver'    => 'mysql',
+            'host'      => 'localhost',
+            'database'  => 'vnjobs_news',
+            'username'  => 'root',
+            'password'  => '',
+            'charset'   => 'utf8',
+			'collation' => 'utf8_unicode_ci',
+			'prefix'    => '',
+        ),
+
 		'pgsql' => array(
 			'driver'   => 'pgsql',
 			'host'     => 'localhost',

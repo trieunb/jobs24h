@@ -19,7 +19,7 @@
 					} 
 					?>
 					{{Form::open(array('route'=>array('jobseekers.search-job'), 'class'=>'form', 'method'=>'GET' ))}}
-						<div class="col-sm-9">
+						<div class="col-sm-12">
 							<div class="col-sm-8">
 			                    <label class="hidden-xs text-white">Tìm việc làm...</label>
 			                    {{Form::input('text','keyword', $keyword, array('class'=>'form-control search-all', 'placeholder'=>'Nhập Chức Danh, Vị Trí Công Việc, Kỹ Năng Liên Quan...'))}}
@@ -39,7 +39,7 @@
 		                    	{{Form::select('level', array('all'=>'Tất cả cấp bậc')+Level::lists('name', 'id'),$level, array('class'=>'form-control chosen-select', 'id'=>'jobLevelMainSearch','data-placeholder'=>'Tất cả cấp bậc'))}}
 		                    </div>
 						</div>
-						<div class="col-sm-9">
+						<div class="col-sm-12">
                             <div class="col-sm-7 col-sm-3 col-sm-push-6 push-top-xs">
                             	<div class="relative">
                        				<a href="{{URL::route('jobseekers.search-job', array('vieclamcaocap'=>'true'))}}" class="btn-search btn btn-default" type="button"><strong>Việc Làm Cao Cấp</strong></a><strong class="text-red small absolute-right"><em>Mới</em></strong>
