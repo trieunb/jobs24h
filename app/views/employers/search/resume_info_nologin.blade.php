@@ -1,3 +1,4 @@
+
 @extends('layouts.employer')
 @section('title')Xem thông tin hồ sơ {{ $resume->tieude_cv }} @stop
 @section('content')

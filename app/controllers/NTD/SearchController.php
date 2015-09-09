@@ -1,7 +1,7 @@
 <?php 
 namespace NTD;
 use Config, File, View, Redirect, NTD, Auth, Job, Validator, Hash, Input, DB, Resume, RSFolder, EFolder, Response, Category, Mail,Application;
-use VResponse, RespondLetter;
+use VResponse, RespondLetter,Request;
 class SearchController extends \Controller {
 	public function getCoBan()
 	{
@@ -253,7 +253,7 @@ class SearchController extends \Controller {
 					else $pdf = false;
 					return View::make('employers.search.resume_info_upload', compact('resume', 'pdf','history','check_order'));
 				} else {
-					return View::make('employers.search.resume_info', compact('resume','history'));
+					return View::make('employers.search.resume_info', compact('resume','history','check_order'));
 				}
 			} else {
 				$file = str_replace(['.doc', '.docx', '.jpg'], '.pdf', $resume->file_name);
@@ -261,7 +261,7 @@ class SearchController extends \Controller {
 				if(File::isFile($dir)) $pdf = true;
 				else $pdf = false;
 				
-				return View::make('employers.search.resume_info_nologin', compact('resume', 'pdf','history'));
+				return View::make('employers.search.resume_info_nologin', compact('resume', 'pdf','history','check_order'));
 			}
 		}
 	}
@@ -269,16 +269,16 @@ class SearchController extends \Controller {
 	{
 
 		$order_inser=\Order::whereNtdId(Auth::id())->first();
-		$order_inser['remain']=$order_inser['remain']-1;
-		if($order_inser['remain']<=0)
-		$order_inser['remain']=0;
-		
-		$order_inser->save();
+	
 		$ngayhomnay=strtotime(date('Y-m-d H:i:s'));
 
-		if ($order_inser['remain'] > -1 && strtotime($order_inser['ended_date']) > $ngayhomnay) {
+		if ($order_inser['remain'] > 0 && strtotime($order_inser['ended_date']) > $ngayhomnay) {
 			# code...
-		
+				$order_inser['remain']=$order_inser['remain']-1;
+			if($order_inser['remain']<=0)
+			$order_inser['remain']=0;
+			
+			$order_inser->save();
 			$file = str_replace(['.doc', '.docx', '.jpg'], '.pdf', Input::get('file'));
 			$file = explode('jobseekers/cv/', $file);
 			$file = $file[1];
@@ -419,4 +419,29 @@ class SearchController extends \Controller {
 			return Response::json(['has'=>false]);
 		}
 	}
+
+
+	 
+
+	public function getXemchitiet($id)
+	{
+		$order_inser=\Order::whereNtdId(Auth::id())->first();
+		
+		$resume = Resume::where('id', $id)->with('cvcategory')->with('location')->with('bangcap')->first();
+		$ngayhomnay=strtotime(date('Y-m-d H:i:s'));
+		 
+		if ($order_inser['remain'] > 0 && strtotime($order_inser['ended_date']) > $ngayhomnay)
+		{
+			$check_ok=1;
+			$order_inser['remain']=$order_inser['remain']-1;
+			if($order_inser['remain']<0)
+			$order_inser['remain']=0;
+			$order_inser->save();
+		}
+		else $check_ok=0;
+
+		return View::make('employers.search.content_cv',compact('resume','check_ok'));
+	}
+
+	 
 }

@@ -28,29 +28,51 @@
 									<h4 class="resume-title">Chức danh/vị trí: <span class="cl-orange">{{ $resume->tieude_cv }}</span></h4>
 									<div class="clearfix"></div>
 									<div class="col-xs-4">
-									@if($resume->ntv->avatar==null)
 										{{ HTML::image('assets/ntd/images/no-avatar.jpg') }}
-									@else
-										{{ HTML::image('uploads/jobseekers/avatar/'.$resume->ntv->avatar.'') }}
-									@endif
 									</div>
 									<div class="col-xs-8">
 										<div class="row td-info">
 											<div class="col-xs-5">
-												Ứng viên
+												Kinh nghiệm
 											</div>
 											<div class="col-xs-7">
-												{{ $resume->ntv->first_name }} {{ $resume->ntv->last_name }}
+												{{$resume->namkinhnghiem}} năm
 											</div>
 										</div>
 										<div class="row td-info">
 											<div class="col-xs-5">
-												Địa chỉ
+												Bằng cấp 
 											</div>
 											<div class="col-xs-7">
-												{{ $resume->ntv->address }}
+												{{$resume->bangcap->name}}
 											</div>
 										</div>
+										<div class="row td-info">
+											<div class="col-xs-5">
+												Cấp bậc hiện tại 
+											</div>
+											<div class="col-xs-7">
+												{{$resume->level->name}}
+											</div>
+										</div>
+										<div class="row td-info">
+											<div class="col-xs-5">
+												Vị trí mong muốn 
+											</div>
+											<div class="col-xs-7">
+												{{$resume->vitrimongmuon}}
+											</div>
+										</div>
+										<div class="row td-info">
+											<div class="col-xs-5">
+												Mức lương mong muốn 
+											</div>
+											<div class="col-xs-7">
+												{{$resume->mucluong}}
+											</div>
+										</div>
+
+
 										<div class="row td-info">
 											<div class="col-xs-5">
 												Tỉnh/Thành phố
@@ -75,12 +97,24 @@
 								<div class="col-xs-7">
 									<div class="buy-service">
 										<div class="row buy-header">
+										<?php $ngayhomnay=strtotime(date('Y-m-d H:i:s')) ?>
+											@if(strtotime($check_order['ended_date']) > $ngayhomnay)
+
+												<div class="col-xs-9">
+													Gói dịch vụ xem hồ sơ của quí khách còn <span style="color:red"> {{ round((strtotime($check_order['ended_date']) - $ngayhomnay)/(24*3600))}} </span>ngày.
+													Và số lượng hồ sơ ứng viên có thể xem được là : <span style="color:red">{{$check_order['remain']}}</span> hồ sơ.
+												</div>
+												<div class="col-xs-3 pull-right">
+													<a href="{{ URL::route('employers.orders.add') }}" class="btn btn-nomal bg-orange pull-right">Mua dịch vụ</a>
+												</div>
+											@else
 											<div class="col-xs-9">
 												Để xem hồ sơ hoàn chỉnh của ứng viên, quý khách vui lòng sử dụng dịch vụ "tìm hồ sơ"
 											</div>
 											<div class="col-xs-3 pull-right">
 												<a href="{{ URL::route('employers.orders.add') }}" class="btn btn-nomal bg-orange pull-right">Mua dịch vụ</a>
 											</div>
+											@endif
 										</div>
 										<div class="row buy-information">
 											<div class="col-xs-6">
@@ -121,10 +155,28 @@
 							<span>Thông tin nghề nghiệp</span>
 						</div>
 						<div class="col-xs-12">
-							@if($pdf)
-							<iframe  frameborder="0" scrolling="no" src="{{ URL::route('employers.search.resume_viewer') }}?file={{ URL::to('/').'/uploads/jobseekers/cv/'.$resume->file_name }}" height="800" width="100%"></iframe>
+						 
+							@if(strtotime($check_order['ended_date']) > $ngayhomnay && $check_order['remain']>0)
+								
+								@if($pdf)
+								<a href="#" id="view" class="btn btn-nomal bg-orange pull-right">Xem hồ sơ</a>
+								Lưu ý: Gói hồ sơ của quý khách sẽ giảm đi 1 tương ứng với mỗi lần xem hồi sơ chi tiết ứng viên
+								@else
+								<a href="{{ URL::route('employers.search.print_cv', $resume->id) }}" class="btn btn-lg bg-orange">Tải CV</a>
+								Lưu ý: Gói hồ sơ của quý khách sẽ giảm đi 1 tương ứng với mỗi lần tải hồi sơ chi tiết ứng viên
+								@endif
+								<div id="view_cv"></div>
+
+								
 							@else 
-							<a href="{{ URL::route('employers.search.print_cv', $resume->id) }}" class="btn btn-lg bg-orange">Tải CV</a>
+								<div class="row buy-header">
+											<div class="col-xs-9">
+												Để xem hồ sơ hoàn chỉnh của ứng viên, quý khách vui lòng sử dụng dịch vụ "tìm hồ sơ"
+											</div>
+											<div class="col-xs-3 pull-right">
+												<a href="{{ URL::route('employers.orders.add') }}" class="btn btn-nomal bg-orange pull-right">Mua dịch vụ</a>
+											</div>
+								</div>
 							@endif
 						</div>
 					</div>
@@ -246,6 +298,21 @@
 @stop
 @section('script')
 	<script type="text/javascript">
+
+	$('#view').click(function(event) { 
+
+		 
+
+		$('#view_cv').append('<iframe style="" id="cv"  frameborder="0" scrolling="no" src="{{ URL::route("employers.search.resume_viewer") }}?file={{ URL::to("/")."/uploads/jobseekers/cv/".$resume->file_name }}" height="800" width="100%"></iframe>');
+					
+		/*else
+
+		$('#view_cv').append('<a href="{{ URL::route('employers.search.print_cv', $resume->id) }}" class="btn btn-lg bg-orange">Tải CV</a>');
+	*/
+	});	
+
+	 	
+
 	$('#inputAdd').click(function(event) { 
 		$('#inputFolder_name').prop({
 			disabled: 'disabled'

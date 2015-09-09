@@ -5,16 +5,27 @@ Class OrdersController extends \BaseController
 	{
 		 
 
-		$ntd=NTD::whereId($id)->with('order')->with('orderpostrec')->first();
+	/*	$ntd=NTD::whereId($id)->with('order')->with('orderpostrec')->first();
 		 
 		$epackage=EPackage::with('eservice')->get();
 		$package_view_cv=EServices::whereId(4)->with('packages')->first();
+		return View::make('admin.employers.order',compact('ntd','epackage','package_view_cv'));*/
+			
+
+		$ntd=NTD::whereId($id)->with('order')->with('orderpostrec')->first();
+		/*var_dump($ntd->orderpostrec);
+		 die();*/
+		$epackage=EPackage::with('eservice')->get();
+		$package_view_cv=EServices::whereId(4)->with('packages')->first();
 		return View::make('admin.employers.order',compact('ntd','epackage','package_view_cv'));
+
 	}
 
 
 	function postIndex($id)
 	{
+		/*var_dump(Input::get());
+		die();*/
 		if (Input::get('ck')) {
 			foreach (Input::get('ck') as $key => $value) {
 				$insert_order=null;
@@ -60,7 +71,7 @@ Class OrdersController extends \BaseController
 			return Redirect::back()->with('success','Đã lưu thành công');
 		}
 		else
-			return Redirect::back()->with('success','Đã lưu thành công');
+			return Redirect::back()->withErrors('Không thành công')->withInput();
 	}
 
 
@@ -118,6 +129,79 @@ Class OrdersController extends \BaseController
 		}
 		else return Response::json(['has'=>true]);
 			
+	}
+
+	function getDeleteService($name,$id)
+	{
+		if($name=="cancel-search")
+		{
+			$del=Order::find($id);
+			if ($del->delete()) {
+					return Redirect::back()->with('success','Xóa Thành công');
+				}
+			else 	return Redirect::back()->withErrors('Xóa Không thành công')->withInput();
+		}
+		else
+		{
+			$del=OrderPostRec::whereNtdId($name)->whereEpackageId($id);
+			if ($del->delete()) {
+					return Redirect::back()->with('success','Xóa Thành công');
+				}
+			else 	return Redirect::back()->withErrors('Xóa Không thành công')->withInput();
+		}
+		
+
+	}
+
+	function getUpdateService($name,$id)
+	{
+
+		if ($id) {
+		 
+			 
+				 $epackage=EPackage::whereId($id)->first();
+				 $insert_order=OrderPostRec::whereNtdId($name)->whereEpackageId($id)->first();
+
+				 if ($insert_order) {
+					$remain			=	$insert_order->remain_date;
+					$total 			=	$remain + $epackage['total_date'];
+					$insert_order->eservice_id =	$epackage['service_id'];
+					$insert_order->epackage_id	= 	$id;
+					$insert_order->epackage_name =	$epackage['package_name'];
+					$insert_order->total_date 		=	$epackage['total_date'];
+					$insert_order->remain_date		=	$total;
+					$insert_order->created_date	=	date('Y-m-d H:i:s');
+					$insert_order->ended_date	=	date('Y-m-d H:i:s',strtotime ( ''.$epackage['total_date'].' day' ,  strtotime($insert_order['ended_date']) ) ) ;
+
+					$insert_order->save();
+
+					 
+				}
+
+				else 
+				{
+
+					$insert_order=OrderPostRec::create(
+					array(
+						'ntd_id'=>$name,
+						'eservice_id'=>$epackage['service_id'],
+						'epackage_id'=>$id,
+						'epackage_name'=>$epackage['package_name'],
+						'total_date'=>$epackage['total_date'],
+						'remain_date'=>$epackage['total_date'],
+						'created_date'=>date('Y-m-d H:i:s'),
+						'ended_date'=>date('Y-m-d H:i:s',strtotime ( ''.$epackage['total_date'].' day' , strtotime (date('Y-m-d H:i:s') ) )) ,
+						)
+					);	
+					 
+
+				}
+
+			 
+			return Redirect::back()->with('success','Đã lưu thành công');
+		}
+		else
+			return Redirect::back()->withErrors('Không thành công')->withInput();
 	}
 } 
 ?>

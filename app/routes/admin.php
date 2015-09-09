@@ -71,7 +71,8 @@ Route::group(array('prefix'=>'admin'), function() {
 		Route::controller('order', 'OrdersController', array(
 			'getIndex'	=>	'admin.order.index',
 			'postSaveSearchService'=>'admin.order.saveSearchService',
-			 
+			'getDeleteService' =>'admin.order.delete',
+			'getUpdateService' =>'admin.order.update',
 		));
 
 		Route::controller('product', 'ProductServiceController', array(

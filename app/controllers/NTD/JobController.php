@@ -422,6 +422,7 @@ class JobController extends \Controller {
 	public function getDelete($id)
 	{
 		$job = Job::where('id', $id)->where('ntd_id', Auth::id())->first();
+		$del_job_hieuung=\JobHieuung::whereJobId($id)->delete();
 		if($job)
 		{
 			Job::destroy($job->id);
