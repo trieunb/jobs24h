@@ -94,7 +94,7 @@ Route::group(array('prefix'=>$locale), function() {
 				'postAjax'				=>	'employers.search.ajax',
 				'getResumeIframe'		=>	'employers.search.resume_viewer',
 				'getInHoSo'			=>	'employers.search.print_cv',
-				
+				'getXemchitiet'	=>	'employers.search.xemchitiet1',
 			));
 		});
 

@@ -1,7 +1,7 @@
 <?php 
 namespace NTD;
 use Config, File, View, Redirect, NTD, Auth, Job, Validator, Hash, Input, DB, Resume, RSFolder, EFolder, Response, Category, Mail,Application;
-use VResponse, RespondLetter;
+use VResponse, RespondLetter,Request;
 class SearchController extends \Controller {
 	public function getCoBan()
 	{
@@ -231,9 +231,9 @@ class SearchController extends \Controller {
 	{
 		 
 		 
-		$resume = Resume::where('id', $id)->with('cvcategory')->with('location')->first();
-		 
+		$resume = Resume::where('id', $id)->with('cvcategory')->with('location')->with('bangcap')->first();
 		$employer = Auth::id();
+		$check_order=\Order::whereNtdId($employer)->first();
 		$history=\SearchHistory::whereNtdId($employer)->orderBy('created_at','desc')->first();
 		 
 		if(!$resume)
@@ -251,9 +251,9 @@ class SearchController extends \Controller {
 					$dir = Config::get('app.upload_path') . 'jobseekers/cv/' . $file;
 					if(File::isFile($dir)) $pdf = true;
 					else $pdf = false;
-					return View::make('employers.search.resume_info_upload', compact('resume', 'pdf','history'));
+					return View::make('employers.search.resume_info_upload', compact('resume', 'pdf','history','check_order'));
 				} else {
-					return View::make('employers.search.resume_info', compact('resume','history'));
+					return View::make('employers.search.resume_info', compact('resume','history','check_order'));
 				}
 			} else {
 				$file = str_replace(['.doc', '.docx', '.jpg'], '.pdf', $resume->file_name);
@@ -261,43 +261,73 @@ class SearchController extends \Controller {
 				if(File::isFile($dir)) $pdf = true;
 				else $pdf = false;
 				
-				return View::make('employers.search.resume_info_nologin', compact('resume', 'pdf','history'));
+				return View::make('employers.search.resume_info_nologin', compact('resume', 'pdf','history','check_order'));
 			}
 		}
 	}
 	public function getResumeIframe()
 	{
-		$file = str_replace(['.doc', '.docx', '.jpg'], '.pdf', Input::get('file'));
-		$file = explode('jobseekers/cv/', $file);
-		$file = $file[1];
-		$ext = explode('.', $file);
-		$fname = $ext[0];
-		$ext = $ext[1];
-		$dir1 = Config::get('app.upload_path') . 'jobseekers/cv/' . $fname . '.pdf';
-		$dir = 'uploads/jobseekers/cv/' . $fname . '.pdf';
-		if(! File::isFile($dir1))
-		{
-			return View::make('employers.search.iframe', compact('file', 'dir'));
-            return '<a href="{{ URL::route(\'employers.search.print_cv\', $resume->id) }}" class="btn btn-lg bg-orange">Tải CV</a>';
-        } else {
-        	return View::make('employers.search.iframe', compact('file', 'dir'));
-        }
+
+		$order_inser=\Order::whereNtdId(Auth::id())->first();
+	
+		$ngayhomnay=strtotime(date('Y-m-d H:i:s'));
+
+		if ($order_inser['remain'] > 0 && strtotime($order_inser['ended_date']) > $ngayhomnay) {
+			# code...
+				$order_inser['remain']=$order_inser['remain']-1;
+			if($order_inser['remain']<=0)
+			$order_inser['remain']=0;
+			
+			$order_inser->save();
+			$file = str_replace(['.doc', '.docx', '.jpg'], '.pdf', Input::get('file'));
+			$file = explode('jobseekers/cv/', $file);
+			$file = $file[1];
+			$ext = explode('.', $file);
+			$fname = $ext[0];
+			$ext = $ext[1];
+			$dir1 = Config::get('app.upload_path') . 'jobseekers/cv/' . $fname . '.pdf';
+			$dir = 'uploads/jobseekers/cv/' . $fname . '.pdf';
+			if(! File::isFile($dir1))
+			{
+				return View::make('employers.search.iframe', compact('file', 'dir'));
+	            return '<a href="{{ URL::route(\'employers.search.print_cv\', $resume->id) }}" class="btn btn-lg bg-orange">Tải CV</a>';
+	        } else {
+	        	return View::make('employers.search.iframe', compact('file', 'dir'));
+	        }
+    	}
+    	else return Response::make('Không thể xem !', 404);
 		
 		
 	}
 	public function getInHoSo($cvId = false)
 	{
+		$ngayhomnay=strtotime(date('Y-m-d H:i:s'));
 		if($cvId)
 		{
 			$resume = Resume::where('id', $cvId)->first();
 			if( ! $resume->file_name)
 			{
-				return View::make('employers.search.print', compact('resume'));
+				$order_inser=\Order::whereNtdId(Auth::id())->first();
+				$order_inser['remain']=$order_inser['remain']-1;
+				if($order_inser['remain']<0)
+				$order_inser['remain']=0;
+				$order_inser->save();
+				if ($order_inser['remain']>-1 && strtotime($check_order['ended_date']) > $ngayhomnay)
+					return View::make('employers.search.print', compact('resume'));
+				else return Response::make('Không thể xem !', 404);
 			} else {
 				$path = Config::get('app.upload_path').'jobseekers/cv/' . $resume->file_name;
 				//return $path;
 				if (\File::isFile($path)) {
-					return Response::download($path, $resume->tieude_cv);
+					$order_inser=\Order::whereNtdId(Auth::id())->first();
+					$order_inser['remain']=$order_inser['remain']-1;
+					if($order_inser['remain']<0)
+					$order_inser['remain']=0;
+					
+					$order_inser->save();
+					if ($order_inser['remain']>-1 && strtotime($check_order['ended_date']) > $ngayhomnay)
+						return Response::download($path, $resume->tieude_cv);
+					else return Response::make('Không thể xem !', 404);
 				} else {
 					return Response::make('File not Found !', 404);
 				}
@@ -389,4 +419,29 @@ class SearchController extends \Controller {
 			return Response::json(['has'=>false]);
 		}
 	}
+
+
+	 
+
+	public function getXemchitiet($id)
+	{
+		$order_inser=\Order::whereNtdId(Auth::id())->first();
+		
+		$resume = Resume::where('id', $id)->with('cvcategory')->with('location')->with('bangcap')->first();
+		$ngayhomnay=strtotime(date('Y-m-d H:i:s'));
+		 
+		if ($order_inser['remain'] > 0 && strtotime($order_inser['ended_date']) > $ngayhomnay)
+		{
+			$check_ok=1;
+			$order_inser['remain']=$order_inser['remain']-1;
+			if($order_inser['remain']<0)
+			$order_inser['remain']=0;
+			$order_inser->save();
+		}
+		else $check_ok=0;
+
+		return View::make('employers.search.content_cv',compact('resume','check_ok'));
+	}
+
+	 
 }

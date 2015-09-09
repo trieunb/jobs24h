@@ -1,7 +1,6 @@
 @extends('layouts.employer')
 @section('title')Xem thông tin hồ sơ {{ $resume->tieude_cv }} @stop
 @section('content')
-
  
 	<section class="boxed-content-wrapper clearfix resume-info">
 		<div class="container">
@@ -13,9 +12,8 @@
 							<div class="pull-right">
 								<ul>
 									<li><a href="#modalSaveFolder" data-toggle="modal" data-target="#modalSaveFolder">{{ HTML::image('assets/ntd/images/icon-save-cv.png') }} Lưu thư mục</a></li>
-									 <!-- <li><a href="{{ URL::to($locale.'/nha-tuyen-dung/tim-kiem/co-ban?' . implode('&', ['keyword=', 'category=all', 'level='.$resume->capbachientai, 'location=all'])) }}" target="_blank">{{ HTML::image('assets/ntd/images/icon-view-cv.png') }} Xem hồ sơ tương tự</a></li> --> 
-									 	 <li><a href="{{ URL::to($locale.'/nha-tuyen-dung/tim-kiem/co-ban?keyword='.$history['keyword'].'&category=all&level='.$resume->capbachientai.'&location=all') }}" target="_blank">{{ HTML::image('assets/ntd/images/icon-view-cv.png') }} Xem hồ sơ tương tự</a></li> 
-								
+									<!-- <li><a href="{{ URL::to($locale.'/employers/search/basic?' . implode('&', ['keyword=', 'category=all', 'level='.$resume->capbachientai, 'location=all'])) }}" target="_blank">{{ HTML::image('assets/ntd/images/icon-view-cv.png') }} Xem hồ sơ tương tự</a></li> -->
+									<li><a href="{{ URL::to($locale.'/nha-tuyen-dung/tim-kiem/co-ban?keyword='.$history['keyword'].'&category=all&level='.$resume->capbachientai.'&location=all') }}" target="_blank">{{ HTML::image('assets/ntd/images/icon-view-cv.png') }} Xem hồ sơ tương tự</a></li> 
 									<li><a href="#modalSend" data-toggle="modal" data-target="#modalSend">{{ HTML::image('assets/ntd/images/icon-send-cv.png') }} Gửi hồ sơ</a></li>
 								</ul>
 							</div>
@@ -25,30 +23,42 @@
 						<div class="col-xs-12">
 							<div class="row">
 								<div class="col-xs-5">
-									<h4 class="resume-title">Chức danh/vị trí: <span class="cl-orange">{{ $resume->tieude_cv }}</span></h4>
+									<h4 class="resume-title">Chức danh/vị trí: <span class="cl-orange">{{ $resume->level->name }}</span></h4>
 									<div class="clearfix"></div>
 									<div class="col-xs-4">
-									@if($resume->ntv->avatar==null)
 										{{ HTML::image('assets/ntd/images/no-avatar.jpg') }}
-									@else
-										{{ HTML::image('uploads/jobseekers/avatar/'.$resume->ntv->avatar.'') }}
-									@endif
 									</div>
 									<div class="col-xs-8">
 										<div class="row td-info">
 											<div class="col-xs-5">
-												Ứng viên
+												Kinh nghiệm
 											</div>
 											<div class="col-xs-7">
-												{{ $resume->ntv->first_name }} {{ $resume->ntv->last_name }}
+												{{$resume->namkinhnghiem}} năm
 											</div>
 										</div>
 										<div class="row td-info">
 											<div class="col-xs-5">
-												Địa chỉ
+												Bằng cấp 
 											</div>
 											<div class="col-xs-7">
-												{{ $resume->ntv->address }}
+												{{$resume->bangcap->name}}
+											</div>
+										</div>
+										<div class="row td-info">
+											<div class="col-xs-5">
+												Cấp bậc hiện tại
+											</div>
+											<div class="col-xs-7">
+												{{$resume->level->name}}
+											</div>
+										</div>
+										<div class="row td-info">
+											<div class="col-xs-5">
+												Vị trí mong muốn 
+											</div>
+											<div class="col-xs-7">
+												{{$resume->vitrimongmuon}}
 											</div>
 										</div>
 										<div class="row td-info">
@@ -75,12 +85,25 @@
 								<div class="col-xs-7">
 									<div class="buy-service">
 										<div class="row buy-header">
+											<?php $ngayhomnay=strtotime(date('Y-m-d H:i:s')) ?>
+											
+											@if(strtotime($check_order['ended_date']) > $ngayhomnay)
+
+												<div class="col-xs-9">
+													Gói dịch vụ xem hồ sơ của quí khách còn <span style="color:red"> {{ round((strtotime($check_order['ended_date']) - $ngayhomnay)/(24*3600))}} </span>ngày.
+													Và số lượng hồ sơ ứng viên có thể xem được là : <span style="color:red">{{$check_order['remain']}}</span> hồ sơ.
+												</div>
+												<div class="col-xs-3 pull-right">
+													<a href="{{ URL::route('employers.orders.add') }}" class="btn btn-nomal bg-orange pull-right">Mua dịch vụ</a>
+												</div>
+											@else
 											<div class="col-xs-9">
 												Để xem hồ sơ hoàn chỉnh của ứng viên, quý khách vui lòng sử dụng dịch vụ "tìm hồ sơ"
 											</div>
 											<div class="col-xs-3 pull-right">
 												<a href="{{ URL::route('employers.orders.add') }}" class="btn btn-nomal bg-orange pull-right">Mua dịch vụ</a>
 											</div>
+											@endif
 										</div>
 										<div class="row buy-information">
 											<div class="col-xs-6">
@@ -116,26 +139,33 @@
 							</div> <!-- end .row top -->
 						</div>
 					</div> <!-- end .row info -->
-					<div class="row resume-content">
-						<div class="heading-title">
-							<span>Thông tin nghề nghiệp</span>
-						</div>
-						<div class="col-xs-12">
-							@if($pdf)
-							<iframe  frameborder="0" scrolling="no" src="{{ URL::route('employers.search.resume_viewer') }}?file={{ URL::to('/').'/uploads/jobseekers/cv/'.$resume->file_name }}" height="800" width="100%"></iframe>
-							@else 
-							<a href="{{ URL::route('employers.search.print_cv', $resume->id) }}" class="btn btn-lg bg-orange">Tải CV</a>
-							@endif
-						</div>
+					@if(strtotime($check_order['ended_date']) > $ngayhomnay && $check_order['remain']>0)
+					<div class="row info-content">
+						<a href="#" id="view" class="btn btn-nomal bg-orange pull-right">Xem hồ sơ</a>
+					</div>	
+					@endif
+					@if(strtotime($check_order['ended_date']) > $ngayhomnay && $check_order['remain']>0)
+					<div id="content_cv">
+						
 					</div>
-					
-					
+					@else 
+					<div class="row info-content">
+								<div class="row buy-header">
+											<div class="col-xs-9">
+												Để xem hồ sơ hoàn chỉnh của ứng viên, quý khách vui lòng sử dụng dịch vụ "tìm hồ sơ"
+											</div>
+											<div class="col-xs-3 pull-right">
+												<a href="{{ URL::route('employers.orders.add') }}" class="btn btn-nomal bg-orange pull-right">Mua dịch vụ</a>
+											</div>
+								</div>
+					</div>
+					@endif
 					<div class="row box-footer">
 						<div class="col-xs-12 info-action">
 							<div class="pull-right">
 								<ul>
 									<li><a href="#modalSaveFolder" data-toggle="modal" data-target="#modalSaveFolder">{{ HTML::image('assets/ntd/images/icon-save-cv.png') }} Lưu thư mục</a></li>
-									<!-- <li><a href="{{ URL::to($locale.'/nha-tuyen-dung/tim-kiem/co-ban?' . implode('&', ['keyword=', 'category=all', 'level='.$resume->capbachientai, 'location=all'])) }}" target="_blank">{{ HTML::image('assets/ntd/images/icon-view-cv.png') }} Xem hồ sơ tương tự</a></li> -->
+									<!-- <li><a href="{{ URL::to($locale.'/employers/search/basic?' . implode('&', ['keyword=', 'category=all', 'level='.($resume->capbachientai>0?$resume->capbachientai:'all'), 'location=all'])) }}" target="_blank">{{ HTML::image('assets/ntd/images/icon-view-cv.png') }} Xem hồ sơ tương tự</a></li> -->
 									<li><a href="{{ URL::to($locale.'/nha-tuyen-dung/tim-kiem/co-ban?keyword='.$history['keyword'].'&category=all&level='.$resume->capbachientai.'&location=all') }}" target="_blank">{{ HTML::image('assets/ntd/images/icon-view-cv.png') }} Xem hồ sơ tương tự</a></li> 
 									<li><a href="#modalSend" data-toggle="modal" data-target="#modalSend">{{ HTML::image('assets/ntd/images/icon-send-cv.png') }} Gửi hồ sơ</a></li>
 								</ul>
@@ -198,6 +228,8 @@
 		</div>
 	</div>
 </div>
+
+<!-- modal send to friend -->
 <div class="modal fade" id="modalSend">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -242,10 +274,23 @@
 		</div>
 	</div>
 </div>
-
+@stop
+@section('style')
+	<style type="text/css">
+	.modal-dialog {
+		margin-top: 50px !important; 
+	}
+	</style>
 @stop
 @section('script')
 	<script type="text/javascript">
+	 
+
+	$('#view').click(function(event) { 
+		 
+					$("#content_cv").load('{{URL::route("employers.search.xemchitiet1",$resume->id)}}');
+			 
+		});
 	$('#inputAdd').click(function(event) { 
 		$('#inputFolder_name').prop({
 			disabled: 'disabled'
@@ -284,8 +329,9 @@
 				setTimeout(function(){ $('#result').html(''); }, 1500);
 				setTimeout(function(){ $('#modalSaveFolder').modal('hide');  }, 1500);
 			}
-		})
-	}
+		});
+
+	}//
 	var sendResume = function()
 	{
 		var send_email = $('#send_email').val();
@@ -328,7 +374,7 @@
 			}
 		});
 
-	}
+	}//sendResume
 	var blockInput = function()
 	{
 		setTimeout(function(){ 
@@ -345,4 +391,5 @@
 	}
 	
 	</script>
+</div>
 @stop

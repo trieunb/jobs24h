@@ -505,6 +505,14 @@
 					<!--end- traning-->
 
 
+					<li class="{{ HTML::active(['admin.product.*']) }}">
+						<a href="{{ URL::route('admin.product.index') }}">
+							<i class="menu-icon fa fa-newspaper-o"></i>
+							<span class="menu-text"> Dịch vụ </span>
+						</a>
+					</li>
+
+
 				</ul><!-- /.nav-list -->
 
 				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
