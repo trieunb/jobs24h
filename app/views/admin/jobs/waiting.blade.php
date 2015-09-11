@@ -4,18 +4,27 @@
 @section('content')
 	@include('includes.notifications')
 	<div class="clearfix"></div>
-	<form action="" method="POST" class="form-inline" role="form">
-		<div class="form-group">
-			<div class="col-sm-2">
-				<select name="action" id="inputAction" class="form-control" required="required">
-					<option value=""></option>
-					<option value="accept">Duyệt tin</option>
-					<option value="deni">Từ chối</option>
-				</select>
+	<div class="col-sm-12 infobox-container">
+		<div class="infobox infobox-green">
+			<div class="infobox-icon">
+				
+				<i class="ace-icon fa fa-bank"></i>
 			</div>
+
+			<div class="infobox-data">
+				 <a href="{{URL::route('admin.jobs.waiting')}}">
+					<div class="infobox-content">Tổng số tin chưa duyệt</div>
+					<span class="infobox-data-number">{{ $jobs->count() }}</span>
+				 </a>
+			</div>
+
+			<!-- <div class="stat stat-success">8%</div> -->
 		</div>
-		<button type="submit" class="btn btn-sm btn-primary">Thực hiện</button>
+	</div>
+
+	<form action="" method="POST" class="form-inline" role="form">
 	
+	<div class="clearfix"></div>
 	<table class="table table-hover table-bordered table-striped" id="jobs">
 		<thead>
 			<tr>
@@ -25,14 +34,16 @@
 						<span class="lbl"></span>
 					</label>
 				</th>
-				<th>ID</th>
-				<th>NTD</th>
-				<th>Mã tin</th>
-				<th>Vị trí</th>
-				<th>Hiển thị</th>
+				<!-- <th>ID</th> -->
+				<th>Tin tuyển dụng</th>
+				<th>Nhà tuyển dụng</th>
+				<!-- <th>Mã tin</th> -->
+				
+				<th>Tình trạng đăng</th>
 				<th>Hạn nộp</th>
 				<th>Trạng thái</th>
-				<th>#</th>
+				<th>Hành động</th>
+				<th>CSKH</th>	
 			</tr>
 		</thead>
 		<tbody>
@@ -45,16 +56,18 @@
 								<span class="lbl"></span>
 							</label>
 						</td>
-						<td>{{ $job->id }}</td>
-						<td>{{ HTML::link(URL::route('admin.employers.edit', [$job->ntd_id]), ($job->ntd->company->company_name)?$job->ntd->company->company_name:$job->ntd->email) }}</td>
-						<td>{{ $job->matin }}</td>
-						<td>{{ HTML::link(URL::route('admin.jobs.edit', [$job->id]), $job->vitri ) }}</td>
+						
+						<!-- <td>{{ $job->id }}</td> -->
+						<td>{{ HTML::link(URL::route('admin.jobs.edit1', [0,$job->id]), $job->vitri ) }}</td>
+						<td>{{ HTML::link(URL::route('admin.employers.edit1', [0,$job->ntd_id]), ($job->ntd->company->company_name)?$job->ntd->company->company_name:$job->ntd->email) }}</td>
+						<!-- <td>{{ $job->matin }}</td> -->
+						
 						<td>@if($job->is_display==1)
-						<span class="label label-success">Hiển thị</span>
+						<span class="label label-success">Đăng ngay</span>
 						@else
-						<span class="label label-warning">Đang ẩn</span>
+						<span class="label label-warning">Chờ đăng</span>
 						@endif</td>
-						<td>{{ $job->hannop }}</td>
+						<td>{{ date('d-m-Y',strtotime($job->hannop)) }}</td>
 						<td id="td_status_{{ $job->id }}">
 							@if($job->status == 1)
 							<span id="lstatus_{{ $job->id }}" class="label label-status label-primary">Đã duyệt</span>
@@ -68,6 +81,7 @@
 							<button type="button" value="1" id="duyet_{{ $job->id }}" class="btn btn-xs btn-duyet btn-primary">Duyệt</button>
 							<button type="button" value="3" id="duyet_{{ $job->id }}" class="btn btn-xs btn-duyet btn-danger">Từ chối</button>
 						</td>
+						<td>CSKH</td>
 					</tr>
 				@endforeach
 			@else
@@ -77,6 +91,19 @@
 			@endif
 		</tbody>
 	</table>
+
+	<div class="col-md-12">
+		<div class="form-group">
+			<div class="col-sm-2">
+				<select name="action" id="inputAction" class="form-control" required="required">
+					<option value=""></option>
+					<option value="accept">Duyệt tin</option>
+					<option value="deni">Từ chối</option>
+				</select>
+			</div>
+		</div>
+		<button type="submit" class="btn btn-sm btn-primary">Thực hiện</button>
+	</div>
 	</form>
 	<div id="pagination">
 		{{ $jobs->links() }}

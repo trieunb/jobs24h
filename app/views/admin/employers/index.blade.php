@@ -12,9 +12,11 @@
 						<span class="lbl"></span>
 					</label>
 				</th>
-				<th>ID</th>
+				
+				
+				<th>Nhà tuyển dụng</th>
 				<th>Email</th>
-				<th>Họ tên</th>
+				<th>Điện thoại</th>
 				<th>Ngày đăng ký</th>
 				<th>Trạng thái</th>
 				<th>Tổng số tin đăng</th>
@@ -35,7 +37,12 @@
 	{{ HTML::script('assets/js/jquery.dataTables.min.js') }}
 	{{ HTML::script('assets/js/jquery.dataTables.bootstrap.min.js') }}
 	<script type="text/javascript">
+	var page1 = <?php if(isset($_GET['page']))
+	 				echo $_GET['page'];
+	 				else echo 0;
+	 				 ?>;
 		$('#employers').dataTable( {
+				"displayStart": page1,
 				"bProcessing": true,
 				"bServerSide": true,
 				"sAjaxSource": "{{ URL::route('employers.datatables') }}",

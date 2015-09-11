@@ -4,6 +4,8 @@
 @section('content')
 	@include('includes.notifications')
 	<div class="clearfix"></div>
+	
+	
 	<form action="" method="POST" class="form-inline" role="form">
 		<div class="form-group">
 			<div class="col-sm-2">

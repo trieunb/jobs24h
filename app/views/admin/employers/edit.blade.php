@@ -2,7 +2,7 @@
 @section('title')Edit Employer #{{ $employer->id }} @stop
 @section('page-header')Sửa thông tin nhà tuyển dụng @stop
 @section('content')
-	{{ Form::open(array('method'=>'POST', 'action'=> array('admin.employers.update', $employer->id), 'class'=>'form form-horizontal', 'method'=>'PUT' ) ) }}
+	{{ Form::open(array('method'=>'POST', 'class'=>'form form-horizontal' ) ) }}
 		@include('includes.notifications')
 		
 		<div class="form-group">

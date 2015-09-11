@@ -2,7 +2,9 @@
 @section('title')Edit Job #{{ $job->id }} @stop
 @section('page-header')Sửa tin tuyển dụng @stop
 @section('content')
-	{{ Form::open(array('method'=>'POST', 'action'=> array('admin.jobs.update', $job->id), 'class'=>'form form-horizontal', 'method'=>'PUT' ) ) }}
+
+	<!-- {{ Form::open(array('method'=>'POST', 'action'=> array('admin.jobs.update1',$page, $job->id), 'class'=>'form form-horizontal', 'method'=>'PUT' ) ) }} -->
+	{{ Form::open(array('method'=>'POST', 'class'=>'form form-horizontal' ) ) }}
 		@include('includes.notifications')
 		
 		<div class="form-group">

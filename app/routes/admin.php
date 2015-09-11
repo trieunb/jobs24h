@@ -13,13 +13,17 @@ Route::group(array('prefix'=>'admin'), function() {
 		
 		Route::get('employers/report', array('as'=>'employers.report', 'uses'=>'EmployerController@report'));
 		Route::get('employers/datatables', array('as'=>'employers.datatables', 'uses'=>'EmployerController@datatables'));
+		Route::get('employers/datatablesvip', array('as'=>'employers.datatablesvip', 'uses'=>'EmployerController@datatables_vip'));
 		Route::resource('employers', 'EmployerController');
-
+		Route::controller('employers','EmployerController',array(
+			'getEditEmployers' =>'admin.employers.edit1'
+			
+			));
 		Route::get('jobs/datatables', array('as'=>'jobs.datatables', 'uses'=>'AJobController@datatables'));
 
 		
 		Route::resource('jobs', 'AJobController', [
-		    'only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']
+		    'only' => ['index', 'create', 'store','edit', 'update', 'destroy']
 		]);
 		Route::controller('jobs', 'AJobController', array(
 			'getReport'	=>	'admin.jobs.report',
@@ -28,6 +32,8 @@ Route::group(array('prefix'=>'admin'), function() {
 			'getVipWaiting'	=>	'admin.jobs.vipwaiting',
 			'getVipExp'		=>	'admin.jobs.vipexp',
 			'postAjax'		=>	'admin.jobs.ajax',
+			'getEdit1'		=> 'admin.jobs.edit1',
+			'postEdit1'	=>		'admin.jobs.update1',	
 		));
 
 		Route::get('resumes/creates/{id}', array('as'=>'resumes.creates', 'uses'=>'ResumeController@creates'));

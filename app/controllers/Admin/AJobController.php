@@ -12,13 +12,31 @@ class AJobController extends \BaseController {
 	{
 		//
 		$ntd_id = Input::get('id');
-		return View::make('admin.jobs.index', compact('id'));
+		$job_total=Job::count();
+		$job_not_active=Job::where('status','<>',1)->count(); // tin chưa duyệt
+		$job_active=Job::whereStatus(1)->count(); 
+		
+
+		 
+
+		 
+		return View::make('admin.jobs.index', compact('job_total','job_not_active','job_active','id'));
 	}
 	public function datatables()
 	{
+
+		$page=0;
+		if (Request::ajax()) {
+			$page=(Input::get('iDisplayStart'));
+		}
+		
 		$ntds = Input::get('id');
-		$jobs = Job::select('id as ckid', 'id', 'ntd_id', 'matin', 'vitri', 'is_display', 'hannop', 'status', 'luotxem', 'id as ids', 'slug')->with('ntd');
-		if($ntds) $jobs->where('ntd_id', $ntds);
+
+		/*$jobs = Job::select('id as ckid', 'id', 'vitri', 'ntd_id', 'matin', 'is_display', 'hannop', 'status', 'luotxem', 'id as ids', 'slug')->with('ntd')->addSelect;*/
+		$jobs = Job::join('companies','jobs.ntd_id','=','companies.ntd_id')->select('jobs.id as ckid', 'jobs.id as id', 'jobs.vitri as vitri','companies.company_name as company_name', 'jobs.ntd_id as ntd_id', 'jobs.matin as matin', 'jobs.is_display as is_display', 'jobs.hannop as hannop', 'jobs.status as status', 'jobs.luotxem as luotxem',DB::raw('(select count(*) from application where jobs.id=application.job_id) as appcount'), 'jobs.id as ids','jobs.slug as slug')->with('ntd')->with('application'); 		
+		//
+		if($ntds) $jobs->where('jobs.ntd_id', $ntds);
+		 
 		return Datatables::of($jobs)
 		->edit_column('ckid', '<th class="center">
 						<label class="pos-rel">
@@ -26,14 +44,16 @@ class AJobController extends \BaseController {
 							<span class="lbl"></span>
 						</label>
 					</th>
-')
-		->edit_column('is_display', '@if($is_display==1)<span class="label label-success">Đang hiển thị</span>@else <span class="label label-info">Đang ẩn</span>@endif')
+		')
+		->remove_column('id')
+		->edit_column('is_display', '@if($is_display==1)<span class="label label-success">Đăng ngay</span>@else <span class="label label-info">Chờ đăng</span>@endif')
 		->edit_column('status', '@if($status==1)<span class="label label-primary">Đã duyệt</span>@else <span class="label label-warning">Chưa duyệt</span>@endif')
-		->edit_column('ntd_id', '{{ HTML::link(URL::route("admin.employers.edit", $ntd_id), $ntd["email"]) }}')
 		->edit_column('vitri', '{{ HTML::link(URL::route("jobseekers.job", [$slug, $id]), $vitri, ["target"=>"_blank"]) }}')
+		//->edit_column('ntd_id', '{{ HTML::link(URL::route("admin.employers.edit1",'.$page.',$ntd_id), $ntd["email"]) }}')
+		->edit_column('ntd_id', '<a id="edit" class="" href="{{URL::route("admin.employers.edit1", array('.$page.',$id) )}}" title="Edit">{{$ntd["email"]}}</a>')
 		->edit_column('ids', '
 			{{ Form::open(array("method"=>"delete", "route"=>array("admin.jobs.destroy", $id) )) }}
-			<a class="btn btn-xs btn-info" href="{{URL::route("admin.jobs.edit", array($id) )}}" title="Edit"><i class="ace-icon fa fa-pencil bigger-120"></i></a> 
+			<a id="edit" class="btn btn-xs btn-info" href="{{URL::route("admin.jobs.edit1", array('.$page.',$id) )}}" title="Edit"><i class="ace-icon fa fa-pencil bigger-120"></i></a> 
 			<button class="btn btn-xs btn-danger" onclick="return confirm(\'Are you sure you want to delete ?\');" type="submit" title="Delete"><i class="ace-icon fa fa-trash-o bigger-120"></i></button>
 			{{ Form::close() }}
 			')
@@ -78,9 +98,10 @@ class AJobController extends \BaseController {
 			$matin = Job::orderBy('matin', 'desc')->first();
 			if($matin) $matin = $matin->matin;
 			else $matin = 100000;
+
 			$data['matin'] = $matin + 1;
 			$data['is_display'] = 1;
-			
+			$data['status']=2;
 			$hinhanh = array();
 
 			$job = new Job;
@@ -138,13 +159,24 @@ class AJobController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
+	public function getEdit1($page,$id)
+	{
+		//
+		
+		$job = Job::find($id);
+		if(!$job) return Response::make('Không tìm thấy tin đăng');
+		return View::make('admin.jobs.edit', compact('job','page'));
+	}
+
 	public function edit($id)
 	{
 		//
+		$page;
 		$job = Job::find($id);
 		if(!$job) return Response::make('Không tìm thấy tin đăng');
-		return View::make('admin.jobs.edit', compact('job'));
+		return View::make('admin.jobs.edit', compact('job','page'));
 	}
+
 
 	/**
 	 * Update the specified resource in storage.
@@ -153,8 +185,11 @@ class AJobController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function postEdit1($page,$id)
 	{
+
+		 $page=$page;
+		  
 		$data = Input::all();
 		$validator = new App\DTT\Forms\EmployerAddJob;
 		if($validator->fails())
@@ -183,7 +218,7 @@ class AJobController extends \BaseController {
 				$job->updateCategory($job->id, $ntd_nganhnghe);
 				$job->save();
 
-				return Redirect::route('admin.jobs.index')->with('success', 'Đã lưu các thay đổi !');
+				return Redirect::route('admin.jobs.index',array('page'=>$page))->with('success','Đã lưu các thay đổi !');
 				
 			} catch (Exception $e) {
 				return Redirect::back()->withInput()->withErrors('Lỗi khi save !');
@@ -215,7 +250,8 @@ class AJobController extends \BaseController {
 	}
 	public function getWaiting()
 	{
-		$jobs = Job::where('status', 2)->with(array('ntd' => function($q){$q->with('company');} ))->where('vip_from', '0000-00-00')->paginate(10);
+		$jobs = Job::where('status','<>', 1)->with(array('ntd' => function($q){$q->with('company');} ))->where('vip_from', '0000-00-00')->paginate(10);
+
 		return View::make('admin.jobs.waiting', compact('jobs'));
 	}
 	public function postWaiting()

@@ -26,7 +26,12 @@
 									<h4 class="resume-title">Chức danh/vị trí: <span class="cl-orange">{{ $resume->level->name }}</span></h4>
 									<div class="clearfix"></div>
 									<div class="col-xs-4">
+									@if($resume->ntv->avatar==null)
 										{{ HTML::image('assets/ntd/images/no-avatar.jpg') }}
+									@else
+										{{ HTML::image('uploads/jobseekers/avatar/'.$resume->ntv->avatar.'') }}
+									@endif
+										<!-- {{ HTML::image('assets/ntd/images/no-avatar.jpg') }} -->
 									</div>
 									<div class="col-xs-8">
 										<div class="row td-info">

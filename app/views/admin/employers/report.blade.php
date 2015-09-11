@@ -22,7 +22,7 @@
 				</div>
 
 				<div class="infobox-data">
-					<span class="infobox-data-number">0/242</span>
+					<span class="infobox-data-number">{{$ntd_vip}}</span>
 					<div class="infobox-content">NTD VIP</div>
 				</div>
 			</div>
@@ -33,8 +33,10 @@
 				</div>
 
 				<div class="infobox-data">
-					<span class="infobox-data-number">0</span>
-					<div class="infobox-content">Tin chưa duyệt</div>
+					<a href="{{URL::route('admin.jobs.waiting')}}">
+						<span class="infobox-data-number">{{$job_not_active}}</span>
+						<div class="infobox-content">Tin chưa duyệt</div>
+					</a>
 				</div>
 				<!-- <div class="stat stat-important">4%</div> -->
 			</div>
@@ -60,12 +62,13 @@
 						<span class="lbl"></span>
 					</label>
 				</th>
-				<th>ID</th>
-				<th>Email</th>
-				<th>Họ tên</th>
-				<th>Ngày đăng ký</th>
-				<th>Trạng thái</th>
-				<th>Tổng số tin đăng</th>
+				
+				<th>Nhà tuyển dụng vip</th>
+				<th>Gói</th>
+				<th>Ngày bắt đầu</th>
+				<th>Ngày hết hạn</th>
+				<th>Loại tham gia</th>
+				<th>Số ngày còn lại</th>
 				<th>#</th>
 			</tr>
 		</thead>
@@ -86,7 +89,7 @@
 		$('#employers').dataTable( {
 				"bProcessing": true,
 				"bServerSide": true,
-				"sAjaxSource": "{{ URL::route('employers.datatables') }}",
+				"sAjaxSource": "{{ URL::route('employers.datatablesvip') }}",
 				bAutoWidth: false,
 					"aoColumns": [
 					  { "bSortable": false, "sClass": "center" },

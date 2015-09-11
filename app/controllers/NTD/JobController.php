@@ -217,6 +217,8 @@ class JobController extends \Controller {
 	}
 	public function postDangTuyenDung()
 	{
+		 
+
 		$validator = new EmployerAddJob;
 		if($validator->fails())
 		{
@@ -230,7 +232,7 @@ class JobController extends \Controller {
 			$ntd_diadiem = $data['ntd_diadiem']; unset($data['ntd_diadiem']);
 			$video = $data['video']; unset($data['video']);
 			$data['ntd_id'] = Auth::id();
-			$data['status'] = 1;
+			$data['status'] = 2; // chưa duyệt 1: đã duyệt
 			//$data['is_display'] = (Input::get('status')==2)?1:0;
 			$data['slug'] = Str::slug(Input::get('vitri'));
 			$data['keyword_tags'] = json_encode($data['keyword_tags']);
