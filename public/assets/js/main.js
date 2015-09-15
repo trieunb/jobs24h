@@ -196,6 +196,7 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
     // COUNTDOWN TEXTEREA
     var maxLength = 5000;
     $(document).on('keyup', '.keyup', function(event) {
+        $(this).attr('maxLength', '5000');
       var length = $(this).val().length;
       var length = maxLength-length;
       var aclass = $(this).attr('class').replace('form-control keyup','');

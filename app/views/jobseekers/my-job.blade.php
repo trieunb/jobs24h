@@ -32,7 +32,7 @@
 								</thead>
 								<tbody>
 									@if(isset($my_job_list) && count($my_job_list))
-									@foreach($jobs_for_widget as $mjl)
+									@foreach($my_job_list as $mjl)
 									
 									<tr>
 										<!-- <td>{{Form::checkbox('check[]', $mjl->id, null, array('class'=>'checkbox'))}}</td> -->

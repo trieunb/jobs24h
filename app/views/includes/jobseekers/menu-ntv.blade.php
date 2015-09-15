@@ -6,18 +6,57 @@
 	   	<ul class="dropdown-menu" role="menu">
 	   		<?php 
 	   		if(Sentry::check()){
-	   			$count_my_jobs = MyJob::where('ntv_id',$GLOBALS['user']->id)->count();
+	   			$count_my_jobs = $resume = Resume::where('ntv_id', $GLOBALS['user']->id)->lists('id');
+		
+				$categories = CVCategory::whereIn('rs_id', $resume)->where('cat_id', '>', 0)->lists('cat_id');
+				$provinces = WorkLocation::whereIn('rs_id', $resume)->where('province_id', '>', 0)->lists('province_id');
+	
+		
+				$jobs = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->where('status',1)->with('province')->with('category');
+				
+				if(count($provinces))
+				{
+					//foreach($provinces as $province){
+						$jobs->whereHas('province', function($query) use($provinces) {
+							$query->whereIn('province_id', $provinces);
+						});
+					//}
+				}else {
+						$jobs->with(array('province'	=>	function($query) {
+							$query->with('province');
+						}));
+				}
+				if(count($categories) )
+				{
+					//foreach($categories as $cate){
+						//var_dump(array($categories)); die();
+						$jobs->whereHas('category', function($query) use($categories)  {
+							$query->whereIn('cat_id', $categories);
+						});
+					//}
+				}else {
+					$jobs->with(array('category'=>function($query) {
+						$query->with('category');
+					}));
+				}
+				$count_my_jobs = $jobs->orderBy('updated_at', 'ASC')->count();
+
+
 	   			$applied_job = Application::where('ntv_id',$GLOBALS['user']->id)->get();
 				if(count($applied_job)){
 					foreach ($applied_job as $key => $value) {
 						$applied_id = array($value->job_id);
 					}
-					$count_saved_job = MyJob::whereNotIn('job_id', $applied_id)->where('ntv_id',$GLOBALS['user']->id)->count();
+					$count_saved_job1 = MyJob::whereNotIn('job_id', $applied_id)->where('ntv_id',$GLOBALS['user']->id)->lists('job_id');
+					$count_saved_job = Job::whereIn('id', $count_saved_job1)->where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->where('status',1)->count();
 				}else{
-					$count_saved_job = $count_my_jobs;
+					$count_saved_job = 0;
 				}
 
-				$count_applied_job = Application::where('ntv_id',$GLOBALS['user']->id)->count();
+				$count_applied_job1 = Application::where('ntv_id',$GLOBALS['user']->id)->lists('job_id');
+				$count_applied_job = Job::whereIn('id', $count_applied_job1)->where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->where('status',1)->count();
+				
+
 				$count_my_resume = Resume::where('ntv_id', $GLOBALS['user']->id)->count();
 				$count_repond = VResponse::where('ntv_id',$GLOBALS['user']->id)->where('user_submit','!=', $GLOBALS['user']->id)->count();
 				//$count_view_resume = ViewResume::where('ntv_id',$GLOBALS['user']->id)->count();

@@ -720,23 +720,21 @@ class JobSeeker extends Controller
 
 	public function myJob(){
 
+		$resume = Resume::where('ntv_id', $GLOBALS['user']->id)->lists('id');
 		
-		$suggested_jobs = Subscribe::where('ntv_id', $GLOBALS['user']->id)->get();
-		if(count($suggested_jobs)){
-			foreach ($suggested_jobs as $key => $value) {
-				$keyword[] = $value->keyword;
-				$categories[] = json_decode($value->categories);
-				$provinces[] = json_decode($value->provinces);
-			}
-			$jobs = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->with('province')->with('category');
+		$categories = CVCategory::whereIn('rs_id', $resume)->where('cat_id', '>', 0)->lists('cat_id');
+		$provinces = WorkLocation::whereIn('rs_id', $resume)->where('province_id', '>', 0)->lists('province_id');
+	
+		
+			$jobs = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->where('status',1)->with('province')->with('category');
 			
 			if(count($provinces))
 			{
-				foreach($provinces as $province){
-					$jobs->whereHas('province', function($query) use($province) {
-						$query->whereIn('province_id', $province);
+				//foreach($provinces as $province){
+					$jobs->whereHas('province', function($query) use($provinces) {
+						$query->whereIn('province_id', $provinces);
 					});
-				}
+				//}
 			}else {
 					$jobs->with(array('province'	=>	function($query) {
 						$query->with('province');
@@ -744,27 +742,21 @@ class JobSeeker extends Controller
 			}
 			if(count($categories) )
 			{
-				foreach($categories as $cate){
-					$jobs->whereHas('category', function($query) use($cate)  {
-						$query->whereIn('cat_id', $cate);
+				//foreach($categories as $cate){
+					//var_dump(array($categories)); die();
+					$jobs->whereHas('category', function($query) use($categories)  {
+						$query->whereIn('cat_id', $categories);
 					});
-				}
+				//}
 			}else {
 				$jobs->with(array('category'=>function($query) {
 					$query->with('category');
 				}));
 			}
-			$my_job_list = $jobs->orderBy('updated_at', 'ASC')->get();
-			if(count($my_job_list) == 0){
-				$my_job_list = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->orderBy('updated_at', 'DESC')->paginate(10);	
-			}
-		}else{
-			$my_job_list = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->orderBy('updated_at', 'DESC')->paginate(10);
-		}
-
+			$my_job_list = $jobs->orderBy('updated_at', 'ASC')->paginate(10);
 		return View::make('jobseekers.my-job',compact('my_job_list'));
-		
 	}
+
 	public function saveJob($job_id){
 		$applied_job = Application::where('ntv_id',$GLOBALS['user']->id)->get();
 		$check = Job::find($job_id);
