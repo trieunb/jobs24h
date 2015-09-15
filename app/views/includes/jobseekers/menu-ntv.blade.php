@@ -13,7 +13,10 @@
 						$applied_id = array($value->job_id);
 					}
 					$count_saved_job = MyJob::whereNotIn('job_id', $applied_id)->where('ntv_id',$GLOBALS['user']->id)->count();
+				}else{
+					$count_saved_job = $count_my_jobs;
 				}
+
 				$count_applied_job = Application::where('ntv_id',$GLOBALS['user']->id)->count();
 				$count_my_resume = Resume::where('ntv_id', $GLOBALS['user']->id)->count();
 				$count_repond = VResponse::where('ntv_id',$GLOBALS['user']->id)->where('user_submit','!=', $GLOBALS['user']->id)->count();

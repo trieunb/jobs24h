@@ -12,6 +12,7 @@
 				</div>
 				<div class="box edit-basic">
 					@include('includes.notifications')
+					<div class="row">
 					{{ Form::open( array('route'=>array('edit-basic-info', 'basic-info',$user->id), 'class'=>'form-horizontal', 'method'=>'POST', 'files'=>'true') ) }}
 						<div class="col-sm-3">
 							<div class="avatar">
@@ -92,7 +93,11 @@
 								    <a href="#" class="text-blue">Hủy bỏ và quay trở lại trang trước</a>
 							    </div>
 							</div>
+							</div>
 					{{Form::close() }}
+					</div>
+					<div class="row" style="border-top: 1px solid #EFEFEF; padding-top:15px;">
+					<div class="col-sm-9 pull-right">
 					{{ Form::open( array('route'=>array('edit-basic-info', 'change-pass'), 'class'=>'form-horizontal', 'method'=>'POST') ) }}
 						<h3 class="text-orange">* Đổi mật khẩu</h3>
 						<div class="form-group">
@@ -121,7 +126,7 @@
 						</div>
 					{{Form::close() }}
 						</div>
-						
+						</div>
 				</div>
 			</div>
 		</div>

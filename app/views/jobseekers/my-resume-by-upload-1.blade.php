@@ -160,6 +160,7 @@
 			            		<span class="error-message">{{$errors->first('info_wish_level')}}</span>
 			            	</div>
 			            </div>
+			            
 			            <div class="form-group">
 			                <label class="col-sm-3 control-label">Mức lương mong muốn<abbr>*</abbr></label>
 							<div class="radio col-sm-3">

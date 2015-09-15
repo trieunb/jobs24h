@@ -57,6 +57,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   var windowScroll = function() {
     if(triggers.length === 0) { return; }
     var scrollY = $window.scrollTop();
+    var entry = $(".boxed-content-wrapper").height();
     for(var i = 0; i < triggers.length; i++) {
       var t = triggers[i], opt = t.data("floatingFixedOptions");
       if(!t.data("isFloating")) {
@@ -67,7 +68,13 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       var top = top = t.data("floatingFixedTop");
       if(top < scrollY + opt.padding && !t.data("isFloating")) {
         t.css({position: 'fixed', top: opt.padding, left: t.data("floatingFixedLeft"), width: t.width() }).data("isFloating", true);
-      } else if(top >= scrollY + opt.padding && t.data("isFloating")) {
+      } 
+      else if($(document).scrollTop() >= entry-1500){
+          var pos = t.data("floatingFixedOrig");
+          t.css(pos).data("isFloating", false);
+          t.css('top', '0px');
+      }
+      if(top >= scrollY + opt.padding && t.data("isFloating")) {
         var pos = t.data("floatingFixedOrig");
         t.css(pos).data("isFloating", false);
       }

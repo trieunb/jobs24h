@@ -1,6 +1,6 @@
 <?php 
 Route::group(array('prefix'=>$locale), function() {
-	Route::group(array('prefix'=>'nguoi-tim-viec'), function() {
+	Route::group(array('prefix'=>'/nguoi-tim-viec'), function() {
 		// Widget VIệc làm phù hơp
 		if($GLOBALS['user'] != null){
 			$suggested_jobs = Subscribe::where('ntv_id', $GLOBALS['user']->id)->get();
@@ -43,14 +43,14 @@ Route::group(array('prefix'=>$locale), function() {
 				}
 				$jobs_for_widget = $jobs->orderBy('updated_at', 'ASC')->take(3)->get();
 				if(count($jobs_for_widget) == 0){
-					$jobs_for_widget = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->orderBy('updated_at', 'ASC')->take(3)->get();	
+					$jobs_for_widget = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->orderBy('updated_at', 'ASC')->take(10)->get();	
 				}
 			}else{
-				$jobs_for_widget = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->orderBy('updated_at', 'ASC')->take(3)->get();
+				$jobs_for_widget = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->orderBy('updated_at', 'ASC')->take(10)->get();
 			}
 			
 		}else{
-			$jobs_for_widget = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->orderBy('updated_at', 'ASC')->take(3)->get();
+			$jobs_for_widget = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->orderBy('updated_at', 'ASC')->take(10)->get();
 		}
 
 

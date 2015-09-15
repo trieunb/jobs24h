@@ -149,7 +149,7 @@
 								</tbody>
 							</table>
 				<p class="clearfix">
-					<a href="#" class="text-blue decoration"><i class="fa fa-chevron-circle-left"></i><em>Trở lại trang Quản Lý Nghề nghiệp</em></a>	
+					
 			<div class="boxed">
 				<div class="rows">
 					@include('includes.jobseekers.widget.suggested-jobs')
@@ -284,6 +284,7 @@
 		           		$('#JobAlertForm').find(".has-error").removeClass('has-error');
 		           		$('#JobAlertForm').find(".error-message").remove();
 						$('#modal-id').modal('hide');
+						 window.location.replace(result);
 		           	}
 				}
 			})
@@ -340,6 +341,7 @@
 		           		$('#UpdateJobAlert').find(".has-error").removeClass('has-error');
 		           		$('#UpdateJobAlert').find(".error-message").remove();
 						$('#UpdateJobAlert .modal').modal('hide');
+						 window.location.replace(result);
 		           	}
 				}
 			})

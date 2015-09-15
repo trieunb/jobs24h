@@ -12,9 +12,23 @@
 				</div>
 				<p>Bạn đã có <strong class="text-orange"><span id="number_of_resumes">{{count($my_resume)}}</span> trong số 4</strong> hồ sơ. Hãy chọn một hồ sơ được "<strong>cho phép tìm kiếm</strong>" để nhà tuyển dụng có thể tìm thấy bạn.</p>
 						@if(count($my_resume) < 4)
-							{{Form::open(array('route'=> array('jobseekers.create-my-resume'), 'method'=>'POST'))}}
-								<p><button type="submit" class="btn btn-lg bg-orange">Tạo Hồ Sơ</button></p>
-							{{Form::close()}}
+							<p>
+							<div class="dropdown">
+							  <button class="btn btn-lg bg-orange dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							    Tạo Hồ Sơ
+							    <span class="caret"></span>
+							  </button>
+								<ul class="dropdown-menu" aria-labelledby="dropdownMenuDivider">
+									  <li>
+									  	<a href="#" class="create_resume">Tạo Hồ Sơ Từng Bước</a>
+									  	{{Form::open(array('route'=> array('jobseekers.create-my-resume'), 'method'=>'POST', 'id'=>'create_resume'))}}
+										{{Form::close()}}
+									  </li>
+									  <li class="divider"></li>
+									  <li><a href="{{URL::route('jobseekers.get-my-resume-by-upload')}}">Tạo Hồ Sơ Đính Kèm File</a></li>
+									</ul>
+							</div>
+							</p>
 						@endif
 							<table class="table table-striped table-hover table-bordered rs-table">
 								<thead>
@@ -143,6 +157,10 @@
 	                }
 	            });    
 	        });
+	    });
+	    $(document).on('click', '.create_resume', function(event) {
+	    	event.preventDefault();
+	    	$('#create_resume').submit();
 	    });
 	</script>
 @stop

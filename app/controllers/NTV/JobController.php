@@ -16,7 +16,7 @@ class JobController extends Controller
 		->with(array('province'=>function($q) {
 			$q->with('province');
 		}))
-		->where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->first();
+		->where('is_display', 1)->where('status', 1)->where('hannop', '>=', date('Y-m-d', time()))->first();
 		$luotxem = Job::find($job_id);
 		$tangluotxem = $luotxem->luotxem;
 		$luotxem->luotxem = $tangluotxem + 1;
