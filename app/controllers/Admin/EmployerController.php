@@ -382,8 +382,8 @@ class EmployerController extends \BaseController {
 		die();*/
 		$job_not_active=Job::where('status','<>',1)->count(); 
 		$ntd_vip	=	Order::count(); 
-		
-		return View::make('admin.employers.report',compact('job_not_active','ntd_vip'));
+		$total_ntd = NTD::count();
+		return View::make('admin.employers.report',compact('job_not_active','ntd_vip','total_ntd'));
 	}
 
 

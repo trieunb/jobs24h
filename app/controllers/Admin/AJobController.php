@@ -278,8 +278,12 @@ class AJobController extends \BaseController {
 	public function getReport()
 	{
 		$totalJobs = Job::count();
-		$totalWaiting = Job::where('status', 2)->where('vip_from', '0000-00-00')->count();
-		$totalVipWaiting = Job::where('status', 2)->where('vip_from', '<>', 0)->count();
+		$totalWaiting = Job::where('status','<>',1)->count();
+		$totalVipWaiting=$jobs=Job::whereExists(function ($query) {
+							$query->from('order_post_rec')
+	                      		  ->whereRaw('order_post_rec.job_id = jobs.id');
+            		  })->count();
+		//$totalVipWaiting = Job::where('status', 2)->where('vip_from', '<>', 0)->count();
 		$totalVipExpring = Job::whereRaw('vip_to >= CURDATE() - INTERVAL 7 DAY AND vip_to >= CURDATE()')->where('vip_from', '<>', '0000-00-00')->count();
 		$totalVipExp = Job::whereRaw('vip_to <= CURDATE()')->where('vip_to', '<>', '0000-00-00')->count();
 		return View::make('admin.jobs.report', compact('totalJobs', 'totalWaiting', 'totalVipWaiting', 'totalVipExpring', 'totalVipExp'));

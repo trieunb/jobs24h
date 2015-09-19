@@ -22,7 +22,12 @@
 		{{ HTML::style('assets/css/ace-ie.min.css') }}
 		<![endif]-->
 
- 		 
+ 	 
+ 	 <style type="text/css">
+ 	.no-skin .nav-list>li>.submenu li>.submenu li.open>a, .no-skin .nav-list>li>.submenu li>.submenu li.active>a {
+    	color: red;
+	}
+</style>	 
 	@yield('style')
 </head>
 <body class="no-skin">

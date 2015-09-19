@@ -11,8 +11,8 @@
 				</div>
 
 				<div class="infobox-data">
-					<span class="infobox-data-number">110/440</span>
-					<div class="infobox-content">Các liên hệ</div>
+					<span class="infobox-data-number"><a href="{{URL::route('admin.employers.index')}}">{{$total_ntd}}</a></span>
+					<div class="infobox-content">Nhà tuyển dụng</div>
 				</div>
 			</div>
 
@@ -22,7 +22,7 @@
 				</div>
 
 				<div class="infobox-data">
-					<span class="infobox-data-number">{{$ntd_vip}}</span>
+					<span class="infobox-data-number"><a href="{{URL::route('admin.employers.report')}}">{{$ntd_vip}}</a></span>
 					<div class="infobox-content">NTD VIP</div>
 				</div>
 			</div>
@@ -34,14 +34,14 @@
 
 				<div class="infobox-data">
 					<a href="{{URL::route('admin.jobs.waiting')}}">
-						<span class="infobox-data-number">{{$job_not_active}}</span>
+						<span class="infobox-data-number"><a href="{{URL::route('admin.jobs.waiting')}}">{{$job_not_active}}</a></span>
 						<div class="infobox-content">Tin chưa duyệt</div>
 					</a>
 				</div>
 				<!-- <div class="stat stat-important">4%</div> -->
 			</div>
 
-			<div class="infobox infobox-red">
+			<!-- <div class="infobox infobox-red">
 				<div class="infobox-icon">
 					<i class="ace-icon fa fa-file"></i>
 				</div>
@@ -50,7 +50,7 @@
 					<span class="infobox-data-number">0</span>
 					<div class="infobox-content">Tin VIP chưa duyệt</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	<table class="table table-hover table-bordered table-striped" id="employers">

@@ -9,7 +9,7 @@
 				</div>
 
 				<div class="infobox-data">
-					<span class="infobox-data-number">{{ $totalJobs }}</span>
+					<span class="infobox-data-number"><a href="{{URL::route('admin.jobs.index')}}">{{ $totalJobs }}</a></span>
 					<div class="infobox-content">Tổng số tin đăng</div>
 				</div>
 
@@ -22,7 +22,7 @@
 				</div>
 
 				<div class="infobox-data">
-					<span class="infobox-data-number">{{ $totalWaiting }}</span>
+					<span class="infobox-data-number"><a href="{{URL::route('admin.jobs.waiting')}}">{{ $totalWaiting }}</a></span>
 					<div class="infobox-content">Tin mới chưa duyệt</div>
 				</div>
 
@@ -38,13 +38,13 @@
 				</div>
 
 				<div class="infobox-data">
-					<span class="infobox-data-number">{{ $totalVipWaiting }}</span>
-					<div class="infobox-content">Tin VIP chưa duyệt</div>
+					<span class="infobox-data-number"><a href="{{URL::route('admin.jobs.vipwaiting')}}">{{ $totalVipWaiting }}</a></span>
+					<div class="infobox-content">Tin VIP</div>
 				</div>
 				<!-- <div class="stat stat-important">4%</div> -->
 			</div>
 
-			<div class="infobox infobox-red">
+			<!-- <div class="infobox infobox-red">
 				<div class="infobox-icon">
 					<i class="ace-icon fa fa-bell-o"></i>
 				</div>
@@ -53,9 +53,9 @@
 					<span class="infobox-data-number">{{ $totalVipExpring }}</span>
 					<div class="infobox-content">Tin VIP sắp hết hạn</div>
 				</div>
-			</div>
+			</div> -->
 
-			<div class="infobox infobox-orange2">
+			<!-- <div class="infobox infobox-orange2">
 				<div class="infobox-icon">
 					<i class="ace-icon fa fa-close"></i>
 				</div>
@@ -64,7 +64,7 @@
 					<span class="infobox-data-number">{{ $totalVipExp }}</span>
 					<div class="infobox-content">Tin VIP đã hết hạn</div>
 				</div>
-			</div>
+			</div> -->
 			<div class="space-6"></div>
 
 			
