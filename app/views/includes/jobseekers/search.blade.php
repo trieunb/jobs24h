@@ -42,7 +42,7 @@
 						<div class="col-sm-12">
                             <div class="col-sm-7 col-sm-3 col-sm-push-6 push-top-xs">
                             	<div class="relative">
-                       				<a href="{{URL::route('jobseekers.search-job', array('vieclamcaocap'=>'true'))}}" class="btn-search btn btn-default" type="button"><strong>Việc Làm Cao Cấp</strong></a><strong class="text-red small absolute-right"><em>Mới</em></strong>
+                       				<a href="{{URL::route('jobseekers.search-job', array('vieclamcaocap'=>'true'))}}" class="btn-search btn btn-default" id="searchJobPrenium" role="button" data-placement="bottom" title="Việc Làm Cao Cấp Là:" data-content='<div class="searchJobPrenium_content"><div class="form-group">Những công việc dành cho <strong> các chuyên gia có nhiều kinh nghiệm </strong> đang tìm kiếm việc làm với mức lương <strong> tối thiểu $1000 </strong> một tháng và <strong> những công ty có phúc lợi tốt nhất </strong>.</div><div class="form-group"><button type="button" class="btn btn-sm bg-orange center-block">Đã hiểu!</button></div></div></div>'><strong>Việc Làm Cao Cấp</strong></a><strong class="text-red small absolute-right"><em>Mới</em></strong>
                        			</div>
                    			</div>
 		                    <div class="col-sm-3 col-sm-push-6 push-top-xs">

@@ -195,10 +195,17 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
 
     // COUNTDOWN TEXTEREA
     var maxLength = 5000;
-    $('#myTextarea').keyup(function() {
+    $(document).on('keyup', '.keyup', function(event) {
+        $(this).attr('maxLength', '5000');
       var length = $(this).val().length;
       var length = maxLength-length;
-      $('.countdown').text(length);
+      var aclass = $(this).attr('class').replace('form-control keyup','');
+      if(length < 0){
+        $('em.'+aclass).html('<span style="color:red">Tối đa 5000 ký tự</span>');  
+      }else{
+        $('em.'+aclass).html(''+length+' ký tự có thể nhập thêm');  
+      }
+      
     });
 
 
@@ -208,6 +215,12 @@ $tags.tagList.on('click', $tags.deleteButtonClass, function (e) {
     $('.share-to-friends, .feedback-to-emp, .add-note').popover({
         html: true,
     });
+    $('#searchJobPrenium').popover({
+        html: true,
+        trigger: 'hover',
+        container: 'body'
+    });
+
 
 
     // UPLOAD INPUT

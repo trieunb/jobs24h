@@ -35,9 +35,9 @@
 						<li>
 							<div class="col-sm-2">
 								@if($job->ntd->company->logo != '')
-								<a href="{{URL::route('jobseekers.job', array($job->slug, $job->id))}}">{{HTML::image('/uploads/companies/logos/'.$job->ntd->company->logo.'')}}</a>
+								<a href="{{URL::route('company.view', $job->ntd->company->id)}}">{{HTML::image('/uploads/companies/logos/'.$job->ntd->company->logo.'')}}</a>
 								@else
-								<a href="{{URL::route('jobseekers.job', array($job->slug, $job->id))}}" style="font-weight:bold; text-transform: capitalize;">{{$job->ntd->company->company_name}}</a>
+								<a href="{{URL::route('company.view', $job->ntd->company->id)}}">{{HTML::image('/assets/images/logovn.png')}}</a>
 								@endif
 							</div>
 							<div class="col-sm-5">
@@ -46,7 +46,7 @@
 									<span class="new-tag">(Mới)</span>
 								</div>
 								<div class="job-info">
-									{{$job->ntd->company->company_name}}
+									<a href="{{URL::route('company.view', $job->ntd->company->id)}}">{{$job->ntd->company->company_name}}</a>
 								</div>
 								<div class="job-meta">
 									<i class="glyphicon glyphicon-calendar"></i>
@@ -58,7 +58,7 @@
 							<div class="col-sm-2">
 								@if($job->province != null)
 								@foreach($job->province as $pv)
-									{{ $pv->province->province_name }}<br>
+									<a href="{{URL::route('jobseekers.search-job', array('province' => array($pv->province->id)))}}">{{ $pv->province->province_name }}</a><br>
 									<?php $arr_province[] = $pv->province->id; ?>
 								@endforeach
 								@endif

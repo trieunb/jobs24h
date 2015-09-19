@@ -13,9 +13,9 @@
 
 Route::get('/', function() use($locale)
 {
-	return Redirect::to('/'.$locale.'/nguoi-tim-viec');
+	return Redirect::to('/'.$locale);
 });
-Route::get('/' .$locale, function() use($locale)
+/*Route::get('/' .$locale, function() use($locale)
 {
 	if(Request::header('referer'))
 	{
@@ -23,10 +23,10 @@ Route::get('/' .$locale, function() use($locale)
 		$refererUrl = preg_replace("/\/(en|vi)\//", "/$locale/", $refererUrl);
 		return Redirect::to($refererUrl);
 	} else {
-		return Redirect::to('/'.$locale.'/nguoi-tim-viec');
+		return Redirect::to('/'.$locale);
 	}
 	die();
-});
+});*/
 
 // App::missing(function($exception)
 // {

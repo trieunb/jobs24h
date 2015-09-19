@@ -33,6 +33,8 @@ class Category extends \Eloquent {
 	}
 
 	
+
+	
 	public static function subcatCount($subid, $category)
 	{
 		foreach ($category as $key => $value) {

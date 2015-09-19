@@ -1,6 +1,6 @@
 <?php 
 Route::group(array('prefix'=>$locale), function() {
-	Route::group(array('prefix'=>'nguoi-tim-viec'), function() {
+//	Route::group(array('prefix'=>'/'), function() {
 		// Widget VIệc làm phù hơp
 		if($GLOBALS['user'] != null){
 			$suggested_jobs = Subscribe::where('ntv_id', $GLOBALS['user']->id)->get();
@@ -10,7 +10,7 @@ Route::group(array('prefix'=>$locale), function() {
 					$categories[] = json_decode($value->categories);
 					$provinces[] = json_decode($value->provinces);
 				}
-				$jobs = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->with('province')->with('category');
+				$jobs = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->where('status',1)->with('province')->with('category');
 
 				if(count($keyword) > 0){
 					foreach($keyword as $kw){
@@ -32,6 +32,7 @@ Route::group(array('prefix'=>$locale), function() {
 				if(count($categories) > 0 )
 				{
 					foreach($categories as $cate){
+
 						$jobs->whereHas('category', function($query) use($cate)  {
 							$query->whereIn('cat_id', $cate);
 						});
@@ -43,14 +44,14 @@ Route::group(array('prefix'=>$locale), function() {
 				}
 				$jobs_for_widget = $jobs->orderBy('updated_at', 'ASC')->take(3)->get();
 				if(count($jobs_for_widget) == 0){
-					$jobs_for_widget = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->orderBy('updated_at', 'ASC')->take(3)->get();	
+					$jobs_for_widget = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->where('status',1)->orderBy('updated_at', 'ASC')->take(10)->get();	
 				}
 			}else{
-				$jobs_for_widget = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->orderBy('updated_at', 'ASC')->take(3)->get();
+				$jobs_for_widget = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->where('status',1)->orderBy('updated_at', 'ASC')->take(10)->get();
 			}
 			
 		}else{
-			$jobs_for_widget = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->orderBy('updated_at', 'ASC')->take(3)->get();
+			$jobs_for_widget = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->where('status',1)->orderBy('updated_at', 'ASC')->take(10)->get();
 		}
 
 
@@ -157,7 +158,7 @@ Route::group(array('prefix'=>$locale), function() {
 		Route::get('/auth/google', array('as' => 'auth_google','uses' => 'JobSeekerAuth@loginWithGoogle'));
 		Route::get('/auth/linkedin', array('as' => 'auth_in','uses' => 'JobSeekerAuth@loginWithLinkedin'));
 		Route::get('/auth/yahoo', array('as' => 'auth_yahoo','uses' => 'JobSeekerAuth@loginWithYahoo'));
-	});
+	//});
 });
 
 

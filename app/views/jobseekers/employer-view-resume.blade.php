@@ -26,7 +26,7 @@
 									@if(count($view_resume))
 									@foreach($view_resume as $view)
 									<tr>
-										<td>{{$view->ntd->company->company_name}}</td>
+										<td><a href="{{URL::route('company.view', $view->ntd->company->id)}}">{{$view->ntd->company->company_name}}</a></td>
 										<td>{{$view->counter}}</td>
 										<td>{{date('d-m-Y',strtotime($view->updated_at))}}</td>
 										<td>{{date('d-m-Y',strtotime($view->created_at))}}</td>

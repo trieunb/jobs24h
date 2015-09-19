@@ -12,28 +12,34 @@ class JobSeeker extends Controller
 	}
 	public function home()
 	{
-		$categories_default = Category::where('parent_id', '!=', 0)
-		->whereHas('mtcategory', function($q) {
-			$q->whereHas('job', function ($q1) {
-				$q1->where('is_display', 1)->where('hannop', '>=' , date('Y-m-d'));
-			});
-		})->with('mtcategory')->get();
+		
+
+		$categories_default1 = Category::where('parent_id', '!=', 0)->get();
+		foreach ($categories_default1 as $key => $value) {
+			$count = CVCategory::where('cat_id', '=',$value->id)->where('job_id', '>',0 )->whereHas('job', function ($q1) {
+				$q1->where('is_display', 1)->where('hannop', '>=' , date('Y-m-d'))->where('status',1);
+			})->count();
+			$categories_default[] = array($value, 'count'=>$count);
+			$categories_hot[] = array($value, 'count'=>$count);
+		}
+
+
 		// Category sort by aplha B
-		$categories_alpha = Category::where('parent_id', '!=', 0)->whereHas('mtcategory', function($q) {
-			$q->whereHas('job', function ($q1) {
-				$q1->where('is_display', 1)->where('hannop', '>=' , date('Y-m-d'));
-			});
-		})->orderBy('cat_name', 'ASC')->with('mtcategory')->get();	
+		$categories_alpha1 = Category::where('parent_id', '!=', 0)->orderBy('cat_name', 'ASC')->get();
+		foreach ($categories_alpha1 as $key => $value) {
+			$count = CVCategory::where('cat_id', '=',$value->id)->where('job_id', '>',0 )->whereHas('job', function ($q1) {
+				$q1->where('is_display', 1)->where('hannop', '>=' , date('Y-m-d'))->where('status',1);
+			})->count();
+			$categories_alpha[] = array($value, 'count'=>$count);
+		}
 
 
-		// Category sort by count jobs
-		$categories_hot = Category::where('parent_id', '!=', 0)->with('mtcategory')->whereHas('mtcategory', function($q) {
-			$q->whereHas('job', function ($q1) {
-				$q1->where('is_display', 1)->where('hannop', '>=' , date('Y-m-d'));
-			});
-		})->with('mtcategory')->get()->sortBy(function($categories_hot) {
-		    return $categories_hot->mtcategory->count();
-		})->reverse();
+		function sortByOrder($a, $b) {
+		    return $b['count'] - $a['count'];
+		}
+
+		usort($categories_hot, 'sortByOrder');
+
 
 
 		// Nhà tuyển dụng hàng đầu
@@ -252,6 +258,9 @@ class JobSeeker extends Controller
 		return View::make('jobseekers.edit-cv')->with('user', $GLOBALS['user'])->with('id_cv', $id_cv)->with('my_resume', $my_resume)->with('camnang_ntv',$camnang_ntv)->with('districts', $districts);
 	}
 	public function saveInfo($action = false, $id_cv){
+		if($action == 'upload_avatar'){
+			return $this->editAvatar();
+		}
 		if($action == 'basic'){
 			return $this->editBasicInfo();
 		}if($action == 'career-goal'){
@@ -289,6 +298,39 @@ class JobSeeker extends Controller
 			$cv->save();
 		}
 	}
+
+	public function editAvatar(){
+		$params = Input::all();
+		$user = $GLOBALS['user'];
+			$rules = array(
+		       'avatar_user' => 'mimes:png,jpeg|max:2000',
+		    );
+		    $messages = array(
+				'max' => 'Hình ảnh không được vượt quá 2MB',
+				'mimes' => 'Vui lòng tải file đúng định dạng'
+			);
+			$validator = Validator::make($params, $rules, $messages);
+			if($validator->fails()){			
+		        return Redirect::back()->withErrors($validator);
+			}else{
+				if($params['avatar_user'] != null){
+					File::delete(Config::get('app.upload_path') . 'jobseekers/avatar/'.$GLOBALS['user']->avatar.'');
+					$extension = $params['avatar_user']->getClientOriginalExtension();
+					$name = Str::random(11) . '.' . $extension;
+					$params['avatar_user']->move(Config::get('app.upload_path') . 'jobseekers/avatar/', $name);
+				}else{
+					$name = $user->avatar;
+				}
+				$user->avatar = $name;
+				if($user->save()){
+					return Redirect::back();	
+				}else{
+					return Redirect::back()->withErrors();	
+				}
+				
+			}
+	}
+
 
 	// Edit & save basic information
 	public function editBasicInfo(){
@@ -426,7 +468,6 @@ class JobSeeker extends Controller
 					'tieude_cv' 			=> $params['tieude'],
 					'bangcapcaonhat' 		=> $params['info_highest_degree'],
 					'capbachientai' 		=> $params['info_current_level'],
-					'vitrimongmuon' 		=> ''.$params['info_wish_position'].'',
 					'capbacmongmuon' 		=> $params['info_wish_level'],
 					'mucluong' 				=> $params['specific_salary'],
 					'ctyganday' 			=> ''.$params['info_latest_company'].'',
@@ -452,10 +493,11 @@ class JobSeeker extends Controller
 		$respond['has'] = false;
 		if(Request::ajax()){
 			$rules = array(
-		       'introduct_yourself' => 'required',
+		       'introduct_yourself' => 'required|max:5000',
 		    );
 		    $messages = array(
 				'required'	=>	'Thông tin này bắt buộc',
+				'max'		=> 	'Tối đa :max ký tự'
 			);
 			$validator = Validator::make($params, $rules, $messages);
 			if($validator->fails()){			
@@ -480,8 +522,6 @@ class JobSeeker extends Controller
 		$params = Input::all();
 		$respond['has'] = false;
 		if(Request::ajax()){
-
-			$params['salary'] = str_replace(',', '', $params['salary']);
 			$validator = new App\DTT\Forms\JobSeekersWorkExp;
 			if($validator->fails())
 			{
@@ -489,17 +529,12 @@ class JobSeeker extends Controller
 				return Response::json($respond);
 			} else {
 				if(isset($params['id_exp'])){
-					Log::info('not ok');
 					$update = Experience::where('id', $params['id_exp'])->update(array(
 						'position' => ''.$params['position'].'', 
 			    		'company_name' => ''.$params['company_name'].'', 
 			    		'from_date'=> ''.$params['from_date'].'',
 			    		'to_date'=> ''.$params['to_date'].'',
 			    		'job_detail'=> ''.$params['job_detail'].'',
-			    		'field'=> ''.$params['field'].'', 
-			    		'specialized'=> ''.$params['specialized'].'',
-			    		'level'=> ''.$params['level'].'',
-						'salary'=> ''.$params['salary'].'',
 					));
 					if($update){
 						$respond['has'] = true;
@@ -508,7 +543,6 @@ class JobSeeker extends Controller
 						$respond['message']='Hiện tại bạn không thể chỉnh sửa mục này';
 					}
 				}else{
-					Log::info('ok');
 					$create = Experience::create(array(
 			    		'rs_id' => $id_cv, 
 			    		'position' => ''.$params['position'].'', 
@@ -516,10 +550,6 @@ class JobSeeker extends Controller
 			    		'from_date'=> ''.$params['from_date'].'',
 			    		'to_date'=> ''.$params['to_date'].'',
 			    		'job_detail'=> ''.$params['job_detail'].'',
-			    		'field'=> ''.$params['field'].'', 
-			    		'specialized'=> ''.$params['specialized'].'',
-			    		'level'=> ''.$params['level'].'',
-						'salary'=> ''.$params['salary'].'',
 					));
 					if($create){
 						$respond['has'] = true;
@@ -554,7 +584,6 @@ class JobSeeker extends Controller
 				if(isset($params['id_edu'])){
 					$update_mte = MTEducation::where('id', $params['id_edu'])->update(array(
 			    		'school' => ''.$params['school'].'', 
-			    		'field_of_study' => $params['field_of_study'], 
 			    		'level'=> $params['level'],
 			    		'study_from'=> ''.$params['study_from'].'',
 			    		'study_to'=> ''.$params['study_to'].'',
@@ -573,7 +602,6 @@ class JobSeeker extends Controller
 					$create_mte = MTEducation::create(array(
 			    		'rs_id' => $id_cv, 
 			    		'school' => ''.$params['school'].'', 
-			    		'field_of_study' => $params['field_of_study'], 
 			    		'level'=> $params['level'],
 			    		'study_from'=> ''.$params['study_from'].'',
 			    		'study_to'=> ''.$params['study_to'].'',
@@ -692,27 +720,21 @@ class JobSeeker extends Controller
 
 	public function myJob(){
 
-		/*
-		$suggested_jobs = Subscribe::where('ntv_id', $GLOBALS['user']->id)->get();
-		if(count($suggested_jobs)){
-			foreach ($suggested_jobs as $key => $value) {
-				$keyword[] = $value->keyword;
-				$categories[] = json_decode($value->categories);
-				$provinces[] = json_decode($value->provinces);
-			}
-			$jobs = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->with('province')->with('category');
-				if(count($keyword)){
-				foreach($keyword as $kw){
-					$jobs->where('vitri', 'LIKE', "%".$kw."%");
-				}	
-			}
+		$resume = Resume::where('ntv_id', $GLOBALS['user']->id)->lists('id');
+		
+		$categories = CVCategory::whereIn('rs_id', $resume)->where('cat_id', '>', 0)->lists('cat_id');
+		$provinces = WorkLocation::whereIn('rs_id', $resume)->where('province_id', '>', 0)->lists('province_id');
+	
+		
+			$jobs = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->where('status',1)->with('province')->with('category');
+			
 			if(count($provinces))
 			{
-				foreach($provinces as $province){
-					$jobs->whereHas('province', function($query) use($province) {
-						$query->whereIn('province_id', $province);
+				//foreach($provinces as $province){
+					$jobs->whereHas('province', function($query) use($provinces) {
+						$query->whereIn('province_id', $provinces);
 					});
-				}
+				//}
 			}else {
 					$jobs->with(array('province'	=>	function($query) {
 						$query->with('province');
@@ -720,30 +742,21 @@ class JobSeeker extends Controller
 			}
 			if(count($categories) )
 			{
-				foreach($categories as $cate){
-					$jobs->whereHas('category', function($query) use($cate)  {
-						$query->whereIn('cat_id', $cate);
+				//foreach($categories as $cate){
+					//var_dump(array($categories)); die();
+					$jobs->whereHas('category', function($query) use($categories)  {
+						$query->whereIn('cat_id', $categories);
 					});
-				}
+				//}
 			}else {
 				$jobs->with(array('category'=>function($query) {
 					$query->with('category');
 				}));
 			}
-			$my_job_list = $jobs->orderBy('updated_at', 'ASC')->get();
-			if(count($my_job_list) == 0){
-				$my_job_list = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->orderBy('updated_at', 'ASC')->paginate(10);	
-			}
-		}else{
-			$my_job_list = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->orderBy('updated_at', 'ASC')->paginate(10);
-		}
-
+			$my_job_list = $jobs->orderBy('updated_at', 'ASC')->paginate(10);
 		return View::make('jobseekers.my-job',compact('my_job_list'));
-		*/
-		$applied_job = Application::where('ntv_id',$GLOBALS['user']->id)->get();
-		$my_job_list = MyJob::where('ntv_id',$GLOBALS['user']->id)->paginate(10);
-		return View::make('jobseekers.my-job',compact('my_job_list', 'applied_job'));
 	}
+
 	public function saveJob($job_id){
 		$applied_job = Application::where('ntv_id',$GLOBALS['user']->id)->get();
 		$check = Job::find($job_id);
@@ -1243,6 +1256,7 @@ class JobSeeker extends Controller
 							'capbachientai' 		=> $params['info_current_level'],
 							'capbacmongmuon' 		=> $params['info_wish_level'],
 							'mucluong' 				=> $params['specific_salary'],
+							'namkinhnghiem'			=> $params['info_years_of_exp'],
 							'trangthai' 			=> 2,
 						));
 						

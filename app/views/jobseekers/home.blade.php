@@ -118,21 +118,21 @@
 							<ul class="arrow-square-orange cate_default">
 								@foreach ($categories_default as $key => $cate)
 								<li>
-									<strong><a href="{{URL::route('jobseekers.get-category', array('id'=>$cate->id))}}">{{$cate->cat_name}}</a></strong> ({{$cate->mtcategory->count()}})
+									<strong><a href="{{URL::route('jobseekers.get-category', array('id'=>$cate[0]->id))}}">{{$cate[0]->cat_name}}</a></strong> ({{$cate['count']}})
 								</li>
 								@endforeach
 							</ul>
 							<ul class="arrow-square-orange cate_alpha hidden-xs">
 								@foreach ($categories_alpha as $key => $cate)
 								<li>
-									<strong><a href="{{URL::route('jobseekers.get-category', array('id'=>$cate->id))}}">{{$cate->cat_name}}</a></strong> ({{$cate->mtcategory->count()}})
+									<strong><a href="{{URL::route('jobseekers.get-category', array('id'=>$cate[0]->id))}}">{{$cate[0]->cat_name}}</a></strong> ({{$cate['count']}})
 								</li>
 								@endforeach
 							</ul>
 							<ul class="arrow-square-orange cate_hot hidden-xs">
 								@foreach ($categories_hot as $key => $cate)
 								<li>
-									<strong><a href="{{URL::route('jobseekers.get-category', array('id'=>$cate->id))}}">{{$cate->cat_name}}</a></strong> ({{$cate->mtcategory->count()}})
+									<strong><a href="{{URL::route('jobseekers.get-category', array('id'=>$cate[0]->id))}}">{{$cate[0]->cat_name}}</a></strong> ({{$cate['count']}})
 								</li>
 								@endforeach
 							</ul>

@@ -45,7 +45,6 @@
 						@else
 							<span class="language"><a href="{{ URL::to('/vi') }}" class="text-blue">Tiếng Việt</a></span>
 						@endif
-						<span class="local"><a href="#" class="text-blue">Join VnJobs Network</a></span>
 						<span class="envelope"><a href="{{URL::route('jobseekers.register-job-alert')}}" class="text-blue"><i class="fa fa-envelope"></i> Nhận việc làm mới</a></span>
 						<span class="employer-site"><a href="{{ URL::route('employers.launching') }}"><i class="fa fa-caret-right"></i> Nhà tuyển dụng</a></span>
 					</div>
@@ -163,8 +162,8 @@
 		</footer>
 		<div class="loading-icon"></div>
 		<span id="top-link-block" class="hidden">
-		    <a href="#top" class="well well-sm"  onclick="$('html,body').animate({scrollTop:0},'slow');return false;">
-		        <i class="glyphicon glyphicon-chevron-up"></i>
+		    <a href="#top" onclick="$('html,body').animate({scrollTop:0},'slow');return false;">
+		        <i class="fa fa-arrow-circle-up"></i>
 		    </a>
 		</span><!-- /top-link-block -->
 		<?php

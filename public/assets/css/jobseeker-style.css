@@ -750,7 +750,7 @@ text-transform: uppercase;}
   padding: 0 0 5px 0; width: 100%;}
 .details.company .top h1 {margin-bottom: 10px;}
 .single-post .company-info {text-align: justify;}
-.single-post .details, .single-post .company-info {line-height: 1.8em; text-align: justify;}
+.single-post .details, .single-post .company-info {line-height: 1.8em; text-align: justify; font-size: 13px;}
 .related-jobs li a, .suggested-jobs, .job-info, .job-title{text-transform: capitalize;}
 .capitalize {text-transform: capitalize;}
 .gallery-photo li {padding: 0; margin: 0;}
@@ -798,8 +798,11 @@ text-transform: uppercase;}
     bottom: 18px; /* height of link element */
     right: 10px; /* padding from the left side of the window */
 }
+#top-link-block i {font-size: 30px; color: #FF7501;}
 .fb_plus, .google_plus {float: left; margin-left: 5px; margin-top: 8px;}
 .google_plus {margin-right: 10px;}
 .groupJob {margin-bottom: 25px;}
 .meta-jobs {float: left; width: 100%;   padding: 0 10px; background: #ECECEC; margin: 10px 0;}
 .single-post-meta {margin-top: 6px; float: left;}
+.popover{z-index: 9999999999999999 !important;} 
+.searchJobPrenium_content {font-size: 12px;}

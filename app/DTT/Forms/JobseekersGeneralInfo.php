@@ -4,7 +4,6 @@ class JobseekersGeneralInfo extends FormValidator {
 	protected $rules = array(
 		"info_highest_degree"	=>"required",
 		"info_current_level"	=>"required",
-		"info_wish_position"	=>"required",
 		"info_wish_level"		=>"required",
 		"info_wish_place_work"	=>"required",
 		"info_category" 		=>"required",

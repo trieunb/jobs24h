@@ -154,6 +154,20 @@
 			            	</div>
 			            </div>
 			            <div class="form-group">
+			                <label class="col-sm-3 control-label">Số năm kinh nghiệm</label>
+			                <div class="col-sm-3">
+			                	{{Form::input('text','info_years_of_exp', null, array('class'=>'info_years_of_exp form-control edit-control text-blue','id'=>'info_years_of_exp', 'maxlength'=>'2', 'placeholder' => 'Ví dụ 2'))}}
+			                </div>
+			                <div class="col-sm-6">
+			                    <div class="checkbox">
+			                    	<label>
+			                    		<input class="default_years_of_exp" name="info_years_of_exp" type="checkbox" value="0">
+			                    		  Tôi mới tốt nghiệp/chưa có kinh nghiệm làm việc
+			                    	</label>
+			                    </div>
+			                </div>
+			            </div>
+			            <div class="form-group">
 			                <label class="col-sm-3 control-label">Mức lương mong muốn<abbr>*</abbr></label>
 							<div class="radio col-sm-3">
 				                <div for="specific-salary">
