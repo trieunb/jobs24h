@@ -168,7 +168,7 @@ class CandidateController extends \Controller {
 	{
 		if(Input::get('folderName'))
 		{
-			$folder_name = substr(Input::get('folderName'),0,20);
+			$folder_name = substr(Input::get('folderName'),0,40);
 			\TaskLog::create(['ntd_id'=>Auth::id(), 'action_type'=>'create_folder','target'=>'Tạo thư mục: ' . Input::get("folderName") ]);
 			$created = EFolder::firstOrCreate(['folder_name'=>$folder_name, 'ntd_id'=>Auth::id()]);
 			
@@ -180,7 +180,7 @@ class CandidateController extends \Controller {
 		$folder = EFolder::where('ntd_id', Auth::id())
 				->where('id', Input::get('folder_id'))
 				->first();
-		$folder->folder_name = substr(Input::get('folder_name'), 0, 20);
+		$folder->folder_name = substr(Input::get('folder_name'), 0, 40);
 		$folder->save();
 		return Response::json(['success'=>true]);
 	}

@@ -38,7 +38,7 @@
             <div class="row">
                
               <div class="col-md-12">
-                <button class="btn more1">Xem thêm</button>
+                <a href="{{URL::route('trainings.allcouser')}}"><button class="btn more1">Xem thêm</button></a>
                 <button onclick="window.location.href='#tq4_r';" class="btn more2">Đăng ký</button>
               </div>
               
@@ -87,19 +87,29 @@
       {{HTML::image('training/assets/img/ttc.png')}}
       
       </div>
-      <div class="tq2" id="tq2">
+      <div class="tq2" id="tq2" style="position: inherit;overflow: hidden;">
             <h2>Tổng quan</h2>
             <?php 
               @preg_match('/<img[^>]+>/i',@$couser['content'], $image);
               $content = preg_replace("/<img[^>]+\>/i", "", $couser['content']); 
              ?>
-            <p align="left">{{$couser['title']}}
-              <br>
-              {{Str::words($content, $limit = 100, $end = '<a class="hover-pointer" data-toggle="modal" data-target="#myModal">... Đọc tiếp</a> ')}}
-             <!--  {{str_limit($content, $limit = 1000, $end = '<a class="hover-pointer" data-toggle="modal" data-target="#myModal">
-            Đọc tiếp
-          </a> ')}} -->
-            </p>
+            <p align="left" style="margin-top: -29px;font-size: 16px;font-weight: bold;">{{$couser['title']}}</p>
+              <?php
+              $string_length = 2000; // give a random character value including whitespace.
+              if(strlen($content)>$string_length){
+              do{
+                  $new_string = mb_substr($content,0,$string_length);
+                  $string_length++;
+                  }while(ctype_graph(mb_substr($new_string,-1)));
+                }
+              else {
+                 $new_string = $content;
+              }
+
+              echo $new_string; ?> 
+              
+              <a style="position: absolute;right: 28px;bottom: 0px;" data-toggle="modal" data-target="#myModal"> ... Đọc tiếp</a>
+             
 
             
           <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -131,8 +141,11 @@
              
             </div>
             <div class="bt-tt">
-              <p class="name">{{$couser['name']}}</p>
-              <p align="justify">{{$couser['worked']}}</p>
+              <p class="name" style="text-align: center;font-size: 17px;font-weight: bold;" >{{$couser['name']}}</p>
+
+              <p class="ct-worked" style="text-align: justify;">{{Str::words($couser['worked'], $limit = 50, $end = '<a id="worked" style="color:white"> ... Xem thêm</a> ')}} </p>
+              
+              <p class="ct-worked" style="display:none" align="justify">{{$couser['worked']}}</p>
                
             </div>
           </div>
@@ -141,9 +154,21 @@
           <p class="cdk">Các cách đăng ký khóa học</p>
           <p>Học viên đăng ký tham gia khóa học trực tiếp tại trung tâm đào tạo hoặc đăng ký online theo mẫu</p>
 
-          <p class="ttht">Thông tin hổ trợ</p>
-          <p><i class="fa fa-phone-square"></i> <span>Hotline :</span> +84-4-3577-1680  &nbsp;&nbsp;&nbsp;<i class="glyphicon glyphicon-envelope"></i>  <span>Email :</span> daotao@vnjobs.vn </p>
-          <p><i class="fa fa-map-marker"></i> <span>Địa điểm :</span> 06 Trần Phú , Đà Nẵng</p>
+          <p class="ttht">Thông tin hỗ trợ</p>
+          <p><i class="fa fa-phone-square"></i> <span style="font-weight: bold;"> Hotline :</span> +84-4-3577-1680  &nbsp;&nbsp;&nbsp;<i class="glyphicon glyphicon-envelope"></i>  <span style="font-weight: bold;">Email :</span> daotao@vnjobs.vn </p>
+          
+          <p><i class="fa fa-map-marker"></i> <span style="font-weight: bold;"> Địa điểm :</span></p><br>
+
+          <span>
+          -  Hà Nội : Tầng 10 Tòa nhà Sudico, Đường Mễ Trì, Phường Mỹ Đình 1, Quận Nam Từ Liêm, Hà Nội.
+          </span><br><br>
+          <span>
+          -  Đà Nẵng : 06 Trần Phú, Hải Châu, Đà Nẵng.
+          </span><br><br>
+          <span>
+          -  Hồ Chí Minh : 36- 38 A Trần Văn Dư, Quận Tân Bình, T.p Hồ Chí Minh.
+          </span>
+          
          </div>
 
     </div>
@@ -193,14 +218,22 @@
               <p>Học phí : {{$couser['fee']}}</p>
               <p>Bao gồm :Tài liệu và chi phí</p>
               @if($couser['discount'] !=null)
-              <div class="ttgiamgia">{{$couser['discount']}}</div>
+              <div class="ttgiamgia">
+                {{str_replace(".",".<br>",$couser['discount'])}}
+             </div>
+              @else
+              <div class="ttgiamgia">Khóa học hiện tại không có chương trình giảm giá</div>
               @endif
             </div>
           </div>
 
           <div class="tq3-r">
             <h2 class="gv" id="giangvien">Giảng viên</h2>
-            <p align="justify">{{$couser['yourself']}}</p>
+            <p class="more" align="justify">
+            {{Str::words($couser['yourself'], $limit = 100, $end = '<a id="more">... Xem thêm</a> ')}} 
+          </p>
+          <p class="more" align="justify" style="display:none">{{$couser['yourself']}}</p>
+
           </div>
           <div class="tq4_r" id="tq4_r">
             <h3>Nếu bạn muốn đăng ký online, vui lòng đăng ký thông tin theo mẫu dưới :</h3>
@@ -305,7 +338,7 @@
                         {{HTML::image(URL::to('uploads/training/'.$gv['thumbnail'].''))}}
                          
                        </div>
-                       <p>{{$gv['name']}}</p>
+                       <a href="{{URL::route('trainings.allgv')}}#{{$gv['id']}}">{{$gv['name']}}</a>
                     </li>
                   @endforeach
                      
@@ -316,6 +349,19 @@
 
         </div>
         <script>
+
+        
+
+          $("#more").click(function() {
+            $(".more").toggle('slow');
+           } );
+          $("#worked").click(function() {
+            $(".ct-worked").toggle('slow');
+           } );
+        
+        
+
+
         $('.captcha').click(function(event) {
           $(this).attr({
             src: '{{ URL::to('captcha') }}?t='+Math.random()

@@ -45,7 +45,7 @@
 					<h3>Công ty chúng tôi thường xuyên mở các khóa học hấp dẫn để các bạn đăng ký và tham gia nâng cao kỹ năng cũng như nghiệp vụ của mình.</h3>
 					<div class="row">
 						<div class="col-md-12">
-			                <a href=""><button class="btn more1">Xem thêm</button></a>
+			                <a href="{{URL::route('trainings.allcouser')}}"><button class="btn more1">Xem thêm</button></a>
 			                <a href=""><button class="btn more2">Đăng ký</button></a>
 			            </div>
 					</div>
@@ -212,11 +212,12 @@
 					        		<div class="col-md-4 image-nx">
 					        		{{HTML::image(URL::to('uploads/training/'.$hvcu['thumbnail'].''))}}
 					        			 
-					        			<p>{{$hvcu['worked']}}</p>
+					        			
 					        		</div>
 					        		<div class="col-md-8 text-nx">
-					        			<h2>{{$hvcu['name']}}</h2>
-					        			<h2>{{$hvcu['couser']}}</h2>
+					        			<p style="font-size:15px; font-weight: bold;">{{$hvcu['name']}}</p>
+					        			<p style="font-size:13px;font-weight: bold;">{{$hvcu['worked']}}</p>
+					        			<p>{{$hvcu['couser']}}</p>
 					        			<p data-toggle="tooltip" data-placement="top" title="{{$hvcu['feeling']}}">{{str_limit($hvcu['feeling'], $limit = 100, $end = '...')}}
 					        			</p>
 					        		</div>
@@ -243,11 +244,12 @@
 					        		<div class="col-md-4 image-nx">
 					        		{{HTML::image(URL::to('uploads/training/'.$hvcu['thumbnail'].''))}}
 					        			 
-					        			<p>{{$hvcu['worked']}}</p>
+					        			
 					        		</div>
 					        		<div class="col-md-8 text-nx">
-					        			<h2>{{$hvcu['name']}}</h2>
-					        			<h2>{{$hvcu['couser']}}</h2>
+					        			<p style="font-size:15px;font-weight: bold;">{{$hvcu['name']}}</p>
+					        			<p style="font-size:13px;font-weight: bold;">{{$hvcu['worked']}}</p>
+					        			<p>{{$hvcu['couser']}}</p>
 					        			<p data-toggle="tooltip" data-placement="top" title="{{$hvcu['feeling']}}">{{str_limit($hvcu['feeling'], $limit = 100, $end = '...')}}
 					        			</p>
 					        		</div>
@@ -279,17 +281,12 @@
 					<ul>
 							@foreach($people[0] as $gv)
 					        	<li>
-
-
-
-
-
-					        		 <div class="image11">
+					        	 <div class="image11">
 					        		 	{{HTML::image(URL::to('uploads/training/'.$gv['thumbnail'].''))}}
 						        		 
 					        		 </div>
 					        		 
-					        		 <p>{{$gv['name']}}</p>
+					        		<a href="{{URL::route('trainings.allgv')}}#{{$gv['id']}}">{{$gv['name']}}</a>
 					        	</li>
 					        @endforeach
 					        	 

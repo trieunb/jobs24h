@@ -365,7 +365,7 @@ a#home-tab {
   width: 100%;
 }
 
-/*Trang tài liệu chi tiết*/
+/*Trang tÃ i liá»‡u chi tiáº¿t*/
 header#header_chitiet {
   background-color: #ec5d60;
 }header#header_chitiet .nav {
@@ -443,7 +443,7 @@ header#header_chitiet {
   color: rgb(236, 93, 96);
 }
 
-/*tin tức chi tiết*/
+/*tin tá»©c chi tiáº¿t*/
 .img-tt img {
   padding: 0px;
   width: 100%;
@@ -454,7 +454,7 @@ header#header_chitiet {
   padding-top: 10px;
 }
 
-/*chương trình đào tọa*/
+/*chÆ°Æ¡ng trÃ¬nh Ä‘Ã o tá»a*/
 .banner-ct {
   background: url('../img/banner_ctdt.jpg') top center;
   height: 433px;
@@ -788,13 +788,13 @@ button.btn.more3:hover
   text-align: center;
   color: rgb(236, 93, 96);
   font-size: 30px;
-    padding-bottom: 36px;
-  margin-top: 32%;
+  padding-bottom: 36px;
+  /* margin-top: 32%; */
 }.tq4 {
   text-align: justify;
   background-color: #dddddd;
-  padding: 49px;
-    border-bottom-left-radius: 72px;
+  padding: 45px;
+  border-bottom-left-radius: 72px;
 }.tq4_r {
   background-image: url(../img/bgdk.png);
   padding: 31px;
@@ -803,7 +803,7 @@ button.btn.more3:hover
   border-top-right-radius: 75px;
   margin-left: -15px;
   font-size: 12px;
-  min-height: 645px;
+  min-height: 556px;
 }.dk1 ul li h2 {
   color: white !important;
   font-size: 16px !important;
@@ -820,21 +820,22 @@ button.btn.more3:hover
   height: 360px;
 }
 .tq2 {
-  height: 720px;
-  padding: 68px;
+  height: 550px;
+  padding: 0px 68px;
 }
 .tq3 {
   height: 500px;
   background-color: rgb(236, 93, 96);
 }
 .tq4 {
-  height: 644px;
+  height: 556px;
 }
 .tq1-r {
   height: 360px;
 }
 .tq2-r {
-  height: 720px;  background-color: rgb(236, 93, 96);
+  height: 550px;
+  background-color: rgb(236, 93, 96);
   margin-left: -15px;
 }
 .tq3-r {
@@ -877,8 +878,8 @@ button.btn.more3:hover
 }.col-md-6.pull-left.tt-left {
   margin-left: 15px;
 }div#thongbao {
-  height: 89px;
-  padding: 7px;
+  /* height: 89px; */
+  /* padding: 7px; */
 }
 .fixed-menu .navbar {
   z-index: 1000;

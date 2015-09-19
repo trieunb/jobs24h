@@ -46,7 +46,7 @@
 			</li>
 			<li>
 				<h3><strong><i class="fa fa-play text-elegant"></i>  Bộ phận Chăm sóc khách hàng</strong></h3>
-				<p class="text-blue">Nếu quý khách có thắc mắc nào, vui lòng nhấp vào đây hoặc liên lạc qua đường dây nóng <span class="h3"><strong>1900 585853</strong></span></p>
+				<p class="text-blue">Nếu quý khách có thắc mắc nào, vui lòng liên lạc qua đường dây nóng <span class="h3"><strong>1900 585853</strong></span></p>
 			</li>
 		</ul>
 	</div>

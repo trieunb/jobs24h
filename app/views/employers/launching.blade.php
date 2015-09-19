@@ -1,6 +1,12 @@
 @extends('layouts.launchinglayout')
 @section('title') Trang chủ Nhà tuyển dụng - VnJobs @stop
 @section('content')
+<style type="text/css">
+	.box-title{    line-height: 18px;
+    font-family: serif;
+    font-size: 18px;
+    font-weight: normal;}
+</style>
 <div class="col-sm-12 main-content">
 							<div class="jumbotron">
 								<h2 class="text-center">Giúp <span class="heading-text">doanh nghiệp</span> của bạn vươn xa</h2>
@@ -52,7 +58,7 @@
 			</div> <!-- .sales -->
 			<div class="newest-sale">
 				<div class="full-page">
-					<h4 class="sale-title">
+					<h4 class="sale-title" style="text-align:center">
 						(<span class="text-required">*</span>) Chương trình giảm giá đặc biệt kéo dài trong 30 ngày và áp dụng cho tất cả các đơn hàng.
 					</h4>
 				</div>
@@ -60,18 +66,18 @@
 			<div class="super-divider2"></div>
 			<div class="focus-boxes">
 				<div class="container">
-					<div class="col-sm-4">
+					<div class="col-sm-4" style="text-align:center">
 						{{ HTML::image('assets/ntd/images/developer.jpg', 'employers', array('class'=>'img-circle box-image') ) }}
 						<h4 class="box-title">Trang tuyển dụng<br>chuyên nghiệp</h4>
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-4" style="text-align:center">
 						{{ HTML::image('assets/ntd/images/developer.jpg', 'employers', array('class'=>'img-circle box-image') ) }}
-						<div class="note-text">1.600</div>
+						<div class="note-text" style="color:orange; font-size:26px">1.600</div>
 						<h4 class="box-title">lượt xem<br>mỗi đăng tuyển</h4>
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-4" style="text-align:center">
 						{{ HTML::image('assets/ntd/images/developer.jpg', 'employers', array('class'=>'img-circle box-image') ) }}
-						<div class="note-text">2.500.000</div>
+						<div class="note-text" style="color:orange; font-size:26px">2.500.000</div>
 						<h4 class="box-title">Ứng viên tiềm năng</h4>
 					</div>
 				</div>
@@ -141,5 +147,6 @@
 						<div class="col-sm-12">
 
 						</div>
+
 
 @stop

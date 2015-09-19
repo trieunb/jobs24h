@@ -1,7 +1,7 @@
 <?php
 
 class ViewResume extends \Eloquent {
-	protected $fillable = ['ntv_id, ntd_id, cv_id'];
+	protected $fillable = ['ntv_id, ntd_id, cv_id','counter'];
 	protected $table ='view_resume';
 	public function ntd()
 	{

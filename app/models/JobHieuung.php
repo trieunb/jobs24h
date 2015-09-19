@@ -7,4 +7,8 @@ class JobHieuung extends \Eloquent {
 	{
 		$this->beLongTo('OrderPostRec','order_post_rec_id');
 	}
+	function job()
+	{
+		$this->beLongTo('Job','job_id');
+	}
 }

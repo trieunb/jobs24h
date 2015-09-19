@@ -23,7 +23,7 @@ class TrainingController extends Controller
 							->get();
 		$people[0] =TrainingPeople::where('training_roll_id','=',1) // giảng viên
 							->take(4)
-							->select('name','thumbnail','facebook','twitter','skype','linkedin')
+							->select('id','name','thumbnail','facebook','twitter','skype','linkedin')
 							->get();
 
 		$people[1]=TrainingPeople::where('training_people.training_roll_id','=',4) //học viên tiêu biểu
@@ -61,6 +61,21 @@ class TrainingController extends Controller
 		else
 			return 'not found';
 	}
+
+	public function all_gv()
+	{
+
+		$people =TrainingPeople::where('training_roll_id','=',1) // giảng viên
+							->select('id','name','thumbnail','worked','yourself')
+							->get();
+		$people1 =TrainingPeople::where('training_roll_id','=',1) // giảng viên
+		->take(4)
+		->select('name','thumbnail','facebook','twitter','skype','linkedin')
+		->get();
+		return View::make('training.detailgv',compact('people','people1'));
+	}
+
+
 	public function dowload_doc($id)
 	{
 		
@@ -155,7 +170,7 @@ class TrainingController extends Controller
  		if (count((array)$couser)) {
  			$people[0] =TrainingPeople::where('training_roll_id','=',1) // giảng viên
 							->take(4)
-							->select('name','thumbnail','facebook','twitter','skype','linkedin')
+							->select('id','name','thumbnail','facebook','twitter','skype','linkedin')
 							->get();
 			$training=Training::take(4)
 			->select('id','title','time_day','fee','date_open','shift','date_study','time_hour')

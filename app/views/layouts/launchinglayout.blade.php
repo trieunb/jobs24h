@@ -63,7 +63,7 @@
 									<li><a href="#">Góc Báo Chí</a></li>
 									<li><a href="#">Hỏi Đáp</a></li>
 									<li><a href="#">Quy Định Sử Dụng</a></li>
-									<li><a href="#">Tư Vấn Tuyển Dụng</a></li>
+									<li><a href="http://vnjobs.vn/cam-nang-viec-lam/">Tư Vấn Tuyển Dụng</a></li>
 								</ul>
 							</div>
 							<div class="clearfix"></div>

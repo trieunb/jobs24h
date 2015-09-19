@@ -6,87 +6,97 @@
 	<div class="clearfix"></div>
 	
 	
-	<form action="" method="POST" class="form-inline" role="form">
-		<div class="form-group">
-			<div class="col-sm-2">
-				<select name="action" id="inputAction" class="form-control" required="required">
-					<option value=""></option>
-					<option value="accept">Duyệt tin</option>
-					<option value="deni">Từ chối</option>
-				</select>
+	<!-- <form action="{{ URL::route('admin.jobs.vipwaiting') }}" method="GET" class="form" role="form" id="search">
+	<div class="col-sm-12">
+			<div class="col-sm-8">
+				{{ Form::text('q',null, array('class'=>'form-control', 'placeholder'=>'Nhập tìm kiếm ', 'id'=>'search_input') ) }}
 			</div>
-		</div>
-		<button type="submit" class="btn btn-sm btn-primary">Thực hiện</button>
-	
-	<table class="table table-hover table-bordered table-striped" id="jobs">
-		<thead>
-			<tr>
-				<th class="center">
-					<label class="pos-rel">
-						<input type="checkbox" class="ace" />
-						<span class="lbl"></span>
-					</label>
-				</th>
-				<th>ID</th>
-				<th>NTD</th>
-				<th>Mã tin</th>
-				<th>Vị trí</th>
-				<th>Hiển thị</th>
-				<th>Hạn nộp</th>
-				<th>Trạng thái</th>
-				<th>#</th>
-			</tr>
-		</thead>
-		<tbody>
-			@if(count($jobs))
-				@foreach($jobs as $job)
-					<tr>
-						<td id="td_checkbox_{{ $job->id }}">
-							<label class="pos-rel">
-								<input type="checkbox" name="jobids[]" value="{{ $job->id }}" class="ace" />
-								<span class="lbl"></span>
-							</label>
-						</td>
-						<td>{{ $job->id }}</td>
-						<td>{{ HTML::link(URL::route('admin.employers.edit', [$job->ntd_id]), ($job->ntd->company->company_name)?$job->ntd->company->company_name:$job->ntd->email) }}</td>
-						<td>{{ $job->matin }}</td>
-						<td>{{ HTML::link(URL::route('admin.jobs.edit', [$job->id]), $job->vitri ) }}</td>
-						<td>@if($job->is_display==1)
-						<span class="label label-success">Hiển thị</span>
-						@else
-						<span class="label label-warning">Đang ẩn</span>
-						@endif</td>
-						<td>{{ $job->hannop }}</td>
-						<td id="td_status_{{ $job->id }}">
-							@if($job->status == 1)
-							<span id="lstatus_{{ $job->id }}" class="label label-status label-primary">Đã duyệt</span>
-							@elseif($job->status == 2)
-							<span id="lstatus_{{ $job->id }}" class="label label-status label-warning">Chưa được duyệt</span>
-							@else 
-							<span id="lstatus_{{ $job->id }}" class="label label-status label-danger">Từ chối</span>
-							@endif
-						</td>
-						<td id="td_duyet_{{ $job->id }}">
-							<button type="button" value="1" id="duyet_{{ $job->id }}" class="btn btn-xs btn-duyet btn-primary">Duyệt</button>
-							<button type="button" value="3" id="duyet_{{ $job->id }}" class="btn btn-xs btn-duyet btn-danger">Từ chối</button>
-						</td>
-					</tr>
-				@endforeach
-			@else
-				<tr>
-					<td colspan="9">Không có tin cần duyệt</td>
-				</tr>
-			@endif
-		</tbody>
-	</table>
-	</form>
-	<div id="pagination">
-		{{ $jobs->links() }}
+			<div class="col-sm-4">
+				<button type="submit" class="btn btn-sm btn-primary" id="search">Tìm kiếm</button>
+			</div>
 	</div>
+	</form> -->
+		
+	<div class="clearfix"></div>
+	<div class="col-sm-12">
+		<form action="" method="POST" class="form-inline" role="form">
+			
+		
+		<div class="col-sm-12">
+		<table class="table table-hover table-bordered table-striped" id="jobs">
+			<thead>
+				<tr>
+					<th class="center">
+						<label class="pos-rel">
+							<input type="checkbox" class="ace" />
+							<span class="lbl"></span>
+						</label>
+					</th>
+					<th>Tin tuyển dụng</th>
+					<th>Nhà tuyển dụng</th>
+					<th>Cập nhật</th>
+					<th>Hết hạn nộp</th>
+					<th>Trạng thái</th>
+					<th>Dịch vụ</th>
+					<th>Ghi Chú</th>
+					
+					<th>#</th>
+					<th>CSKH</th>
+				</tr>
+			</thead>
+			<tbody>
+				 
+			</tbody>
+		</table>
+		</div>
+		</form>
+	</div>
+	 
 @stop
-
+@section('style')
+	{{ HTML::style('assets/css/dataTables.bootstrap.css') }}
+@stop
 @section('script')
+	{{ HTML::script('assets/js/jquery.dataTables.min.js') }}
+	{{ HTML::script('assets/js/jquery.dataTables.bootstrap.min.js') }}
 	<script type="text/javascript">
+	 
+	 
+	
+	 	var page1 = <?php if(isset($_GET['page']))
+	 				echo $_GET['page'];
+	 				else echo 0;
+	 				 ?>;
+		$('#jobs').dataTable( {
+				"displayStart": page1,
+				"bProcessing": true,
+				"bServerSide": true,
+
+				"sAjaxSource": "{{ URL::route('admin.jobs.datatables_waiting_vip', ["id"=>Input::get('id')]) }}",
+				bAutoWidth: false,
+					"aoColumns": [
+					  { "bSortable": false, "sClass": "center" },
+					  null, null,null, null, null, null,null,null,
+					  { "bSortable": false }
+					],
+					"aaSorting": [[ 1, "desc" ]],
+				columns: [
+	            {data: 'id', name: 'jobs.id'},
+	            {data: 'ntd_id', name: 'jobs.vitri'},
+	            {data: 'matin', name: 'jobs.vitri'},
+	            {data: 'vitri', name: 'jobs.updated_at'},
+	            {data: 'chucvu', name: 'jobs.hannop'},
+	            {data: 'namkinhnghiem', name: 'jobs.is_display'},
+	            {data: 'bangcap', name: 'jobs.orderpostrec'},
+	            {data: 'hinhthuc', name: 'jobs.hinhthuc'},
+	            {data: 'bangcap', name: 'jobs.gioitinh'},
+	            {data: 'dotuoi_min', name: 'jobs.dotuoi_min','searchable':false},
+        		]
+
+			});
+		 
+
+
 	$('.btn-duyet').click(function(event) {
 		var thisId = this.id;
 		var jobid = thisId.split('_');
@@ -121,4 +131,6 @@
 			else $row.removeClass(active_class);
 		});
 	</script>
+
+
 @stop

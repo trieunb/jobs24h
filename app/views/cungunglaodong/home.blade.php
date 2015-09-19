@@ -86,7 +86,7 @@
 							<p>
 								hào mừng Khách hàng đã đến với dịch vụ Cung ứng lao động của VnJobs.vn. Với kinh nghiệm hoàn thành tuyển dụng đội ngũ quản lý và nhân viên cho các đối tác chiến lược bao gồm các công ty như Viiettel, Vinaphone, BIDV...
 								<br /><br />VnJobs.vn đã bước đầu thành công trong việc phát triển đội ngũ nhân sự với các chuyên viên tuyển dụng đến từ các công ty cung cấp nhân sự lớn trên thị trường, song song với họ là những chuyên viên tuyển dụng tới từ các công ty lớn trong các ngành Tài chính, sản xuất và dịch vụ.
-								<br />Đồng thời với việc phát triển đội ngũ nhân sự, VnJobs.vn cũng đã thành công trong việc xây dựng kho dữ liệu ứng viên đa dạng ngành nghề nhằm giúp khách hàng tiếp cận đúng và hiệu quả với ứng viên mà họ đang tìm kiếm. Với 7 dịch vụ: Dịch vụ quản lý nhân sự, dịch vụ tuyển dụng, dịch vụ Đào tạo nhân sự, dịch vụ lương và chế độ, dịch vụ Head Hunting.
+								<br />Đồng thời với việc phát triển đội ngũ nhân sự, VnJobs.vn cũng đã thành công trong việc xây dựng kho dữ liệu ứng viên đa dạng ngành nghề nhằm giúp khách hàng tiếp cận đúng và hiệu quả với ứng viên mà họ đang tìm kiếm. Với 6 dịch vụ: Dịch vụ quản lý nhân sự, dịch vụ tuyển dụng, dịch vụ Đào tạo nhân sự, dịch vụ lương và chế độ, dịch vụ Head Hunting.
 							</p>
 							<ul class="push-top">
 								<li>

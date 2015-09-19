@@ -6,11 +6,11 @@
             
             <?php
              
-            
-            if(Request::is(''.Request::segment(1).'/trainings/detail-doc/*'))
+            //echo Request::segment(3);
+            if(Request::segment(3)=="tai-lieu")
            	echo '<a href="'.URL::route("trainings.alldoc").'"><i class="fa fa-chevron-right"></i> Tài liệu </a>';
             else
-            echo '<a href="'.URL::route("trainings.allpost").'"><i class="fa fa-chevron-right"></i> Tin tức </a>';
+            //echo '<a href="'.URL::route("trainings.allpost").'"><i class="fa fa-chevron-right"></i> Tin tức </a>';
            
             ?>
             <i class="fa fa-chevron-right"></i> <span>@yield('title')</span>

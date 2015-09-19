@@ -21,7 +21,7 @@
   			<ul>
   				@if(count($folders))
 					@foreach($folders as $value)
-						<li class="{{ HTML::active(['employers.candidates.folder'], 'selected', $value->id) }}"><a href="{{ URL::route('employers.candidates.folder', $value->id) }}"><i class="fa fa-folder-o"></i>{{ $value->folder_name }} ({{ $value->rsfolder->count() }})</a></li>
+						<li class="{{ HTML::active(['employers.candidates.folder'], 'selected', $value->id) }}"><a title="{{$value->folder_name}}" href="{{ URL::route('employers.candidates.folder', $value->id) }}"><i class="fa fa-folder-o"></i>{{ Str::limit($value->folder_name,25) }} ({{ $value->rsfolder->count() }})</a></li>
 					@endforeach
   				@endif
   				<li class="{{ HTML::active(['employers.candidates.folderManager'], 'selected') }}"><a href="{{ URL::route('employers.candidates.folderManager') }}">Quản lý thư mục</a></li>

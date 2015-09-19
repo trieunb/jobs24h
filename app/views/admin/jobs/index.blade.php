@@ -48,25 +48,25 @@
 	<table class="table table-hover table-bordered table-striped" id="jobs">
 		<thead>
 			<tr>
-				<th class="center">
+				<!-- <th class="center">
 					<label class="pos-rel">
 						<input type="checkbox" class="ace" />
 						<span class="lbl"></span>
 					</label>
-				</th>
-				
+				</th> -->
+				<th>ID</th>
 				<th>Tin tuyển dụng</th>
 				<th>Nhà tuyển dụng</th>
-				<th>Email Nhà tuyển dụng</th>
-				<th>Mã tin</th>
+				<th>Cập nhật</th>
+				<th>Hết hạn nộp</th>
+				<th>Loại tin</th>
+				
 				<th>Tình trạng đăng</th>
-				<th>Hạn nộp</th>
-
 				<th>Trạng thái</th>
-
-				<th>Lượt xem</th>
-				<th>Lượt nộp</th>
+				<th>Số Lượt xem</th>
+				<th>Số Lượt nộp</th>
 				<th>Thao tác</th>
+				<th>CSKH</th>
 				
 			</tr>
 		</thead>
@@ -97,7 +97,7 @@
 				bAutoWidth: false,
 					"aoColumns": [
 					  { "bSortable": false, "sClass": "center" },
-					  null, null,null, null, null, null,null,null,null,
+					  null, null,null, null, null, null,null,null,null,null,
 					  { "bSortable": false }
 					],
 					"aaSorting": [[ 1, "desc" ]],

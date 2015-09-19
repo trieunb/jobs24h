@@ -10,6 +10,7 @@ Route::group(array('prefix'=>$locale), function() {
 		Route::get('/tat-ca-tai-lieu',array('as'=>'trainings.alldoc', 'uses'=>'TrainingController@all_doc'));
 		Route::get('/tat-ca-khoa-hoc',array('as'=>'trainings.allcouser', 'uses'=>'TrainingController@all_couser'));
 		Route::get('/tat-ca-bai-viet',array('as'=>'trainings.allpost', 'uses'=>'TrainingController@all_post'));
+		Route::get('/tat-ca-giang-vien',array('as'=>'trainings.allgv', 'uses'=>'TrainingController@all_gv'));
 
 
 		

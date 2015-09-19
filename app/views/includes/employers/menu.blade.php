@@ -56,7 +56,7 @@
 			</ul>
 		</li>
 		<li class="{{ HTML::active(['employers.hiring.*']) }}">
-			<a href="#">Tư vấn tuyển dụng</a>
+			<a href="http://vnjobs.vn/cam-nang-viec-lam/">Tư vấn tuyển dụng</a>
 			<ul>
 				<!-- <div class="container">
 				<li class="selected"><a href="#">Việc làm của tôi</a></li>

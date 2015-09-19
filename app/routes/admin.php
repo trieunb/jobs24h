@@ -20,7 +20,9 @@ Route::group(array('prefix'=>'admin'), function() {
 			
 			));
 		Route::get('jobs/datatables', array('as'=>'jobs.datatables', 'uses'=>'AJobController@datatables'));
-
+		Route::get('jobs/datatables_waiting', array('as'=>'admin.jobs.datatables_waiting', 'uses'=>'AJobController@datatables_waiting'));
+		Route::get('jobs/datatables_waiting_vip', array('as'=>'admin.jobs.datatables_waiting_vip', 'uses'=>'AJobController@datatables_waiting_vip'));
+		Route::get('jobs/datatables_cvapp', array('as'=>'admin.jobs.datatables_cvapp', 'uses'=>'AJobController@datatables_cvapp'));
 		
 		Route::resource('jobs', 'AJobController', [
 		    'only' => ['index', 'create', 'store','edit', 'update', 'destroy']
@@ -33,7 +35,9 @@ Route::group(array('prefix'=>'admin'), function() {
 			'getVipExp'		=>	'admin.jobs.vipexp',
 			'postAjax'		=>	'admin.jobs.ajax',
 			'getEdit1'		=> 'admin.jobs.edit1',
-			'postEdit1'	=>		'admin.jobs.update1',	
+			'postEdit1'	=>		'admin.jobs.update1',
+			'getDelete'	=>		'admin.jobs.delete',
+			'getJobApp'	=>'admin.jobs.cvapp',
 		));
 
 		Route::get('resumes/creates/{id}', array('as'=>'resumes.creates', 'uses'=>'ResumeController@creates'));
@@ -75,7 +79,8 @@ Route::group(array('prefix'=>'admin'), function() {
 
 		 
 		Route::controller('order', 'OrdersController', array(
-			'getIndex'	=>	'admin.order.index',
+			'getPackageEmployer'=>'admin.order.packageemployer',
+			'getPackage'	=>	'admin.order.package',
 			'postSaveSearchService'=>'admin.order.saveSearchService',
 			'getDeleteService' =>'admin.order.delete',
 			'getUpdateService' =>'admin.order.update',

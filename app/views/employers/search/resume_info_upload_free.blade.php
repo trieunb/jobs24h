@@ -1,8 +1,8 @@
 @extends('layouts.employer')
 @section('title')Xem thông tin hồ sơ {{ $resume->tieude_cv }} @stop
 @section('content')
- 
 
+ 
 	<section class="boxed-content-wrapper clearfix resume-info">
 		<div class="container">
 			
@@ -76,20 +76,10 @@
 									<div class="buy-service">
 										<div class="row buy-header">
 											<div class="col-xs-9">
-												Ấn vào thích để có thể sử dụng miễn phí dịch vụ xem hồ sơ.<br> 
-												Cảm ơn Quý khách đã tin tưởng và sử dụng dịch vụ tìm hồ sơ của VnJobs.vn. 
+												Để xem hồ sơ hoàn chỉnh của ứng viên, quý khách vui lòng sử dụng dịch vụ "tìm hồ sơ"
 											</div>
 											<div class="col-xs-3 pull-right">
-											<script>(function(d, s, id) {
-										      var js, fjs = d.getElementsByTagName(s)[0];
-										      if (d.getElementById(id)) return;
-										      js = d.createElement(s); js.id = id;
-										      js.src = "//connect.facebook.net/vn_VN/sdk.js#xfbml=1&version=v2.4&appId=1627071780874094";
-										      fjs.parentNode.insertBefore(js, fjs);
-										    }(document, 'script', 'facebook-jssdk'));
-										    </script>
-										    <div class="fb_plus"><div class="fb-like" data-href="https://www.facebook.com/vnjobs.vn" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div></div>
-												<!-- <a href="{{ URL::route('employers.orders.add') }}" class="btn btn-nomal bg-orange pull-right">Mua dịch vụ</a> -->
+												<a href="{{ URL::route('employers.orders.add') }}" class="btn btn-nomal bg-orange pull-right">Mua dịch vụ</a>
 											</div>
 										</div>
 										<div class="row buy-information">
@@ -255,8 +245,6 @@
 
 @stop
 @section('script')
- 
-	
 	<script type="text/javascript">
 	$('#inputAdd').click(function(event) { 
 		$('#inputFolder_name').prop({

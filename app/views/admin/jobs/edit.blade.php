@@ -2,7 +2,7 @@
 @section('title')Edit Job #{{ $job->id }} @stop
 @section('page-header')Sửa tin tuyển dụng @stop
 @section('content')
-
+{{ HTML::script(URL::to('packages/ckeditor/ckeditor/ckeditor.js')) }}
 	<!-- {{ Form::open(array('method'=>'POST', 'action'=> array('admin.jobs.update1',$page, $job->id), 'class'=>'form form-horizontal', 'method'=>'PUT' ) ) }} -->
 	{{ Form::open(array('method'=>'POST', 'class'=>'form form-horizontal' ) ) }}
 		@include('includes.notifications')
@@ -171,9 +171,95 @@
 		<div class="form-group">
 			<div class="col-sm-10 col-sm-offset-2">
 				{{ Form::button('Lưu thay đổi', array('type'=>'submit', 'class'=>'btn btn-primary')) }}
+				<a href="#" class="btn btn-success" data-toggle="modal" data-target="#myModal">Gửi mail</a>
+				<a class="btn btn-info" href="#">Hồ sơ ứng tuyển</a>
+				<a onclick="return confirm('Bạn có chắc muốn xóa ?');" href="{{URL::route('admin.jobs.delete',$job->id)}}" class="btn btn-danger">Xóa</a>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-10 col-sm-offset-2">
+				<a class="btn btn-warning" href="{{URL::route('admin.order.package')}}/{{$job->id}}">Đăng ký dịch vụ cho tin này</a>
 			</div>
 		</div>
 	{{ Form::close() }}
+
+	<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width: 1000px;">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Gửi email phản hồi tin tuyển dụng</h4>
+      </div>
+      <div class="modal-body">
+	      <div class="col-sm-12">
+	         
+				<label for="inputEmail" class="col-sm-3 control-label">Email:</label>
+				<div class="col-sm-9">
+					{{ Form::input('email', 'email', $job->ntd->email, array('class'=>'form-control', 'required','readonly') ) }}
+				</div>
+			 
+		  </div>
+
+		  <div class="col-sm-12">
+	         
+				<label for="inputEmail" class="col-sm-3 control-label">Công ty:</label>
+				<div class="col-sm-9">
+					{{ Form::input('text', 'company', $job->ntd->company->company_name, array('class'=>'form-control', 'required','readonly') ) }}
+				</div>
+			 
+		  </div>
+
+		   <div class="col-sm-12">
+	         
+				<label for="inputEmail" class="col-sm-3 control-label">Tin tuyển dụng:</label>
+				<div class="col-sm-9">
+					{{ Form::input('text', 'post', $job->vitri, array('class'=>'form-control', 'required','readonly') ) }}
+				</div>
+			 
+		  </div>
+
+
+		  <div class="clearfix"></div>
+		  <div class="col-sm-12">
+			 
+				<label for="inputEmail" class="col-sm-3 control-label">Tiêu đề:</label>
+				<div class="col-sm-9">
+					{{ Form::input('text', 'title', null, array('class'=>'form-control', 'required','placeholder'=>"ví dụ :chào nhà tuyển dụng") ) }}
+				</div>
+			 
+		  </div>
+		  <div class="clearfix"></div>
+		  <div class="col-sm-12">
+			 
+				<label for="inputEmail" class="col-sm-3 control-label">Nội dung:</label>
+				<div class="col-sm-9">
+					{{ Form::textarea('content', null,  ['size' => '50x9','placeholder'=>'ví dụ : Tin tuyển dụng của bạn đã được duyệt']) }}
+				<script>
+				CKEDITOR.replace( 'content', {
+                
+                });
+                </script>
+				</div>
+			 
+		  </div>
+		  <div class="clearfix"></div>
+
+
+
+      </div>
+      <div class="modal-footer">
+      	<a class="btn btn-success" href="">Gửi</a>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
 @stop
 
 @section('style')

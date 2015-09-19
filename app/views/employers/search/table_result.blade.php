@@ -9,7 +9,9 @@
 							</thead>
 							<tbody id="result-detail">
 								@if(count($result))
+								
 								@foreach($result as $val)
+
 									<tr>
 										<td>
 										<?php $params = []; ?>
@@ -31,7 +33,9 @@
 											$lv = ($val->level==0)?'all':$val->level;
 											$lc = ($val->location==0)?'all':$val->location;
 											?>
-											<a href="{{ URL::to($locale.'/employers/search/basic?' . implode('&', ['keyword='.$kw, 'category='.$ct, 'level='.$lv, 'location='.$lc])) }}" target="_blank">{{ implode(';', $params) }}</a>
+												<a href="{{ URL::to($locale.'/nha-tuyen-dung/tim-kiem/co-ban?keyword='.$val->keyword.'&category=all&level=all&location=all') }}" target="_blank">{{ implode(';', $params) }}</a> 
+										 <!-- 	<a href="{{ URL::to($locale.'/nha-tuyen-dung/tim-kiem/co-ban?keyword='.$val->keyword.'&category='.$val->category.'&level='.$val->level.'&location='.$val->location.'') }}" target="_blank">{{ implode(';', $params) }}</a>  -->
+										<!-- 	<a href="{{ URL::to($locale.'/employers/search/basic?' . implode('&', ['keyword='.$val->keyword, 'category='.$ct, 'level='.$lv, 'location='.$lc])) }}" target="_blank">{{ implode(';', $params) }}</a> -->
 										</td>
 										<td>
 											{{ $val->total_result }}

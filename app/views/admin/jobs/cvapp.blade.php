@@ -1,41 +1,30 @@
 @extends('layouts.admin')
-@section('title')Employers Manager @stop
+@section('title') Application Jobs @stop
 @section('content')
+
+ 
+  
 	@include('includes.notifications')
-
-
 	<div class="clearfix"></div>
-	<div class="col-md-3">
-	{{Form::select('active',array(
-	''=>'Lựa chọn trạng thái',
-	URL::route("admin.employers.index",array("active"=>''))=>'Cả 2',
-	URL::route("admin.employers.index",array("active"=>'0')) => 'Không kích hoạt',
-	URL::route("admin.employers.index",array("active"=>'1'))=>'Kích hoạt'),
-	array('id'=>'active'))}}
-	</div>
-	<div class="clearfix"></div>
-	<table class="table table-hover table-bordered table-striped" id="employers">
+	 
+	
+	<table class="table table-hover table-bordered table-striped" id="jobs">
 		<thead>
 			<tr>
-				<th class="center">
+				<!-- <th class="center">
 					<label class="pos-rel">
 						<input type="checkbox" class="ace" />
 						<span class="lbl"></span>
 					</label>
-				</th>
-				
-				
-				<th>Nhà tuyển dụng</th>
-				<th>Email</th>
-				<th>Điện thoại</th>
-				<th>Ngày đăng ký</th>
-				<th>
-					Trạng thái 
-					
-				</th>
-				<th>Tổng số tin đăng</th>
-				<th>#</th>
+				</th> -->
+				<th>ID</th>
+				<th>Tiêu đề hồ sơ</th>
+				<th>Họ và tên</th>
+				<th>Ngày ứng tuyển</th>
+				<th>Trạng thái</th>
+				<th>Thao tác</th>
 				<th>CSKH</th>
+				
 			</tr>
 		</thead>
 		<tbody>
@@ -52,39 +41,27 @@
 	{{ HTML::script('assets/js/jquery.dataTables.min.js') }}
 	{{ HTML::script('assets/js/jquery.dataTables.bootstrap.min.js') }}
 	<script type="text/javascript">
-
-	$('select').on('change', function() {
-  		var active = $(this).val();
-  		window.location.href = active;
-	});
-
-
-	 
-
-	var page1 = <?php if(isset($_GET['page']))
+	
+	 	var page1 = <?php if(isset($_GET['page']))
 	 				echo $_GET['page'];
 	 				else echo 0;
 	 				 ?>;
-	/* var chuaduyet=<?php if(isset($_GET['is_active']))
-	 				echo $_GET['is_active'];
-	 				else echo 0;
-	 				 ?>;*/
-		$('#employers').dataTable( {
+		$('#jobs').dataTable( {
 				"displayStart": page1,
 				"bProcessing": true,
 				"bServerSide": true,
-				"sAjaxSource": "{{ URL::route('employers.datatables',["active"=>Input::get('active')]) }}",
+				"sAjaxSource": "{{ URL::route('admin.jobs.datatables_cvapp', ["id"=>Input::get('id')]) }}",
 				bAutoWidth: false,
 					"aoColumns": [
 					  { "bSortable": false, "sClass": "center" },
-					  null, null,null, null, null, null,null,
+					  null, null,null, null, null,
 					  { "bSortable": false }
 					],
 					"aaSorting": [[ 1, "desc" ]],
 			});
-
+		 
 		var active_class = 'success';
-		$('#employers > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
+		$('#jobs > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
 					var th_checked = this.checked;//checkbox inside "TH" table header
 					
 					$(this).closest('table').find('tbody > tr').each(function(){
@@ -94,7 +71,7 @@
 					});
 				});
 
-		$('#employers').on('click', 'td input[type=checkbox]' , function(){
+		$('#jobs').on('click', 'td input[type=checkbox]' , function(){
 					var $row = $(this).closest('tr');
 					if(this.checked) $row.addClass(active_class);
 					else $row.removeClass(active_class);

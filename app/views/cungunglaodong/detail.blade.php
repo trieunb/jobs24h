@@ -5,7 +5,11 @@
  
 @section('content')
 
-
+<style type="text/css">
+	#carousel-custom .item img:hover {
+    border-radius: 0%;
+}
+</style>
 <div class="container">
 <div class="banner">	
 		<div class="header-page">

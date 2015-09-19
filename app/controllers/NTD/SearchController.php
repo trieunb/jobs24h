@@ -5,6 +5,7 @@ use VResponse, RespondLetter,Request;
 class SearchController extends \Controller {
 	public function getCoBan()
 	{
+
 		if(Input::get('category'))
 		{
 			$history = array();
@@ -44,6 +45,7 @@ class SearchController extends \Controller {
 			$history['ntd_id'] = Auth::id();
 			$history['total_result'] = $result->getTotal();
 			$history['search_date'] = date('Y-m-d');
+
 			if(isset($input['submit'])) \SearchHistory::create($history);
 			return View::make('employers.search.basic', compact('result', 'input'));
 		} else {
@@ -194,13 +196,29 @@ class SearchController extends \Controller {
 	}
 	public function postCalendar()
 	{
+		$year=Input::get('year');
+		$month=Input::get('month');
+		if ($month>9) {
+		$search=\SearchHistory::whereNtdId(Auth::id())->where('search_date','like','%'.$year.'-'.$month.'%')->lists('search_date');	
+		}
+		else
+		$search=\SearchHistory::whereNtdId(Auth::id())->where('search_date','like','%'.$year.'-0'.$month.'%')->lists('search_date');
+		$result=array_unique($search);
 		
+		foreach ($result as $key => $value) {
+		 	$t[]=date('d',strtotime($value));
+		 } 
+
 		$td = $this->calendar();
 		$html = "";
 		foreach ($td as $key => $value) {
 			$html .= "<tr>";
 			foreach ($value as $val) {
-				$html .= "<td><a data-toggle=\"modal\" id=\"date_$val\" href=\"#modal-history\" class=\"show-modal\">$val</a></td>";
+				//	$t=date('d',strtotime($val1));
+				if (in_array($val,$t))
+				$html .= "<td><a style=\"color:#EA00E3\" data-toggle=\"modal\" id=\"date_$val\" href=\"#modal-history\" class=\"show-modal\">$val</a></td>";
+				else
+				$html .= "<td><a data-toggle=\"modal\" id=\"date_$val\" href=\"#modal-history\" class=\"show-modal\">$val</a></td>";	
 			}
 			$html .= "</tr>";
 		}
@@ -223,6 +241,7 @@ class SearchController extends \Controller {
 		->paginate(10);
 		$result->appends(array('year' => $year, 'month'=>$month,'day'=>$day));
 		$category = \Category::lists('cat_name', 'id');
+
 		$level = \Level::lists('name', 'id');
 		$location = \Province::lists('province_name', 'id');
 		return View::make('employers.search.table_result', compact('result', 'category', 'level', 'location'));
@@ -232,6 +251,10 @@ class SearchController extends \Controller {
 		 
 		 
 		$resume = Resume::where('id', $id)->with('cvcategory')->with('location')->with('bangcap')->first();
+
+
+		 
+		
 		$employer = Auth::id();
 		$check_order=\Order::whereNtdId($employer)->first();
 		$history=\SearchHistory::whereNtdId($employer)->orderBy('created_at','desc')->first();
@@ -240,6 +263,24 @@ class SearchController extends \Controller {
 		{
 			return Redirect::route('employers.search.basic');
 		} else {
+			$counte_cv=\ViewResume::whereNtvId($resume->ntv_id)->whereNtdId($employer)->whereCvId($id)->first();
+
+			if ($counte_cv) {
+				$counte_cv->counter=$counte_cv->counter+1;
+				$counte_cv->save();
+			}
+			else
+			{
+				 $counte_cv= new \ViewResume;
+				 $counte_cv->ntv_id=$resume->ntv_id;
+				 $counte_cv->ntd_id=$employer;
+				 $counte_cv->cv_id=$id;
+				 $counte_cv->counter=1;
+				 $counte_cv->save();
+				
+			}
+
+
 			$resume->views += 1;
 			$resume->timestamps = false;
 			$resume->save();

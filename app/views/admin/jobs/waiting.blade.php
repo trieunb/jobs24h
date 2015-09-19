@@ -14,17 +14,16 @@
 			<div class="infobox-data">
 				 <a href="{{URL::route('admin.jobs.waiting')}}">
 					<div class="infobox-content">Tổng số tin chưa duyệt</div>
-					<span class="infobox-data-number">{{ $jobs->count() }}</span>
+					<span class="infobox-data-number">{{ $job_not_active }}</span>
 				 </a>
 			</div>
 
 			<!-- <div class="stat stat-success">8%</div> -->
 		</div>
 	</div>
-
-	<form action="" method="POST" class="form-inline" role="form">
+ 
 	
-	<div class="clearfix"></div>
+	 
 	<table class="table table-hover table-bordered table-striped" id="jobs">
 		<thead>
 			<tr>
@@ -38,80 +37,51 @@
 				<th>Tin tuyển dụng</th>
 				<th>Nhà tuyển dụng</th>
 				<!-- <th>Mã tin</th> -->
-				
-				<th>Tình trạng đăng</th>
+				<th>Cập nhật</th>
 				<th>Hạn nộp</th>
+				<th>Tình trạng đăng</th>
 				<th>Trạng thái</th>
 				<th>Hành động</th>
 				<th>CSKH</th>	
 			</tr>
 		</thead>
 		<tbody>
-			@if(count($jobs))
-				@foreach($jobs as $job)
-					<tr>
-						<td id="td_checkbox_{{ $job->id }}">
-							<label class="pos-rel">
-								<input type="checkbox" name="jobids[]" value="{{ $job->id }}" class="ace" />
-								<span class="lbl"></span>
-							</label>
-						</td>
-						
-						<!-- <td>{{ $job->id }}</td> -->
-						<td>{{ HTML::link(URL::route('admin.jobs.edit1', [0,$job->id]), $job->vitri ) }}</td>
-						<td>{{ HTML::link(URL::route('admin.employers.edit1', [0,$job->ntd_id]), ($job->ntd->company->company_name)?$job->ntd->company->company_name:$job->ntd->email) }}</td>
-						<!-- <td>{{ $job->matin }}</td> -->
-						
-						<td>@if($job->is_display==1)
-						<span class="label label-success">Đăng ngay</span>
-						@else
-						<span class="label label-warning">Chờ đăng</span>
-						@endif</td>
-						<td>{{ date('d-m-Y',strtotime($job->hannop)) }}</td>
-						<td id="td_status_{{ $job->id }}">
-							@if($job->status == 1)
-							<span id="lstatus_{{ $job->id }}" class="label label-status label-primary">Đã duyệt</span>
-							@elseif($job->status == 2)
-							<span id="lstatus_{{ $job->id }}" class="label label-status label-warning">Chưa được duyệt</span>
-							@else 
-							<span id="lstatus_{{ $job->id }}" class="label label-status label-danger">Từ chối</span>
-							@endif
-						</td>
-						<td id="td_duyet_{{ $job->id }}">
-							<button type="button" value="1" id="duyet_{{ $job->id }}" class="btn btn-xs btn-duyet btn-primary">Duyệt</button>
-							<button type="button" value="3" id="duyet_{{ $job->id }}" class="btn btn-xs btn-duyet btn-danger">Từ chối</button>
-						</td>
-						<td>CSKH</td>
-					</tr>
-				@endforeach
-			@else
-				<tr>
-					<td colspan="9">Không có tin cần duyệt</td>
-				</tr>
-			@endif
+			 
 		</tbody>
 	</table>
 
-	<div class="col-md-12">
-		<div class="form-group">
-			<div class="col-sm-2">
-				<select name="action" id="inputAction" class="form-control" required="required">
-					<option value=""></option>
-					<option value="accept">Duyệt tin</option>
-					<option value="deni">Từ chối</option>
-				</select>
-			</div>
-		</div>
-		<button type="submit" class="btn btn-sm btn-primary">Thực hiện</button>
-	</div>
-	</form>
-	<div id="pagination">
-		{{ $jobs->links() }}
-	</div>
+	
+	
+	 
+	 
 @stop
-
+@section('style')
+	{{ HTML::style('assets/css/dataTables.bootstrap.css') }}
+@stop
 @section('script')
+{{ HTML::script('assets/js/jquery.dataTables.min.js') }}
+{{ HTML::script('assets/js/jquery.dataTables.bootstrap.min.js') }}
 	<script type="text/javascript">
+
+	var page1 = <?php if(isset($_GET['page']))
+	 				echo $_GET['page'];
+	 				else echo 0;
+	 				 ?>;
+		$('#jobs').dataTable( {
+				"displayStart": page1,
+				"bProcessing": true,
+				"bServerSide": true,
+				"sAjaxSource": "{{ URL::route('admin.jobs.datatables_waiting', ["id"=>Input::get('id')]) }}",
+				bAutoWidth: false,
+					"aoColumns": [
+					  { "bSortable": false, "sClass": "center" },
+					  null, null,null, null, null, null,null,
+					  { "bSortable": false }
+					],
+					"aaSorting": [[ 1, "desc" ]],
+			});
+
+
 	$('.btn-duyet').click(function(event) {
 		var thisId = this.id;
 		var jobid = thisId.split('_');

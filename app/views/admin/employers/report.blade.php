@@ -64,6 +64,7 @@
 				</th>
 				
 				<th>Nhà tuyển dụng vip</th>
+				<th>Xác thực</th>
 				<th>Gói</th>
 				<th>Ngày bắt đầu</th>
 				<th>Ngày hết hạn</th>
@@ -93,7 +94,7 @@
 				bAutoWidth: false,
 					"aoColumns": [
 					  { "bSortable": false, "sClass": "center" },
-					  null, null,null, null, null, null,
+					  null, null,null, null, null, null,null,
 					  { "bSortable": false }
 					],
 					"aaSorting": [[ 1, "desc" ]],

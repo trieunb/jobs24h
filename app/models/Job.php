@@ -72,4 +72,11 @@ class Job extends \Eloquent {
 		}
 		return true;
 	}
+
+
+	public function orderpostrec()
+	{
+		return $this->hasMany('OrderPostRec','job_id');
+	}
+	
 }

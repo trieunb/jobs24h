@@ -2,80 +2,20 @@
 @section('title')Employers Manager @stop
 @section('content')
 	@include('includes.notifications')
-	<div class="alert alert-block alert-warning">
-		Quản lý dịch vụ cho nhà tuyển dụng có email : {{$ntd['email']}}
-	</div>
+	
 	<div class="alert alert-block alert-default">
 		 
-		<div class="row">
-			<div class="col-md-12">
-				 
-				<h3>1. Tìm kiếm hồ sơ <i class="fa fa-search"></i></h3>
-
-			
-				<table class="table table-hover table-bordered table-striped dataTable" id="table">
-					<thead>
-						<tr>
-							 
-							<th>Tên gói</th>
-							<th>Số lượng hồ sơ còn có thể xem</th>
-							<th>Ngày tạo</th>
-							<th>Ngày hết hạn</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						
-						@if($ntd->order->first()!=null)
-							<tr>
-							<td>
-								{{ Form::select('search_service',$package_view_cv->packages->lists('package_name','id'), $ntd->order->first()->package_id, array('id' => 'seCompanyID')) }}
-							</td>
-							<td>
-								@if($ntd->order->first()->remain>0)
-									{{$ntd->order->first()->remain}} hồ sơ
-								@else
-									Hết số lượng xem hồ sơ
-								@endif
-							</td>
-							<td>
-								Ngày {{date("d-m-Y H:i:s", strtotime($ntd->order->first()->created_date))}}
-							</td>
-							<td>
-								Ngày {{date("d-m-Y H:i:s", strtotime($ntd->order->first()->ended_date))}}
-								 
-							</td>
-							<td>
-								<button class="btn btn-xs btn-primary" id="save_search"><i class="fa fa-pencil"></i> Cập nhật</button>
-								<a class="btn btn-xs btn-danger" onclick="return confirm('Bạn có chắc muốn xóa dịch vụ này hay không ?')" title="Hủy dịch vụ" href="{{URL::route('admin.order.delete',array('cancel-search',$ntd->order->first()->id))}}" id=""><i class="fa fa-trash"></i></a>
-							</td>
-							</tr>
-						@else
-						<tr>
-							<td>
-								{{ Form::select('search_service',$package_view_cv->packages->lists('package_name','id'), array('id' => 'seCompanyID')) }}
-							</td>
-							<td>Chưa đăng ký dịch vụ</td>
-							<td>Chưa đăng ký dịch vụ</td>
-							<td>Chưa đăng ký dịch vụ</td>
-							<td>
-								<button class="btn btn-xs btn-primary" id="save_search"><i class="fa fa-save"></i> Đăng ký</button>
-
-							</td>
-						</tr>
-						@endif	 
-					</tbody>
-				</table>
-			</div>
-			<div class="clearfix"></div>
+		 
 	<div class="row">
 		{{ Form::open(array('method'=>'POST', 'class'=>'form form-horizontal' ) ) }}
-		<div class="col-md-12">	
-			<div class="col-md-6"><h2>2. Đăng tin tuyển dụng</h2></div>
-			<div class="col-md-6">
-				
-			</div>
-		</div>
+		<div class="alert alert-block alert-warning">
+		Quản lý Dịch vụ Tin Tuyển Dụng: {{$job->vitri}}<br>
+		Thuộc nhà tuyển dụng có email : {{$job->ntd->email}}
+		<input type="hidden" name="ntd_id" value="{{$job->ntd->id}}">
+		<br>
+		Tên Công Ty: {{$job->ntd->company->company_name}}<br>
+		
+	</div>
 		<div class="col-md-12">
 			<p style="font-size: 12px;">- Các gói dịch vụ đã checked là những gói mà nhà tuyển dụng đã mua trước đó. 
 			<br>- Nếu muốn cập nhật hoặc đăng ký gói dịch vụ nào thì bấm nút Save tương ứng với gói đó.
@@ -102,12 +42,12 @@
 				</tr>
 			</thead>
 			<tbody>
-				
+					<?php $now=date('d-m-Y H:i:s'); ?>
 					@foreach($epackage as $value)
 						<tr>
 							<td style="text-align:center">
 								<label class="pos-rel">
-								{{ Form::checkbox('ck[]', $value['id'],in_array( $value['id'],$ntd->orderpostrec->lists('epackage_id')),array('class'=>'ace') ) }}
+								{{ Form::checkbox('ck[]', $value['id'],in_array( $value['id'],$job->orderpostrec->lists('epackage_id')),array('class'=>'ace') ) }}
 									
 									<span class="lbl"></span>
 								</label>
@@ -119,7 +59,7 @@
 								  $created_date='<span style="color:#C6C6C6">Chưa kích hoạt</span>';
 								  $ended_date ='<span style="color:#C6C6C6">Chưa kích hoạt</span>';
 							?>
-							@foreach($ntd->orderpostrec as $value1)
+							@foreach($job->orderpostrec as $value1)
 
 								@if($value1['epackage_id']==$value['id'])
 									
@@ -131,7 +71,17 @@
 										@endif
 										<?php $created_date=date("d-m-Y H:i:s", strtotime($value1['created_date'])) ?>
 										
-										<?php $ended_date=date("d-m-Y H:i:s", strtotime($value1['ended_date'])) ?> 
+										<?php 
+										if((strtotime(date('Y-m-d H:i:s',strtotime($value1['ended_date'])))-strtotime($now))/(60*60*24)< 7 && (strtotime(date('Y-m-d H:i:s',strtotime($value1['ended_date'])))-strtotime($now))/(60*60*24)>0 )
+										$ended_date ='	<p style="color:orange ">'.date('d-m-Y H:i:s',strtotime($value1['ended_date'])).'</p>';
+										elseif((strtotime(date('Y-m-d H:i:s',strtotime($value1['ended_date'])))-strtotime($now))/(60*60*24)<= 0)
+											$ended_date='<p style="color:red ">'.date("d-m-Y H:i:s",strtotime($value1["ended_date"])).'</p>';
+										else
+											$ended_date='<p>'.date("d-m-Y H:i:s",strtotime($value1["ended_date"])).' </p>';
+								
+										//$ended_date=date("d-m-Y H:i:s", strtotime($value1['ended_date']))
+
+										 ?> 
 								
 								@endif
 							@endforeach
@@ -140,8 +90,8 @@
 								<td>{{$ended_date}}</td>
 							<td>{{$value['eservice']['service_name']}}</td>
 							<td>
-								<a class="btn btn-xs btn-primary" title="Đăng ký/ cập nhật" href="{{URL::route('admin.order.update',array($ntd['id'],$value['id']))}}" id=""><i class="fa fa-save"></i></a>
-								<a class="btn btn-xs btn-danger" onclick="return confirm('Bạn có chắc muốn xóa dịch vụ này hay không ?')" title="Hủy dịch vụ" href="{{URL::route('admin.order.delete',array($ntd['id'],$value['id']))}}" id=""><i class="fa fa-trash"></i></a>
+								<a class="btn btn-xs btn-primary" title="Đăng ký/ cập nhật" href="{{URL::route('admin.order.update',array($job->id,$job->ntd->id,$value['id']))}}" id=""><i class="fa fa-save"></i></a>
+								<a class="btn btn-xs btn-danger" onclick="return confirm('Bạn có chắc muốn xóa dịch vụ này hay không ?')" title="Hủy dịch vụ" href="{{URL::route('admin.order.delete',array($job->ntd->id,$value['id']))}}" id=""><i class="fa fa-trash"></i></a>
 							</td>
 
 						</tr>
@@ -158,28 +108,7 @@
 	</div>
 
 
-<!-- 	<div class="clearfix"></div>
-	<div class="row">
-		
-	
-		<div class="col-md-12">
-			<h2>1. Tìm kiếm hồ sơ</h2>
-		</div>
-		<div class="col-md-12">
-			@foreach($package_view_cv->packages as $value)
-				<div class="col-md-2">
-					<label class="radio-inline" for="{{$value['package_name']}}">
-						<input type="radio" id="{{$value['package_name']}}" name="search_service" value="{{$value['id']}}" />{{$value['package_name']}}
-					
-					</label>
-				</div>
-			@endforeach
-			<div class="col-md-2">
-				<button class="btn-info full-right" id="save_search">Lưu tìm kiếm hồ sơ</button>
-			</div>
-		</div>
-		
-	</div> -->
+
 
 @stop
 
@@ -214,7 +143,7 @@
 	 
 
 	 	$('#save_search').click(function(event) {
-	 		var ntd_id	=	{{$ntd['id']}};
+	 		var ntd_id	=	{{$job->ntd->id}};
 	 		var id = $('select[name=search_service]').val();
 	 		$.ajax({
 	 			url: '{{URL::route("admin.order.saveSearchService")}}',
