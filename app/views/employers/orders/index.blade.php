@@ -28,8 +28,8 @@
 							</tr>
 						</thead>
 						<tbody>
-						@if(count($orders))
-						@foreach($orders as $order)
+						@if(count($order))
+						 
 							<tr>
 								<td>
 									<a class="text-blue" href="{{ URL::route('employers.orders.detail', $order->id) }}">{{ $order->order_number }}</a>
@@ -43,8 +43,8 @@
 								<p><a class="text-blue" data-toggle="collapse" data-target="#collapse{{ $order->id }}" aria-expanded="false" aria-controls="collapse{{ $order->id }}"><i class="fa fa-plus-square-o"></i>&nbsp; Xem chi tiết</a></p>
 									
 								</td>
-								<td>{{ $order->total }}</td>
-								<td>{{ $order->remain }}</td>
+								<td>{{ $order->total }} CV</td>
+								<td>{{ $order->remain }} CV</td>
 								<td>{{ $order->created_date }}</td>
 								<td>{{ $order->ended_date }}</td>
 								<td>
@@ -55,7 +55,35 @@
 									@endif
 								</td>
 							</tr>
-						@endforeach
+							<tr>
+								@if(count($verify))
+									<td>
+									<a class="text-blue" href="{{ URL::route('employers.orders.detail', $verify->id) }}">1234</a>
+								</td>
+								<td>{{ $verify->epackage_name }}
+								<div class="collapse vncollapse" id="collapse{{ $verify->id }}">
+									<ul>
+										<li>Xác thực nhà tuyển dụng</li>
+									</ul>  
+								</div>
+								<p><a class="text-blue" data-toggle="collapse" data-target="#collapse{{ $verify->id }}" aria-expanded="false" aria-controls="collapse{{ $verify->id }}"><i class="fa fa-plus-square-o"></i>&nbsp; Xem chi tiết</a></p>
+									
+								</td>
+								<td>{{ $verify->total_date }} ngày</td>
+								<td>{{ round((strtotime(date('Y-m-d H:i:s',strtotime($verify->ended_date)))-strtotime(date('Y-m-d H:i:s')))/(60*60*24)) }} ngày</td>
+								<td>{{ $verify->created_date }}</td>
+								<td>{{ $verify->ended_date }}</td>
+								<td>
+									@if($verify->ended_date >= date('Y-m-d H:i:s') && $verify->created_date <= date('Y-m-d H:i:s'))
+									<span class="label label-success">Đang kích hoạt</span>
+									@else 
+									<span class="label label-danger">Đã hết hạn</span>
+									@endif
+								</td>
+								@endif
+							</tr>
+						 
+						
 						@else 
 							<tr>
 								<td colspan="7">Bạn không có đơn hàng nào.</td>
@@ -64,6 +92,8 @@
 
 						</tbody>
 					</table>
+					
+
 				</div>
 			</section>
 		</div>

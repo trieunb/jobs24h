@@ -87,10 +87,10 @@
 			<thead>
 				<tr>
 					<th class="center">
-						<label class="pos-rel">
+						<!-- <label class="pos-rel">
 							<input type="checkbox" class="ace" />
 							<span class="lbl"></span>
-						</label>
+						</label> -->
 					</th>
 					
 					<th>Loại dịch vụ</th>
@@ -175,7 +175,7 @@
 							});
 					 
 
-					});
+
 			$('#save_search').click(function(event) {
 		 		var ntd_id	=	{{$ntd['id']}};
 		 		var id = $('select[name=search_service]').val();

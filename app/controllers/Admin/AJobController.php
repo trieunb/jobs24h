@@ -451,6 +451,8 @@ class AJobController extends \BaseController {
 						 'jobs.id as cskh')  ; 
 		$page=0;
 		if (Request::ajax()) {
+			 
+			 
 			$page=(Input::get('iDisplayStart'));
 		}
 		
@@ -509,17 +511,37 @@ class AJobController extends \BaseController {
 		$cv=Application::join('resumes','application.cv_id','=','resumes.id')
 						->join('jobs','application.job_id','=','jobs.id')
 						->join('jobseekers','application.ntv_id','=','jobseekers.id')
-						->select('application.id as appid','resumes.tieude_cv as tieude_cv','jobseekers.first_name as first_name','jobseekers.last_name as last_name','application.apply_date as apply_date','resumes.trangthai as trangthai','application.id as thaotac','application.id as cskh');
+						->select('resumes.id as rid','jobs.id as jid','application.id as appid','resumes.tieude_cv as tieude_cv','jobseekers.first_name as first_name','jobseekers.last_name as last_name','application.apply_date as apply_date','resumes.trangthai as trangthai','application.id as thaotac','application.id as cskh');
 		if($id) $cv->whereJobId($id);
 		return Datatables::of($cv)
+		->remove_column('rid')
+		->remove_column('jid')
+		->edit_column('tieude_cv','<a href="{{URL::route("admin.resumes.edit",$rid)}}">{{$tieude_cv}}</a>')
 		->edit_column('first_name','{{$first_name}} {{$last_name}}')
 		->edit_column('trangthai','@if($trangthai==1) Đã kích hoạt @else Chưa kích hoạt @endif')
+		->edit_column('thaotac','<a href="{{URL::route("admin.jobs.deleteapp",array($rid,$jid))}}">Xóa</a>')
 		->remove_column('last_name')
 		->edit_column('cskh',''.$user.'')
 		->make();
 	}
+	public function getDeleteApp($cv_id,$job_id)
+	{
+		$del=Application::whereCvId($cv_id)->whereJobId($job_id);
+		if ($del->delete()) {
+			return Redirect::back()->withSuccess('Xóa thành công');
+		}
+		else return Redirect::back()->withErrors('Xóa thất bại');
+	}
 				
+	public function postSendMail()
+	{
 
+		Mail::send('admin.jobs.sendmail', array('send_email'=> Input::get('email'),'company'=>Input::get('company'), 'vitri'=>Input::get('post'),'content'=>Input::get('content')), function($message){
+				$message->from(AdminAuth::getUser()->email, AdminAuth::getUser()->username);
+		        $message->to(Input::get('email'), Input::get('email'))->subject(Input::get('title'));
+		    	});
+				return Redirect::back()->with('success', 'Đã gửi email đến nhà tuyển dụng thành công');
+	}
 	
 
 }

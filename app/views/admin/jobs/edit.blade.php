@@ -164,15 +164,41 @@
 		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Trạng thái:</label>
 			<div class="col-sm-2">
-				{{ Form::select('status', [0=>'Không kích hoạt', 1=>'Đang hiển thị'], $job->status, array('class'=>'form-control') ) }}
+				{{ Form::select('status', [0=>'Không kích hoạt', 1=>'Duyệt'], $job->status, array('class'=>'form-control') ) }}
 			</div>
 		</div>
+
+
+		<div class="form-group">
+			<label for="input" class="col-sm-2 control-label">Người duyệt:</label>
+			<div class="col-sm-6">
+				@if($job->status==1)
+					{{ Form::text('duyet', AdminAuth::getUser()->username, array('class'=>'form-control', 'placeholder'=>'','disabled') ) }}
+				@else
+					{{ Form::text('duyet', null, array('class'=>'form-control', 'placeholder'=>'','disabled') ) }}
+				@endif
+			
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="input" class="col-sm-2 control-label">Người gửi mail:</label>
+			<div class="col-sm-6">
+				@if($job->user_approved==1)
+					{{ Form::text('sendemail', AdminAuth::getUser()->email, array('class'=>'form-control', 'placeholder'=>'','disabled') ) }}
+				@else
+					{{ Form::text('sendemail', null, array('class'=>'form-control', 'placeholder'=>'','disabled') ) }}
+				@endif
+			
+			</div>
+		</div>
+
 
 		<div class="form-group">
 			<div class="col-sm-10 col-sm-offset-2">
 				{{ Form::button('Lưu thay đổi', array('type'=>'submit', 'class'=>'btn btn-primary')) }}
 				<a href="#" class="btn btn-success" data-toggle="modal" data-target="#myModal">Gửi mail</a>
-				<a class="btn btn-info" href="#">Hồ sơ ứng tuyển</a>
+				<a class="btn btn-info" href="{{URL::route('admin.jobs.cvapp')}}?id={{$job->id}}">Hồ sơ ứng tuyển</a>
 				<a onclick="return confirm('Bạn có chắc muốn xóa ?');" href="{{URL::route('admin.jobs.delete',$job->id)}}" class="btn btn-danger">Xóa</a>
 			</div>
 		</div>
@@ -193,10 +219,20 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Gửi email phản hồi tin tuyển dụng</h4>
       </div>
+      {{ Form::open(array('method'=>'POST', 'action'=> array('admin.jobs.sendmail'), 'class'=>'form form-horizontal' ) ) }} 
       <div class="modal-body">
+      
+      	<div class="col-sm-12">
+	         
+				<label for="inputEmail" class="col-sm-3 control-label">To:</label>
+				<div class="col-sm-9">
+					{{ Form::input('email', 'email1', AdminAuth::getUser()->email, array('class'=>'form-control', 'required','readonly') ) }}
+				</div>
+			 
+		  </div>
 	      <div class="col-sm-12">
 	         
-				<label for="inputEmail" class="col-sm-3 control-label">Email:</label>
+				<label for="inputEmail" class="col-sm-3 control-label">From:</label>
 				<div class="col-sm-9">
 					{{ Form::input('email', 'email', $job->ntd->email, array('class'=>'form-control', 'required','readonly') ) }}
 				</div>
@@ -227,7 +263,7 @@
 			 
 				<label for="inputEmail" class="col-sm-3 control-label">Tiêu đề:</label>
 				<div class="col-sm-9">
-					{{ Form::input('text', 'title', null, array('class'=>'form-control', 'required','placeholder'=>"ví dụ :chào nhà tuyển dụng") ) }}
+					{{ Form::input('text', 'title', null, array('class'=>'form-control', 'required','placeholder'=>"Ví dụ :Tin tuyển dụng $job->vitri đã được duyệt ") ) }}
 				</div>
 			 
 		  </div>
@@ -236,7 +272,8 @@
 			 
 				<label for="inputEmail" class="col-sm-3 control-label">Nội dung:</label>
 				<div class="col-sm-9">
-					{{ Form::textarea('content', null,  ['size' => '50x9','placeholder'=>'ví dụ : Tin tuyển dụng của bạn đã được duyệt']) }}
+					{{ Form::textarea('content', 'Ví dụ : tin tuyển dụng của bạn đã được duyệt tại vnjobs.vn',  ['size' => '50x9','placeholder'=>'ví dụ : Tin tuyển dụng của bạn đã được duyệt']) }}
+
 				<script>
 				CKEDITOR.replace( 'content', {
                 
@@ -250,12 +287,15 @@
 
 
       </div>
+     
       <div class="modal-footer">
-      	<a class="btn btn-success" href="">Gửi</a>
+
+      	<button class="btn btn-success" type="submit">Gửi</button>
+      	
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
-
+ 	{{Form::close()}}
   </div>
 </div>
 

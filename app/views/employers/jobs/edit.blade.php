@@ -260,26 +260,70 @@
 
 										<div class="boxed">
 											<div class="heading-image">
-												<h2 class="text-blue">{{ HTML::image('assets/ntd/images/thong-tin-ung-tuyen.png') }} Cài đặt các dịch vụ</h2>
+												<h2 class="text-blue">{{ HTML::image('assets/ntd/images/thong-tin-ung-tuyen.png') }} Dịch vụ kèm theo</h2>
 											</div>
 
 											<div class="form-group">
-												<label for="input" class="col-sm-12 control-label">Lựa chọn các hiệu ứng cho tin đăng:</label>
+												<label for="input" class="col-sm-12 control-label">Các dịch vụ đi kèm với tin đăng:</label>
 												<div class="clearfix"></div>
-												@foreach($order as $value)
-												<div class="col-sm-2"></div>
-												<div class="col-sm-10">
-													<div class="checkbox">
-														{{ Form::checkbox('hieuung[]', $value['id'],in_array( $value['id'],$order_check ),['id'=>'hieuung'.$value['id'].'']) }}
-														<!-- <input type="checkbox" id="hieuung{{$value['id']}}" name="hieuung[]" value="{{$value['epackage_id']}}"> -->
-														<label for="hieuung{{$value['id']}}">
-															<span></span>
-															{{$value['epackage_name']}}
-														</label>
-													</div>
+												<table class="table table-blue-bordered table-bordered">
+													<thead>
+														<tr>
+															<th class="col-sm-1">Số đơn hàng</th>
+															<th class="col-sm-3">Gói dịch vụ</th>
+															<th class="col-sm-1">Số lượng</th>
+															<th class="col-sm-1">Còn lại</th>
+															<th class="col-sm-2">Ngày bắt đầu kích hoạt</th>
+															<th class="col-sm-2">Ngày kết thúc kích hoạt</th>
+															<th class="col-sm-2">Tình trạng</th>
+														</tr>
+													</thead>
+													<tbody>
+													@if(count($order))
+													 @foreach($order as $value)
+														 
+														<tr>
+															 
+																<td>
+																<a class="text-blue" href="{{ URL::route('employers.orders.detail', $value->id) }}">1234</a>
+															</td>
+															<td>{{ $value->epackage_name }}
+															<div class="collapse vncollapse" id="collapse{{ $value->id }}">
+																<ul>
+																	<li>Gói dịch vụ cho tin đăng</li>
+																</ul>  
+															</div>
+															<p><a class="text-blue" data-toggle="collapse" data-target="#collapse{{ $value->id }}" aria-expanded="false" aria-controls="collapse{{ $value->id }}"><i class="fa fa-plus-square-o"></i>&nbsp; Xem chi tiết</a></p>
+																
+															</td>
+															<td>{{ $value->total_date }} ngày</td>
+															<td>{{ round((strtotime(date('Y-m-d H:i:s',strtotime($value->ended_date)))-strtotime(date('Y-m-d H:i:s')))/(60*60*24)) }} ngày</td>
+															<td>{{ $value->created_date }}</td>
+															<td>{{ $value->ended_date }}</td>
+															<td>
+																@if($value->ended_date >= date('Y-m-d H:i:s') && $value->created_date <= date('Y-m-d H:i:s'))
+																<span class="label label-success">Đang kích hoạt</span>
+																@else 
+																<span class="label label-danger">Đã hết hạn</span>
+																@endif
+															</td>
+															 
+														</tr>
+													 
+													@endforeach
+													@else 
+														<tr>
+															<td colspan="7">Bạn không có đơn hàng nào.</td>
+														</tr>
+													@endif
 
-												</div>
-												@endforeach
+													</tbody>
+												</table>
+
+
+												 
+												 
+
 											</div>
 
 										</div>

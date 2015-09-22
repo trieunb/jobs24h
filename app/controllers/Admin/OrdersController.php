@@ -190,7 +190,7 @@ Class OrdersController extends \BaseController
 		 
 			 
 				 $epackage=EPackage::whereId($package_id)->first();
-				 $insert_order=OrderPostRec::whereJobId($job_id)->whereEpackageId($package_id)->first();
+				 $insert_order=OrderPostRec::whereJobId($job_id)->whereNtdId($ntd_id)->whereEpackageId($package_id)->first();
 
 				 if ($insert_order) {
 					$remain			=	$insert_order->remain_date;
@@ -210,10 +210,22 @@ Class OrdersController extends \BaseController
 
 				else 
 				{
-
-					$insert_order=OrderPostRec::create(
+						 
+					$insert = new OrderPostRec;
+					$insert->job_id=$job_id;
+					$insert->ntd_id=$ntd_id;
+					$insert->eservice_id=$epackage['service_id'];
+						$insert->epackage_id=$package_id;
+						$insert->epackage_name=$epackage['package_name'];
+						$insert->total_date=$epackage['total_date'];
+						$insert->remain_date=$epackage['total_date'];
+						$insert->created_date=date('Y-m-d H:i:s');
+						$insert->ended_date=date('Y-m-d H:i:s',strtotime ( ''.$epackage['total_date'].' day' , strtotime (date('Y-m-d H:i:s') ) )) ;
+					$insert->save();	
+					 	
+					/*$insert_order=OrderPostRec::create(
 					array(
-						'job_id'=>$job_id,
+						'job_id'=>(int)$job_id,
 						'ntd_id'=>$ntd_id,
 						'eservice_id'=>$epackage['service_id'],
 						'epackage_id'=>$package_id,
@@ -223,7 +235,7 @@ Class OrdersController extends \BaseController
 						'created_date'=>date('Y-m-d H:i:s'),
 						'ended_date'=>date('Y-m-d H:i:s',strtotime ( ''.$epackage['total_date'].' day' , strtotime (date('Y-m-d H:i:s') ) )) ,
 						)
-					);	
+					);*/	
 					 
 
 				}

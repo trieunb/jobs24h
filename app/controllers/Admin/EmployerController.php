@@ -390,6 +390,8 @@ class EmployerController extends \BaseController {
 	public function datatables_vip()
 	{
 
+ 
+		 
 		$page=0;
 		$employers = Order::join('employers','orders.ntd_id','=','employers.id')->join('companies','orders.ntd_id','=','companies.ntd_id')
 	   ->select(array('orders.id as ckid','employers.id as emid','companies.company_name as name',DB::raw('(select count(*) from order_post_rec where orders.ntd_id = order_post_rec.ntd_id and order_post_rec.epackage_id=1) as xacthuc'),'orders.package_name','orders.created_date as created_date','orders.ended_date as ended_date','orders.created_at as created_at','orders.updated_at as updated_at','orders.remain as remain','employers.id as ids'));

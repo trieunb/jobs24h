@@ -15,13 +15,18 @@ class OrderController extends \Controller {
 	{
 		if($type == 1)
 		{
-			$orders = Order::where('ntd_id', Auth::id())->where('ended_date', '>=', date('Y-m-d H:i:s'))->paginate(10);
+			$order = Order::where('ntd_id', Auth::id())->where('ended_date', '>=', date('Y-m-d H:i:s'))->first();
+			$verify = \OrderPostRec::where('ntd_id', Auth::id())->where('epackage_id',1)->where('ended_date', '>=', date('Y-m-d H:i:s'))->first();
+			//$orders_post_rec=\OrderPostRec::where('ntd_id', Auth::id())->where('ended_date', '>=', date('Y-m-d H:i:s'))->paginate(10);
+
 		} elseif($type == 2) {
-			$orders = Order::where('ntd_id', Auth::id())->where('ended_date', '<', date('Y-m-d H:i:s'))->paginate(10);
+			$order = Order::where('ntd_id', Auth::id())->where('ended_date', '<', date('Y-m-d H:i:s'))->first();
+			$verify = \OrderPostRec::where('ntd_id', Auth::id())->where('epackage_id',1)->where('ended_date', '<', date('Y-m-d H:i:s'))->first();
 		} else {
-			$orders = Order::where('ntd_id', Auth::id())->paginate(10);
+			$order = Order::where('ntd_id', Auth::id())->first();
+			$verify = \OrderPostRec::where('ntd_id', Auth::id())->where('epackage_id',1)->first();
 		}
-		return View::make('employers.orders.index', compact('orders'));
+		return View::make('employers.orders.index', compact('order','verify'));
 	}
 	public function getMuaDichVu()
 	{

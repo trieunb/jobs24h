@@ -38,6 +38,8 @@ Route::group(array('prefix'=>'admin'), function() {
 			'postEdit1'	=>		'admin.jobs.update1',
 			'getDelete'	=>		'admin.jobs.delete',
 			'getJobApp'	=>'admin.jobs.cvapp',
+			'getDeleteApp' =>'admin.jobs.deleteapp',
+			'postSendMail' =>'admin.jobs.sendmail',
 		));
 
 		Route::get('resumes/creates/{id}', array('as'=>'resumes.creates', 'uses'=>'ResumeController@creates'));

@@ -67,7 +67,7 @@
 	 				echo $_GET['page'];
 	 				else echo 0;
 	 				 ?>;
-		$('#jobs').dataTable( {
+	oTable =	$('#jobs').dataTable( {
 				"displayStart": page1,
 				"bProcessing": true,
 				"bServerSide": true,
@@ -80,22 +80,37 @@
 					  { "bSortable": false }
 					],
 					"aaSorting": [[ 1, "desc" ]],
-				columns: [
-	            {data: 'id', name: 'jobs.id'},
-	            {data: 'ntd_id', name: 'jobs.vitri'},
-	            {data: 'matin', name: 'jobs.vitri'},
-	            {data: 'vitri', name: 'jobs.updated_at'},
-	            {data: 'chucvu', name: 'jobs.hannop'},
-	            {data: 'namkinhnghiem', name: 'jobs.is_display'},
-	            {data: 'bangcap', name: 'jobs.orderpostrec'},
-	            {data: 'hinhthuc', name: 'jobs.hinhthuc'},
-	            {data: 'bangcap', name: 'jobs.gioitinh'},
-	            {data: 'dotuoi_min', name: 'jobs.dotuoi_min','searchable':false},
-        		]
+				 
 
 			});
 		 
+		 var input = $(".dataTables_filter input");
+		input.unbind('keyup search input').bind('keypress', function (e) {
+		    //if (e.which == 13) {
+		       var keywords = bodauTiengViet(input.val()), filter ='';
+		       	console.log(keywords);
+		       /*for (var i=0; i<keywords.length; i++) {
+		           filter = (filter!=='') ? filter+'|'+keywords[i] : keywords[i];
+		       } */           
+		       oTable.fnFilter(keywords, null, true, false, true, true);
+		    //}
+		});
 
+	 
+		 
+
+
+		function bodauTiengViet(str) {  
+			str= str.toLowerCase();  
+			str= str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a");  
+			str= str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e");  
+			str= str.replace(/ì|í|ị|ỉ|ĩ/g,"i");  
+			str= str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o");  
+			str= str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u");  
+			str= str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y");  
+			str= str.replace(/đ/g,"d");  
+			return str;  
+		}
 
 	$('.btn-duyet').click(function(event) {
 		var thisId = this.id;

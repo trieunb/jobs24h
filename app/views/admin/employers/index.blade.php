@@ -69,7 +69,7 @@
 	 				echo $_GET['is_active'];
 	 				else echo 0;
 	 				 ?>;*/
-		$('#employers').dataTable( {
+	   oTable =	$('#employers').dataTable( {
 				"displayStart": page1,
 				"bProcessing": true,
 				"bServerSide": true,
@@ -99,8 +99,6 @@
 					if(this.checked) $row.addClass(active_class);
 					else $row.removeClass(active_class);
 				});
-
-		
-	</script>
+		</script>
 	
 @stop

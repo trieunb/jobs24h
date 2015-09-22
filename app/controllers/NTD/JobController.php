@@ -212,7 +212,9 @@ class JobController extends \Controller {
 
 	public function getDangTuyenDung()
 	{
-		$order=\OrderPostRec::whereNtdId(Auth::id())->get();
+		$order=\OrderPostRec::whereNtdId(Auth::id())->where('epackage_id','<>',1)->get();
+		/*var_dump($order->toArray());
+		die();*/
 		return View::make('employers.jobs.add',compact('order'));
 	}
 	public function postDangTuyenDung()
@@ -315,21 +317,6 @@ class JobController extends \Controller {
 					$company->video_link = $video;
 					$company->company_images = json_encode($filenames);
 					$company->save();
-
-					
-					if(Input::get('hieuung')){
-						foreach (Input::get('hieuung') as $key => $value) {
-						\JobHieuung::create(
-								array(
-									'job_id'=>$job->id,
-									'order_post_rec_id'=>$value,
-									));
-							  
-						}
-						 
-					}
-
-
 					return Redirect::route('employers.jobs.index')->with('success', 'Đăng tin thành công !');
 				} else {
 					return Redirect::back()->withInput()->withErrors('Lỗi');
@@ -344,8 +331,8 @@ class JobController extends \Controller {
 	{
 		$job = Job::where('id', $id)->where('ntd_id', Auth::id())->first();
 
-
-		$order=\OrderPostRec::whereNtdId(Auth::id())->get();
+		$order=\OrderPostRec::whereNtdId(Auth::id())->whereJobId($id)->where('epackage_id','<>',1)->get();
+		//$order=\OrderPostRec::whereNtdId(Auth::id())->get();
 
 		$order_check=\JobHieuung::whereJobId($id)->lists('order_post_rec_id');
 		 

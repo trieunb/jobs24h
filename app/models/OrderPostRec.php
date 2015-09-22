@@ -7,5 +7,6 @@ class OrderPostRec extends \Eloquent {
 	public function job()
 	{
 		return $this->beLongTo('Job','job_id');
-	}
+	} 
+
 }
