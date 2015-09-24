@@ -12,7 +12,7 @@
 				$provinces = WorkLocation::whereIn('rs_id', $resume)->where('province_id', '>', 0)->lists('province_id');
 	
 		
-				$jobs = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->where('status',1)->with('province')->with('category');
+				$jobs = Job::where('is_display', 1)/*->where('hannop', '>=', date('Y-m-d', time()))*/->where('status',1)->with('province')->with('category');
 				
 				if(count($provinces))
 				{
@@ -48,13 +48,13 @@
 						$applied_id = array($value->job_id);
 					}
 					$count_saved_job1 = MyJob::whereNotIn('job_id', $applied_id)->where('ntv_id',$GLOBALS['user']->id)->lists('job_id');
-					$count_saved_job = Job::whereIn('id', $count_saved_job1)->where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->where('status',1)->count();
+					$count_saved_job = Job::whereIn('id', $count_saved_job1)->where('is_display', 1)/*->where('hannop', '>=', date('Y-m-d', time()))*/->where('status',1)->count();
 				}else{
 					$count_saved_job = 0;
 				}
 
 				$count_applied_job1 = Application::where('ntv_id',$GLOBALS['user']->id)->lists('job_id');
-				$count_applied_job = Job::whereIn('id', $count_applied_job1)->where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->where('status',1)->count();
+				$count_applied_job = Job::whereIn('id', $count_applied_job1)->where('is_display', 1)/*->where('hannop', '>=', date('Y-m-d', time()))*/->where('status',1)->count();
 				
 
 				$count_my_resume = Resume::where('ntv_id', $GLOBALS['user']->id)->count();

@@ -2,9 +2,8 @@
 @section('title')Edit Jobseeker: {{ $js->username }} @stop
 @section('page-header')Chỉnh sửa người tìm việc @stop
 @section('content')
-	{{ Form::open( array('route'=>array('admin.jobseekers.update', $js->id), 'class'=>'form-horizontal', 'method'=>'PUT') ) }}
+	{{ Form::open( array('route'=>array('admin.jobseekers.post-edit', $js->id), 'class'=>'form-horizontal', 'method'=>'POST') ) }}
 		@include('includes.notifications')
-		
 		<div class="form-group">
 			<label for="inputEmail" class="col-sm-2 control-label">Email:</label>
 			<div class="col-sm-6">
@@ -36,6 +35,12 @@
 			</div>
 		</div>
 		<div class="form-group">
+			<label for="input" class="col-sm-2 control-label">Điện thoại:</label>
+			<div class="col-sm-2">
+				{{ Form::input('text', 'phone_number', $js->phone_number, array('class'=>'form-control') ) }}
+			</div>
+		</div>
+		<div class="form-group">
 			<label for="input" class="col-sm-2 control-label">Giới tính:</label>
 			<div class="col-sm-2">
 				{{ Form::select('gender', array(1=>'Nam', 2=>'Nữ', 3=>'Không tiết lộ'), $js->gender, array('class'=>'form-control') ) }}
@@ -51,6 +56,12 @@
 			<label for="input" class="col-sm-2 control-label">Địa chỉ:</label>
 			<div class="col-sm-6">
 				{{ Form::input('text', 'address', $js->address, array('class'=>'form-control') ) }}
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="input" class="col-sm-2 control-label">Quốc tịch:</label>
+			<div class="col-sm-2">
+				{{ Form::select('country_id', $countries, $js->country_id, array('class'=>'form-control')) }}
 			</div>
 		</div>
 		<div class="form-group">
@@ -88,8 +99,7 @@
 			<div class="col-sm-10">
 				@foreach($cvlist as $cv)
 					<i class="glyphicon glyphicon-hand-right"></i> {{ $cv->ntv_tieudeCV }} 
-					(<a href="{{ URL::route('admin.resumes.edit', $cv->id) }}">Sửa</a> | 
-					<a href="{{ URL::route('admin.resumes.show', $cv->id) }}" target="_blank">In</a>)
+					<a href="{{ URL::route('admin.resumes.edit1', $cv->id) }}">{{ $cv->tieude_cv }} </a>
 					<br>
 				@endforeach
 			</div>

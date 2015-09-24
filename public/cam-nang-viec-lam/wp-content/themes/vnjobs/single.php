@@ -9,9 +9,11 @@
 
 get_header(); ?>
 	<div class="row main-content">
+
 					<div class="primary">
 						<h3 class="detail-title"><a href="<?php echo get_permalink(); ?>"><?php the_title(); ?></a></h3>
 						<?php 
+										setPostViews(get_the_ID());
 					    				$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'large' );
 										$url = $thumb['0'];
 										if($url != null){
@@ -147,9 +149,33 @@ get_header(); ?>
 						<div class="new-posts">
 							<h4 class="new-title">TIN XEM NHIỀU NHẤT</h4>
 							<div class="sidebar-newposts">
-								 <?php echo popularPosts(10); ?>
+								 <?php
+									query_posts('meta_key=post_views_count&orderby=meta_value_num&order=DESC&posts_per_page=5');
+									if (have_posts()) : while (have_posts()) : the_post(); ?>
+									<div class="sidebar-post">
+										<div class="thumbs-left">
+										<?php 
+						    				$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'large' );
+											$url = $thumb['0'];
+											if($url != null){
+													echo '<img src="'.$url.'">';
+												}else{
+													echo '<img src="'.get_bloginfo("template_directory").'/assets/images/nha-tuyen-dung.jpg" class="thumbnail">';
+												}
+										?>
+										</div>
+										<div class="desc-right">
+											<h4 class="sidebar-posttitle">
+										    	<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a>
+										    </h4>
+										    <div class="sidebar-postcontent"><span><?php echo mb_substr(get_the_excerpt(), 0,50)."..."; ?></span></div>
+									    </div>
+								    </div>
+									<?php
+									endwhile; endif;
+									wp_reset_query();
+								?>
 							</div><!-- end new-posts -->
-						</div> 
 
 					</div>
 					<div class="clearfix"></div>

@@ -1,26 +1,12 @@
 @extends('layouts.admin')
-@section('title')Jobseeker Manager @stop
+@section('title')Resumes Manager @stop
+@section('page-header')Danh sách hồ sơ @stop
 @section('content')
 	@include('includes.notifications')
-	<div class="row">
-		<div class="col-sm-3">
-		<table class="table table-bordered">
-			<tbody>
-				<tr>
-					<td class="col-sm-9">Tổng số NTV đã đăng kí</td>
-					<td  style="text-align:right"><strong>{{$totalNTV}}</strong></td>
-				</tr>
-				<tr>
-					<td class="col-sm-9">Tổng số NTV chưa kích hoạt</td>
-					<td  style="text-align:right"><strong>{{$ntvUnactive}}</strong></td>
-				</tr>
-			</tbody>
-		</table>
-		</div>
-
-	</div>
+	
 	<div class="clearfix"></div>
-	<table class="table table-hover table-bordered table-striped" id="jobseekers">
+	
+	<table class="table table-hover table-bordered table-striped" id="resumes">
 		<thead>
 			<tr>
 				<th class="center">
@@ -30,15 +16,13 @@
 					</label>
 				</th>
 				<th>ID</th>
+				<th class="col-sm-3">Tiêu đề</th>
 				<th>Họ tên</th>
-				<th>Email</th>
-				<th>SĐT</th>
-				<th>Ngày đăng ký</th>
-				<th>Hồ sơ</th>
-				<th>Ứng tuyển</th>
-				<th>Đính kèm</th>
-				<th>Tư cách</th>
+				<th>Ngày tạo</th>
+				<th>CSKH</th>
 				<th>Trạng thái</th>
+				<th>Hồ sơ chính</th>
+				<th>Hồ sơ phụ</th>
 				<th>#</th>
 			</tr>
 		</thead>
@@ -56,21 +40,21 @@
 	{{ HTML::script('assets/js/jquery.dataTables.min.js') }}
 	{{ HTML::script('assets/js/jquery.dataTables.bootstrap.min.js') }}
 	<script type="text/javascript">
-		$('#jobseekers').dataTable( {
+		$('#resumes').dataTable( {
 				"bProcessing": true,
 				"bServerSide": true,
-				"sAjaxSource": "{{ URL::route('jobseekers.datatables') }}",
+				"sAjaxSource": "{{ URL::route('resumes.datatables-list-cv-by-ntv', array($id)) }}",
 				bAutoWidth: false,
 					"aoColumns": [
 					  { "bSortable": false, "sClass": "center" },
-					  null, null,null, null, null,null, null, null,null,null,
+					  null, null,null, null, null,null, null,null,
 					  { "bSortable": false }
 					],
 					"aaSorting": [[ 1, "desc" ]],
 			});
 
 		var active_class = 'success';
-		$('#jobseekers > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
+		$('#resumes > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
 					var th_checked = this.checked;//checkbox inside "TH" table header
 					
 					$(this).closest('table').find('tbody > tr').each(function(){
@@ -80,7 +64,7 @@
 					});
 				});
 
-		$('#jobseekers').on('click', 'td input[type=checkbox]' , function(){
+		$('#resumes').on('click', 'td input[type=checkbox]' , function(){
 					var $row = $(this).closest('tr');
 					if(this.checked) $row.addClass(active_class);
 					else $row.removeClass(active_class);
@@ -88,4 +72,5 @@
 
 		
 	</script>
+
 @stop

@@ -123,9 +123,9 @@
 								@if($job->gioitinh == 0)
 									Không yêu cầu
 								@elseif($job->gioitinh == 1)
-									Nữ
-								@else
 									Nam
+								@else
+									Nữ
 								@endif
 								</td>
 							</tr>

@@ -64,10 +64,10 @@ return array(
 		),*/
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'localhost',
+			'host'      => 'vnjobs.vn',
 			'database'  => 'vnjobs',
 			'username'  => 'root',
-			'password'  => '',
+			'password'  => 'mp@123',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
