@@ -7,6 +7,32 @@
 @stop
 @section('content')
 
+{{ HTML::style('training/assets/css/jquery.onp.sociallocker.1.7.6.min.css') }}
+{{ HTML::script('training/assets/js/jquery.ui.highlight.min.js') }}
+{{ HTML::script('training/assets/js/jquery.onp.sociallocker.1.7.6.min.js') }}
+
+  <script>
+    jQuery(document).ready(function ($) {
+        $("#default-usage .to-lock").sociallocker({
+            demo: false,
+      url: "https://www.facebook.com/vnjobs.vn",
+            text: {
+                header: "Bạn muốn download tài liệu này",
+                message: "Vui lòng like để được tải về."
+            },
+            theme: "secrets",
+            buttons: {
+                order: [
+                    "facebook-like"
+                ]},
+            facebook: {
+                appId: "1536226246625315"
+            }        
+        });
+
+    });
+  </script>
+ 
 <div class="container">
         <div class="col-md-8">
                     @include('includes.trainings.submenu')
@@ -22,9 +48,17 @@
               	{{HTML::image(URL::to('uploads/training/'.$doc['thumbnail'].''),$doc['title'])}}
               </div>
               <div class="col-md-8"><p align="justify">{{$doc['content']}}</p>
-              <a href="{{URL::route('trainings.dowloaddoc',array($doc['id']))}}" style="color:white">
-              	<button class="btn dowload"><i class="glyphicon glyphicon-save"></i> Download</button>
-              </a>
+               
+
+              <article id="default-usage">
+                  <div class="to-lock" style="display: none;">
+                       <a  href="{{URL::route('trainings.dowloaddoc',array($doc['id']))}}" style="color:white">
+                       <button class="btn dowload"> <i class="glyphicon glyphicon-save"></i> Download </button>
+                        </a>
+                  </div>
+              </article>
+
+              
               </div>
           
           </div>
@@ -58,4 +92,8 @@
       @include('includes.trainings.main-khoahoc')
 
       <div class="clearfix"></div>
+  
+
+  
+
 @stop

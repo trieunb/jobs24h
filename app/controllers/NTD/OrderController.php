@@ -15,15 +15,16 @@ class OrderController extends \Controller {
 	{
 		if($type == 1)
 		{
-			$order = Order::where('ntd_id', Auth::id())->where('ended_date', '>=', date('Y-m-d H:i:s'))->first();
-			$verify = \OrderPostRec::where('ntd_id', Auth::id())->where('epackage_id',1)->where('ended_date', '>=', date('Y-m-d H:i:s'))->first();
+			$order = Order::where('ntd_id', Auth::id())->where('ended_date', '>=', date('Y-m-d H:i:s'))->with('ordersdetail')->first();
+			  
+			$verify = \OrderPostRec::where('ntd_id', Auth::id())->where('epackage_id',1)->where('ended_date', '>=', date('Y-m-d H:i:s'))->with('ordersdetail')->first();
 			//$orders_post_rec=\OrderPostRec::where('ntd_id', Auth::id())->where('ended_date', '>=', date('Y-m-d H:i:s'))->paginate(10);
 
 		} elseif($type == 2) {
-			$order = Order::where('ntd_id', Auth::id())->where('ended_date', '<', date('Y-m-d H:i:s'))->first();
+			$order = Order::where('ntd_id', Auth::id())->where('ended_date', '<', date('Y-m-d H:i:s'))->with('ordersdetail')->first();
 			$verify = \OrderPostRec::where('ntd_id', Auth::id())->where('epackage_id',1)->where('ended_date', '<', date('Y-m-d H:i:s'))->first();
 		} else {
-			$order = Order::where('ntd_id', Auth::id())->first();
+			$order = Order::where('ntd_id', Auth::id())->with('ordersdetail')->first();
 			$verify = \OrderPostRec::where('ntd_id', Auth::id())->where('epackage_id',1)->first();
 		}
 		return View::make('employers.orders.index', compact('order','verify'));
@@ -49,8 +50,16 @@ class OrderController extends \Controller {
 		$contacts = EContact::create($contacts);
 		return Redirect::back()->with('success', 'Gửi liên hệ thành công. Chúng tôi sẽ liên lạc lại với bạn.');
 	}
-	public function getDetail($id)
+	public function getDetail()
 	{
+		$order_detail=\OrderDetail::whereNtdId(Auth::id())->with(array('orderpostrec'=>function($q)
+			{
+				$q->with('job_has')->select('vitri');
+			}))->paginate(10);
+		var_dump($order_detail->toArray());
+		die();
 
+		return View::make('employers.orders.order_detail',compact('order_detail'));
+		
 	}
 }

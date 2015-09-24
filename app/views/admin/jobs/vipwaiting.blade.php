@@ -5,7 +5,26 @@
 	@include('includes.notifications')
 	<div class="clearfix"></div>
 	
-	
+	<div class="col-sm-12 infobox-container">
+		<div class="infobox infobox-green">
+			<!-- <div class="infobox-icon">
+				
+				<i class="ace-icon fa fa-bank"></i>
+			</div> -->
+
+			<div class="infobox-data">
+				 <a href="{{URL::route('admin.jobs.waiting')}}">
+				 <div class="infobox-content">Tổng số tin Vip</div>
+				 <span class="infobox-data-number">{{ $jobs_count }}</span>
+					
+					
+				 </a>
+			</div>
+
+			<!-- <div class="stat stat-success">8%</div> -->
+		</div>
+	</div>
+ 
 	<!-- <form action="{{ URL::route('admin.jobs.vipwaiting') }}" method="GET" class="form" role="form" id="search">
 	<div class="col-sm-12">
 			<div class="col-sm-8">
@@ -86,14 +105,12 @@
 		 
 		 var input = $(".dataTables_filter input");
 		input.unbind('keyup search input').bind('keypress', function (e) {
-		    //if (e.which == 13) {
+		    if (e.which == 13) {
 		       var keywords = bodauTiengViet(input.val()), filter ='';
-		       	console.log(keywords);
-		       /*for (var i=0; i<keywords.length; i++) {
-		           filter = (filter!=='') ? filter+'|'+keywords[i] : keywords[i];
-		       } */           
+		       //	console.log(keywords);
+		                
 		       oTable.fnFilter(keywords, null, true, false, true, true);
-		    //}
+		    }
 		});
 
 	 

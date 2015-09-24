@@ -334,7 +334,7 @@ class JobController extends \Controller {
 		$order=\OrderPostRec::whereNtdId(Auth::id())->whereJobId($id)->where('epackage_id','<>',1)->get();
 		//$order=\OrderPostRec::whereNtdId(Auth::id())->get();
 
-		$order_check=\JobHieuung::whereJobId($id)->lists('order_post_rec_id');
+	//	$order_check=\JobHieuung::whereJobId($id)->lists('order_post_rec_id');
 		 
 
 		if( ! $job)

@@ -78,5 +78,7 @@ class Job extends \Eloquent {
 	{
 		return $this->hasMany('OrderPostRec','job_id');
 	}
+
+	 
 	
 }

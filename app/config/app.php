@@ -129,6 +129,8 @@ return array(
 		'Mews\Captcha\CaptchaServiceProvider',
 		'Maatwebsite\Excel\ExcelServiceProvider',
 		'Artdarek\OAuth\OAuthServiceProvider',
+		'Thomaswelton\LaravelFacebook\LaravelFacebookServiceProvider',
+		
 		//'Cartalyst\SentrySocial\SentrySocialServiceProvider',
 		//'Intervention\Image\ImageServiceProvider',
 	),
@@ -209,7 +211,8 @@ return array(
 		'Excel' => 'Maatwebsite\Excel\Facades\Excel',
 		'OAuth' => 'Artdarek\OAuth\Facade\OAuth',
 		//'SentrySocial' => 'Cartalyst\SentrySocial\Facades\Laravel\SentrySocial',
-		'Image' => 'Intervention\Image\Facades\Image'
+		'Image' => 'Intervention\Image\Facades\Image',
+		'Facebook' => 'Thomaswelton\LaravelFacebook\Facades\Facebook'
 	),
 
 	/**

@@ -32,7 +32,7 @@
 						 
 							<tr>
 								<td>
-									<a class="text-blue" href="{{ URL::route('employers.orders.detail', $order->id) }}">{{ $order->order_number }}</a>
+									<a class="text-blue" href="{{ URL::route('employers.orders.detail', $order->ordersdetail->first()->id) }}">{{ $order->ordersdetail->first()->madonhang }}</a>
 								</td>
 								<td>{{ $order->package_name }}
 								<div class="collapse vncollapse" id="collapse{{ $order->id }}">
@@ -58,7 +58,7 @@
 							<tr>
 								@if(count($verify))
 									<td>
-									<a class="text-blue" href="{{ URL::route('employers.orders.detail', $verify->id) }}">1234</a>
+									<a class="text-blue" href="{{ URL::route('employers.orders.detail') }}">{{$verify->ordersdetail->first()->madonhang}}</a>
 								</td>
 								<td>{{ $verify->epackage_name }}
 								<div class="collapse vncollapse" id="collapse{{ $verify->id }}">

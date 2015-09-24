@@ -7,6 +7,18 @@ class OrderPostRec extends \Eloquent {
 	public function job()
 	{
 		return $this->beLongTo('Job','job_id');
-	} 
+	}
+	
+	public function job_has()
+	{
+		return $this->hasOne('Job','id');
+	}
+
+	public function ordersdetail()
+	{
+		return $this->hasMany('OrderDetail', 'order_post_rec_id');
+	}
+	 
+
 
 }

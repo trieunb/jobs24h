@@ -94,6 +94,17 @@ Class OrdersController extends \BaseController
 
 				}
 
+
+				// chèn đơn hàng chi tiết
+				$order_detail = new OrderDetail;
+				$order_detail->ntd_id=$ntd_id;
+				$order_detail->madonhang=strtotime(date('Y-m-d H:i:s'));
+				$order_detail->order_id=0;
+				$order_detail->name_package=$epackage->package_name;
+				$order_detail->order_post_rec_id=$insert_order->id;
+				$order_detail->price=$epackage->price;
+				$order_detail->save();
+
 			}
 			return Redirect::back()->with('success','Đã lưu thành công');
 		}
@@ -128,7 +139,14 @@ Class OrdersController extends \BaseController
 						$insert_order->ended_date	=	date('Y-m-d H:i:s',strtotime ( ''.$package['total_date'].' day' , strtotime ($insert_order['ended_date'] ) )) ;
 
 					$insert_order->save();
-
+					$order_detail = new OrderDetail;
+					$order_detail->ntd_id=$ntd_id;
+					$order_detail->madonhang=strtotime(date('Y-m-d H:i:s'));
+					$order_detail->order_id=$insert_order->id;
+					$order_detail->order_post_rec_id=0;
+					$order_detail->name_package=$package->package_name;
+					$order_detail->price=$package->price;
+					$order_detail->save();
 					return Response::json(['has'=>true]); 
 				}
 
@@ -148,7 +166,16 @@ Class OrdersController extends \BaseController
 							
 
 						)
-					);	
+					);
+					$insert_order->save();
+					$order_detail = new OrderDetail;
+					$order_detail->ntd_id=$ntd_id;
+					$order_detail->madonhang=strtotime(date('Y-m-d H:i:s'));
+					$order_detail->order_id=$insert_order->id;
+					$order_detail->order_post_rec_id=0;
+					$order_detail->price=$package->price;
+					$order_detail->name_package=$package->package_name;
+					$order_detail->save();
 					return Response::json(['has'=>true]);
 
 				}
@@ -211,17 +238,17 @@ Class OrdersController extends \BaseController
 				else 
 				{
 						 
-					$insert = new OrderPostRec;
-					$insert->job_id=$job_id;
-					$insert->ntd_id=$ntd_id;
-					$insert->eservice_id=$epackage['service_id'];
-						$insert->epackage_id=$package_id;
-						$insert->epackage_name=$epackage['package_name'];
-						$insert->total_date=$epackage['total_date'];
-						$insert->remain_date=$epackage['total_date'];
-						$insert->created_date=date('Y-m-d H:i:s');
-						$insert->ended_date=date('Y-m-d H:i:s',strtotime ( ''.$epackage['total_date'].' day' , strtotime (date('Y-m-d H:i:s') ) )) ;
-					$insert->save();	
+					$insert_order = new OrderPostRec;
+					$insert_order->job_id=$job_id;
+					$insert_order->ntd_id=$ntd_id;
+					$insert_order->eservice_id=$epackage['service_id'];
+						$insert_order->epackage_id=$package_id;
+						$insert_order->epackage_name=$epackage['package_name'];
+						$insert_order->total_date=$epackage['total_date'];
+						$insert_order->remain_date=$epackage['total_date'];
+						$insert_order->created_date=date('Y-m-d H:i:s');
+						$insert_order->ended_date=date('Y-m-d H:i:s',strtotime ( ''.$epackage['total_date'].' day' , strtotime (date('Y-m-d H:i:s') ) )) ;
+					$insert_order->save();	
 					 	
 					/*$insert_order=OrderPostRec::create(
 					array(
@@ -239,6 +266,14 @@ Class OrdersController extends \BaseController
 					 
 
 				}
+				$order_detail = new OrderDetail;
+				$order_detail->ntd_id=$ntd_id;
+				$order_detail->madonhang=strtotime(date('Y-m-d H:i:s'));
+				$order_detail->order_id=0;
+				$order_detail->order_post_rec_id=$insert_order->id;
+				$order_detail->price=$epackage->price;
+				$order_detail->name_package=$epackage->package_name;
+				$order_detail->save();
 
 			 
 			return Redirect::back()->with('success','Đã lưu thành công');

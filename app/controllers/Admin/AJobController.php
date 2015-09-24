@@ -52,7 +52,8 @@ class AJobController extends \BaseController {
 		return Datatables::of($jobs)	
 		->edit_column('ckid','{{$ckid}}')
 		->remove_column('id')
-		->edit_column('vitri', '{{ HTML::link(URL::route("jobseekers.job", [$slug, $id]), $vitri, ["target"=>"_blank","title"=>"Xem tin tuyển dụng này trên trang chủ"]) }}')
+		->edit_column('vitri','<a id="edit" class="" href="{{URL::route("admin.jobs.edit1", array('.$page.',$id) )}}" title="Edit">{{$vitri}}</a> ')
+		//->edit_column('vitri', '{{ HTML::link(URL::route("jobseekers.job", [$slug, $id]), $vitri, ["target"=>"_blank","title"=>"Xem tin tuyển dụng này trên trang chủ"]) }}')
 		->edit_column('company_name','<a id="edit" class="" href="{{URL::route("admin.employers.edit1", array('.$page.',$id) )}}" title="Chỉnh sửa nhà tuyển dụng">{{$company_name}}</a>')
 		->edit_column('ntd_id', '{{date("d-m-y",strtotime($ntd["updated_at"]))}}') // cập nhật
 		->edit_column('hannop','@if((strtotime(date("d-m-Y",strtotime($hannop)))-strtotime(date("d-m-Y")))/(60*60*24) < 0)
@@ -71,7 +72,8 @@ class AJobController extends \BaseController {
 		->edit_column('appcount','<a target="_blank" href="{{URL::to(\'/admin/jobs/job-app\')}}?id={{$id}}">{{$appcount}}</a>')
 		->edit_column('ids','
 			{{ Form::open(array("method"=>"delete", "route"=>array("admin.jobs.destroy", $id) )) }}
-			<a id="edit" class="btn btn-xs btn-info" href="{{URL::route("admin.jobs.edit1", array('.$page.',$id) )}}" title="Edit"><i class="ace-icon fa fa-pencil bigger-120"></i></a> 
+			<a class="btn btn-xs btn-success" title="Xem tin tuyển dụng này trên trang chủ" target="_blank" class"btn btn-xs btn-success" href="{{URL::route("jobseekers.job", [$slug, $id])}}"><i class="ace-icon fa fa-eye-slash bigger-100"></i></a>
+			
 			<button class="btn btn-xs btn-danger" onclick="return confirm(\'Are you sure you want to delete ?\');" type="submit" title="Delete"><i class="ace-icon fa fa-trash-o bigger-120"></i></button>
 			{{ Form::close() }}
 			')
@@ -381,7 +383,10 @@ class AJobController extends \BaseController {
 
 	public function getVipWaiting()
 	{
-		 
+		 $jobs_count=Job::whereExists(function ($query) {
+							$query->from('order_post_rec')
+	                      		  ->whereRaw('order_post_rec.job_id = jobs.id');
+            		  })->count();
 		/*$jobs1 = Job::whereExists(function ($query) {
 							$query->select('ended_date')
 	                      ->from('order_post_rec')
@@ -422,7 +427,7 @@ class AJobController extends \BaseController {
 		 
 		$pagination = $jobs->appends(array('q' => $query ))->links(); */
 		//return View::make('admin.jobs.vipwaiting', compact('jobs','pagination'));
-		return View::make('admin.jobs.vipwaiting');
+		return View::make('admin.jobs.vipwaiting',compact('jobs_count'));
 	}
 
 

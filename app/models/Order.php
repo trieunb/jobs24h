@@ -9,4 +9,9 @@ class Order extends \Eloquent {
 	{
 		return $this->belongsTo('NTD', 'ntd_id');
 	}
+	public function ordersdetail()
+	{
+		return $this->hasMany('OrderDetail', 'order_id');
+	}
+
 }
