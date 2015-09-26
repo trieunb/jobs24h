@@ -3,8 +3,9 @@
 @section('page-header')Sửa thông tin nhà tuyển dụng @stop
 @section('content')
 
-	
-		{{ Form::open(['method'=>'POST', 'class'=>'form-horizontal', 'files'=>true]) }}
+		{{ Form::open(array('url'=>URL::route('admin.employers.update',$com->id).'?page='.Input::get('page').'&web='.Input::get('web').'' ,'class'=>'form form-horizontal', 'method'=>'PUT' ) ) }}
+
+		<!-- {{ Form::open(['method'=>'POST', 'class'=>'form-horizontal', 'files'=>true]) }} -->
 			@include('includes.notifications')
 
 

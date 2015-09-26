@@ -33,34 +33,47 @@
 						</tr>
 					</thead>
 					<tbody>
-							@if($ntd->order->first()!=null)
+						@if($ntd->order->count()>0)
 							<tr>
 							<td>
-								{{ Form::select('search_service',$package_view_cv->packages->lists('package_name','id'), $ntd->order->first()->package_id, array('id' => 'seCompanyID')) }}
+								{{ Form::select('search_service',$package_view_cv, $ntd->order->first()->package_id, array('id' => 'seCompanyID')) }}
 							</td>
-							<td>
-								@if($ntd->order->first()->remain>0)
-									{{$ntd->order->first()->remain}} hồ sơ
-								@else
-									Hết lượt xem hồ sơ
-								@endif
-							</td>
-							<td>
-								Ngày {{date("d-m-Y H:i:s", strtotime($ntd->order->first()->created_date))}}
-							</td>
-							<td>
-								Ngày {{date("d-m-Y H:i:s", strtotime($ntd->order->first()->ended_date))}}
+							@if($ntd->order->first()->package_id!=0)
+								<td>
+
+									@if($ntd->order->first()->remain>0)
+										{{$ntd->order->first()->remain}} hồ sơ
+									@else
+										Hết lượt xem hồ sơ
+									@endif
+								</td>
+								<td>
+									Ngày {{date("d-m-Y H:i:s", strtotime($ntd->order->first()->created_date))}}
+								</td>
+								<td>
+									Ngày {{date("d-m-Y H:i:s", strtotime($ntd->order->first()->ended_date))}}
+									 
+								</td>
+								<td>
+									<button class="btn btn-xs btn-primary" id="save_search"><i class="fa fa-pencil"></i> Cập nhật</button>
+									<a class="btn btn-xs btn-danger" onclick="return confirm('Bạn có chắc muốn xóa')" title="Xóa dịch vụ" href="{{URL::route('admin.order.delete',array('cancel-search',$ntd->order->first()->id))}}" id=""><i class="fa fa-trash"></i></a>
+								</td>
+							
+							@else
 								 
-							</td>
-							<td>
-								<button class="btn btn-xs btn-primary" id="save_search"><i class="fa fa-pencil"></i> Cập nhật</button>
-								<a class="btn btn-xs btn-danger" onclick="return confirm('Bạn có chắc muốn xóa')" title="Xóa dịch vụ" href="{{URL::route('admin.order.delete',array('cancel-search',$ntd->order->first()->id))}}" id=""><i class="fa fa-trash"></i></a>
-							</td>
+								<td>Chưa kích hoạt</td>
+								<td>Chưa kích hoạt</td>
+								<td>Chưa kích hoạt</td>
+								<td>
+									<button class="btn btn-xs btn-primary" id="save_search"><i class="fa fa-save"></i> Cập nhật</button>
+
+								</td>
+							@endif
 							</tr>
 						@else
 						<tr>
 							<td>
-								{{ Form::select('search_service',$package_view_cv->packages->lists('package_name','id'), array('id' => 'seCompanyID')) }}
+								{{ Form::select('search_service',$package_view_cv, array('id' => 'seCompanyID')) }}
 							</td>
 							<td>Chưa kích hoạt</td>
 							<td>Chưa kích hoạt</td>
@@ -76,75 +89,59 @@
 			</div>
 
 
-
-{{ Form::open(array('method'=>'POST', 'class'=>'form form-horizontal' ) ) }}
-		 
-		 
 		<div class="clearfix"></div>
 		<div class="col-md-12">
-			<h3>2. Xác thực nhà tuyển dụng <i class="fa fa-thumbs-o-up"></i></h3>
+		<h3>2. Xác thực nhà tuyển dụng <i class="fa fa-thumbs-o-up"></i></h3>
+
 		<table class="table table-hover table-bordered table-striped dataTable" id="table">
 			<thead>
 				<tr>
-					<th class="center">
-						<!-- <label class="pos-rel">
-							<input type="checkbox" class="ace" />
-							<span class="lbl"></span>
-						</label> -->
-					</th>
+					 
 					
-					<th>Loại dịch vụ</th>
-					<th>Số ngày còn lại</th>
+					<th>Tên gói</th>
 					<th>Ngày tạo</th>
-					<th>Ngày hết hạn</th> 
-					<th>Thuộc dịch vụ</th>
-					<th>#</th>
+					<th>Ngày hết hạn</th>
+					<th>Hành động</th>
 				</tr>
 			</thead>
 			<tbody>
-					
-					 
-						<tr>
-							<td style="text-align:center">
-								<label class="pos-rel">
-								{{ Form::checkbox('ck[]', $epackage['id'],in_array( $epackage['id'],$ntd->orderpostrec->lists('epackage_id')),array('class'=>'ace') ) }}
-									
-									<span class="lbl"></span>
-								</label>
-							</td>
-							
-							<td>{{$epackage['package_name']}}</td>
+			    <tr>
+					<td>{{ Form::select('xacthuc_service',$package_xacthuc, array('id' => 'seCompanyID')) }}</td>
 
-							<?php $remain='<span style="color:#C6C6C6">Chưa kích hoạt</span>'; 
-								  $created_date='<span style="color:#C6C6C6">Chưa kích hoạt</span>';
-								  $ended_date ='<span style="color:#C6C6C6">Chưa kích hoạt</span>';
-							?>
-							@foreach($ntd->orderpostrec as $value1)
-
-								@if($value1['epackage_id']==$epackage['id'])
-									
-										@if($value1['remain_date']>0)
-										<?php $remain=$value1['remain_date'].' Ngày'; ?>
-										 
-										@else
-											<?php $remain = 'Hết hạn';?>
-										@endif
-										<?php $created_date=date("d-m-Y H:i:s", strtotime($value1['created_date'])) ?>
-										
-										<?php $ended_date=date("d-m-Y H:i:s", strtotime($value1['ended_date'])) ?> 
-								
-								@endif
-							@endforeach
-								<td>{{$remain}}</td>
+					<?php 
+						  $created_date='<span style="color:#C6C6C6">Chưa kích hoạt</span>';
+						  $ended_date ='<span style="color:#C6C6C6">Chưa kích hoạt</span>';
+					?>
+						@if($ntd->order->count()>0)
+							@if($ntd->order->first()->is_xacthuc!=0)
+								<td>
+									Ngày {{date("d-m-Y H:i:s", strtotime($ntd->order->first()->start_date_xacthuc))}}
+								</td>
+								<td>
+									Ngày {{date("d-m-Y H:i:s", strtotime($ntd->order->first()->end_date_xacthuc))}}
+									 
+								</td>
+							@else
+								 
 								<td>{{$created_date}}</td>
 								<td>{{$ended_date}}</td>
-							<td>{{$epackage['eservice']['service_name']}}</td>
-							<td>
-								<a class="btn btn-xs btn-primary" title="Cập nhật dịch vụ" href="{{URL::route('admin.order.update',array(0,$ntd['id'],$epackage['id']))}}" id=""><i class="fa fa-save"></i></a>
-								<a class="btn btn-xs btn-danger" onclick="return confirm('Bạn có muốn xóa ko?')" title="Hủy dịch vụ" href="{{URL::route('admin.order.delete',array($ntd['id'],$epackage['id']))}}" id=""><i class="fa fa-trash"></i></a>
-							</td>
+							@endif
+						@else
+								<td>{{$created_date}}</td>
+								<td>{{$ended_date}}</td>
+						@endif
+					<td>
 
-						</tr>
+						<button class="btn btn-xs btn-primary" id="save_xacthuc"><i class="fa fa-pencil"></i> Cập nhật</button>
+							@if($ntd->order->count()>0)
+							@if($ntd->order->first()->is_xacthuc!=0)
+								<a class="btn btn-xs btn-danger" onclick="return confirm('Bạn có chắc muốn xóa')" title="Xóa dịch vụ" href="{{URL::route('admin.order.delete',array('cancel-xacthuc',$ntd->order->first()->id))}}" id=""><i class="fa fa-trash"></i></a>
+							@endif
+							@endif
+
+					</td>
+
+				</tr>
 					 	
 			</tbody>
 			
@@ -152,7 +149,7 @@
 		</table>
 
 		</div>
-		{{Form::close() }}
+		 
 @stop	
 @section('script')
 	<script>
@@ -179,11 +176,12 @@
 			$('#save_search').click(function(event) {
 		 		var ntd_id	=	{{$ntd['id']}};
 		 		var id = $('select[name=search_service]').val();
+		 		var action='search';
 		 		$.ajax({
 		 			url: '{{URL::route("admin.order.saveSearchService")}}',
 		 			type: 'POST',
 		 			dataType: 'json',
-		 			data: {ntd_id:ntd_id,id: id},
+		 			data: {ntd_id:ntd_id,id: id,action:action},
 		 			success: function(json)
 					{
 						if(json.has)
@@ -200,6 +198,34 @@
 		 		 
 		 		
 		 	});
+
+		 	$('#save_xacthuc').click(function(event) {
+		 		var ntd_id	=	{{$ntd['id']}};
+		 		var id = $('select[name=xacthuc_service]').val();
+		 		var action='xacthuc';
+		 		$.ajax({
+		 			url: '{{URL::route("admin.order.saveSearchService")}}',
+		 			type: 'POST',
+		 			dataType: 'json',
+		 			data: {ntd_id:ntd_id,id: id,action:action},
+		 			success: function(json)
+					{
+						if(json.has)
+						{
+							alert("Đã lưu"); 
+							 location.reload();
+						} else {
+							alert("Không thể lưu"); 
+						}
+						 
+					}
+
+		 		});
+		 		 
+		 		
+		 	});
+
+
 	});
 	</script>
 @stop

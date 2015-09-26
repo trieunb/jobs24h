@@ -56,6 +56,10 @@
 			</div> -->
 		</div>
 	</div>
+
+	 
+
+	<div class="clearfix"></div>
 	<table class="table table-hover table-bordered table-striped" id="employers">
 		<thead>
 			<tr>
@@ -90,6 +94,10 @@
 	{{ HTML::script('assets/js/jquery.dataTables.min.js') }}
 	{{ HTML::script('assets/js/jquery.dataTables.bootstrap.min.js') }}
 	<script type="text/javascript">
+
+	 
+
+
 	oTable=	$('#employers').dataTable( {
 				"bProcessing": true,
 				"bServerSide": true,

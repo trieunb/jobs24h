@@ -9,10 +9,7 @@ class OrderPostRec extends \Eloquent {
 		return $this->beLongTo('Job','job_id');
 	}
 	
-	public function job_has()
-	{
-		return $this->hasOne('Job','id');
-	}
+	 
 
 	public function ordersdetail()
 	{

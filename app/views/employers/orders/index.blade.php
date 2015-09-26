@@ -29,10 +29,11 @@
 						</thead>
 						<tbody>
 						@if(count($order))
-						 
+						 	@if($order->package_id!=0)
 							<tr>
+
 								<td>
-									<a class="text-blue" href="{{ URL::route('employers.orders.detail', $order->ordersdetail->first()->id) }}">{{ $order->ordersdetail->first()->madonhang }}</a>
+									<a class="text-blue" href="{{ URL::route('employers.orders.detail')}}">Xem tất cả</a>
 								</td>
 								<td>{{ $order->package_name }}
 								<div class="collapse vncollapse" id="collapse{{ $order->id }}">
@@ -55,34 +56,36 @@
 									@endif
 								</td>
 							</tr>
+							@endif
+							@if($order->is_xacthuc!=0)
 							<tr>
-								@if(count($verify))
-									<td>
-									<a class="text-blue" href="{{ URL::route('employers.orders.detail') }}">{{$verify->ordersdetail->first()->madonhang}}</a>
+								
+								<td>
+									<a class="text-blue" href="{{ URL::route('employers.orders.detail') }}">Xem tất cả</a>
 								</td>
-								<td>{{ $verify->epackage_name }}
-								<div class="collapse vncollapse" id="collapse{{ $verify->id }}">
+								<td>Xác thực 
+								<div class="collapse vncollapse" id="collapse1">
 									<ul>
 										<li>Xác thực nhà tuyển dụng</li>
 									</ul>  
 								</div>
-								<p><a class="text-blue" data-toggle="collapse" data-target="#collapse{{ $verify->id }}" aria-expanded="false" aria-controls="collapse{{ $verify->id }}"><i class="fa fa-plus-square-o"></i>&nbsp; Xem chi tiết</a></p>
+								<p><a class="text-blue" data-toggle="collapse" data-target="#collapse1" aria-expanded="false" aria-controls="collapse1"><i class="fa fa-plus-square-o"></i>&nbsp; Xem chi tiết</a></p>
 									
 								</td>
-								<td>{{ $verify->total_date }} ngày</td>
-								<td>{{ round((strtotime(date('Y-m-d H:i:s',strtotime($verify->ended_date)))-strtotime(date('Y-m-d H:i:s')))/(60*60*24)) }} ngày</td>
-								<td>{{ $verify->created_date }}</td>
-								<td>{{ $verify->ended_date }}</td>
+								<td>30 ngày</td>
+								<td>{{ round((strtotime(date('Y-m-d H:i:s',strtotime($order->end_date_xacthuc)))-strtotime(date('Y-m-d H:i:s')))/(60*60*24)) }} ngày</td>
+								<td>{{ $order->start_date_xacthuc }}</td>
+								<td>{{ $order->end_date_xacthuc }}</td>
 								<td>
-									@if($verify->ended_date >= date('Y-m-d H:i:s') && $verify->created_date <= date('Y-m-d H:i:s'))
+									@if($order->end_date_xacthuc >= date('Y-m-d H:i:s') && $order->start_date_xacthuc <= date('Y-m-d H:i:s'))
 									<span class="label label-success">Đang kích hoạt</span>
 									@else 
 									<span class="label label-danger">Đã hết hạn</span>
 									@endif
 								</td>
-								@endif
+								
 							</tr>
-						 
+						 	@endif
 						
 						@else 
 							<tr>

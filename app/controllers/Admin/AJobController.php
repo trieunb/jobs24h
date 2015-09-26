@@ -26,6 +26,7 @@ class AJobController extends \BaseController {
 		if (Request::ajax()) {
 			$page=(Input::get('iDisplayStart'));
 		}
+	 
 		//$sSearch=$this->vn_str_filter($sSearch);
 		$ntds = Input::get('id');
 		$user=AdminAuth::getUser()->username;
@@ -52,9 +53,9 @@ class AJobController extends \BaseController {
 		return Datatables::of($jobs)	
 		->edit_column('ckid','{{$ckid}}')
 		->remove_column('id')
-		->edit_column('vitri','<a id="edit" class="" href="{{URL::route("admin.jobs.edit1", array('.$page.',$id) )}}" title="Edit">{{$vitri}}</a> ')
+		->edit_column('vitri','<a id="edit" class="" href="{{URL::route("admin.jobs.edit", $id )}}?page={{'.$page.'}}&web=job_index" title="Edit">{{$vitri}}</a> ')
 		//->edit_column('vitri', '{{ HTML::link(URL::route("jobseekers.job", [$slug, $id]), $vitri, ["target"=>"_blank","title"=>"Xem tin tuyển dụng này trên trang chủ"]) }}')
-		->edit_column('company_name','<a id="edit" class="" href="{{URL::route("admin.employers.edit1", array('.$page.',$id) )}}" title="Chỉnh sửa nhà tuyển dụng">{{$company_name}}</a>')
+		->edit_column('company_name','<a id="edit" class="" href="{{URL::route("admin.employers.edit",$id)}}?page={{'.$page.'}}&web=job_index" title="Chỉnh sửa nhà tuyển dụng">{{$company_name}}</a>')
 		->edit_column('ntd_id', '{{date("d-m-y",strtotime($ntd["updated_at"]))}}') // cập nhật
 		->edit_column('hannop','@if((strtotime(date("d-m-Y",strtotime($hannop)))-strtotime(date("d-m-Y")))/(60*60*24) < 0)
 				<span style="color:red">Hết hạn nộp</span>
@@ -196,12 +197,76 @@ class AJobController extends \BaseController {
 	public function edit($id)
 	{
 		//
-		$page;
+	 	$page=Input::get('page');
+	 	$web=Input::get('web');
+
+		$job = Job::whereId($id)->with(array('ntd'=>function($q)
+			{
+				$q->with('company');
+			}))->first();
+		$job->keyword_tags=json_decode($job->keyword_tags,true);
+		 
+		 
+		if(!$job) return Response::make('Không tìm thấy tin đăng');
+
+		 
+			return View::make('admin.jobs.edit', compact('job','page','web'));
+		 
+		/*$page;
 		$job = Job::find($id);
 		if(!$job) return Response::make('Không tìm thấy tin đăng');
-		return View::make('admin.jobs.edit', compact('job','page'));
+		return View::make('admin.jobs.edit', compact('job','page'));*/
 	}
+	public function update($id)
+	{
 
+		$data = Input::all();
+		
+		$validator = new App\DTT\Forms\EmployerAddJob;
+		if($validator->fails())
+		{
+			return Redirect::back()->withInput()->withErrors($validator);
+		} else {
+			$data = Input::all();
+			unset($data['page']);
+			unset($data['web']);
+			unset($data['_token']);
+			unset($data['_token']);
+			unset($data['_method']);
+			unset($data['thuongluong']);
+			$ntd_nganhnghe = $data['ntd_nganhnghe']; unset($data['ntd_nganhnghe']);
+			$ntd_diadiem = $data['ntd_diadiem']; unset($data['ntd_diadiem']);
+
+			$data['keyword_tags'] = json_encode($data['keyword_tags']);
+			
+			unset($data['show_auto_reply']);
+			unset($data['letter_auto']);
+
+			//dd($data);
+			$job = Job::where('id', $id)->first();
+			if( ! $job) return Redirect::route('admin.jobs.index')->withErrors('Không tìm thấy công việc.');
+			foreach ($data as $key => $value) {
+				$job->$key = $value;
+			}
+			try {
+				
+				$job->updateLocation($job->id, $ntd_diadiem);
+				$job->updateCategory($job->id, $ntd_nganhnghe);
+				$job->save();
+ 			 	 
+				if(Input::get('web')=='job_index')
+					return Redirect::route('admin.jobs.index',array('page'=>Input::get('page')))->with('success','Đã lưu các thay đổi !');
+				elseif(Input::get('web')=='job_watting')
+					return Redirect::to(URL::route('admin.jobs.waiting').'?page='.Input::get('page'))->with('success','Đã lưu các thay đổi !');
+				elseif(Input::get('web')=='job_vip')
+					return Redirect::to(URL::route('admin.jobs.vipwaiting').'?page='.Input::get('page'))->with('success','Đã lưu các thay đổi !');
+				else return Redirect::route('admin.employers.index',array('page'=>Input::get('page')))->with('success','Đã lưu các thay đổi !');
+
+			} catch (Exception $e) {
+				return Redirect::back()->withInput()->withErrors('Lỗi khi save !');
+			}
+		}
+	}
 
 	/**
 	 * Update the specified resource in storage.
@@ -210,10 +275,10 @@ class AJobController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function postEdit1($page,$id)
+	public function postEdit1()
 	{
 
-		 $page=$page;
+		/* $page=$page;
 		  
 		$data = Input::all();
 		$validator = new App\DTT\Forms\EmployerAddJob;
@@ -248,7 +313,7 @@ class AJobController extends \BaseController {
 			} catch (Exception $e) {
 				return Redirect::back()->withInput()->withErrors('Lỗi khi save !');
 			}
-		}
+		}*/
 	}
 
 	/**
@@ -303,6 +368,7 @@ class AJobController extends \BaseController {
 			'jobs.id as ckid',
 		 	'jobs.id as id',
 		 	'jobs.vitri as vitri',
+		 	'companies.ntd_id as ntd_id',
 		 	'companies.company_name as company_name',
 		 	'jobs.updated_at as updated_at',
 		 	'jobs.hannop as hannop',
@@ -325,8 +391,9 @@ class AJobController extends \BaseController {
 		return Datatables::of($jobs)	
 		->edit_column('ckid','{{$ckid}}')
 		->remove_column('id')
-		->edit_column('vitri', '{{ HTML::link(URL::route(\'admin.jobs.edit1\', [0,$id]), $vitri ) }}')
-		->edit_column('company_name','<a id="edit" class="" href="{{URL::route("admin.employers.edit1", array('.$page.',$id) )}}" title="Chỉnh sửa nhà tuyển dụng">{{$company_name}}</a>')
+		->remove_column('ntd_id')
+		->edit_column('vitri', '<a id="edit" class="" href="{{URL::route("admin.jobs.edit", $id )}}?page={{'.$page.'}}&web=job_watting" title="Edit">{{$vitri}}</a>')
+		->edit_column('company_name','<a id="edit" class="" href="{{URL::route("admin.employers.edit", $ntd_id )}}?page={{'.$page.'}}&web=job_watting" title="Chỉnh sửa nhà tuyển dụng">{{$company_name}}</a>')
 		->edit_column('updated_at', '{{date("d-m-y",strtotime($updated_at))}}') // cập nhật
 		->edit_column('hannop','{{date("d-m-y",strtotime($hannop))}}')
 		->edit_column('is_display', '@if($is_display==1)<span class="label label-success">Đăng ngay</span>@else <span class="label label-info">Chờ đăng</span>@endif')
@@ -469,8 +536,8 @@ class AJobController extends \BaseController {
 		return Datatables::of($jobs)
 		->remove_column('eid')	
 		->edit_column('id','{{$id}}')
-		->edit_column('vitri','{{ HTML::link(URL::route(\'admin.jobs.edit1\', [0,$id]), $vitri ) }}')
-		->edit_column('company_name','<a id="edit" class="" href="{{URL::route("admin.employers.edit1", array('.$page.',$eid) )}}" title="Chỉnh sửa nhà tuyển dụng">{{$company_name}}</a>
+		->edit_column('vitri','<a id="edit" class="" href="{{URL::route("admin.jobs.edit", $id )}}?page={{'.$page.'}}&web=job_vip" title="Edit">{{$vitri}}</a>')
+		->edit_column('company_name','<a id="edit" class="" href="{{URL::route("admin.employers.edit", $eid )}}?page={{'.$page.'}}&web=job_vip" title="Chỉnh sửa nhà tuyển dụng">{{$company_name}}</a>
 			')
 		->edit_column('updated_at','{{date("d-m-y",strtotime($updated_at))}}')
 		->edit_column('hannop','
@@ -484,13 +551,16 @@ class AJobController extends \BaseController {
 		->edit_column('services','<a href="{{URL::route(\'admin.order.package\')}}/{{$id}}" target="_blank" title="Click vào để xem chi tiết dịch vụ của tin này">Xem chi tiết</a>')
 		->edit_column('notes','
 			@foreach($orderpostrec as $order)
+
 				@if((strtotime(date("d-m-Y H:i:s",strtotime($order["ended_date"])))-strtotime(date("d-m-Y H:i:s")))/(60*60*24) < 7 && (strtotime(date("d-m-Y H:i:s",strtotime($order["ended_date"])))-strtotime(date("d-m-Y H:i:s")))/(60*60*24)>0)
 							 <span style="color:orange"> Có dịch vụ gần hết hạn </span> 
 							 <?php   break;?>
 							@elseif((strtotime(date("d-m-Y H:i:s",strtotime($order["ended_date"])))-strtotime(date("d-m-Y H:i:s")))/(60*60*24) < 0) 
 								<span style="color:red"> Có dịch vụ hết hạn </span>
 							  <?php   break;?>
+
 							@else
+								 
 				@endif 
 						 
 			@endforeach

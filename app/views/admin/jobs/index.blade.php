@@ -89,11 +89,12 @@
 	 				echo $_GET['page'];
 	 				else echo 0;
 	 				 ?>;
+	 	 
 		oTable=$('#jobs').dataTable( {
 				"displayStart": page1,
 				"bProcessing": true,
 				"bServerSide": true,
-				"sAjaxSource": "{{ URL::route('jobs.datatables', ["id"=>Input::get('id')]) }}",
+				"sAjaxSource": "{{ URL::route('jobs.datatables', ["id"=>Input::get('id'),"web"=>Input::get('web')]) }}",
 				bAutoWidth: false,
 					"aoColumns": [
 					  { "bSortable": false, "sClass": "center" },

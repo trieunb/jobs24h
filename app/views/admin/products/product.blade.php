@@ -8,7 +8,7 @@
 	</div>
 	<div class="clearfix"></div>
 	<div class="row">
-		<div class="col-md-12"><h2>1. {{$package_view_cv['service_name']}}</h2></div>
+		<div class="col-md-12"><h2>1. Tìm kiếm hồ sơ và xác thực</h2></div>
 		<div class="col-md-12">
 		
 			<table class="table table-hover table-bordered table-striped dataTable" id="table">
@@ -29,7 +29,7 @@
 			</thead>
 			<tbody>
 				
-					@foreach($package_view_cv->packages as $value)
+					@foreach($package_view_cv as $value)
 					<tr>
 					<td style="text-align:center">
 						<label class="pos-rel">
