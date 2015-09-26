@@ -1,4 +1,4 @@
-		<div id="sidebar" class="sidebar responsive">
+<div id="sidebar" class="sidebar responsive">
 
 				<div class="sidebar-shortcuts" id="sidebar-shortcuts">
 					<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
@@ -80,69 +80,30 @@
 						</a>
 
 						<b class="arrow"></b>
+
 						<ul class="submenu">
+							
+							<li class="">
+								<a href="{{ URL::route('admin.jobseekers.index') }}">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Danh sách
+								</a>
+								<b class="arrow"></b>
+							</li>
+							<li class="">
+								
+								<b class="arrow"></b>
+							</li>
+
 							<li class="{{ HTML::active(['admin.resumes.*']) }}">
 								<a href="#" class="dropdown-toggle">
 									<i class="menu-icon fa fa-pencil orange"></i>
-										Quản lý Hồ Sơ
+										Hồ sơ
 									<b class="arrow fa fa-angle-down"></b>
 								</a>
 
 								<b class="arrow"></b>
 
-								<ul class="submenu">
-									<li class="{{ HTML::active(['admin.resumes.index']) }}">
-										<a href="{{ URL::route('admin.resumes.index') }}">
-											<i class="menu-icon fa fa-bar-chart purple"></i>
-											Danh sách hồ sơ
-										</a>
-
-										<b class="arrow"></b>
-									</li>
-
-									
-
-									<li class="{{ HTML::active(['admin.resumes.not-active']) }}">
-										<a href="{{ URL::route('admin.resumes.not-active') }}">
-											<i class="menu-icon fa fa-clock-o purple"></i>
-											Hồ sơ chưa duyệt
-										</a>
-
-										<b class="arrow"></b>
-									</li>
-								</ul>
-							</li>
-
-							<li class="{{ HTML::active(['admin.jobseekers.*']) }}">
-								<a href="#" class="dropdown-toggle">
-									<i class="menu-icon fa fa-pencil orange"></i>
-										Chăm sóc NTV
-									<b class="arrow fa fa-angle-down"></b>
-								</a>
-
-								<b class="arrow"></b>
-
-								<ul class="submenu">
-									<li class="{{ HTML::active(['admin.jobseekers.index']) }}">
-										<a href="{{ URL::route('admin.jobseekers.index') }}">
-											<i class="menu-icon fa fa-bar-chart purple"></i>
-											Thống kê & Danh sách NTV
-										</a>
-
-										<b class="arrow"></b>
-									</li>
-
-									
-
-									<li class="{{ HTML::active(['admin.jobseekers.not-login']) }}">
-										<a href="{{ URL::route('admin.jobseekers.not-login') }}">
-											<i class="menu-icon fa fa-clock-o purple"></i>
-											Danh sách NTV chưa đăng ký
-										</a>
-
-										<b class="arrow"></b>
-									</li>
-								</ul>
 							</li>
 						</ul>
 					</li>
@@ -160,14 +121,14 @@
 							<li class="{{ HTML::active(['admin.jobs.*']) }}">
 								<a href="#" class="dropdown-toggle">
 									<i class="menu-icon fa fa-pencil orange"></i>
-										Quản lý Tin tuyển dụng
+										Tin tuyển dụng
 									<b class="arrow fa fa-angle-down"></b>
 								</a>
 
 								<b class="arrow"></b>
 
 								<ul class="submenu">
-									<li class="{{ HTML::active(['admin.jobs.report']) }}">
+									<li class="">
 										<a href="{{ URL::route('admin.jobs.report') }}">
 											<i class="menu-icon fa fa-bar-chart purple"></i>
 											Thống Kê
@@ -175,79 +136,83 @@
 
 										<b class="arrow"></b>
 									</li>
-
-									
-
-									<li class="{{ HTML::active(['admin.jobs.waiting']) }}">
+									<li class="">
 										<a href="{{ URL::route('admin.jobs.waiting') }}">
 											<i class="menu-icon fa fa-clock-o purple"></i>
-											Tin mới chưa duyệt
+											Tin mới chưa được duyệt
 										</a>
 
 										<b class="arrow"></b>
 									</li>
-									<li class="{{ HTML::active(['admin.jobs.vipwaiting']) }}">
+									<li class="">
 										<a href="{{ URL::route('admin.jobs.vipwaiting') }}">
 											<i class="menu-icon fa fa-check-square-o purple"></i>
-											Quản lý tin vip
+											Tin VIP chưa duyệt
 										</a>
 
 										<b class="arrow"></b>
 									</li>
-									<li class="{{ HTML::active(['admin.jobs.index']) }}">
+									<li class="">
+										<a href="{{ URL::route('admin.jobs.vipexp') }}">
+											<i class="menu-icon fa fa-bell-o purple"></i>
+											Tin VIP trả phí sắp hết hạn
+										</a>
+
+										<b class="arrow"></b>
+									</li>
+									<li class="">
 										<a href="{{ URL::route('admin.jobs.index') }}">
 											<i class="menu-icon fa fa-plus purple"></i>
-											Tất cả tin tuyển dụng
+											Danh sách
 										</a>
 
 										<b class="arrow"></b>
 									</li>
 
-									
-									<!-- <li class="">
+									<li class="">
 										<a href="{{ URL::route('admin.jobs.create') }}">
 											<i class="menu-icon fa fa-eye pink"></i>
 											Thêm tin tuyển dụng
 										</a>
 
 										<b class="arrow"></b>
-									</li> -->
+									</li>
 								</ul>
 							</li>
 							<li class="{{ HTML::active(['admin.employers.*']) }}">
 								<a href="#" class="dropdown-toggle">
 									<i class="menu-icon fa fa-pencil orange"></i>
-										Quản lý nhà tuyển dụng
+										Chăm sóc nhà tuyển dụng
 									<b class="arrow fa fa-angle-down"></b>
 								</a>
 
 								<b class="arrow"></b>
 
 							<ul class="submenu">
-								<li class="{{ HTML::active(['admin.employers.report']) }}">
-									<a href="{{ URL::route('admin.employers.report') }}">
+								<li class="{{ HTML::active(['admin.employers.*']) }}">
+									<a href="{{ URL::route('employers.report') }}">
 										<i class="menu-icon fa fa-caret-right"></i>
-										Thống kê và danh sách nhà tuyển dụng vip
+										Thống kê
 									</a>
 									<b class="arrow"></b>
 								</li>
 
-								<!-- <li class="">
+								<li class="">
 									<a href="#">
 										<i class="menu-icon fa fa-caret-right"></i>
 										Tài khoản được chia
 									</a>
 									<b class="arrow"></b>
-								</li> -->
+								</li>
 
-								<li class="{{ HTML::active(['admin.employers.index']) }}">
+								<li class="">
 									<a href="{{ URL::route('admin.employers.index') }}">
 										<i class="menu-icon fa fa-caret-right"></i>
-										Tổng số nhà tuyển dụng
+										Đã liên hệ
 									</a>
 									<b class="arrow"></b>
 								</li>
-								<li class="{{ HTML::active(['admin.employers.create']) }}">
+								<li class="">
 									<a href="{{ URL::route('admin.employers.create') }}">
 										<i class="menu-icon fa fa-caret-right"></i>
 										Thêm mới nhà tuyển dụng
@@ -532,4 +497,3 @@
 					<i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
 				</div>
 			</div>
-

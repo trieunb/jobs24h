@@ -51,7 +51,7 @@
 												<button type="button" class="btn bg-gray-light btn-sm add-note" data-toggle="popover" data-placement="bottom" data-content='<div class="form-horizontal" id="note"><div class="form-group"><textarea rows="3" name="note" class="form-control note" placeholder="Ghi chú">{{$mjl->note}}</textarea></div><div class="form-group"><input type="hidden" name="id" class="form-control id" value="{{$mjl->id}}"><button type="button" class="btn btn-sm save-note bg-orange pull-right">Lưu</button></div></div>'>Thêm ghi chú</button>
 											</td>
 											<td><a href="{{URL::route('company.view', $mjl->jobs->ntd->company->id)}}">{{$mjl->jobs->ntd->company->company_name}}</a></td>
-											<td>{{date('d-m-Y',strtotime($mjl->save_date))}}</td>
+											<td>{{date('d-m-Y',strtotime($mjl->created_at))}}</td>
 											<td>{{$mjl->respond}}</td>
 											<td>
 												Đã ứng tuyển

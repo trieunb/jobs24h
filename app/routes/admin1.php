@@ -19,13 +19,11 @@ Route::group(array('prefix'=>'admin'), function() {
 			'getNotLogin'	=> 'admin.jobseekers.not-login',
 			'getDatatablesnotlogin' => 'jobseekers.not-login.datatables',
 			'postDeleteNTVNotLogin' => 'admin.jobseekers.delete-ntv-not-login',
-			'getListJobApplied'		=> 'admin.jobseekers.list-job-applied',
-			'getListJobAppliedDatatables'		=> 'admin.jobseekers.list-job-applied-datatables',
 		));
-		
+
 
 		
-		Route::get('employers/report', array('as'=>'admin.employers.report', 'uses'=>'EmployerController@report'));
+		Route::get('employers/report', array('as'=>'employers.report', 'uses'=>'EmployerController@report'));
 		Route::get('employers/datatables', array('as'=>'employers.datatables', 'uses'=>'EmployerController@datatables'));
 		Route::get('employers/datatablesvip', array('as'=>'employers.datatablesvip', 'uses'=>'EmployerController@datatables_vip'));
 		Route::resource('employers', 'EmployerController');
@@ -34,9 +32,7 @@ Route::group(array('prefix'=>'admin'), function() {
 			
 			));
 		Route::get('jobs/datatables', array('as'=>'jobs.datatables', 'uses'=>'AJobController@datatables'));
-		Route::get('jobs/datatables_waiting', array('as'=>'admin.jobs.datatables_waiting', 'uses'=>'AJobController@datatables_waiting'));
-		Route::get('jobs/datatables_waiting_vip', array('as'=>'admin.jobs.datatables_waiting_vip', 'uses'=>'AJobController@datatables_waiting_vip'));
-		Route::get('jobs/datatables_cvapp', array('as'=>'admin.jobs.datatables_cvapp', 'uses'=>'AJobController@datatables_cvapp'));
+
 		
 		Route::resource('jobs', 'AJobController', [
 		    'only' => ['index', 'create', 'store','edit', 'update', 'destroy']
@@ -49,15 +45,12 @@ Route::group(array('prefix'=>'admin'), function() {
 			'getVipExp'		=>	'admin.jobs.vipexp',
 			'postAjax'		=>	'admin.jobs.ajax',
 			'getEdit1'		=> 'admin.jobs.edit1',
-			'postEdit1'	=>		'admin.jobs.update1',
-			'getDelete'	=>		'admin.jobs.delete',
-			'getJobApp'	=>'admin.jobs.cvapp',
-			'getDeleteApp' =>'admin.jobs.deleteapp',
-			'postSendMail' =>'admin.jobs.sendmail',
+			'postEdit1'	=>		'admin.jobs.update1',	
 		));
 
 
 		Route::get('resumes/datatables', array('as'=>'resumes.datatables', 'uses'=>'ResumeController@datatables'));
+
 		Route::controller('resumes', 'ResumeController', array(
 			'getIndex' 		=> 'admin.resumes.index',
 			'getEdit' 		=> 'admin.resumes.edit1',
@@ -65,9 +58,7 @@ Route::group(array('prefix'=>'admin'), function() {
 			'postActive' 		=> 'admin.resumes.post-active',
 			'postDelete' 		=> 'admin.resumes.post-delete',
 			'getNotActive' 		=> 'admin.resumes.not-active',
-			'getNotActiveDatatables' => 'resumes.datatables.not-active',
-			'getListCvByNtvDatatables'	=> 'resumes.datatables-list-cv-by-ntv',
-			'getListCvByNtv'		=> 'admin.resumes.list-cv-by-ntv',
+			'getNotActiveDatatables' => 'resumes.datatables.not-active'
 		));
 		Route::post('resumes/search', array('as'=>'resumes.search', 'uses'=>'ResumeController@search'));
 		Route::get('resumes/uploadcv/{action}/{id}', ['as' => 'admin.resumes.uploadcv', 'uses' => 'ResumeController@actionUploadCV']);
@@ -86,7 +77,9 @@ Route::group(array('prefix'=>'admin'), function() {
 		    'only' => ['show', 'create', 'store', 'edit', 'update', 'destroy']
 		]);
 		*/
-		
+	
+
+	
 
 		// ROUTE TIN TỨC
 		Route::controller('news', 'NewsController', array(
@@ -113,8 +106,7 @@ Route::group(array('prefix'=>'admin'), function() {
 
 		 
 		Route::controller('order', 'OrdersController', array(
-			'getPackageEmployer'=>'admin.order.packageemployer',
-			'getPackage'	=>	'admin.order.package',
+			'getIndex'	=>	'admin.order.index',
 			'postSaveSearchService'=>'admin.order.saveSearchService',
 			'getDeleteService' =>'admin.order.delete',
 			'getUpdateService' =>'admin.order.update',

@@ -22,7 +22,7 @@ get_header(); ?>
 					      <div class="carousel-inner">
 					      	<?php
 							global $post;
-							$args = array( 'posts_per_page' => 5, 'category' => 3 );
+							$args = array( 'posts_per_page' => 5, 'categories' => array(2,3,4) );
 							$myposts = get_posts( $args );
 							foreach ( $myposts as $k => $post ) : 
 							  setup_postdata( $post ); ?>
@@ -38,9 +38,9 @@ get_header(); ?>
 									?>
 						           <div class="carousel-caption ">
 						            <h4><a href="<?php echo get_permalink(); ?>"><?php the_title(); ?></a></h4>
-						            <p><?php
-										the_excerpt();
-									?>
+						            <p>
+										<?php echo limit_words(get_the_excerpt(), '33')."..."; ?>
+									
 									</p>
 						          </div>
 						        </div><!-- End Item -->
@@ -52,7 +52,7 @@ get_header(); ?>
 					    <ul class="list-group col-sm-4">
 					    	<h3 class="slide-title"><a href="<?php echo get_category_link(3); ?>">NGƯỜI TÌM VIỆC</a></h3>
 						    <?php
-							$args = array( 'posts_per_page' => 5,'category' => 3 );
+							$args = array( 'posts_per_page' => 5,'categories' => array(2,3,4) );
 							$myposts = get_posts( $args );
 							foreach ( $myposts as $k => $post ) : 
 							  setup_postdata( $post ); ?>
@@ -97,7 +97,7 @@ get_header(); ?>
 					    		<div class="post-right">
 					    			<h3 class="post-title"><a href="<?php echo get_permalink(); ?>"><?php the_title(); ?></a></h3>
 									<p class="post-content">
-										<?php the_excerpt(); ?>
+										<?php echo mb_substr(get_the_excerpt(), 0,150)."..."; ?>
 									</p>
 					    			<div class="post-meta">
 					    				<ul>
@@ -125,7 +125,32 @@ get_header(); ?>
 						<div class="new-posts">
 							<h4 class="new-title">TIN XEM NHIỀU NHẤT</h4>
 							<div class="sidebar-newposts">
-								 <?php echo popularPosts(10); ?>
+								 <?php
+									query_posts('meta_key=post_views_count&orderby=meta_value_num&order=DESC&posts_per_page=5');
+									if (have_posts()) : while (have_posts()) : the_post(); ?>
+									<div class="sidebar-post">
+										<div class="thumbs-left">
+										<?php 
+						    				$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'large' );
+											$url = $thumb['0'];
+											if($url != null){
+													echo '<img src="'.$url.'">';
+												}else{
+													echo '<img src="'.get_bloginfo("template_directory").'/assets/images/nha-tuyen-dung.jpg" class="thumbnail">';
+												}
+										?>
+										</div>
+										<div class="desc-right">
+											<h4 class="sidebar-posttitle">
+										    	<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a>
+										    </h4>
+										    <div class="sidebar-postcontent"><span><?php echo mb_substr(get_the_excerpt(), 0,50)."..."; ?></span></div>
+									    </div>
+								    </div>
+									<?php
+									endwhile; endif;
+									wp_reset_query();
+								?>
 							</div><!-- end new-posts -->
 						</div> 
 
@@ -133,7 +158,7 @@ get_header(); ?>
 					<div class="clearfix"></div>
 					<hr class="big-sep">
 					<div class="employer">
-						<h3 class="e-title"><a href="<?php echo get_category_link(4); ?>">Nhà tuyển dụng</a></h3>
+						<h3 class="e-title"><a href="<?php echo get_category_link(4); ?>">NHÀ TUYỂN DỤNG</a></h3>
 						<div class="col-xs-6 e-main">
 							<?php
 							$args = array( 'posts_per_page' => 1, 'offset'=> 0, 'category' => 4 );
@@ -144,15 +169,15 @@ get_header(); ?>
 								$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'large' );
 								$url = $thumb['0'];
 								if($url != null){
-										echo '<img src="'.$url.'" class="full-image">';
+										echo '<div class="img_290"><img src="'.$url.'" ></div>';
 									}else{
-										echo '<img src="'.get_bloginfo("template_directory").'/assets/images/nha-tuyen-dung.jpg" class="full-image">';
+										echo '<div class="img_290"><img src="'.get_bloginfo("template_directory").'/assets/images/nha-tuyen-dung.jpg" class="full-image"></div>';
 									}
 								?>
 							
 								<h3 class="e-slide-title"><a href="<?php echo get_permalink(); ?>"><?php the_title(); ?></a></h3>
 								<p>
-									<?php the_excerpt(); ?>
+									<?php echo mb_substr(get_the_excerpt(), 0,150)."..."; ?>
 								</p>
 								<div class="post-meta">
 				    				<ul>
@@ -182,18 +207,19 @@ get_header(); ?>
 										$url = $thumb['0'];
 									?>
 									<div class="col-xs-6">
+										
 										<?php 
 											if($url != null){
-												echo '<img src="'.$url.'" class="full-image esubpost">';
+												echo '<div class="img_ntd"><img src="'.$url.'" class="full-image esubpost"></div>';
 											}else{
-												echo '<img src="'.get_bloginfo("template_directory").'/assets/images/nha-tuyen-dung.jpg" class="full-image esubpost">';
+												echo '<div class="img_ntd"><img src="'.get_bloginfo("template_directory").'/assets/images/nha-tuyen-dung.jpg" class="full-image esubpost"></div>';
 											}
 										?>
 										<h4 class="e-post-title"><a href="<?php echo get_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a></h4>
 										<p>
-											<?php echo limit_words(get_the_excerpt(), '9'); ?>
+											<?php echo limit_words(get_the_excerpt(), '8')."..."; ?>
 										</p>
-									</div>
+										</div>
 
 
 								<?php endforeach;
@@ -204,7 +230,7 @@ get_header(); ?>
 					<div class="clearfix"></div>
 					<hr class="big-sep">
 					<div class="employer">
-						<h3 class="e-title"><a href="<?php echo get_category_link(11); ?>">Góc báo chí VNJOBS</a></h3>
+						<h3 class="e-title"><a href="<?php echo get_category_link(11); ?>">GÓC BÁO CHÍ VnJobs</a></h3>
 						<div class="col-xs-12 news-main">
 							<div class="row">
 								<div class="col-xs-8 news-post">

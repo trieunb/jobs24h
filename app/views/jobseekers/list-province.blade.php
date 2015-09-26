@@ -10,7 +10,12 @@
 				</div>
 					<ul class="arrow-square-orange">
 					@foreach ($widget_province_hot as $key => $province)
-						<li class="col-sm-4"><p><a href="{{URL::route('jobseekers.search-job', array('province[]'=>$province->id))}}">{{$province->province_name}} <span class="text-orange">({{$province->mtprovince->count()}})</span></a></p></li>
+						<?php 
+								$count = WorkLocation::where('province_id', '=',$province->id)->where('job_id', '>',0 )->whereHas('job', function ($q1) {
+									$q1->where('is_display', 1)/*->where('hannop', '>=' , date('Y-m-d'))*/->where('status',1);
+								})->count(); 
+							?>
+						<li class="col-sm-4"><p><a href="{{URL::route('jobseekers.search-job', array('province[]'=>$province->id))}}">{{$province->province_name}} <span class="text-orange">({{$count}})</span></a></p></li>
 					@endforeach
 					</ul>
 			</div>

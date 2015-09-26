@@ -7,6 +7,7 @@
 	</div>
 	<section class="main-content container single-post">
 		<section id="content" class="col-sm-9">
+				@if(isset($my_resume))
 				<div class="box form-horizontal">
 					<div class="col-sm-2">
 						<label class="control-label">Tiêu đề hồ sơ<abbr>*</abbr></label>	
@@ -719,6 +720,11 @@
 						{{Form::button('Tạo Hồ Sơ', array('class'=>'btn btn-lg bg-orange publish_resume', 'data-rs'=> $id_cv))}}
 					@endif
 				</div>
+				@else
+					<div class="boxed">
+						<h3>Không tìm thấy hồ sơ</h3>
+					</div>
+				@endif
 	</section>
 	<aside id="sidebar" class="col-sm-3 pull-right">
 		<div class="add-modules">
@@ -790,34 +796,7 @@
 	                </div>
 	                <div class="col-sm-2 box-label danger"><strong>10%</strong></div>
 	            </div> 
-	            @if(count($camnang_ntv))
-				<div class="widget row">
-					<h3>Cẩm nang nghề nghiệp</h3>
-					<ul>
-						@foreach($camnang_ntv as $post)	
-						<li>
-							<div class="col-sm-3">{{$post->thumbnail}}</div>
-							<div class="col-sm-9">
-								<a href="#" class="text-blue">{{$post->title}}</a>
-								<?php
-									// strip tags to avoid breaking any html
-									$string = $post->content;
-									$string = strip_tags($string);
-
-									if (strlen($string) > 50) {
-									    // truncate string
-									    $stringCut = substr($string, 0, 50);
-									    // make sure it ends in a word so assassinate doesn't become ass...
-									    $string = substr($stringCut, 0, strrpos($stringCut, ' ')); 
-									}
-									echo "<p>$string</p>";
-								?>
-							</div>
-						</li>
-						@endforeach
-					</ul>
-				</div>
-				@endif
+	            
 			</div>
 		</aside>
 		<div class="modal fade" id="modal-alert">
@@ -836,7 +815,7 @@
 	</section>
 
 @stop
-
+@if(isset($my_resume))
 @section('scripts')
 	
 	<script type="text/javascript">
@@ -1383,3 +1362,4 @@
 	});
 	</script>
 @stop
+@endif

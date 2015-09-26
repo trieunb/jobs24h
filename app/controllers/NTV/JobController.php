@@ -16,7 +16,7 @@ class JobController extends Controller
 		->with(array('province'=>function($q) {
 			$q->with('province');
 		}))
-		->where('is_display', 1)->where('status', 1)->where('hannop', '>=', date('Y-m-d', time()))->first();
+		->where('is_display', 1)->where('status', 1)/*->where('hannop', '>=', date('Y-m-d', time()))*/->first();
 		$luotxem = Job::find($job_id);
 		$tangluotxem = $luotxem->luotxem;
 		$luotxem->luotxem = $tangluotxem + 1;
@@ -33,7 +33,7 @@ class JobController extends Controller
 		$work_type = Input::get('type');
 		$id_emp = Input::get('id');
 		$vieclamcaocap = Input::get('vieclamcaocap');
-		$jobs = Job::where('is_display',1)->where('hannop', '>=', date('Y-m-d', time()))->where('status',1)->with('province')->with('category');
+		$jobs = Job::where('is_display',1)/*->where('hannop', '>=', date('Y-m-d', time()))*/->where('status',1)->with('province')->with('category');
 		if(is_numeric($id_emp) && $id_emp != null){
 			$jobs->where('ntd_id',$id_emp);
 		}
@@ -102,7 +102,7 @@ class JobController extends Controller
 	
 		if(Input::get('id') != null){
 			$cate_id = Input::get('id');
-			$jobs = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->with('category');
+			$jobs = Job::where('is_display', 1)/*->where('hannop', '>=', date('Y-m-d', time()))*/->with('category');
 			$jobs->whereHas('category', function($query) use($cate_id)  {
 				$query->where('cat_id', $cate_id);
 			});

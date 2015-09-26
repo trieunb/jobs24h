@@ -17,7 +17,7 @@ class JobSeeker extends Controller
 		$categories_default1 = Category::where('parent_id', '!=', 0)->get();
 		foreach ($categories_default1 as $key => $value) {
 			$count = CVCategory::where('cat_id', '=',$value->id)->where('job_id', '>',0 )->whereHas('job', function ($q1) {
-				$q1->where('is_display', 1)->where('hannop', '>=' , date('Y-m-d'))->where('status',1);
+				$q1->where('is_display', 1)/*->where('hannop', '>=' , date('Y-m-d'))*/->where('status',1);
 			})->count();
 			$categories_default[] = array($value, 'count'=>$count);
 			$categories_hot[] = array($value, 'count'=>$count);
@@ -28,7 +28,7 @@ class JobSeeker extends Controller
 		$categories_alpha1 = Category::where('parent_id', '!=', 0)->orderBy('cat_name', 'ASC')->get();
 		foreach ($categories_alpha1 as $key => $value) {
 			$count = CVCategory::where('cat_id', '=',$value->id)->where('job_id', '>',0 )->whereHas('job', function ($q1) {
-				$q1->where('is_display', 1)->where('hannop', '>=' , date('Y-m-d'))->where('status',1);
+				$q1->where('is_display', 1)/*->where('hannop', '>=' , date('Y-m-d'))*/->where('status',1);
 			})->count();
 			$categories_alpha[] = array($value, 'count'=>$count);
 		}
@@ -57,7 +57,7 @@ class JobSeeker extends Controller
 		}))
 		->with(array('province'=>function($q) {
 			$q->with('province');
-		}))->where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->orderBy('luotxem', 'DESC')->take(45)->get();
+		}))->where('is_display', 1)/*->where('hannop', '>=', date('Y-m-d', time()))*/->orderBy('luotxem', 'DESC')->take(45)->get();
 
 		// Việc làm mới nhất
 		$new_jobs = Job::with(array('ntd'=>function($q) {
@@ -68,7 +68,7 @@ class JobSeeker extends Controller
 		}))
 		->with(array('province'=>function($q) {
 			$q->with('province');
-		}))->where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->orderBy('updated_at', 'DESC')->take(45)->get();
+		}))->where('is_display', 1)/*->where('hannop', '>=', date('Y-m-d', time()))*/->orderBy('updated_at', 'DESC')->take(45)->get();
 
 		// Tin tức
 
@@ -249,13 +249,18 @@ class JobSeeker extends Controller
 	// Edit CV
 	public function editCvHome($id_cv){
 		$my_resume = Resume::where('id', $id_cv)->first();
-		if($GLOBALS['user']->province_id != null){
-			$districts = Districts::where('province_id', $GLOBALS['user']->province_id)->lists('district_name', 'id');
+		//var_dump($my_resume->ntv_id); die();
+		if($GLOBALS['user']->id == $my_resume->ntv_id){
+			if($GLOBALS['user']->province_id != null){
+				$districts = Districts::where('province_id', $GLOBALS['user']->province_id)->lists('district_name', 'id');
+			}else{
+				$districts = null;
+			}
+			$camnang_ntv = TrainingPost::where('training_cat_id', 10)->where('training_cat_id', 9)->with('trainingCat')->take(6)->get();
+			return View::make('jobseekers.edit-cv')->with('user', $GLOBALS['user'])->with('id_cv', $id_cv)->with('my_resume', $my_resume)->with('camnang_ntv',$camnang_ntv)->with('districts', $districts);
 		}else{
-			$districts = null;
+			return View::make('jobseekers.edit-cv');
 		}
-		$camnang_ntv = TrainingPost::where('training_cat_id', 10)->where('training_cat_id', 9)->with('trainingCat')->take(6)->get();
-		return View::make('jobseekers.edit-cv')->with('user', $GLOBALS['user'])->with('id_cv', $id_cv)->with('my_resume', $my_resume)->with('camnang_ntv',$camnang_ntv)->with('districts', $districts);
 	}
 	public function saveInfo($action = false, $id_cv){
 		if($action == 'upload_avatar'){
@@ -457,11 +462,14 @@ class JobSeeker extends Controller
 				
 				if($params['specific_salary'] == '') $params['specific_salary'] = 0;
 				else{$params['specific_salary'] = str_replace(',', '', $params['specific_salary']);}
+				
 				if(!isset($params['is_publish'])) $params['is_publish'] = 0;
 				else{$params['is_publish'] = 1;}
 				if($params['is_publish'] == 1){
 					$un_set_publish = Resume::where('ntv_id',$GLOBALS['user']->id)->update(array('is_public'=>0));
 				}
+
+
 
 				$rs = Resume::where('id',$id_cv)->where('ntv_id',$GLOBALS['user']->id)->update(array(
 					'namkinhnghiem' 		=> $params['info_years_of_exp'],
@@ -726,7 +734,7 @@ class JobSeeker extends Controller
 		$provinces = WorkLocation::whereIn('rs_id', $resume)->where('province_id', '>', 0)->lists('province_id');
 	
 		
-			$jobs = Job::where('is_display', 1)->where('hannop', '>=', date('Y-m-d', time()))->where('status',1)->with('province')->with('category');
+			$jobs = Job::where('is_display', 1)/*->where('hannop', '>=', date('Y-m-d', time()))*/->where('status',1)->with('province')->with('category');
 			
 			if(count($provinces))
 			{
@@ -918,12 +926,9 @@ class JobSeeker extends Controller
 	        	return Redirect::back()->withInput()->withErrors($validator);
 			}else{
 				if($GLOBALS['user']  != null){
-					$my_jobs = MyJob::where('ntv_id',$GLOBALS['user']->id)->get();
+					$my_jobs = MyJob::where('ntv_id',$GLOBALS['user']->id)->where('job_id', $job_id)->get();
 					if(count($my_jobs) == 0){
-						$date = date('Y-m-d', time());
-						$my_job = MyJob::firstOrCreate(array('ntv_id' => $GLOBALS['user']->id, 'job_id' => $job_id));
-						$my_job->save_date = $date;
-						$my_job->save();
+						$my_job = MyJob::create(array('ntv_id' => $GLOBALS['user']->id, 'job_id' => $job_id, 'save_date' => date('Y-m-d')));
 					}
 					$check = Application::where('job_id', $job_id)->where('ntv_id', $GLOBALS['user']->id)->count();
 				}else {$check = 0;}
@@ -964,7 +969,17 @@ class JobSeeker extends Controller
 							//'province_id' 	=> $params['province_id'],
 							'apply_date'	=> date('Y-m-d', time()),
 						));
+						
+							$job = Job::find($job_id);
+							$ntd = NTD::find($job->ntd_id);
+							$ntd_email = $ntd->email;
 						if($apply){
+
+							
+							// gởi thông báo có người apply công việc
+							Mail::send('jobseekers.mail.thongbaontd', array('company_name'=> $ntd->company->company_name, 'position'=> $job->vitri, 'ntv_name'=> $GLOBALS['user']->first_name. $GLOBALS['user']->last_name), function($message) use ($ntd_email,$job){
+					        $message->to($ntd_email, $ntd_email)->subject('VnJobs.Vn - Hồ sơ ứng tuyển vị trí:'. $job->vitri);
+					    	});
 							return Redirect::back()->with('success','Bạn đã nộp đơn thành công. Chúc bạn may mắn');
 						}else{
 							return Redirect::back()->withInput()->with('loi','Hiện tại bạn không thể nộp đơn cho công việc này');
@@ -1023,6 +1038,11 @@ class JobSeeker extends Controller
 		$user = $GLOBALS['user'];
 		if(!isset($params['specific_salary'])) $params['specific_salary'] = 0;
 		else{$params['specific_salary'] = str_replace(',', '', $params['specific_salary']);}
+
+
+		if(!isset($params['info_years_of_exp'])) $params['info_years_of_exp'] = 0;
+
+
 		$district_id = $user->district_id;
 		if($params['country_id'] != 2){
 			$province_id = '';
@@ -1122,6 +1142,7 @@ class JobSeeker extends Controller
 					'capbachientai' 		=> $params['info_current_level'],
 					'capbacmongmuon' 		=> $params['info_wish_level'],
 					'mucluong' 				=> $params['specific_salary'],
+					'namkinhnghiem'			=> $params['info_years_of_exp'],
 					'file_name' 			=> $name,
 				));
 					
@@ -1447,6 +1468,7 @@ class JobSeeker extends Controller
 	public function getListCategory(){
 		$list_parent = Category::where('parent_id', 0)->get();
 
+		
 		if(count($list_parent)){
 			foreach ($list_parent as $key => $value) {
 				$cate = Category::where('parent_id', $value->id)->get();
@@ -1466,7 +1488,7 @@ class JobSeeker extends Controller
 	// Lấy chi tiết công ty
 	public function getInfoCompany($id){
 		$company = Company::find($id);
-		$jobs = Job::where('ntd_id', $company->ntd_id)->where('is_display',1)->where('hannop', '>=', date('Y-m-d', time()))->where('status',1)->paginate(3);
+		$jobs = Job::where('ntd_id', $company->ntd_id)->where('is_display',1)/*->where('hannop', '>=', date('Y-m-d', time()))*/->where('status',1)->paginate(3);
 		if (Request::ajax()) {
             return Response::json(View::make('jobseekers.detail-company')->with(compact('company', 'jobs'))->render());
         }
