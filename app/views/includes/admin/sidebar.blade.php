@@ -39,7 +39,7 @@
 
 						<b class="arrow"></b>
 					</li>
-
+					@if(AdminAuth::check_permissions('admin_full'))
 					<li class="{{ HTML::active(['admin.users.*']) }}">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-list"></i>
@@ -70,6 +70,8 @@
 							</li>
 						</ul>
 					</li>
+					@endif
+					@if(AdminAuth::check_permissions('ntv_full'))
 
 					<li class="{{ HTML::active(['admin.jobseekers.*', 'admin.resumes.*']) }}">
 						<a href="#" class="dropdown-toggle">
@@ -146,6 +148,8 @@
 							</li>
 						</ul>
 					</li>
+					@endif
+					@if(AdminAuth::check_permissions('ntd_full'))
 					<li class="{{ HTML::active(['admin.employers.*', 'admin.jobs.*']) }}">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-pencil-square-o"></i>
@@ -259,8 +263,9 @@
 							
 						</ul>
 					</li> <!-- end ntd -->
-
+					@endif
 					<!--start training-->
+					@if(AdminAuth::check_permissions('train_full'))
 					<li class="{{ HTML::active(['admin/training','admin/training/*']) }}">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-pencil-square-o"></i>
@@ -356,8 +361,9 @@
 							</li>
 						</ul>
 					</li>
+					@endif
 					<!--end- traning-->
-
+					@if(AdminAuth::check_permissions('culd_full'))
 					<!--Cung ung lao dong-->
 					<li class="{{ HTML::active(['admin/cungunglaodong','admin/cungunglaodong/*']) }}">
 						<a href="#" class="dropdown-toggle">
@@ -398,8 +404,10 @@
 							 
 						</ul>
 					</li><!--end- cungunglaodong-->
-
+					@endif
+					@if(AdminAuth::check_permissions('admin_full'))
 					<!--Ngành nghề-->
+
 					<li class="{{ HTML::active(['admin/category','admin/category/*']) }}">
 						<a href="{{URL::to('admin/category')}}" class="dropdown-toggle">
 							<i class="menu-icon fa fa-list-alt"></i>
@@ -456,7 +464,8 @@
 							</li>
 						</ul>
 					</li><!--end- province-->
-					
+					@endif
+					@if(AdminAuth::check_permissions('news_full'))
 					<!--start training-->
 					<li class="{{ HTML::active(['news.index*','news.index*']) }}">
 						<a href="#" class="dropdown-toggle">
@@ -486,7 +495,8 @@
 						</ul>
 					</li>
 					<!--end- traning-->
-
+					@endif
+					@if(AdminAuth::check_permissions('hiring_full'))
 					<!--start training-->
 					<li class="{{ HTML::active(['admin.hiring.*']) }}">
 						<a href="#" class="dropdown-toggle">
@@ -517,14 +527,15 @@
 					</li>
 					<!--end- traning-->
 
-
+					@endif
+					@if(AdminAuth::check_permissions('admin_full'))
 					<li class="{{ HTML::active(['admin.product.*']) }}">
 						<a href="{{ URL::route('admin.product.index') }}">
 							<i class="menu-icon fa fa-newspaper-o"></i>
 							<span class="menu-text"> Dịch vụ </span>
 						</a>
 					</li>
-
+					@endif
 
 				</ul><!-- /.nav-list -->
 

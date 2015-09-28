@@ -55,14 +55,20 @@ class UserController extends \BaseController {
 	public function store()
 	{
 		//
-		$params = Input::only('username', 'email', 'password');
+	 
+ 
+		$params = Input::only('username', 'email', 'password','permission');
 		$validator = new App\DTT\Forms\AdminUserCreate;
 		if($validator->fails())
 		{
 			return Redirect::back()->withInput()->withErrors($validator);
 		} else {
+
+			//var_dump(isset($params['permission']));
 			$params['permission'] = isset($params['permission'])?$params['permission']:array();
+			 
 			$params['permissions'] = json_encode($params['permission']);
+			 
 			unset($params['permission']);
 			$params['password'] = DTT\Sentry\Hashing\Sha256Hasher::hash($params['password']);
 			$user = AdminUser::create($params);

@@ -1,7 +1,7 @@
 <?php
 
 class AdminUser extends \Eloquent {
-	protected $fillable = ['username', 'email', 'password'];
+	protected $fillable = ['username', 'email', 'password','permissions'];
 	protected $table = 'admin_info';
 	public function hasAccess($requestPermission)
 	{

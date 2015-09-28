@@ -481,16 +481,8 @@ class EmployerController extends \BaseController {
 
 	public function report()
 	{
-
-
-		
-		 
-
-		 
 		$job_not_active=Job::where('status','<>',1)->count(); 
 		$ntd_vip	= Order::count();
-		 
-		 
 		$total_ntd = NTD::count();
 		return View::make('admin.employers.report',compact('job_not_active','ntd_vip','total_ntd'));
 	}
@@ -506,15 +498,8 @@ class EmployerController extends \BaseController {
 
 		 
 			$employers = Order::join('employers','orders.ntd_id','=','employers.id')->join('companies','orders.ntd_id','=','companies.ntd_id')
-		   ->select(array('orders.id as ckid','employers.id as emid','companies.company_name as name','orders.is_xacthuc as xacthuc','orders.end_date_xacthuc as end_xacthuc','orders.package_name','orders.created_date as created_date','orders.ended_date as ended_date','orders.created_at as created_at','orders.updated_at as updated_at','orders.remain as remain','employers.id as ids'))->groupBy('orders.ntd_id')->having(('orders.ntd_id'), '>', 1);
-		 
-	   //$employers=null;
-	   
-/*	$employers	=	Order::join('employers','orders.ntd_id','=','employers.id')
-->select(array('orders.id as ckid','orders.ntd_id','orders.package_name','orders.created_date','orders.ended_date','orders.updated_at','orders.remain','employers.email as email'));*/
-
-
-		return Datatables::of($employers)
+		   ->select(array('orders.id as ckid','employers.id as emid','companies.company_name as name','orders.is_xacthuc as xacthuc','orders.end_date_xacthuc as end_xacthuc','orders.package_name as package_name','orders.created_date as created_date','orders.ended_date as ended_date','orders.created_at as created_at','orders.updated_at as updated_at','orders.remain as remain','employers.id as ids','orders.start_date_xacthuc as start_date_xacthuc'));
+		 return Datatables::of($employers)
 		->remove_column('emid')
 		->remove_column('end_xacthuc')
 		->edit_column('xacthuc','@if($xacthuc==0) <span style="color:red">Chưa xác thực</span> @else 
@@ -524,9 +509,10 @@ class EmployerController extends \BaseController {
 			Hết hạn xác thực
 			@endif 
 		@endif')
+		->remove_column('start_date_xacthuc')
 		->edit_column('name','<a class="" href="{{URL::route("admin.employers.edit",$emid)}}?page={{'.$page.'}}&web=emp_vip" title="Edit">{{$name}}</a>')
-		->edit_column('created_date','{{date("d-m-Y H:i:s",strtotime($created_date))}}')
-		->edit_column('ended_date','{{date("d-m-Y H:i:s",strtotime($ended_date))}}')
+		->edit_column('created_date','@if($package_name!=null){{date("d-m-Y H:i:s",strtotime($created_date))}} @else {{date("d-m-Y H:i:s",strtotime($start_date_xacthuc))}} @endif')
+		->edit_column('ended_date','@if($package_name!=null){{date("d-m-Y H:i:s",strtotime($ended_date))}}@else {{date("d-m-Y H:i:s",strtotime($end_xacthuc))}} @endif')
 		->edit_column('created_at','@if($created_at==$updated_at) Tham gia lần đầu @else Gia hạn @endif')
 		->remove_column('updated_at')
 		->edit_column('remain','{{$remain}} Ngày')

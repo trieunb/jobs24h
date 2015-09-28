@@ -9,6 +9,9 @@ class AdminController extends \BaseController {
 	 */
 	public function index()
 	{
+
+		/*var_dump(AdminAuth::check_permissions("ntv_full")); check quyền hạn
+		 die();*/
 		$ntdLogin = NTD::whereRaw("DATE_FORMAT(last_login, '%Y-%m-%d') = '".date('Y-m-d')."'")->count();
 		$totalNTD = NTD::count();
 		$ntvLogin = NTV::whereRaw("DATE_FORMAT(last_login, '%Y-%m-%d') = '".date('Y-m-d')."'")->count();
