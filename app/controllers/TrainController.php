@@ -437,10 +437,13 @@ class TrainController extends \BaseController {
 			$del=TrainingTrainingPeople::where('training_people_id','=',$delete_data->id);
 			//kiểm tra có ảnh đại diện hay hok, nếu có thì xóa
 			if ($delete_data['thumbnail']!='avatar.jpg') {
+				if ($delete_data['thumbnail']!=null) {
+					$path=public_path().'/'.$delete_data['thumbnail'];
+
+					 if(File::exists($path))
+						unlink($path);
+				}
 				
-				$path=public_path().'/'.$delete_data['thumbnail'];
-				 if(File::exists($path))
-					unlink($path);
 				 
 			}
 			

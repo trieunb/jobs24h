@@ -82,6 +82,89 @@ Route::filter('sentry.logged.ntv', function() {
 	}
 });
 
+
+//kiểm tra quyền admin
+Route::filter('sentry.permissions.admin_full',function()
+{
+	if( !AdminAuth::check_permissions('admin_full'))
+	{
+		return "Bạn không được phép truy cập";
+
+	}
+	 
+	 
+});
+
+//Kiểm tra quyền nhà tuyển dụng
+Route::filter('sentry.permissions.ntd_full',function()
+{
+	if( !AdminAuth::check_permissions('ntd_full'))
+	{
+		return "Bạn không được phép truy cập";
+
+	}
+	 
+	 
+});
+
+//kiểm tra quyền người tìm việc
+Route::filter('sentry.permissions.ntv_full',function()
+{
+	if( !AdminAuth::check_permissions('ntv_full'))
+	{
+		return "Bạn không được phép truy cập";
+
+	}
+	 
+	 
+});
+//kiểm tra quyền training
+Route::filter('sentry.permissions.train_full',function()
+{
+	if( !AdminAuth::check_permissions('train_full'))
+	{
+		return "Bạn không được phép truy cập";
+
+	}
+	 
+	 
+});
+//kiểm tra quyền cung ứng
+Route::filter('sentry.permissions.culd_full',function()
+{
+	if( !AdminAuth::check_permissions('culd_full'))
+	{
+		return "Bạn không được phép truy cập";
+
+	}
+	 
+	 
+});
+//kiểm tra quyền tin tưc
+Route::filter('sentry.permissions.news_full',function()
+{
+	if( !AdminAuth::check_permissions('news_full'))
+	{
+		return "Bạn không được phép truy cập";
+
+	}
+	 
+	 
+});
+
+//kiểm tra quyền hiring
+Route::filter('sentry.permissions.hiring_full',function()
+{
+	if( !AdminAuth::check_permissions('hiring_full'))
+	{
+		return "Bạn không được phép truy cập";
+
+	}
+	 
+	 
+});
+
+
 /**
  * Filter languages
  */

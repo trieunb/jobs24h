@@ -16,4 +16,7 @@ class OrderDetail extends \Eloquent {
 	{
 		return $this->belongsTo('Resume', 'rs_id');
 	}
+
+	 
+
 }

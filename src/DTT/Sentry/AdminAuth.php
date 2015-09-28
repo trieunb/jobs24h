@@ -60,6 +60,7 @@ class AdminAuth {
 		}
 		return true;
 	}
+
 	public static function getUser()
 	{
 		if( ! self::check())
@@ -90,6 +91,21 @@ class AdminAuth {
 			return false;
 		}
 		return false;
+	}
+
+	public static function check_permissions($string)
+	{
+		if (!is_null(self::check()))
+		{
+			
+			if(in_array($string,json_decode(self::getUser()->permissions)))
+				return true;
+			else
+				return false;
+		}
+		else return false;
+
+	 
 	}
 	
 

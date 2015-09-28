@@ -7,15 +7,13 @@ Class OrdersController extends \BaseController
 
 		$ntd=NTD::whereId($id)
 						->with('company')
-						->with(array('orderpostrec'=>function($q1) use($id)
-						{
-							$q1->whereEpackageId(1)->whereNtdId($id);
-						}))->with('order')->first();
-							 
-		$package_view_cv=EServices::whereId(4)->with('packages')->first();
-  		
-		$epackage=EPackage::whereId(1)->first();
-		return View::make('admin.employers.order_employer',compact('ntd','package_view_cv','epackage'));				 
+						->with('order')->first();
+
+
+						 
+		$package_view_cv=Package::where('service_id','<>',1)->lists('package_name','id');
+		$package_xacthuc=Package::where('service_id','=',1)->lists('package_name','id');
+		return View::make('admin.employers.order_employer',compact('ntd','package_view_cv','package_xacthuc'));				 
 	}
 	function getPackage($id)
 	{
@@ -121,38 +119,27 @@ Class OrdersController extends \BaseController
 		{
 
 			$ntd_id=Input::get('ntd_id');
+			$action=Input::get('action');
+			$id=Input::get('id');
+			$package=Package::whereId(Input::get('id'))->first();
+			$insert_order = Order::whereNtdId($ntd_id)->first();
 
-			if (Input::get('id')) {
-				$package=Package::whereId(Input::get('id'))->first();
-				$insert_order = Order::whereNtdId($ntd_id)->first();
-				 
-				if ($insert_order) {
-					$remain			=	$insert_order->remain;
-					$total 			=	$remain + $package['total_resume'];
-					$insert_order->package_id	= 	Input::get('id');
-					$insert_order->package_name =	$package['package_name'];
-					$insert_order->total 		=	$package['total_resume'];
-					$insert_order->remain		=	$total;
-					if($insert_order->ended_date	<	date('Y-m-d H:i:s'))
-						$insert_order->ended_date	=	date('Y-m-d H:i:s',strtotime ( ''.$package['total_date'].' day' , strtotime (date('Y-m-d H:i:s')) ) ) ;
-					else	
-						$insert_order->ended_date	=	date('Y-m-d H:i:s',strtotime ( ''.$package['total_date'].' day' , strtotime ($insert_order['ended_date'] ) )) ;
-
-					$insert_order->save();
-					$order_detail = new OrderDetail;
-					$order_detail->ntd_id=$ntd_id;
-					$order_detail->madonhang=strtotime(date('Y-m-d H:i:s'));
-					$order_detail->order_id=$insert_order->id;
-					$order_detail->order_post_rec_id=0;
-					$order_detail->name_package=$package->package_name;
-					$order_detail->price=$package->price;
-					$order_detail->save();
-					return Response::json(['has'=>true]); 
-				}
-
-				else 
+			if(!$insert_order)
+			{
+				if($action=='xacthuc')
 				{
-
+					
+					$insert_order=Order::create(
+						array(
+							'ntd_id'=>$ntd_id,
+							'is_xacthuc'=>1,
+							'start_date_xacthuc'=>date('Y-m-d H:i:s'),
+							'end_date_xacthuc'=>date('Y-m-d H:i:s',strtotime ( ''.$package['total_date'].' day' , strtotime (date('Y-m-d H:i:s') ) )),
+							));
+				}
+				else
+				{
+					 
 					$insert_order=Order::create(
 					array(
 						'ntd_id'=>$ntd_id,
@@ -167,7 +154,46 @@ Class OrdersController extends \BaseController
 
 						)
 					);
-					$insert_order->save();
+				}
+			}
+			else
+			{
+				if($action=="xacthuc")
+					{
+						log::info('có order,xác thực');
+
+						if($insert_order->is_xacthuc==1)
+						{
+							$insert_order->end_date_xacthuc	= date('Y-m-d H:i:s',strtotime ( ''.$package['total_date'].' day' , strtotime ($insert_order->end_date_xacthuc ) )) ;
+						}
+						else
+						{
+							$insert_order->is_xacthuc=1;
+							$insert_order->start_date_xacthuc=date('Y-m-d H:i:s');
+							$insert_order->end_date_xacthuc	= date('Y-m-d H:i:s',strtotime ( ''.$package['total_date'].' day' , strtotime (date('Y-m-d H:i:s') ) )) ;
+						}
+						 
+					}
+				else
+				{
+					log::info('có order,search');
+						if ($insert_order->package_id==0) {
+							$insert_order->created_date=date('Y-m-d H:i:s');
+						}
+						$remain			=	$insert_order->remain;
+						$total 			=	$remain + $package['total_resume'];
+						$insert_order->package_id	= 	Input::get('id');
+						$insert_order->package_name =	$package['package_name'];
+						$insert_order->total 		=	$package['total_resume'];
+						$insert_order->remain		=	$total;
+						if($insert_order->ended_date	<	date('Y-m-d H:i:s'))
+							$insert_order->ended_date	=	date('Y-m-d H:i:s',strtotime ( ''.$package['total_date'].' day' , strtotime (date('Y-m-d H:i:s')) ) ) ;
+						else	
+							$insert_order->ended_date	=	date('Y-m-d H:i:s',strtotime ( ''.$package['total_date'].' day' , strtotime ($insert_order['ended_date'] ) )) ;
+				}
+			}
+
+			$insert_order->save();
 					$order_detail = new OrderDetail;
 					$order_detail->ntd_id=$ntd_id;
 					$order_detail->madonhang=strtotime(date('Y-m-d H:i:s'));
@@ -178,10 +204,9 @@ Class OrdersController extends \BaseController
 					$order_detail->save();
 					return Response::json(['has'=>true]);
 
-				}
-			}
 		}
-		else return Response::json(['has'=>true]);
+
+
 			
 	}
 
@@ -192,20 +217,46 @@ Class OrdersController extends \BaseController
 	{
 		if($name=="cancel-search")
 		{
+
 			$del=Order::find($id);
-			if ($del->delete()) {
+			if($del->is_xacthuc==0)
+			{
+				if ($del->delete()) {
 					return Redirect::back()->with('success','Xóa Thành công');
 				}
-			else 	return Redirect::back()->withErrors('Xóa Không thành công')->withInput();
+			}
+			else{
+				$del->package_id=0;
+				$del->Package_name=null;
+				$del->total=0;
+				$del->remain=0;
+				$del->created_date=0;
+				$del->ended_date=0;
+				$del->save();
+				return Redirect::back()->with('success','Xóa Thành công');
+			}
 		}
-		else
+		elseif($name=="cancel-xacthuc")
 		{
-			$del=OrderPostRec::whereNtdId($name)->whereEpackageId($id);
-			if ($del->delete()) {
+			$del=Order::find($id);
+			if($del->package_id==0)
+			{
+				if ($del->delete()) 
 					return Redirect::back()->with('success','Xóa Thành công');
-				}
-			else 	return Redirect::back()->withErrors('Xóa Không thành công')->withInput();
+			}
+			else
+			{
+				$del->is_xacthuc=0;
+				$del->start_date_xacthuc=0;
+				$del->end_date_xacthuc=0;
+				 
+				$del->save();
+				return Redirect::back()->with('success','Xóa Thành công');
+			}
+		 
 		}
+		else return Redirect::back()->withErrors('Xóa Không thành công')->withInput();
+
 		
 
 	}

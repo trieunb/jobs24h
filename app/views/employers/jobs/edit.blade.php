@@ -285,7 +285,7 @@
 														<tr>
 															 
 																<td>
-																<a class="text-blue" href="{{ URL::route('employers.orders.detail', $value->id) }}">1234</a>
+																<a class="text-blue" href="{{ URL::route('employers.orders.detail') }}">Xem đơn hàng</a>
 															</td>
 															<td>{{ $value->epackage_name }}
 															<div class="collapse vncollapse" id="collapse{{ $value->id }}">

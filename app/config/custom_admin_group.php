@@ -1,7 +1,7 @@
 <?php 
 return [
     'permission' => [
-        'admin_full' => "Quản trị Admin",
+        'admin_full' => "Quản trị Admin (Thêm, sửa , xóa, phân quyền.)",
         'ntv_full' => "Quản trị người tìm việc, hồ sơ",
         'ntd_full' => "Quản trị nhà tuyển dụng, tin tuyển dụng",
         'train_full' => "Quản trị Đào tạo, tài liệu",

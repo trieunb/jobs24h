@@ -15,18 +15,20 @@ class OrderController extends \Controller {
 	{
 		if($type == 1)
 		{
-			$order = Order::where('ntd_id', Auth::id())->where('ended_date', '>=', date('Y-m-d H:i:s'))->with('ordersdetail')->first();
+			$order = Order::where('ntd_id', Auth::id())->where('ended_date', '>=', date('Y-m-d H:i:s'))->first();
 			  
-			$verify = \OrderPostRec::where('ntd_id', Auth::id())->where('epackage_id',1)->where('ended_date', '>=', date('Y-m-d H:i:s'))->with('ordersdetail')->first();
+		//	$verify = \OrderPostRec::where('ntd_id', Auth::id())->where('epackage_id',1)->where('ended_date', '>=', date('Y-m-d H:i:s'))->with('ordersdetail')->first();
 			//$orders_post_rec=\OrderPostRec::where('ntd_id', Auth::id())->where('ended_date', '>=', date('Y-m-d H:i:s'))->paginate(10);
 
 		} elseif($type == 2) {
-			$order = Order::where('ntd_id', Auth::id())->where('ended_date', '<', date('Y-m-d H:i:s'))->with('ordersdetail')->first();
-			$verify = \OrderPostRec::where('ntd_id', Auth::id())->where('epackage_id',1)->where('ended_date', '<', date('Y-m-d H:i:s'))->first();
+			$order = Order::where('ntd_id', Auth::id())->where('ended_date', '<', date('Y-m-d H:i:s'))->first();
+			//$verify = \OrderPostRec::where('ntd_id', Auth::id())->where('epackage_id',1)->where('ended_date', '<', date('Y-m-d H:i:s'))->first();
 		} else {
-			$order = Order::where('ntd_id', Auth::id())->with('ordersdetail')->first();
-			$verify = \OrderPostRec::where('ntd_id', Auth::id())->where('epackage_id',1)->first();
+			$order = Order::where('ntd_id', Auth::id())->first();
+			//$verify = \OrderPostRec::where('ntd_id', Auth::id())->where('epackage_id',1)->first();
 		}
+
+
 		return View::make('employers.orders.index', compact('order','verify'));
 	}
 	public function getMuaDichVu()
@@ -52,12 +54,15 @@ class OrderController extends \Controller {
 	}
 	public function getDetail()
 	{
-		$order_detail=\OrderDetail::whereNtdId(Auth::id())->with(array('orderpostrec'=>function($q)
+		/*$order_detail=\OrderDetail::whereNtdId(Auth::id())->with(array('orderpostrec'=>function($q)
 			{
-				$q->with('job_has')->select('vitri');
-			}))->paginate(10);
-		var_dump($order_detail->toArray());
-		die();
+				$q->select('order_post_rec.job_id');
+			//	$q->join('jobs','jobs.id','=','order_post_rec.job_id');
+			}))->paginate(10);*/
+
+		$order_detail=\OrderDetail::where('order_details.ntd_id','=',Auth::id())->leftJoin('order_post_rec','order_details.order_post_rec_id','=','order_post_rec.id')->leftJoin('jobs','order_post_rec.job_id','=','jobs.id')->select('order_details.madonhang as madonhang','order_details.name_package as name_package','jobs.vitri as vitri','order_details.price as price','order_details.created_at as created_at')->Orderby('order_details.created_at','desc')->paginate(10);
+
+		 
 
 		return View::make('employers.orders.order_detail',compact('order_detail'));
 		

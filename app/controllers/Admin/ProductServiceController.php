@@ -4,7 +4,8 @@ class ProductServiceController extends \Controller {
 	function getIndex()
 	{
 		$epackage=EPackage::with('eservice')->get();
-		$package_view_cv=EServices::whereId(4)->with('packages')->first();
+		$package_view_cv=Package::with('eservice')->get();
+		
 		return View::make('admin.products.product',compact('epackage','package_view_cv'));
 	}
 

@@ -31,9 +31,14 @@
 								<td>
 									{{ $value->madonhang }}
 								</td>
-								<td> {{$value->name_package}}</td>
+								<td> <span> {{$value->name_package}} </span>
+										 @if($value->vitri)
+										  : <span style="color:red">{{$value->vitri}}</span>
+										 @endif	 
+								</td>
 								<td>{{ $value->created_at}}</td>
-								<td>{{ $value->price }}</td>
+								
+								<td>{{ number_format($value->price) }} vnđ</td>
 							</tr>
 							 
 						 	@endforeach

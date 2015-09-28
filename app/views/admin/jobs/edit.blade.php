@@ -3,8 +3,13 @@
 @section('page-header')Sửa tin tuyển dụng @stop
 @section('content')
 {{ HTML::script(URL::to('packages/ckeditor/ckeditor/ckeditor.js')) }}
-	<!-- {{ Form::open(array('method'=>'POST', 'action'=> array('admin.jobs.update1',$page, $job->id), 'class'=>'form form-horizontal', 'method'=>'PUT' ) ) }} -->
-	{{ Form::open(array('method'=>'POST', 'class'=>'form form-horizontal' ) ) }}
+
+
+
+	{{ Form::open(array('url'=>URL::route('admin.jobs.update',$job->id).'?page='.Input::get('page').'&web='.Input::get('web').'' ,'class'=>'form form-horizontal', 'method'=>'PUT' ) ) }}
+
+
+	<!-- {{ Form::open(array('method'=>'POST', 'action'=> array('admin.jobs.update1'), 'class'=>'form form-horizontal' ) ) }} -->
 		@include('includes.notifications')
 		
 		<div class="form-group">
