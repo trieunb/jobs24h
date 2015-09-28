@@ -4,7 +4,7 @@
 @section('content')
 	{{ Form::open(array('method'=>'POST', 'action'=> array('admin.resumes.edit.uploadcv', $resume->id), 'class'=>'form form-horizontal', 'files'=>'true' ) ) }}
 		@include('includes.notifications')
-		<div class="form-group">
+			<div class="form-group">
 				<label for="input" class="col-sm-2 control-label">Cho phép tìm kiếm:</label>
 				<div class="col-sm-10">
 					<div class="checkbox">

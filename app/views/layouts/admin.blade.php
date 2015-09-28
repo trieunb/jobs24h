@@ -8,6 +8,7 @@
 	<title>@yield('title', isset($title) ?: 'Dashboard') - Admin VnJobs</title>
 	<!-- BOOTSTRAP STYLES-->
 	{{ HTML::style('assets/css/bootstrap.min.css?v='.$ver) }}
+	{{ HTML::style('ace/assets/css/style.css?v='.$ver) }}
 	<!-- FONTAWESOME ICONS STYLES-->
 	{{ HTML::style('assets/font-awesome/4.2.0/css/font-awesome.min.css?v='.$ver) }}
 	<!--CUSTOM STYLES-->

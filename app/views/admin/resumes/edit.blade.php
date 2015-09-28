@@ -2,7 +2,7 @@
 @section('title')Edit Resume @stop
 @section('page-header')Chỉnh sửa hồ sơ @stop
 @section('content')
-	{{ Form::open(array('method'=>'PUT', 'action'=> array('admin.resumes.update', $resume->id), 'class'=>'form form-horizontal' ) ) }}
+	{{ Form::open(array('method'=>'POST', 'route'=> array('admin.resumes.post-edit', $resume->id), 'class'=>'form form-horizontal', 'accept-charset' =>'UTF-8') ) }}
 		@include('includes.notifications')
 			<div class="form-group">
 				<label for="input" class="col-sm-2 control-label">Cho phép tìm kiếm:</label>
@@ -37,7 +37,7 @@
 			<div class="form-group">
 				<label for="inputEmail" class="col-sm-2 control-label">Email:</label>
 				<div class="col-sm-8">
-					{{ Form::email('email', $resume->ntv->email, array('autocomplete'=>'off', 'id'=>'email', 'required', 'class'=>'form-control', 'required', 'placeholder'=>'Nhập email người tìm việc') ) }}
+					{{ Form::text('email', $resume->ntv->email, array('autocomplete'=>'off', 'id'=>'email', 'required', 'class'=>'form-control', 'required', 'placeholder'=>'Nhập email người tìm việc') ) }}
 					<div class="col-xs-6">
 						<ul class="dropdown-menu email-result">
 							
@@ -48,8 +48,8 @@
 			<div class="form-group">
 				<label for="input" class="col-sm-2 control-label">Tiêu đề Hồ sơ <abbr>*</abbr></label>
 				<div class="col-sm-8">
-					{{ Form::text('tieude', $resume->tieude_cv, array('class'=>'form-control', 'placeholder'=>'Ví dụ: CV Lập trình viên') ) }}
-					<span class="error-message">{{$errors->first('tieude')}}</span>
+					{{ Form::text('tieude_cv', $resume->tieude_cv, array('class'=>'form-control', 'placeholder'=>'Ví dụ: CV Lập trình viên') ) }}
+					<span class="error-message">{{$errors->first('tieude_cv')}}</span>
 				</div>
 			</div>
 			<div class="form-group">
@@ -185,21 +185,20 @@
 		<div class="col-sm-12">
 			<h2 class="alert alert-info">Kinh Nghiệm Làm Việc</h2>
 			@if(count($resume->experience))
-				<?php $n = 1;?>
 				@foreach($resume->experience as $exp)
-				<div class="items block" id="saveWorkExp_{{$n}}">
+				<div class="items block" id="saveWorkExp">
 					<div class="form-horizontal" id="saveWorkExp">
 					<div class="form-group">
 						<label for="" class="col-sm-2 control-label">Chức danh <abbr>*</abbr></label>
 						<div class="col-sm-8">
-							{{Form::input('text','position', $exp->position, array('class'=>'position form-control'))}}
+							{{Form::input('text','position[]', $exp->position, array('class'=>'position form-control'))}}
 							<span class="error-message">{{$errors->first('position')}}</span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="" class="col-sm-2 control-label">Công ty <abbr>*</abbr></label>
 						<div class="col-sm-8">
-							{{Form::input('text', 'company_name', $exp->company_name, array('class'=>'company_name form-control'))}}
+							{{Form::input('text', 'company_name[]', $exp->company_name, array('class'=>'company_name form-control'))}}
 							<span class="error-message">{{$errors->first('company_name')}}</span>
 						</div>
 					</div>
@@ -207,7 +206,7 @@
 						<label for="" class="col-sm-2 control-label">Từ tháng <abbr>*</abbr></label>
 								<div class="col-sm-2">
 									<div class="input-group input-group-sm">
-										{{Form::input('text','from_date', $exp->from_date, array('id'=>'datepicker','class'=>'hasDatepicker form-control', 'placeholder'=>'Ví dụ: 04/2012','data-date-format'=>'MM-YYYY'))}}
+										{{Form::input('text','from_date[]', $exp->from_date, array('id'=>'datepicker','class'=>'hasDatepicker form-control', 'placeholder'=>'Ví dụ: 04/2012','data-date-format'=>'MM-YYYY'))}}
 										<span class="input-group-addon">
 											<i class="ace-icon fa fa-calendar"></i>
 										</span>
@@ -217,7 +216,7 @@
 								<label for="" class="col-sm-2 control-label">Đến tháng <abbr>*</abbr></label>
 								<div class="col-sm-2">
 									<div class="input-group input-group-sm">
-										{{Form::input('text','to_date', $exp->to_date, array('id'=>'datepicker','class'=>'hasDatepicker form-control', 'placeholder'=>'Ví dụ: 04/2012','data-date-format'=>'MM-YYYY'))}}
+										{{Form::input('text','to_date[]', $exp->to_date, array('id'=>'datepicker','class'=>'hasDatepicker form-control', 'placeholder'=>'Ví dụ: 04/2012','data-date-format'=>'MM-YYYY'))}}
 										<span class="input-group-addon">
 											<i class="ace-icon fa fa-calendar"></i>
 										</span>
@@ -236,20 +235,15 @@
 				            <div class="form-group">
 				            	<label class="col-sm-2 control-label">Mô tả <abbr>*</abbr></label>
 				            	<div class="col-sm-8">
-									{{Form::textarea( 'job_detail', $exp->job_detail, array('class'=>'job_detail form-control keyup', 'rows'=>'5', 'maxlength'=>'5000'))}}
+									{{Form::textarea( 'job_detail[]', $exp->job_detail, array('class'=>'job_detail form-control keyup', 'rows'=>'5', 'maxlength'=>'5000'))}}
 									<em class="text-gray-light job_detail">5000 ký tự có thể nhập thêm</em>
 									<span class="error-message">{{$errors->first('job_detail')}}</span>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-offset-2 col-sm-8">
-									{{Form::button('Xóa', array('class'=>'btn btn-lg bg-gray-light delete-exp', 'data' => $exp->id))}}
-									{{Form::input('hidden', 'id_exp', $exp->id, array('class'=>'id_exp form-control'))}}
+									{{Form::input('hidden', 'id_exp[]', $exp->id, array('class'=>'id_exp form-control'))}}
 								</div>
 							</div>
 							</div>
 							</div>
-							<?php $n+=1;?>
+							
 						@endforeach
 
 						@else 
@@ -323,19 +317,19 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Chuyên ngành <abbr>*</abbr></label>
 				            	<div class="col-sm-8">
-				            		{{Form::input('text', 'specialized', $education->specialized, array('class'=>'specialized form-control', 'placeholder'=>'Ví dụ: Kinh doanh quốc tế'))}}
+				            		{{Form::input('text', 'specialized[]', $education->specialized, array('class'=>'specialized form-control', 'placeholder'=>'Ví dụ: Kinh doanh quốc tế'))}}
 				            		<span class="error-message">{{$errors->first('specialized')}}</span>
 				            	</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Trường <abbr>*</abbr></label>
 				            	<div class="col-sm-4">
-				            		{{Form::input('text', 'school', $education->school, array('class'=>'school form-control', 'placeholder'=>'Ví dụ: Đại học Kinh Tế Tp.Hồ Chí Minh'))}}
+				            		{{Form::input('text', 'school[]', $education->school, array('class'=>'school form-control', 'placeholder'=>'Ví dụ: Đại học Kinh Tế Tp.Hồ Chí Minh'))}}
 				            		<span class="error-message">{{$errors->first('school')}}</span>
 				            	</div>
 				            	<label class="col-sm-2 control-label">Bằng cấp <abbr>*</abbr></label>
 				            	<div class="col-sm-2">
-				            		{{ Form::select('level', array(''=>'- Vui lòng chọn -')+Education::lists('name', 'id'),$education->level, array('class'=>'level form-control', 'id' => 'Diploma') ) }}
+				            		{{ Form::select('level[]', array(''=>'- Vui lòng chọn -')+Education::lists('name', 'id'),$education->level, array('class'=>'level form-control', 'id' => 'Diploma') ) }}
 				            		<span class="error-message">{{$errors->first('level')}}</span>
 				            	</div>
 							</div>
@@ -343,7 +337,7 @@
 								<label class="col-sm-2 control-label">Từ tháng</label>
 				            	<div class="col-sm-2">
 				            		<div class="input-group input-group-sm">
-											{{Form::input('text','study_from', $education->study_from, array('id'=>'datepicker','class'=>'hasDatepicker form-control', 'placeholder'=>'Ví dụ: 04/2012','data-date-format'=>'MM-YYYY'))}}
+											{{Form::input('text','study_from[]', $education->study_from, array('id'=>'datepicker','class'=>'hasDatepicker form-control', 'placeholder'=>'Ví dụ: 04/2012','data-date-format'=>'MM-YYYY'))}}
 											<span class="input-group-addon">
 												<i class="ace-icon fa fa-calendar"></i>
 											</span>
@@ -352,7 +346,7 @@
 				            	<label class="col-sm-2 control-label">Đến tháng</label>
 				            	<div class="col-sm-2">
 				            		<div class="input-group input-group-sm">
-											{{Form::input('text','study_to', $education->study_to, array('id'=>'datepicker','class'=>'hasDatepicker form-control', 'placeholder'=>'Ví dụ: 04/2012','data-date-format'=>'MM-YYYY'))}}
+											{{Form::input('text','study_to[]', $education->study_to, array('id'=>'datepicker','class'=>'hasDatepicker form-control', 'placeholder'=>'Ví dụ: 04/2012','data-date-format'=>'MM-YYYY'))}}
 											<span class="input-group-addon">
 												<i class="ace-icon fa fa-calendar"></i>
 											</span>
@@ -362,21 +356,16 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Xếp loại <abbr>*</abbr></label>
 				            	<div class="col-sm-3">
-				            		{{ Form::select('average_grade_id', array(''=>'- Vui lòng chọn -')+AverageGrade::lists('name', 'id'),$education->average_grade_id, array('class'=>'average_grade_id form-control', 'id' => 'AverageGrade') ) }}
+				            		{{ Form::select('average_grade_id[]', array(''=>'- Vui lòng chọn -')+AverageGrade::lists('name', 'id'),$education->average_grade_id, array('class'=>'average_grade_id form-control', 'id' => 'AverageGrade') ) }}
 				            		<span class="error-message">{{$errors->first('average_grade_id')}}</span>
 				            	</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Thành tựu</label>
 								<div class="col-sm-8">
-									{{Form::textarea( 'achievement', $education->achievement, array('class'=>'achievement form-control keyup', 'rows'=>'5', 'maxlength'=>'5000'))}}
+									{{Form::textarea( 'achievement[]', $education->achievement, array('class'=>'achievement form-control keyup', 'rows'=>'5', 'maxlength'=>'5000'))}}
 									<em class="text-gray-light achievement">5000 ký tự có thể nhập thêm</em>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-offset-2 col-sm-8">
-									{{Form::button('Xóa', array('class'=>'btn btn-lg bg-gray-light delete-education', 'data' => $education->id))}}
-									{{Form::input('hidden', 'id_edu', $education->id, array('class'=>'id_edu form-control'))}}
+									{{Form::input('hidden', 'id_edu[]', $education->id, array('class'=>'id_edu form-control'))}}
 								</div>
 							</div>
 							</div>
@@ -485,7 +474,7 @@
 						
 		<div class="form-group" style="border-top: 5px solid #D9EDF7; margin-top:20px; padding-top:35px;">
 			<div class="col-sm-offset-5">
-				<button type="submit" class="btn btn-primary">Lưu tất cả thay đổi</button>
+				{{ Form::submit('Lưu tất cả thay đổi', ['class'=>'btn btn-primary']) }}
 			</div>
 		</div>
 	{{ Form::close() }}

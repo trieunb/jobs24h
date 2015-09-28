@@ -42,22 +42,27 @@ Route::group(array('prefix'=>'admin'), function() {
 		    'only' => ['index', 'create', 'store','edit', 'update', 'destroy']
 		]);
 		Route::controller('jobs', 'AJobController', array(
-			'getReport'	=>	'admin.jobs.report',
+			'getReport'		=>	'admin.jobs.report',
 			'getWaiting'	=>	'admin.jobs.waiting',
-			'getEditWaiting'	=>	'admin.jobs.editwaiting',
+			'getEditWaiting'=>	'admin.jobs.editwaiting',
 			'getVipWaiting'	=>	'admin.jobs.vipwaiting',
 			'getVipExp'		=>	'admin.jobs.vipexp',
 			'postAjax'		=>	'admin.jobs.ajax',
-			'getEdit1'		=> 'admin.jobs.edit1',
-			'postEdit1'	=>		'admin.jobs.update1',
-			'getDelete'	=>		'admin.jobs.delete',
-			'getJobApp'	=>'admin.jobs.cvapp',
-			'getDeleteApp' =>'admin.jobs.deleteapp',
-			'postSendMail' =>'admin.jobs.sendmail',
+			'getEdit1'		=> 	'admin.jobs.edit1',
+			'postEdit1'		=>	'admin.jobs.update1',
+			'getDelete'		=>	'admin.jobs.delete',
+			'getJobApp'		=> 	'admin.jobs.cvapp',
+			'getDeleteApp' 	=>	'admin.jobs.deleteapp',
+			'postSendMail' 	=>	'admin.jobs.sendmail',
 		));
 
 
 		Route::get('resumes/datatables', array('as'=>'resumes.datatables', 'uses'=>'ResumeController@datatables'));
+		Route::post('resumes/search', array('as'=>'resumes.search', 'uses'=>'ResumeController@search'));
+		Route::get('resumes/uploadcv/{action}/{id}', ['as' => 'admin.resumes.uploadcv', 'uses' => 'ResumeController@actionUploadCV']);
+		Route::post('resumes/uploadcv/edit/{id}', ['as' => 'admin.resumes.edit.uploadcv', 'uses' => 'ResumeController@uploadCV']);
+		
+		
 		Route::controller('resumes', 'ResumeController', array(
 			'getIndex' 		=> 'admin.resumes.index',
 			'getEdit' 		=> 'admin.resumes.edit1',
@@ -69,24 +74,7 @@ Route::group(array('prefix'=>'admin'), function() {
 			'getListCvByNtvDatatables'	=> 'resumes.datatables-list-cv-by-ntv',
 			'getListCvByNtv'		=> 'admin.resumes.list-cv-by-ntv',
 		));
-		Route::post('resumes/search', array('as'=>'resumes.search', 'uses'=>'ResumeController@search'));
-		Route::get('resumes/uploadcv/{action}/{id}', ['as' => 'admin.resumes.uploadcv', 'uses' => 'ResumeController@actionUploadCV']);
-		Route::post('resumes/uploadcv/edit/{id}', ['as' => 'admin.resumes.edit.uploadcv', 'uses' => 'ResumeController@uploadCV']);
-		/*Route::get('resumes/creates/{id}', array('as'=>'resumes.creates', 'uses'=>'ResumeController@creates'));
-		Route::get('resumes/{id}/download', array('as'=>'resumes.download', 'uses'=>'ResumeController@download'));
-		
-		Route::post('resumes/search', array('as'=>'resumes.search', 'uses'=>'ResumeController@search'));
-		Route::get('resumes/uploadcv/{action}/{id}', ['as' => 'admin.resumes.uploadcv', 'uses' => 'ResumeController@actionUploadCV']);
-		Route::post('resumes/uploadcv/edit/{id}', ['as' => 'admin.resumes.edit.uploadcv', 'uses' => 'ResumeController@uploadCV']);
-		
-		Route::get('resumes/report', ['as'=>'admin.resumes.report', 'uses'=>'ResumeController@getReport']);
-		Route::get('resumes/not-active', ['as'=>'admin.resumes.notactive', 'uses'=>'ResumeController@getNotActive']);
-		Route::get('resumes/edit-active', ['as'=>'admin.resumes.editactive', 'uses'=>'ResumeController@getEditActive']);
-		Route::resource('resumes', 'ResumeController', [
-		    'only' => ['show', 'create', 'store', 'edit', 'update', 'destroy']
-		]);
-		*/
-		
+	
 
 		// ROUTE TIN TỨC
 		Route::controller('news', 'NewsController', array(

@@ -21,7 +21,6 @@
 				<th>Cập nhật</th>
 				<th>Hết hạn nộp</th>
 				<th>Loại tin</th>
-				
 				<th>Tình trạng đăng</th>
 				<th>Trạng thái</th>
 				<th>Số Lượt xem</th>

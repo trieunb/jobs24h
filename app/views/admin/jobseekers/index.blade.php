@@ -34,6 +34,7 @@
 				<th>Email</th>
 				<th>SĐT</th>
 				<th>Ngày đăng ký</th>
+				<th>CSKH</th>
 				<th>Hồ sơ</th>
 				<th>Ứng tuyển</th>
 				<th>Đính kèm</th>
@@ -63,7 +64,7 @@
 				bAutoWidth: false,
 					"aoColumns": [
 					  { "bSortable": false, "sClass": "center" },
-					  null, null,null, null, null,null, null, null,null,null,
+					  null, null,null, null, null,null, null, null,null,null,null,
 					  { "bSortable": false }
 					],
 					"aaSorting": [[ 1, "desc" ]],
