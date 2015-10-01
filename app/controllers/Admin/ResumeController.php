@@ -444,13 +444,13 @@ class ResumeController extends \BaseController {
 				if(!isset($data['is_publish'])) $data['is_publish'] = 0;
 				else{$data['is_publish'] = 1;}
 				if($data['is_publish'] == 1){
-					$un_set_publish = Resume::where('ntv_id',$GLOBALS['user']->id)->update(array('is_public'=>0));
+					$un_set_publish = Resume::where('id',$id)->update(array('is_public'=>0));
 				}
 
 				if(!isset($data['is_visible'])) $data['is_visible'] = 0;
 				else{$data['is_visible'] = 1;}
 				if($data['is_visible'] == 1){
-					$un_set_visible = Resume::where('ntv_id',$GLOBALS['user']->id)->update(array('is_visible'=>0));
+					$un_set_visible = Resume::where('id',$id)->update(array('is_visible'=>0));
 				}
 
 
@@ -687,14 +687,14 @@ class ResumeController extends \BaseController {
 				if(!isset($params['is_publish'])) $params['is_publish'] = 0;
 				else{$params['is_publish'] = 1;}
 				if($params['is_publish'] == 1){
-					$un_set_publish = Resume::where('ntv_id',$GLOBALS['user']->id)->update(array('is_public'=>0));
+					$un_set_publish = Resume::where('id', $id)->update(array('is_public'=>0));
 				}
 
 
 				if(!isset($params['is_visible'])) $params['is_visible'] = 0;
 				else{$params['is_visible'] = 1;}
 				if($params['is_visible'] == 1){
-					$un_set_visible = Resume::where('ntv_id',$GLOBALS['user']->id)->update(array('is_visible'=>0));
+					$un_set_visible = Resume::where('id', $id)->update(array('is_visible'=>0));
 				}
 
 				$rs = Resume::where('id',$id)->update(array(
@@ -728,9 +728,15 @@ class ResumeController extends \BaseController {
 		}
 		$file= Config::get('app.upload_path') . 'jobseekers/cv/'.$file_name.'';
 		$name = explode('.', $file_name);
-		if($cv->tieude_cv == ''){
-			$name = $GLOBALS['user']->first_name.$GLOBALS['user']->last_name.'_'.date('m-d-Y',strtotime($cv->updated_at)).'.'.$name[1];
-		}else{$name = $cv->tieude_cv.'.'.$name[1];}
+		$user = NTV::find($cv->ntv_id);
+		if($cv->tieude_cv == '' && $cv->ntv != 0){
+			$user = NTV::find($cv->ntv_id);
+			$name = $user->first_name.$user->last_name.'_'.date('m-d-Y',strtotime($cv->updated_at)).'.'.$name[1];
+		}elseif($cv->ntv_id == 0){
+			$user1 = Application::where('cv_id', $id)->first();
+			$name = $user1->first_name.$user1->last_name.'_'.date('m-d-Y',strtotime($cv->updated_at)).'.'.$name[1];
+		}
+		else{$name = $cv->tieude_cv.'.'.$name[1];}
 		$headers = array(
            'Content-Type: image/png',
            'Content-Type: image/jpeg',

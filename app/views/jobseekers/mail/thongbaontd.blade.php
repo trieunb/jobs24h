@@ -12,7 +12,7 @@
 					<br>Quý công ty vừa nhận được đơn ứng tuyển vào vị trí: "<strong style="text-transform:uppercase">{{$position}}</strong>" từ ứng viên: <strong>{{$ntv_name}}</strong>
 					<br>Để xem thông tin cụ thể, mời Quý công ty đăng nhập: <a href="{{URL::route('employers.candidates.index')}}">{{URL::route('employers.candidates.index')}}</a><br>
 					
-					<br style="font-size:11px; color:#BABABA; font-style:italic">*** Lưu ý: Đây là email được gửi tự động từ hệ thống của VnJobs.nn, vui lòng không trả lời (reply) email này.<br>
+					<br style="font-size:11px; color:#BABABA; font-style:italic">*** Lưu ý: Đây là email được gửi tự động từ hệ thống của VnJobs.vn, vui lòng không trả lời (reply) email này.<br>
 					Mọi thông tin hỗ trợ, Quý công ty vui lòng liên hệ:<br>
 					Mr Quân 043212 3625 ( máy lẻ 1122) hoặc email: quanpv@mptelecom.com.vn<br>
 					Chúc Quý công ty tìm được người mong muốn và ngày càng phát triển!<br>
