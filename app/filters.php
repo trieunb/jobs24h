@@ -93,6 +93,7 @@ Route::filter('sentry.permissions.admin_full',function()
 	}
 	 
 	 
+	 
 });
 
 //Kiểm tra quyền nhà tuyển dụng

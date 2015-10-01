@@ -29,9 +29,18 @@ class AJobController extends \BaseController {
 	 
 		//$sSearch=$this->vn_str_filter($sSearch);
 		$ntds = Input::get('id');
-		$user=AdminAuth::getUser()->username;
-		/*$jobs = Job::select('id as ckid', 'id', 'vitri', 'ntd_id', 'matin', 'is_display', 'hannop', 'status', 'luotxem', 'id as ids', 'slug')->with('ntd')->addSelect;*/
-		$jobs = Job::join('companies','jobs.ntd_id','=','companies.ntd_id')->select(
+		$user=AdminAuth::getUser();
+
+		if(in_array('admin_full',json_decode($user->permissions))) //nếu là admin thì show hết
+		{
+			$jobs = Job::join('companies','jobs.ntd_id','=','companies.ntd_id')
+			->join('employers as emp',
+				function($join) use($user)
+				{
+					 $join->on('emp.id','=','jobs.ntd_id');
+				})
+			->leftjoin('admin_info','emp.admin_info_id','=','admin_info.id')
+			->select(
 			'jobs.id as ckid',
 		 	'jobs.id as id',
 		 	'jobs.vitri as vitri',
@@ -44,18 +53,46 @@ class AJobController extends \BaseController {
 		 	'jobs.luotxem as luotxem',
 		 	 DB::raw('(select count(*) from application where jobs.id = application.job_id) as appcount'),
 		 	'jobs.id as ids',
-		 	'jobs.id as cskh',
+		 	'admin_info.username as cskh',
 		 	'jobs.slug as slug'
-		 	)->with('ntd')->with('application'); 		
+		 	)->with('ntd')->with('application')->orderBy('jobs.id','desc');
+		}
+		else
+		{
+		/*$jobs = Job::select('id as ckid', 'id', 'vitri', 'ntd_id', 'matin', 'is_display', 'hannop', 'status', 'luotxem', 'id as ids', 'slug')->with('ntd')->addSelect;*/
+		$jobs = Job::join('companies','jobs.ntd_id','=','companies.ntd_id')
+			->join('employers as emp',
+				function($join) use($user)
+				{
+					 $join->on('emp.id','=','jobs.ntd_id');
+				})->where('emp.admin_info_id', '=',$user->id )
+			->leftjoin('admin_info','emp.admin_info_id','=','admin_info.id')
+			->select(
+			'jobs.id as ckid',
+		 	'jobs.id as id',
+		 	'jobs.vitri as vitri',
+		 	'companies.company_name as company_name',
+		 	'jobs.ntd_id as ntd_id',
+		 	'jobs.hannop as hannop',
+		 	DB::raw('(select count(*) from order_post_rec where jobs.id = order_post_rec.job_id) as matin'),
+		 	'jobs.is_display as is_display',
+		 	'jobs.status as status',
+		 	'jobs.luotxem as luotxem',
+		 	 DB::raw('(select count(*) from application where jobs.id = application.job_id) as appcount'),
+		 	'jobs.id as ids',
+		 	'admin_info.username as cskh',
+		 	'jobs.slug as slug'
+		 	)->with('ntd')->with('application')->orderBy('jobs.id','desc'); 		
 		//
+		}
 		if($ntds) $jobs->where('jobs.ntd_id', $ntds);
 		 
 		return Datatables::of($jobs)	
-		->edit_column('ckid','{{$ckid}}')
+		//->edit_column('ckid','{{$ckid}}')
 		->remove_column('id')
 		->edit_column('vitri','<a id="edit" class="" href="{{URL::route("admin.jobs.edit", $id )}}?page={{'.$page.'}}&web=job_index" title="Edit">{{$vitri}}</a> ')
 		//->edit_column('vitri', '{{ HTML::link(URL::route("jobseekers.job", [$slug, $id]), $vitri, ["target"=>"_blank","title"=>"Xem tin tuyển dụng này trên trang chủ"]) }}')
-		->edit_column('company_name','<a id="edit" class="" href="{{URL::route("admin.employers.edit",$id)}}?page={{'.$page.'}}&web=job_index" title="Chỉnh sửa nhà tuyển dụng">{{$company_name}}</a>')
+		->edit_column('company_name','<a id="edit" class="" href="{{URL::route("admin.employers.edit",$ntd_id)}}?page={{'.$page.'}}&web=job_index" title="Chỉnh sửa nhà tuyển dụng">{{$company_name}}</a>')
 		->edit_column('ntd_id', '{{date("d-m-y",strtotime($ntd["updated_at"]))}}') // cập nhật
 		->edit_column('hannop','@if((strtotime(date("d-m-Y",strtotime($hannop)))-strtotime(date("d-m-Y")))/(60*60*24) < 0)
 				<span style="color:red">Hết hạn nộp</span>
@@ -66,7 +103,7 @@ class AJobController extends \BaseController {
 			 @if($matin==0) <a href="{{URL::route(\'admin.order.package\')}}/{{$id}}" target="_blank" title="Click vào để xem chi tiết dịch vụ của tin này">Bình thường</a>
 			 @else <a href="{{URL::route(\'admin.order.package\')}}/{{$id}}" target="_blank" title="Click vào để xem chi tiết dịch vụ của tin này">VIP</a> 
 			 @endif')
-		->edit_column('cskh',''.$user.'')
+		//->edit_column('cskh','{{$cskh}}')
 		->edit_column('is_display', '@if($is_display==1)<span class="label label-success">Đăng ngay</span>@else <span class="label label-info">Chờ đăng</span>@endif')
 		->edit_column('status', '@if($status==1)<span class="label label-primary">Đã duyệt</span>@else <span class="label label-warning">Chưa duyệt</span>@endif')
 		->edit_column('luotxem','{{$luotxem}}')
@@ -364,7 +401,16 @@ class AJobController extends \BaseController {
 	}
 	public function datatables_waiting()
 	{
-		$jobs=Job::where('status','<>', 1)->join('companies','jobs.ntd_id','=','companies.ntd_id')->select(
+		$user=AdminAuth::getUser();
+		if(in_array('admin_full',json_decode($user->permissions)))
+		{
+		$jobs=Job::where('status','<>', 1)->join('companies','jobs.ntd_id','=','companies.ntd_id')
+			->join('employers as emp',
+				function($join) use($user)
+				{
+					 $join->on('emp.id','=','jobs.ntd_id');
+				})
+			->leftjoin('admin_info','emp.admin_info_id','=','admin_info.id')->select(
 			'jobs.id as ckid',
 		 	'jobs.id as id',
 		 	'jobs.vitri as vitri',
@@ -375,8 +421,31 @@ class AJobController extends \BaseController {
 		 	'jobs.is_display as is_display',
 		 	'jobs.status as status',
 		 	'jobs.id as action',
-		 	'jobs.id as cskh'
+		 	'admin_info.username as cskh'
 		 	)->with('ntd');
+		}
+		else
+		{
+			$jobs=Job::where('status','<>', 1)->join('companies','jobs.ntd_id','=','companies.ntd_id')
+			->join('employers as emp',
+				function($join) use($user)
+				{
+					 $join->on('emp.id','=','jobs.ntd_id');
+				})
+			->join('admin_info','emp.admin_info_id','=','admin_info.id')->select(
+			'jobs.id as ckid',
+		 	'jobs.id as id',
+		 	'jobs.vitri as vitri',
+		 	'companies.ntd_id as ntd_id',
+		 	'companies.company_name as company_name',
+		 	'jobs.updated_at as updated_at',
+		 	'jobs.hannop as hannop',
+		 	'jobs.is_display as is_display',
+		 	'jobs.status as status',
+		 	'jobs.id as action',
+		 	'admin_info.username as cskh'
+		 	)->with('ntd');
+		}
 		$i=1;
 		$page=0;
 		if (Request::ajax()) {
@@ -384,7 +453,7 @@ class AJobController extends \BaseController {
 		}
 		
 		$ntds = Input::get('id');
-		$user=AdminAuth::getUser()->username;
+		
 		 
 		//if($ntds) $jobs->where('jobs.ntd_id', $ntds);
 		 
@@ -404,7 +473,7 @@ class AJobController extends \BaseController {
 			<button class="btn btn-xs btn-danger" onclick="return confirm(\'Are you sure you want to delete ?\');" type="submit" title="Delete"><i class="ace-icon fa fa-trash-o bigger-120"></i></button>
 			{{ Form::close() }}
 			')
-		->edit_column('cskh',''.$user.'')
+		//->edit_column('cskh',''.$user.'')
 		->make();
 	}
 
@@ -500,6 +569,9 @@ class AJobController extends \BaseController {
 
 	public function datatables_waiting_vip()
 	{
+		$user=AdminAuth::getUser();
+		if(in_array('admin_full',json_decode($user->permissions)))
+		{	
 		$jobs=Job::whereExists(function ($query) {
 							$query->from('order_post_rec')
 	                      		  ->whereRaw('order_post_rec.job_id = jobs.id');
@@ -508,11 +580,17 @@ class AJobController extends \BaseController {
 						  {
 						  		$q1->addSelect('*');
 						  }))
-					->join('employers','jobs.ntd_id','=','employers.id')
+					->join('employers as emp',
+						function($join) use($user)
+						{
+							 $join->on('emp.id','=','jobs.ntd_id');
+						})
+					->leftjoin('admin_info','emp.admin_info_id','=','admin_info.id')
+					//->join('employers','jobs.ntd_id','=','employers.id')
 					->join('companies','jobs.ntd_id','=','companies.ntd_id')->select(
 						'jobs.id as id',
 						'jobs.vitri as vitri',
-						'employers.id as eid',
+						'emp.id as eid',
 						'companies.company_name as company_name',
 						'jobs.updated_at as updated_at',
 						'jobs.hannop as hannop',
@@ -520,7 +598,37 @@ class AJobController extends \BaseController {
 						'jobs.id as services',
 						 'jobs.id as notes',
 						 'jobs.id as action',
-						 'jobs.id as cskh')  ; 
+						 'admin_info.username as cskh')  ;
+		} 
+		else{
+			$jobs=Job::whereExists(function ($query) {
+							$query->from('order_post_rec')
+	                      		  ->whereRaw('order_post_rec.job_id = jobs.id');
+            		  })
+					->with(array('orderpostrec' => function($q1)
+						  {
+						  		$q1->addSelect('*');
+						  }))
+					->join('employers as emp',
+						function($join) use($user)
+						{
+							 $join->on('emp.id','=','jobs.ntd_id');
+						})
+					->join('admin_info','emp.admin_info_id','=','admin_info.id')
+					//->join('employers','jobs.ntd_id','=','employers.id')
+					->join('companies','jobs.ntd_id','=','companies.ntd_id')->select(
+						'jobs.id as id',
+						'jobs.vitri as vitri',
+						'emp.id as eid',
+						'companies.company_name as company_name',
+						'jobs.updated_at as updated_at',
+						'jobs.hannop as hannop',
+						'jobs.is_display as is_display',
+						'jobs.id as services',
+						 'jobs.id as notes',
+						 'jobs.id as action',
+						 'admin_info.username as cskh')  ;
+		}
 		$page=0;
 		if (Request::ajax()) {
 			 
@@ -529,7 +637,7 @@ class AJobController extends \BaseController {
 		}
 		
 		 
-		$user=AdminAuth::getUser()->username;
+		
 		 
 		//if($ntds) $jobs->where('jobs.ntd_id', $ntds);
 		//$now=strtotime(date('d-m-Y H:i:s')); 
@@ -565,7 +673,7 @@ class AJobController extends \BaseController {
 						 
 			@endforeach
 			')
-		->edit_column('cskh',''.$user.'')
+		//->edit_column('cskh',''.$user.'')
 		->edit_column('action','<a class="btn btn-xs btn-danger" href="#" onclick="return confirm(\'Bạn có chắc muốn xóa ?\');" title="Delete"><i class="ace-icon fa fa-trash-o bigger-120"></i></a>')
 		->make();
 	}
@@ -611,10 +719,12 @@ class AJobController extends \BaseController {
 	public function postSendMail()
 	{
 
+
 		Mail::send('admin.jobs.sendmail', array('send_email'=> Input::get('email'),'company'=>Input::get('company'), 'vitri'=>Input::get('post'),'content'=>Input::get('content')), function($message){
 				$message->from(AdminAuth::getUser()->email, AdminAuth::getUser()->username);
 		        $message->to(Input::get('email'), Input::get('email'))->subject(Input::get('title'));
 		    	});
+				$job=Job::where('vitri',Input::get('post'))->update(['user_approved'=>'1']);
 				return Redirect::back()->with('success', 'Đã gửi email đến nhà tuyển dụng thành công');
 	}
 	

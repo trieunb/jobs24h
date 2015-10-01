@@ -95,15 +95,13 @@ class AdminAuth {
 
 	public static function check_permissions($string)
 	{
-		if (!is_null(self::check()))
-		{
+		 
 			
 			if(in_array($string,json_decode(self::getUser()->permissions)))
 				return true;
 			else
 				return false;
-		}
-		else return false;
+		 
 
 	 
 	}

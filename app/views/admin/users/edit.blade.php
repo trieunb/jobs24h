@@ -38,8 +38,18 @@
 				@foreach(Config::get('custom_admin_group.permission') as $key=>$val )
 				<div class="checkbox">
 					<label>
-						<input type="checkbox" name="permission[]" @if(in_array($key, $upermission))checked="checked"@endif value="{{ $key }}">
+						<input id="{{$key}}" type="checkbox" name="permission[]" @if(in_array($key, $upermission))checked="checked"@endif value="{{ $key }}">
 						{{ $val }}
+						@if($key=="ntv_full")
+							( <span style="color:red;font-size: 12px;"> Còn tổng cộng {{$total_ntv_not_share}} NTV chưa được chia </span>)
+							<a target="_blank" href="{{URL::route('admin.employers.index')}}?Search={{$user->username}}"><p style="font-size: 12px;font-style: italic;">User này đang quản lý <span style="color:red">{{$total_ntv_share}}</span> Người Tìm Việc</p></a>							<div class="ntv_full"></div>
+						@endif
+						@if($key=="ntd_full")
+						
+						(<span style="color:red;font-size: 12px;"> Còn tổng cộng {{$total_ntd_not_share}} NTD chưa được chia</span>)
+						<a target="_blank" href="{{URL::route('admin.employers.index')}}?Search={{$user->username}}"><p style="font-size: 12px;font-style: italic;">User này đang quản lý <span style="color:red;">{{$total_ntd_share}}</span> Nhà Tuyển Dụng</p>	</a>
+							<div class="ntd_full"></div>
+						@endif
 					</label>
 				</div>
 				@endforeach
@@ -52,4 +62,40 @@
 			</div>
 		</div>
 	{{ Form::close() }}
+	{{ Form::open(array("method"=>"delete", "route"=>array("admin.users.destroy",$user->id) )) }}
+	<div class="form-group">
+		<div class="col-sm-10 col-sm-offset-2">
+			<button class="btn btn-danger" onclick="return confirm(\'Bạn có muốn xóa user này ?\');" type="submit" title="Delete"><i class="glyphicon glyphicon-remove"></i> Xóa User</button>
+		</div>
+	</div>
+	{{ Form::close() }}
+	{{ HTML::script('training/assets/js/jquery.min.js') }}
+	 
+	<script type="text/javascript">
+	$(document).ready(function()
+	{
+	 
+	 	$('#ntv_full').change(function(e)
+	 	{
+			if ($('#ntv_full').is(":checked"))
+				{
+				   $('.ntv_full').append('<input type="number" name="num_ntv"><p style="font-size: 12px;font-style: italic;">Nhập số người tìm việc mà bạn muốn chia cho user này</p>')
+				}
+			else
+				$('.ntv_full').empty();
+	 	});
+
+	 	$('#ntd_full').change(function(e)
+	 	{
+			if ($('#ntd_full').is(":checked"))
+				{
+				   $('.ntd_full').append('<input type="number" name="num_ntd"><p style="font-size: 12px;font-style: italic;">Nhập số nhà tuyển dụng mà bạn muốn chia cho user này</p>')
+				}
+			else
+				$('.ntd_full').empty();
+	 	});
+
+	 	
+	});
+	</script>
 @stop

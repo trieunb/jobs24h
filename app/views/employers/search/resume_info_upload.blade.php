@@ -2,7 +2,6 @@
 @section('title')Xem thông tin hồ sơ {{ $resume->tieude_cv }} @stop
 @section('content')
  
-
 	<section class="boxed-content-wrapper clearfix resume-info">
 		<div class="container">
 			
@@ -37,20 +36,46 @@
 									<div class="col-xs-8">
 										<div class="row td-info">
 											<div class="col-xs-5">
-												Ứng viên
+												Kinh nghiệm
 											</div>
 											<div class="col-xs-7">
-												{{ $resume->ntv->first_name }} {{ $resume->ntv->last_name }}
+												{{$resume->namkinhnghiem}} năm
 											</div>
 										</div>
 										<div class="row td-info">
 											<div class="col-xs-5">
-												Địa chỉ
+												Bằng cấp 
 											</div>
 											<div class="col-xs-7">
-												{{ $resume->ntv->address }}
+												{{$resume->bangcap->name}}
 											</div>
 										</div>
+										<div class="row td-info">
+											<div class="col-xs-5">
+												Cấp bậc hiện tại 
+											</div>
+											<div class="col-xs-7">
+												{{$resume->level->name}}
+											</div>
+										</div>
+										<div class="row td-info">
+											<div class="col-xs-5">
+												Vị trí mong muốn 
+											</div>
+											<div class="col-xs-7">
+												{{$resume->vitrimongmuon}}
+											</div>
+										</div>
+										<div class="row td-info">
+											<div class="col-xs-5">
+												Mức lương mong muốn 
+											</div>
+											<div class="col-xs-7">
+												{{$resume->mucluong}}
+											</div>
+										</div>
+
+
 										<div class="row td-info">
 											<div class="col-xs-5">
 												Tỉnh/Thành phố
@@ -75,22 +100,24 @@
 								<div class="col-xs-7">
 									<div class="buy-service">
 										<div class="row buy-header">
+										<?php $ngayhomnay=strtotime(date('Y-m-d H:i:s')) ?>
+											@if(strtotime($check_order['ended_date']) > $ngayhomnay)
+
+												<div class="col-xs-9">
+													Gói dịch vụ xem hồ sơ của quí khách còn <span style="color:red"> {{ round((strtotime($check_order['ended_date']) - $ngayhomnay)/(24*3600))}} </span>ngày.
+													Và số lượng hồ sơ ứng viên có thể xem được là : <span id="cv_xem" style="color:red">{{$check_order['remain']}}</span> hồ sơ.
+												</div>
+												<div class="col-xs-3 pull-right">
+													<a href="{{ URL::route('employers.orders.add') }}" class="btn btn-nomal bg-orange pull-right">Mua dịch vụ</a>
+												</div>
+											@else
 											<div class="col-xs-9">
-												Ấn vào thích để có thể sử dụng miễn phí dịch vụ xem hồ sơ.<br> 
-												Cảm ơn Quý khách đã tin tưởng và sử dụng dịch vụ tìm hồ sơ của VnJobs.vn. 
+												Để xem hồ sơ hoàn chỉnh của ứng viên, quý khách vui lòng sử dụng dịch vụ "tìm hồ sơ"
 											</div>
 											<div class="col-xs-3 pull-right">
-											<script>(function(d, s, id) {
-										      var js, fjs = d.getElementsByTagName(s)[0];
-										      if (d.getElementById(id)) return;
-										      js = d.createElement(s); js.id = id;
-										      js.src = "//connect.facebook.net/vn_VN/sdk.js#xfbml=1&version=v2.4&appId=1627071780874094";
-										      fjs.parentNode.insertBefore(js, fjs);
-										    }(document, 'script', 'facebook-jssdk'));
-										    </script>
-										    <div class="fb_plus"><div class="fb-like" data-href="https://www.facebook.com/vnjobs.vn" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div></div>
-												<!-- <a href="{{ URL::route('employers.orders.add') }}" class="btn btn-nomal bg-orange pull-right">Mua dịch vụ</a> -->
+												<a href="{{ URL::route('employers.orders.add') }}" class="btn btn-nomal bg-orange pull-right">Mua dịch vụ</a>
 											</div>
+											@endif
 										</div>
 										<div class="row buy-information">
 											<div class="col-xs-6">
@@ -131,19 +158,56 @@
 							<span>Thông tin nghề nghiệp</span>
 						</div>
 						<div class="col-xs-12">
-							@if($pdf)
-							<iframe  frameborder="0" scrolling="no" src="{{ URL::route('employers.search.resume_viewer') }}?file={{ URL::to('/').'/uploads/jobseekers/cv/'.$resume->file_name }}" height="800" width="100%"></iframe>
+						 	
+							@if(strtotime($check_order['ended_date']) > $ngayhomnay && $check_order['remain']>0)
+								<div id="no-cv-phu">
+								@if($pdf)
+								<a href="#" id="view" class="btn btn-nomal bg-orange pull-right">Xem hồ sơ</a>
+								Lưu ý:Quí khách đang xem hồ sơ phụ của ứng viên, Gói hồ sơ của quý khách sẽ giảm đi 1 tương ứng với mỗi lần xem hồ sơ chi tiết ứng viên
+								@else
+								Lưu ý: Nếu quí khách chọn tải cv phụ gói dịch vụ của quí khách sẽ không bị giảm.
+								<a href="{{ URL::route('employers.search.print_cv',array($resume->id,'tai-phu')) }}" class="btn btn-lg bg-orange">Tải CV Phụ</a>
+								
+								@endif
+								</div>
+								<div id="view_cv">
+									 
+									@if($pdf)
+									<iframe  frameborder="0" scrolling="no" src="{{ URL::route('employers.search.resume_viewer') }}?file={{ URL::to('/').'/uploads/jobseekers/cv/'.$resume->second_file_name }}" height="800" width="100%"></iframe>
+									@else 
+									<div style="margin: 10px 0px 0px 0px">
+									Lưu ý: Gói hồ sơ của quý khách sẽ giảm đi 1 tương ứng với mỗi lần tải hồ sơ chi tiết ứng viên
+									<a href="{{ URL::route('employers.search.print_cv',array($resume->id,'tai-chinh')) }}" class="btn btn-lg bg-orange">Tải CV Chính</a>
+									</div>
+									
+									@endif
+
+								</div>
+							
+						</div>
+
+								
 							@else 
-							<a href="{{ URL::route('employers.search.print_cv', $resume->id) }}" class="btn btn-lg bg-orange">Tải CV</a>
+								<div class="row buy-header">
+											<div class="col-xs-9">
+												Để xem hồ sơ hoàn chỉnh của ứng viên, quý khách vui lòng sử dụng dịch vụ "tìm hồ sơ"
+											</div>
+											<div class="col-xs-3 pull-right">
+												<a href="{{ URL::route('employers.orders.add') }}" class="btn btn-nomal bg-orange pull-right">Mua dịch vụ</a>
+											</div>
+								</div>
+								<div id="view_cv_tam"> 
+									<iframe style="" id="cv"  frameborder="0" scrolling="no" src="{{ URL::route("employers.search.resume_viewer") }}?file={{ URL::to("/")."/uploads/jobseekers/cv/".$resume->second_file_name }}" height="800" width="100%"></iframe>
+								</div>
 							@endif
 						</div>
 					</div>
 					
 					
 					<div class="row box-footer">
-						<div class="col-xs-12 info-action">
+						<div class="col-xs-12 info-action" >
 							<div class="pull-right">
-								<ul>
+								<ul style="background:white; padding:10px;border-radius:10px" >
 									<li><a href="#modalSaveFolder" data-toggle="modal" data-target="#modalSaveFolder">{{ HTML::image('assets/ntd/images/icon-save-cv.png') }} Lưu thư mục</a></li>
 									<!-- <li><a href="{{ URL::to($locale.'/nha-tuyen-dung/tim-kiem/co-ban?' . implode('&', ['keyword=', 'category=all', 'level='.$resume->capbachientai, 'location=all'])) }}" target="_blank">{{ HTML::image('assets/ntd/images/icon-view-cv.png') }} Xem hồ sơ tương tự</a></li> -->
 									<li><a href="{{ URL::to($locale.'/nha-tuyen-dung/tim-kiem/co-ban?keyword='.$history['keyword'].'&category=all&level='.$resume->capbachientai.'&location=all') }}" target="_blank">{{ HTML::image('assets/ntd/images/icon-view-cv.png') }} Xem hồ sơ tương tự</a></li> 
@@ -255,9 +319,25 @@
 
 @stop
 @section('script')
- 
-	
 	<script type="text/javascript">
+
+	$('#view').click(function(event) { 
+
+		 
+		var cv= $('#cv_xem').text();
+		 $('#cv_xem').text(cv-1);
+		 $('#view_cv').empty();
+		 $('#no-cv-phu').empty();
+		$('#view_cv').append('<iframe style="" id="cv"  frameborder="0" scrolling="no" src="{{ URL::route("employers.search.resume_viewer") }}?file={{ URL::to("/")."/uploads/jobseekers/cv/".$resume->file_name }}" height="800" width="100%"></iframe>');
+					
+		/*else
+
+		$('#view_cv').append('<a href="{{ URL::route('employers.search.print_cv', $resume->id) }}" class="btn btn-lg bg-orange">Tải CV</a>');
+	*/
+	});	
+
+	 	
+
 	$('#inputAdd').click(function(event) { 
 		$('#inputFolder_name').prop({
 			disabled: 'disabled'

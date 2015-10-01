@@ -60,6 +60,7 @@ class AccountController extends \Controller {
 	}
 	public function getDoiMatKhau()
 	{
+		 
 		$user = Auth::getUser();
 		return View::make('employers.account.change_pass', compact('user'));
 	}

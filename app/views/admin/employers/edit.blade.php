@@ -3,7 +3,7 @@
 @section('page-header')Sửa thông tin nhà tuyển dụng @stop
 @section('content')
 
-		{{ Form::open(array('url'=>URL::route('admin.employers.update',$com->id).'?page='.Input::get('page').'&web='.Input::get('web').'' ,'class'=>'form form-horizontal', 'method'=>'PUT' ) ) }}
+		{{ Form::open(array('url'=>URL::route('admin.employers.update',$com->id).'?page='.Input::get('page').'&web='.Input::get('web').'' ,'class'=>'form form-horizontal', 'method'=>'PUT','files'=>true ) ) }}
 
 		<!-- {{ Form::open(['method'=>'POST', 'class'=>'form-horizontal', 'files'=>true]) }} -->
 			@include('includes.notifications')
@@ -111,14 +111,19 @@
 					</div>
 				</div>
 				<div class="col-sm-6">
+
+					@if(file_exists(Config::get('app.upload_path') . 'companies/logos/'.$com->company->logo) && $com->company->logo != NULL)
+					<div class="col-sm-12" style="margin: 13px 0px 10px -10px;">
+						{{ HTML::image('uploads/companies/logos/'.$com->company->logo) }}
+					</div>	
+					<div class="clearfix"></div>
+					@endif
 					<div class="col-sm-5 btn fileUpload">
 					     <span>{{ HTML::image('assets/ntd/images/folder.png') }} Tải ảnh từ máy tính</span>
 					    {{ Form::file('filelogo', ['class'=>'upload uploadBtn', 'id'=>'b1']) }}
 					</div>
 					<div class="col-sm-7">
-					@if(file_exists(Config::get('app.upload_path') . 'companies/logos/'.$com->company->logo) && $com->company->logo != NULL)
-					{{ HTML::image('uploads/companies/logos/'.$com->company->logo) }}
-					@endif
+					
 						<input placeholder="không có tệp nào được chọn" id="b1_u" disabled="disabled" class="form-control col-sm-12 uploadFile">
 					</div>
 					<div class="clearfix"></div>
@@ -226,23 +231,26 @@
 					<div class="col-sm-9 col-sm-offset-3">
 						<small class="legend">- Hỗ trợ định dạng *.jpg,.gif,.png, dung lượng mỗi ảnh không vượt quá 1MB<br>- Chiều cao mỗi ảnh phải >135px và < 1.500px</small>
 					</div>
+
+
+					<div class="col-sm-12">
+						@if(json_decode($com->company->company_images))
+						 
+							@foreach(json_decode($com->company->company_images) as $image)
+								@if($image)
+								
+									<div class="col-sm-2"><a target="_blank" href="{{URL::to('uploads/companies/images/'.$image.'')}}">{{ HTML::image('uploads/companies/images/'.$image,null,array('style'=>'width:100%;height: 65px;')) }}</a></div>
+									
+								@endif
+							@endforeach
+						 <div class="clearfix"></div>	
+						@endif
+					</div>
 				</div>
 				
 				
 
-				<div class="col-sm-12">
-					@if(json_decode($com->company->company_images))
-					 
-						@foreach(json_decode($com->company->company_images) as $image)
-							@if($image)
-							
-								<div class="col-sm-4">{{ HTML::image('uploads/companies/images/'.$image) }}</div>
-								
-							@endif
-						@endforeach
-					 <div class="clearfix"></div>	
-					@endif
-				</div>
+				
 
 			</div>
 

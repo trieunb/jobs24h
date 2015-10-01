@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 @section('title')Add new Administrator @stop
 @section('page-header')Thêm mới quản trị viên @stop
+
+
 @section('content')
 	{{ Form::open(array('method'=>'POST', 'action'=> array('admin.users.store'), 'class'=>'form form-horizontal' ) ) }}
 		@include('includes.notifications')
@@ -31,8 +33,19 @@
 				@foreach(Config::get('custom_admin_group.permission') as $key=>$val )
 				<div class="checkbox">
 					<label>
-						<input type="checkbox" name="permission[]" value="{{ $key }}">
+						<input type="checkbox" name="permission[]" id="{{ $key }}" value="{{ $key }}">
 						{{ $val }}
+						@if($key=="ntv_full")
+							
+							( <span style="color:red;font-size: 12px;"> Còn tổng cộng {{$total_ntv_not_share}} NTV chưa được chia </span>)
+							<div class="ntv_full"></div>
+						@endif
+						@if($key=="ntd_full")
+						(<span style="color:red;font-size: 12px;"> Còn tổng cộng {{$total_ntd_not_share}} NTD chưa được chia</span>)
+							<div class="ntd_full"></div>
+						@endif
+
+						 
 					</label>
 				</div>
 				@endforeach
@@ -45,4 +58,34 @@
 			</div>
 		</div>
 	{{ Form::close() }}
+
+	{{ HTML::script('training/assets/js/jquery.min.js') }}
+	 
+	<script type="text/javascript">
+	$(document).ready(function()
+	{
+	 
+	 	$('#ntv_full').change(function(e)
+	 	{
+			if ($('#ntv_full').is(":checked"))
+				{
+				   $('.ntv_full').append('<input type="number" name="num_ntv"><p style="font-size: 12px;font-style: italic;">Nhập số người tìm việc mà bạn muốn chia cho user này</p>')
+				}
+			else
+				$('.ntv_full').empty();
+	 	});
+
+	 	$('#ntd_full').change(function(e)
+	 	{
+			if ($('#ntd_full').is(":checked"))
+				{
+				   $('.ntd_full').append('<input type="number" name="num_ntd"><p style="font-size: 12px;font-style: italic;">Nhập số nhà tuyển dụng mà bạn muốn chia cho user này</p>')
+				}
+			else
+				$('.ntd_full').empty();
+	 	});
+
+	 	
+	});
+	</script>
 @stop

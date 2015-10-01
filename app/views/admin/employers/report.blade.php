@@ -76,8 +76,9 @@
 				<th>Ngày bắt đầu</th>
 				<th>Ngày hết hạn</th>
 				<th>Loại tham gia</th>
-				<th>Số ngày còn lại</th>
+				<th>Số hồ sơ còn lại</th>
 				<th>#</th>
+				<th>CSKH</th>
 			</tr>
 		</thead>
 		<tbody>

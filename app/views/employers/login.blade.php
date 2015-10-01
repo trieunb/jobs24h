@@ -25,7 +25,7 @@
 								   			</div>
 								   			<div class="form-group pull-right">
 								   				<div class="">
-								   					{{ HTML::link(URL::route('employers.register'), 'Bạn chưa có tài khoản ?') }} / {{ HTML::link('#', 'Quên mật khẩu ?') }}
+								   					{{ HTML::link(URL::route('employers.register'), 'Bạn chưa có tài khoản ?') }} / {{ HTML::link(URL::route('employers.forget'), 'Quên mật khẩu ?') }}
 								   				</div>
 								   			</div>
 								   			<div class="clearfix"></div>

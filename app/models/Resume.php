@@ -143,4 +143,5 @@ class Resume extends \Eloquent {
 	{
 		return $this->hasMany('Application', 'cv_id');
 	}
+	 
 }

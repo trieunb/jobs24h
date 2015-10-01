@@ -1,3 +1,4 @@
+		<?php $per=json_decode($user->permissions) ?>
 		<div id="sidebar" class="sidebar responsive">
 
 				<div class="sidebar-shortcuts" id="sidebar-shortcuts">
@@ -39,7 +40,7 @@
 
 						<b class="arrow"></b>
 					</li>
-					@if(AdminAuth::check_permissions('admin_full'))
+					@if(in_array('admin_full',$per))
 					<li class="{{ HTML::active(['admin.users.*']) }}">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-list"></i>
@@ -71,8 +72,8 @@
 						</ul>
 					</li>
 					@endif
-					@if(AdminAuth::check_permissions('ntv_full'))
-
+					 
+					@if(in_array('ntv_full',$per))
 					<li class="{{ HTML::active(['admin.jobseekers.*', 'admin.resumes.*']) }}">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-pencil-square-o"></i>
@@ -149,8 +150,9 @@
 						</ul>
 					</li>
 					@endif
-					@if(AdminAuth::check_permissions('ntd_full'))
-					<li class="{{ HTML::active(['admin.employers.*', 'admin.jobs.*']) }}">
+					 
+					@if(in_array('ntd_full',$per))
+					<li class="{{ HTML::active(['admin.employers.*', 'admin.jobs.*','admin.order.*']) }}">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-pencil-square-o"></i>
 							<span class="menu-text"> Nhà tuyển dụng </span>
@@ -218,7 +220,7 @@
 									</li> -->
 								</ul>
 							</li>
-							<li class="{{ HTML::active(['admin.employers.*']) }}">
+							<li class="{{ HTML::active(['admin.employers.*','admin.order.*']) }}">
 								<a href="#" class="dropdown-toggle">
 									<i class="menu-icon fa fa-pencil orange"></i>
 										Quản lý nhà tuyển dụng
@@ -265,7 +267,8 @@
 					</li> <!-- end ntd -->
 					@endif
 					<!--start training-->
-					@if(AdminAuth::check_permissions('train_full'))
+					@if(in_array('train_full',$per))
+					 
 					<li class="{{ HTML::active(['admin/training','admin/training/*']) }}">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-pencil-square-o"></i>
@@ -363,7 +366,8 @@
 					</li>
 					@endif
 					<!--end- traning-->
-					@if(AdminAuth::check_permissions('culd_full'))
+					@if(in_array('culd_full',$per))
+					 
 					<!--Cung ung lao dong-->
 					<li class="{{ HTML::active(['admin/cungunglaodong','admin/cungunglaodong/*']) }}">
 						<a href="#" class="dropdown-toggle">
@@ -405,7 +409,8 @@
 						</ul>
 					</li><!--end- cungunglaodong-->
 					@endif
-					@if(AdminAuth::check_permissions('admin_full'))
+					@if(in_array('admin_full',$per))
+					 
 					<!--Ngành nghề-->
 
 					<li class="{{ HTML::active(['admin/category','admin/category/*']) }}">
@@ -465,7 +470,9 @@
 						</ul>
 					</li><!--end- province-->
 					@endif
-					@if(AdminAuth::check_permissions('news_full'))
+
+					@if(in_array('news_full',$per))
+					 
 					<!--start training-->
 					<li class="{{ HTML::active(['news.index*','news.index*']) }}">
 						<a href="#" class="dropdown-toggle">
@@ -496,7 +503,8 @@
 					</li>
 					<!--end- traning-->
 					@endif
-					@if(AdminAuth::check_permissions('hiring_full'))
+					@if(in_array('hiring_full',$per))
+					 
 					<!--start training-->
 					<li class="{{ HTML::active(['admin.hiring.*']) }}">
 						<a href="#" class="dropdown-toggle">
@@ -528,7 +536,8 @@
 					<!--end- traning-->
 
 					@endif
-					@if(AdminAuth::check_permissions('admin_full'))
+					@if(in_array('admin_full',$per))
+					 
 					<li class="{{ HTML::active(['admin.product.*']) }}">
 						<a href="{{ URL::route('admin.product.index') }}">
 							<i class="menu-icon fa fa-newspaper-o"></i>

@@ -31,23 +31,48 @@
 									@else
 										{{ HTML::image('uploads/jobseekers/avatar/'.$resume->ntv->avatar.'') }}
 									@endif
-										<!-- {{ HTML::image('assets/ntd/images/no-avatar.jpg') }} -->
 									</div>
 									<div class="col-xs-8">
 										<div class="row td-info">
 											<div class="col-xs-5">
-												Ứng viên
+												Kinh nghiệm
 											</div>
 											<div class="col-xs-7">
-												{{ $resume->ntv->full_name() }}
+												{{$resume->namkinhnghiem}} năm
 											</div>
 										</div>
 										<div class="row td-info">
 											<div class="col-xs-5">
-												Ngày sinh
+												Bằng cấp 
 											</div>
 											<div class="col-xs-7">
-												{{ $resume->ntv->date_of_birth }}
+												{{$resume->bangcap->name}}
+											</div>
+										</div>
+										<div class="row td-info">
+											<div class="col-xs-5">
+												Cấp bậc hiện tại
+											</div>
+											<div class="col-xs-7">
+												{{$resume->level->name}}
+											</div>
+										</div>
+										<div class="row td-info">
+											<div class="col-xs-5">
+												Vị trí mong muốn 
+											</div>
+											<div class="col-xs-7">
+												{{$resume->vitrimongmuon}}
+											</div>
+										</div>
+										<div class="row td-info">
+											<div class="col-xs-5">
+												Tỉnh/Thành phố
+											</div>
+											<div class="col-xs-7">
+												@if($resume->ntv->province_id)
+												{{ $resume->ntv->province->province_name }}
+												@endif
 											</div>
 										</div>
 										<div class="row td-info">
@@ -58,37 +83,31 @@
 												Việt Nam
 											</div>
 										</div>
-										<div class="row td-info">
-											<div class="col-xs-5">
-												Giới tính
-											</div>
-											<div class="col-xs-7">
-												@if($resume->ntv->gender == 1)
-												Nam
-												@elseif($resume->ntv->gender == 2)
-												Nữ
-												@else 
-												Không công khai
-												@endif
-												 - 
-												@if($resume->ntv->marital_status == 1)
-												Độc thân
-												@else
-												Đã lập gia đình
-												@endif
-											</div>
-										</div>
+										
 									</div>
 								</div><!-- end .info left -->
 								<div class="col-xs-7">
 									<div class="buy-service">
 										<div class="row buy-header">
+											<?php $ngayhomnay=strtotime(date('Y-m-d H:i:s')) ?>
+											
+											@if(strtotime($check_order['ended_date']) > $ngayhomnay)
+
+												<div class="col-xs-9">
+													Gói dịch vụ xem hồ sơ của quí khách còn <span style="color:red"> {{ round((strtotime($check_order['ended_date']) - $ngayhomnay)/(24*3600))}} </span>ngày.
+													Và số lượng hồ sơ ứng viên có thể xem được là : <span id="cv_xem" style="color:red">{{$check_order['remain']}}</span> hồ sơ.
+												</div>
+												<div class="col-xs-3 pull-right">
+													<a href="{{ URL::route('employers.orders.add') }}" class="btn btn-nomal bg-orange pull-right">Mua dịch vụ</a>
+												</div>
+											@else
 											<div class="col-xs-9">
 												Để xem hồ sơ hoàn chỉnh của ứng viên, quý khách vui lòng sử dụng dịch vụ "tìm hồ sơ"
 											</div>
 											<div class="col-xs-3 pull-right">
 												<a href="{{ URL::route('employers.orders.add') }}" class="btn btn-nomal bg-orange pull-right">Mua dịch vụ</a>
 											</div>
+											@endif
 										</div>
 										<div class="row buy-information">
 											<div class="col-xs-6">
@@ -124,130 +143,32 @@
 							</div> <!-- end .row top -->
 						</div>
 					</div> <!-- end .row info -->
+					
+					@if(strtotime($check_order['ended_date']) > $ngayhomnay && $check_order['remain']>0)
+					<div class="heading-title">
+							<span></span>
+						</div>
 					<div class="row info-content">
-						<div class="heading-title">
-							<span>Thông tin nghề nghiệp</span>
-						</div>
-						<div class="list-info">
-							<div class="info-left">Năm kinh nghiệm</div>
-							<div class="info-right">@if($resume->namkinhnghiem == 0) Chưa có kinh nghiệm @else {{ $resume->namkinhnghiem }} Năm @endif</div>
-						</div>
-						<div class="list-info">
-							<div class="info-left">Cấp bậc hiện tại</div>
-							<div class="info-right">{{ $resume->level->name }}</div>
-						</div>
-						<div class="list-info">
-							<div class="info-left">Bằng cấp cao nhất</div>
-							<div class="info-right">{{ $resume->bangcap->name }}</div>
-						</div>
-						<div class="list-info">
-							<div class="info-left">Ngoại ngữ</div>
-							<div class="info-right">
-								@if(count($resume->cvlanguage))
-								@foreach($resume->cvlanguage as $lang)
-									@if($lang->lang_id > 0)
-									{{ $lang->lang->lang_name }} - {{ $lang->lvlang->name }}<br>
-									@endif
-								@endforeach
-								@endif
-							</div>
-						</div>
-						<div class="list-info">
-							<div class="info-left">Cấp bậc mong muốn</div>
-							<div class="info-right">{{ $resume->capbac->name }}</div>
-						</div>
-						<div class="list-info">
-							<div class="info-left">Mức lương mong muốn</div>
-							<div class="info-right">@if(@$resume->mucluong){{ $resume->mucluong() }} VND @else Thương lượng @endif</div>
-						</div>
-						<div class="list-info">
-							<div class="info-left">Ngành nghề mong muốn</div>
-							<div class="info-right">
-								@if(count($resume->cvcategory))
-								@foreach($resume->cvcategory as $cat)
-									@if($cat->cat_id > 0)
-									{{ $cat->category->cat_name }}<br>
-									@endif
-								@endforeach
-								@endif
-							</div>
-						</div>
-						<div class="list-info">
-							<div class="info-left">Địa điểm làm việc</div>
-							<div class="info-right">
-								@if(count($resume->location))
-								@foreach($resume->location as $loc)
-									@if($loc->province_id > 0)
-									{{ $loc->province->province_name }}<br>
-									@endif
-								@endforeach
-								@endif
-							</div>
-						</div>
-						<div class="list-info">
-							<div class="info-left">Hình thức</div>
-							<div class="info-right">{{ @$resume->worktype->name }}</div>
-						</div>
+					Lưu ý: Gói hồ sơ của quý khách sẽ giảm đi 1 tương ứng với mỗi lần xem hồ sơ chi tiết ứng viên
+						<a href="#" id="view" class="btn btn-nomal bg-orange pull-right">Xem hồ sơ</a>
+					</div>	
+					@endif
+					@if(strtotime($check_order['ended_date']) > $ngayhomnay && $check_order['remain']>0)
+					<div id="content_cv">
 						
-					</div> <!-- end.info-content -->
+					</div>
+					@else 
 					<div class="row info-content">
-						<div class="heading-title">
-							<span>Quá trình học vấn và bằng cấp</span>
-						</div>
-						@if(count($resume->education))
-						@foreach($resume->education as $edu)
-						<div class="list-info">
-							<div class="info-left">{{ $edu->study_from }} - {{ $edu->study_to }}</div>
-							<div class="info-right">
-								<span class="info-school-name">{{ $edu->school }}</span><br>
-								{{ $edu->edu->name }}<br>
-								{{ nl2br($edu->achievement) }}<br>
-								- Điểm: {{ $edu->diem->name }}<br>
-								- Lĩnh vực nghiên cứu: {{ $edu->linhvuc->name }}
-							</div>
-						</div>
-						@endforeach
-						@endif
-						
-
-					</div><!-- end .info-content -->
-					<div class="row info-content">
-						<div class="heading-title">
-							<span>Kinh nghiệm làm việc</span>
-						</div>
-						@if(count($resume->experience))
-						@foreach($resume->experience as $exp)
-						<div class="list-info">
-							<div class="info-left">{{ $exp->from_date }}- {{ ($exp->to_date=='')?'Hiện nay':$exp->to_date }}</div>
-							<div class="info-right">
-								<span class="info-school-name">{{ $exp->company_name }}</span><br>
-								{{ $exp->position }}<br>
-								{{ nl2br($exp->job_detail) }}<br>
-								- Lĩnh vực: {{ $exp->fieldofwork->name }}<br>
-								- Chuyên ngành: {{ $exp->chuyennganh->name }}<br>
-								- Cấp bậc: {{ $exp->capbac->name }}<br>
-								@if($exp->salary != '')- Lương: {{ $exp->salary() }}<br>@endif
-							</div>
-						</div>
-						@endforeach
-						@endif
-						
-
-					</div><!-- end .info-content -->
-					<div class="row info-content">
-						<div class="heading-title">
-							<span>Kỹ năng</span>
-						</div>
-						@if(count($resume->kynang() ))
-						@foreach($resume->kynang() as $kn)
-						<div class="list-info">
-							<div class="info-full">{{ $kn[0] }} ({{ Config::get('custom_kynang.kynang')[$kn[1]] }})</div>
-						</div>
-						@endforeach
-						@endif
-						
-
-					</div><!-- end .info-content -->
+								<div class="row buy-header">
+											<div class="col-xs-9">
+												Để xem hồ sơ hoàn chỉnh của ứng viên, quý khách vui lòng sử dụng dịch vụ "tìm hồ sơ"
+											</div>
+											<div class="col-xs-3 pull-right">
+												<a href="{{ URL::route('employers.orders.add') }}" class="btn btn-nomal bg-orange pull-right">Mua dịch vụ</a>
+											</div>
+								</div>
+					</div>
+					@endif
 					<div class="row box-footer">
 						<div class="col-xs-12 info-action">
 							<div class="pull-right">
@@ -372,6 +293,14 @@
 @stop
 @section('script')
 	<script type="text/javascript">
+	 
+
+	$('#view').click(function(event) { 
+		 			var cv= $('#cv_xem').text();
+		 			$('#cv_xem').text(cv-1);
+					$("#content_cv").load('{{URL::route("employers.search.xemchitiet1",$resume->id)}}');
+			 
+		});
 	$('#inputAdd').click(function(event) { 
 		$('#inputFolder_name').prop({
 			disabled: 'disabled'

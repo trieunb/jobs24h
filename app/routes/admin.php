@@ -61,15 +61,15 @@ Route::group(array('prefix'=>'admin'), function() {
 		Route::get('jobs/datatables_waiting_vip', array('as'=>'admin.jobs.datatables_waiting_vip', 'uses'=>'AJobController@datatables_waiting_vip'));
 		Route::get('jobs/datatables_cvapp', array('as'=>'admin.jobs.datatables_cvapp', 'uses'=>'AJobController@datatables_cvapp'));
 		
-		
+		Route::get('employers/report', array('as'=>'admin.employers.report', 'uses'=>'EmployerController@report'));
 		//quản lý nhà tuyển dụng và tin tuyển dụng
 		Route::group(array('before'=>'sentry.permissions.ntd_full'), function() {
 			Route::resource('employers', 'EmployerController');
 			Route::controller('employers','EmployerController',array(
-			'getEditEmployers' =>'admin.employers.edit1'
-			
+			'getEditEmployers' =>'admin.employers.edit1',
+			//'getReport' =>"admin.employers.report"
 			));
-			Route::get('employers/report', array('as'=>'admin.employers.report', 'uses'=>'EmployerController@report'));
+			
 			Route::resource('jobs', 'AJobController', [
 			    'only' => ['index', 'create', 'store','edit', 'update', 'destroy']
 			]);

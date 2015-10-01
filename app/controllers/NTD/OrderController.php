@@ -52,7 +52,7 @@ class OrderController extends \Controller {
 		$contacts = EContact::create($contacts);
 		return Redirect::back()->with('success', 'Gửi liên hệ thành công. Chúng tôi sẽ liên lạc lại với bạn.');
 	}
-	public function getDetail()
+	public function getChiTiet()
 	{
 		/*$order_detail=\OrderDetail::whereNtdId(Auth::id())->with(array('orderpostrec'=>function($q)
 			{
@@ -60,7 +60,7 @@ class OrderController extends \Controller {
 			//	$q->join('jobs','jobs.id','=','order_post_rec.job_id');
 			}))->paginate(10);*/
 
-		$order_detail=\OrderDetail::where('order_details.ntd_id','=',Auth::id())->leftJoin('order_post_rec','order_details.order_post_rec_id','=','order_post_rec.id')->leftJoin('jobs','order_post_rec.job_id','=','jobs.id')->select('order_details.madonhang as madonhang','order_details.name_package as name_package','jobs.vitri as vitri','order_details.price as price','order_details.created_at as created_at')->Orderby('order_details.created_at','desc')->paginate(10);
+		$order_detail=\OrderDetailNtd::where('order_detail_ntd.ntd_id','=',Auth::id())->leftJoin('order_post_rec','order_detail_ntd.order_post_rec_id','=','order_post_rec.id')->leftJoin('jobs','order_post_rec.job_id','=','jobs.id')->select('order_detail_ntd.madonhang as madonhang','order_detail_ntd.name_package as name_package','jobs.vitri as vitri','order_detail_ntd.price as price','order_detail_ntd.created_at as created_at')->Orderby('order_detail_ntd.created_at','desc')->paginate(10);
 
 		 
 

@@ -325,7 +325,11 @@ class SearchController extends \Controller {
 			$file = $file[1];
 			$ext = explode('.', $file);
 			$fname = $ext[0];
-			$ext = $ext[1];
+			if (isset($ext[1])) {
+				$ext = $ext[1];
+			}
+			else {return 'Ứng viên này chưa có hồ sơ phụ, quí khách vui lòng click xem hồ sơ để xem hồ sơ chính của ứng viên !';}
+			
 			$dir1 = Config::get('app.upload_path') . 'jobseekers/cv/' . $fname . '.pdf';
 			$dir = 'uploads/jobseekers/cv/' . $fname . '.pdf';
 			if(! File::isFile($dir1))
@@ -340,37 +344,58 @@ class SearchController extends \Controller {
 		
 		
 	}
-	public function getInHoSo($cvId = false)
+	public function getInHoSo($cvId = false,$action)
 	{
 		$ngayhomnay=strtotime(date('Y-m-d H:i:s'));
 		if($cvId)
 		{
 			$resume = Resume::where('id', $cvId)->first();
-			if( ! $resume->file_name)
+			if($action=="tai-phu")
 			{
-				$order_inser=\Order::whereNtdId(Auth::id())->first();
-				$order_inser['remain']=$order_inser['remain']-1;
-				if($order_inser['remain']<0)
-				$order_inser['remain']=0;
-				$order_inser->save();
-				if ($order_inser['remain']>-1 && strtotime($check_order['ended_date']) > $ngayhomnay)
-					return View::make('employers.search.print', compact('resume'));
-				else return Response::make('Không thể xem !', 404);
-			} else {
-				$path = Config::get('app.upload_path').'jobseekers/cv/' . $resume->file_name;
-				//return $path;
-				if (\File::isFile($path)) {
+				if( ! $resume->second_file_name)
+				{
+					return Response::make('File not Found !', 404);
+				} else {
+					$path = Config::get('app.upload_path').'jobseekers/cv/' . $resume->second_file_name;
+					//return $path;
+					if (\File::isFile($path)) {
+						return Response::download($path, $resume->tieude_cv);
+					} else {
+						return Response::make('File not Found !', 404);
+					}
+				}
+
+
+			}
+
+			else
+			{
+				if( ! $resume->file_name)
+				{
 					$order_inser=\Order::whereNtdId(Auth::id())->first();
 					$order_inser['remain']=$order_inser['remain']-1;
 					if($order_inser['remain']<0)
 					$order_inser['remain']=0;
-					
 					$order_inser->save();
-					if ($order_inser['remain']>-1 && strtotime($check_order['ended_date']) > $ngayhomnay)
-						return Response::download($path, $resume->tieude_cv);
+					if ($order_inser['remain']>-1 && strtotime($order_inser['ended_date']) > $ngayhomnay)
+						return View::make('employers.search.print', compact('resume'));
 					else return Response::make('Không thể xem !', 404);
 				} else {
-					return Response::make('File not Found !', 404);
+					$path = Config::get('app.upload_path').'jobseekers/cv/' . $resume->file_name;
+					//return $path;
+					if (\File::isFile($path)) {
+						$order_inser=\Order::whereNtdId(Auth::id())->first();
+						$order_inser['remain']=$order_inser['remain']-1;
+						if($order_inser['remain']<0)
+						$order_inser['remain']=0;
+						
+						$order_inser->save();
+						if ($order_inser['remain']>-1 && strtotime($order_inser['ended_date']) > $ngayhomnay)
+							return Response::download($path, $resume->tieude_cv);
+						else return Response::make('Không thể xem !', 404);
+					} else {
+						return Response::make('File not Found !', 404);
+					}
 				}
 			}
 		}
@@ -404,7 +429,8 @@ class SearchController extends \Controller {
 			$data['send_content'] = Input::get('send_content');
 			$data['cv_id'] = Input::get('cv_id');
 			$resume = Resume::where('id', Input::get('cv_id'))->first();
-			if($resume->file_name!=null)
+			//code cũ gửi nguyên cái file qua luôn
+			/*if($resume->file_name!=null)
 			{
 
 				$file=public_path().'/uploads/jobseekers/cv/'.$resume->file_name;
@@ -417,7 +443,13 @@ class SearchController extends \Controller {
 			else{
 			Mail::send('employers.search.mail', array('send_email'=> Input::get('send_email'), 'send_content'=> Input::get('send_content'), 'ntd_email'=>Auth::getUser()->email, 'firstname'=>Input::get('send_email'), 'resume'=> $resume), function($message){
 		        $message->to(Input::get('send_email'), Input::get('send_email'))->subject('[VNJOBS.VN] ' . Input::get("send_subject"));
-		    });}
+		    });}*/
+			//code mới chỉ gửi cái link thôi
+			Mail::send('employers.mail.mail_link_friend', array('send_email'=> Input::get('send_email'), 'send_content'=> Input::get('send_content'), 'ntd_email'=>Auth::getUser()->email, 'firstname'=>Input::get('send_email'), 'resume'=> $resume), function($message){
+		        $message->to(Input::get('send_email'), Input::get('send_email'))->subject('[VNJOBS.VN] ' . Input::get("send_subject"));
+		    });
+
+
 			return Response::json(['has'=>true]);
 			return Response::json(['has'=>false]);
 		}

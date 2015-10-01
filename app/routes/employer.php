@@ -77,7 +77,7 @@ Route::group(array('prefix'=>$locale), function() {
 			Route::controller('don-hang', 'OrderController', array(
 				'getDanhSachDonHang'			=>	'employers.orders.index',
 				'getMuaDichVu'			=>	'employers.orders.add',
-				'getDetail'			=>	'employers.orders.detail',
+				'getChiTiet'			=>	'employers.orders.detail',
 				'getLienHeMua'			=>	'employers.orders.contact',
 				
 			));
@@ -103,11 +103,14 @@ Route::group(array('prefix'=>$locale), function() {
 			Route::controller('/', 'AuthController', array(
 				'getDangNhap'		=>	'employers.login',
 				'getDangKy'	=>	'employers.register',
-				'getKichHoat' =>'employers.active'
+				'getKichHoat' =>'employers.active',
+				'getQuenMatKhau'=>'employers.forget',
+				'getForgetPass'=>'employers.forgetpass',
 			));
 		});
 	});
 });
+
 Event::listen('auth.login', function($user) {
 	$user->last_login = date('Y-m-d H:i:s');
 	$user->save();

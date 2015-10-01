@@ -19,6 +19,7 @@
 				<th>Email</th>
 				<th>Ngày tạo</th>
 				<th>Action</th>
+				<th>Quyền hạn</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -42,7 +43,7 @@
 				bAutoWidth: false,
 					"aoColumns": [
 					  { "bSortable": false, "sClass": "center" },
-					  null, null, null, null,
+					  null, null, null, null,null,
 					  { "bSortable": false }
 					],
 

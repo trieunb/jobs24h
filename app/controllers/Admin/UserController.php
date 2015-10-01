@@ -15,9 +15,10 @@ class UserController extends \BaseController {
 
 	public function datatables()
 	{
-		$users = AdminUser::select('id as ckid', 'id', 'username', 'email', 'created_at', 'id as ids');
+		$users = AdminUser::select('id as ckid', 'id', 'username', 'email', 'created_at', 'id as ids','permissions as per');
 		$stt = 1;
 		return Datatables::of($users)
+		->edit_column('username','<a title="Bấm vào đây để chỉnh sửa" href="{{URL::route("admin.users.edit", array($id) )}}">{{$username}}</a>')
 		->edit_column('ckid', '<th class="center">
 															<label class="pos-rel">
 																<input type="checkbox" class="ace" />
@@ -25,12 +26,31 @@ class UserController extends \BaseController {
 															</label>
 														</th>
 ')
+
 		->edit_column('ids', '
 			{{ Form::open(array("method"=>"delete", "route"=>array("admin.users.destroy", $id) )) }}
 			<a class="btn btn-xs btn-info" href="{{URL::route("admin.users.edit", array($id) )}}" title="Edit"><i class="glyphicon glyphicon-edit"></i></a> 
-			<button class="btn btn-xs btn-danger" onclick="return confirm(\'Are you want delete ?\');" type="submit" title="Delete"><i class="glyphicon glyphicon-remove"></i></button>
+			<button class="btn btn-xs btn-danger" onclick="return confirm(\'Bạn có muốn xóa user này ?\');" type="submit" title="Delete"><i class="glyphicon glyphicon-remove"></i></button>
 			{{ Form::close() }}
 			')
+		->edit_column('per','@foreach(json_decode($per) as $key=>$val)
+									@if($val=="admin_full") 
+										<p style="font-size: 11px; margin: 0px;">- Quản lý admin</p>
+									@elseif($val=="ntv_full")
+										<p style="font-size: 11px; margin: 0px;">- Quản lý người tìm việc</p>
+									@elseif($val=="ntd_full")
+										<p style="font-size: 11px; margin: 0px;">- Quản lý nhà tuyển dụng</p>
+									@elseif($val=="train_full")
+										<p style="font-size: 11px; margin: 0px;">- Quản lý mục đào tạo</p>
+									@elseif($val=="culd_full")
+										<p style="font-size: 11px; margin: 0px;">- Quản lý mục cung ứng lao động</p>
+									@elseif($val=="news_full")
+										<p style="font-size: 11px; margin: 0px;">- Quản lý mục tin tức</p>
+									@elseif($val=="hiring_full")
+										<p style="font-size: 11px; margin: 0px;">- Quản lý Cẩm nang việc làm</p>
+									@endif
+
+							@endforeach')
 		->make();
 	}
 
@@ -43,7 +63,9 @@ class UserController extends \BaseController {
 	public function create()
 	{
 		//
-		return View::make('admin.users.create');
+		$total_ntv_not_share=NTV::whereAdminInfoId(0)->count();	
+		$total_ntd_not_share=NTD::whereAdminInfoId(0)->count();
+		return View::make('admin.users.create',	compact('total_ntd_not_share','total_ntv_not_share'));
 	}
 
 	/**
@@ -55,14 +77,15 @@ class UserController extends \BaseController {
 	public function store()
 	{
 		//
-	 
- 
+	 	
+ 		 
 		$params = Input::only('username', 'email', 'password','permission');
 		$validator = new App\DTT\Forms\AdminUserCreate;
 		if($validator->fails())
 		{
 			return Redirect::back()->withInput()->withErrors($validator);
 		} else {
+
 
 			//var_dump(isset($params['permission']));
 			$params['permission'] = isset($params['permission'])?$params['permission']:array();
@@ -74,6 +97,9 @@ class UserController extends \BaseController {
 			$user = AdminUser::create($params);
 			if($user)
 			{
+				if (Input::get('num_ntd')) {
+					 $insert_num_ntd=NTD::whereAdminInfoId(0)->take(Input::get('num_ntd'))->update(array('admin_info_id' => $user->id));
+				}
 				return Redirect::route('admin.users.index')->with('success', 'Tạo mới quản trị thành công.');
 			} else {
 				return Redirect::back()->withInput()->withErrors('Có lỗi khi thêm mới quản trị viên.');
@@ -108,7 +134,11 @@ class UserController extends \BaseController {
 	    if($user === false) {
 	    	return Response::make('User was not found !', 404);
 	    } else {
-	    	return View::make('admin.users.edit', compact('user'));
+	    	$total_ntv_not_share=NTV::whereAdminInfoId(0)->count();	
+			$total_ntd_not_share=NTD::whereAdminInfoId(0)->count();
+			$total_ntv_share=NTV::whereAdminInfoId($id)->count();
+			$total_ntd_share=NTD::whereAdminInfoId($id)->count();
+	    	return View::make('admin.users.edit', compact('user','total_ntv_not_share','total_ntd_not_share','total_ntd_share','total_ntv_share'));
 	    }
 	}
 
@@ -122,9 +152,13 @@ class UserController extends \BaseController {
 	public function update($id)
 	{
 		//
+		/*var_dump(Input::get('num_ntd'));
+		die();*/
 		$req = Input::only('username', 'email', 'password', 'permission');
 		$json = json_encode($req['permission']);
+		 
 		$user = AdminAuth::findUserById($id);
+
 		if( ! $user)
 		{
 			return Redirect::back()->withErrors('User không tìm thấy !');
@@ -145,6 +179,13 @@ class UserController extends \BaseController {
 			if($req['password'] != NULL) $user->password = DTT\Sentry\Hashing\Sha256Hasher::hash($req['password']);
 			if($user->save())
 			{
+
+				if (Input::get('num_ntd')) {
+					 $insert_num_ntd=NTD::whereAdminInfoId(0)->take(Input::get('num_ntd'))->update(array('admin_info_id' => $id));
+				}
+				if (Input::get('num_ntv')) {
+					 $insert_num_ntd=NTV::whereAdminInfoId(0)->take(Input::get('num_ntv'))->update(array('admin_info_id' => $id));
+				}
 				return Redirect::route('admin.users.index')->with('success', 'Lưu thông tin thành công !');
 			}
 			return Redirect::back()->withInput()->withErrors('Lỗi khi cập nhật');
@@ -162,6 +203,8 @@ class UserController extends \BaseController {
 	{
 		//
 		$user = AdminAuth::findUserById($id);
+		$insert_num_ntd=NTD::whereAdminInfoId($id)->update(array('admin_info_id' => 0));
+		$insert_num_ntv=NTV::whereAdminInfoId($id)->update(array('admin_info_id' => 0));
 		$user->delete();
 		return Redirect::route('admin.users.index')->with('success', 'Xóa người dùng thành công !');
 	}

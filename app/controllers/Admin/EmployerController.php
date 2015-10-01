@@ -20,10 +20,23 @@ class EmployerController extends \BaseController {
 		if (Request::ajax()) {
 			$page=(Input::get('iDisplayStart'));
 		}
-		$user=AdminAuth::getUser()->username;
+		$user=AdminAuth::getUser();
+		if(in_array('admin_full',json_decode($user->permissions)))
+			{
+			$employers = NTD::join('companies','employers.id','=','companies.ntd_id')
+			->leftjoin('admin_info','employers.admin_info_id','=','admin_info.id')
+			->select('employers.id as ckid', 'employers.id as id', 'companies.company_name as company_name', 'employers.email','employers.phone_number', 'employers.created_at', 'employers.is_active', 'employers.id as idd', 'employers.id as ids','admin_info.username as cskh')->with('job')->orderBy('employers.id','desc');
+
+			}
+		else
+		{
+			$employers = NTD::join('companies','employers.id','=','companies.ntd_id')
+			->join('admin_info','employers.admin_info_id','=','admin_info.id')
+			->select('employers.id as ckid', 'employers.id as id', 'companies.company_name as company_name', 'employers.email','employers.phone_number', 'employers.created_at', 'employers.is_active', 'employers.id as idd', 'employers.id as ids','admin_info.username as cskh')->with('job')->orderBy('employers.id','desc')->where('employers.admin_info_id',$user->id);
+		}
 		$active = Input::get('active');
 		 	
-		$employers = NTD::join('companies','employers.id','=','companies.ntd_id')->select('employers.id as ckid', 'employers.id as id', 'companies.company_name as company_name', 'employers.email','employers.phone_number', 'employers.created_at', 'employers.is_active', 'employers.id as idd', 'employers.id as ids','employers.id as cskh')->with('job')->orderBy('employers.id','desc');
+		
 
 		if($active!=null) {$employers->whereIsActive($active);}
 
@@ -48,7 +61,7 @@ class EmployerController extends \BaseController {
 			<button class="btn btn-xs btn-danger" onclick="return confirm(\'Are you sure you want to delete ?\');" type="submit" title="Delete"><i class="ace-icon fa fa-trash-o bigger-120"></i></button>
 			{{ Form::close() }}
 			')
-		->edit_column('cskh',''.$user.'')
+		->edit_column('cskh','{{$cskh}}')
 		->make();
 	}
 
@@ -291,11 +304,12 @@ class EmployerController extends \BaseController {
 		{
 			return Redirect::back()->withInput()->withErrors($validator);
 		} else {
-
+			 
 			if (Input::hasFile('filelogo')) {
 				$path = Config::get('app.upload_path').'companies/logos/';
 				Input::file('filelogo')->move($path, Input::file('filelogo')->getClientOriginalName());
 				$data1['logo'] = Input::file('filelogo')->getClientOriginalName();
+				
 			}
 
 			$path = Config::get('app.upload_path').'companies/images/';
@@ -481,8 +495,9 @@ class EmployerController extends \BaseController {
 
 	public function report()
 	{
+
 		$job_not_active=Job::where('status','<>',1)->count(); 
-		$ntd_vip	= Order::count();
+		$ntd_vip	= Order::where('package_name','<>','free')->count();
 		$total_ntd = NTD::count();
 		return View::make('admin.employers.report',compact('job_not_active','ntd_vip','total_ntd'));
 	}
@@ -493,12 +508,22 @@ class EmployerController extends \BaseController {
 
  
 		 
-
+		$user=AdminAuth::getUser();
 		$page=0;
 
-		 
-			$employers = Order::join('employers','orders.ntd_id','=','employers.id')->join('companies','orders.ntd_id','=','companies.ntd_id')
-		   ->select(array('orders.id as ckid','employers.id as emid','companies.company_name as name','orders.is_xacthuc as xacthuc','orders.end_date_xacthuc as end_xacthuc','orders.package_name as package_name','orders.created_date as created_date','orders.ended_date as ended_date','orders.created_at as created_at','orders.updated_at as updated_at','orders.remain as remain','employers.id as ids','orders.start_date_xacthuc as start_date_xacthuc'));
+		if(in_array('admin_full',json_decode($user->permissions)))
+		{ 
+		$employers = Order::where('package_name','<>','free')->join('employers','orders.ntd_id','=','employers.id')->join('companies','orders.ntd_id','=','companies.ntd_id')
+			->leftjoin('admin_info','employers.admin_info_id','=','admin_info.id')
+		   ->select(array('orders.id as ckid','employers.id as emid','companies.company_name as name','orders.is_xacthuc as xacthuc','orders.end_date_xacthuc as end_xacthuc','orders.package_name as package_name','orders.created_date as created_date','orders.ended_date as ended_date','orders.created_at as created_at','orders.updated_at as updated_at','orders.remain as remain','employers.id as ids','orders.start_date_xacthuc as start_date_xacthuc','admin_info.username as cskh'));
+		}
+		else{
+			$employers = Order::where('package_name','<>','free')->join('employers','orders.ntd_id','=','employers.id')
+			->join('companies','orders.ntd_id','=','companies.ntd_id')
+		  	->join('admin_info','employers.admin_info_id','=','admin_info.id')
+		   	->select(array('orders.id as ckid','employers.id as emid','companies.company_name as name','orders.is_xacthuc as xacthuc','orders.end_date_xacthuc as end_xacthuc','orders.package_name as package_name','orders.created_date as created_date','orders.ended_date as ended_date','orders.created_at as created_at','orders.updated_at as updated_at','orders.remain as remain','employers.id as ids','orders.start_date_xacthuc as start_date_xacthuc','admin_info.username as cskh'));
+		}
+
 		 return Datatables::of($employers)
 		->remove_column('emid')
 		->remove_column('end_xacthuc')
@@ -515,7 +540,7 @@ class EmployerController extends \BaseController {
 		->edit_column('ended_date','@if($package_name!=null){{date("d-m-Y H:i:s",strtotime($ended_date))}}@else {{date("d-m-Y H:i:s",strtotime($end_xacthuc))}} @endif')
 		->edit_column('created_at','@if($created_at==$updated_at) Tham gia lần đầu @else Gia hạn @endif')
 		->remove_column('updated_at')
-		->edit_column('remain','{{$remain}} Ngày')
+		->edit_column('remain','{{$remain}} CV')
 		->edit_column('ids', '
 			<a class="btn btn-xs btn-info" href="{{URL::to("admin/order/package-employer/$ids")}}" title="Chỉnh sửa dịch vụ cho nhà tuyển dụng"><i class="ace-icon fa fa-cogs bigger-120"></i></a>
 			')

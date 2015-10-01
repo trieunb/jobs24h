@@ -1,6 +1,29 @@
  
 @if($check_ok==1)
-<div class="row info-content">
+						<div class="row info-content">
+
+							<div class="heading-title">
+								<span>Thông tin cơ bản</span>
+							</div>
+							<div class="list-info">
+								<div class="info-left">Họ và tên</div>
+								<div class="info-right">{{ $resume->ntv->full_name() }}</div>
+							</div>
+							<div class="list-info">
+								<div class="info-left">Email</div>
+								<div class="info-right">{{ $resume->ntv->email }}</div>
+							</div>
+							<div class="list-info">
+								<div class="info-left">Số điện thoại</div>
+								<div class="info-right">{{ $resume->ntv->phone_number }}</div>
+							</div>
+							<div class="list-info">
+								<div class="info-left">Ngày sinh</div>
+								<div class="info-right">{{ $resume->ntv->date_of_birth }}</div>
+							</div>
+
+						</div>
+						<div class="row info-content">					
 
 							<div class="heading-title">
 								<span>Thông tin nghề nghiệp</span>
@@ -61,10 +84,10 @@
 									@endif
 								</div>
 							</div>
-							<div class="list-info">
+							<!-- <div class="list-info">
 								<div class="info-left">Hình thức</div>
 								<div class="info-right">{{ @$resume->worktype->name }}</div>
-							</div>
+							</div> -->
 							
 						</div> <!-- end.info-content -->
 						<div class="row info-content">

@@ -82,6 +82,9 @@
 					],
 					"aaSorting": [[ 1, "desc" ]],
 			});
+
+
+
 	   var input = $(".dataTables_filter input");
 		input.unbind('keyup search input').bind('keypress', function (e) {
 		    if (e.which == 13) {
@@ -94,9 +97,20 @@
 		    }
 		});
 
-	 
+		var search = getParameterByName('Search');
+	 	if(search!='') 
+       	 	{
+       	 		 var keywords = bodauTiengViet(search), filter ='';
+       	 		 oTable.fnFilter(keywords);
+       	 	}
+	 	
 		 
-
+       	function getParameterByName(name) {
+			    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+			    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+			        results = regex.exec(location.search);
+			    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+		}
 
 		function bodauTiengViet(str) {  
 			str= str.toLowerCase();  

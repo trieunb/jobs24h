@@ -94,7 +94,7 @@ Class OrdersController extends \BaseController
 
 
 				// chèn đơn hàng chi tiết
-				$order_detail = new OrderDetail;
+				$order_detail = new OrderDetailNtd;
 				$order_detail->ntd_id=$ntd_id;
 				$order_detail->madonhang=strtotime(date('Y-m-d H:i:s'));
 				$order_detail->order_id=0;
@@ -194,7 +194,7 @@ Class OrdersController extends \BaseController
 			}
 
 			$insert_order->save();
-					$order_detail = new OrderDetail;
+					$order_detail = new OrderDetailNtd;
 					$order_detail->ntd_id=$ntd_id;
 					$order_detail->madonhang=strtotime(date('Y-m-d H:i:s'));
 					$order_detail->order_id=$insert_order->id;
@@ -317,7 +317,7 @@ Class OrdersController extends \BaseController
 					 
 
 				}
-				$order_detail = new OrderDetail;
+				$order_detail = new OrderDetailNtd;
 				$order_detail->ntd_id=$ntd_id;
 				$order_detail->madonhang=strtotime(date('Y-m-d H:i:s'));
 				$order_detail->order_id=0;

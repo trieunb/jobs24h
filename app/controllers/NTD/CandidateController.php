@@ -30,6 +30,8 @@ class CandidateController extends \Controller {
 		}
 
 		$apply = $apply->paginate(10);
+
+		
 		return View::make('employers.candidates.job', compact('apply'))->with('job_id', $id);
 	}
 	public function getThuMuc($id = false)
@@ -234,6 +236,11 @@ class CandidateController extends \Controller {
 	public function getDanhSachHoSoDaXem()
 	{
 		$detail = \OrderDetail::where('ntd_id', Auth::id())->orderBy('id', 'desc')->paginate(10);
+		foreach ($detail as $key => $order) {
+				var_dump($order ->resume);
+				die();
+		}
+	
 		return View::make('employers.candidates.viewed', compact('detail'));
 	}
 
