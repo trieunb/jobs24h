@@ -21,8 +21,7 @@ class AdminCVCreate extends FormValidator {
 		"info_category" 		=>"required",
 		"foreign_languages_1"	=>"required",
 		"level_languages_1" 	=>"required",
-		"tieude" 				=>"required",
-		'is_public'				=>	'in:0,1',
+		"tieude_cv" 				=>"required",
 		'is_default'			=>	'in:0,1',
 		'trangthai'				=>	'in:0,1',
 		);
