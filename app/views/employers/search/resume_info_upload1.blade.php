@@ -1,7 +1,8 @@
 @extends('layouts.employer')
 @section('title')Xem thông tin hồ sơ {{ $resume->tieude_cv }} @stop
 @section('content')
- 	<section class="boxed-content-wrapper clearfix resume-info">
+ 
+	<section class="boxed-content-wrapper clearfix resume-info">
 		<div class="container">
 			
 			<section id="" class="right">
@@ -9,10 +10,11 @@
 					<div class="row box-header">
 						<div class="col-xs-12 info-action">
 							<div class="pull-right">
-								<ul >
+								<ul>
 									<li><a href="#modalSaveFolder" data-toggle="modal" data-target="#modalSaveFolder">{{ HTML::image('assets/ntd/images/icon-save-cv.png') }} Lưu thư mục</a></li>
-									<!-- <li><a href="{{ URL::to($locale.'/employers/search/basic?' . implode('&', ['keyword=', 'category=all', 'level='.($resume->capbachientai>0?$resume->capbachientai:'all'), 'location=all'])) }}" target="_blank">{{ HTML::image('assets/ntd/images/icon-view-cv.png') }} Xem hồ sơ tương tự</a></li> -->
-									<li><a href="{{ URL::to($locale.'/nha-tuyen-dung/tim-kiem/co-ban?keyword='.$history['keyword'].'&category=all&level='.$resume->capbachientai.'&location=all') }}" target="_blank">{{ HTML::image('assets/ntd/images/icon-view-cv.png') }} Xem hồ sơ tương tự</a></li> 
+									 <!-- <li><a href="{{ URL::to($locale.'/nha-tuyen-dung/tim-kiem/co-ban?' . implode('&', ['keyword=', 'category=all', 'level='.$resume->capbachientai, 'location=all'])) }}" target="_blank">{{ HTML::image('assets/ntd/images/icon-view-cv.png') }} Xem hồ sơ tương tự</a></li> --> 
+									 	 <li><a href="{{ URL::to($locale.'/nha-tuyen-dung/tim-kiem/co-ban?keyword='.$history['keyword'].'&category=all&level='.$resume->capbachientai.'&location=all') }}" target="_blank">{{ HTML::image('assets/ntd/images/icon-view-cv.png') }} Xem hồ sơ tương tự</a></li> 
+								
 									<li><a href="#modalSend" data-toggle="modal" data-target="#modalSend">{{ HTML::image('assets/ntd/images/icon-send-cv.png') }} Gửi hồ sơ</a></li>
 								</ul>
 							</div>
@@ -22,10 +24,14 @@
 						<div class="col-xs-12">
 							<div class="row">
 								<div class="col-xs-5">
-									<h4 class="resume-title">Chức danh/vị trí: <span class="cl-orange">{{ $resume->heading }}</span></h4>
+									<h4 class="resume-title">Chức danh/vị trí: <span class="cl-orange">{{ $resume->tieude_cv }}</span></h4>
 									<div class="clearfix"></div>
 									<div class="col-xs-4">
+									@if($resume->ntv->avatar==null)
 										{{ HTML::image('assets/ntd/images/no-avatar.jpg') }}
+									@else
+										{{ HTML::image('uploads/jobseekers/avatar/'.$resume->ntv->avatar.'') }}
+									@endif
 									</div>
 									<div class="col-xs-8">
 										<div class="row td-info">
@@ -33,17 +39,15 @@
 												Ứng viên
 											</div>
 											<div class="col-xs-7">
-												{{ $resume->application->first()->first_name }} {{ $resume->application->first()->last_name }}
+												{{ $resume->ntv->full_name() }}
 											</div>
 										</div>
 										<div class="row td-info">
 											<div class="col-xs-5">
-												Tỉnh/Thành phố
+												Ngày sinh  
 											</div>
 											<div class="col-xs-7">
-												@if($resume->application->first()->province_id > 0)
-												{{ $resume->application->first()->province->province_name }}
-												@endif
+												{{ $resume->ntv->date_of_birth }}
 											</div>
 										</div>
 										<div class="row td-info">
@@ -51,16 +55,43 @@
 												Quốc tịch
 											</div>
 											<div class="col-xs-7">
-												Việt Nam
+												@if($resume->ntv->country_id)
+												{{ $resume->ntv->country->country_name }}
+												@endif
 											</div>
 										</div>
+										<div class="row td-info">
+											<div class="col-xs-5">
+												Giới tính
+											</div>
+											<div class="col-xs-7">
+												@if($resume->ntv->gender == 0)
+												Nam
+												@elseif($resume->ntv->gender == 1)
+												Nữ
+												@else 
+												Không công khai
+												@endif
+												 - 
+												@if($resume->ntv->marital_status == 1)
+												Độc thân
+												@else
+												Đã lập gia đình
+												@endif
+											</div>
+										</div>
+										 
+
+
+										 
+										 
 										
 									</div>
 								</div><!-- end .info left -->
 								<div class="col-xs-7">
 									<div class="buy-service">
 										<div class="row buy-header">
-											<?php $ngayhomnay=strtotime(date('Y-m-d H:i:s')) ?>
+										<?php $ngayhomnay=strtotime(date('Y-m-d H:i:s')) ?>
 											@if(strtotime($check_order['ended_date']) > $ngayhomnay)
 
 												<div class="col-xs-9">
@@ -114,15 +145,73 @@
 						</div>
 					</div> <!-- end .row info -->
 					<div class="row resume-content">
+						 
 						<div class="heading-title">
-							<span>Thông tin nghề nghiệp</span>
-						</div>
+								<span>Thông tin nghề nghiệp</span>
+							</div>
+							<div class="list-info">
+								<div class="info-left">Năm kinh nghiệm</div>
+								<div class="info-right">@if($resume->namkinhnghiem == 0) Chưa có kinh nghiệm @else {{ $resume->namkinhnghiem }} Năm @endif</div>
+							</div>
+							<div class="list-info">
+								<div class="info-left">Cấp bậc hiện tại</div>
+								<div class="info-right">{{ $resume->level->name }}</div>
+							</div>
+							<div class="list-info">
+								<div class="info-left">Bằng cấp cao nhất</div>
+								<div class="info-right">{{ $resume->bangcap->name }}</div>
+							</div>
+							<div class="list-info">
+								<div class="info-left">Ngoại ngữ</div>
+								<div class="info-right">
+									@if(count($resume->cvlanguage))
+									@foreach($resume->cvlanguage as $lang)
+										@if($lang->lang_id > 0)
+										{{ $lang->lang->lang_name }} - {{ $lang->lvlang->name }}<br>
+										@endif
+									@endforeach
+									@endif
+								</div>
+							</div>
+							<div class="list-info">
+								<div class="info-left">Cấp bậc mong muốn</div>
+								<div class="info-right">{{ $resume->capbac->name }}</div>
+							</div>
+							<div class="list-info">
+								<div class="info-left">Mức lương mong muốn</div>
+								<div class="info-right">@if(@$resume->mucluong){{ $resume->mucluong() }} VND @else Thương lượng @endif</div>
+							</div>
+							<div class="list-info">
+								<div class="info-left">Ngành nghề mong muốn</div>
+								<div class="info-right">
+									@if(count($resume->cvcategory))
+									@foreach($resume->cvcategory as $cat)
+										@if($cat->cat_id > 0)
+										{{ $cat->category->cat_name }}<br>
+										@endif
+									@endforeach
+									@endif
+								</div>
+							</div>
+							<div class="list-info">
+								<div class="info-left">Địa điểm làm việc</div>
+								<div class="info-right">
+									@if(count($resume->location))
+									@foreach($resume->location as $loc)
+										@if($loc->province_id > 0)
+										{{ $loc->province->province_name }}<br>
+										@endif
+									@endforeach
+									@endif
+								</div>
+							</div>
 						<div class="col-xs-12">
+						 	
 							@if(strtotime($check_order['ended_date']) > $ngayhomnay && $check_order['remain']>0)
 								<div id="no-cv-phu">
 								@if($pdf)
 								<a href="#" id="view" class="btn btn-nomal bg-orange pull-right">Xem hồ sơ</a>
-								Lưu ý: Gói hồ sơ của quý khách sẽ giảm đi 1 tương ứng với mỗi lần xem hồ sơ chi tiết ứng viên
+								Lưu ý:Quí khách đang xem hồ sơ phụ của ứng viên, Gói hồ sơ của quý khách sẽ giảm đi 1 tương ứng với mỗi lần xem hồ sơ chi tiết ứng viên
 								@else
 								Lưu ý: Nếu quí khách chọn tải cv phụ gói dịch vụ của quí khách sẽ không bị giảm.
 								<a href="{{ URL::route('employers.search.print_cv',array($resume->id,'tai-phu')) }}" class="btn btn-lg bg-orange">Tải CV Phụ</a>
@@ -130,15 +219,20 @@
 								@endif
 								</div>
 								<div id="view_cv">
+									 
 									@if($pdf)
-									<iframe  frameborder="0" scrolling="no" src="{{ URL::route('employers.search.resume_viewer') }}?file={{ URL::to('/').'/uploads/jobseekers/cv/'.$resume->second_file_name }}" height="800" width="100%"></iframe>
+									<iframe  frameborder="0" scrolling="no" src="{{ URL::route('employers.search.resume_viewer') }}?file={{ URL::to('/').'/uploads/jobseekers/cv/'.$resume->second_file_name }}&type=phu" height="800" width="100%"></iframe>
 									@else 
 									<div style="margin: 10px 0px 0px 0px">
 									Lưu ý: Gói hồ sơ của quý khách sẽ giảm đi 1 tương ứng với mỗi lần tải hồ sơ chi tiết ứng viên
 									<a href="{{ URL::route('employers.search.print_cv',array($resume->id,'tai-chinh')) }}" class="btn btn-lg bg-orange">Tải CV Chính</a>
 									</div>
+									
 									@endif
+
 								</div>
+							
+						</div>
 
 								
 							@else 
@@ -150,16 +244,21 @@
 												<a href="{{ URL::route('employers.orders.add') }}" class="btn btn-nomal bg-orange pull-right">Mua dịch vụ</a>
 											</div>
 								</div>
+								<div id="view_cv_tam"> 
+									<iframe style="" id="cv"  frameborder="0" scrolling="no" src="{{ URL::route("employers.search.resume_viewer") }}?file={{ URL::to("/")."/uploads/jobseekers/cv/".$resume->second_file_name }}" height="800" width="100%"></iframe>
+								</div>
 							@endif
 						</div>
 					</div>
+					
+					
 					<div class="row box-footer">
-						<div class="col-xs-12 info-action">
+						<div class="col-xs-12 info-action" >
 							<div class="pull-right">
-								<ul style="background:white; padding:10px;border-radius:10px">
+								<ul style="background:white; padding:10px;border-radius:10px" >
 									<li><a href="#modalSaveFolder" data-toggle="modal" data-target="#modalSaveFolder">{{ HTML::image('assets/ntd/images/icon-save-cv.png') }} Lưu thư mục</a></li>
-								<!-- 	<li><a href="{{ URL::to($locale.'/employers/search/basic?' . implode('&', ['keyword=', 'category=all', 'level='.($resume->capbachientai>0?$resume->capbachientai:'all'), 'location=all'])) }}" target="_blank">{{ HTML::image('assets/ntd/images/icon-view-cv.png') }} Xem hồ sơ tương tự</a></li> -->
-								<li><a href="{{ URL::to($locale.'/nha-tuyen-dung/tim-kiem/co-ban?keyword='.$history['keyword'].'&category=all&level='.$resume->capbachientai.'&location=all') }}" target="_blank">{{ HTML::image('assets/ntd/images/icon-view-cv.png') }} Xem hồ sơ tương tự</a></li> 
+									<!-- <li><a href="{{ URL::to($locale.'/nha-tuyen-dung/tim-kiem/co-ban?' . implode('&', ['keyword=', 'category=all', 'level='.$resume->capbachientai, 'location=all'])) }}" target="_blank">{{ HTML::image('assets/ntd/images/icon-view-cv.png') }} Xem hồ sơ tương tự</a></li> -->
+									<li><a href="{{ URL::to($locale.'/nha-tuyen-dung/tim-kiem/co-ban?keyword='.$history['keyword'].'&category=all&level='.$resume->capbachientai.'&location=all') }}" target="_blank">{{ HTML::image('assets/ntd/images/icon-view-cv.png') }} Xem hồ sơ tương tự</a></li> 
 									<li><a href="#modalSend" data-toggle="modal" data-target="#modalSend">{{ HTML::image('assets/ntd/images/icon-send-cv.png') }} Gửi hồ sơ</a></li>
 								</ul>
 							</div>
@@ -269,6 +368,7 @@
 @stop
 @section('script')
 	<script type="text/javascript">
+
 	$('#view').click(function(event) { 
 
 		 
@@ -284,8 +384,8 @@
 	*/
 	});	
 
+	 	
 
-	
 	$('#inputAdd').click(function(event) { 
 		$('#inputFolder_name').prop({
 			disabled: 'disabled'

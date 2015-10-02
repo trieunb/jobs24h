@@ -33,7 +33,7 @@ class UserController extends \BaseController {
 			<button class="btn btn-xs btn-danger" onclick="return confirm(\'Bạn có muốn xóa user này ?\');" type="submit" title="Delete"><i class="glyphicon glyphicon-remove"></i></button>
 			{{ Form::close() }}
 			')
-		->edit_column('per','@foreach(json_decode($per) as $key=>$val)
+		->edit_column('per','@if($per) @foreach(json_decode($per) as $key=>$val)
 									@if($val=="admin_full") 
 										<p style="font-size: 11px; margin: 0px;">- Quản lý admin</p>
 									@elseif($val=="ntv_full")
@@ -50,7 +50,7 @@ class UserController extends \BaseController {
 										<p style="font-size: 11px; margin: 0px;">- Quản lý Cẩm nang việc làm</p>
 									@endif
 
-							@endforeach')
+							@endforeach @endif')
 		->make();
 	}
 

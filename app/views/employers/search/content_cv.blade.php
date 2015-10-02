@@ -103,7 +103,9 @@
 									{{ $edu->edu->name }}<br>
 									{{ nl2br($edu->achievement) }}<br>
 									- Điểm: {{ $edu->diem->name }}<br>
+									@if(isset($edu->linhvuc->name))
 									- Lĩnh vực nghiên cứu: {{ $edu->linhvuc->name }}
+									@endif
 								</div>
 							</div>
 							@endforeach
@@ -123,9 +125,15 @@
 									<span class="info-school-name">{{ $exp->company_name }}</span><br>
 									{{ $exp->position }}<br>
 									{{ nl2br($exp->job_detail) }}<br>
+									@if(isset($exp->fieldofwork->name))
 									- Lĩnh vực: {{ $exp->fieldofwork->name }}<br>
+									@endif
+									@if(isset($exp->chuyennganh->name))
 									- Chuyên ngành: {{ $exp->chuyennganh->name }}<br>
+									@endif
+									@if(isset($exp->capbac->name))
 									- Cấp bậc: {{ $exp->capbac->name }}<br>
+									@endif
 									@if($exp->salary != '')- Lương: {{ $exp->salary() }}<br>@endif
 								</div>
 							</div>

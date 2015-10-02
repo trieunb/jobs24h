@@ -251,14 +251,11 @@ class SearchController extends \Controller {
 		 
 		 
 		$resume = Resume::where('id', $id)->with('cvcategory')->with('location')->with('bangcap')->first();
-
-
-		 
-		
 		$employer = Auth::id();
 		$check_order=\Order::whereNtdId($employer)->first();
 		$history=\SearchHistory::whereNtdId($employer)->orderBy('created_at','desc')->first();
-		 
+		$saveView=\OrderDetail::whereNtdId($employer)->whereRsId($id)->whereOrderId($check_order->id);
+		//chưa xong phần history của view cv
 		if(!$resume)
 		{
 			return Redirect::route('employers.search.basic');
@@ -289,7 +286,11 @@ class SearchController extends \Controller {
 				if($resume->file_name)
 				{
 					$file = str_replace(['.doc', '.docx', '.jpg'], '.pdf', $resume->file_name);
+					//var_dump($file );
+					 
 					$dir = Config::get('app.upload_path') . 'jobseekers/cv/' . $file;
+					//var_dump($dir);
+					//die();
 					if(File::isFile($dir)) $pdf = true;
 					else $pdf = false;
 					return View::make('employers.search.resume_info_upload', compact('resume', 'pdf','history','check_order'));
@@ -315,11 +316,15 @@ class SearchController extends \Controller {
 
 		if ($order_inser['remain'] > 0 && strtotime($order_inser['ended_date']) > $ngayhomnay) {
 			# code...
+			if(Input::get('type')!='phu')
+			{
 				$order_inser['remain']=$order_inser['remain']-1;
-			if($order_inser['remain']<=0)
-			$order_inser['remain']=0;
-			
-			$order_inser->save();
+				if($order_inser['remain']<=0)
+				$order_inser['remain']=0;
+				
+				$order_inser->save();
+			}
+			 
 			$file = str_replace(['.doc', '.docx', '.jpg'], '.pdf', Input::get('file'));
 			$file = explode('jobseekers/cv/', $file);
 			$file = $file[1];

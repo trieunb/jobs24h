@@ -35,44 +35,18 @@
 									<div class="col-xs-8">
 										<div class="row td-info">
 											<div class="col-xs-5">
-												Kinh nghiệm
+												Ứng viên
 											</div>
 											<div class="col-xs-7">
-												{{$resume->namkinhnghiem}} năm
+												{{ $resume->ntv->full_name() }}
 											</div>
 										</div>
 										<div class="row td-info">
 											<div class="col-xs-5">
-												Bằng cấp 
+												Ngày sinh  
 											</div>
 											<div class="col-xs-7">
-												{{$resume->bangcap->name}}
-											</div>
-										</div>
-										<div class="row td-info">
-											<div class="col-xs-5">
-												Cấp bậc hiện tại
-											</div>
-											<div class="col-xs-7">
-												{{$resume->level->name}}
-											</div>
-										</div>
-										<div class="row td-info">
-											<div class="col-xs-5">
-												Vị trí mong muốn 
-											</div>
-											<div class="col-xs-7">
-												{{$resume->vitrimongmuon}}
-											</div>
-										</div>
-										<div class="row td-info">
-											<div class="col-xs-5">
-												Tỉnh/Thành phố
-											</div>
-											<div class="col-xs-7">
-												@if($resume->ntv->province_id)
-												{{ $resume->ntv->province->province_name }}
-												@endif
+												{{ $resume->ntv->date_of_birth }}
 											</div>
 										</div>
 										<div class="row td-info">
@@ -80,7 +54,29 @@
 												Quốc tịch
 											</div>
 											<div class="col-xs-7">
-												Việt Nam
+												@if($resume->ntv->country_id)
+												{{ $resume->ntv->country->country_name }}
+												@endif
+											</div>
+										</div>
+										<div class="row td-info">
+											<div class="col-xs-5">
+												Giới tính
+											</div>
+											<div class="col-xs-7">
+												@if($resume->ntv->gender == 0)
+												Nam
+												@elseif($resume->ntv->gender == 1)
+												Nữ
+												@else 
+												Không công khai
+												@endif
+												 - 
+												@if($resume->ntv->marital_status == 1)
+												Độc thân
+												@else
+												Đã lập gia đình
+												@endif
 											</div>
 										</div>
 										
@@ -143,7 +139,73 @@
 							</div> <!-- end .row top -->
 						</div>
 					</div> <!-- end .row info -->
-					
+					<div class="row info-content">					
+
+							<div class="heading-title">
+								<span>Thông tin nghề nghiệp</span>
+							</div>
+							<div class="list-info">
+								<div class="info-left">Năm kinh nghiệm</div>
+								<div class="info-right">@if($resume->namkinhnghiem == 0) Chưa có kinh nghiệm @else {{ $resume->namkinhnghiem }} Năm @endif</div>
+							</div>
+							<div class="list-info">
+								<div class="info-left">Cấp bậc hiện tại</div>
+								<div class="info-right">{{ $resume->level->name }}</div>
+							</div>
+							<div class="list-info">
+								<div class="info-left">Bằng cấp cao nhất</div>
+								<div class="info-right">{{ $resume->bangcap->name }}</div>
+							</div>
+							<div class="list-info">
+								<div class="info-left">Ngoại ngữ</div>
+								<div class="info-right">
+									@if(count($resume->cvlanguage))
+									@foreach($resume->cvlanguage as $lang)
+										@if($lang->lang_id > 0)
+										{{ $lang->lang->lang_name }} - {{ $lang->lvlang->name }}<br>
+										@endif
+									@endforeach
+									@endif
+								</div>
+							</div>
+							<div class="list-info">
+								<div class="info-left">Cấp bậc mong muốn</div>
+								<div class="info-right">{{ $resume->capbac->name }}</div>
+							</div>
+							<div class="list-info">
+								<div class="info-left">Mức lương mong muốn</div>
+								<div class="info-right">@if(@$resume->mucluong){{ $resume->mucluong() }} VND @else Thương lượng @endif</div>
+							</div>
+							<div class="list-info">
+								<div class="info-left">Ngành nghề mong muốn</div>
+								<div class="info-right">
+									@if(count($resume->cvcategory))
+									@foreach($resume->cvcategory as $cat)
+										@if($cat->cat_id > 0)
+										{{ $cat->category->cat_name }}<br>
+										@endif
+									@endforeach
+									@endif
+								</div>
+							</div>
+							<div class="list-info">
+								<div class="info-left">Địa điểm làm việc</div>
+								<div class="info-right">
+									@if(count($resume->location))
+									@foreach($resume->location as $loc)
+										@if($loc->province_id > 0)
+										{{ $loc->province->province_name }}<br>
+										@endif
+									@endforeach
+									@endif
+								</div>
+							</div>
+							<!-- <div class="list-info">
+								<div class="info-left">Hình thức</div>
+								<div class="info-right">{{ @$resume->worktype->name }}</div>
+							</div> -->
+							
+						</div>
 					@if(strtotime($check_order['ended_date']) > $ngayhomnay && $check_order['remain']>0)
 					<div class="heading-title">
 							<span></span>

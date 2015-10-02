@@ -42,7 +42,7 @@
 						{{ $val }}
 						@if($key=="ntv_full")
 							( <span style="color:red;font-size: 12px;"> Còn tổng cộng {{$total_ntv_not_share}} NTV chưa được chia </span>)
-							<a target="_blank" href="{{URL::route('admin.employers.index')}}?Search={{$user->username}}"><p style="font-size: 12px;font-style: italic;">User này đang quản lý <span style="color:red">{{$total_ntv_share}}</span> Người Tìm Việc</p></a>							<div class="ntv_full"></div>
+							<a target="_blank" href="{{URL::route('admin.jobs.index')}}?Search={{$user->username}}"><p style="font-size: 12px;font-style: italic;">User này đang quản lý <span style="color:red">{{$total_ntv_share}}</span> Người Tìm Việc</p></a>							<div class="ntv_full"></div>
 						@endif
 						@if($key=="ntd_full")
 						
