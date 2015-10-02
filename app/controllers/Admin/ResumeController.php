@@ -28,6 +28,7 @@ class ResumeController extends \BaseController {
 		if (Request::ajax()) {
 			$page=(Input::get('iDisplayStart'));
 		}
+		$user=AdminAuth::getUser()->username;
 		$resumes = Resume::select(
 			'id as ckid',
 			'id',
@@ -39,14 +40,15 @@ class ResumeController extends \BaseController {
 			'trangthai',
 			'file_name',
 			'second_file_name',
-			'id as ids');
+			'id as ids')->whereIn('trangthai', array(1,2) );
 		return Datatables::of($resumes)
 		->edit_column('ckid', '<th class="center"><label class="pos-rel"><input type="checkbox" class="ace" /><span class="lbl"></span></label></th>')
 		->edit_column('tieude_cv', '@if($tieude_cv != "")<a href="{{URL::route("admin.resumes.edit1", array($id) )}}" style="text-transform:capitalize" target="_blank">{{$tieude_cv}}</a>@else  @endif')		
 		->edit_column('fn', '@if($fn != "")<a href="{{URL::route("admin.jobseekers.edit1", array('.$page.',$ntv_id))}}" target="_blank">{{$fn}} {{$ln}}</a>@else  @endif')		
 		->remove_column('ln')	
-		->edit_column('trangthai', '@if($trangthai == 2)<span class="label label-warning">Chưa duyệt</span>@elseif($trangthai == 1) <span class="label label-primary">Chưa hoàn thiện</span>@else <span class="label label-success">Đã duyệt</span>@endif')
+		->edit_column('trangthai', '@if($trangthai == 2)<span class="label label-warning">Chưa duyệt</span>@elseif($trangthai == 1)<span class="label label-success">Đã duyệt</span>@else  <span class="label label-primary">Chưa hoàn thiện</span> @endif')
 		->edit_column('created_at', '{{date("d-m-Y", strtotime($created_at))}}')
+		->edit_column('ntv_id', ''.$user.'')
 		->edit_column('ids', '
 			{{ Form::open(array("method"=>"POST", "route"=>array("admin.resumes.post-delete", $id) )) }}
 			<button class="btn btn-xs btn-danger" onclick="return confirm(\'Are you sure you want to delete ?\');" type="submit" title="Delete"><i class="ace-icon fa fa-trash-o bigger-120"></i></button>
@@ -61,6 +63,7 @@ class ResumeController extends \BaseController {
 		if (Request::ajax()) {
 			$page=(Input::get('iDisplayStart'));
 		}
+		$user=AdminAuth::getUser()->username;
 		$resumes = Resume::select(
 			'id as ckid',
 			'id',
@@ -75,6 +78,7 @@ class ResumeController extends \BaseController {
 		->edit_column('tieude_cv', '@if($tieude_cv != "")<a href="{{URL::route("admin.resumes.edit1", array($id) )}}" style="text-transform:capitalize" target="_blank">{{$tieude_cv}}</a>@else  @endif')		
 		->edit_column('fn', '@if($fn != "")<a href="{{URL::route("admin.jobseekers.edit1", array('.$page.',$ntv_id))}}" target="_blank">{{$fn}} {{$ln}}</a>@else  @endif')		
 		->remove_column('ln')	
+		->edit_column('ntv_id', ''.$user.'')
 		->edit_column('created_at', '{{date("d-m-Y", strtotime($created_at))}}')
 		->edit_column('ids', '
 			{{ Form::open(array("method"=>"POST", "route"=>array("admin.resumes.post-delete", $id), "style"=>"display:inline-block" )) }}
@@ -310,13 +314,6 @@ class ResumeController extends \BaseController {
 		return View::make('admin.resumes.print', compact('resume', 'bang_cap'));
 	}
 
-	/**
-	 * Show the form for editing the specified resource.
-	 * GET /resume/{id}/edit
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
 	public function getEdit($id)
 	{
 		//
@@ -334,17 +331,35 @@ class ResumeController extends \BaseController {
 		
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 * PUT /resume/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+	
 	public function postEdit($id)
 	{	
-		$params = Input::all();
-		//var_dump($params['trangthai']); die();
+		$data = Input::all();	
+		$id = (int)$id;
+	  	if(isset($data["is_publish"])) $data["is_publish"] =  (int)$data["is_publish"];
+	  	$data["trangthai"] =  (int)$data["trangthai"];
+		$data["info_years_of_exp"] =  (int)$data["info_years_of_exp"];
+		$data["info_highest_degree"] =  (int)$data["info_highest_degree"];
+		$data["foreign_languages_1"] =  (int)$data["foreign_languages_1"];
+	 	if(isset($data["level_languages_1"])) $data["level_languages_1"] =  (int)$data["level_languages_1"];
+		$data["foreign_languages_2"] = (int) $data["foreign_languages_2"];
+		$data["foreign_languages_3"] = (int) $data["foreign_languages_3"];
+		  
+		if(isset($data["info_current_level"])) $data["info_current_level"] = (int) $data["info_current_level"];
+		if(isset($data["info_wish_level"])) $data["info_wish_level"] = (int) $data["info_wish_level"];
+		if(isset($data["specific_salary"])) $data["specific_salary"] = (int) $data["specific_salary"];
+	  	
+		
+
+  		if(isset($data['info_category'][0]))$data['info_category'][0] = (int)$data['info_category'][0];
+  		if(isset($data['info_category'][1]))$data['info_category'][1] = (int)$data['info_category'][1];
+  		if(isset($data['info_category'][2]))$data['info_category'][2] = (int)$data['info_category'][2];
+
+  		if(isset($data['info_wish_place_work'][0]))$data['info_wish_place_work'][0] = (int)$data['info_wish_place_work'][0];
+  		if(isset($data['info_wish_place_work'][1])) $data['info_wish_place_work'][1] = (int)$data['info_wish_place_work'][1];
+		if(isset($data['info_wish_place_work'][2])) $data['info_wish_place_work'][2] = (int)$data['info_wish_place_work'][2];
+   
+		
 		$resume = Resume::with('location')->find($id);
 		if( ! $resume)
 		{
@@ -357,44 +372,44 @@ class ResumeController extends \BaseController {
 				return Redirect::back()->withInput()->withErrors($validator);
 			} else {
 				// THONG TIN CHUNG
-				if(!isset($params['foreign_languages_2'])){$params['foreign_languages_2']=null;}
-				if(!isset($params['foreign_languages_3'])){$params['foreign_languages_3']=null;}
-				if(!isset($params['level_languages_2'])){$params['level_languages_2']=null;}
-				if(!isset($params['level_languages_3'])){$params['level_languages_3']=null;}
+				if(!isset($data['foreign_languages_2'])){$data['foreign_languages_2']=null;}
+				if(!isset($data['foreign_languages_3'])){$data['foreign_languages_3']=null;}
+				if(!isset($data['level_languages_2'])){$data['level_languages_2']=null;}
+				if(!isset($data['level_languages_3'])){$data['level_languages_3']=null;}
 				// Languages
 				$chk = CVLanguage::where('rs_id',$id)->get();
 				if(count($chk) == 0){
 					$lt = CVLanguage::insert(array(
-						array('rs_id' => $id,'lang_id' => $params['foreign_languages_1'],'level' => $params['level_languages_1'],'count_lang' => 1),
-						array('rs_id' => $id,'lang_id' => $params['foreign_languages_2'],'level' => $params['level_languages_2'],'count_lang' => 2),
-						array('rs_id' => $id,'lang_id' => $params['foreign_languages_3'],'level' => $params['level_languages_3'],'count_lang' => 3),
+						array('rs_id' => $id,'lang_id' => $data['foreign_languages_1'],'level' => $data['level_languages_1'],'count_lang' => 1),
+						array('rs_id' => $id,'lang_id' => $data['foreign_languages_2'],'level' => $data['level_languages_2'],'count_lang' => 2),
+						array('rs_id' => $id,'lang_id' => $data['foreign_languages_3'],'level' => $data['level_languages_3'],'count_lang' => 3),
 					));
 				}else{
 					for ($i=1; $i <= count($chk) ; $i++) { 
 						$lt = CVLanguage::where('rs_id',$id)->where('count_lang', $i)->update(array(
-							'lang_id' => $params['foreign_languages_'.$i.''],'level' => $params['level_languages_'.$i.'']
+							'lang_id' => $data['foreign_languages_'.$i.''],'level' => $data['level_languages_'.$i.'']
 						));
 					}
 				}
 
 				// Categories
 				$chk_cat = CVCategory::where('rs_id',$id)->get();
-				if(count($params['info_category']) < 2){
-					$params['info_category'][1] = 0;	
+				if(count($data['info_category']) < 2){
+					(int)$data['info_category'][1] = 0;	
 				}
-				if(count($params['info_category']) < 3){
-					$params['info_category'][2] = 0;
+				if(count($data['info_category']) < 3){
+					(int)$data['info_category'][2] = 0;
 				}
 				if(count($chk_cat) == 0){
 					$ct = CVCategory::insert(array(
-						array('rs_id' => $id,'cat_id' => $params['info_category'][0], 'count_cate' => 1),
-						array('rs_id' => $id,'cat_id' => $params['info_category'][1], 'count_cate' => 2),
-						array('rs_id' => $id,'cat_id' => $params['info_category'][2], 'count_cate' => 3),
+						array('rs_id' => $id,'cat_id' => $data['info_category'][0], 'count_cate' => 1),
+						array('rs_id' => $id,'cat_id' => $data['info_category'][1], 'count_cate' => 2),
+						array('rs_id' => $id,'cat_id' => $data['info_category'][2], 'count_cate' => 3),
 					));
 				}else{
 					for ($i=0; $i < count($chk_cat) ; $i++) { 
 						$update_ct = CVCategory::where('rs_id',$id)->where('count_cate', $i+1)->update(array(
-							'cat_id' => $params['info_category'][$i]
+							'cat_id' => $data['info_category'][$i]
 						));
 					}
 				}
@@ -402,87 +417,93 @@ class ResumeController extends \BaseController {
 
 				// Work Locations
 				$chk_wl = WorkLocation::where('rs_id',$id)->get();
-				if(count($params['info_wish_place_work']) < 2){
-					$params['info_wish_place_work'][1] = 0;	
+				if(count($data['info_wish_place_work']) < 2){
+					$data['info_wish_place_work'][1] = 0;	
 				}
-				if(count($params['info_wish_place_work']) < 3){
-					$params['info_wish_place_work'][2] = 0;
+				if(count($data['info_wish_place_work']) < 3){
+					$data['info_wish_place_work'][2] = 0;
 				}
+
 				if(count($chk_wl) == 0){
 					$wl = WorkLocation::insert(array(
-						array('rs_id' => $id,'province_id' => $params['info_wish_place_work'][0], 'count_work_location' => 1),
-						array('rs_id' => $id,'province_id' => $params['info_wish_place_work'][1], 'count_work_location' => 2),
-						array('rs_id' => $id,'province_id' => $params['info_wish_place_work'][2], 'count_work_location' => 3),
+						array('rs_id' => $id,'province_id' => $data['info_wish_place_work'][0], 'count_work_location' => 1),
+						array('rs_id' => $id,'province_id' => $data['info_wish_place_work'][1], 'count_work_location' => 2),
+						array('rs_id' => $id,'province_id' => $data['info_wish_place_work'][2], 'count_work_location' => 3),
 					));
 				}else{
 					for ($j=0; $j < count($chk_wl) ; $j++) { 
 						$update_wl = WorkLocation::where('rs_id',$id)->where('count_work_location', $j+1)->update(array(
-							'province_id' => $params['info_wish_place_work'][$j]
+							'province_id' => $data['info_wish_place_work'][$j]
 						));
 					}
 				}
 				
-				$params['specific_salary'] = 800000;
-				//else{$params['specific_salary'] = str_replace(',', '', $params['specific_salary']);}
 				
-				if(!isset($params['is_publish'])) $params['is_publish'] = 0;
-				else{$params['is_publish'] = 1;}
-				if($params['is_publish'] == 1){
-					$un_set_publish = Resume::where('ntv_id',$GLOBALS['user']->id)->update(array('is_public'=>0));
+				//else{$data['specific_salary'] = str_replace(',', '', $data['specific_salary']);}
+				
+				if(!isset($data['is_publish'])) $data['is_publish'] = 0;
+				else{$data['is_publish'] = 1;}
+				if($data['is_publish'] == 1){
+					$un_set_publish = Resume::where('id',$id)->update(array('is_public'=>0));
+				}
+
+				if(!isset($data['is_visible'])) $data['is_visible'] = 0;
+				else{$data['is_visible'] = 1;}
+				if($data['is_visible'] == 1){
+					$un_set_visible = Resume::where('id',$id)->update(array('is_visible'=>0));
 				}
 
 
-				if(!isset($params['is_visible'])) $params['is_visible'] = 0;
-				else{$params['is_visible'] = 1;}
-				if($params['is_visible'] == 1){
-					$un_set_visible = Resume::where('ntv_id',$GLOBALS['user']->id)->update(array('is_visible'=>0));
-				}
 
 				// KINH NGHIEM LAM VIEC
-				if(isset($params['id_exp'])){
-					$update = Experience::where('id', $params['id_exp'])->update(array(
-						'position' => ''.$params['position'].'', 
-			    		'company_name' => ''.$params['company_name'].'', 
-			    		'from_date'=> ''.$params['from_date'].'',
-			    		'to_date'=> ''.$params['to_date'].'',
-			    		'job_detail'=> ''.$params['job_detail'].'',
-					));
+				if(isset($data['id_exp'])){
+					for ($i=0; $i < count($data['id_exp']); $i++)  {
+						$update = Experience::where('id', (int)$data['id_exp'][$i])->update(array(
+							'position' 		=> ''.$data['position'][$i].'', 
+				    		'company_name' 	=> ''.$data['company_name'][$i].'', 
+				    		'from_date'		=> ''.$data['from_date'][$i].'',
+				    		'to_date'		=> ''.$data['to_date'][$i].'',
+				    		'job_detail'	=> ''.$data['job_detail'][$i].'',
+						));
+					}
+					
 				
 				}else{
 					$create = Experience::create(array(
 			    		'rs_id' => $id, 
-			    		'position' => ''.$params['position'].'', 
-			    		'company_name' => ''.$params['company_name'].'', 
-			    		'from_date'=> ''.$params['from_date'].'',
-			    		'to_date'=> ''.$params['to_date'].'',
-			    		'job_detail'=> ''.$params['job_detail'].'',
+			    		'position' => ''.$data['position'].'', 
+			    		'company_name' => ''.$data['company_name'].'', 
+			    		'from_date'=> ''.$data['from_date'].'',
+			    		'to_date'=> ''.$data['to_date'].'',
+			    		'job_detail'=> ''.$data['job_detail'].'',
 					));
 				
 				}
 
 				// HOC VAN BANG CAP
-				if(isset($params['id_edu'])){
-					$update_mte = MTEducation::where('id', $params['id_edu'])->update(array(
-			    		'school' => ''.$params['school'].'', 
-			    		'level'=> $params['level'],
-			    		'study_from'=> ''.$params['study_from'].'',
-			    		'study_to'=> ''.$params['study_to'].'',
-			    		'achievement'=> ''.$params['achievement'].'', 
-			    		'specialized'=> ''.$params['specialized'].'',
-			    		'average_grade_id'=> $params['average_grade_id'],
-					));
-					
+				if(isset($data['id_edu'])){
+					for ($i=0; $i < count($data['id_edu']); $i++)  {
+						$update_mte = MTEducation::where('id', (int)$data['id_edu'][$i])->update(array(
+				    		'school' => ''.$data['school'][$i].'', 
+				    		'level'=> (int)$data['level'][$i],
+				    		'study_from'=> ''.$data['study_from'][$i].'',
+				    		'study_to'=> ''.$data['study_to'][$i].'',
+				    		'achievement'=> ''.$data['achievement'][$i].'', 
+				    		'specialized'=> ''.$data['specialized'][$i].'',
+				    		'average_grade_id'=> (int)$data['average_grade_id'][$i],
+						));
+					}
 					
 				}else{
 					$create_mte = MTEducation::create(array(
 			    		'rs_id' => $id, 
-			    		'school' => ''.$params['school'].'', 
-			    		'level'=> $params['level'],
-			    		'study_from'=> ''.$params['study_from'].'',
-			    		'study_to'=> ''.$params['study_to'].'',
-			    		'achievement'=> ''.$params['achievement'].'', 
-			    		'specialized'=> ''.$params['specialized'].'',
-			    		'average_grade_id'=> $params['average_grade_id'],
+			    		'school' => ''.$data['school'].'', 
+			    		'level'=> (int)$data['level'],
+			    		'study_from'=> ''.$data['study_from'].'',
+			    		'study_to'=> ''.$data['study_to'].'',
+			    		'achievement'=> ''.$data['achievement'].'', 
+			    		'specialized'=> ''.$data['specialized'].'',
+			    		'average_grade_id'=> (int)$data['average_grade_id'],
 					));
 					
 				}
@@ -490,30 +511,30 @@ class ResumeController extends \BaseController {
 				// KY NANG
 				$arr = array();
 				$new_arr= array();
-				foreach($params['skills'] as $key => $value)
+				foreach($data['skills'] as $key => $value)
 				{
 					if($value != ''){
-						foreach ($params['level_skills'] as $k => $val) {
+						foreach ($data['level_skills'] as $k => $val) {
 							if($k == $key){
 								$arr[] = array($value,$val);
 							}
 						}
 					}
 				}
-				$rs = Resume::where('id',$id)->where('ntv_id',$GLOBALS['user']->id)->update(array(
-					'namkinhnghiem' 		=> $params['info_years_of_exp'],
-					'tieude_cv' 			=> $params['tieude'],
-					'bangcapcaonhat' 		=> $params['info_highest_degree'],
-					'capbachientai' 		=> $params['info_current_level'],
-					'capbacmongmuon' 		=> $params['info_wish_level'],
-					'mucluong' 				=> $params['specific_salary'],
-					'ctyganday' 			=> ''.$params['info_latest_company'].'',
-					'cvganday' 				=> ''.$params['info_latest_job'].'',
-					'is_public'				=> $params['is_publish'],
-					'is_visible'			=> $params['is_visible'],
-					'dinhhuongnn'			=>''.$params['introduct_yourself'].'',
+				$rs = Resume::where('id',$id)->update(array(
+					'namkinhnghiem' 		=> $data['info_years_of_exp'],
+					'tieude_cv' 			=> ''.$data['tieude_cv'].'',
+					'bangcapcaonhat' 		=> $data['info_highest_degree'],
+					'capbachientai' 		=> $data['info_current_level'],
+					'capbacmongmuon' 		=> $data['info_wish_level'],
+					'mucluong' 				=> $data['specific_salary'],
+					'ctyganday' 			=> ''.$data['info_latest_company'].'',
+					'cvganday' 				=> ''.$data['info_latest_job'].'',
+					'is_public'				=> $data['is_publish'],
+					'is_visible'			=> $data['is_visible'],
+					'dinhhuongnn'			=>''.$data['introduct_yourself'].'',
 					'kynang'				=>''.json_encode($arr).'',
-					'trangthai'				=> ''.$params['trangthai'].''
+					'trangthai'				=> $data['trangthai']
 
 				));
 				if($rs){
@@ -666,14 +687,14 @@ class ResumeController extends \BaseController {
 				if(!isset($params['is_publish'])) $params['is_publish'] = 0;
 				else{$params['is_publish'] = 1;}
 				if($params['is_publish'] == 1){
-					$un_set_publish = Resume::where('ntv_id',$GLOBALS['user']->id)->update(array('is_public'=>0));
+					$un_set_publish = Resume::where('id', $id)->update(array('is_public'=>0));
 				}
 
 
 				if(!isset($params['is_visible'])) $params['is_visible'] = 0;
 				else{$params['is_visible'] = 1;}
 				if($params['is_visible'] == 1){
-					$un_set_visible = Resume::where('ntv_id',$GLOBALS['user']->id)->update(array('is_visible'=>0));
+					$un_set_visible = Resume::where('id', $id)->update(array('is_visible'=>0));
 				}
 
 				$rs = Resume::where('id',$id)->update(array(
@@ -707,9 +728,15 @@ class ResumeController extends \BaseController {
 		}
 		$file= Config::get('app.upload_path') . 'jobseekers/cv/'.$file_name.'';
 		$name = explode('.', $file_name);
-		if($cv->tieude_cv == ''){
-			$name = $GLOBALS['user']->first_name.$GLOBALS['user']->last_name.'_'.date('m-d-Y',strtotime($cv->updated_at)).'.'.$name[1];
-		}else{$name = $cv->tieude_cv.'.'.$name[1];}
+		$user = NTV::find($cv->ntv_id);
+		if($cv->tieude_cv == '' && $cv->ntv != 0){
+			$user = NTV::find($cv->ntv_id);
+			$name = $user->first_name.$user->last_name.'_'.date('m-d-Y',strtotime($cv->updated_at)).'.'.$name[1];
+		}elseif($cv->ntv_id == 0){
+			$user1 = Application::where('cv_id', $id)->first();
+			$name = $user1->first_name.$user1->last_name.'_'.date('m-d-Y',strtotime($cv->updated_at)).'.'.$name[1];
+		}
+		else{$name = $cv->tieude_cv.'.'.$name[1];}
 		$headers = array(
            'Content-Type: image/png',
            'Content-Type: image/jpeg',
@@ -749,6 +776,7 @@ class ResumeController extends \BaseController {
 		if (Request::ajax()) {
 			$page=(Input::get('iDisplayStart'));
 		}
+		$user=AdminAuth::getUser()->username;
 		$resumes = Resume::select(
 			'id as ckid',
 			'id',
@@ -766,8 +794,9 @@ class ResumeController extends \BaseController {
 		->edit_column('tieude_cv', '@if($tieude_cv != "")<a href="{{URL::route("admin.resumes.edit1", array($id) )}}" style="text-transform:capitalize" target="_blank">{{$tieude_cv}}</a>@else  @endif')		
 		->edit_column('fn', '@if($fn != "")<a href="{{URL::route("admin.jobseekers.edit1", array('.$page.',$ntv_id))}}" target="_blank">{{$fn}} {{$ln}}</a>@else  @endif')		
 		->remove_column('ln')	
-		->edit_column('trangthai', '@if($trangthai == 2)<span class="label label-warning">Chưa duyệt</span>@elseif($trangthai == 1) <span class="label label-primary">Chưa hoàn thiện</span>@else <span class="label label-success">Đã duyệt</span>@endif')
+		->edit_column('trangthai', '@if($trangthai == 2)<span class="label label-warning">Chưa duyệt</span>@elseif($trangthai == 1)<span class="label label-success">Đã duyệt</span> @else <span class="label label-primary">Chưa hoàn thiện</span>@endif')
 		->edit_column('created_at', '{{date("d-m-Y", strtotime($created_at))}}')
+		->edit_column('ntv_id', ''.$user.'')
 		->edit_column('ids', '
 			{{ Form::open(array("method"=>"POST", "route"=>array("admin.resumes.post-delete", $id) )) }}
 			<button class="btn btn-xs btn-danger" onclick="return confirm(\'Are you sure you want to delete ?\');" type="submit" title="Delete"><i class="ace-icon fa fa-trash-o bigger-120"></i></button>

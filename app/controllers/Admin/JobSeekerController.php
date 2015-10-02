@@ -90,6 +90,7 @@ class JobSeekerController extends \BaseController {
 		if (Request::ajax()) {
 			$page=(Input::get('iDisplayStart'));
 		}
+		$user=AdminAuth::getUser()->username;
 		$jobseekers = NTV::select(
 			'id as ckid',
 			'id',
@@ -98,6 +99,7 @@ class JobSeekerController extends \BaseController {
 			'email',
 			'phone_number',
 			'created_at',
+			'id as cskh',
 			DB::raw('(select count(*) from resumes where jobseekers.id = resumes.ntv_id) as count_resume') ,
 			DB::raw('(select count(*) from application where jobseekers.id = application.ntv_id) as count_application'),
 			DB::raw('(select count(*) from resumes where jobseekers.id = resumes.ntv_id AND resumes.file_name != "") as count_file_upload'),
@@ -118,6 +120,7 @@ class JobSeekerController extends \BaseController {
 		->edit_column('created_at', '{{date("d-m-Y", strtotime($created_at))}}')
    		->edit_column('activated', '@if($activated==true)<span class="label label-success">Kích hoạt</span>@else <span class="label label-info">Không kích hoạt</span>@endif')
    		->edit_column('member', '@if($member != 0)<span class="label label-success">Thành viên</span>@else <span class="label label-success">Khách</span>@endif')
+   		->edit_column('cskh', ''.$user.'')
 		->edit_column('ids', '
 			{{ Form::open(array("method"=>"POST", "route"=>array("admin.jobseekers.delete", $id) )) }}
 			<button class="btn btn-xs btn-danger" onclick="return confirm(\'Are you sure you want to delete ?\');" type="submit" title="Delete"><i class="ace-icon fa fa-trash-o bigger-120"></i></button>
