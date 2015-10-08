@@ -116,7 +116,7 @@
 													Số lượng hồ sơ ứng viên có thể xem được là : <span id="cv_xem" style="color:red">{{$check_order['remain']}}</span> hồ sơ.
 												</div>
 												<div class="col-xs-3 pull-right">
-													<a class="btn btn-nomal bg-orange pull-right" id="show_info" href="#">Xem</a>
+													<a class="btn btn-nomal bg-orange pull-right" id="show_info" href="#view_cv">Xem</a>
 													<!-- <a href="{{ URL::route('employers.orders.add') }}" class="btn btn-nomal bg-orange pull-right">Mua dịch vụ</a> -->
 												</div>
 											@else

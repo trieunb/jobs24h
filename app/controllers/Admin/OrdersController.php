@@ -33,7 +33,8 @@ Class OrdersController extends \BaseController
 			$q1->where('epackage_id','<>',1);
 		}
 		))->first();
-		   
+		
+
 		//$ntd=NTD::whereId($id)->with('job')->with('orderpostrec')->first();
 		/*var_dump($ntd->orderpostrec);
 		 die();*/
@@ -66,8 +67,9 @@ Class OrdersController extends \BaseController
 					$insert_order->ended_date	=	date('Y-m-d H:i:s',strtotime ( ''.$epackage['total_date'].' day' ,  strtotime($insert_order['ended_date']) ) ) ;
 
 					$insert_order->save();
-
-					 
+					//chèn dịch vụ vào jobs cho dễ selects
+					
+					
 				}
 
 				else 
@@ -89,9 +91,29 @@ Class OrdersController extends \BaseController
 						
 				
 					 $insert_order->save();
-
+					 
 				}
-
+				if ($value==2) {
+						$inser_job=Job::find($id)->update('is_red',$insert_order->ended_date);
+					}
+					if ($value==3) {
+						$inser_job=Job::find($id)->update('is_hot',$insert_order->ended_date);
+					}
+					if ($value==4) {
+						$inser_job=Job::find($id)->update('is_gap',$insert_order->ended_date);
+					}
+					if ($value==5 || $value==6) {
+						$inser_job=Job::find($id)->update('top_nganh',$insert_order->ended_date);
+					}
+					if ($value==7 || $value==8) {
+						$inser_job=Job::find($id)->update('top_home',$insert_order->ended_date);
+					}
+					if ($value==9 || $value==10) {
+						$inser_job=Job::find($id)->update('fixed_nganh',$insert_order->ended_date);
+					}
+					if ($value==11 || $value==12) {
+						$inser_job=Job::find($id)->update('fixed_home',$insert_order->ended_date);
+					}
 
 				// chèn đơn hàng chi tiết
 				$order_detail = new OrderDetailNtd;
@@ -255,12 +277,22 @@ Class OrdersController extends \BaseController
 			}
 		 
 		}
+		 
+
 		else return Redirect::back()->withErrors('Xóa Không thành công')->withInput();
 
 		
 
 	}
 
+	function getDeleteServiceJob($job_id,$epackage_id)
+	{
+		$del=OrderPostRec::whereJobId($job_id)->whereEpackageId($epackage_id);
+				if ($del->delete()) 
+					return Redirect::back()->with('success','Xóa Thành công');
+			 	else 
+					return Redirect::back()->with('success','Xóa Thành công');
+	}
 	function getUpdateService($job_id,$ntd_id,$package_id)
 	{
 

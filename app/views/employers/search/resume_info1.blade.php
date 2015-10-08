@@ -91,11 +91,10 @@
 
 												<div class="col-xs-9">
 													Gói dịch vụ xem hồ sơ của quí khách còn <span style="color:red"> {{ round((strtotime($check_order['ended_date']) - $ngayhomnay)/(24*3600))}} </span>ngày.
-													Số lượng hồ sơ ứng viên có thể xem được là : <span id="cv_xem" style="color:red">{{$check_order['remain']}}</span> hồ sơ.
+													Và số lượng hồ sơ ứng viên có thể xem được là : <span id="cv_xem" style="color:red">{{$check_order['remain']}}</span> hồ sơ.
 												</div>
 												<div class="col-xs-3 pull-right">
-													<!-- <a href="{{ URL::route('employers.orders.add') }}" class="btn btn-nomal bg-orange pull-right">Mua dịch vụ</a> -->
-													<a class="btn btn-nomal bg-orange pull-right" id="show_info" href="#content_cv">Xem</a>
+													<a href="{{ URL::route('employers.orders.add') }}" class="btn btn-nomal bg-orange pull-right">Mua dịch vụ</a>
 												</div>
 											@else
 											<div class="col-xs-9">
@@ -113,11 +112,11 @@
 												</h5>
 												<div class="row">
 													<div class="col-xs-4">Địa chỉ:</div>
-													<div class="col-xs-8">Số 36-38A Trần Văn Dư, Quận Tân Bình, Thành phố Hồ Chí Minh</div>
+													<div class="col-xs-8">06 Trần Phú - Đà Nẵng - Việt Nam</div>
 													<div class="col-xs-4">Điện thoại:</div>
-													<div class="col-xs-8">+84-8-7300-7979</div>
+													<div class="col-xs-8">(084.8) 3828 6060</div>
 													<div class="col-xs-4">Fax:</div>
-													<div class="col-xs-8">+84-8-6293-6896</div>
+													<div class="col-xs-8">(084.8) 3824 1866</div>
 												</div>
 												
 											</div>
@@ -127,11 +126,11 @@
 												</h5>
 												<div class="row">
 													<div class="col-xs-4">Địa chỉ:</div>
-													<div class="col-xs-8">Tầng 10, tòa nhà SUDICO, Đường Mễ Trì, Phường Mỹ Đình 1, Quận Nam Từ Liêm, Hà Nội </div>
+													<div class="col-xs-8">06 Trần Phú - Đà Nẵng - Việt Nam</div>
 													<div class="col-xs-4">Điện thoại:</div>
-													<div class="col-xs-8">+84-4-3577-1608</div>
+													<div class="col-xs-8">(084.8) 3828 6060</div>
 													<div class="col-xs-4">Fax:</div>
-													<div class="col-xs-8">+84-4-3787-8212</div>
+													<div class="col-xs-8">(084.8) 3824 1866</div>
 												</div>
 											</div>
 										</div>
@@ -208,13 +207,12 @@
 							
 						</div>
 					@if(strtotime($check_order['ended_date']) > $ngayhomnay && $check_order['remain']>0)
-					
-					<div class="row info-content">
-					<!-- <div class="heading-title">
+					<div class="heading-title">
 							<span></span>
-						</div> -->
-					<!-- Lưu ý: Gói hồ sơ của quý khách sẽ giảm đi 1 tương ứng với mỗi lần xem hồ sơ chi tiết ứng viên
-						<a href="#" id="view" class="btn btn-nomal bg-orange pull-right">Xem hồ sơ</a> -->
+						</div>
+					<div class="row info-content">
+					Lưu ý: Gói hồ sơ của quý khách sẽ giảm đi 1 tương ứng với mỗi lần xem hồ sơ chi tiết ứng viên
+						<a href="#" id="view" class="btn btn-nomal bg-orange pull-right">Xem hồ sơ</a>
 					</div>	
 					@endif
 					@if(strtotime($check_order['ended_date']) > $ngayhomnay && $check_order['remain']>0)
@@ -223,17 +221,14 @@
 					</div>
 					@else 
 					<div class="row info-content">
-						<div id="content_cv">
-							
-						</div>
-								<!-- <div class="row buy-header">
+								<div class="row buy-header">
 											<div class="col-xs-9">
 												Để xem hồ sơ hoàn chỉnh của ứng viên, quý khách vui lòng sử dụng dịch vụ "tìm hồ sơ"
 											</div>
 											<div class="col-xs-3 pull-right">
 												<a href="{{ URL::route('employers.orders.add') }}" class="btn btn-nomal bg-orange pull-right">Mua dịch vụ</a>
 											</div>
-								</div> -->
+								</div>
 					</div>
 					@endif
 					<div class="row box-footer">
@@ -362,13 +357,12 @@
 	<script type="text/javascript">
 	 
 
-	/*$('#view').click(function(event) { 
+	$('#view').click(function(event) { 
 		 			var cv= $('#cv_xem').text();
 		 			$('#cv_xem').text(cv-1);
 					$("#content_cv").load('{{URL::route("employers.search.xemchitiet1",$resume->id)}}');
 			 
-		});*/
-	$("#content_cv").load('{{URL::route("employers.search.xemchitiet1",$resume->id)}}');
+		});
 	$('#inputAdd').click(function(event) { 
 		$('#inputFolder_name').prop({
 			disabled: 'disabled'

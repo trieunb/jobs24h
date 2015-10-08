@@ -345,7 +345,7 @@ class SearchController extends \Controller {
 	        	return View::make('employers.search.iframe', compact('file', 'dir'));
 	        }
     	}
-    	else return Response::make('Không thể xem !', 404);
+    	else return Response::make('Bạn Không Đủ Điều Kiện Để Xem Hồ Sơ Này !', 404);
 		
 		
 	}

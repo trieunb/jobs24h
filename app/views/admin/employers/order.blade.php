@@ -91,7 +91,7 @@
 							<td>{{$value['eservice']['service_name']}}</td>
 							<td>
 								<a class="btn btn-xs btn-primary" title="Đăng ký/ cập nhật" href="{{URL::route('admin.order.update',array($job->id,$job->ntd->id,$value['id']))}}" id=""><i class="fa fa-save"></i></a>
-								<a class="btn btn-xs btn-danger" onclick='return confirm("Bạn có chắc muốn xóa dịch vụ này hay không ?");' title="Hủy dịch vụ" href="{{URL::route('admin.order.delete',array($job->ntd->id,$value['id']))}}" id=""><i class="fa fa-trash"></i></a>
+								<a class="btn btn-xs btn-danger" onclick='return confirm("Bạn có chắc muốn xóa dịch vụ này hay không ?");' title="Hủy dịch vụ" href="{{URL::route('admin.order.delete_services',array($job->id,$value['id']))}}" id=""><i class="fa fa-trash"></i></a>
 							</td>
 
 						</tr>

@@ -23,7 +23,7 @@
 							</div>
 
 						</div>
-						<div class="row info-content">					
+						<!-- <div class="row info-content">					
 
 							<div class="heading-title">
 								<span>Thông tin nghề nghiệp</span>
@@ -87,9 +87,24 @@
 							<!-- <div class="list-info">
 								<div class="info-left">Hình thức</div>
 								<div class="info-right">{{ @$resume->worktype->name }}</div>
-							</div> -->
+							</div>
 							
-						</div> <!-- end.info-content -->
+						</div>    end.info-content -->
+
+						<div class="row info-content">
+							<div class="heading-title">
+								<span>Định hướng nghề nghiệp</span>
+							</div>
+							@if(count($resume->dinhhuongnn ))
+							 
+							 
+							<div class="list-info">
+								<div class="info-full" style="    background: none">
+									• {{nl2br($resume->dinhhuongnn)}}
+								</div>
+							 </div>
+							@endif
+						</div>
 						<div class="row info-content">
 							<div class="heading-title">
 								<span>Quá trình học vấn và bằng cấp</span>
@@ -146,16 +161,33 @@
 							<div class="heading-title">
 								<span>Kỹ năng</span>
 							</div>
+							 
 							@if(count($resume->kynang() ))
-							@foreach($resume->kynang() as $kn)
-							<div class="list-info">
-								<div class="info-full">{{ $kn[0] }} ({{ Config::get('custom_kynang.kynang')[$kn[1]] }})</div>
-							</div>
-							@endforeach
+							 
+								@foreach($resume->kynang() as $kn)
+								<div class="list-info">
+									<div class="info-full">
+
+									{{ $kn[0] }} ({{ Config::get('custom_kynang.kynang')[$kn[1]] }})
+									</div>
+								</div>
+								@endforeach
 							@endif
 							
 
 						</div><!-- end .info-content -->
 @else
-Bạn Không thể xem
+<div class="heading-title">
+<div class="row buy-header">
+	<div class="col-xs-9"><span>
+		Để xem hồ sơ hoàn chỉnh của ứng viên, quý khách vui lòng sử dụng dịch vụ "tìm hồ sơ"</span>
+	</div>
+	<div class="col-xs-3 pull-right" style="margin-top: -4px;">
+		<a href="{{ URL::route('employers.orders.add') }}" class="btn btn-nomal bg-orange pull-right">Mua dịch vụ</a>
+	</div>
+	 
+</div>
+ </div>
+
 @endif
+ 
