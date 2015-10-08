@@ -592,7 +592,7 @@ class ResumeController extends \BaseController {
 
 	public function uploadCV($id){
 		$params= Input::all();
-
+		
 		if(!isset($params['specific_salary'])) $params['specific_salary'] = 0;
 		else{$params['specific_salary'] = str_replace(',', '', $params['specific_salary']);}
 		if(!isset($params['info_years_of_exp'])) $params['info_years_of_exp'] = 0;
@@ -632,8 +632,10 @@ class ResumeController extends \BaseController {
 				if($params['cv_second'] != null){
 					$extension = $params['cv_second']->getClientOriginalExtension();
 					$cv_second = Str::random(11) . '.' . $extension;
-					$params['cv_second']->move(Config::get('app.upload_path') . 'jobseekers/cv/', $name);
-					File::delete(Config::get('app.upload_path') . 'jobseekers/cv/'.$cv->file_name.'');
+					var_dump($cv_second);
+					die();
+					$params['cv_second']->move(Config::get('app.upload_path') . 'jobseekers/cv/', $cv_second);
+					File::delete(Config::get('app.upload_path') . 'jobseekers/cv/'.$cv->second_file_name.'');
 				}else{
 					$cv_second = '';
 				}

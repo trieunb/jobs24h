@@ -316,41 +316,62 @@ class SearchController extends \Controller {
 
 		if ($order_inser['remain'] > 0 && strtotime($order_inser['ended_date']) > $ngayhomnay) {
 			# code...
-			if(Input::get('type')!='phu')
-			{
+			 
 				$order_inser['remain']=$order_inser['remain']-1;
 				if($order_inser['remain']<=0)
 				$order_inser['remain']=0;
 				
 				$order_inser->save();
-			}
+			 
 			 
 			$file = str_replace(['.doc', '.docx', '.jpg'], '.pdf', Input::get('file'));
-			$file = explode('jobseekers/cv/', $file);
-			$file = $file[1];
-			$ext = explode('.', $file);
-			$fname = $ext[0];
-			if (isset($ext[1])) {
-				$ext = $ext[1];
-			}
-			else {return 'Ứng viên này chưa có hồ sơ phụ, quí khách vui lòng click xem hồ sơ để xem hồ sơ chính của ứng viên !';}
-			
-			$dir1 = Config::get('app.upload_path') . 'jobseekers/cv/' . $fname . '.pdf';
-			$dir = 'uploads/jobseekers/cv/' . $fname . '.pdf';
+			$dir1 = Config::get('app.upload_path') . 'jobseekers/cv/' . $file;
+			$dir = 'uploads/jobseekers/cv/' . $file;
 			if(! File::isFile($dir1))
 			{
-				return View::make('employers.search.iframe', compact('file', 'dir'));
-	            return '<a href="{{ URL::route(\'employers.search.print_cv\', $resume->id) }}" class="btn btn-lg bg-orange">Tải CV</a>';
+				 return 'Không có file để tải';
+				/*return View::make('employers.search.iframe', compact('file', 'dir'));*/
+	          /*  return '<a href="{{ URL::route(\'employers.search.print_cv\', $resume->id) }}" class="btn btn-lg bg-orange">Tải CV</a>';*/
 	        } else {
 	        	return View::make('employers.search.iframe', compact('file', 'dir'));
 	        }
     	}
-    	else return Response::make('Bạn Không Đủ Điều Kiện Để Xem Hồ Sơ Này !', 404);
+    	else 
+    	{
+    		$second_file_name	= Resume::whereFileName(Input::get('file'))->select('second_file_name')->first();
+    		 
+    		if($second_file_name['second_file_name']==null)
+    		{
+    			 return 'Không có file để tải';
+    		} 
+    		$file = str_replace(['.doc', '.docx', '.jpg'], '.pdf', $second_file_name['second_file_name']);
+    		$dir1 = Config::get('app.upload_path') . 'jobseekers/cv/' . $second_file_name['second_file_name'];
+			$dir = 'uploads/jobseekers/cv/' . $second_file_name['second_file_name'];
+			if(! File::isFile($dir1))
+			{
+				//return View::make('employers.search.iframe', compact('file', 'dir'));
+	            return 'Không có file để tải';
+	        } else {
+	        	return View::make('employers.search.iframe', compact('file', 'dir'));
+	        }
+    	}  
 		
 		
 	}
 	public function getInHoSo($cvId = false,$action)
 	{
+		$headers = array(
+           'Content-Type: image/png',
+           'Content-Type: image/jpeg',
+           'Content-Type: image/gif',
+           'Content-Type: application/vnd.ms-excel',
+           'Content-Type: application/msword',
+           'Content-Type: application/pdf',
+           'Content-Type: application/x-rar-compressed',
+           'Content-Type: application/zip',
+           'Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+           'Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        	);
 		$ngayhomnay=strtotime(date('Y-m-d H:i:s'));
 		if($cvId)
 		{
@@ -362,9 +383,10 @@ class SearchController extends \Controller {
 					return Response::make('File not Found !', 404);
 				} else {
 					$path = Config::get('app.upload_path').'jobseekers/cv/' . $resume->second_file_name;
+					$name = explode('.', $resume->second_file_name);
 					//return $path;
 					if (\File::isFile($path)) {
-						return Response::download($path, $resume->tieude_cv);
+						return Response::download($path, $resume->tieude_cv.'.'.$name[1],$headers);
 					} else {
 						return Response::make('File not Found !', 404);
 					}
@@ -377,17 +399,12 @@ class SearchController extends \Controller {
 			{
 				if( ! $resume->file_name)
 				{
-					$order_inser=\Order::whereNtdId(Auth::id())->first();
-					$order_inser['remain']=$order_inser['remain']-1;
-					if($order_inser['remain']<0)
-					$order_inser['remain']=0;
-					$order_inser->save();
-					if ($order_inser['remain']>-1 && strtotime($order_inser['ended_date']) > $ngayhomnay)
-						return View::make('employers.search.print', compact('resume'));
-					else return Response::make('Không thể xem !', 404);
+					 return Response::make('Không có file để tải !', 404);
 				} else {
 					$path = Config::get('app.upload_path').'jobseekers/cv/' . $resume->file_name;
+					$name = explode('.', $resume->file_name);
 					//return $path;
+					 
 					if (\File::isFile($path)) {
 						$order_inser=\Order::whereNtdId(Auth::id())->first();
 						$order_inser['remain']=$order_inser['remain']-1;
@@ -396,8 +413,8 @@ class SearchController extends \Controller {
 						
 						$order_inser->save();
 						if ($order_inser['remain']>-1 && strtotime($order_inser['ended_date']) > $ngayhomnay)
-							return Response::download($path, $resume->tieude_cv);
-						else return Response::make('Không thể xem !', 404);
+							return Response::download($path, $resume->tieude_cv.'.'.$name[1],$headers);
+						else return Response::make('Không thể tải !', 404);
 					} else {
 						return Response::make('File not Found !', 404);
 					}
@@ -407,6 +424,21 @@ class SearchController extends \Controller {
 	}
 	public function postAjax()
 	{
+		if(Input::get('action')=='showInfoNologin')
+		{
+			$ntvid=Input::get('ntvid');
+			$ntv=\Application::whereId($ntvid)->first();
+			if($ntv)
+			return Response::json(['ntv'=>$ntv]);
+		}
+
+		if(Input::get('action')=='showInfo')
+		{
+			$ntvid=Input::get('ntvid');
+			$ntv=\NTV::whereId($ntvid)->first();
+			if($ntv)
+			return Response::json(['ntv'=>$ntv]);
+		}
 		if(Input::get('action') == 'saveToFolder')
 		{
 			$data['ntd_id'] = Auth::id();

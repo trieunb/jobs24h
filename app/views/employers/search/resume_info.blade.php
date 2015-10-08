@@ -73,12 +73,17 @@
 												@endif
 												 - 
 												@if($resume->ntv->marital_status == 1)
-												Độc thân
-												@else
 												Đã lập gia đình
+												@else
+												
+												Độc thân
 												@endif
 											</div>
 										</div>
+										<div class="show-info">
+											
+										</div>
+
 										
 									</div>
 								</div><!-- end .info left -->
@@ -95,7 +100,7 @@
 												</div>
 												<div class="col-xs-3 pull-right">
 													<!-- <a href="{{ URL::route('employers.orders.add') }}" class="btn btn-nomal bg-orange pull-right">Mua dịch vụ</a> -->
-													<a class="btn btn-nomal bg-orange pull-right" id="show_info" href="#content_cv">Xem</a>
+													<button type="button" class="btn btn-nomal bg-orange pull-right" id="show_info">Xem</button>
 												</div>
 											@else
 											<div class="col-xs-9">
@@ -361,6 +366,21 @@
 @section('script')
 	<script type="text/javascript">
 	 
+	 $('#show_info').click(function(event) {
+	 	var action = 'showInfo';
+	 	var ntv_id = {{ $resume->ntv->id }};
+	 	$.ajax({
+			url: '{{ URL::route('employers.search.ajax') }}',
+			data: {action: action, ntvid: ntv_id},
+			type: 'POST',
+			dataType: 'json',
+			success: function(json)
+			{
+				$('.show-info').append('<div class="row td-info"><div class="col-xs-5">Email</div><div class="col-xs-7" style="margin-left:-44px;">'+json.ntv.email+'</div></div><div class="row td-info"><div class="col-xs-5">Điện thoại</div><div class="col-xs-7">'+json.ntv.phone_number+'</div></div>');
+				 
+			}
+		});
+	 });
 
 	/*$('#view').click(function(event) { 
 		 			var cv= $('#cv_xem').text();

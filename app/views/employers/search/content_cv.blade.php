@@ -1,6 +1,6 @@
  
 @if($check_ok==1)
-						<div class="row info-content">
+						<!-- <div class="row info-content">
 
 							<div class="heading-title">
 								<span>Thông tin cơ bản</span>
@@ -22,7 +22,7 @@
 								<div class="info-right">{{ $resume->ntv->date_of_birth }}</div>
 							</div>
 
-						</div>
+						</div> -->
 						<!-- <div class="row info-content">					
 
 							<div class="heading-title">
@@ -112,7 +112,7 @@
 							@if(count($resume->education))
 							@foreach($resume->education as $edu)
 							<div class="list-info">
-								<div class="info-left">{{ $edu->study_from }} - {{ $edu->study_to }}</div>
+								<div class="info-left">{{ str_replace('-','/',$edu->study_from) }} - {{ str_replace('-','/',$edu->study_to) }}</div>
 								<div class="info-right">
 									<span class="info-school-name">{{ $edu->school }}</span><br>
 									{{ $edu->edu->name }}<br>
@@ -135,7 +135,7 @@
 							@if(count($resume->experience))
 							@foreach($resume->experience as $exp)
 							<div class="list-info">
-								<div class="info-left">{{ $exp->from_date }}- {{ ($exp->to_date=='')?'Hiện nay':$exp->to_date }}</div>
+								<div class="info-left">{{ str_replace('-','/',$exp->from_date) }} - {{ ($exp->to_date=='')?'Hiện nay':str_replace('-','/',$exp->to_date) }}</div>
 								<div class="info-right">
 									<span class="info-school-name">{{ $exp->company_name }}</span><br>
 									{{ $exp->position }}<br>

@@ -54,6 +54,9 @@
 												Việt Nam
 											</div>
 										</div>
+										<div class="show-info">
+											
+										</div>
 										
 									</div>
 								</div><!-- end .info left -->
@@ -69,7 +72,7 @@
 												</div>
 												<div class="col-xs-3 pull-right">
 													<!-- <a href="{{ URL::route('employers.orders.add') }}" class="btn btn-nomal bg-orange pull-right">Mua dịch vụ</a> -->
-													<a class="btn btn-nomal bg-orange pull-right" id="show_info" href="#view_cv">Xem</a>
+													<button class="btn btn-nomal bg-orange pull-right" id="show_info">Xem</button>
 												</div>
 											@else
 											<div class="col-xs-9">
@@ -119,50 +122,22 @@
 							<span>Nội dung hồ sơ</span>
 						</div>
 						<div class="col-xs-12">
-							@if(strtotime($check_order['ended_date']) > $ngayhomnay && $check_order['remain']>0)
-								<div id="no-cv-phu">
-								@if($pdf)
-								<iframe  frameborder="0" scrolling="no" src="{{ URL::route('employers.search.resume_viewer') }}?file={{ URL::to('/').'/uploads/jobseekers/cv/'.$resume->file_name }}" height="800" width="100%"></iframe>
-								<!-- <a href="#" id="view" class="btn btn-nomal bg-orange pull-right">Xem hồ sơ</a>
-								Lưu ý: Gói hồ sơ của quý khách sẽ giảm đi 1 tương ứng với mỗi lần xem hồ sơ chi tiết ứng viên -->
-								@else
-								Quí khách vui lòng tải về máy để xem.
-								<a href="{{ URL::route('employers.search.print_cv',array($resume->id,'tai-chinh')) }}" class="btn btn-lg bg-orange">Tải CV</a>
-								
-								@endif
-								</div>
-								<div id="view_cv">
-									<!-- @if($pdf)
-									<iframe  frameborder="0" scrolling="no" src="{{ URL::route('employers.search.resume_viewer') }}?file={{ URL::to('/').'/uploads/jobseekers/cv/'.$resume->second_file_name }}&type=phu" height="800" width="100%"></iframe>
-									@else 
-									<div style="margin: 10px 0px 0px 0px">
-									Lưu ý: Gói hồ sơ của quý khách sẽ giảm đi 1 tương ứng với mỗi lần tải hồ sơ chi tiết ứng viên
-									<a href="{{ URL::route('employers.search.print_cv',array($resume->id,'tai-chinh')) }}" class="btn btn-lg bg-orange">Tải CV Chính</a>
-									</div>
-									@endif -->
-								</div>
-
-								
+							@if($pdf)
+										 
+										<!-- <iframe  frameborder="0" scrolling="no" src="{{ URL::route('employers.search.resume_viewer') }}?file={{ URL::to('/').'/uploads/jobseekers/cv/'.$resume->second_file_name }}&type=phu" height="800" width="100%"></iframe> -->
+										<iframe  frameborder="0" scrolling="no" src="{{ URL::route('employers.search.resume_viewer') }}?file={{$resume->file_name }}" height="800" width="100%"></iframe>
 							@else 
-							<div id="no-cv-phu">
-								@if($pdf)
-								<iframe  frameborder="0" scrolling="no" src="{{ URL::route('employers.search.resume_viewer') }}?file={{ URL::to('/').'/uploads/jobseekers/cv/'.$resume->file_name }}" height="800" width="100%"></iframe>
-								<!-- <a href="#" id="view" class="btn btn-nomal bg-orange pull-right">Xem hồ sơ</a>
-								Lưu ý: Gói hồ sơ của quý khách sẽ giảm đi 1 tương ứng với mỗi lần xem hồ sơ chi tiết ứng viên -->
-								@else
-								Quí khách vui lòng tải về máy để xem.
-								<a href="{{ URL::route('employers.search.print_cv',array($resume->id,'tai-chinh')) }}" class="btn btn-lg bg-orange">Tải CV</a>
-								
-								@endif
-								</div>
-								<!-- <div class="row buy-header">
-											<div class="col-xs-9">
-												Để xem hồ sơ hoàn chỉnh của ứng viên, quý khách vui lòng sử dụng dịch vụ "tìm hồ sơ"
-											</div>
-											<div class="col-xs-3 pull-right">
-												<a href="{{ URL::route('employers.orders.add') }}" class="btn btn-nomal bg-orange pull-right">Mua dịch vụ</a>
-											</div>
-								</div> -->
+										 
+										<div style="margin: 10px 0px 0px 0px">
+										<!-- Ứng viên này chưa có hồ sơ -->
+										Quí khách vui lòng tải cv về máy để xem
+										@if(strtotime($check_order['ended_date']) > $ngayhomnay && $check_order['remain']>0)
+										<a href="{{ URL::route('employers.search.print_cv',array($resume->id,'tai-chinh')) }}" class="btn btn-lg bg-orange">Tải CV</a>
+										@else
+										<a href="{{ URL::route('employers.search.print_cv',array($resume->id,'tai-phu')) }}" class="btn btn-lg bg-orange">Tải CV</a>
+										@endif
+										</div>
+									
 							@endif
 						</div>
 					</div>
@@ -282,6 +257,24 @@
 @stop
 @section('script')
 	<script type="text/javascript">
+
+	$('#show_info').click(function(event) {
+	 	var action = 'showInfoNologin';
+	 	var ntv_id = {{ $resume->application->first()->id }};
+	 	$.ajax({
+			url: '{{ URL::route('employers.search.ajax') }}',
+			data: {action: action, ntvid: ntv_id},
+			type: 'POST',
+			dataType: 'json',
+			success: function(json)
+			{
+				$('.show-info').append('<div class="row td-info"><div class="col-xs-5">Email</div><div class="col-xs-7" style="margin-left:-44px;">'+json.ntv.email+'</div></div><div class="row td-info"><div class="col-xs-5">Điện thoại</div><div class="col-xs-7">'+json.ntv.contact_phone+'</div></div>');
+				 
+			}
+		});
+	 });
+
+
 	$('#view').click(function(event) { 
 
 		 
