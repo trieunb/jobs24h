@@ -61,9 +61,9 @@
 							
 							@else
 								 
-								<td>Chưa kích hoạt</td>
-								<td>Chưa kích hoạt</td>
-								<td>Chưa kích hoạt</td>
+								<td><span style="color:#C6C6C6">Chưa kích hoạt</span></td>
+								<td><span style="color:#C6C6C6">Chưa kích hoạt</span></td>
+								<td><span style="color:#C6C6C6">Chưa kích hoạt</span></td>
 								<td>
 									<button class="btn btn-xs btn-primary" id="save_search"><i class="fa fa-save"></i> Cập nhật</button>
 
@@ -75,9 +75,9 @@
 							<td>
 								{{ Form::select('search_service',$package_view_cv, array('id' => 'seCompanyID')) }}
 							</td>
-							<td>Chưa kích hoạt</td>
-							<td>Chưa kích hoạt</td>
-							<td>Chưa kích hoạt</td>
+							<td><span style="color:#C6C6C6">Chưa kích hoạt</span></td>
+							<td><span style="color:#C6C6C6">Chưa kích hoạt</span></td>
+							<td><span style="color:#C6C6C6">Chưa kích hoạt</span></td>
 							<td>
 								<button class="btn btn-xs btn-primary" id="save_search"><i class="fa fa-save"></i> Cập nhật</button>
 

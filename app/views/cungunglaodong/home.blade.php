@@ -90,28 +90,28 @@
 							</p>
 							<ul class="push-top">
 								<li>
-								<a href="{{URL::route('cungunglaodong.detail','9')}}"><span>
+								<a href="{{URL::route('cungunglaodong.detail','9')}}/quan-ly-nhan-su"><span>
 								{{HTML::image('cungunglaodong/assets/images/icon_photo.png')}}
 								 
 								</span> Quản lý nhân sự</a></li>
 								<li>
-								<a href="{{URL::route('cungunglaodong.detail','3')}}"><span>
+								<a href="{{URL::route('cungunglaodong.detail','3')}}/dao-tao-nhan-su"><span>
 								{{HTML::image('cungunglaodong/assets/images/icon_paint.png')}}
 								 </span> Đào tạo nhân sự</a></li>
 								<li>
-								<a href="{{URL::route('cungunglaodong.detail','8')}}"><span>
+								<a href="{{URL::route('cungunglaodong.detail','8')}}/luong-va-che-do"><span>
 								{{HTML::image('cungunglaodong/assets/images/icon_gift.png')}}
 								 </span> Lương và chế độ</a></li>
 								<li>
-								<a href="{{URL::route('cungunglaodong.detail','6')}}"><span>
+								<a href="{{URL::route('cungunglaodong.detail','6')}}/dich-vu-tuyen-dung"><span>
 								{{HTML::image('cungunglaodong/assets/images/icon_cart.png')}}
 								</span> Tuyển dụng</a></li>
 								<li>
-								<a href="{{URL::route('cungunglaodong.detail','7')}}"><span>
+								<a href="{{URL::route('cungunglaodong.detail','7')}}/giai-phap-lao-dong"><span>
 								{{HTML::image('cungunglaodong/assets/images/icon_user.png')}}
 								 </span> Giải pháp lao động</a></li>
 								<li>
-								<a href="{{URL::route('cungunglaodong.detail','5')}}"><span>
+								<a href="{{URL::route('cungunglaodong.detail','5')}}/thue-ngoai-nhan-su"><span>
 								{{HTML::image('cungunglaodong/assets/images/icon_human.png')}}
 								 </span> Thuê ngoài nhân sự</a></li>
 							</ul>

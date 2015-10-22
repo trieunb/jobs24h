@@ -36,6 +36,16 @@
     						@foreach($document[0] as $doc)
     						<?php $create=explode(" ", $doc['created_at']);
     						$date= date("d-m-Y", strtotime($create[0]));
+    						 $str1 = trim(mb_strtolower($doc['title']));
+							    $str1 = preg_replace('/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/', 'a', $str1);
+							    $str1 = preg_replace('/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/', 'e', $str1);
+							    $str1 = preg_replace('/(ì|í|ị|ỉ|ĩ)/', 'i', $str1);
+							    $str1 = preg_replace('/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/', 'o', $str1);
+							    $str1 = preg_replace('/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/', 'u', $str1);
+							    $str1 = preg_replace('/(ỳ|ý|ỵ|ỷ|ỹ)/', 'y', $str1);
+							    $str1 = preg_replace('/(đ)/', 'd', $str1);
+							    $str1 = preg_replace('/[^a-z0-9-\s]/', '', $str1);
+							    $str1 = preg_replace('/([\s]+)/', '-', $str1);
     						?>
 			 				<li class='wow bounceInUp'>
 			 					<div class="date-book">{{$date}}</div>
@@ -49,7 +59,7 @@
 				 					<p><i class="glyphicon glyphicon-save"></i> Download : {{$doc['download']}}</p>
 			 					</div>
 			 					<div class="col-md-6">
-			 						<a href="{{URL::route('trainings.detaildoc',array($doc['id']))}}"><button class="btn btn-default more-book">Xem thêm</button></a>
+			 						<a href="{{URL::route('trainings.detaildoc',array($doc['id']))}}/{{$str1}}"><button class="btn btn-default more-book">Xem thêm</button></a>
 			 					</div>
 			 				</li>
 			 				@endforeach
@@ -62,6 +72,16 @@
     						@foreach($document[1] as $doc)
     						<?php $create=explode(" ", $doc['created_at']);
     						$date= date("d-m-Y", strtotime($create[0]));
+    						 $str1 = trim(mb_strtolower($doc['title']));
+							    $str1 = preg_replace('/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/', 'a', $str1);
+							    $str1 = preg_replace('/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/', 'e', $str1);
+							    $str1 = preg_replace('/(ì|í|ị|ỉ|ĩ)/', 'i', $str1);
+							    $str1 = preg_replace('/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/', 'o', $str1);
+							    $str1 = preg_replace('/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/', 'u', $str1);
+							    $str1 = preg_replace('/(ỳ|ý|ỵ|ỷ|ỹ)/', 'y', $str1);
+							    $str1 = preg_replace('/(đ)/', 'd', $str1);
+							    $str1 = preg_replace('/[^a-z0-9-\s]/', '', $str1);
+							    $str1 = preg_replace('/([\s]+)/', '-', $str1);
     						?>
 			 				<li class='wow bounceInDown'>
 			 					<div class="date-book">{{$date}}</div>
@@ -75,7 +95,7 @@
 				 					<p><i class="glyphicon glyphicon-save"></i> Download : {{$doc['download']}}</p>
 			 					</div>
 			 					<div class="col-md-6">
-			 						<a href="{{URL::route('trainings.detaildoc',array($doc['id']))}}"><div class="btn btn-default more-book">Xem thêm</div></a>
+			 						<a href="{{URL::route('trainings.detaildoc',array($doc['id']))}}/{{$str1}}"><div class="btn btn-default more-book">Xem thêm</div></a>
 			 					</div>
 			 				</li>
 			 				@endforeach

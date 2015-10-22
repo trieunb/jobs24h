@@ -54,7 +54,7 @@ Tuyển dụng ̃Quản lý nhân tài
 								<div class="col-xs-9  col-xs-offset-2 text-center tq-middle">
 									<p class="padding-top-10">Giải pháp toàn diện kết nối, tuyển dụng & quản lý nhân tài</p>
 									<p>
-										Talent Solution – giải pháp tuyển dụng toàn diện dành cho doanh nghiệp được sáng tạo độc quyền bởi CareerBuilder. Talent Solution tận dụng công nghệ kỹ thuật số nhằm thu hút các ứng viên từ tất cả các nguồn và thiết bị. Không đợi đến khi có nhu cầu tuyển dụng, bạn có thể xây dựng dữ liệu ứng viên chất lượng cao và thông báo đến đúng đối tượng khi có cơ hội việc làm mới nhất!
+										Talent Solution – giải pháp tuyển dụng toàn diện dành cho doanh nghiệp được sáng tạo độc quyền bởi VNJOBS. Talent Solution tận dụng công nghệ kỹ thuật số nhằm thu hút các ứng viên từ tất cả các nguồn và thiết bị. Không đợi đến khi có nhu cầu tuyển dụng, bạn có thể xây dựng dữ liệu ứng viên chất lượng cao và thông báo đến đúng đối tượng khi có cơ hội việc làm mới nhất!
 									</p>
 									<a href="{{ URL::route('employers.orders.add') }}" class="btn btn-default btn-contact">Liên hệ</a>
 								</div>

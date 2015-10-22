@@ -136,8 +136,8 @@
 						<div class="header-blocked">
 							<h2>Địa chỉ</h2>
 						</div>
-						<!-- <iframe src="https://www.google.com/maps/embed/v1/place?q={{ urlencode($company->company_address) }}&key=AIzaSyAm4pUdr46jAne7C8DNnce1T5wjkV-oGeE" width="100%" height="100%" frameborder="0" style="border:0"></iframe> -->
 						<div id="map" style="width:100%; height:300px;"></div>
+						<!-- <iframe src="https://www.google.com/maps/embed/v1/place?q={{ urlencode($company->company_address) }}&key=AIzaSyBv2alU4RKCx8knReQMVcejcuvYeMha1Dk" width="100%" height="100%" frameborder="0" style="border:0"></iframe> -->
 						<span class="push-padding-10"><i class="fa fa-map-marker fa-1x"></i>  {{ $company->company_address }}</span>
 					</div>
 				</div>
@@ -156,6 +156,7 @@
 @stop
 
 @section('script')
+	@section('script')
 	{{ HTML::script('assets/js/bootstrap-datepicker.min.js') }}
 	<script>
 function initMap() {
@@ -167,6 +168,7 @@ function initMap() {
 
  // document.getElementById('submit').addEventListener('click', function() {
     geocodeAddress(geocoder, map);
+    //map.addMarker(new MarkerOptions().title("{{$company->company_name}}"));
   //});
 }
 
@@ -177,8 +179,10 @@ function geocodeAddress(geocoder, resultsMap) {
       resultsMap.setCenter(results[0].geometry.location);
       var marker = new google.maps.Marker({
         map: resultsMap,
+        title: "{{$company->company_name}}",
         position: results[0].geometry.location
       });
+      
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
@@ -191,4 +195,6 @@ function geocodeAddress(geocoder, resultsMap) {
 
 	
 
+@stop
+	
 @stop

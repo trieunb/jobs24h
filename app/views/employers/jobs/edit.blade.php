@@ -331,7 +331,7 @@
 
 									</div>		
 									<div class="center">
-									{{ Form::button('Lưu lại', array('type'=>'submit', 'class'=>'btn btn-lg bg-orange')) }}
+									{{ Form::button('Đăng lại', array('type'=>'submit', 'class'=>'btn btn-lg bg-orange')) }}
 									<a href="{{ URL::route('employers.jobs.index') }}" class="btn btn-lg bg-orange">Hủy</a>
 								</div>
 							</div> <!-- primary -->

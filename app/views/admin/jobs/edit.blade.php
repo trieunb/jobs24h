@@ -144,7 +144,7 @@
 				{{ Form::select('hinhthucnop', Config::get('custom_hinhthucnop.hinh_thuc'), $job->hinhthucnop, array('class'=>'form-control') ) }}
 			</div>
 		</div>
-		<div class="tags-box bg-little-blue push-padding-30-full border-blue col-xs-10">
+		<div class="tags-box bg-little-blue push-padding-30-full border-blue col-xs-10" style="    margin-bottom: 10px;">
 			<div class="form-group">
 				<label for="keyword_tags" class="col-sm-2 control-label">Thẻ từ khóa 1:</label>
 				<div class="col-sm-6">
@@ -178,7 +178,11 @@
 			<label for="input" class="col-sm-2 control-label">Người duyệt:</label>
 			<div class="col-sm-6">
 				@if($job->status==1)
-					{{ Form::text('duyet', AdminAuth::getUser()->username, array('class'=>'form-control', 'placeholder'=>'','disabled') ) }}
+					@if(isset($user_admin->username))
+					{{ Form::text('duyet', $user_admin->username, array('class'=>'form-control', 'placeholder'=>'','disabled') ) }}
+					@else
+					{{ Form::text('duyet', null, array('class'=>'form-control', 'placeholder'=>'','disabled') ) }}
+					@endif
 				@else
 					{{ Form::text('duyet', null, array('class'=>'form-control', 'placeholder'=>'','disabled') ) }}
 				@endif
@@ -190,7 +194,11 @@
 			<label for="input" class="col-sm-2 control-label">Người gửi mail:</label>
 			<div class="col-sm-6">
 				@if($job->user_approved==1)
-					{{ Form::text('sendemail', AdminAuth::getUser()->email, array('class'=>'form-control', 'placeholder'=>'','disabled') ) }}
+					@if(isset($user_admin->email))
+					{{ Form::text('sendemail', $user_admin->email, array('class'=>'form-control', 'placeholder'=>'','disabled') ) }}
+					@else
+					{{ Form::text('sendemail', null, array('class'=>'form-control', 'placeholder'=>'','disabled') ) }}
+					@endif
 				@else
 					{{ Form::text('sendemail', null, array('class'=>'form-control', 'placeholder'=>'','disabled') ) }}
 				@endif
@@ -198,6 +206,40 @@
 			</div>
 		</div>
 
+		<div class="tags-box bg-little-blue push-padding-30-full border-blue col-xs-10" style="    margin-bottom: 10px;">
+			<div class="form-group">
+				<label for="keyword_tags" class="col-sm-2 control-label">SEO TITLE:</label>
+				<div class="col-sm-6">
+				@if(isset($job->seo["title"]))
+					{{ Form::text('seo[title]',  $job->seo["title"], array('class'=>'form-control', 'placeholder'=>'Ví dụ: tiêu đề') ) }}
+				@else
+					{{ Form::text('seo[title]',  null, array('class'=>'form-control', 'placeholder'=>'Ví dụ: tiêu đề') ) }}
+				@endif
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="keyword_tags" class="col-sm-2 control-label">SEO DESCRIPTION:</label>
+				<div class="col-sm-6">
+				@if(isset($job->seo["description"]))
+					{{ Form::text('seo[description]', $job->seo["description"], array('class'=>'form-control', 'placeholder'=>'Ví dụ: Mô tả') ) }}
+				@else
+					{{ Form::text('seo[description]', null, array('class'=>'form-control', 'placeholder'=>'Ví dụ: Mô tả') ) }}
+				@endif
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="keyword_tags" class="col-sm-2 control-label">META KEYWORDS:</label>
+				<div class="col-sm-6">
+				@if(isset($job->seo["keyword"]))
+					{{ Form::text('seo[keyword]',  $job->seo["keyword"], array('class'=>'form-control', 'placeholder'=>'Ví dụ: keyword') ) }}
+				@else
+					{{ Form::text('seo[keyword]',null, array('class'=>'form-control', 'placeholder'=>'Ví dụ: keyword') ) }}
+				@endif
+				</div>
+			</div>
+			
+		</div>
+		<div class="clearfix"></div>
 
 		<div class="form-group">
 			<div class="col-sm-10 col-sm-offset-2">

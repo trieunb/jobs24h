@@ -19,4 +19,8 @@ class AdminUser extends \Eloquent {
 		@json_decode($string);
 		return (json_last_error() == JSON_ERROR_NONE);
 	}
+	public function ntd()
+	{
+		return $this->hasMany('NTD','admin_info_id');
+	}
 }

@@ -14,8 +14,7 @@
     height: 160px;
     width: 160px;
     display: inline-block;
-}
-.image2 img{
+}.image2 img{
   border-radius: 50%;
       height: 100%;
       width: 100%;
@@ -30,14 +29,29 @@
         <div class="col-md-8">
         
            @foreach($people as $value)
-           <div class="col-md-12" >
+           <div class="col-md-12">
            <div class="col-md-4">
               <div class="image2">
                 {{HTML::image(URL::to('uploads/training/'.$value['thumbnail'].''))}}
               </div>
            </div>
+            <?php 
+                
+                  $str = trim(mb_strtolower($value['name']));
+                  $str = preg_replace('/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/', 'a', $str);
+                  $str = preg_replace('/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/', 'e', $str);
+                  $str = preg_replace('/(ì|í|ị|ỉ|ĩ)/', 'i', $str);
+                  $str = preg_replace('/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/', 'o', $str);
+                  $str = preg_replace('/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/', 'u', $str);
+                  $str = preg_replace('/(ỳ|ý|ỵ|ỷ|ỹ)/', 'y', $str);
+                  $str = preg_replace('/(đ)/', 'd', $str);
+                  $str = preg_replace('/[^a-z0-9-\s]/', '', $str);
+                  $str = preg_replace('/([\s]+)/', '-', $str);
+                   
+                 
+                ?>
            <div class="col-md-8" style="text-align:left">
-             <h4 id="{{$value['id']}}" style="color: #08DDFF;font-weight: bold;">
+             <h4 id="{{$str}}" style="color: #08DDFF;font-weight: bold;">
                   {{$value['name']}}
              </h4>
 

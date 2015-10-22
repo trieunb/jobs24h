@@ -27,14 +27,16 @@ class CungunglaodongController extends \BaseController
 
 	public function getEditServices($id)
 	{
-		$data=TrainingCat::where('id','=',$id)->get();
+		$data=TrainingCat::where('id','=',$id)->first();
+		$data['seo']=json_decode($data['seo']);
 		return View::make('admin.cungung.editservices')->with('data',$data);
 	}
 
 	public function postEditServices($id)
 	{
 
-		$data=Input::only('name');
+		$data=Input::only('name','seo');
+		$data['seo']=json_encode($data['seo']);
 		$logo=Input::file('banner');
 		 
 		$insert_data=TrainingCat::find($id);
@@ -62,7 +64,7 @@ class CungunglaodongController extends \BaseController
 			$path_logo=$insert_data['banner'];
 
 		$insert_data->name=$data['name'];
-		 
+		$insert_data->seo=$data['seo']; 
 		 
 		$insert_data->banner=$path_logo;
 		 
@@ -104,9 +106,10 @@ class CungunglaodongController extends \BaseController
 	}
 	public function postAddServices()
 	{
-		$data=Input::only('name');
+
+		$data=Input::only('name','seo');
 		$logo=Input::file('banner');
-	 
+	 	$data['seo']=json_encode($data['seo']);
 		if ($logo!=null) { // nếu chọn image thì upload lên
 	
 			$file1=array('logo'=>$logo);
@@ -134,7 +137,8 @@ class CungunglaodongController extends \BaseController
 			array(
 				'name'		=>	$data['name'],
 				'banner'	=>	$path_logo,
-				
+				'seo'		=>	$data['seo'],
+				'about'		=>2,
 				)
 			);
 		

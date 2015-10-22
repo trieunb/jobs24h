@@ -85,7 +85,7 @@
 										@elseif(Route::is('employers.jobs.isapply'))
 										{{ Form::button('Mở nhận HS', array('type'=>'submit', 'name'=>'submit', 'value'=>'apply', 'class'=>'btn btn-default')) }}
 										@elseif(Route::is('employers.jobs.expired'))
-										{{ Form::button('Đăng lại việc làm này', array('type'=>'submit', 'name'=>'submit', 'value'=>'expired', 'class'=>'btn btn-default')) }}
+										<!-- {{ Form::button('Đăng lại việc làm này', array('type'=>'submit', 'name'=>'submit', 'value'=>'expired', 'class'=>'btn btn-default')) }} -->
 										@else
 										{{ Form::button('Xuất tất cả việc làm', array('type'=>'submit', 'name'=>'submit', 'value'=>'export', 'class'=>'btn btn-default')) }}
 										

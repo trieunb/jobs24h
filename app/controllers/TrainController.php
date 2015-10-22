@@ -66,6 +66,7 @@ class TrainController extends \BaseController {
 		 	$data['discount']= $training->discount;
 		 	$data['name']= "";
 		 	$data['tch'] = $training->trainingpeoples->lists('training_people_id');
+		 	$data['seo'] = $training->seo=json_decode($training->seo,true); 
 
 		 foreach ($couser as  $value) {
 
@@ -93,11 +94,13 @@ class TrainController extends \BaseController {
 	{
 
 		 
-		$data=Input::only('title','time_day','fee','date_open','shift','date_study','time_hour','editor1','discount');
+		$data=Input::only('title','time_day','fee','date_open','shift','date_study','time_hour','editor1','discount','seo');
+
 		$teacher=Input::get('teacher');
 
 
 		$insert_data=Training::find($id);
+		$insert_data->seo=json_encode($data['seo']); 
 		$insert_data->title=$data['title'];
 		$insert_data->time_day=$data['time_day'];
 		$insert_data->fee=$data['fee'];
@@ -141,9 +144,9 @@ class TrainController extends \BaseController {
 	{
 
 
-		$data=Input::only('title','time_day','fee','date_open','shift','date_study','time_hour','editor1','discount');
+		$data=Input::only('title','time_day','fee','date_open','shift','date_study','time_hour','editor1','discount','seo');
 		$teacher=Input::get('teacher');
-		 
+		$seo=json_encode($data['seo']) ;
 		$insert_data=Training::create(
 			array(
 				'title'		=>	$data['title'],
@@ -155,7 +158,7 @@ class TrainController extends \BaseController {
 				'time_hour'	=>	$data['time_hour'],
 				'content'	=>	$data['editor1'],
 				'discount'	=>	$data['discount'],
-
+				'seo'		=>  $seo,
 				)
 			);
 //
@@ -539,7 +542,8 @@ class TrainController extends \BaseController {
 
 	public function postAddDocument()
 	{
-		 $data=Input::only('title','editor1','author');
+		 $data=Input::only('title','editor1','author','seo');
+		 $data['seo']=json_encode($data['seo']);
 		$logo=Input::file('thumbnail');
 		$document=Input::file('store');
 		if ($document==null) {
@@ -595,6 +599,7 @@ class TrainController extends \BaseController {
 				'author'=>$data['author'],
 				'store'=>$path_document,
 				'thumbnail'=>$path_logo,
+				'seo'=>$data['seo'],
 				)
 			);
 		if ($insert_data) 
@@ -628,7 +633,9 @@ class TrainController extends \BaseController {
 	{
 		if(isset($id))
 		{
-			$data=TrainingDocument::where('id','=',$id)->select('title','author','content','store','thumbnail')->get();
+			$data=TrainingDocument::where('id','=',$id)->select('title','author','content','store','thumbnail','seo')->first();
+			$data['seo']=json_decode($data['seo']);
+			 
 			return View::make('admin.training.editdocument')->with('data',$data);
 		}
 	}
@@ -637,7 +644,7 @@ class TrainController extends \BaseController {
 	{
 		if (isset($id)) 
 		{
-			$data=Input::only('title','editor1','author');
+			$data=Input::only('title','editor1','author','seo');
 			$logo=Input::file('thumbnail');
 			$file_document=Input::file('store');
 			$insert_data=TrainingDocument::find($id);
@@ -693,7 +700,7 @@ class TrainController extends \BaseController {
 			}
 			else
 				$path_document=$insert_data['store'];
-
+			$insert_data->seo=json_encode($data['seo']);
 			$insert_data->title=$data['title'];
 			$insert_data->content=$data['editor1'];
 			$insert_data->author=$data['author'];

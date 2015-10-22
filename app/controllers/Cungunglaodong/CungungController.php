@@ -15,7 +15,7 @@
 			return View::make('cungunglaodong.home')->with('data',$data);
 		}
 
-		public function detail($id)
+		public function detail($id,$slug)
 		{
 			$services=TrainingCat::whereId($id)->first(); 
 			$data=TrainingPost::where('training_cat_id','=',$id)

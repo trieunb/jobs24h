@@ -46,7 +46,7 @@
 					<div class="row">
 						<div class="col-md-12">
 			                <a href="{{URL::route('trainings.allcouser')}}"><button class="btn more1">Xem thêm</button></a>
-			                <a href=""><button class="btn more2">Đăng ký</button></a>
+			                <a href="#khoahoc"><button class="btn more2">Đăng ký</button></a>
 			            </div>
 					</div>
 				</div>
@@ -73,7 +73,7 @@
 
 		 		<div class="clearfix"></div>
 		 	
-		 		<div class="main2">
+		 		<div class="main2" id="khoahoc">
 		 			<h2>Sắp khai giảng</h2>
 		 			<h3>Một số khóa học mà chúng tôi sắp khai giảng. Đăng ký ngay để có nhiều kỹ năng cho mình nhé!</h3>
 		 			<ul>
@@ -92,9 +92,23 @@
 		 					 @else
 		 					 {{HTML::image(URL::to('uploads/training'.$tr['thumbnail'].''))}}
 		 					 @endif
-		 					
-		 					<h2><a href="{{URL::route('trainings.detailcouser',array($tr['id']))}}">{{$tr['title']}}</a></h2>
-		 					<h3>Thời lượng : {{$tr['time_day']}} buổi <br> Học phí {{$tr['fee']}}</h3>
+		 					 <?php 
+		 					  
+							    $str = trim(mb_strtolower($tr['title']));
+							    $str = preg_replace('/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/', 'a', $str);
+							    $str = preg_replace('/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/', 'e', $str);
+							    $str = preg_replace('/(ì|í|ị|ỉ|ĩ)/', 'i', $str);
+							    $str = preg_replace('/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/', 'o', $str);
+							    $str = preg_replace('/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/', 'u', $str);
+							    $str = preg_replace('/(ỳ|ý|ỵ|ỷ|ỹ)/', 'y', $str);
+							    $str = preg_replace('/(đ)/', 'd', $str);
+							    $str = preg_replace('/[^a-z0-9-\s]/', '', $str);
+							    $str = preg_replace('/([\s]+)/', '-', $str);
+							     
+							   
+		 					  ?>
+		 					<h2><a href="{{URL::route('trainings.detailcouser',array($tr['id']))}}/{{$str}}">{{$tr['title']}}</a></h2>
+		 					<h3>Thời lượng : {{$tr['time_day']}} buổi <br> Học phí : {{$tr['fee']}}</h3>
 
 		 				</li>
 
@@ -133,7 +147,21 @@
 			 				<li class='wow bounceInUp'>
 			 					<!-- <div class="date-book">{{$date}}</div> -->
 			 					{{HTML::image(URL::to('uploads/training/'.$doc['thumbnail'].''))}}
-			 					 
+			 					 <?php 
+		 					  
+							    $str1 = trim(mb_strtolower($doc['title']));
+							    $str1 = preg_replace('/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/', 'a', $str1);
+							    $str1 = preg_replace('/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/', 'e', $str1);
+							    $str1 = preg_replace('/(ì|í|ị|ỉ|ĩ)/', 'i', $str1);
+							    $str1 = preg_replace('/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/', 'o', $str1);
+							    $str1 = preg_replace('/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/', 'u', $str1);
+							    $str1 = preg_replace('/(ỳ|ý|ỵ|ỷ|ỹ)/', 'y', $str1);
+							    $str1 = preg_replace('/(đ)/', 'd', $str1);
+							    $str1 = preg_replace('/[^a-z0-9-\s]/', '', $str1);
+							    $str1 = preg_replace('/([\s]+)/', '-', $str1);
+							     
+							   
+		 					  ?>
 			 					<h2>{{$doc['title']}}</h2>
 			 					<span>By {{$doc['author']}}</span>
 			 					<div class="clearfix"></div>
@@ -142,7 +170,7 @@
 				 					<p><i class="glyphicon glyphicon-save"></i> Download : {{$doc['download']}}</p>
 			 					</div>
 			 					<div class="col-md-6">
-			 						<a href="{{URL::route('trainings.detaildoc',array($doc['id']))}}"><button class="btn btn-default more-book">Xem thêm</button></a>
+			 						<a href="{{URL::route('trainings.detaildoc',array($doc['id']))}}/{{$str1}}"><button class="btn btn-default more-book">Xem thêm</button></a>
 			 					</div>
 			 				</li>
 			 				@endforeach
@@ -155,6 +183,16 @@
     						@foreach($document[1] as $doc)
     						<?php $create=explode(" ", $doc['created_at']);
     						$date= date("d-m-Y", strtotime($create[0]));
+    						 $str1 = trim(mb_strtolower($doc['title']));
+							    $str1 = preg_replace('/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/', 'a', $str1);
+							    $str1 = preg_replace('/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/', 'e', $str1);
+							    $str1 = preg_replace('/(ì|í|ị|ỉ|ĩ)/', 'i', $str1);
+							    $str1 = preg_replace('/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/', 'o', $str1);
+							    $str1 = preg_replace('/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/', 'u', $str1);
+							    $str1 = preg_replace('/(ỳ|ý|ỵ|ỷ|ỹ)/', 'y', $str1);
+							    $str1 = preg_replace('/(đ)/', 'd', $str1);
+							    $str1 = preg_replace('/[^a-z0-9-\s]/', '', $str1);
+							    $str1 = preg_replace('/([\s]+)/', '-', $str1);
     						?>
 			 				<li class='wow bounceInDown'>
 			 					<div class="date-book">{{$date}}</div>
@@ -168,7 +206,7 @@
 				 					<p><i class="glyphicon glyphicon-save"></i> Download : {{$doc['download']}}</p>
 			 					</div>
 			 					<div class="col-md-6">
-			 						<a href="{{URL::route('trainings.detaildoc',array($doc['id']))}}"><div class="btn btn-default more-book">Xem thêm</div></a>
+			 						<a href="{{URL::route('trainings.detaildoc',array($doc['id']))}}/{{$str1}}"><div class="btn btn-default more-book">Xem thêm</div></a>
 			 					</div>
 			 				</li>
 			 				@endforeach
@@ -212,9 +250,10 @@
 					        		<div class="col-md-4 image-nx">
 					        		{{HTML::image(URL::to('uploads/training/'.$hvcu['thumbnail'].''))}}
 					        			 
-					        			
+					        			 
 					        		</div>
 					        		<div class="col-md-8 text-nx">
+					        			 
 					        			<p style="font-size:15px; font-weight: bold;">{{$hvcu['name']}}</p>
 					        			<p style="font-size:13px;font-weight: bold;">{{$hvcu['worked']}}</p>
 					        			<p>{{$hvcu['couser']}}</p>
@@ -244,7 +283,7 @@
 					        		<div class="col-md-4 image-nx">
 					        		{{HTML::image(URL::to('uploads/training/'.$hvcu['thumbnail'].''))}}
 					        			 
-					        			
+					        			 
 					        		</div>
 					        		<div class="col-md-8 text-nx">
 					        			<p style="font-size:15px;font-weight: bold;">{{$hvcu['name']}}</p>
@@ -280,13 +319,23 @@
 
 					<ul>
 							@foreach($people[0] as $gv)
+							<?php $str2 = trim(mb_strtolower($gv['name']));
+				                  $str2 = preg_replace('/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/', 'a', $str2);
+				                  $str2 = preg_replace('/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/', 'e', $str2);
+				                  $str2 = preg_replace('/(ì|í|ị|ỉ|ĩ)/', 'i', $str2);
+				                  $str2 = preg_replace('/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/', 'o', $str2);
+				                  $str2 = preg_replace('/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/', 'u', $str2);
+				                  $str2 = preg_replace('/(ỳ|ý|ỵ|ỷ|ỹ)/', 'y', $str2);
+				                  $str2 = preg_replace('/(đ)/', 'd', $str2);
+				                  $str2 = preg_replace('/[^a-z0-9-\s]/', '', $str2);
+				                  $str2 = preg_replace('/([\s]+)/', '-', $str2); ?>
 					        	<li>
-					        	 <div class="image11">
+					        	<div class="image11">
 					        		 	{{HTML::image(URL::to('uploads/training/'.$gv['thumbnail'].''))}}
 						        		 
 					        		 </div>
 					        		 
-					        		<a href="{{URL::route('trainings.allgv')}}#{{$gv['id']}}">{{$gv['name']}}</a>
+					        		 <a href="{{URL::route('trainings.allgv')}}#{{$str2}}">{{$gv['name']}}</a>
 					        	</li>
 					        @endforeach
 					        	 

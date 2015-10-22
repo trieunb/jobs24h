@@ -17,14 +17,15 @@
 				<div class="page">
 					<header>
 						<div class="container">
-							<div class="col-sm-4">
-								<a href="{{ URL::route('employers.jobs.index') }}">
-									{{ HTML::image('assets/ntd/images/logo.png') }}
+							<div class="col-xs-4">
+								<a href="{{ URL::route('employers.launching') }}">
+									<!-- {{ HTML::image('assets/ntd/images/logo.png') }} -->
+									{{ HTML::image('assets/images/logo.png') }}
 								</a>
 							</div>
-							<div class="col-sm-8">
+							<div class="col-xs-8">
 								<div class="row">
-									<div class="col-sm-12">
+									<div class="col-xs-12">
 										<ul class="pull-right nav-menu">
 											<li><a href="{{ URL::route('employers.orders.add') }}">SẢN PHẨM & DỊCH VỤ</a></li>
 											<li><a href="{{ URL::route('employers.orders.add') }}">LIÊN HỆ NGAY</a></li>
@@ -34,7 +35,7 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-sm-12">
+									<div class="col-xs-12">
 										<ul class="pull-right language">
 											<li><a href="#" onclick="alert('Developing ...'); return false;">Tiếng Việt</a></li>
 											<li><a href="#" onclick="alert('Developing ...'); return false;">English</a></li>
@@ -56,18 +57,18 @@
 				<div id="above">
 					<div class="footer-page">
 						<div class="container">
-							<div class="col-sm-12">
+							<div class="col-xs-12">
 								<ul class="pull-right bottom-navigation">
 									<li><a href="#">Giới Thiệu</a></li>
 									<li><a href="#">Bảo Mật Thông Tin</a></li>
 									<li><a href="#">Góc Báo Chí</a></li>
 									<li><a href="#">Hỏi Đáp</a></li>
 									<li><a href="#">Quy Định Sử Dụng</a></li>
-									<li><a href="http://vnjobs.vn/cam-nang-viec-lam/">Tư Vấn Tuyển Dụng</a></li>
+									<li><a href="#">Tư Vấn Tuyển Dụng</a></li>
 								</ul>
 							</div>
 							<div class="clearfix"></div>
-							<div class="col-sm-12">
+							<div class="col-xs-12">
 								<div class="text-center">
 									<span>Kết nối với vnjobs.vn:</span>
 								</div>

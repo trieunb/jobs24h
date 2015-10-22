@@ -6,8 +6,6 @@
 
 @stop
 @section('content')
-
-			
 			<div class="container">
 				 
 
@@ -30,7 +28,22 @@
 		 					 {{HTML::image(URL::to('uploads/training/'.$tr['thumbnail'].''))}}
 		 					 @endif
 		 					</div>
-		 					<h2><a href="{{URL::route('trainings.detailcouser',array($tr['id']))}}">{{$tr['title']}}</a></h2>
+		 					<?php 
+		 					  
+							    $str = trim(mb_strtolower($tr['title']));
+							    $str = preg_replace('/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/', 'a', $str);
+							    $str = preg_replace('/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/', 'e', $str);
+							    $str = preg_replace('/(ì|í|ị|ỉ|ĩ)/', 'i', $str);
+							    $str = preg_replace('/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/', 'o', $str);
+							    $str = preg_replace('/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/', 'u', $str);
+							    $str = preg_replace('/(ỳ|ý|ỵ|ỷ|ỹ)/', 'y', $str);
+							    $str = preg_replace('/(đ)/', 'd', $str);
+							    $str = preg_replace('/[^a-z0-9-\s]/', '', $str);
+							    $str = preg_replace('/([\s]+)/', '-', $str);
+							     
+							   
+		 					  ?>
+		 					<h2><a href="{{URL::route('trainings.detailcouser',array($tr['id']))}}/{{ $str}}">{{$tr['title']}}</a></h2>
 		 					<h3>Thời lượng : {{$tr['time_day']}} buổi <br> Học phí {{$tr['fee']}}</h3>
 
 		 				</li>

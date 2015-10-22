@@ -58,18 +58,26 @@
 									<i class="fa fa-caret-square-o-right"></i>
 									
 									<br>
-									Chức danh: {{ $ap->resume->cvganday }}<br>
-									Địa Điểm: @if(count($ap->resume->location)) 
+									Chức danh: @if(isset($ap->resume->cvganday))
+											   {{ $ap->resume->cvganday }} 
+											   @endif  
+									<br>
+									Địa Điểm: 
+									@if(isset($ap->resume->location)) 
+									@if(count($ap->resume->location)>0) 
 										@foreach($ap->resume->location as $l)
+											 
 											{{ $l->province->province_name }},
+											 
 										@endforeach
+									@endif
 									@endif
 									<br>
 									Thư mục: {{ HTML::link(URL::route('employers.candidates.job', $ap->job_id), $ap->job->vitri) }}
 								</td>
 								<td>
-									Ngày nộp: {{ $ap->apply_date }}<br>
-									Cập nhật: {{ $ap->resume->getUpdateAt() }}<br>
+									Ngày nộp:  {{ $ap->apply_date }}  <br>
+									Cập nhật: @if(isset($ap->resume->getUpdateAt)) {{ $ap->resume->getUpdateAt }} @endif<br>
 									Trạng thái: <span id="a_{{ $ap->id }}">{{ Config::get('custom_apply.apply_status')[$ap->status] }}</span>
 								</td>
 								<td>

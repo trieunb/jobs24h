@@ -23,6 +23,7 @@ class JobController extends \Controller {
 	}
 	public function getIndex()
 	{
+		
 		$title = 'Tất cả việc làm';
 		$jobs = Job::where('ntd_id', Auth::id())
 		->orderBy('id', 'desc')
@@ -383,7 +384,7 @@ class JobController extends \Controller {
 				$job->updateLocation($job->id, $ntd_diadiem);
 				$job->updateCategory($job->id, $ntd_nganhnghe);
 				$job->save();
-				if(Input::get('hieuung')){
+				/*if(Input::get('hieuung')){
 
 					$insert_hieuung	=\JobHieuung::whereJobId($job->id)->delete();
 					
@@ -395,7 +396,7 @@ class JobController extends \Controller {
 								'order_post_rec_id'=>$value,
 								));
 					}
-				}
+				}*/
 					 
 					
 
@@ -411,7 +412,7 @@ class JobController extends \Controller {
 	public function getDelete($id)
 	{
 		$job = Job::where('id', $id)->where('ntd_id', Auth::id())->first();
-		$del_job_hieuung=\JobHieuung::whereJobId($id)->delete();
+		$del_job_hieuung=\OrderPostRec::whereJobId($id)->delete();
 		if($job)
 		{
 			Job::destroy($job->id);

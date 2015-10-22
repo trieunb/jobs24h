@@ -237,17 +237,20 @@ class AJobController extends \BaseController {
 	 	$page=Input::get('page');
 	 	$web=Input::get('web');
 
-		$job = Job::whereId($id)->with(array('ntd'=>function($q)
+		$job = Job::where('jobs.id','=',$id)->with(array('ntd'=>function($q)
 			{
 				$q->with('company');
 			}))->first();
+		$user_admin=AdminUser::whereId($job->ntd->admin_info_id)->first();
+		 
 		$job->keyword_tags=json_decode($job->keyword_tags,true);
 		 
+		$job->seo=json_decode($job->seo,true); 
 		 
 		if(!$job) return Response::make('Không tìm thấy tin đăng');
 
 		 
-			return View::make('admin.jobs.edit', compact('job','page','web'));
+			return View::make('admin.jobs.edit', compact('job','page','web','user_admin'));
 		 
 		/*$page;
 		$job = Job::find($id);
@@ -257,8 +260,9 @@ class AJobController extends \BaseController {
 	public function update($id)
 	{
 
+
 		$data = Input::all();
-		
+
 		$validator = new App\DTT\Forms\EmployerAddJob;
 		if($validator->fails())
 		{
@@ -275,7 +279,9 @@ class AJobController extends \BaseController {
 			$ntd_diadiem = $data['ntd_diadiem']; unset($data['ntd_diadiem']);
 
 			$data['keyword_tags'] = json_encode($data['keyword_tags']);
-			
+			$data['seo'] = json_encode($data['seo']);
+
+
 			unset($data['show_auto_reply']);
 			unset($data['letter_auto']);
 
@@ -285,12 +291,16 @@ class AJobController extends \BaseController {
 			foreach ($data as $key => $value) {
 				$job->$key = $value;
 			}
+			/*var_dump($job);
+			die();*/
 			try {
 				
 				$job->updateLocation($job->id, $ntd_diadiem);
 				$job->updateCategory($job->id, $ntd_nganhnghe);
+
+				//var_dump($job);
 				$job->save();
- 			 	 
+				 
 				if(Input::get('web')=='job_index')
 					return Redirect::route('admin.jobs.index',array('page'=>Input::get('page')))->with('success','Đã lưu các thay đổi !');
 				elseif(Input::get('web')=='job_watting')

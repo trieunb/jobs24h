@@ -18,16 +18,17 @@
 						<div class="container">
 							<div class="col-sm-4">
 								<a href="{{ URL::route('employers.launching') }}">
-									{{ HTML::image('assets/ntd/images/logo.png') }}
+									<!-- {{ HTML::image('assets/ntd/images/logo.png') }} -->
+									{{ HTML::image('assets/images/logo.png') }}
 								</a>
 							</div>
 							<div class="col-sm-8">
 								<div class="row">
 									<div class="col-sm-12">
 										<ul class="pull-right nav-menu">
-											<li><a href="#">SẢN PHẨM & DỊCH VỤ</a></li>
-											<li><a href="#">LIÊN HỆ NGAY</a></li>
-											<li><a href="#">GIỚI THIỆU</a></li>
+											<li><a href="{{ URL::route('product.home') }}">SẢN PHẨM & DỊCH VỤ</a></li>
+											<li><a href="{{ URL::route('employers.orders.add') }}">LIÊN HỆ NGAY</a></li>
+											<li><a href="{{ URL::route('employers.orders.add') }}">GIỚI THIỆU</a></li>
 											<li class="active"><a href="{{ URL::route('jobseekers.home') }}">CHO NGƯỜI TÌM VIỆC</a></li>
 										</ul>
 									</div>
@@ -63,7 +64,7 @@
 									<li><a href="#">Góc Báo Chí</a></li>
 									<li><a href="#">Hỏi Đáp</a></li>
 									<li><a href="#">Quy Định Sử Dụng</a></li>
-									<li><a href="http://vnjobs.vn/cam-nang-viec-lam/">Tư Vấn Tuyển Dụng</a></li>
+									<li><a href="#">Tư Vấn Tuyển Dụng</a></li>
 								</ul>
 							</div>
 							<div class="clearfix"></div>

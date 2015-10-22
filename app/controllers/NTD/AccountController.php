@@ -19,7 +19,6 @@ class AccountController extends \Controller {
 	}
 	public function postThongTinCongTy()
 	{
-		 
 		$params = Input::all();
 		$validator = new \App\DTT\Forms\EmployerUpdateCompany;
 		if($validator->fails())
@@ -60,7 +59,7 @@ class AccountController extends \Controller {
 	}
 	public function getDoiMatKhau()
 	{
-		 
+		
 		$user = Auth::getUser();
 		return View::make('employers.account.change_pass', compact('user'));
 	}

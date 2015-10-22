@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title')Add new Training @stop
+@section('title')Chỉnh sửa khóa học @stop
 @section('page-header')Chỉnh sửa khóa học @stop
 @section('style')
 
@@ -97,17 +97,64 @@
 			
 		</div>
 
-  
+  		<div class="tags-box bg-little-blue push-padding-30-full border-blue col-xs-10" style="margin-bottom: 10px;">
+			<div class="form-group">
+				<label for="keyword_tags" class="col-sm-2 control-label">SEO TITLE:</label>
+				<div class="col-sm-6">
+				@if(isset($data["seo"]["title"]))
+					{{ Form::text('seo[title]',  $data["seo"]["title"], array('class'=>'form-control', 'placeholder'=>'Ví dụ: tiêu đề') ) }}
+				@else
+					{{ Form::text('seo[title]',  null, array('class'=>'form-control', 'placeholder'=>'Ví dụ: tiêu đề') ) }}
+				@endif
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="keyword_tags" class="col-sm-2 control-label">SEO DESCRIPTION:</label>
+				<div class="col-sm-6">
+				@if(isset($data["seo"]["description"]))
+					{{ Form::text('seo[description]', $data["seo"]["description"], array('class'=>'form-control', 'placeholder'=>'Ví dụ: Mô tả') ) }}
+				@else
+					{{ Form::text('seo[description]', null, array('class'=>'form-control', 'placeholder'=>'Ví dụ: Mô tả') ) }}
+				@endif
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="keyword_tags" class="col-sm-2 control-label">META KEYWORDS:</label>
+				<div class="col-sm-6">
+				@if(isset($data["seo"]["keyword"]))
+					{{ Form::text('seo[keyword]',  $data["seo"]["keyword"], array('class'=>'form-control', 'placeholder'=>'Ví dụ: keyword') ) }}
+				@else
+					{{ Form::text('seo[keyword]',null, array('class'=>'form-control', 'placeholder'=>'Ví dụ: keyword') ) }}
+				@endif
+				</div>
+			</div>
+			
+		</div>
+
+
 		<div class="form-group">
 			<div class="col-sm-10 col-sm-offset-2">
 				{{ Form::button('Lưu thay đổi', array('type'=>'submit', 'class'=>'btn btn-primary')) }}
 			</div>
 		</div>
 	{{ Form::close() }}
+	<style type="text/css">
+		.no-padding {
+			padding: 0;
+		}
+		.middle-align {
+			vertical-align: middle;
+			padding-top: 6px;
+		}
+		.bg-little-blue {background: #e4f5ff;}
+		.push-padding-30-full {padding: 30px;}
+		.border-blue {border: 1px solid #00b9f2;}
+	</style>
 @stop
 
 @section('style')
 	{{ HTML::style('assets/css/datepicker3.css') }}
+
 @stop
 @section('script')
 	{{ HTML::script('assets/js/bootstrap-datepicker.js') }}

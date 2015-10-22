@@ -102,7 +102,11 @@
 													Số lượng hồ sơ ứng viên có thể xem được là : <span id="cv_xem" style="color:red">{{$check_order['remain']}}</span> hồ sơ.
 												</div>
 												<div class="col-xs-3 pull-right">
-													<button class="btn btn-nomal bg-orange pull-right" id="show_info" >Xem</button>
+													@if($pdf)
+													<button class="btn btn-nomal bg-orange pull-right" id="show_info">Xem</button>
+													@else
+													<a href="{{ URL::route('employers.search.print_cv',array($resume->id,'tai-chinh')) }}" class="btn btn-nomal bg-orange pull-right" id="dow_info">Tải CV chính</a>
+													@endif
 													<!-- <a href="{{ URL::route('employers.orders.add') }}" class="btn btn-nomal bg-orange pull-right">Mua dịch vụ</a> -->
 												</div>
 											@else
@@ -227,7 +231,7 @@
 										<span>Nội dung hồ sơ</span>
 										</div>
 										<!-- <iframe  frameborder="0" scrolling="no" src="{{ URL::route('employers.search.resume_viewer') }}?file={{ URL::to('/').'/uploads/jobseekers/cv/'.$resume->second_file_name }}&type=phu" height="800" width="100%"></iframe> -->
-										<iframe  frameborder="0" scrolling="no" src="{{ URL::route('employers.search.resume_viewer') }}?file={{$resume->file_name }}" height="800" width="100%"></iframe>
+										<iframe  frameborder="0" scrolling="no" src="{{ URL::route('employers.search.resume_viewer') }}?file={{$resume->second_file_name }}&type=phu" height="800" width="100%"></iframe>
 									@else 
 										<div class="heading-title">
 											<span>Nội dung hồ sơ</span>
@@ -235,11 +239,9 @@
 										<div style="margin: 10px 0px 0px 0px">
 										<!-- Ứng viên này chưa có hồ sơ -->
 										Quí khách vui lòng tải cv về máy để xem
-										@if(strtotime($check_order['ended_date']) > $ngayhomnay && $check_order['remain']>0)
-										<a href="{{ URL::route('employers.search.print_cv',array($resume->id,'tai-chinh')) }}" class="btn btn-lg bg-orange">Tải CV</a>
-										@else
-										<a href="{{ URL::route('employers.search.print_cv',array($resume->id,'tai-phu')) }}" class="btn btn-lg bg-orange">Tải CV</a>
-										@endif
+										 
+										<a href="{{ URL::route('employers.search.print_cv',array($resume->id,'tai-phu')) }}" class="btn btn-lg bg-orange">Tải CV phụ</a>
+										 
 										</div>
 									
 									@endif
@@ -377,25 +379,31 @@
 			success: function(json)
 			{
 				$('.show-info').append('<div class="row td-info"><div class="col-xs-5">Email</div><div class="col-xs-7" style="margin-left:-44px;">'+json.ntv.email+'</div></div><div class="row td-info"><div class="col-xs-5">Điện thoại</div><div class="col-xs-7">'+json.ntv.phone_number+'</div></div>');
+				var cv= $('#cv_xem').text();
+		 		$('#cv_xem').text(cv-1);
+				$('#view_cv').empty();
+				$('#view_cv').append('<iframe  frameborder="0" scrolling="no" src="{{ URL::route('employers.search.resume_viewer') }}?file={{$resume->file_name }}" height="800" width="100%"></iframe>');
 				 
 			}
 		});
 	 });
-	/*$('#view').click(function(event) { 
-
-		 
-		var cv= $('#cv_xem').text();
-		 $('#cv_xem').text(cv-1);
-		 $('#view_cv').empty();
-		 $('#no-cv-phu').empty();
-		$('#view_cv').append('<iframe style="" id="cv"  frameborder="0" scrolling="no" src="{{ URL::route("employers.search.resume_viewer") }}?file={{ URL::to("/")."/uploads/jobseekers/cv/".$resume->file_name }}" height="800" width="100%"></iframe>');
-					
-		/*else
-
-		$('#view_cv').append('<a href="{{ URL::route('employers.search.print_cv', $resume->id) }}" class="btn btn-lg bg-orange">Tải CV</a>');
-	*/
-	/*});*/	
-
+	 
+	$('#dow_info').click(function(event) {
+	 	var action = 'showInfo';
+	 	var ntv_id = {{ $resume->ntv->id }};
+	 	$.ajax({
+			url: '{{ URL::route('employers.search.ajax') }}',
+			data: {action: action, ntvid: ntv_id},
+			type: 'POST',
+			dataType: 'json',
+			success: function(json)
+			{
+				$('.show-info').append('<div class="row td-info"><div class="col-xs-5">Email</div><div class="col-xs-7" style="margin-left:-44px;">'+json.ntv.email+'</div></div><div class="row td-info"><div class="col-xs-5">Điện thoại</div><div class="col-xs-7">'+json.ntv.phone_number+'</div></div>');
+				 var cv= $('#cv_xem').text();
+		 		$('#cv_xem').text(cv-1);
+			}
+		});
+	 });
 	 	
 
 	$('#inputAdd').click(function(event) { 

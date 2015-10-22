@@ -8,7 +8,6 @@
 	<title>@yield('title', isset($title) ?: 'Dashboard') - Admin VnJobs</title>
 	<!-- BOOTSTRAP STYLES-->
 	{{ HTML::style('assets/css/bootstrap.min.css?v='.$ver) }}
-	{{ HTML::style('ace/assets/css/style.css?v='.$ver) }}
 	<!-- FONTAWESOME ICONS STYLES-->
 	{{ HTML::style('assets/font-awesome/4.2.0/css/font-awesome.min.css?v='.$ver) }}
 	<!--CUSTOM STYLES-->
@@ -23,12 +22,7 @@
 		{{ HTML::style('assets/css/ace-ie.min.css') }}
 		<![endif]-->
 
- 	 
- 	 <style type="text/css">
- 	.no-skin .nav-list>li>.submenu li>.submenu li.open>a, .no-skin .nav-list>li>.submenu li>.submenu li.active>a {
-    	color: red;
-	}
-</style>	 
+ 		 
 	@yield('style')
 </head>
 <body class="no-skin">

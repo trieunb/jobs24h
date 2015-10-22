@@ -52,7 +52,7 @@
         </div>
         <div class="col-sm-3">
           <h3>Liên Hệ</h3>
-          <p><i class="fa fa-map-marker"></i>&nbsp; Địa chỉ: Tầng 10, Tòa nhà SUDICO, Mỹ Đình 1, Mễ Trì, Nam Từ Liên, Hà Nội</p>
+          <p><i class="fa fa-map-marker"></i>&nbsp; Địa chỉ: Tầng 10, Tòa nhà SUDICO, Mỹ Đình 1, Mễ Trì, Nam Từ Liêm, Hà Nội</p>
           <p><i class="fa fa-envelope"></i>&nbsp; Email: <a href="mailto:info@vnjobs.vn">info@vnjobs.vn</a></p>
           <p><i class="fa fa-phone"></i>&nbsp; Điện thoại: 04-3577-1608</p>
           <p><i class="fa fa-phone"></i>&nbsp; Hotline: 1900 5858 53</p>

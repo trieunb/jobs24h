@@ -23,6 +23,21 @@
     
   </nav>
 </div>
+          <?php 
+                
+                  $str = trim(mb_strtolower($couser['title']));
+                  $str = preg_replace('/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/', 'a', $str);
+                  $str = preg_replace('/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/', 'e', $str);
+                  $str = preg_replace('/(ì|í|ị|ỉ|ĩ)/', 'i', $str);
+                  $str = preg_replace('/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/', 'o', $str);
+                  $str = preg_replace('/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/', 'u', $str);
+                  $str = preg_replace('/(ỳ|ý|ỵ|ỷ|ỹ)/', 'y', $str);
+                  $str = preg_replace('/(đ)/', 'd', $str);
+                  $str = preg_replace('/[^a-z0-9-\s]/', '', $str);
+                  $str = preg_replace('/([\s]+)/', '-', $str);
+                   
+                 
+                ?>
 <!-- <ul>
           <li><a href="#tq2">Tổng quan</a></li>
           <li><a href="#chiphi">Chi phí</a></li>
@@ -333,19 +348,25 @@
 
           <ul>
               @foreach($people[0] as $gv)
+              <?php $str2 = trim(mb_strtolower($gv['name']));
+                          $str2 = preg_replace('/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/', 'a', $str2);
+                          $str2 = preg_replace('/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/', 'e', $str2);
+                          $str2 = preg_replace('/(ì|í|ị|ỉ|ĩ)/', 'i', $str2);
+                          $str2 = preg_replace('/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/', 'o', $str2);
+                          $str2 = preg_replace('/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/', 'u', $str2);
+                          $str2 = preg_replace('/(ỳ|ý|ỵ|ỷ|ỹ)/', 'y', $str2);
+                          $str2 = preg_replace('/(đ)/', 'd', $str2);
+                          $str2 = preg_replace('/[^a-z0-9-\s]/', '', $str2);
+                          $str2 = preg_replace('/([\s]+)/', '-', $str2); ?>
                     <li>
                        <div class="image11">
                         {{HTML::image(URL::to('uploads/training/'.$gv['thumbnail'].''))}}
                          
                        </div>
-                       <a href="{{URL::route('trainings.allgv')}}#{{$gv['id']}}">{{$gv['name']}}</a>
+                       <a href="{{URL::route('trainings.allgv')}}#{{$str2}}">{{$gv['name']}}</a>
                     </li>
                   @endforeach
-                     
-                     
-                     
-                     
-          </ul>
+            </ul>
 
         </div>
         <script>
@@ -373,7 +394,7 @@
 
         $( "#dangky" ).submit(function( event ) {
           
-          var url = "{{URL::route('trainings.detailcouser',$couser['id'])}}"; // the script where you handle the form input.
+          var url = "{{URL::route('trainings.detailcouser',$couser['id'])}}/{{$str}}"; // the script where you handle the form input.
 
           $.ajax({
              type: "POST",

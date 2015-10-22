@@ -38,7 +38,7 @@ class TrainingController extends Controller
  
 
 
-	public function detail_doc($id)
+	public function detail_doc($id,$slug)
 	{
 
 		$doc1=TrainingDocument::find($id);
@@ -61,7 +61,6 @@ class TrainingController extends Controller
 		else
 			return 'not found';
 	}
-
 	public function all_gv()
 	{
 
@@ -74,8 +73,6 @@ class TrainingController extends Controller
 		->get();
 		return View::make('training.detailgv',compact('people','people1'));
 	}
-
-
 	public function dowload_doc($id)
 	{
 		
@@ -109,10 +106,10 @@ class TrainingController extends Controller
 		else "not found";
 	}
 
-	public function detail_couser($id)
+	public function detail_couser($id,$slug)
 	{
 		 
-		 
+
 		 $couser1=Training::find($id);
 
 		 $couser=$couser1->trainingpeoples;
@@ -182,7 +179,7 @@ class TrainingController extends Controller
 	}
 
 
-	public function post_detail_couser($id)
+	public function post_detail_couser($id,$slug)
 	{
 		 
 		$validator = new \App\DTT\Forms\TrainingRegister;

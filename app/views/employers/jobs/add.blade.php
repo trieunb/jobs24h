@@ -295,8 +295,6 @@
 										
 										</div>
 										</div>
-										
-										
 								<div class="center">
 									{{ Form::button('Đăng tuyển', array('type'=>'submit', 'class'=>'btn btn-lg bg-orange')) }}
 									<a href="{{ URL::route('employers.jobs.index') }}" class="btn btn-lg bg-orange">Hủy</a>

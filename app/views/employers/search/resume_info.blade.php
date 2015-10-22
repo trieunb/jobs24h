@@ -377,7 +377,9 @@
 			success: function(json)
 			{
 				$('.show-info').append('<div class="row td-info"><div class="col-xs-5">Email</div><div class="col-xs-7" style="margin-left:-44px;">'+json.ntv.email+'</div></div><div class="row td-info"><div class="col-xs-5">Điện thoại</div><div class="col-xs-7">'+json.ntv.phone_number+'</div></div>');
-				 
+				var cv= $('#cv_xem').text();
+		 			$('#cv_xem').text(cv-1);
+				$("#content_cv").load('{{URL::route("employers.search.xemchitiet1",$resume->id)}}'); 
 			}
 		});
 	 });
@@ -388,7 +390,7 @@
 					$("#content_cv").load('{{URL::route("employers.search.xemchitiet1",$resume->id)}}');
 			 
 		});*/
-	$("#content_cv").load('{{URL::route("employers.search.xemchitiet1",$resume->id)}}');
+	
 	$('#inputAdd').click(function(event) { 
 		$('#inputFolder_name').prop({
 			disabled: 'disabled'

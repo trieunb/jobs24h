@@ -99,7 +99,33 @@
 			</div>
 			
 		</div>
-		 
+		<div class="tags-box bg-little-blue push-padding-30-full border-blue col-xs-10" style="margin-bottom: 10px;">
+			<div class="form-group">
+				<label for="keyword_tags" class="col-sm-2 control-label">SEO TITLE:</label>
+				<div class="col-sm-6">
+				 
+					{{ Form::text('seo[title]',  null, array('class'=>'form-control', 'placeholder'=>'Ví dụ: tiêu đề') ) }}
+				 
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="keyword_tags" class="col-sm-2 control-label">SEO DESCRIPTION:</label>
+				<div class="col-sm-6">
+				 
+					{{ Form::text('seo[description]', null, array('class'=>'form-control', 'placeholder'=>'Ví dụ: Mô tả') ) }}
+				 
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="keyword_tags" class="col-sm-2 control-label">META KEYWORDS:</label>
+				<div class="col-sm-6">
+				 
+					{{ Form::text('seo[keyword]',null, array('class'=>'form-control', 'placeholder'=>'Ví dụ: keyword') ) }}
+				 
+				</div>
+			</div>
+			
+		</div> 
 	 
 		 
 		<div class="form-group">
@@ -108,6 +134,18 @@
 			</div>
 		</div>
 	{{ Form::close() }}
+	<style type="text/css">
+		.no-padding {
+			padding: 0;
+		}
+		.middle-align {
+			vertical-align: middle;
+			padding-top: 6px;
+		}
+		.bg-little-blue {background: #e4f5ff;}
+		.push-padding-30-full {padding: 30px;}
+		.border-blue {border: 1px solid #00b9f2;}
+	</style>
 @stop
 
 @section('style')

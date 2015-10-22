@@ -11,11 +11,11 @@
 
 	 {{ Form::open(['role' => 'form','class'=>'form form-horizontal','files'=>true]) }}
 		@include('includes.notifications')
-		@foreach($data as $value)
+		 
 		<div class="form-group">
 			<label for="inputTitle" class="col-sm-2 control-label">Tiêu đề:</label>
 			<div class="col-sm-6">
-				{{ Form::input('text', 'name', $value['name'], array('class'=>'form-control', 'required') ) }}
+				{{ Form::input('text', 'name', $data['name'], array('class'=>'form-control', 'required') ) }}
 			</div>
 		</div>
 		 
@@ -31,7 +31,7 @@
 			</div>
 
 			<div class="col-sm-3">
-				<img style="width:50%" id="blah" src="{{$value['banner']}}" alt="banner" />
+				<img style="width:50%" id="blah" src="{{$data['banner']}}" alt="banner" />
 
 			</div>
 
@@ -39,14 +39,58 @@
 			 
 		</div>
 		 
+		<div class="tags-box bg-little-blue push-padding-30-full border-blue col-xs-10" style="margin-bottom: 10px;">
+			<div class="form-group">
+				<label for="keyword_tags" class="col-sm-2 control-label">SEO TITLE:</label>
+				<div class="col-sm-6">
+				@if(isset($data["seo"]->title))
+					{{ Form::text('seo[title]',  $data["seo"]->title, array('class'=>'form-control', 'placeholder'=>'Ví dụ: tiêu đề') ) }}
+				@else
+					{{ Form::text('seo[title]',  null, array('class'=>'form-control', 'placeholder'=>'Ví dụ: tiêu đề') ) }}
+				@endif
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="keyword_tags" class="col-sm-2 control-label">SEO DESCRIPTION:</label>
+				<div class="col-sm-6">
+				@if(isset($data["seo"]->description))
+					{{ Form::text('seo[description]', $data["seo"]->description, array('class'=>'form-control', 'placeholder'=>'Ví dụ: Mô tả') ) }}
+				@else
+					{{ Form::text('seo[description]', null, array('class'=>'form-control', 'placeholder'=>'Ví dụ: Mô tả') ) }}
+				@endif
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="keyword_tags" class="col-sm-2 control-label">META KEYWORDS:</label>
+				<div class="col-sm-6">
+				@if(isset($data["seo"]->keyword))
+					{{ Form::text('seo[keyword]',  $data["seo"]->keyword, array('class'=>'form-control', 'placeholder'=>'Ví dụ: keyword') ) }}
+				@else
+					{{ Form::text('seo[keyword]',null, array('class'=>'form-control', 'placeholder'=>'Ví dụ: keyword') ) }}
+				@endif
+				</div>
+			</div>
+			
+		</div> 
 		 
-		@endforeach
 		<div class="form-group">
 			<div class="col-sm-10 col-sm-offset-2">
 				{{ Form::button('Lưu thay đổi', array('type'=>'submit', 'class'=>'btn btn-primary')) }}
 			</div>
 		</div>
 	{{ Form::close() }}
+	<style type="text/css">
+		.no-padding {
+			padding: 0;
+		}
+		.middle-align {
+			vertical-align: middle;
+			padding-top: 6px;
+		}
+		.bg-little-blue {background: #e4f5ff;}
+		.push-padding-30-full {padding: 30px;}
+		.border-blue {border: 1px solid #00b9f2;}
+	</style>
 @stop
 
 @section('style')
